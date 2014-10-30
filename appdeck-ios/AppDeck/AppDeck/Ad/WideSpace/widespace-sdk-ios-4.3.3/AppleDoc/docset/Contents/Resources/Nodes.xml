@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocSetNodes version="1.0">
+    <TOC>
+        <Node type="folder">
+            <Name>Widespace-SDK-iOS</Name>
+            <Path>index.html</Path>
+			<Subnodes>
+                
+				
+				<Node type="folder">
+					<Name>Classes</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="1"/>
+						
+					</Subnodes>
+				</Node>
+				
+				
+                
+				<Node>
+					<Name>Protocols</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="2"/>
+						
+					</Subnodes>
+				</Node>
+				
+                
+				<Node>
+					<Name>Constants</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="3"/>
+						<NodeRef refid="4"/>
+						<NodeRef refid="5"/>
+						<NodeRef refid="6"/>
+						<NodeRef refid="7"/>
+						
+					</Subnodes>
+				</Node>
+				
+			</Subnodes>
+        </Node>
+    </TOC>
+	<Library>
+		
+		<Node id="1" type="file" documentType="reference">
+            <Name>WSAdSpace</Name>
+            <Path>Classes/WSAdSpace.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/WSAdSpace.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/WSAdSpace.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/WSAdSpace.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/WSAdSpace.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		
+		
+        <Node id="2" type="file" documentType="reference">
+            <Name>WSAdSpaceDelegate</Name>
+            <Path>Protocols/WSAdSpaceDelegate.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Protocols/WSAdSpaceDelegate.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Protocols/WSAdSpaceDelegate.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Protocols/WSAdSpaceDelegate.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		
+        <Node id="3" type="file" documentType="reference">
+            <Name>WSAdType</Name>
+            <Path>Constants/WSAdType.html</Path>
+            
+        </Node>
+		<Node id="4" type="file" documentType="reference">
+            <Name>WSAnimationDirection</Name>
+            <Path>Constants/WSAnimationDirection.html</Path>
+            
+        </Node>
+		<Node id="5" type="file" documentType="reference">
+            <Name>WSErrorType</Name>
+            <Path>Constants/WSErrorType.html</Path>
+            
+        </Node>
+		<Node id="6" type="file" documentType="reference">
+            <Name>WSMediaStatus</Name>
+            <Path>Constants/WSMediaStatus.html</Path>
+            
+        </Node>
+		<Node id="7" type="file" documentType="reference">
+            <Name>WSMediaType</Name>
+            <Path>Constants/WSMediaType.html</Path>
+            
+        </Node>
+		
+	</Library>
+</DocSetNodes>
