@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/WSAnimationDirection.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/WSAnimationDirection</TokenIdentifier>
+			<Abstract type="html">Specifies the animation direction for an expand or collapse operation.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+            <Availability type="html">(
+    &quot;since 4.1&quot;
+)</Availability>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAnimationDirectionUp</TokenIdentifier>
+            <Abstract type="html">The animation direction is considered to be upwards in relation to the WSAdSpace position.
+	 </Abstract>
+            <Declaration>WSAnimationDirectionUp</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAnimationDirectionDown</TokenIdentifier>
+            <Abstract type="html">The animation direction is considered to be downwards in relation to the WSAdSpace position.
+	 </Abstract>
+            <Declaration>WSAnimationDirectionDown</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAnimationDirectionFullScreen</TokenIdentifier>
+            <Abstract type="html">The WSAdSpace will open a modal view in full screen.
+	 </Abstract>
+            <Declaration>WSAnimationDirectionFullScreen</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+	</File>
+</Tokens>

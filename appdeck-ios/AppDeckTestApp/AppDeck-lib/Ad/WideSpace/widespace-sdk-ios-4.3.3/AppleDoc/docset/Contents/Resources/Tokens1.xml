@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/WSAdSpace.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/WSAdSpace</TokenIdentifier>
+			<Abstract type="html">An instance of WSAdSpace is a means for displaying ads in your app.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate of the AdSpace that you want to receive messages of what is happening. Not required.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/WSAdSpaceDelegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) id&lt;WSAdSpaceDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate of the AdSpace that you want to receive messages of what is happening. Not required.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/WSAdSpaceDelegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) id&lt;WSAdSpaceDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate of the AdSpace that you want to receive messages of what is happening. Not required.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/WSAdSpaceDelegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign) id&lt;WSAdSpaceDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setGPSEnabled:</TokenIdentifier>
+			<Abstract type="html">Determines if the WSAdSpace is using the GPS to target ads towards the end user. Setting this to NO will set it to NO for all WSAdSpaces during this session. Setting it to YES will turn location on for all WSAdSpaces.
+&lt;p&gt;
+Default value is YES. This can also be set in initWithFrame:sid:autoUpdate:autoStart:delegate:GPSEnabled:
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isGPSEnabled, setter=setGPSEnabled:) BOOL gpsEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/gpsEnabled</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isGPSEnabled</TokenIdentifier>
+			<Abstract type="html">Determines if the WSAdSpace is using the GPS to target ads towards the end user. Setting this to NO will set it to NO for all WSAdSpaces during this session. Setting it to YES will turn location on for all WSAdSpaces.
+&lt;p&gt;
+Default value is YES. This can also be set in initWithFrame:sid:autoUpdate:autoStart:delegate:GPSEnabled:
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isGPSEnabled, setter=setGPSEnabled:) BOOL gpsEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/gpsEnabled</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/gpsEnabled</TokenIdentifier>
+			<Abstract type="html">Determines if the WSAdSpace is using the GPS to target ads towards the end user. Setting this to NO will set it to NO for all WSAdSpaces during this session. Setting it to YES will turn location on for all WSAdSpaces.
+&lt;p&gt;
+Default value is YES. This can also be set in initWithFrame:sid:autoUpdate:autoStart:delegate:GPSEnabled:
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isGPSEnabled, setter=setGPSEnabled:) BOOL gpsEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/gpsEnabled</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setPaused:</TokenIdentifier>
+			<Abstract type="html">Set to pause or resume the AdSpace.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/pause</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/resume</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, getter=isPaused) BOOL paused</Declaration>
+			
+			
+			<Anchor>//api/name/paused</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isPaused</TokenIdentifier>
+			<Abstract type="html">Set to pause or resume the AdSpace.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/pause</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/resume</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, getter=isPaused) BOOL paused</Declaration>
+			
+			
+			<Anchor>//api/name/paused</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/paused</TokenIdentifier>
+			<Abstract type="html">Set to pause or resume the AdSpace.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/pause</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/resume</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, assign, getter=isPaused) BOOL paused</Declaration>
+			
+			
+			<Anchor>//api/name/paused</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setSid:</TokenIdentifier>
+			<Abstract type="html">The SID of AdSpace was initialized with, you can set this to a different SID to load new ads (changing this property will clear the AdQueue)
+This needs to be set to a proper SID obtained from Widespace. Without a valid SID you will not get any ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, retain) NSString *sid</Declaration>
+			
+			
+			<Anchor>//api/name/sid</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/sid</TokenIdentifier>
+			<Abstract type="html">The SID of AdSpace was initialized with, you can set this to a different SID to load new ads (changing this property will clear the AdQueue)
+This needs to be set to a proper SID obtained from Widespace. Without a valid SID you will not get any ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, retain) NSString *sid</Declaration>
+			
+			
+			<Anchor>//api/name/sid</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/sid</TokenIdentifier>
+			<Abstract type="html">The SID of AdSpace was initialized with, you can set this to a different SID to load new ads (changing this property will clear the AdQueue)
+This needs to be set to a proper SID obtained from Widespace. Without a valid SID you will not get any ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, retain) NSString *sid</Declaration>
+			
+			
+			<Anchor>//api/name/sid</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setShadowEnabled:</TokenIdentifier>
+			<Abstract type="html">Decide if the AdSpace should draw a drop shadow under the ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isShadowEnabled) BOOL shadowEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/shadowEnabled</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isShadowEnabled</TokenIdentifier>
+			<Abstract type="html">Decide if the AdSpace should draw a drop shadow under the ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isShadowEnabled) BOOL shadowEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/shadowEnabled</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/shadowEnabled</TokenIdentifier>
+			<Abstract type="html">Decide if the AdSpace should draw a drop shadow under the ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isShadowEnabled) BOOL shadowEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/shadowEnabled</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setRegulatedMode:</TokenIdentifier>
+			<Abstract type="html">Controls how much user related information is sent with each request. If your app is going to be published in a market with strict privacy laws (ex. Germany), you should most likely enable this. Calling this method will also clear the internal queue of ads (ex. if you have used prefetch, you will have to use prefetch again to get new ads). Setting regulated mode will clear the ad queue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isRegulatedMode) BOOL regulatedMode</Declaration>
+			
+			
+			<Anchor>//api/name/regulatedMode</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isRegulatedMode</TokenIdentifier>
+			<Abstract type="html">Controls how much user related information is sent with each request. If your app is going to be published in a market with strict privacy laws (ex. Germany), you should most likely enable this. Calling this method will also clear the internal queue of ads (ex. if you have used prefetch, you will have to use prefetch again to get new ads). Setting regulated mode will clear the ad queue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isRegulatedMode) BOOL regulatedMode</Declaration>
+			
+			
+			<Anchor>//api/name/regulatedMode</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/regulatedMode</TokenIdentifier>
+			<Abstract type="html">Controls how much user related information is sent with each request. If your app is going to be published in a market with strict privacy laws (ex. Germany), you should most likely enable this. Calling this method will also clear the internal queue of ads (ex. if you have used prefetch, you will have to use prefetch again to get new ads). Setting regulated mode will clear the ad queue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isRegulatedMode) BOOL regulatedMode</Declaration>
+			
+			
+			<Anchor>//api/name/regulatedMode</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setExtraParamters:</TokenIdentifier>
+			<Abstract type="html">Get all extra paramters as a dictionary.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setExtraParameter:value:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *extraParamters</Declaration>
+			
+			
+			<Anchor>//api/name/extraParamters</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/extraParamters</TokenIdentifier>
+			<Abstract type="html">Get all extra paramters as a dictionary.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setExtraParameter:value:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *extraParamters</Declaration>
+			
+			
+			<Anchor>//api/name/extraParamters</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/extraParamters</TokenIdentifier>
+			<Abstract type="html">Get all extra paramters as a dictionary.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setExtraParameter:value:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *extraParamters</Declaration>
+			
+			
+			<Anchor>//api/name/extraParamters</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setAutoUpdate:</TokenIdentifier>
+			<Abstract type="html">Decide if AdSpace should fetch new ads and present them automatically (assuming AdSpace is running). This is also set in the init method.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isAutoUpdate) BOOL autoUpdate</Declaration>
+			
+			
+			<Anchor>//api/name/autoUpdate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isAutoUpdate</TokenIdentifier>
+			<Abstract type="html">Decide if AdSpace should fetch new ads and present them automatically (assuming AdSpace is running). This is also set in the init method.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isAutoUpdate) BOOL autoUpdate</Declaration>
+			
+			
+			<Anchor>//api/name/autoUpdate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/autoUpdate</TokenIdentifier>
+			<Abstract type="html">Decide if AdSpace should fetch new ads and present them automatically (assuming AdSpace is running). This is also set in the init method.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, getter=isAutoUpdate) BOOL autoUpdate</Declaration>
+			
+			
+			<Anchor>//api/name/autoUpdate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setCurrentAdInfo:</TokenIdentifier>
+			<Abstract type="html">Get the current ad description. This holds ad id, layout parameters and update time among other things.
+This is a direct representation of the JSON response.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/nextAdInfo</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *currentAdInfo</Declaration>
+			
+			
+			<Anchor>//api/name/currentAdInfo</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/currentAdInfo</TokenIdentifier>
+			<Abstract type="html">Get the current ad description. This holds ad id, layout parameters and update time among other things.
+This is a direct representation of the JSON response.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/nextAdInfo</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *currentAdInfo</Declaration>
+			
+			
+			<Anchor>//api/name/currentAdInfo</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/currentAdInfo</TokenIdentifier>
+			<Abstract type="html">Get the current ad description. This holds ad id, layout parameters and update time among other things.
+This is a direct representation of the JSON response.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/nextAdInfo</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *currentAdInfo</Declaration>
+			
+			
+			<Anchor>//api/name/currentAdInfo</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setNextAdInfo:</TokenIdentifier>
+			<Abstract type="html">Get the next ad description. This holds ad id, layout parameters and update timer among other things.
+This is a direct representation of the JSON response.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/currentAdInfo</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *nextAdInfo</Declaration>
+			
+			
+			<Anchor>//api/name/nextAdInfo</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/nextAdInfo</TokenIdentifier>
+			<Abstract type="html">Get the next ad description. This holds ad id, layout parameters and update timer among other things.
+This is a direct representation of the JSON response.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/currentAdInfo</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *nextAdInfo</Declaration>
+			
+			
+			<Anchor>//api/name/nextAdInfo</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/nextAdInfo</TokenIdentifier>
+			<Abstract type="html">Get the next ad description. This holds ad id, layout parameters and update timer among other things.
+This is a direct representation of the JSON response.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/currentAdInfo</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>@property (nonatomic, readonly) NSDictionary *nextAdInfo</Declaration>
+			
+			
+			<Anchor>//api/name/nextAdInfo</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/initWithSid:</TokenIdentifier>
+			<Abstract type="html">Returns an AdSpace that presents ads and should be added to the screen.
+&lt;p&gt;
+The SID must be set to a valid SID that you have obtained from Widespace (Nova Front).
+This instance will auto update and auto run. Default frame is here (0, 0, 320, 48), delegate is nil and GPS is enabled.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (id)initWithSid:(NSString *)sid</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sid</Name>
+					<Abstract type="html">SID for the adspace.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The WSAdSpace instance with settings provided in initializer.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithSid:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/initWithFrame:sid:autoUpdate:autoStart:delegate:</TokenIdentifier>
+			<Abstract type="html">Returns an AdSpace that presents ads and should be added to the screen.
+GPS is enabled here by default.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (id)initWithFrame:(CGRect)frame sid:(NSString *)sid autoUpdate:(BOOL)autoUpdate autoStart:(BOOL)autoStart delegate:(id&lt;WSAdSpaceDelegate&gt;)adSpaceDelegate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>frame</Name>
+					<Abstract type="html">Frame of the adspace, used for sizing the incoming ads and deciding where to place them on screen.</Abstract>
+				</Parameter><Parameter>
+					<Name>sid</Name>
+					<Abstract type="html">SID for the adspace.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoUpdate</Name>
+					<Abstract type="html">AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired runAd.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoStart</Name>
+					<Abstract type="html">AdSpace will fetch and present an ad immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>adSpaceDelegate</Name>
+					<Abstract type="html">The delegate of the AdSpace that you want to receive messages of what is happening. (Optional)</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The WSAdSpace instance with settings provided in initializer.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithFrame:sid:autoUpdate:autoStart:delegate:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/initWithFrame:sid:autoStart:autoUpdate:delegate:</TokenIdentifier>
+			<Abstract type="html">Returns an AdSpace that presents ads and should be added to the screen.
+GPS is enabled here by default.
+&lt;p&gt;
+The frame must be set to the intended size of the Ads to display on the screen, if you specify a frame that is too small you will get an error in the delegate method -didFailWithError. Typical size of frame for an iPhone app that receives Panorama and Expandable ads is CGRect(0, 0, 320, 48).</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (id)initWithFrame:(CGRect)frame sid:(NSString *)sid autoStart:(BOOL)autoStart autoUpdate:(BOOL)autoUpdate delegate:(id&lt;WSAdSpaceDelegate&gt;)adSpaceDelegate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>frame</Name>
+					<Abstract type="html">Frame of the adspace, used for sizing the incoming ads and deciding where to place them on screen.</Abstract>
+				</Parameter><Parameter>
+					<Name>sid</Name>
+					<Abstract type="html">SID for the adspace.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoStart</Name>
+					<Abstract type="html">AdSpace will fetch and present an ad immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoUpdate</Name>
+					<Abstract type="html">AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired runAd.</Abstract>
+				</Parameter><Parameter>
+					<Name>adSpaceDelegate</Name>
+					<Abstract type="html">The delegate of the AdSpace that you want to receive messages of what is happening. (Optional)</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The WSAdSpace instance with settings provided in initializer.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:</TokenIdentifier>
+			<Abstract type="html">Additional initializer method for setting if the WSAdSpace should gather GPS location.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/delegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (id)initWithFrame:(CGRect)frame sid:(NSString *)sid autoStart:(BOOL)autoStart autoUpdate:(BOOL)autoUpdate delegate:(id&lt;WSAdSpaceDelegate&gt;)adSpaceDelegate GPSEnabled:(BOOL)gpsEnabled</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>frame</Name>
+					<Abstract type="html">Frame of the adspace, used for sizing the incoming ads and deciding where to place them on screen.</Abstract>
+				</Parameter><Parameter>
+					<Name>sid</Name>
+					<Abstract type="html">SID for the adspace.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoStart</Name>
+					<Abstract type="html">AdSpace will fetch and present an ad immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoUpdate</Name>
+					<Abstract type="html">AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired runAd.</Abstract>
+				</Parameter><Parameter>
+					<Name>adSpaceDelegate</Name>
+					<Abstract type="html">The delegate of the AdSpace that you want to receive messages of what is happening. (Optional)</Abstract>
+				</Parameter><Parameter>
+					<Name>gpsEnabled</Name>
+					<Abstract type="html">Determines if all WSAdSpace instances should use GPS location, this will be over ridden if you initialize with initWithFrame:sid:autoUpdate:autoStart:delegate since it defaults to YES.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The WSAdSpace instance with settings provided in initializer.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/prefetchAd</TokenIdentifier>
+			<Abstract type="html">Prefetch the next ad so you have it ready for presenting without delay, you will have to wait for prefetching to be done. When prefetching is done you will receive a callback to your delegate that informs you that the AdSpace is ready to run the ad. This method returns immediately. When prefetching, the fetched ad will be placed in the ad queue where it is available for you to run.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intf/WSAdSpaceDelegate</TokenIdentifier>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/runAd</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)prefetchAd</Declaration>
+			
+			
+			<Anchor>//api/name/prefetchAd</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/runAd</TokenIdentifier>
+			<Abstract type="html">Present the next ad in the ad queue, if isAutoRun:YES the AdSpace will continue fetching and running ads after the first ad is finished. If the ad queue is empty the AdSpace will first fetch an ad, place it in the ad queue and then run the first item in the ad queue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)runAd</Declaration>
+			
+			
+			<Anchor>//api/name/runAd</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/closeAd</TokenIdentifier>
+			<Abstract type="html">Close the current ad show by the AdSpace.
+This will stop any video or audio the ad is playing and animate out.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)closeAd</Declaration>
+			
+			
+			<Anchor>//api/name/closeAd</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/pause</TokenIdentifier>
+			<Abstract type="html">Pause the AdSpace. After this method is called, no ads will be automatically fetched or displayed until resume is called. This also pauses any video or audio the current ad is playing.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/resume</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)pause</Declaration>
+			
+			
+			<Anchor>//api/name/pause</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/resume</TokenIdentifier>
+			<Abstract type="html">Resumes previously paused AdSpace. After this method is called, it will continue its display timer and close it self when it is done. This will also resume any video or audio the current ad is playing.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/pause</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)resume</Declaration>
+			
+			
+			<Anchor>//api/name/resume</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/stop</TokenIdentifier>
+			<Abstract type="html">Run before destroying AdSpace to free resources.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)stop</Declaration>
+			
+			
+			<Anchor>//api/name/stop</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isPaused</TokenIdentifier>
+			<Abstract type="html">Check if the AdSpace is paused or not.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)isPaused</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if AdSpace is paused.</Abstract></ReturnValue>
+			<Anchor>//api/name/isPaused</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setSid:</TokenIdentifier>
+			<Abstract type="html">Set the SID for the AdSpace, this will clear the current ad queue and begin fetching ads again if isAutoUpdate:YES. This is also set in the init method. Changing SID will clear the ad queue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instp/WSAdSpace/delegate</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)setSid:(NSString *)sid</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sid</Name>
+					<Abstract type="html">SID to set for the AdSpace.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setSid:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getSid</TokenIdentifier>
+			<Abstract type="html">Get the SID for the AdSpace.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (NSString *)getSid</Declaration>
+			
+			<ReturnValue><Abstract type="html">The current sid for the AdSpace.</Abstract></ReturnValue>
+			<Anchor>//api/name/getSid</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setAdSpacePosition:</TokenIdentifier>
+			<Abstract type="html">Convenience method for setting just the position of the AdSpace instead of setting the whole frame.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)setAdSpacePosition:(CGPoint)point</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>point</Name>
+					<Abstract type="html">The position you want the AdSpace to be positioned at.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setAdSpacePosition:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setAdSpaceFrame:</TokenIdentifier>
+			<Abstract type="html">Convenience method for setting the frame of the AdSpace.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)setAdSpaceFrame:(CGRect)frame</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>frame</Name>
+					<Abstract type="html">The frame you want the AdSpace to have.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setAdSpaceFrame:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setAnimation:</TokenIdentifier>
+			<Abstract type="html">Decide if the AdSpace should animate the ads when presenting or dismissing them.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)setAnimation:(BOOL)animation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>animation</Name>
+					<Abstract type="html">If YES, the AdSpace will animate the ads.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setAnimation:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setShadow:</TokenIdentifier>
+			<Abstract type="html">Decide if the AdSpace should draw a drop shadow under the ads.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)setShadow:(BOOL)shadow</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>shadow</Name>
+					<Abstract type="html">If YES shadow will be applied to ads.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setShadow:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setRegulatedMode:</TokenIdentifier>
+			<Abstract type="html">Controls how much user related information is sent with each request. If your app is going to be published in a market with strict privacy laws (ex. Germany), you should most likely enable this. Calling this method will also clear the internal queue of ads (ex. if you have used prefetch, you will have to use prefetch again to get new ads). Setting regulated mode will clear the ad queue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)setRegulatedMode:(BOOL)regulatedMode</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>regulatedMode</Name>
+					<Abstract type="html">If YES regulated mode is active.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setRegulatedMode:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setExtraParameters:</TokenIdentifier>
+			<Abstract type="html">Pass extra parameters to the query string against engine.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)setExtraParameters:(NSDictionary *)keyValue</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>keyValue</Name>
+					<Abstract type="html">Dictionary that replaces all current extra parameters.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setExtraParameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setExtraParameter:value:</TokenIdentifier>
+			<Abstract type="html">Pass extra parameters to the query string against engine. Extra parameters will be added to the extra parameters list, to remove an extra parameter pass the desired key with value = nil.
+&lt;p&gt;
+You should add demography data here if you have it gathered. Doing this will help direct more targeted ads for the current user which in turn gives you a higher revenue.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)setExtraParameter:(NSString *)key value:(NSString *)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the value when requesting data from engine.</Abstract>
+				</Parameter><Parameter>
+					<Name>value</Name>
+					<Abstract type="html">The value for the key when requesting data from engine.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if parameter key and value is allowed and was set.</Abstract></ReturnValue>
+			<Anchor>//api/name/setExtraParameter:value:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/isAutoUpdating</TokenIdentifier>
+			<Abstract type="html">Returns whether this AdSpace is auto updating or not.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)isAutoUpdating</Declaration>
+			
+			<ReturnValue><Abstract type="html">YES if AdSpace is auto updating.</Abstract></ReturnValue>
+			<Anchor>//api/name/isAutoUpdating</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setAutoUpdate:</TokenIdentifier>
+			<Abstract type="html">Decide if AdSpace should fetch new ads and present them accordingly. This is also set in the init method.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/initWithFrame:sid:autoUpdate:autoStart:delegate:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)setAutoUpdate:(BOOL)autoUpdate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>autoUpdate</Name>
+					<Abstract type="html">AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired runAd.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setAutoUpdate:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/clearQueue</TokenIdentifier>
+			<Abstract type="html">Clear the ad queue, this will leave you with no ads in the queue so if you want to place a new ad in the ad queue you have to call prefetchAd.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)clearQueue</Declaration>
+			
+			
+			<Anchor>//api/name/clearQueue</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setQueueSize:</TokenIdentifier>
+			<Abstract type="html">Specify the size of the ad queue.
+&lt;p&gt;
+By default the queue size is 2. The value can be between 2 and 10. Setting a value that is not valid will return NO.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getQueueSize</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (BOOL)setQueueSize:(int)size</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>size</Name>
+					<Abstract type="html">The numer of ads you want to be able to cache in the ad queue.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if size is allowed</Abstract></ReturnValue>
+			<Anchor>//api/name/setQueueSize:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getQueueSize</TokenIdentifier>
+			<Abstract type="html">Read the queue size if the AdSpace</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/setQueueSize:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (int)getQueueSize</Declaration>
+			
+			
+			<Anchor>//api/name/getQueueSize</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getCurrentAdDescription</TokenIdentifier>
+			<Abstract type="html">Get the current ad description. This holds ad id, layout parameters and update timer among other things.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getNextAdDescription</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (NSMutableDictionary *)getCurrentAdDescription</Declaration>
+			
+			<ReturnValue><Abstract type="html">The current ad description as parsed from the JSON response.</Abstract></ReturnValue>
+			<Anchor>//api/name/getCurrentAdDescription</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getNextAdDescription</TokenIdentifier>
+			<Abstract type="html">Get the next ad description. This holds ad id, layout parameters and update timer among other things.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/getCurrentAdDescription</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (NSMutableDictionary *)getNextAdDescription</Declaration>
+			
+			<ReturnValue><Abstract type="html">The next ad description as parsed from the JSON response.</Abstract></ReturnValue>
+			<Anchor>//api/name/getNextAdDescription</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/WSAdSpace/nextAdEstimatedSize</TokenIdentifier>
+			<Abstract type="html">Get the estimated size of the next ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (CGSize)nextAdEstimatedSize</Declaration>
+			
+			<ReturnValue><Abstract type="html">Size in pixels.</Abstract></ReturnValue>
+			<Anchor>//api/name/nextAdEstimatedSize</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

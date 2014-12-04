@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/WSAdSpaceDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/WSAdSpaceDelegate</TokenIdentifier>
+			<Abstract type="html">The delegate of a WSAdSpace object must adopt the WSAdSpaceDelegate protocol. Optional methods of the protocol allow the delegate to receive notifications about what is happening with the ads and the WSAdSpace.
+&lt;p&gt;
+All the methods of the WSAdSpaceDelegate protocol are optional.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/wsParentViewController</TokenIdentifier>
+			<Abstract type="html">Provide a specific UIViewController to the WSAdSpace for fetching interface orientation and calculating available screen space. Will be handled automatically if not implemented.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (UIViewController *)wsParentViewController</Declaration>
+			
+			
+			<Anchor>//api/name/wsParentViewController</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willCloseAd:withAdType:</TokenIdentifier>
+			<Abstract type="html">AdSpace will close the current ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willCloseAd:(WSAdSpace *)adSpace withAdType:(WSAdType)adType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that is closing the ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>adType</Name>
+					<Abstract type="html">Enum describing the type of ad that is being closed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willCloseAd:withAdType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willCloseAd:adType:</TokenIdentifier>
+			<Abstract type="html">AdSpace will close the current ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willCloseAd:(WSAdSpace *)adSpace adType:(NSString *)adType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that is closing the ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>adType</Name>
+					<Abstract type="html">String describing the type of ad that is being closed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willCloseAd:adType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didCloseAd:withAdType:</TokenIdentifier>
+			<Abstract type="html">AdSpace closed the current ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didCloseAd:(WSAdSpace *)adSpace withAdType:(WSAdType)adType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that closed the ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>adType</Name>
+					<Abstract type="html">Enum describing the type of ad that was closed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCloseAd:withAdType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didCloseAd:adType:</TokenIdentifier>
+			<Abstract type="html">AdSpace closed the current ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didCloseAd:(WSAdSpace *)adSpace adType:(NSString *)adType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that closed the ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>adType</Name>
+					<Abstract type="html">String describing the type of ad that was closed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCloseAd:adType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willLoadAd:</TokenIdentifier>
+			<Abstract type="html">AdSpace will request for a new ad. This callback fires just before sending a request for a new ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willLoadAd:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that will request an ad.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willLoadAd:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didLoadAd:withAdType:</TokenIdentifier>
+			<Abstract type="html">AdSpace just successfully received an ad information. This callback fires when AdSpace successfully received an ad information.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didLoadAd:(WSAdSpace *)adSpace withAdType:(WSAdType)adType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that received the ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>adType</Name>
+					<Abstract type="html">Enum describing the type of ad that was received.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didLoadAd:withAdType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didLoadAd:adType:</TokenIdentifier>
+			<Abstract type="html">AdSpace just successfully received an ad information. This callback fires when AdSpace successfully received an ad information.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didLoadAd:(WSAdSpace *)adSpace adType:(NSString *)adType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that received the ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>adType</Name>
+					<Abstract type="html">String describing the type of ad that was received.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didLoadAd:adType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willStartMedia:withMediaType:</TokenIdentifier>
+			<Abstract type="html">AdSpace will start playing a movie or a sound, you should react to this if you are playing audio or video in your app.
+&lt;p&gt;
+Example usage: You should make sure your users do not have a bad user experience where they hear two sounds at the same time while the ad is playing its media.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willStartMedia:(WSAdSpace *)adSpace withMediaType:(WSMediaType)mediaType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that has the ad with the media that will start to play.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaType</Name>
+					<Abstract type="html">Enum describing the media type being started.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willStartMedia:withMediaType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willStartMedia:mediaType:</TokenIdentifier>
+			<Abstract type="html">AdSpace will start playing a movie or a sound, you should react to this if you are playing audio or video in your app.
+&lt;p&gt;
+Example usage: You should make sure your users do not have a bad user experience where they hear two sounds at the same time while the ad is playing its media.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willStartMedia:(WSAdSpace *)adSpace mediaType:(NSString *)mediaType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that has the ad with the media that will start to play.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaType</Name>
+					<Abstract type="html">String describing the media type being started.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willStartMedia:mediaType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didStopMedia:withMediaType:</TokenIdentifier>
+			<Abstract type="html">AdSpace will stop playing a movie or a sound, you should react to this if you where playing audio or video in your app before the ad started its media. This can occur if your users stop the playing of a video/sound or if the ad is closed.
+&lt;p&gt;
+Example usage: Now is the perfect time for you to resume your audio playing.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didStopMedia:(WSAdSpace *)adSpace withMediaType:(WSMediaType)mediaType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that has the ad with the media that stopped playing.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaType</Name>
+					<Abstract type="html">Enum describing the media type that was stopped.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didStopMedia:withMediaType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didStopMedia:mediaType:</TokenIdentifier>
+			<Abstract type="html">AdSpace will stop playing a movie or a sound, you should react to this if you where playing audio or video in your app before the ad started its media. This can occur if your users stop the playing of a video/sound or if the ad is closed.
+&lt;p&gt;
+Example usage: Now is the perfect time for you to resume your audio playing.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didStopMedia:(WSAdSpace *)adSpace mediaType:(NSString *)mediaType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that has the ad with the media that stopped playing.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaType</Name>
+					<Abstract type="html">String describing the media type that was stopped.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didStopMedia:mediaType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didCompleteMedia:withMediaType:</TokenIdentifier>
+			<Abstract type="html">AdSpace completed media playing. This happens when a video or audio plays its full length (ex. watching a video ad to the end of the video) or if media playback fails.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didCompleteMedia:(WSAdSpace *)adSpace withMediaType:(WSMediaType)mediaType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace has the ad with the media that completed playing.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaType</Name>
+					<Abstract type="html">Enum describing the media type that completed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCompleteMedia:withMediaType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didCompleteMedia:mediaType:</TokenIdentifier>
+			<Abstract type="html">AdSpace completed media playing. This happens when a video or audio plays its full length (ex. watching a video ad to the end of the video) or if media playback fails.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didCompleteMedia:(WSAdSpace *)adSpace mediaType:(NSString *)mediaType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace has the ad with the media that completed playing.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaType</Name>
+					<Abstract type="html">String describing the media type that completed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCompleteMedia:mediaType:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willPresentModal:</TokenIdentifier>
+			<Abstract type="html">AdSpace will open full screen modal view (ex. full screen web browser, full screen video player &amp;amp; full screen calendar UI etc.).</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didDismissModal:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)willPresentModal:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that will open full screen modal view.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willPresentModal:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didDismissModal:</TokenIdentifier>
+			<Abstract type="html">AdSpace did dismiss full screen modal view.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willPresentModal:</TokenIdentifier>
+		
+	</RelatedTokens>
+	
+			<Declaration>- (void)didDismissModal:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that did dismiss full screen modal view.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didDismissModal:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didReceiveNoAd:</TokenIdentifier>
+			<Abstract type="html">AdSpace did not receive any ad from engine (response returned but with no ad), this might be due to impressions already beeing consumed for your AdSpace.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didReceiveNoAd:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that received no ad.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didReceiveNoAd:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didFailWithError:withType:message:error:</TokenIdentifier>
+			<Abstract type="html">AdSpace failed and is reporting an error, if this happens you should check what error it is and try to handle it.
+&lt;p&gt;
+Its typically a bad idea to just propagate the error messages that comes through here to the user since the cause of the error most likely is not the users fault or nothing the user can do anything about. The WSAdSpace will try to handle the error.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didFailWithError:(WSAdSpace *)adSpace withType:(WSErrorType)type message:(NSString *)message error:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that received the error.</Abstract>
+				</Parameter><Parameter>
+					<Name>type</Name>
+					<Abstract type="html">Enum describing the error type.</Abstract>
+				</Parameter><Parameter>
+					<Name>message</Name>
+					<Abstract type="html">Error description.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">Underlying error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didFailWithError:withType:message:error:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didFailWithError:type:message:error:</TokenIdentifier>
+			<Abstract type="html">AdSpace failed and is reporting an error, if this happens you should check what error it is and try to handle it.
+&lt;p&gt;
+Its typically a bad idea to just propagate the error messages that comes through here to the user since the cause of the error most likely is not the users fault or nothing the user can do anything about. The WSAdSpace will try to handle the error.
+&lt;/p&gt;</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didFailWithError:(WSAdSpace *)adSpace type:(NSString *)type message:(NSString *)message error:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that received the error.</Abstract>
+				</Parameter><Parameter>
+					<Name>type</Name>
+					<Abstract type="html">String describing the error type.</Abstract>
+				</Parameter><Parameter>
+					<Name>message</Name>
+					<Abstract type="html">Error description.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">Underlying error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didFailWithError:type:message:error:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didExpandAd:withExpandDirection:finalWidth:finalHeight:</TokenIdentifier>
+			<Abstract type="html">Current ad in AdSpace was expanded.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didExpandAd:(WSAdSpace *)adSpace withExpandDirection:(WSAnimationDirection)expandDirection finalWidth:(CGFloat)finalWidth finalHeight:(CGFloat)finalHeight</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace holds the ad that was expanded.</Abstract>
+				</Parameter><Parameter>
+					<Name>expandDirection</Name>
+					<Abstract type="html">Enum describing the direction, in which direction the adspace expanded.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalWidth</Name>
+					<Abstract type="html">Width after ad has expanded.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalHeight</Name>
+					<Abstract type="html">Height after ad has expanded.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didExpandAd:withExpandDirection:finalWidth:finalHeight:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didExpandAd:expandDirection:finalWidth:finalHeight:</TokenIdentifier>
+			<Abstract type="html">Current ad in AdSpace was expanded.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didExpandAd:(WSAdSpace *)adSpace expandDirection:(NSString *)expandDirection finalWidth:(CGFloat)finalWidth finalHeight:(CGFloat)finalHeight</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace holds the ad that was expanded.</Abstract>
+				</Parameter><Parameter>
+					<Name>expandDirection</Name>
+					<Abstract type="html">String describing the direction, in which direction the adspace expanded.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalWidth</Name>
+					<Abstract type="html">Width after ad has expanded.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalHeight</Name>
+					<Abstract type="html">Height after ad has expanded.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didExpandAd:expandDirection:finalWidth:finalHeight:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didResizeAd:finalWidth:finalHeight:</TokenIdentifier>
+			<Abstract type="html">Current ad in AdSpace was resized.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didResizeAd:(WSAdSpace *)adSpace finalWidth:(CGFloat)finalWidth finalHeight:(CGFloat)finalHeight</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace holds the ad that was resized.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalWidth</Name>
+					<Abstract type="html">Width after ad has resized.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalHeight</Name>
+					<Abstract type="html">Height after ad has resized.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didResizeAd:finalWidth:finalHeight:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didCollapseAd:withCollapsedDirection:finalWidth:finalHeight:</TokenIdentifier>
+			<Abstract type="html">Current ad in AdSpace was collapsed.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didCollapseAd:(WSAdSpace *)adSpace withCollapsedDirection:(WSAnimationDirection)collapsedDirection finalWidth:(CGFloat)finalWidth finalHeight:(CGFloat)finalHeight</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace holds the ad that was collapsed.</Abstract>
+				</Parameter><Parameter>
+					<Name>collapsedDirection</Name>
+					<Abstract type="html">Enum describing the direction, in which direction the adspace collapsed.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalWidth</Name>
+					<Abstract type="html">Width after ad has collapsed.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalHeight</Name>
+					<Abstract type="html">Height after ad has collapsed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCollapseAd:withCollapsedDirection:finalWidth:finalHeight:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didCollapseAd:collapsedDirection:finalWidth:finalHeight:</TokenIdentifier>
+			<Abstract type="html">Current ad in AdSpace was collapsed.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didCollapseAd:(WSAdSpace *)adSpace collapsedDirection:(NSString *)collapsedDirection finalWidth:(CGFloat)finalWidth finalHeight:(CGFloat)finalHeight</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace holds the ad that was collapsed.</Abstract>
+				</Parameter><Parameter>
+					<Name>collapsedDirection</Name>
+					<Abstract type="html">String describing the direction, in which direction the adspace collapsed.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalWidth</Name>
+					<Abstract type="html">Width after ad has collapsed.</Abstract>
+				</Parameter><Parameter>
+					<Name>finalHeight</Name>
+					<Abstract type="html">Height after ad has collapsed.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didCollapseAd:collapsedDirection:finalWidth:finalHeight:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didPrefetchAd:withMediaStatus:</TokenIdentifier>
+			<Abstract type="html">AdSpace finished prefetching an ad. The ad is placed in the ad queue and is ready for you to show using runAd.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didPrefetchAd:(WSAdSpace *)adSpace withMediaStatus:(WSMediaStatus)mediaStatus</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that prefetched an ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaStatus</Name>
+					<Abstract type="html">Enum describing the status of media what media the ad contains. (not cached, cached or no media).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didPrefetchAd:withMediaStatus:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didPrefetchAd:mediaStatus:</TokenIdentifier>
+			<Abstract type="html">AdSpace finished prefetching an ad. The ad is placed in the ad queue and is ready for you to show using runAd.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didPrefetchAd:(WSAdSpace *)adSpace mediaStatus:(NSString *)mediaStatus</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that prefetched an ad.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaStatus</Name>
+					<Abstract type="html">String describing the status of media what media the ad contains. (not cached, cached or no media).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didPrefetchAd:mediaStatus:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willAnimateIn:</TokenIdentifier>
+			<Abstract type="html">AdSpace will perform an in animation of an ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willAnimateIn:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that will animate an ad.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willAnimateIn:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didAnimateIn:</TokenIdentifier>
+			<Abstract type="html">AdSpace completed in animation of an ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didAnimateIn:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that completed the animation of an ad.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didAnimateIn:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/willAnimateOut:</TokenIdentifier>
+			<Abstract type="html">AdSpace will perform an out animation of an ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)willAnimateOut:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that will animate an ad.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/willAnimateOut:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/WSAdSpaceDelegate/didAnimateOut:</TokenIdentifier>
+			<Abstract type="html">AdSpace completed out animation of an ad.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+			
+			<Declaration>- (void)didAnimateOut:(WSAdSpace *)adSpace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>adSpace</Name>
+					<Abstract type="html">The AdSpace that completed the animation of an ad.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didAnimateOut:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+        
+	</File>
+</Tokens>

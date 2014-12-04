@@ -1,0 +1,2613 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>WSAdSpace Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 961)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">Widespace-SDK-iOS </a></h1>
+				<a id="developerHome" href="../index.html">Widespace</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">WSAdSpace Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/adQueue">&nbsp;&nbsp;&nbsp;&nbsp;adQueue</option>
+	
+	<option value="//api/name/autoUpdate">&nbsp;&nbsp;&nbsp;&nbsp;autoUpdate</option>
+	
+	<option value="//api/name/currentAdInfo">&nbsp;&nbsp;&nbsp;&nbsp;currentAdInfo</option>
+	
+	<option value="//api/name/delegate">&nbsp;&nbsp;&nbsp;&nbsp;delegate</option>
+	
+	<option value="//api/name/extraParamters">&nbsp;&nbsp;&nbsp;&nbsp;extraParamters</option>
+	
+	<option value="//api/name/gpsEnabled">&nbsp;&nbsp;&nbsp;&nbsp;gpsEnabled</option>
+	
+	<option value="//api/name/nextAdInfo">&nbsp;&nbsp;&nbsp;&nbsp;nextAdInfo</option>
+	
+	<option value="//api/name/paused">&nbsp;&nbsp;&nbsp;&nbsp;paused</option>
+	
+	<option value="//api/name/regulatedMode">&nbsp;&nbsp;&nbsp;&nbsp;regulatedMode</option>
+	
+	<option value="//api/name/shadowEnabled">&nbsp;&nbsp;&nbsp;&nbsp;shadowEnabled</option>
+	
+	<option value="//api/name/sid">&nbsp;&nbsp;&nbsp;&nbsp;sid</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/clearQueue">&nbsp;&nbsp;&nbsp;&nbsp;- clearQueue</option>
+	
+	<option value="//api/name/closeAd">&nbsp;&nbsp;&nbsp;&nbsp;- closeAd</option>
+	
+	<option value="//api/name/getCurrentAdDescription">&nbsp;&nbsp;&nbsp;&nbsp;- getCurrentAdDescription</option>
+	
+	<option value="//api/name/getNextAdDescription">&nbsp;&nbsp;&nbsp;&nbsp;- getNextAdDescription</option>
+	
+	<option value="//api/name/getQueueSize">&nbsp;&nbsp;&nbsp;&nbsp;- getQueueSize</option>
+	
+	<option value="//api/name/getSid">&nbsp;&nbsp;&nbsp;&nbsp;- getSid</option>
+	
+	<option value="//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithFrame:sid:autoStart:autoUpdate:delegate:</option>
+	
+	<option value="//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:</option>
+	
+	<option value="//api/name/initWithFrame:sid:autoUpdate:autoStart:delegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithFrame:sid:autoUpdate:autoStart:delegate:</option>
+	
+	<option value="//api/name/initWithSid:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithSid:</option>
+	
+	<option value="//api/name/isAutoUpdating">&nbsp;&nbsp;&nbsp;&nbsp;- isAutoUpdating</option>
+	
+	<option value="//api/name/isPaused">&nbsp;&nbsp;&nbsp;&nbsp;- isPaused</option>
+	
+	<option value="//api/name/nextAdEstimatedSize">&nbsp;&nbsp;&nbsp;&nbsp;- nextAdEstimatedSize</option>
+	
+	<option value="//api/name/pause">&nbsp;&nbsp;&nbsp;&nbsp;- pause</option>
+	
+	<option value="//api/name/prefetchAd">&nbsp;&nbsp;&nbsp;&nbsp;- prefetchAd</option>
+	
+	<option value="//api/name/resume">&nbsp;&nbsp;&nbsp;&nbsp;- resume</option>
+	
+	<option value="//api/name/runAd">&nbsp;&nbsp;&nbsp;&nbsp;- runAd</option>
+	
+	<option value="//api/name/setAdSpaceFrame:">&nbsp;&nbsp;&nbsp;&nbsp;- setAdSpaceFrame:</option>
+	
+	<option value="//api/name/setAdSpacePosition:">&nbsp;&nbsp;&nbsp;&nbsp;- setAdSpacePosition:</option>
+	
+	<option value="//api/name/setAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- setAnimation:</option>
+	
+	<option value="//api/name/setAutoUpdate:">&nbsp;&nbsp;&nbsp;&nbsp;- setAutoUpdate:</option>
+	
+	<option value="//api/name/setExtraParameter:value:">&nbsp;&nbsp;&nbsp;&nbsp;- setExtraParameter:value:</option>
+	
+	<option value="//api/name/setExtraParameters:">&nbsp;&nbsp;&nbsp;&nbsp;- setExtraParameters:</option>
+	
+	<option value="//api/name/setQueueSize:">&nbsp;&nbsp;&nbsp;&nbsp;- setQueueSize:</option>
+	
+	<option value="//api/name/setRegulatedMode:">&nbsp;&nbsp;&nbsp;&nbsp;- setRegulatedMode:</option>
+	
+	<option value="//api/name/setShadow:">&nbsp;&nbsp;&nbsp;&nbsp;- setShadow:</option>
+	
+	<option value="//api/name/setSid:">&nbsp;&nbsp;&nbsp;&nbsp;- setSid:</option>
+	
+	<option value="//api/name/stop">&nbsp;&nbsp;&nbsp;&nbsp;- stop</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/adQueue">adQueue</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/autoUpdate">autoUpdate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/currentAdInfo">currentAdInfo</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delegate">delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/extraParamters">extraParamters</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/gpsEnabled">gpsEnabled</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/nextAdInfo">nextAdInfo</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paused">paused</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/regulatedMode">regulatedMode</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadowEnabled">shadowEnabled</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sid">sid</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clearQueue">clearQueue</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/closeAd">closeAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCurrentAdDescription">getCurrentAdDescription</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getNextAdDescription">getNextAdDescription</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getQueueSize">getQueueSize</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getSid">getSid</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:">initWithFrame:sid:autoStart:autoUpdate:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:">initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithFrame:sid:autoUpdate:autoStart:delegate:">initWithFrame:sid:autoUpdate:autoStart:delegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithSid:">initWithSid:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isAutoUpdating">isAutoUpdating</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isPaused">isPaused</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/nextAdEstimatedSize">nextAdEstimatedSize</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/pause">pause</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/prefetchAd">prefetchAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/resume">resume</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/runAd">runAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setAdSpaceFrame:">setAdSpaceFrame:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setAdSpacePosition:">setAdSpacePosition:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setAnimation:">setAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setAutoUpdate:">setAutoUpdate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setExtraParameter:value:">setExtraParameter:value:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setExtraParameters:">setExtraParameters:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setQueueSize:">setQueueSize:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setRegulatedMode:">setRegulatedMode:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setShadow:">setShadow:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setSid:">setSid:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stop">stop</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="WSAdSpace Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">WSAdSpace Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">UIView</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">WSAdSpace.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>An instance of WSAdSpace is a means for displaying ads in your app.</p>
+
+<p>The AdSpace manages ads and presents them based on your input and configuration. Ads will be retrieved from the Widespace ad network and targeted to your users demography data for the best experience possible.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/gpsEnabled">&nbsp;&nbsp;gpsEnabled</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/paused">&nbsp;&nbsp;paused</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/sid">&nbsp;&nbsp;sid</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shadowEnabled">&nbsp;&nbsp;shadowEnabled</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/regulatedMode">&nbsp;&nbsp;regulatedMode</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/extraParamters">&nbsp;&nbsp;extraParamters</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/autoUpdate">&nbsp;&nbsp;autoUpdate</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/currentAdInfo">&nbsp;&nbsp;currentAdInfo</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/nextAdInfo">&nbsp;&nbsp;nextAdInfo</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/adQueue">&nbsp;&nbsp;adQueue</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithSid:">&ndash;&nbsp;initWithSid:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithFrame:sid:autoUpdate:autoStart:delegate:">&ndash;&nbsp;initWithFrame:sid:autoUpdate:autoStart:delegate:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:">&ndash;&nbsp;initWithFrame:sid:autoStart:autoUpdate:delegate:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:">&ndash;&nbsp;initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/prefetchAd">&ndash;&nbsp;prefetchAd</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/runAd">&ndash;&nbsp;runAd</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/closeAd">&ndash;&nbsp;closeAd</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/pause">&ndash;&nbsp;pause</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/resume">&ndash;&nbsp;resume</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/stop">&ndash;&nbsp;stop</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/isPaused">&ndash;&nbsp;isPaused</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setSid:">&ndash;&nbsp;setSid:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getSid">&ndash;&nbsp;getSid</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setAdSpacePosition:">&ndash;&nbsp;setAdSpacePosition:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setAdSpaceFrame:">&ndash;&nbsp;setAdSpaceFrame:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setAnimation:">&ndash;&nbsp;setAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setShadow:">&ndash;&nbsp;setShadow:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setRegulatedMode:">&ndash;&nbsp;setRegulatedMode:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setExtraParameters:">&ndash;&nbsp;setExtraParameters:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setExtraParameter:value:">&ndash;&nbsp;setExtraParameter:value:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/isAutoUpdating">&ndash;&nbsp;isAutoUpdating</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setAutoUpdate:">&ndash;&nbsp;setAutoUpdate:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clearQueue">&ndash;&nbsp;clearQueue</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setQueueSize:">&ndash;&nbsp;setQueueSize:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getQueueSize">&ndash;&nbsp;getQueueSize</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getCurrentAdDescription">&ndash;&nbsp;getCurrentAdDescription</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getNextAdDescription">&ndash;&nbsp;getNextAdDescription</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/nextAdEstimatedSize">&ndash;&nbsp;nextAdEstimatedSize</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/adQueue" title="adQueue"></a>
+	<h3 class="subsubtitle method-title">adQueue</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get and set adQueue array.
+This is the array of dictionary. Dictionary is the direct representation of the JSON response.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSArray *adQueue</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/autoUpdate" title="autoUpdate"></a>
+	<h3 class="subsubtitle method-title">autoUpdate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Decide if AdSpace should fetch new ads and present them automatically (assuming AdSpace is running). This is also set in the init method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isAutoUpdate) BOOL autoUpdate</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/currentAdInfo" title="currentAdInfo"></a>
+	<h3 class="subsubtitle method-title">currentAdInfo</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the current ad description. This holds ad id, layout parameters and update time among other things.
+This is a direct representation of the JSON response.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSDictionary *currentAdInfo</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/nextAdInfo">@property nextAdInfo</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="subsubtitle method-title">delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The delegate of the AdSpace that you want to receive messages of what is happening. Not required.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) id&lt;WSAdSpaceDelegate&gt; delegate</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="../Protocols/WSAdSpaceDelegate.html">WSAdSpaceDelegate</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/extraParamters" title="extraParamters"></a>
+	<h3 class="subsubtitle method-title">extraParamters</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get all extra paramters as a dictionary.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSDictionary *extraParamters</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/setExtraParameter:value:">- setExtraParameter:value:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/gpsEnabled" title="gpsEnabled"></a>
+	<h3 class="subsubtitle method-title">gpsEnabled</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Determines if the WSAdSpace is using the GPS to target ads towards the end user. Setting this to NO will set it to NO for all WSAdSpaces during this session. Setting it to YES will turn location on for all WSAdSpaces.</p>
+
+<p>
+Default value is YES. This can also be set in initWithFrame:sid:autoUpdate:autoStart:delegate:GPSEnabled:
+</p>
+
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isGPSEnabled, setter=setGPSEnabled:) BOOL gpsEnabled</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/nextAdInfo" title="nextAdInfo"></a>
+	<h3 class="subsubtitle method-title">nextAdInfo</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the next ad description. This holds ad id, layout parameters and update timer among other things.
+This is a direct representation of the JSON response.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSDictionary *nextAdInfo</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/currentAdInfo">@property currentAdInfo</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/paused" title="paused"></a>
+	<h3 class="subsubtitle method-title">paused</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Set to <a href="#//api/name/pause">pause</a> or <a href="#//api/name/resume">resume</a> the AdSpace.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isPaused) BOOL paused</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/pause">- pause</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/resume">- resume</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/regulatedMode" title="regulatedMode"></a>
+	<h3 class="subsubtitle method-title">regulatedMode</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Controls how much user related information is sent with each request. If your app is going to be published in a market with strict privacy laws (ex. Germany), you should most likely enable this. Calling this method will also clear the internal queue of ads (ex. if you have used prefetch, you will have to use prefetch again to get new ads). Setting regulated mode will clear the ad queue.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isRegulatedMode) BOOL regulatedMode</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shadowEnabled" title="shadowEnabled"></a>
+	<h3 class="subsubtitle method-title">shadowEnabled</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Decide if the AdSpace should draw a drop shadow under the ads.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isShadowEnabled) BOOL shadowEnabled</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/sid" title="sid"></a>
+	<h3 class="subsubtitle method-title">sid</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The SID of AdSpace was initialized with, you can set this to a different SID to load new ads (changing this property will clear the AdQueue)
+This needs to be set to a proper SID obtained from Widespace. Without a valid SID you will not get any ads.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *sid</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/clearQueue" title="clearQueue"></a>
+	<h3 class="subsubtitle method-title">clearQueue</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Clear the ad queue, this will leave you with no ads in the queue so if you want to place a new ad in the ad queue you have to call <a href="#//api/name/prefetchAd">prefetchAd</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)clearQueue</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 (not needed by publishers)</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/closeAd" title="closeAd"></a>
+	<h3 class="subsubtitle method-title">closeAd</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Close the current ad show by the AdSpace.
+This will <a href="#//api/name/stop">stop</a> any video or audio the ad is playing and animate out.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)closeAd</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getCurrentAdDescription" title="getCurrentAdDescription"></a>
+	<h3 class="subsubtitle method-title">getCurrentAdDescription</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the current ad description. This holds ad id, layout parameters and update timer among other things.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSMutableDictionary *)getCurrentAdDescription</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The current ad description as parsed from the JSON response.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/currentAdInfo">currentAdInfo</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/getNextAdDescription">- getNextAdDescription</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getNextAdDescription" title="getNextAdDescription"></a>
+	<h3 class="subsubtitle method-title">getNextAdDescription</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the next ad description. This holds ad id, layout parameters and update timer among other things.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSMutableDictionary *)getNextAdDescription</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The next ad description as parsed from the JSON response.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/nextAdInfo">nextAdInfo</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/getCurrentAdDescription">- getCurrentAdDescription</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getQueueSize" title="getQueueSize"></a>
+	<h3 class="subsubtitle method-title">getQueueSize</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Read the queue size if the AdSpace</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (int)getQueueSize</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/setQueueSize:">- setQueueSize:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getSid" title="getSid"></a>
+	<h3 class="subsubtitle method-title">getSid</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the SID for the AdSpace.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)getSid</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The current <a href="#//api/name/sid">sid</a> for the AdSpace.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/sid">sid</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:" title="initWithFrame:sid:autoStart:autoUpdate:delegate:"></a>
+	<h3 class="subsubtitle method-title">initWithFrame:sid:autoStart:autoUpdate:delegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an AdSpace that presents ads and should be added to the screen.
+GPS is enabled here by default.</p>
+
+<p><p>
+The frame must be set to the intended size of the Ads to display on the screen, if you specify a frame that is too small you will get an error in the <a href="#//api/name/delegate">delegate</a> method -didFailWithError. Typical size of frame for an iPhone app that receives Panorama and Expandable ads is CGRect(0, 0, 320, 48).</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithFrame:(CGRect)<em>frame</em> sid:(NSString *)<em>sid</em> autoStart:(BOOL)<em>autoStart</em> autoUpdate:(BOOL)<em>autoUpdate</em> delegate:(id&lt;WSAdSpaceDelegate&gt;)<em>adSpaceDelegate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>frame</em></dt>
+			<dd><p>Frame of the adspace, used for sizing the incoming ads and deciding where to place them on screen.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sid</em></dt>
+			<dd><p>SID for the adspace.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoStart</em></dt>
+			<dd><p>AdSpace will fetch and present an ad immediately.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoUpdate</em></dt>
+			<dd><p>AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired <a href="#//api/name/runAd">runAd</a>).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adSpaceDelegate</em></dt>
+			<dd><p>The <a href="#//api/name/delegate">delegate</a> of the AdSpace that you want to receive messages of what is happening. (Optional)</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The WSAdSpace instance with settings provided in initializer.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The SID must be set to a valid SID that you have obtained from Widespace (Nova Front).</p>
+
+<p>If you set <a href="#//api/name/autoUpdate">autoUpdate</a> to YES the AdSpace will fetch and present updates automatically. If you set <a href="#//api/name/autoUpdate">autoUpdate</a> to NO you will manually have to tell the adSpace to run to fetch the next ad and present it (you may also prefetch manually to have the next ad cached before running to be able to present the ad at an exact time without delay).</p>
+
+<p>With autoStart set to YES the AdSpace will fetch an ad and present it as soon as it is initialized.
+</p></p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:" title="initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:"></a>
+	<h3 class="subsubtitle method-title">initWithFrame:sid:autoStart:autoUpdate:delegate:GPSEnabled:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Additional initializer method for setting if the WSAdSpace should gather GPS location.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithFrame:(CGRect)<em>frame</em> sid:(NSString *)<em>sid</em> autoStart:(BOOL)<em>autoStart</em> autoUpdate:(BOOL)<em>autoUpdate</em> delegate:(id&lt;WSAdSpaceDelegate&gt;)<em>adSpaceDelegate</em> GPSEnabled:(BOOL)<em>gpsEnabled</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>frame</em></dt>
+			<dd><p>Frame of the adspace, used for sizing the incoming ads and deciding where to place them on screen.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sid</em></dt>
+			<dd><p>SID for the adspace.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoStart</em></dt>
+			<dd><p>AdSpace will fetch and present an ad immediately.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoUpdate</em></dt>
+			<dd><p>AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired <a href="#//api/name/runAd">runAd</a>).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adSpaceDelegate</em></dt>
+			<dd><p>The <a href="#//api/name/delegate">delegate</a> of the AdSpace that you want to receive messages of what is happening. (Optional)</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>gpsEnabled</em></dt>
+			<dd><p>Determines if all WSAdSpace instances should use GPS location, this will be over ridden if you initialize with initWithFrame:sid:autoUpdate:autoStart:<a href="#//api/name/delegate">delegate</a> since it defaults to YES.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The WSAdSpace instance with settings provided in initializer.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p>initWithFrame:sid:autoStart:autoUpdate:<a href="#//api/name/delegate">@property delegate</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithFrame:sid:autoUpdate:autoStart:delegate:" title="initWithFrame:sid:autoUpdate:autoStart:delegate:"></a>
+	<h3 class="subsubtitle method-title">initWithFrame:sid:autoUpdate:autoStart:delegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an AdSpace that presents ads and should be added to the screen.
+GPS is enabled here by default.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithFrame:(CGRect)<em>frame</em> sid:(NSString *)<em>sid</em> autoUpdate:(BOOL)<em>autoUpdate</em> autoStart:(BOOL)<em>autoStart</em> delegate:(id&lt;WSAdSpaceDelegate&gt;)<em>adSpaceDelegate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>frame</em></dt>
+			<dd><p>Frame of the adspace, used for sizing the incoming ads and deciding where to place them on screen.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sid</em></dt>
+			<dd><p>SID for the adspace.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoUpdate</em></dt>
+			<dd><p>AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired <a href="#//api/name/runAd">runAd</a>).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoStart</em></dt>
+			<dd><p>AdSpace will fetch and present an ad immediately.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adSpaceDelegate</em></dt>
+			<dd><p>The <a href="#//api/name/delegate">delegate</a> of the AdSpace that you want to receive messages of what is happening. (Optional)</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The WSAdSpace instance with settings provided in initializer.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to changed order of arguments, use initWithFrame:sid:autoStart:autoUpdate:<a href="#//api/name/delegate">delegate</a> instead</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithSid:" title="initWithSid:"></a>
+	<h3 class="subsubtitle method-title">initWithSid:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an AdSpace that presents ads and should be added to the screen.</p>
+
+<p>
+The SID must be set to a valid SID that you have obtained from Widespace (Nova Front).
+This instance will auto update and auto run. Default frame is here (0, 0, 320, 48), [delegate](#//api/name/delegate) is nil and GPS is enabled.
+</p>
+
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithSid:(NSString *)<em>sid</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sid</em></dt>
+			<dd><p>SID for the adspace.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The WSAdSpace instance with settings provided in initializer.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/isAutoUpdating" title="isAutoUpdating"></a>
+	<h3 class="subsubtitle method-title">isAutoUpdating</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns whether this AdSpace is auto updating or not.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)isAutoUpdating</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>YES if AdSpace is auto updating.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/autoUpdate">autoUpdate</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/isPaused" title="isPaused"></a>
+	<h3 class="subsubtitle method-title">isPaused</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check if the AdSpace is <a href="#//api/name/paused">paused</a> or not.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)isPaused</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>YES if AdSpace is <a href="#//api/name/paused">paused</a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/paused">paused</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/nextAdEstimatedSize" title="nextAdEstimatedSize"></a>
+	<h3 class="subsubtitle method-title">nextAdEstimatedSize</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Get the estimated size of the next ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (CGSize)nextAdEstimatedSize</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>Size in pixels.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/pause" title="pause"></a>
+	<h3 class="subsubtitle method-title">pause</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pause the AdSpace. After this method is called, no ads will be automatically fetched or displayed until <a href="#//api/name/resume">resume</a> is called. This also pauses any video or audio the current ad is playing.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)pause</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/resume">- resume</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/prefetchAd" title="prefetchAd"></a>
+	<h3 class="subsubtitle method-title">prefetchAd</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Prefetch the next ad so you have it ready for presenting without delay, you will have to wait for prefetching to be done. When prefetching is done you will receive a callback to your <a href="#//api/name/delegate">delegate</a> that informs you that the AdSpace is ready to run the ad. This method returns immediately. When prefetching, the fetched ad will be placed in the ad queue where it is available for you to run.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)prefetchAd</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="../Protocols/WSAdSpaceDelegate.html">WSAdSpaceDelegate</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/runAd">- runAd</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/resume" title="resume"></a>
+	<h3 class="subsubtitle method-title">resume</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Resumes previously <a href="#//api/name/paused">paused</a> AdSpace. After this method is called, it will continue its display timer and close it self when it is done. This will also resume any video or audio the current ad is playing.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)resume</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/pause">- pause</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/runAd" title="runAd"></a>
+	<h3 class="subsubtitle method-title">runAd</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Present the next ad in the ad queue, if isAutoRun:YES the AdSpace will continue fetching and running ads after the first ad is finished. If the ad queue is empty the AdSpace will first fetch an ad, place it in the ad queue and then run the first item in the ad queue.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)runAd</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setAdSpaceFrame:" title="setAdSpaceFrame:"></a>
+	<h3 class="subsubtitle method-title">setAdSpaceFrame:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Convenience method for setting the frame of the AdSpace.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setAdSpaceFrame:(CGRect)<em>frame</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>frame</em></dt>
+			<dd><p>The frame you want the AdSpace to have.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 - Should use frame property of WSAdSpace instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setAdSpacePosition:" title="setAdSpacePosition:"></a>
+	<h3 class="subsubtitle method-title">setAdSpacePosition:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Convenience method for setting just the position of the AdSpace instead of setting the whole frame.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setAdSpacePosition:(CGPoint)<em>point</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>point</em></dt>
+			<dd><p>The position you want the AdSpace to be positioned at.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 - Should use frame property of WSAdSpace instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setAnimation:" title="setAnimation:"></a>
+	<h3 class="subsubtitle method-title">setAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Decide if the AdSpace should animate the ads when presenting or dismissing them.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setAnimation:(BOOL)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>If YES, the AdSpace will animate the ads.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setAutoUpdate:" title="setAutoUpdate:"></a>
+	<h3 class="subsubtitle method-title">setAutoUpdate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Decide if AdSpace should fetch new ads and present them accordingly. This is also set in the init method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setAutoUpdate:(BOOL)<em>autoUpdate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>autoUpdate</em></dt>
+			<dd><p>AdSpace will continue fetching and presenting ads automatically (assuming the AdSpace is autoStart:YES or has fired <a href="#//api/name/runAd">runAd</a>).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/autoUpdate">autoUpdate</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/initWithFrame:sid:autoUpdate:autoStart:delegate:">- initWithFrame:sid:autoUpdate:autoStart:delegate:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setExtraParameter:value:" title="setExtraParameter:value:"></a>
+	<h3 class="subsubtitle method-title">setExtraParameter:value:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass extra parameters to the query string against engine. Extra parameters will be added to the extra parameters list, to remove an extra parameter pass the desired key with value = nil.</p>
+
+<p><p>
+You should add demography data here if you have it gathered. Doing this will help direct more targeted ads for the current user which in turn gives you a higher revenue.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)setExtraParameter:(NSString *)<em>key</em> value:(NSString *)<em>value</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>key</em></dt>
+			<dd><p>The key for the value when requesting data from engine.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>value</em></dt>
+			<dd><p>The value for the key when requesting data from engine.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>YES if parameter key and value is allowed and was set.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Example Keys and Values:</p>
+
+<p>@&ldquo;postal&rdquo;  : @&ldquo;12345&rdquo;      =   Users postal code. <br>
+@&ldquo;city&rdquo;    : @&ldquo;Stockholm&rdquo;  =   Users city of residence. <br>
+@&ldquo;age&rdquo;     : @&ldquo;25&rdquo;         =   Users age in years. 0-99. <br>
+@&ldquo;yob&rdquo;     : @&ldquo;1980&rdquo;       =   Users birthyear, full 4 digit format. 1900-2013. <br>
+@&ldquo;sex&rdquo;     : @&ldquo;1&rdquo;          =   Users sex. 1 = male | 2 = female
+</p></p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setExtraParameters:" title="setExtraParameters:"></a>
+	<h3 class="subsubtitle method-title">setExtraParameters:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass extra parameters to the query string against engine.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setExtraParameters:(NSDictionary *)<em>keyValue</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>keyValue</em></dt>
+			<dd><p>Dictionary that replaces all current extra parameters.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to single key value setter implementation that just adds to the existing extra properties. The new method also validates input so the request does not break.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setQueueSize:" title="setQueueSize:"></a>
+	<h3 class="subsubtitle method-title">setQueueSize:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Specify the size of the ad queue.</p>
+
+<p>
+By default the queue size is 2. The value can be between 2 and 10. Setting a value that is not valid will return NO.
+</p>
+
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)setQueueSize:(int)<em>size</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>size</em></dt>
+			<dd><p>The numer of ads you want to be able to cache in the ad queue.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>YES if size is allowed</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/getQueueSize">- getQueueSize</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setRegulatedMode:" title="setRegulatedMode:"></a>
+	<h3 class="subsubtitle method-title">setRegulatedMode:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Controls how much user related information is sent with each request. If your app is going to be published in a market with strict privacy laws (ex. Germany), you should most likely enable this. Calling this method will also clear the internal queue of ads (ex. if you have used prefetch, you will have to use prefetch again to get new ads). Setting regulated mode will clear the ad queue.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setRegulatedMode:(BOOL)<em>regulatedMode</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>regulatedMode</em></dt>
+			<dd><p>If YES regulated mode is active.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/regulatedMode">regulatedMode</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setShadow:" title="setShadow:"></a>
+	<h3 class="subsubtitle method-title">setShadow:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Decide if the AdSpace should draw a drop shadow under the ads.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setShadow:(BOOL)<em>shadow</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>shadow</em></dt>
+			<dd><p>If YES shadow will be applied to ads.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/shadowEnabled">shadowEnabled</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setSid:" title="setSid:"></a>
+	<h3 class="subsubtitle method-title">setSid:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Set the SID for the AdSpace, this will clear the current ad queue and begin fetching ads again if isAutoUpdate:YES. This is also set in the init method. Changing SID will clear the ad queue.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setSid:(NSString *)<em>sid</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sid</em></dt>
+			<dd><p>SID to set for the AdSpace.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1 due to property replacement, please use <a href="#//api/name/sid">sid</a> instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p>initWithFrame:sid:autoUpdate:autoStart:<a href="#//api/name/delegate">@property delegate</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/stop" title="stop"></a>
+	<h3 class="subsubtitle method-title">stop</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Run before destroying AdSpace to free resources.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)stop</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Warning:</strong> Deprecated since 4.1</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">WSAdSpace.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2014 Widespace. All rights reserved. (Last updated: 2014-11-06)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 961)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

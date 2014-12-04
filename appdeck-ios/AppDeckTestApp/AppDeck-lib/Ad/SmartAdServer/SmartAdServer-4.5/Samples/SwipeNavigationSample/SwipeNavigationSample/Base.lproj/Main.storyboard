@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="W0v-3M-FZR">
+    <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
+        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Page Content View Controller-->
+        <scene sceneID="mFI-p0-2Dc">
+            <objects>
+                <viewController storyboardIdentifier="PageContentViewController" id="hzi-sT-gtq" customClass="PageContentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MYv-rJ-QQA"/>
+                        <viewControllerLayoutGuide type="bottom" id="XmR-o0-Gig"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0d0-Nx-Ull">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Page XX" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7T-bv-t4a">
+                                <rect key="frame" x="82" y="260" width="157" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="157" id="Ahu-6U-HB7"/>
+                                    <constraint firstAttribute="height" constant="48" id="gbh-Bl-zWO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="288" translatesAutoresizingMaskIntoConstraints="NO" id="cN4-am-KCd">
+                                <rect key="frame" x="16" y="72" width="288" height="459"/>
+                                <string key="text">Lorem ipsum dolor sit amet. Nulla facilisi. Aliquam porta nisl ut lectus tincidunt hendrerit. Mauris tempus odio nec nisl lacinia rutrum. In arcu nunc, feugiat a eleifend eget, rutrum nec dui. Duis et ultricies erat, sed pharetra leo. Sed semper, sem in euismod vehicula, massa velit facilisis odio, sit amet cursus dolor felis vitae tortor. Suspendisse dapibus ante quis nunc ornare, non dignissim dolor sollicitudin. Etiam interdum convallis purus, nec ultricies turpis. Proin cursus quam non nunc dapibus, nec convallis mauris sodales. Nullam tincidunt, nibh ac venenatis ultricies, libero felis malesuada felis, in eleifend risus leo sit amet lorem. Donec consequat, lorem quis tincidunt porttitor, orci est vehicula orci, nec pretium sem nunc vel risus. Praesent elementum ante non felis elementum adipiscing. Pellentesque quis sapien semper, malesuada sapien et, placerat mi. Ut mollis venenatis nunc non lacinia.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cN4-am-KCd" firstAttribute="leading" secondItem="0d0-Nx-Ull" secondAttribute="leadingMargin" id="02b-Az-EIC"/>
+                            <constraint firstAttribute="centerY" secondItem="f7T-bv-t4a" secondAttribute="centerY" id="II8-Ux-6kq"/>
+                            <constraint firstItem="cN4-am-KCd" firstAttribute="top" secondItem="MYv-rJ-QQA" secondAttribute="bottom" constant="8" id="Lqz-R1-cKf"/>
+                            <constraint firstAttribute="centerX" secondItem="f7T-bv-t4a" secondAttribute="centerX" id="Qog-U8-B89"/>
+                            <constraint firstItem="cN4-am-KCd" firstAttribute="trailing" secondItem="0d0-Nx-Ull" secondAttribute="trailingMargin" id="Zcs-nX-3fa"/>
+                            <constraint firstItem="XmR-o0-Gig" firstAttribute="top" secondItem="cN4-am-KCd" secondAttribute="bottom" constant="37" id="iti-vC-W0n"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="hGN-lW-xor"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="titleLabel" destination="f7T-bv-t4a" id="LOc-XL-eZo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rdM-WS-7Z4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1743" y="-452"/>
+        </scene>
+        <!--Page Ad View Controller-->
+        <scene sceneID="0mb-hC-qhf">
+            <objects>
+                <viewController storyboardIdentifier="PageAdViewController" hidesBottomBarWhenPushed="YES" id="V8f-fR-NEf" customClass="PageAdViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8lB-HO-Zae"/>
+                        <viewControllerLayoutGuide type="bottom" id="4SN-cG-XI4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VCD-OV-5cw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iIX-Py-x3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1743" y="282"/>
+        </scene>
+        <!--Swipe Navigation-->
+        <scene sceneID="KE8-N8-acS">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="Yfa-Pv-rMM" customClass="PageViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Swipe Navigation" id="PnU-vD-ju5"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nsp-et-zM7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1273" y="-64"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dfG-3K-y6v">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W0v-3M-FZR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wdz-Ha-hZo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Yfa-Pv-rMM" kind="relationship" relationship="rootViewController" id="zO4-s2-kVT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WXt-eP-692" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="851" y="-64"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
+    </simulatedMetricsContainer>
+</document>

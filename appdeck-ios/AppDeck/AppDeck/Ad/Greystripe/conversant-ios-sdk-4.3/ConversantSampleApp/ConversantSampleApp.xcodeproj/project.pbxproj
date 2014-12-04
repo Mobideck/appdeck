@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F042117192A7A3300E6A236 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042116192A7A3300E6A236 /* Foundation.framework */; };
+		7F042119192A7A3300E6A236 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042118192A7A3300E6A236 /* CoreGraphics.framework */; };
+		7F04211B192A7A3300E6A236 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F04211A192A7A3300E6A236 /* UIKit.framework */; };
+		7F042121192A7A3300E6A236 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7F04211F192A7A3300E6A236 /* InfoPlist.strings */; };
+		7F042123192A7A3300E6A236 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F042122192A7A3300E6A236 /* main.m */; };
+		7F042157192A7B2500E6A236 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042151192A7B2500E6A236 /* AddressBook.framework */; };
+		7F042158192A7B2500E6A236 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042152192A7B2500E6A236 /* AddressBookUI.framework */; };
+		7F042159192A7B2500E6A236 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042153192A7B2500E6A236 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7F04215A192A7B2500E6A236 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042154192A7B2500E6A236 /* CoreLocation.framework */; };
+		7F04215B192A7B2500E6A236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042155192A7B2500E6A236 /* EventKit.framework */; };
+		7F04215C192A7B2500E6A236 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042156192A7B2500E6A236 /* EventKitUI.framework */; };
+		7F04215E192A7B4A00E6A236 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F04215D192A7B4A00E6A236 /* libsqlite3.dylib */; };
+		7F042160192A7B5500E6A236 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F04215F192A7B5500E6A236 /* libz.dylib */; };
+		7F042169192A7B7B00E6A236 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042161192A7B7B00E6A236 /* MediaPlayer.framework */; };
+		7F04216A192A7B7B00E6A236 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042162192A7B7B00E6A236 /* MessageUI.framework */; };
+		7F04216B192A7B7B00E6A236 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042163192A7B7B00E6A236 /* MobileCoreServices.framework */; };
+		7F04216C192A7B7B00E6A236 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042164192A7B7B00E6A236 /* PassKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7F04216D192A7B7B00E6A236 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042165192A7B7B00E6A236 /* QuartzCore.framework */; };
+		7F04216E192A7B7B00E6A236 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042166192A7B7B00E6A236 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7F04216F192A7B7B00E6A236 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042167192A7B7B00E6A236 /* SystemConfiguration.framework */; };
+		7F042170192A7B7B00E6A236 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042168192A7B7B00E6A236 /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7F04217E192A7BEA00E6A236 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F042172192A7BEA00E6A236 /* AppDelegate.m */; };
+		7F04217F192A7BEA00E6A236 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F042173192A7BEA00E6A236 /* Images.xcassets */; };
+		7F042180192A7BEA00E6A236 /* iPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F042175192A7BEA00E6A236 /* iPadViewController.m */; };
+		7F042181192A7BEA00E6A236 /* iPhoneFullscreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F042177192A7BEA00E6A236 /* iPhoneFullscreenViewController.m */; };
+		7F042182192A7BEA00E6A236 /* iPhoneInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F042179192A7BEA00E6A236 /* iPhoneInfoViewController.m */; };
+		7F042183192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F04217B192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.m */; };
+		7F042184192A7BEA00E6A236 /* iPhoneMobileBannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F04217D192A7BEA00E6A236 /* iPhoneMobileBannerViewController.m */; };
+		7F042191192A7CF800E6A236 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F042190192A7CF800E6A236 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7F042196192A7DF700E6A236 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F042192192A7DF700E6A236 /* Main_iPad.storyboard */; };
+		7F042197192A7DF700E6A236 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F042194192A7DF700E6A236 /* Main_iPhone.storyboard */; };
+		7FF5DA82192A7E9700F60D96 /* libGreystripeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF5DA81192A7E9700F60D96 /* libGreystripeSDK.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7F042113192A7A3300E6A236 /* ConversantSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConversantSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F042116192A7A3300E6A236 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7F042118192A7A3300E6A236 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7F04211A192A7A3300E6A236 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7F04211E192A7A3300E6A236 /* ConversantSampleApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ConversantSampleApp-Info.plist"; sourceTree = "<group>"; };
+		7F042120192A7A3300E6A236 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7F042122192A7A3300E6A236 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7F042124192A7A3300E6A236 /* ConversantSampleApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversantSampleApp-Prefix.pch"; sourceTree = "<group>"; };
+		7F042151192A7B2500E6A236 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		7F042152192A7B2500E6A236 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		7F042153192A7B2500E6A236 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		7F042154192A7B2500E6A236 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		7F042155192A7B2500E6A236 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		7F042156192A7B2500E6A236 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		7F04215D192A7B4A00E6A236 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		7F04215F192A7B5500E6A236 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		7F042161192A7B7B00E6A236 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		7F042162192A7B7B00E6A236 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		7F042163192A7B7B00E6A236 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7F042164192A7B7B00E6A236 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		7F042165192A7B7B00E6A236 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7F042166192A7B7B00E6A236 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		7F042167192A7B7B00E6A236 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7F042168192A7B7B00E6A236 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		7F042171192A7BEA00E6A236 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7F042172192A7BEA00E6A236 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7F042173192A7BEA00E6A236 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7F042174192A7BEA00E6A236 /* iPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPadViewController.h; sourceTree = "<group>"; };
+		7F042175192A7BEA00E6A236 /* iPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPadViewController.m; sourceTree = "<group>"; };
+		7F042176192A7BEA00E6A236 /* iPhoneFullscreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneFullscreenViewController.h; sourceTree = "<group>"; };
+		7F042177192A7BEA00E6A236 /* iPhoneFullscreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneFullscreenViewController.m; sourceTree = "<group>"; };
+		7F042178192A7BEA00E6A236 /* iPhoneInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneInfoViewController.h; sourceTree = "<group>"; };
+		7F042179192A7BEA00E6A236 /* iPhoneInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneInfoViewController.m; sourceTree = "<group>"; };
+		7F04217A192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneMediumRectangleViewController.h; sourceTree = "<group>"; };
+		7F04217B192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneMediumRectangleViewController.m; sourceTree = "<group>"; };
+		7F04217C192A7BEA00E6A236 /* iPhoneMobileBannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneMobileBannerViewController.h; sourceTree = "<group>"; };
+		7F04217D192A7BEA00E6A236 /* iPhoneMobileBannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneMobileBannerViewController.m; sourceTree = "<group>"; };
+		7F042190192A7CF800E6A236 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7F042193192A7DF700E6A236 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		7F042195192A7DF700E6A236 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		7FF5DA79192A7E9700F60D96 /* GSAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSAd.h; path = ../ConversantSDK/GSAd.h; sourceTree = "<group>"; };
+		7FF5DA7A192A7E9700F60D96 /* GSAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSAdDelegate.h; path = ../ConversantSDK/GSAdDelegate.h; sourceTree = "<group>"; };
+		7FF5DA7B192A7E9700F60D96 /* GSBannerAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSBannerAdView.h; path = ../ConversantSDK/GSBannerAdView.h; sourceTree = "<group>"; };
+		7FF5DA7C192A7E9700F60D96 /* GSFullscreenAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSFullscreenAd.h; path = ../ConversantSDK/GSFullscreenAd.h; sourceTree = "<group>"; };
+		7FF5DA7D192A7E9700F60D96 /* GSLeaderboardAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSLeaderboardAdView.h; path = ../ConversantSDK/GSLeaderboardAdView.h; sourceTree = "<group>"; };
+		7FF5DA7E192A7E9700F60D96 /* GSMediumRectangleAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSMediumRectangleAdView.h; path = ../ConversantSDK/GSMediumRectangleAdView.h; sourceTree = "<group>"; };
+		7FF5DA7F192A7E9700F60D96 /* GSMobileBannerAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSMobileBannerAdView.h; path = ../ConversantSDK/GSMobileBannerAdView.h; sourceTree = "<group>"; };
+		7FF5DA80192A7E9700F60D96 /* GSSDKInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSSDKInfo.h; path = ../ConversantSDK/GSSDKInfo.h; sourceTree = "<group>"; };
+		7FF5DA81192A7E9700F60D96 /* libGreystripeSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGreystripeSDK.a; path = ../ConversantSDK/libGreystripeSDK.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7F042110192A7A3300E6A236 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F042157192A7B2500E6A236 /* AddressBook.framework in Frameworks */,
+				7F042158192A7B2500E6A236 /* AddressBookUI.framework in Frameworks */,
+				7F042159192A7B2500E6A236 /* AdSupport.framework in Frameworks */,
+				7F042119192A7A3300E6A236 /* CoreGraphics.framework in Frameworks */,
+				7F04215A192A7B2500E6A236 /* CoreLocation.framework in Frameworks */,
+				7F04215B192A7B2500E6A236 /* EventKit.framework in Frameworks */,
+				7F04215C192A7B2500E6A236 /* EventKitUI.framework in Frameworks */,
+				7F042117192A7A3300E6A236 /* Foundation.framework in Frameworks */,
+				7FF5DA82192A7E9700F60D96 /* libGreystripeSDK.a in Frameworks */,
+				7F04215E192A7B4A00E6A236 /* libsqlite3.dylib in Frameworks */,
+				7F042160192A7B5500E6A236 /* libz.dylib in Frameworks */,
+				7F042169192A7B7B00E6A236 /* MediaPlayer.framework in Frameworks */,
+				7F04216A192A7B7B00E6A236 /* MessageUI.framework in Frameworks */,
+				7F04216B192A7B7B00E6A236 /* MobileCoreServices.framework in Frameworks */,
+				7F04216C192A7B7B00E6A236 /* PassKit.framework in Frameworks */,
+				7F04216D192A7B7B00E6A236 /* QuartzCore.framework in Frameworks */,
+				7F04216E192A7B7B00E6A236 /* Social.framework in Frameworks */,
+				7F042191192A7CF800E6A236 /* StoreKit.framework in Frameworks */,
+				7F04216F192A7B7B00E6A236 /* SystemConfiguration.framework in Frameworks */,
+				7F042170192A7B7B00E6A236 /* Twitter.framework in Frameworks */,
+				7F04211B192A7A3300E6A236 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7F04210A192A7A3300E6A236 = {
+			isa = PBXGroup;
+			children = (
+				7F042185192A7C4700E6A236 /* ConversantSDK */,
+				7F04211C192A7A3300E6A236 /* ConversantSampleApp */,
+				7F042115192A7A3300E6A236 /* Frameworks */,
+				7F042114192A7A3300E6A236 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F042114192A7A3300E6A236 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F042113192A7A3300E6A236 /* ConversantSampleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7F042115192A7A3300E6A236 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F042190192A7CF800E6A236 /* StoreKit.framework */,
+				7F042151192A7B2500E6A236 /* AddressBook.framework */,
+				7F042152192A7B2500E6A236 /* AddressBookUI.framework */,
+				7F042153192A7B2500E6A236 /* AdSupport.framework */,
+				7F042118192A7A3300E6A236 /* CoreGraphics.framework */,
+				7F042154192A7B2500E6A236 /* CoreLocation.framework */,
+				7F042155192A7B2500E6A236 /* EventKit.framework */,
+				7F042156192A7B2500E6A236 /* EventKitUI.framework */,
+				7F042116192A7A3300E6A236 /* Foundation.framework */,
+				7F04215D192A7B4A00E6A236 /* libsqlite3.dylib */,
+				7F04215F192A7B5500E6A236 /* libz.dylib */,
+				7F042161192A7B7B00E6A236 /* MediaPlayer.framework */,
+				7F042162192A7B7B00E6A236 /* MessageUI.framework */,
+				7F042163192A7B7B00E6A236 /* MobileCoreServices.framework */,
+				7F042164192A7B7B00E6A236 /* PassKit.framework */,
+				7F042165192A7B7B00E6A236 /* QuartzCore.framework */,
+				7F042166192A7B7B00E6A236 /* Social.framework */,
+				7F042167192A7B7B00E6A236 /* SystemConfiguration.framework */,
+				7F042168192A7B7B00E6A236 /* Twitter.framework */,
+				7F04211A192A7A3300E6A236 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F04211C192A7A3300E6A236 /* ConversantSampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				7F042171192A7BEA00E6A236 /* AppDelegate.h */,
+				7F042172192A7BEA00E6A236 /* AppDelegate.m */,
+				7F042173192A7BEA00E6A236 /* Images.xcassets */,
+				7F042174192A7BEA00E6A236 /* iPadViewController.h */,
+				7F042175192A7BEA00E6A236 /* iPadViewController.m */,
+				7F042176192A7BEA00E6A236 /* iPhoneFullscreenViewController.h */,
+				7F042177192A7BEA00E6A236 /* iPhoneFullscreenViewController.m */,
+				7F042178192A7BEA00E6A236 /* iPhoneInfoViewController.h */,
+				7F042179192A7BEA00E6A236 /* iPhoneInfoViewController.m */,
+				7F04217A192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.h */,
+				7F04217B192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.m */,
+				7F04217C192A7BEA00E6A236 /* iPhoneMobileBannerViewController.h */,
+				7F04217D192A7BEA00E6A236 /* iPhoneMobileBannerViewController.m */,
+				7F042192192A7DF700E6A236 /* Main_iPad.storyboard */,
+				7F042194192A7DF700E6A236 /* Main_iPhone.storyboard */,
+				7F04211D192A7A3300E6A236 /* Supporting Files */,
+			);
+			path = ConversantSampleApp;
+			sourceTree = "<group>";
+		};
+		7F04211D192A7A3300E6A236 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7F04211E192A7A3300E6A236 /* ConversantSampleApp-Info.plist */,
+				7F04211F192A7A3300E6A236 /* InfoPlist.strings */,
+				7F042122192A7A3300E6A236 /* main.m */,
+				7F042124192A7A3300E6A236 /* ConversantSampleApp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7F042185192A7C4700E6A236 /* ConversantSDK */ = {
+			isa = PBXGroup;
+			children = (
+				7FF5DA79192A7E9700F60D96 /* GSAd.h */,
+				7FF5DA7A192A7E9700F60D96 /* GSAdDelegate.h */,
+				7FF5DA7B192A7E9700F60D96 /* GSBannerAdView.h */,
+				7FF5DA7C192A7E9700F60D96 /* GSFullscreenAd.h */,
+				7FF5DA7D192A7E9700F60D96 /* GSLeaderboardAdView.h */,
+				7FF5DA7E192A7E9700F60D96 /* GSMediumRectangleAdView.h */,
+				7FF5DA7F192A7E9700F60D96 /* GSMobileBannerAdView.h */,
+				7FF5DA80192A7E9700F60D96 /* GSSDKInfo.h */,
+				7FF5DA81192A7E9700F60D96 /* libGreystripeSDK.a */,
+			);
+			name = ConversantSDK;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7F042112192A7A3300E6A236 /* ConversantSampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F04214B192A7A3300E6A236 /* Build configuration list for PBXNativeTarget "ConversantSampleApp" */;
+			buildPhases = (
+				7F04210F192A7A3300E6A236 /* Sources */,
+				7F042110192A7A3300E6A236 /* Frameworks */,
+				7F042111192A7A3300E6A236 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ConversantSampleApp;
+			productName = ConversantSampleApp;
+			productReference = 7F042113192A7A3300E6A236 /* ConversantSampleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7F04210B192A7A3300E6A236 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Conversant;
+			};
+			buildConfigurationList = 7F04210E192A7A3300E6A236 /* Build configuration list for PBXProject "ConversantSampleApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7F04210A192A7A3300E6A236;
+			productRefGroup = 7F042114192A7A3300E6A236 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7F042112192A7A3300E6A236 /* ConversantSampleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F042111192A7A3300E6A236 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F042197192A7DF700E6A236 /* Main_iPhone.storyboard in Resources */,
+				7F042196192A7DF700E6A236 /* Main_iPad.storyboard in Resources */,
+				7F042121192A7A3300E6A236 /* InfoPlist.strings in Resources */,
+				7F04217F192A7BEA00E6A236 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F04210F192A7A3300E6A236 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F042181192A7BEA00E6A236 /* iPhoneFullscreenViewController.m in Sources */,
+				7F042180192A7BEA00E6A236 /* iPadViewController.m in Sources */,
+				7F042184192A7BEA00E6A236 /* iPhoneMobileBannerViewController.m in Sources */,
+				7F042183192A7BEA00E6A236 /* iPhoneMediumRectangleViewController.m in Sources */,
+				7F04217E192A7BEA00E6A236 /* AppDelegate.m in Sources */,
+				7F042123192A7A3300E6A236 /* main.m in Sources */,
+				7F042182192A7BEA00E6A236 /* iPhoneInfoViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7F04211F192A7A3300E6A236 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F042120192A7A3300E6A236 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7F042192192A7DF700E6A236 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F042193192A7DF700E6A236 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		7F042194192A7DF700E6A236 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7F042195192A7DF700E6A236 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7F042149192A7A3300E6A236 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7F04214A192A7A3300E6A236 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7F04214C192A7A3300E6A236 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ConversantSampleApp/ConversantSampleApp-Prefix.pch";
+				INFOPLIST_FILE = "ConversantSampleApp/ConversantSampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../ConversantSDK,
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7F04214D192A7A3300E6A236 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ConversantSampleApp/ConversantSampleApp-Prefix.pch";
+				INFOPLIST_FILE = "ConversantSampleApp/ConversantSampleApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../ConversantSDK,
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7F04210E192A7A3300E6A236 /* Build configuration list for PBXProject "ConversantSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F042149192A7A3300E6A236 /* Debug */,
+				7F04214A192A7A3300E6A236 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7F04214B192A7A3300E6A236 /* Build configuration list for PBXNativeTarget "ConversantSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F04214C192A7A3300E6A236 /* Debug */,
+				7F04214D192A7A3300E6A236 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7F04210B192A7A3300E6A236 /* Project object */;
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>320x50 Banner</string>
+		<key>id</key>
+		<integer>15</integer>
+		<key>type</key>
+		<string>Banner</string>
+		<key>dimension</key>
+		<string>{320,50}</string>
+		<key>adType</key>
+		<integer>2</integer>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>300x250 Rectangle</string>
+		<key>id</key>
+		<integer>10</integer>
+		<key>type</key>
+		<string>Banner</string>
+		<key>dimension</key>
+		<string>{300,250}</string>
+		<key>adType</key>
+		<integer>3</integer>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>320x480 Full Screen</string>
+		<key>id</key>
+		<integer>14</integer>
+		<key>dimension</key>
+		<string>{320,480}</string>
+		<key>idiom</key>
+		<string>Phone</string>
+	</dict>
+</array>
+</plist>

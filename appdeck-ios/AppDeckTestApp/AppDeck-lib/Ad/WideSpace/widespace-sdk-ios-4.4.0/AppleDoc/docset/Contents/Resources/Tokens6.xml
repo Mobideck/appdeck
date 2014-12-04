@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/WSErrorType.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/WSErrorType</TokenIdentifier>
+			<Abstract type="html">Specifies the error type for an error published by the didFailWithError: method.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+            <Availability type="html">(
+    &quot;since 4.1&quot;
+)</Availability>
+			
+			<NodeRef refid="6"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeNetworkError</TokenIdentifier>
+            <Abstract type="html">The error was caused by a network problem.
+	 </Abstract>
+            <Declaration>WSErrorTypeNetworkError</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeICSParseError</TokenIdentifier>
+            <Abstract type="html">The error was caused by an invalid .ics calendar file.
+	 </Abstract>
+            <Declaration>WSErrorTypeICSParseError</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeMediaDownloadInterruption</TokenIdentifier>
+            <Abstract type="html">Media file download failed due to a network error.
+	 </Abstract>
+            <Declaration>WSErrorTypeMediaDownloadInterruption</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeMediaNotFound</TokenIdentifier>
+            <Abstract type="html">The error was caused by a missing media file.
+	 </Abstract>
+            <Declaration>WSErrorTypeMediaNotFound</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeInvalidSID</TokenIdentifier>
+            <Abstract type="html">The ad server responded with an error.
+	 </Abstract>
+            <Declaration>WSErrorTypeInvalidSID</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypePermission</TokenIdentifier>
+            <Abstract type="html">The error was caused due to a permission failure when the SDK tried to save an image to the photo album.
+	 </Abstract>
+            <Declaration>WSErrorTypePermission</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeLayoutError</TokenIdentifier>
+            <Abstract type="html">The error was caused by an invalid layout.
+	 </Abstract>
+            <Declaration>WSErrorTypeLayoutError</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeDeprecatedSDK</TokenIdentifier>
+            <Abstract type="html">The error was caused by using a deprecated feature of the SDK.
+	 </Abstract>
+            <Declaration>WSErrorTypeDeprecatedSDK</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeConnectionLimit</TokenIdentifier>
+            <Abstract type="html">The error was caused by calling runAd: too often.
+	 </Abstract>
+            <Declaration>WSErrorTypeConnectionLimit</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeHTTPError</TokenIdentifier>
+            <Abstract type="html">The error was caused due to a failure or problem with an ad.
+	 </Abstract>
+            <Declaration>WSErrorTypeHTTPError</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeJSONParseError</TokenIdentifier>
+            <Abstract type="html">The error was caused by invalid ad JSON data.
+	 </Abstract>
+            <Declaration>WSErrorTypeJSONParseError</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeAdQueueFull</TokenIdentifier>
+            <Abstract type="html">The error was caused due to calling prefetchAd when the prefetch queue size limit is reached.
+	 </Abstract>
+            <Declaration>WSErrorTypeAdQueueFull</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeNoAd</TokenIdentifier>
+            <Abstract type="html">The error was caused by receiving &quot;No Ad&quot; response from the ad server.
+	 </Abstract>
+            <Declaration>WSErrorTypeNoAd</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSErrorTypeUnknown</TokenIdentifier>
+            <Abstract type="html">The error was caused by an unknown error.
+	 </Abstract>
+            <Declaration>WSErrorTypeUnknown</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="6"/>
+        </Token>
+        
+	</File>
+</Tokens>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/WSAdType.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/WSAdType</TokenIdentifier>
+			<Abstract type="html">Specifies the ad type.</Abstract>
+			<DeclaredIn>WSAdSpace.h</DeclaredIn>
+            <Availability type="html">(
+    &quot;since 4.1&quot;
+)</Availability>
+			
+			<NodeRef refid="4"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAdTypeNormal</TokenIdentifier>
+            <Abstract type="html">The ad type is a &quot;normal&quot; ad.
+	 </Abstract>
+            <Declaration>WSAdTypeNormal</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAdTypeExpandable</TokenIdentifier>
+            <Abstract type="html">The ad type is an &quot;expandable&quot; ad.
+	 </Abstract>
+            <Declaration>WSAdTypeExpandable</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAdTypeRaw</TokenIdentifier>
+            <Abstract type="html">The ad type is a &quot;raw&quot; ad.
+	 </Abstract>
+            <Declaration>WSAdTypeRaw</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/WSAdTypeSplash</TokenIdentifier>
+            <Abstract type="html">The ad type is a &quot;splash&quot; ad.
+	 </Abstract>
+            <Declaration>WSAdTypeSplash</Declaration>
+            
+            <DeclaredIn>WSAdSpace.h</DeclaredIn>
+            
+            <NodeRef refid="4"/>
+        </Token>
+        
+	</File>
+</Tokens>
