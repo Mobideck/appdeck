@@ -1,0 +1,75 @@
+===================================
+InMobi Monetization SDK 4.x for iOS
+===================================
+
+This is the InMobi Monetization SDK 4.x for iOS
+
+## ChangeLog ##
+
+Build 4.5.1 [16/Sep/2014]
+-------------
+- Minor bug fixes
+
+Build 4.5.0 [13/Sep/2014]
+-------------
+- Support for iOS 8
+- Support for attribute API
+- Location based enhancements
+- Dropping support for iOS 4.3
+- Other minor bug fixes
+
+Build 4.4.1 [09/July/2014]
+-------------
+- Fix for SKStore issue
+- Other minor bug fixes
+
+Build 4.4.0 [17/June/2014]
+-------------
+- Mraid enhancements for orientation lock
+- Introduced Video instant play capability
+- Minor Bug fixes
+
+Build 4.3.0 [28/Apr/2014]
+-------------
+- Deprecating support for iOS 4.3
+- MRAID enhancements
+	- Added support for Calendar Events. Requires EventKit.framework and EventKitUI.framework to be added. 
+- Reward Ads support
+- Security related improvements
+- Including Sample App for Native Ads
+- Minor Bug fixes
+
+
+Build 4.1.0 [23/Dec/2013]
+-------------
+- Support for Native ads
+- Hang fix for InApp store in iOS 6
+- Minor bug fixes.
+
+## ChangeLog ##
+Build 4.0.4 [22/Nov/2013]
+-------------
+- Minor fix for call click to action.
+- Minor bug fixes.
+
+## ChangeLog ##
+Build 4.0.3 [29/Oct/2013]
+-------------
+- 64 bit compatible.
+- Other minor bug fixes.
+
+Build 4.0.2 [10/Sept/2013]
+-----------
+- Minor bug fixes.
+
+Build 4.0.1 [30/Aug/2013]
+-----------
+- Fixed a crash scenario when releasing the Banner instance at ad failure callback.
+- Other minor bug fixes.
+
+Build 4.0.0 [23/Aug/2013]
+-----------
+- iOS 7 compliant.
+- Supports new innovative ad formats. 
+- Built in Analytics. 
+- Supports user Segmentation and Cross promotion.

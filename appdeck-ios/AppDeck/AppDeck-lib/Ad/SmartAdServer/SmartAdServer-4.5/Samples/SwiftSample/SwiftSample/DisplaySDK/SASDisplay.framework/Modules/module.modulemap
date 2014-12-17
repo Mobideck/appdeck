@@ -1,0 +1,6 @@
+framework module SASDisplay {
+  umbrella header "SASDisplay.h"
+
+  export *
+  module * { export * }
+}
