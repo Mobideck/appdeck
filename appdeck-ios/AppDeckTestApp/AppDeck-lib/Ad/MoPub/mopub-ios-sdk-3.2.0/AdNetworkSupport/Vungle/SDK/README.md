@@ -1,1 +1,0 @@
-To use the Vungle Video Ad Network, download the Vungle SDK and place the header files, static library, and resources in this folder.

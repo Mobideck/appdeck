@@ -123,8 +123,8 @@
     
     self.customWebViewFactory = [[CustomWebViewFactory alloc] init];
     
-/*    [NSURLProtocol registerClass:[ManagedUIWebViewURLProtocol class]];
-    [NSURLProtocol registerClass:[MobilizeUIWebViewURLProtocol class]];*/
+    [NSURLProtocol registerClass:[ManagedUIWebViewURLProtocol class]];
+/*    [NSURLProtocol registerClass:[MobilizeUIWebViewURLProtocol class]];*/
     [NSURLProtocol registerClass:[CacheMonitoringURLProtocol class]];
 
 //    [NSURLProtocol registerClass:[LoaderURLProtocol class]]; // load another

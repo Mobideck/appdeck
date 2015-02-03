@@ -1591,7 +1591,7 @@
         if (frame.size.width <  frame.size.height)
         {
             _bannerAd.view.hidden = NO;
-            _bannerAd.view.frame = CGRectMake(0, frame.size.height - _bannerAd.height, _bannerAd.width, _bannerAd.height);
+            _bannerAd.view.frame = CGRectMake((frame.size.width - _bannerAd.width) / 2, frame.size.height - _bannerAd.height, _bannerAd.width, _bannerAd.height);
             [self.view bringSubviewToFront:_bannerAd.view];
             if (bannerAdAnimating == NO)
                 frame.size.height -= _bannerAd.height;

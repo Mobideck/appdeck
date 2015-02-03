@@ -18,10 +18,10 @@
 {
     self = [super initWithAdRation:adRation engine:adEngine config:config];
     if (self) {
-        // only interticial
-        if (![self.adType isEqualToString:@"interticial"])
+        // only interstitial
+        if (![self.adType isEqualToString:@"interstitial"])
         {
-            NSLog(@"AppsFireAdViewController only handle interticial");
+            NSLog(@"AppsFireAdViewController only handle interstitial");
             return nil;
         }
     }

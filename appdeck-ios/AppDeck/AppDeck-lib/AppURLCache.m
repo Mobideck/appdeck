@@ -346,6 +346,15 @@ static unsigned char gifData[] = {
                     NSLog(@"EmbedHeaders: failed to convert: %@ for key %@", obj, key);
                 
             }];
+
+        // inject appdeck js in data ?
+        if ([ManagedUIWebViewController shouldInjectAppDeckJSInData:bodyData])
+        {
+            //NSLog(@"patch ressource: %@", request);
+            NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:bodyData];
+            if (patched_data)
+                bodyData = patched_data;
+        }
         
         if (headers == nil)
         {

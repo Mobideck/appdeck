@@ -13,7 +13,7 @@
 
 @interface HTMLChunkAdViewController : AppDeckAdViewController <ManagedUIWebViewDelegate, AppDeckApiCallDelegate>
 {
-    NSTimer *timer; // for interticial
+    NSTimer *timer; // for interstitial
     
     UIImageView *close; // allow close of ad
     

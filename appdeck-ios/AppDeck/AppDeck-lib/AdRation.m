@@ -114,12 +114,13 @@
     {
         if ([self.adViewController.adType isEqualToString:@"rectangle"])
             self.adRequest.page.rectangleAd = (AppDeckAdViewController *)self.adViewController;
-        else if ([self.adViewController.adType isEqualToString:@"interticial"])
+        else if ([self.adViewController.adType isEqualToString:@"interstitial"])
             self.adRequest.page.interstitialAd = (AppDeckAdViewController *)self.adViewController;
         else if ([self.adViewController.adType isEqualToString:@"banner"])
             self.adRequest.page.bannerAd = (AppDeckAdViewController *)self.adViewController;
         else
         {
+            
             self.adViewController.state = AppDeckAdStateFailed;
             return;
         }

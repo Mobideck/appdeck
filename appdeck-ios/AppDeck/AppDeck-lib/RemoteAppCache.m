@@ -145,8 +145,7 @@ int main_unused_7z(int numargs, char *args[]);
             }
             
             //NSDictionary *dic = [[NSFileManager defaultManager] attributesOfItemAtPath:entryPath error:nil];
-            //NSLog(@"%@", dic);
-            //NSLog(@"New Cache Entry: %@ : %d - %@", request.URL.relativePath, [rdata length], [dic objectForKey:NSFileSize]);
+            //NSLog(@"New Cache Entry: %@ : %lu - %@", request.URL.relativePath, [rdata length], [dic objectForKey:NSFileSize]);
             
             [[NSFileManager defaultManager] removeItemAtPath:entryPath error:nil];
 #ifdef DEBUG_OUTPUT

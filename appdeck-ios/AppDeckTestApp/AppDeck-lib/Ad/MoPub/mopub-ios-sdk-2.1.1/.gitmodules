@@ -1,6 +1,0 @@
-[submodule "Specs/Externals/PivotalCoreKit"]
-	path = Specs/Externals/PivotalCoreKit
-	url = git://github.com/mopub/PivotalCoreKit.git
-[submodule "Specs/Externals/KIF"]
-	path = Specs/Externals/KIF
-	url = https://github.com/square/KIF.git

@@ -56,8 +56,8 @@ function ezcurl($url, &$error = null)
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HEADER, 1);
     curl_setopt($ch, CURLOPT_USERAGENT, 'AppDeck');
-    curl_setopt($ch, CURLOPT_PROXY, 'v2.appdeck.mobi:3128');
-    //curl_setopt($ch, CURLOPT_ENCODING, 'identity');
+    //curl_setopt($ch, CURLOPT_PROXY, 'v2.appdeck.mobi:3128');
+    //curl_setopt($ch, CURLOPT_ENCODING, '');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -87,7 +87,7 @@ function ezcurl($url, &$error = null)
           $pos = strpos($header, ': ');
           if ($pos === false)
             continue;
-          $header_name = substr($header, 0, $pos);
+          $header_name = strtolower(substr($header, 0, $pos));
           $header_value = substr($header, $pos + 2);
            // if header already exist, we create array
            if (isset($h[$header_name]))
@@ -99,6 +99,24 @@ function ezcurl($url, &$error = null)
              $h[$header_name] = $header_value;
            }
         }
+    // clean headers
+    unset($h['Transfer-Encoding']);
+    unset($h['Set-Cookie']);
+    unset($h['transfer-encoding']);
+    unset($h['set-cookie']);    
+    // extract gzip content
+    if (isset($h['content-encoding']) && $h['content-encoding'] == 'gzip')
+    {
+      unset($h['content-encoding']);
+      file_put_contents('/tmp/gzip', $body);
+      $body = gzdecode($body);
+    }
+    else if (isset($h['Content-Encoding']) && $h['Content-Encoding'] == 'gzip')
+    {
+      unset($h['Content-Encoding']);
+      file_put_contents('/tmp/gzip', $body);
+      $body = gzdecode($body);
+    }
     return array($h, $body);
 }
 

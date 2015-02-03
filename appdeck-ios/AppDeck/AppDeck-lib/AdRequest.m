@@ -44,17 +44,18 @@
 
 -(void)fetch
 {
-    NSString *adConfUrl = @"http://oxom-cloud.seb-dev-new.paris.office.netavenir.com/api/ads/template/get";
-    //    NSString *adConfUrl = @"http://test.cloud.oxom.com/api/ads/template/get";
+    NSString *adConfUrl = @"http://xad.appdeck.mobi/api/ads/template/get";
     
-    adConfUrl = @"http://dev.mobideck.net/test/oxomad.php";
-    adConfUrl = @"http://xad.appdeck.mobi/api/ads/template/get";
+//    adConfUrl = @"http://oxom-cloud.seb-dev-new.paris.office.netavenir.com/api/ads/template/get";
+//    adConfUrl = @"http://test.cloud.oxom.com/api/ads/template/get";
+//    adConfUrl = @"http://dev.mobideck.net/test/oxomad.php";
+//    adConfUrl = @"http://xad.appdeck.mobi/api/ads/template/get";
     
     NSMutableDictionary *adContext = [self getContext];//[[NSMutableDictionary alloc] init];
     
     NSMutableDictionary *adParams = [[NSMutableDictionary alloc] init];
     [adParams setObject:adContext forKey:@"context"];
-    [adParams setObject:@"1b4b6629d6fa09ac3616f165938d9fee" forKey:@"customerId"];
+    [adParams setObject:self.adManager.loader.conf.app_api_key forKey:@"customerId"];
     
     // request
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:adConfUrl] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:60.0];

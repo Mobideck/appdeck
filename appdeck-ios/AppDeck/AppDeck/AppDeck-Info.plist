@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AppDeckApiKey</key>
-	<string>999h056edc07b49f95bb570e1af07b8eece8</string>
+	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
@@ -67,7 +67,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>net.mobideck.appdeck.test</string>
+	<string>net.mobideck.appdeck.testXXX</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
