@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobideck.appdeck"
+    android:versionCode="2"
+    android:versionName="2.0"
+     > <!--  android:installLocation="preferExternal"  -->
+    
+    <!--  permission for appdeck --> -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>     
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <!--  permission for better advertisement -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" /> -->
+
+    <!--  permission for push -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.mobideck.appdeck.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!--  to support device < 4.0.4 -->
+	<!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->    
+    <uses-permission android:name="com.mobideck.appdeck.permission.C2D_MESSAGE" />
+
+    <!--  permission for WideSpace -->
+    <!-- 
+	<uses-permission android:name="android.permission.READ_CALENDAR" />
+	<uses-permission android:name="android.permission.WRITE_CALENDAR" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"/>    
+     -->
+     
+     <!--  permission for crosswalk -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />    
+        
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseTheme"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        android:name="com.mobideck.appdeck.AppDeckApplication"
+         >
+
+        <!--  Test Cache -->
+        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
+        <!--  AppDeck Test App -->
+   	 	<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
+<!--          PC INpact -->
+<!--   		<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b"></meta-data> -->
+		<!--  Play3-Live iOS -->
+<!--  	 <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
+ 	 <!--  Play3-Live Android -->
+  	  <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
+ 	 <!--  Monsieur-Mademoiselle -->
+ 	 <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data> -->
+ 	 
+		<!--  94 citoyens -->
+ 		<!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data> -->
+		<meta-data android:name="noCache" android:value="false"></meta-data>
+		
+        <receiver
+            android:name="com.mobideck.appdeck.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.netavenir.play3live" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.mobideck.appdeck.GcmIntentService" />		
+<!--             android:launchMode="singleInstance" -->		
+        <activity
+            android:name="com.mobideck.appdeck.Loader"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+
+            android:label="@string/app_name" >
+            <intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--
+        <activity
+            android:name="com.mobideck.appdeck.PopUp"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name" >
+            <intent-filter>
+
+            </intent-filter>
+        </activity>
+        -->
+        <!--
+        <activity
+            android:name="com.mobideck.appdeck.PageSwipe"
+            android:label="@string/app_name" >
+            <intent-filter>
+
+            </intent-filter>
+        </activity>
+		 -->
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="06661b993731d02660ac43897854ae842acf59be"/>
+        
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+    </application>
+
+</manifest>

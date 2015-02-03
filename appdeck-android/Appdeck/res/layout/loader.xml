@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loader_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_30"
+    android:orientation="vertical"
+    > -->
+    
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/loader_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <!-- The navigation drawer -->
+    <FrameLayout android:id="@+id/left_drawer"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+    <FrameLayout android:id="@+id/right_drawer"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+    
+</android.support.v4.widget.DrawerLayout>    
+    
+ <!-- 
+<com.widespace.AdSpace
+    android:id="@+id/adTakeOver"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    widespace:sid="2b8766c3-9cd4-4bf9-9cdf-8c8b3816cc7b"
+    widespace:autostart="true"
+    widespace:autoupdate="true"
+/>
+ -->
+<!-- 
+<com.widespace.AdSpace
+    android:id="@+id/adPanorama"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    widespace:sid="0c101de9-1dca-4163-b9fe-8d010df1422c"
+    widespace:autostart="true"
+    widespace:autoupdate="true"
+/>
+  -->
+<!-- 
+
+</FrameLayout>
+-->

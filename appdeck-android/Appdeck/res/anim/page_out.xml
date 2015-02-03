@@ -1,0 +1,19 @@
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:duration="700"
+    >
+    <!-- Before rotating, immediately set the alpha to 0. -->
+	<alpha
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0" />
+
+    <!-- Rotate.
+	<rotate
+            android:fromDegrees="-180"
+            android:toDegrees="0"
+            android:toYScale="0.0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:duration="400" />    
+-->
+</set>
