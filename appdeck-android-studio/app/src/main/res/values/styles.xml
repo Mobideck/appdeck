@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
+        <item name="homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
+    </style>
+
+
+    <color name="black">#000000</color>
+    <color name="black_10">#19000000</color>
+    <color name="black_20">#32000000</color>
+    <color name="black_30">#AC000000</color>
+    <color name="white">#ffffff</color>
+
+    <color name="purple_light">#a276eb</color>
+    <color name="purple_middle">#8658ce</color>
+    <color name="purple_dark">#6a3ab2</color>
+
+</resources>

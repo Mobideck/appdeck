@@ -1,0 +1,148 @@
+
+
+
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="/images/common/touch-icons/apple-touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/common/touch-icons/apple-touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/common/touch-icons/apple-touch-icon-iphone4.png" />
+    <script src="/js/jq?v=garalz9W_pCMb-67QPxLYnudsdYVN0--5CGlPQGEI2c1"></script>
+
+        <meta name="robots" content="noindex,nofollow" />
+
+
+
+
+
+
+    <link href="/css/jquery/cssclair?v=EWSO6bGyhhYe3DZ9z-HwqTzqkJuc1tv1seLI6nA0moY1" rel="stylesheet"/>
+
+
+
+    
+    
+
+        <script type="text/javascript">
+            try {
+                app.profile.setEnableAd(true);
+                app.profile.setEnablePrefetch(true);
+            } catch (ex) { }
+
+        </script>
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <script type="text/javascript">
+        function openright() {
+            try {
+                app.slidemenu("open", "right");
+            } catch (ex) { }
+
+        }
+
+    </script>
+    
+    <meta name="appdeck-menu-entry" icon="!config" content="javascript:openright()" />
+</head>
+<body>
+    <div id="page" data-role="page" class="ui-responsive-panel" 
+    class="gridded-bg";
+>
+
+
+
+        <a href="#popupDialogBrowser" id="linkToPopupDialogBrowser" data-rel="popup" data-position-to="window"></a>
+
+
+        <script src="/js/appoverride.js"></script>
+<section id="menu" class="menu">
+    
+<div id="menu_content">
+        <div id="closeMenu">
+
+        <span class="menu_title">
+            Menu
+        </span>
+
+
+        </div>
+        <div id="search">
+            <div id="search_bloc" class="search_bloc">
+                <form method="GET" action="/rechercher" id="form_search">
+                    <input type="text" name="term" placeholder="Rechercher une actualité..." data-role="none" id="input-search" />
+                    <input type="submit" class="sprite sprite-ico-rechercher" value="" data-role="none" />
+                </form>
+            </div>
+        </div>
+        <div id="sections" class="sections">
+            <nav>
+                <ul id="main-menu-pci">
+                    <!-- Le commentaire sont !important et permettent une bonne interprétation de la propriété CSS inline-block -->
+                    <li class="btn_menu_focus"><a rel="actus" href="/" data-ajax="true" data-appentry="actus"><span class="sprite sprite-menu-actu"></span>Actus</a></li>
+                    <!--
+                        -->
+                    <li class="btn_menu"><a rel="tests" href="/tests" data-ajax="true" data-appentry="tests"><span class="sprite sprite-menu-test"></span>Test</a></li>
+                    <!--
+                        -->
+                    <li class="btn_menu"><a rel="dossiers" href="/dossiers" data-ajax="true" data-appentry="dossiers"><span class="sprite sprite-menu-dossier"></span>Dossiers</a></li>
+                    <!--
+                        -->
+                    <li class="btn_menu bp"><a rel="bonsplans" href="/bons-plans" data-ajax="true" data-appentry="bonplans"><span class="sprite sprite-menu-bonplan"></span>Bons plans</a></li>
+                    <!--
+                        -->
+                    <li class="btn_menu"><a rel="forum" target="_blank" href="http://forum.pcinpact.com/" data-appentry="forum"><span class="sprite sprite-menu-forum"></span>Forum</a></li>
+                </ul>
+            </nav>
+        </div>
+            <div id="categories" class="categories">
+                <nav>
+                    <ul id="cat-menu-pci">
+                        <li><a href="/">tout</a></li>
+                                <li><a href="/?cat=7">Culture Num&#233;rique</a></li>
+                                <li><a href="/?cat=5">Droit</a></li>
+                                <li><a href="/?cat=6">Economie</a></li>
+                                <li><a href="/?cat=3">Internet</a></li>
+                                <li><a href="/?cat=2">Logiciel</a></li>
+                                <li><a href="/?cat=1">Mat&#233;riel</a></li>
+                                <li><a href="/?cat=4">Mobilit&#233;</a></li>
+                                <li><a href="/?cat=8">Next INpact</a></li>
+
+                    </ul>
+                </nav>
+        </div>
+    </div>
+</section>
+<footer id="app-footer">
+    <p>
+        <a >
+            Propulsé par
+            <img src="/images/logo.png" id="logo-appdeck" />
+        </a> 
+    </p>
+    <p>
+        Next INpact - ©2015
+    </p>
+</footer>
+
+
+
+
+    </div>
+
+        <script type="text/javascript">
+            $(document).on("mobileinit", function () {
+                $.mobile.ajaxEnabled = false;
+            });
+        </script>
+    <script src="/js/app?v=SWBCRzjph99wrRtAc1ZpSEcTwYVDGON5-9QkPvk8FG81"></script>
+
+    
+
+
+
+</body>
+</html>

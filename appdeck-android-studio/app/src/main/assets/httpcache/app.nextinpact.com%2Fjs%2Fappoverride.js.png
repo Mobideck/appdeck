@@ -1,0 +1,246 @@
+﻿$(document).off('pagecreate.mobileredirect');
+// On empêche le compteur de s'enclencher lorsque l'on page à une autre page
+$(document).off("pagehide.mobileredirect");
+
+
+/*  Gestion du menu version APP   */
+//changement de picto dans les menus
+$(document).on('click', '#main-menu-pci li a', function (e) {
+
+    $('#main-menu-pci li.btn_menu_focus').addClass('btn_menu').removeClass('btn_menu_focus');
+    $(this).parent().removeClass('btn_menu').addClass('btn_menu_focus');
+    if ($(this).attr('data-appentry') != 'actus') {
+        $('#cat-menu-pci').slideUp();
+    } else {
+        $('#cat-menu-pci').slideDown();
+    }
+
+
+});
+
+//Gere le changement au clic catégorie du menu
+$(document).on('click', '#cat-menu-pci li a', function (e) {
+
+    $('#cat-menu-pci li.categorie_active').removeClass('categorie_active');
+    $(this).parent().addClass('categorie_active');
+});
+
+//delete des elements non conformes app
+$(document).ready(function () {
+    $('#btn_options_close, #btn_menu_close, .sprite-ico-fleche-menu').remove();
+    alreadySeenLinks();
+});
+
+
+/****** ******/
+
+/* Gestion du panneau d'options version APP */
+$(document).on("pageinit", function () {
+    setTimeout(function () {
+        $('#logOnForm').unbind('submit');
+        $('#button_logOff').unbind('vclick');
+        $(document).on('vclick', '#button_logOff', function (e) {
+            e.preventDefault();
+            $.mobile.changePage('/Account/LogOffApp');
+        });
+    }, 1000);
+
+    $(document).on('vclick', '#connect_socialbar', function (e) {
+        try {
+            app.slidemenu("open", "right");
+        } catch(ex) {
+            
+        }
+        
+    });
+    loadOptionPanel();
+});
+
+
+/*Remplacement de la light box*/
+
+function bodyAuth(responseServer) {
+    var documentBody = $(responseServer).filter('body');
+    $('body').replaceWith(documentBody);
+}
+
+function photoBrowser(origin, selector) {
+    var images = [];
+    var index = 0;
+
+    var elementList = document.querySelectorAll(selector);
+    for (var i = 0; i < elementList.length; i++) {
+        var el = elementList[i];
+        var img = el.getElementsByTagName("img")[0];
+
+        if (typeof (img) === "undefined")
+            continue;
+
+        if (el == origin)
+            index = images.length;
+
+        images.push({ url: el.href, thumbnail: img.src, caption: img.src });
+
+    }
+    try {
+        app.photoBrowser({ images: images, startIndex: index, bgcolor: '#000000', bgalpha: 0.8 });
+    } catch(ex) {
+        
+    }
+    
+}
+
+function enablePhotoBrowser(selector) {
+    elementList = document.querySelectorAll(selector);
+
+    for (var i = 0; i < elementList.length; i++) {
+        elementList[i].addEventListener('click', function (evt) {
+            photoBrowser(evt.currentTarget, selector);
+            evt.preventDefault();
+        }, false);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    enablePhotoBrowser('.fancyimg');
+});
+
+$(document).on('vclick', '#btn_smiley', function (e) {
+    e.preventDefault();
+    setTimeout(function () {
+        showSmileyPanel();
+    }, 500);
+});
+function showSmileyPanel() {
+    if ($(".topPanelSmiley").css('display') == "none") {
+        //var test = $('.topPanelSmiley').clone();
+        //$('#dialogPopup').html(test);
+        //$('#dialogPopup').dialog();
+        $('.topPanelSmiley').show();
+    } else {
+        $('.topPanelSmiley').hide();
+    }
+}
+
+/* Extrait les paramètres d'une url */
+function qsToObject(qs) {
+    var o = {};
+    qs.replace(
+            new RegExp("([^?=&]+)(=([^&^#]*))?", "g"),
+            function ($0, $1, $2, $3) { o[$1] = $3; }
+            );
+    return o;
+}
+
+var requestingListActu = false;
+var pageListActu = 2;
+var interPointer = null;
+var nbHits = 0;
+var maxScroll = 3;
+var scrollFinalized = false;
+/* ENDLESS scrolling */
+function endLessScrolling(routeList, navElement, dateDedup) {
+    pageListActu = getNumNextPage($('.pager ul li:last a').attr('href'));
+    if ($('article').length != 0  && pageListActu != 0) {
+        $('.pager').hide();
+        $('#loader_actu_list ').show();
+        var params = qsToObject(window.location.href.slice(window.location.href.indexOf('?') + 1));
+        $(window).scroll(function () {
+            if ($("#actu_list").css("display") != "none") {
+                var start = new Date();
+                start = start.getTime();
+                var offset = $(navElement + ' article').last().offset();
+                if (offset.top - $(window).height() <= $(window).scrollTop() && requestingListActu == false && nbHits <= maxScroll) {
+                    requestingListActu = true;
+                    var paramListNews = {
+                        page: pageListActu,
+                        t: Math.round((new Date()).getTime() / 1000)
+                    };
+                    if (params.cat != null) {
+                        paramListNews.cat = params.cat;
+                    }
+                    $.post(routeList, paramListNews, function (responseBrut) {
+                        var response = $(responseBrut);
+                        if (response.find('article').length != 0) {
+                            var a = window.location.href.indexOf('/dossiers') == -1;
+                            var b = window.location.href.indexOf('/tests') == -1;
+                            var c = window.location.href.indexOf('/test/') == -1;
+                            var d = window.location.href.indexOf('/dossier/') == -1;
+                            var e = window.location.href.indexOf('/bons-plans/') == -1;
+                            if (a && b && c && d && e) {
+                                if (dateDedup) {
+                                    //Retrait des dates en double
+                                    var firstNextDate = response.find(".actu_separator_date").first().html();
+                                    if (firstNextDate.toString() == $("#actu_list .actu_separator_date").last().html()) {
+                                        response.find(".actu_separator_date").first().text("");
+                                        response.find(".actu_separator_date").first().removeClass();
+
+                                    }
+                                }
+                            }
+                            if (a || b || c || d) {
+                                response.find('.test_dossier_header').removeClass().text("");
+                            }
+                            //affichage du bloc
+                            //2sec min avant affichage
+                            var finish = new Date();
+                            finish = start + 2000 - finish.getTime();
+                            if (finish > 0) {
+                                interPointer = self.setInterval(function() {
+                                    $('.pager, #loader_actu_list').remove();
+                                    $(navElement + " article").last().after(response.find(navElement).html());
+                                    nbHits++;
+                                    requestingListActu = false;
+                                    pageListActu++;
+                                    clearInterval(interPointer);
+                                    $('.pager').hide();
+                                    setSize();
+                                    $('#loader_actu_list').show();
+                                }, finish);
+                            } else {
+                                $('.pager, #loader_actu_list').remove();
+                                $(navElement + " article").last().after(response.find(navElement).html());
+                                nbHits++;
+                                requestingListActu = false;
+                                pageListActu++;
+                                $('.pager').hide();
+                                setSize();
+                                $('#loader_actu_list').show();
+                            }
+                        } else {
+                            $('#loader_actu_list').hide();
+                            $('.pager').show();
+                        }
+                    });
+                } else if (nbHits > maxScroll && !scrollFinalized) {
+                    $('#loader_actu_list ').hide();
+                    var url = $('.pager  ul li:last a').attr('href');
+                    var nextElm = $('<a></a>').attr('href', url).addClass("button_submit").addClass('next_endless').text("Afficher plus");
+                    $('.pager').replaceWith(nextElm);
+                    scrollFinalized = true;
+                    $(window).unbind('scroll');
+                    return;
+                }
+            }
+        });
+    }
+}
+function getNumNextPage(url) {
+    try {
+        var arrayUrl = url.split('?page=');
+        return parseInt(arrayUrl[1]);    
+    } catch (ex) {
+        return 0;
+    }
+    
+}
+
+/*Gestion de la recherche*/
+$(document).on('submit', '#form_search', function(e) {
+    e.preventDefault(); 
+    var val = $('#input-search').val();
+    var url = "/rechercher?term=" + val;
+    app.page.push(url);
+    return false;
+    //document.location.href = url;
+});

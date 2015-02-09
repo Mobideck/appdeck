@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Build Download" default="Download" basedir=".">    
+	<target name="Download">
+		<echo>Download Resources</echo>
+		<exec executable="php" dir="${basedir}" failonerror="true">
+            <arg value="extra/embedresources_android.php"/>
+            <arg value="${basedir}"/>
+        </exec>
+	</target>
+	
+	<target name="Clean">
+	    <echo>Clean Resources</echo>
+        <delete dir="assets/httpcache"/>
+    </target>
+</project>
