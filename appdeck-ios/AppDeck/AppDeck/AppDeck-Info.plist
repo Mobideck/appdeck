@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AppDeckApiKey</key>
-	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
+	<string>224h315e5a19e0865b35ac7e5b3713ef5a3b#Next INpact</string>
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
@@ -20,6 +20,8 @@
 	<string>837hf414478b7e520570c0a057bd3fe124c9#94 citoyens</string>
 	<key>AppDeckApiKey - 6</key>
 	<string>914h091c82338d9cbcf6249444987b0778e2#Play3-Live 2.5</string>
+	<key>AppDeckApiKey - 7</key>
+	<string>1060hc931f3cbf173612382d474a58d3a78b0#Next INpact DEV</string>
 	<key>AppDeckApiKey - 8 - 2</key>
 	<string>985hfa5ba10d46bd8094b9131add88375d29#actuanimaux</string>
 	<key>AppDeckApiKey - 9</key>
@@ -67,7 +69,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>net.mobideck.appdeck.testXXX</string>
+	<string>net.mobideck.appdeck.test</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -75,11 +77,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.30</string>
+	<string>1.31</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>30</string>
+	<string>31</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIBackgroundModes</key>

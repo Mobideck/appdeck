@@ -72,9 +72,13 @@ typedef enum {
     NSMutableDictionary *profileData;
 }
 
+-(id)initWithKey:(NSString *)key;
+
 -(void)setValue:(id)value forKey:(id)key;
 
 -(NSDictionary *)getComputedData;
+
+@property (nonatomic, strong)   NSString *key;
 
 @property (nonatomic, strong)   NSString *postal;
 @property (nonatomic, strong)   NSString *city;
@@ -106,6 +110,7 @@ typedef enum {
 @property (nonatomic, copy)   NSString *openUDID;
 @property (nonatomic, copy)   NSString *secureUDID;
 @property (nonatomic, copy)   NSString *udfa;
+
 
 // live configuration
 @property (assign, nonatomic) BOOL enable_prefetch;

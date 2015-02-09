@@ -24,10 +24,10 @@
     self = [super initWithAdManager:adManager andConfiguration:config];
     if (self) {
         // Custom initialization
-        [SASAdView setSiteID:123456 baseURL:@"http://www.test.com"];
-        
         self.siteID = [NSString stringWithFormat:@"%@", [config objectForKey:@"siteID"]];
         self.baseURL = [NSString stringWithFormat:@"%@", [config objectForKey:@"baseURL"]];
+        
+        [SASAdView setSiteID:self.siteID.integerValue baseURL:self.baseURL];
         
         [SASAdView setLoggingEnabled:YES];
         [SASAdView setTestModeEnabled:YES];

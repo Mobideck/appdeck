@@ -83,7 +83,7 @@ static unsigned char gifData[] = {
         [self checkBeacon];
         [self performSelectorInBackground:@selector(cleanup) withObject:nil];
         // init CDN host list
-        cdnregexp = [[RE2Regexp alloc] initWithString:@"(.appdeckcdn.com|appdata.static.appdeck.mobi|static.appdeck.mobi|ajax.googleapis.com|cachedcommons.org|cdnjs.cloudflare.com|code.jquery.com|ajax.aspnetcdn.com|ajax.microsoft.com|ads.mobcdn.com|.akamai.net|.akamaiedge.net|.llnwd.net|edgecastcdn.net|.systemcdn.net|hwcdn.net|.panthercdn.com|.simplecdn.net|.instacontent.net|.footprint.net|.ay1.b.yahoo.com|.yimg.|.google.|googlesyndication.|youtube.|.googleusercontent.com|.internapcdn.net|.cloudfront.net|.netdna-cdn.com|.netdna-ssl.com|.netdna.com|.cotcdn.net|.cachefly.net|bo.lt|.cloudflare.com|.afxcdn.net|.lxdns.com|.att-dsa.net|.vo.msecnd.net|.voxcdn.net|.bluehatnetwork.com|.swiftcdn1.com|.cdngc.net|.fastly.net|.nocookie.net|.gslb.taobao.com|.gslb.tbcache.com|.mirror-image.net|.cubecdn.net|.yottaa.net|.r.cdn77.net|.incapdns.net|.bitgravity.com|.r.worldcdn.net|.r.worldssl.net|tbcdn.cn|.taobaocdn.com|.ngenix.net|.pagerain.net|.ccgslb.com|cdn.sfr.net|.azioncdn.net|.azioncdn.com|.azion.net|.cdncloud.net.au|cdn.viglink.com|.ytimg.com|.dmcdn.net|.googleapis.com|.googleusercontent.com|code.jquery.com|media.mobpartner.mobi|gstatic.com|ytimg.com|[0-9].gravatar.com|.wp.com|.bootstrapcdn.com)"];
+        cdnregexp = [[RE2Regexp alloc] initWithString:@"(.appdeckcdn.com|appdata.static.appdeck.mobi|static.appdeck.mobi|ajax.googleapis.com|cachedcommons.org|cdnjs.cloudflare.com|code.jquery.com|ajax.aspnetcdn.com|ajax.microsoft.com|ads.mobcdn.com|.akamai.net|.akamaiedge.net|.llnwd.net|edgecastcdn.net|.systemcdn.net|hwcdn.net|.panthercdn.com|.simplecdn.net|.instacontent.net|.footprint.net|.ay1.b.yahoo.com|.yimg.|.google.|googlesyndication.|youtube.|.googleusercontent.com|.internapcdn.net|.cloudfront.net|.netdna-cdn.com|.netdna-ssl.com|.netdna.com|.cotcdn.net|.cachefly.net|bo.lt|.cloudflare.com|.afxcdn.net|.lxdns.com|.att-dsa.net|.vo.msecnd.net|.voxcdn.net|.bluehatnetwork.com|.swiftcdn1.com|.cdngc.net|.fastly.net|.nocookie.net|.gslb.taobao.com|.gslb.tbcache.com|.mirror-image.net|.cubecdn.net|.yottaa.net|.r.cdn77.net|.incapdns.net|.bitgravity.com|.r.worldcdn.net|.r.worldssl.net|tbcdn.cn|.taobaocdn.com|.ngenix.net|.pagerain.net|.ccgslb.com|cdn.sfr.net|.azioncdn.net|.azioncdn.com|.azion.net|.cdncloud.net.au|cdn.viglink.com|.ytimg.com|.dmcdn.net|.googleapis.com|.googleusercontent.com|code.jquery.com|media.mobpartner.mobi|gstatic.com|ytimg.com|[0-9].gravatar.com|.wp.com|.bootstrapcdn.com|.msecnd.net)"];
         
         // create cache directory if needed
         NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -522,6 +522,9 @@ static unsigned char gifData[] = {
 
 -(BOOL)shouldServeRequestFromCache:(NSURLRequest *)request
 {
+    if ([request.HTTPMethod isEqualToString:@"POST"])
+        return NO;
+    
     if (request.cachePolicy == NSURLRequestReturnCacheDataDontLoad || request.cachePolicy == NSURLRequestReturnCacheDataElseLoad)
         return YES;
     
@@ -572,6 +575,9 @@ static unsigned char gifData[] = {
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request
 {
     //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
+    
+    if ([request.HTTPMethod isEqualToString:@"POST"])
+      NSLog(@"request: method: %@ url: %@ - cache: %lu", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
     
     if (NO && [request.URL.host isEqualToString:@"fonts.googleapis.com"])
     {

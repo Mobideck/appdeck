@@ -11,17 +11,20 @@
 #import "OpenUDID.h"
 #import "SecureUDID.h"
 
-const char * kAppDeckProfileKey = "#appdeck#profile#";
+//const char * kAppDeckProfileKey = "#appdeck#profile#";
 
 @implementation AppDeckUserProfile
 
--(id)init
+-(id)initWithKey:(NSString *)key;
 {
     self = [super init];
     
     if (self)
     {
-        NSDictionary *currentProfile = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithCString:kAppDeckProfileKey encoding:NSUTF8StringEncoding]];
+        self.key = [NSString stringWithFormat:@"#appdeck#profile#%@", key];
+        NSDictionary *currentProfile = [[NSUserDefaults standardUserDefaults] objectForKey:self.key];
+                                        
+                                        //[NSString stringWithCString:kAppDeckProfileKey encoding:NSUTF8StringEncoding]];
         
         if (currentProfile == nil)
         {

@@ -746,7 +746,7 @@ const long sizeofcodeblank = sizeof(codeblank);
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     webViewLoadCount--;
-    if (webViewLoadCount == 0)
+    if (webViewLoadCount == 0 && webViewTimer == nil /* loaded not raised */)
         [self completed:error];
 }
 

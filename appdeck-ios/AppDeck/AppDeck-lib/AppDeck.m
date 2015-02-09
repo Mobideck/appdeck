@@ -10,6 +10,7 @@
 #import "AppURLCache.h"
 #import "CustomWebViewFactory.h"
 #import "LoaderViewController.h"
+#import "LoaderConfiguration.h"
 #import "LoaderChildViewController.h"
 #import "JRSwizzle.h"
 #import "RNCachingURLProtocol.h"
@@ -135,7 +136,7 @@
     __block AppDeck *me = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         [[UIDevice currentDevice] systemVersion];
-        me.userProfile = [[AppDeckUserProfile alloc] init];
+        me.userProfile = [[AppDeckUserProfile alloc] initWithKey:self.loader.conf.app_api_key];
     });
     
     return self;

@@ -30,7 +30,7 @@
     }
     if (api_key)
         conf_url = [NSString stringWithFormat:@"http://config.appdeck.mobi/json/%@", api_key];
-    // App.io auto launch
+    // App.io or appetize.io auto launch
     NSString *app_json_url = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_json_url"];
     if (app_json_url)
         conf_url = app_json_url;

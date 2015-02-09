@@ -475,7 +475,7 @@
     }*/
     // done !
     
-    if (self.conf.enable_debug)       
+    if (self.conf.enable_debug)
     {
         [self enableAutoReloadConf:1.0];
         self.log = [[LogViewController alloc] initWithNibName:nil bundle:nil loader:self];
