@@ -1218,8 +1218,8 @@
     
     if (page.screenConfiguration.title != nil)
         container.title = page.screenConfiguration.title;
-    else
-        container.title = self.conf.title;
+/*    else
+        container.title = self.conf.title;*/
     
     if (page.screenConfiguration.logo && ![page.screenConfiguration.logo isEqualToString:@""])
     {
