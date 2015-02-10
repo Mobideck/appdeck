@@ -54,7 +54,7 @@ public class XSmartWebView extends XWalkView {
 	static boolean prioritySet = false;
 	
 	AppDeck appDeck;
-	public AppDeckFragment root;
+	public AppDeckFragment root = null;
 	String url;
 	Uri uri;
 		
@@ -69,7 +69,15 @@ public class XSmartWebView extends XWalkView {
 	public boolean shouldLoadFromCache = false;
 	
     public boolean catchLink = true;
-		   
+
+/*    public XSmartWebView(Loader loader) {
+        super(loader, loader);
+        appDeck = AppDeck.getInstance();
+        configureWebView();
+        setResourceClient(new XSmartResourceClient(this));
+        setUIClient(new XSmartUIClient(this));
+    }*/
+
 	public XSmartWebView(AppDeckFragment root) {
 		super(root.loader, root.loader);
 		this.root = root;

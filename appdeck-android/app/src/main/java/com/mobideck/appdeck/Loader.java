@@ -143,6 +143,7 @@ public class Loader extends ActionBarActivity {
 		//XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
 		
 		Crashlytics.start(this);
+        //Crashlytics.getInstance().setDebugMode(true);
 		requestWindowFeature(Window.FEATURE_PROGRESS);
 		
 		Intent intent = getIntent();
@@ -521,7 +522,7 @@ public class Loader extends ActionBarActivity {
 
     public void openMenu()
     {
-    	closeMenu();
+        closeMenu();
     	if (mDrawerLayout == null)
     		return;
     	if (mDrawerLeftMenu != null)
@@ -1356,6 +1357,7 @@ public class Loader extends ActionBarActivity {
 	
 	public void showPopOver(AppDeckFragment origin, AppDeckApiCall call)
 	{
+        /*
 		if (origin != null)
 			origin.loader.cancelSubViews();
 		
@@ -1370,7 +1372,8 @@ public class Loader extends ActionBarActivity {
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		//ft.add(popover, "fragmentPopOver");
 		ft.add(R.id.loader_container, popover, "fragmentPopOver");
-		ft.commitAllowingStateLoss();	
+		ft.commitAllowingStateLoss();
+			*/
 		/*
 		Dialog popUpDialog = new Dialog(getBaseContext(),
                 android.R.style.Theme_Translucent_NoTitleBar);

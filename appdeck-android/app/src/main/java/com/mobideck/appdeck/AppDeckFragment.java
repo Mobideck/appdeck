@@ -39,14 +39,17 @@ public class AppDeckFragment extends Fragment {
 	public boolean enablePushAnimation = true;
 	public boolean enablePopAnimation = true;
 	
-	AppDeckFragment()
+	public AppDeckFragment()
 	{
 		
 	}
-	
-	AppDeckFragment(Loader loader)
+
+
+	public static AppDeckFragment fragmentWithLoader(Loader loader)
 	{
-		this.loader = loader;
+        AppDeckFragment fragment = new AppDeckFragment();
+        fragment.loader = loader;
+		return fragment;
 	}
 	
 	/*

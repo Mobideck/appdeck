@@ -420,12 +420,12 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                             transportProtocol.toString() + ": " + t.getMessage());
                 }
             }
-
+/*
             Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
                 public void uncaughtException(final Thread t, final Throwable e) {
                     Log.e(TAG, "Uncaught throwable: " + e.getMessage());
                 }
-            });
+            });*/
 
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 public void run() {

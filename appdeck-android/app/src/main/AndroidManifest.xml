@@ -51,7 +51,7 @@
         <!--  AppDeck Test App -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data> -->
         <!--          PC INpact -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b"></meta-data>
+        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />
         <!--  Play3-Live iOS -->
         <!--  	 <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
         <!--  Play3-Live Android -->
@@ -61,7 +61,7 @@
 
         <!--  94 citoyens -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data> -->
-        <meta-data android:name="noCache" android:value="false"></meta-data>
+        <meta-data android:name="noCache" android:value="false" />
 
 
         <receiver

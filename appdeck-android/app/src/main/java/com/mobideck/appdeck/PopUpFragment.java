@@ -35,7 +35,12 @@ public class PopUpFragment extends AppDeckFragment {
     private View bgView;
     
     PopOverFragment self;
-    
+
+    PopUpFragment()
+    {
+
+    }
+
     PopUpFragment(AppDeckFragment origin, String url)
 	{
 		appDeck = AppDeck.getInstance();

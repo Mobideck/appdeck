@@ -15,9 +15,12 @@ public class PageWebViewMenu extends XSmartWebView {
 	String url;
 	int position;
 	
-	
+
 	public PageWebViewMenu(Loader loader, String url, int position) {
-		super(new AppDeckFragment(loader));
+		super(AppDeckFragment.fragmentWithLoader(loader));
+        /*AppDeckFragment appDeckFragment = new AppDeckFragment();
+        appDeckFragment.loader = loader;*/
+
 		this.root.alwaysLoadRootPage = true;
 		this.url = url;
 		this.position = position;

@@ -45,7 +45,12 @@ public class PopOverFragment extends AppDeckFragment {
     private View bgView;
     
     PopOverFragment self;
-    
+
+    public PopOverFragment()
+    {
+
+    }
+/*
 	PopOverFragment(AppDeckFragment origin, AppDeckApiCall call)
 	{
 		appDeck = AppDeck.getInstance();
@@ -61,7 +66,7 @@ public class PopOverFragment extends AppDeckFragment {
 	    bgcolor = call.param.getString("bgcolor");
 	    border = call.param.getFloat("border");
 	    radius = call.param.getFloat("radius");
-	}
+	}*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
