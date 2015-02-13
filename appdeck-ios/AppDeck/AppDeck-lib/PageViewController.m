@@ -256,7 +256,7 @@
     managedWebView.webView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [managedWebView setBackgroundColor1:self.loader.conf.app_background_color1 color2:self.loader.conf.app_background_color2];
     
-    managedWebView.webView.dataDetectorTypes = UIDataDetectorTypeLink;//UIDataDetectorTypeAll ^ UIDataDetectorTypePhoneNumber;
+    managedWebView.webView.dataDetectorTypes = UIDataDetectorTypeNone;//UIDataDetectorTypeLink;//UIDataDetectorTypeAll ^ UIDataDetectorTypePhoneNumber;
 }
 
 -(void)initialLoad
@@ -409,6 +409,8 @@
         request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
     else
         request.cachePolicy = NSURLRequestUseProtocolCachePolicy;
+    [request setValue:@"" forHTTPHeaderField:@"If-Modified-Since"];
+    [request setValue:@"" forHTTPHeaderField:@"If-None-Match"];
 //    NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
     
     __block PageViewController *me = self;

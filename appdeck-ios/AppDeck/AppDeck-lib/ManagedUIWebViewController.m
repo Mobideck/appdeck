@@ -26,6 +26,8 @@
 
 @end
 
+/*
+
 #ifdef DEBUG
 const char code[] = "<script type=\"text/javascript\" src=\"http://appdata.static.appdeck.mobi/js/fastclick.js\"></script><script type=\"text/javascript\" src=\"http://appdata.static.appdeck.mobi/js/appdeck_dev.js\"></script>\r\n ";
 const long sizeofcode = sizeof(code);
@@ -38,8 +40,13 @@ const char codeblank[] = "<script src=\"http://appdata.static.appdeck.mobi/blank
 const long sizeofcodeblank = sizeof(codeblank);
 #endif
 
-@implementation ManagedUIWebViewController
+ */
 
+const char appdeck_inject_js[] = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";
+const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
+
+@implementation ManagedUIWebViewController
+/*
 +(BOOL)shouldInjectAppDeckJSInResponse:(NSURLResponse *)response
 {
     if ([response isKindOfClass:[NSHTTPURLResponse class]] == NO)
@@ -111,7 +118,7 @@ const long sizeofcodeblank = sizeof(codeblank);
         }
     }
     return nil;
-}
+}*/
 
 +(NSMutableArray *)sharedInstanceList
 {
@@ -1106,7 +1113,9 @@ const long sizeofcodeblank = sizeof(codeblank);
 {
     if (self.enable_api)
     {
-        NSString *js = [NSString stringWithFormat:@"if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck_1.10.js'; document.getElementsByTagName('head')[0].appendChild(scr);}"];
+        NSString *js = [NSString stringWithCString:appdeck_inject_js encoding:NSUTF8StringEncoding];
+        /*
+        NSString *js = [NSString stringWithFormat:@"if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck_1.10.js'; document.getElementsByTagName('head')[0].appendChild(scr);}"];*/
         [self.webView stringByEvaluatingJavaScriptFromString:js];
     }
 //    [webView stringByEvaluatingJavaScriptFromString:@"$(document).ready(function () {jQuery.ajaxSetup({isLocal:true}); });"];

@@ -98,10 +98,11 @@ typedef void ( ^ManagedUIWebViewCompletedCallBack )( NSError *error ) ;
 -(void)setMaskColor:(UIColor *)color opcacity:(CGFloat)opacity anim:(CGFloat)anim userInteractionEnabled:(BOOL)interaction;
 -(void)disableMask;
 
+/*
 +(NSData *)dataWithInjectedAppDeckJS:(NSData *)data;
 +(BOOL)shouldInjectAppDeckJSInResponse:(NSURLResponse *)response;
 +(BOOL)shouldInjectAppDeckJSInData:(NSData *)data;
-
+*/
 
 
 @property (strong, nonatomic) UIColor *backgroundColor1;

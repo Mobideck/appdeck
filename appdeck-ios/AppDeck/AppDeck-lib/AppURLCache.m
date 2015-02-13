@@ -306,6 +306,8 @@ static unsigned char gifData[] = {
 
 -(NSCachedURLResponse *)getCacheResponseForRequest:(NSURLRequest *)request
 {
+//    NSLog(@"getCacheResponseForRequest: %@", request.URL.absoluteString);
+//    NSLog(@"Headers: %@", request.allHTTPHeaderFields);
     if (memcache == nil || request == nil || request.URL == nil || request.URL.absoluteString == nil)
         return nil;
     // in memcache ?
@@ -318,9 +320,24 @@ static unsigned char gifData[] = {
     if (cachedData != nil)
     {
         NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:cachedData.response.MIMEType expectedContentLength:cachedData.data.length textEncodingName:cachedData.response.textEncodingName];
+        
         cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:cachedData.data];
         return cachedResponse;
-        //[memcache setObject:cachedResponse forKey:request.URL.absoluteString];
+/*
+        NSDictionary *headerFields = @{
+                                       @"ETag": @"\"appdeck-super-cache\"",
+                                       };
+        
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL
+                                                          statusCode:200
+                                                         HTTPVersion:@"HTTP/1.1"
+                                                        headerFields:];
+                                   
+//                                   :request.URL MIMEType:cachedData.response.MIMEType expectedContentLength:cachedData.data.length textEncodingName:cachedData.response.textEncodingName];
+        
+        cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:cachedData.data];
+        return cachedResponse;*/
+        
     }
     // in resource cache ?
     NSString *file = [self getCachePathForEmbedResource:request];
@@ -346,7 +363,7 @@ static unsigned char gifData[] = {
                     NSLog(@"EmbedHeaders: failed to convert: %@ for key %@", obj, key);
                 
             }];
-
+/*
         // inject appdeck js in data ?
         if ([ManagedUIWebViewController shouldInjectAppDeckJSInData:bodyData])
         {
@@ -355,7 +372,7 @@ static unsigned char gifData[] = {
             if (patched_data)
                 bodyData = patched_data;
         }
-        
+        */
         if (headers == nil)
         {
             NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:bodyData.length textEncodingName:nil];

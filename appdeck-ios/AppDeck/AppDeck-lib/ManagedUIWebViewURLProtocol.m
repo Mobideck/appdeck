@@ -84,7 +84,7 @@ extern long sizeofcodeblank;
 
 - (void)startLoading
 {
-    self.MyConnection = [NSURLConnection connectionWithRequest:[self request] delegate:self];
+    self.myConnection = [NSURLConnection connectionWithRequest:[self request] delegate:self];
 }
 
 - (void)stopLoading
@@ -98,6 +98,7 @@ extern long sizeofcodeblank;
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    /*
     if (tmp)
     {
         [tmp appendData:data];
@@ -108,46 +109,9 @@ extern long sizeofcodeblank;
             return;
         
         tmp = nil;
-        /*
-        NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:data];
-        if (patched_data != nil)
-        {
-            
-        }*/
-        
-        //return;
-/*
-        char *buf = (char *)[tmp bytes];
-        long length = [tmp length];
-        for (long k = 0; k < length; k++)
-        {
-            if ((buf[k] == 'h' || buf[k] == 'H') &&
-                (buf[k + 1] == 'e' || buf[k + 1] == 'E') &&
-                (buf[k + 2] == 'a' || buf[k + 2] == 'A') &&
-                (buf[k + 3] == 'd' || buf[k + 3] == 'D'))
-            {
-                for (long i = k + 4; i < length; i++)
-                {
-                    if (buf[i] == '>')
-                    {
-                        i++;
-                        void *mem = malloc(length + sizeof(code));
-                        memcpy(mem, buf, i);
-                        memcpy(mem + i, code, sizeof(code));
-                        memcpy(mem + i + sizeof(code), buf + i, length - i);
-                        data = [NSData dataWithBytesNoCopy:mem length:length + sizeof(code)];
-                        buf = (char *)mem;
-                        tmp = nil;
-                        break;
-                    }
-                }
-                if (tmp == nil)
-                    break;
-            }
-        }*/
         if (tmp)
             return;
-    }
+    }*/
     [[self client] URLProtocol:self didLoadData:data];
     receivedContentLength += data.length;
     __block ManagedUIWebViewController *myCtl = ctl;
@@ -183,6 +147,7 @@ extern long sizeofcodeblank;
         if (length != nil)
             expectedContentLength = [length longLongValue];
 
+        /*
         // inject js ?
         if ([ManagedUIWebViewController shouldInjectAppDeckJSInResponse:response])
         {
@@ -196,27 +161,7 @@ extern long sizeofcodeblank;
         }
         else
             NSLog(@"Not Injecting JS in %@ content type is not html", self.request.URL.absoluteString);
-        /*
-        NSString *contentType = [[headers objectForKey:@"Content-Type"] lowercaseString];
-        if (contentType && [contentType rangeOfString:@"html"].location != NSNotFound)
-        {
-            //NSLog(@"Inject JS in %@", self.request.URL.absoluteString);
-            NSMutableDictionary *newHeaders = [headers mutableCopy];
-            if (length)
-                [newHeaders setObject:[NSString stringWithFormat:@"%ld", expectedContentLength + sizeofcode] forKey:@"Content-Length"];
-            NSHTTPURLResponse *newResponse = [[NSHTTPURLResponse alloc] initWithURL:response.URL statusCode:status HTTPVersion:@"HTTP/1.1" headerFields:newHeaders];
-            response = newResponse;
-            if (length)
-            {
-                expectedContentLength = expectedContentLength + sizeofcode;
-                tmp = [[NSMutableData alloc] initWithCapacity:expectedContentLength];
-            }
-            else
-                tmp = [[NSMutableData alloc] initWithCapacity:128 * 1024];
-        }
-        else
-            NSLog(@"Not Injecting JS in %@ content type is not html (%@)", self.request.URL.absoluteString, contentType);
-         */
+*/
         __block ManagedUIWebViewController *myCtl = ctl;
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [myCtl initialRequestDidReceiveResponse:httpResponse];
@@ -233,8 +178,6 @@ extern long sizeofcodeblank;
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
 {
-/*    if (cachedResponse)
-        [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];*/
     AppDeck *appDeck = [AppDeck sharedInstance];
     [appDeck.cache storeCachedResponse:cachedResponse forRequest:self.request];
     
@@ -251,11 +194,6 @@ extern long sizeofcodeblank;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     /*
-    {
-        NSData *data = [NSData dataWithBytes:codeblank length:sizeofcodeblank];
-        [[self client] URLProtocol:self didLoadData:data];
-    }
-    */
     if (tmp)
     {
         NSData *data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:tmp];
@@ -269,46 +207,7 @@ extern long sizeofcodeblank;
         tmp = nil;
         data = nil;
         
-        /*
-        char *buf = (char *)[tmp bytes];
-        long length = [tmp length];
-        for (long k = 0; k < length; k++)
-        {
-            if ((buf[k] == 'h' || buf[k] == 'H') &&
-                (buf[k + 1] == 'e' || buf[k + 1] == 'E') &&
-                (buf[k + 2] == 'a' || buf[k + 2] == 'A') &&
-                (buf[k + 3] == 'd' || buf[k + 3] == 'D'))
-            {
-                for (long i = k + 4; i < length; i++)
-                {
-                    if (buf[i] == '>')
-                    {
-                        i++;
-                        void *mem = malloc(length + sizeofcode);
-                        memcpy(mem, buf, i);
-                        memcpy(mem + i, code, sizeofcode);
-                        memcpy(mem + i + sizeofcode, buf + i, length - i);
-                        NSData *data = [NSData dataWithBytesNoCopy:mem length:length + sizeofcode];
-                        [[self client] URLProtocol:self didLoadData:data];
-                        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:self.response data:data];
-                        AppDeck *appDeck = [AppDeck sharedInstance];
-                        [appDeck.cache storeCachedResponse:cachedResponse forRequest:self.request];
-                        buf = (char *)mem;
-                        tmp = nil;
-                        break;
-                    }
-                }
-                if (tmp == nil)
-                    break;
-            }
-        }
-        if (tmp)
-        {
-            NSLog(@"failed to inject appdeck.js in %@", self.request.URL.absoluteString);
-            [[self client] URLProtocol:self didLoadData:tmp];
-            tmp = nil;
-        }*/
-    }
+    }*/
     [[self client] URLProtocolDidFinishLoading:self];
     __block ManagedUIWebViewController *myCtl = ctl;
     dispatch_async(dispatch_get_main_queue(), ^(void) {

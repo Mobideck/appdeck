@@ -122,6 +122,7 @@ int main_unused_7z(int numargs, char *args[]);
             NSString *MIMEType = @"text/html";
             NSString *textEncodingName = nil;
             
+            /*
             // inject appdeck js in data ?
             if ([ManagedUIWebViewController shouldInjectAppDeckJSInData:rdata])
             {
@@ -129,7 +130,7 @@ int main_unused_7z(int numargs, char *args[]);
                 NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:rdata];
                 if (patched_data)
                     rdata = patched_data;
-            }
+            }*/
             
             NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[request URL] MIMEType:MIMEType expectedContentLength:[rdata length] textEncodingName:textEncodingName];
             NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:rdata];

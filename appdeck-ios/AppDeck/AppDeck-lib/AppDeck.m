@@ -426,6 +426,10 @@
     if ([call.command isEqualToString:@"clearcache"])
     {
         [self.cache cleanall];
+        NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+        [NSURLCache setSharedURLCache:sharedCache];
+        self.cache = [[AppURLCache alloc] init];
+        [NSURLCache setSharedURLCache:self.cache];        
         return YES;
     }
     

@@ -114,13 +114,14 @@
     // *** CDN ***
     
     self.cdn_enabled = [[result query:@"cdn_enabled"] boolValue];
-    if (self.app_api_key)
+    // we disable auto appdeck CDN features
+    /*    if (self.app_api_key)
     {
         self.cdn_host = [NSString stringWithFormat:@"%@.appdeckcdn.com", self.app_api_key];
 //        self.cdn_host = @"cdn.appdeck.mobi";
 //        self.cdn_path = [NSString stringWithFormat:@"/%@", self.app_api_key];
         self.cdn_path = @"";
-    }
+    }*/
     if ([result query:@"cdn_host"])
         self.cdn_host = [result query:@"cdn_host"];
     if ([result query:@"cdn_path"])

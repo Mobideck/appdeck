@@ -477,7 +477,7 @@
     
     if (self.conf.enable_debug)
     {
-        [self enableAutoReloadConf:1.0];
+        [self enableAutoReloadConf:5.0];
         self.log = [[LogViewController alloc] initWithNibName:nil bundle:nil loader:self];
         glLog = self.log;
         [self.view addSubview:self.log.view];
@@ -2051,7 +2051,7 @@
                  [AppDeck reloadFrom:self.conf.jsonUrl.absoluteString];
              }
              else
-                 [self enableAutoReloadConf:1.0];
+                 [self enableAutoReloadConf:5.0];
          }];
         
 /*        NSURL *url = self.jsonUrl;
