@@ -14,6 +14,7 @@
 
 @interface MobFoxVideoInterstitialAdViewController : AppDeckAdViewController <MobFoxVideoInterstitialViewControllerDelegate>
 {
+    MobFoxAdType    currentAdvertType;
 }
 
 - (id)initWithAdRation:(AdRation *)adRation engine:(MobFoxAdEngine *)adEngine config:(NSDictionary *)config;
@@ -22,6 +23,6 @@
 
 @property (nonatomic, strong) MobFoxVideoInterstitialViewController *videoInterstitialViewController;
 
-- (IBAction)requestInterstitialAdvert:(id)sender;
+//- (IBAction)requestInterstitialAdvert:(id)sender;
 
 @end

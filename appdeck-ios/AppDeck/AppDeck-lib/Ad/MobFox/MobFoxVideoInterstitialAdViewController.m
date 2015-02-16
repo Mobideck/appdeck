@@ -63,6 +63,8 @@
         [adView setExtraParameter:@"sex" value:(profile.gender == ProfileGenderMale ? @"1" : @"0")];*/
     
     self.view.clipsToBounds = YES;
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.opaque = YES;
     
     self.videoInterstitialViewController.requestURL = @"http://my.mobfox.com/request.php";
     
@@ -101,10 +103,21 @@
     [super viewWillAppear:animated];
 }
 
+/*
+-(void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    NSLog(@"PageViewController: %f - %f - %f", self.view.frame.origin.x, self.view.frame.size.width, self.view.frame.size.height);
+    NSLog(@"PageViewController: %f - %f - %f", self.view.bounds.origin.x, self.view.bounds.size.width, self.view.bounds.size.height);
+    _videoInterstitialViewController.view.frame = CGRectMake(self.view.frame.size.width / 2 - self.width / 2,
+                                                             self.view.frame.size.height / 2 - self.height / 2,
+                                                             self.width, self.height);
+}*/
+
 #pragma mark - MobFox delegate
 
 // Set the Publisher ID (mandatory)
-- (NSString *)publisherIdForMobFoxBannerView:(MobFoxBannerView *)banner
+- (NSString *)publisherIdForMobFoxVideoInterstitialView:(MobFoxVideoInterstitialViewController *)videoInterstitial
 {
     return self.adEngine.publisherID;
 }
@@ -118,8 +131,12 @@
     // Means an advert has been retrieved and configured.
     // Display the ad using the presentAd method and ensure you pass back the advertType
 
+    self.width = _videoInterstitialViewController.view.frame.size.width;
+    self.height = _videoInterstitialViewController.view.frame.size.height;
+    
     self.state = AppDeckAdStateReady;
-    [videoInterstitial presentAd:advertType];
+    currentAdvertType = advertType;
+//    [videoInterstitial presentAd:advertType];
 }
 
 // Called if no Video/Interstitial is available or there was an error.
@@ -152,5 +169,13 @@
 {
     
 }
+
+#pragma mark AppDeckAdViewController
+
+-(void)adWillAppearInViewController:(LoaderChildViewController *)ctl
+{
+    [self.videoInterstitialViewController presentAd:currentAdvertType];
+}
+
 
 @end

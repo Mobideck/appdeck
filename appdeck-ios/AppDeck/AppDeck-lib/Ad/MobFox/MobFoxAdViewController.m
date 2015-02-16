@@ -32,41 +32,33 @@
 {
     [super viewDidLoad];
 
-    /*if ([self.adType isEqualToString:@"banner"] && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-    {
-        self.width = 768;
-        self.height = 90;
-    }
-    else*/ if ([self.adType isEqualToString:@"banner"])
+    if ([self.adType isEqualToString:@"banner"])
     {
         self.width = 320;
         self.height = 50;
-        self.bannerView = [[MobFoxBannerView alloc] initWithFrame:CGRectZero];
-        self.bannerView.allowDelegateAssigmentToRequestAd = NO; //use this if you don't want to trigger ad loading when setting delegate and intend to request it it manually
-        self.bannerView.delegate = self;
-        [self.view addSubview:self.bannerView];
-        self.bannerView.requestURL = @"http://my.mobfox.com/request.php"; // Do Not Change this
-        self.bannerView.adspaceWidth = 320; // Optional, used to set the custom size of the banner placement. Without setting it, the Server will revert to default sizes (320x50 for iPhone, 728x90 for iPad).
-        self.bannerView.adspaceHeight = 50;
-        self.bannerView.adspaceStrict = NO; // Optional, tells the server to only supply ads that are exactly of the desired size. Without setting it, the server could also supply smaller Ads when no ad of desired size is available.
-        [self.bannerView requestAd]; // Request a Banner Ad manually
     }
-    else /*if ([self.adType isEqualToString:@"rectangle"] && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
-    {
-        self.width = 300;
-        self.height = 300;
-    }
-    else*/ if ([self.adType isEqualToString:@"rectangle"])
+    else if ([self.adType isEqualToString:@"rectangle"])
     {
         self.width = 320;
         self.height = 320;
     }
-    else /*if ([self.adType isEqualToString:@"interstitial"])*/
+    else
     {
         self.state = AppDeckAdStateFailed;
         return;
     }
 
+    self.bannerView = [[MobFoxBannerView alloc] initWithFrame:CGRectZero];
+    self.bannerView.allowDelegateAssigmentToRequestAd = NO; //use this if you don't want to trigger ad loading when setting delegate and intend to request it it manually
+    self.bannerView.delegate = self;
+    [self.view addSubview:self.bannerView];
+    self.bannerView.requestURL = @"http://my.mobfox.com/request.php"; // Do Not Change this
+    self.bannerView.adspaceWidth = self.width; // Optional, used to set the custom size of the banner placement. Without setting it, the Server will revert to default sizes (320x50 for iPhone, 728x90 for iPad).
+    self.bannerView.adspaceHeight = self.height;
+    self.bannerView.adspaceStrict = NO; // Optional, tells the server to only supply ads that are exactly of the desired size. Without setting it, the server could also supply smaller Ads when no ad of desired size is available.
+    [self.bannerView requestAd]; // Request a Banner Ad manually
+    
+    
     /*
     // meta
     AppDeckUserProfile *profile = self.adManager.loader.appDeck.userProfile;
