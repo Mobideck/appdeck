@@ -556,6 +556,8 @@
 
 -(void)applicationWillEnterForeground
 {
+    if (self.isMain)
+        [self.loader.adManager pageViewController:self appearWithEvent:AdManagerEventWakeUp];
     [self checkReloadContent:nil];
 }
 
@@ -1239,6 +1241,7 @@
     if (_bannerAd == nil)
     {
         [self viewWillLayoutSubviews];
+        self.adRequest = nil;
         return;
     }
 
@@ -1275,15 +1278,17 @@
     }
     
     _interstitialAd = interstitialAd;
-    _interstitialAd.page = self;
-
-    /*
+   
     if (_interstitialAd == nil)
     {
         self.swipeContainer.swipeEnabled = YES;
         self.isFullScreen = NO;
+        self.adRequest = nil;
         return;
     }
+
+    _interstitialAd.page = self;    
+    
     self.swipeContainer.swipeEnabled = NO;
     self.isFullScreen = YES;
     
@@ -1300,8 +1305,12 @@
     } completion:^(BOOL finished) {
 
     }];
-*/
+
     _interstitialAd.state = AppDeckAdStateLoad;
+    
+/*    [contentCtl addChildViewController:_interstitialAd];
+    [contentCtl.webView.scrollView addSubview:_interstitialAd.view];*/
+    
     if (self.isMain)
         _interstitialAd.state = AppDeckAdStateAppear;
     
@@ -1337,6 +1346,7 @@
     {
         contentCtl.webView.scrollView.contentInset = [self getPageContentInset];
         [self viewWillLayoutSubviews];
+        self.adRequest = nil;
         return;
     }
     

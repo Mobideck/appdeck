@@ -241,6 +241,7 @@
 		A925D52F17003D60000F6EEC /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D52E17003D60000F6EEC /* EventKit.framework */; };
 		A925D53117003D67000F6EEC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D53017003D67000F6EEC /* MediaPlayer.framework */; };
 		A925D53317003D6E000F6EEC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D53217003D6E000F6EEC /* MessageUI.framework */; };
+		A92A67921A91E268008A607E /* AmazonAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A92A67911A91E268008A607E /* AmazonAd.framework */; };
 		A93022CF17461C0400FD07F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93022CE17461C0400FD07F5 /* MapKit.framework */; };
 		A93047C4176C8E7A0094CD57 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A93047C3176C8E7A0094CD57 /* libz.dylib */; };
 		A937A8671A30A07100ED6599 /* SpeechKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A937A8321A30A07100ED6599 /* SpeechKit.framework */; };
@@ -801,6 +802,7 @@
 		A925D52E17003D60000F6EEC /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		A925D53017003D67000F6EEC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		A925D53217003D6E000F6EEC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		A92A67911A91E268008A607E /* AmazonAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AmazonAd.framework; sourceTree = "<group>"; };
 		A93022CE17461C0400FD07F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A93047C3176C8E7A0094CD57 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A937A8321A30A07100ED6599 /* SpeechKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpeechKit.framework; sourceTree = "<group>"; };
@@ -912,6 +914,7 @@
 				A925D51917003C27000F6EEC /* AdSupport.framework in Frameworks */,
 				A916CE5C1A1E03E5005FE1AE /* libAppsfireSDK.a in Frameworks */,
 				A91DFAA916CFAE8C00512CA0 /* MobileCoreServices.framework in Frameworks */,
+				A92A67921A91E268008A607E /* AmazonAd.framework in Frameworks */,
 				A91DFA7A16CE971700512CA0 /* CFNetwork.framework in Frameworks */,
 				A91DFA7616CE970A00512CA0 /* CoreImage.framework in Frameworks */,
 				A91DFA1416CE8D1400512CA0 /* UIKit.framework in Frameworks */,
@@ -929,6 +932,7 @@
 		A916C2B81A1E03D4005FE1AE /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				A92A678F1A91E258008A607E /* AmazonAds */,
 				A95D7B911A8C9B1400F73ACD /* MobFox */,
 				A916C2B91A1E03D4005FE1AE /* AdColony */,
 				A916C33E1A1E03D5005FE1AE /* AdMob */,
@@ -2095,6 +2099,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A92A678F1A91E258008A607E /* AmazonAds */ = {
+			isa = PBXGroup;
+			children = (
+				A92A67901A91E268008A607E /* Ads */,
+			);
+			name = AmazonAds;
+			sourceTree = "<group>";
+		};
+		A92A67901A91E268008A607E /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				A92A67911A91E268008A607E /* AmazonAd.framework */,
+			);
+			name = Ads;
+			path = AmazonAds/Ads;
+			sourceTree = "<group>";
+		};
 		A937A7EE1A30A07100ED6599 /* widespace-sdk-ios-4.4.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2617,6 +2638,7 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/WideSpace/widespace-sdk-ios-4.4.0",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MobFox/MobFox-iOS-SDK-6.0.0/MobFox.embeddedframework",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MobFox/MobFox-iOS-SDK-6.0.0/MobFoxDemo/MobFox.embeddedframework",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/AmazonAds/Ads",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppDeck/AppDeck-Prefix.pch";
@@ -2671,6 +2693,7 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/WideSpace/widespace-sdk-ios-4.4.0",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MobFox/MobFox-iOS-SDK-6.0.0/MobFox.embeddedframework",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MobFox/MobFox-iOS-SDK-6.0.0/MobFoxDemo/MobFox.embeddedframework",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/AmazonAds/Ads",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppDeck/AppDeck-Prefix.pch";

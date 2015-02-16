@@ -46,7 +46,7 @@ static char AppDeckProgressHUDKey;
     self = [super init];
     if (self)
     {
-        self.graceTime = 0.5;
+        self.graceTime = 1.0;
         self.minShowTime = 0.5;
         self.viewController = viewController;
 

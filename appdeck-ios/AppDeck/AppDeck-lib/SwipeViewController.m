@@ -254,8 +254,8 @@
     
     if (viewController)
     {
-        [self setShadowEnabled:YES toView:_current.view];
         _current.swipeContainer = self;
+        [self setShadowEnabled:YES toView:_current.view];
         //_current.swipeIndex = 0;
         [self addChildViewController:_current];
         [_current didMoveToParentViewController:self];
@@ -446,6 +446,7 @@
     childViewController.progress = 0;
     if (_current == childViewController)
     {
+        //NSLog(@"startProgressWithExpectedProgress:%f inTime:%f", expectedProgress, duration);
         //NSLog(@"navigationController: %@ navigationBar: %@", self.navigationController, self.navigationController.navigationBar);
         [self.navigationController.navigationBar progressStart:expectedProgress inTime:duration];
         
@@ -461,8 +462,9 @@
     childViewController.progress = progress;
     if (_current == childViewController)
     {
+        //NSLog(@"updateProgressWithProgress:%f duration:%f", progress, duration);
         [self.navigationController.navigationBar progressUpdate:progress duration:duration];
-        if (progress > 0.5)
+        if (progress > 0.75)
         {
             AppDeckProgressHUD *appdeckProgressHUD = [AppDeckProgressHUD progressHUDForViewController:self];
             [appdeckProgressHUD hide];
@@ -477,6 +479,7 @@
     childViewController.progress = 1;
     if (_current == childViewController)
     {
+        //NSLog(@"endProgressDuration:%f", secconds);
         AppDeckProgressHUD *appdeckProgressHUD = [AppDeckProgressHUD progressHUDForViewController:self];
         [appdeckProgressHUD hide];
         [self.navigationController.navigationBar progressEnd:secconds];

@@ -15,6 +15,8 @@
 
 + (AppDeckProgressHUD *)progressHUDForViewController:(UIViewController *)viewController;
 
+//-(void)setDeterminate:(BOOL)determinate;
+
 -(void)show;
 -(void)hide;
 

@@ -83,7 +83,7 @@
         [self adDidUnloadFromViewController:self.page];*/
     else if (_state == AppDeckAdStateClose)
     {
-        self.page.disableAds = YES;
+        //self.page.disableAds = YES;
         [self adDidUnloadFromViewController:self.page];
     }
     [self.adManager ad:self didUpdateState:_state];    
