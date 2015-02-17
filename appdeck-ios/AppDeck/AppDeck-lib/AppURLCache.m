@@ -614,7 +614,8 @@ static unsigned char gifData[] = {
     {
         BOOL shouldBlock = NO;
         const char *absoluteURL = [request.URL.absoluteString UTF8String];
-        if (self.enableAdBlock && [adblockregexp match:absoluteURL])
+        const char *domain = [request.URL.host UTF8String];
+        if (self.enableAdBlock && [adblockregexp match:domain])
             shouldBlock = YES;
         if (shouldBlock == YES)
         {
