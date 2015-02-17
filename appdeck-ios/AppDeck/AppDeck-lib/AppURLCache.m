@@ -26,6 +26,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "AdBlock.h"
+
 @interface AppURLCachedData : NSObject <NSCoding>
     @property (nonatomic, readwrite, strong) NSData *data;
     @property (nonatomic, readwrite, strong) NSURLResponse *response;
@@ -84,6 +86,15 @@ static unsigned char gifData[] = {
         [self performSelectorInBackground:@selector(cleanup) withObject:nil];
         // init CDN host list
         cdnregexp = [[RE2Regexp alloc] initWithString:@"(.appdeckcdn.com|appdata.static.appdeck.mobi|static.appdeck.mobi|ajax.googleapis.com|cachedcommons.org|cdnjs.cloudflare.com|code.jquery.com|ajax.aspnetcdn.com|ajax.microsoft.com|ads.mobcdn.com|.akamai.net|.akamaiedge.net|.llnwd.net|edgecastcdn.net|.systemcdn.net|hwcdn.net|.panthercdn.com|.simplecdn.net|.instacontent.net|.footprint.net|.ay1.b.yahoo.com|.yimg.|.google.|googlesyndication.|youtube.|.googleusercontent.com|.internapcdn.net|.cloudfront.net|.netdna-cdn.com|.netdna-ssl.com|.netdna.com|.cotcdn.net|.cachefly.net|bo.lt|.cloudflare.com|.afxcdn.net|.lxdns.com|.att-dsa.net|.vo.msecnd.net|.voxcdn.net|.bluehatnetwork.com|.swiftcdn1.com|.cdngc.net|.fastly.net|.nocookie.net|.gslb.taobao.com|.gslb.tbcache.com|.mirror-image.net|.cubecdn.net|.yottaa.net|.r.cdn77.net|.incapdns.net|.bitgravity.com|.r.worldcdn.net|.r.worldssl.net|tbcdn.cn|.taobaocdn.com|.ngenix.net|.pagerain.net|.ccgslb.com|cdn.sfr.net|.azioncdn.net|.azioncdn.com|.azion.net|.cdncloud.net.au|cdn.viglink.com|.ytimg.com|.dmcdn.net|.googleapis.com|.googleusercontent.com|code.jquery.com|media.mobpartner.mobi|gstatic.com|ytimg.com|[0-9].gravatar.com|.wp.com|.bootstrapcdn.com|.msecnd.net)"];
+
+        /// empty response
+//        emptyResponse
+        
+        // adblock regexp
+        NSString *adblock64String = [NSString stringWithCString:adBlockbase64 encoding:NSUTF8StringEncoding];
+        NSData *adblock64Data = [[NSData alloc] initWithBase64EncodedString:adblock64String options:0];
+        NSString *adblockString = [[NSString alloc] initWithData:adblock64Data encoding:NSUTF8StringEncoding];
+        adblockregexp = [[RE2Regexp alloc] initWithString:adblockString];
         
         // create cache directory if needed
         NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -214,14 +225,18 @@ static unsigned char gifData[] = {
 {
     RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
     [cacheRegex addObject:regex];    
+}
 
-/*    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString options:NSRegularExpressionCaseInsensitive error:NULL];
-    if (regex == nil)
-    {
-        NSLog(@"invalid Rexep Cache : %@", regexString);
-        return;
-    }
-    [cacheRegex addObject:regex];*/
+-(void)addAdBlockWhiteListCacheRegularExpressionFromString:(NSString *)regexString
+{
+    RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
+    [adblockwhitelist addObject:regex];
+}
+
+-(void)addAdBlockBlackListCacheRegularExpressionFromString:(NSString *)regexString
+{
+    RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
+    [adblockblacklist addObject:regex];
 }
 
 -(void)removeAllRegularExpression
@@ -591,7 +606,43 @@ static unsigned char gifData[] = {
 
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request
 {
+    BOOL fromWebView = [[request.allHTTPHeaderFields objectForKey:@"User-Agent"] containsString:@"Mozilla"];
     //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
+
+    // adblock
+    if (fromWebView)
+    {
+        BOOL shouldBlock = NO;
+        const char *absoluteURL = [request.URL.absoluteString UTF8String];
+        if (self.enableAdBlock && [adblockregexp match:absoluteURL])
+            shouldBlock = YES;
+        if (shouldBlock == YES)
+        {
+            for (RE2Regexp *regex in adblockwhitelist) {
+                if ([regex match:absoluteURL])
+                    shouldBlock = NO;
+            }
+        }
+        if (shouldBlock == NO)
+        {
+            for (RE2Regexp *regex in adblockblacklist) {
+                if ([regex match:absoluteURL])
+                    shouldBlock = NO;
+            }
+        }
+        if (shouldBlock == YES)
+        {
+            if (glLog)
+            {
+                NSString *log_url = ([glLog.host isEqualToString:request.URL.host] ? request.URL.relativePath : request.URL.absoluteString);
+                [glLog info:@"Block %@", log_url];
+            }
+            NSData *data = [[NSData alloc]  init];
+            NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"text/plain" expectedContentLength:0 textEncodingName:nil];
+            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
+            return cachedResponse;
+        }
+    }
     
     if ([request.HTTPMethod isEqualToString:@"POST"])
       NSLog(@"request: method: %@ url: %@ - cache: %lu", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);

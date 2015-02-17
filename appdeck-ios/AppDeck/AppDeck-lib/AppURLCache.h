@@ -20,11 +20,20 @@
     NSMutableArray  *cacheRegex;
     
     RE2Regexp *cdnregexp;
+    RE2Regexp *adblockregexp;
+    NSMutableArray *adblockwhitelist;
+    NSMutableArray *adblockblacklist;
+    
+    NSCachedURLResponse *emptyResponse;
 }
 
 @property (assign, nonatomic) BOOL alwaysCache;
+@property (assign, nonatomic) BOOL enableAdBlock;
 
 -(void)addCacheRegularExpressionFromString:(NSString *)regexString;
+-(void)addAdBlockWhiteListCacheRegularExpressionFromString:(NSString *)regexString;
+-(void)addAdBlockBlackListCacheRegularExpressionFromString:(NSString *)regexString;
+
 -(void)removeAllRegularExpression;
 
 -(BOOL)requestIsInCache:(NSURLRequest *)request date:(NSDate **)date;

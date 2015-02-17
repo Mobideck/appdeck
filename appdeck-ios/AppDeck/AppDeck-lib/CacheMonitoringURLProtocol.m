@@ -69,8 +69,20 @@
     
     [myRequest addValue:[CacheMonitoringURLProtocol getUserId] forHTTPHeaderField:@"AppDeck-User-ID"];
     [myRequest addValue:appDeck.loader.conf.app_api_key forHTTPHeaderField:@"AppDeck-App-Key"];
-    [myRequest addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];
+
     
+    NSString *userAgent = [myRequest.allHTTPHeaderFields objectForKey:@"User-Agent"];
+    if (userAgent)
+    {
+        userAgent = [userAgent stringByAppendingString:[[AppDeck sharedInstance] userAgentChunk]];
+        [myRequest addValue:userAgent forHTTPHeaderField:@"User-Agent"];
+    }
+    
+    /*
+    if (userAgent && [userAgent containsString:@"Mozilla"])
+        [myRequest addValue:[[AppDeck sharedInstance] userAgentWebView] forHTTPHeaderField:@"User-Agent"];
+    else
+        [myRequest addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];*/
     //NSLog(@"%@", request.URL.absoluteString);
     
     BOOL isInEmbedCache = [appDeck.cache requestIsInEmbedCache:request];

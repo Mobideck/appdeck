@@ -41,6 +41,8 @@
 @property (assign, nonatomic) BOOL  isTestApp;
 
 @property (strong, nonatomic)   NSString    *userAgent;
+@property (strong, nonatomic)   NSString    *userAgentWebView;
+@property (strong, nonatomic)   NSString    *userAgentChunk;
 
 +(LoaderViewController *)open:(NSString *)url  withLaunchingWithOptions:(NSDictionary *)launchOptions;
 +(void)reloadFrom:(NSString *)url;

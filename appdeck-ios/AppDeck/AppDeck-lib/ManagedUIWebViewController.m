@@ -971,6 +971,7 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     
     NSMutableURLRequest *mutableRequest = [_request mutableCopy];
     mutableRequest = [mutableRequest mutableCopy];
+//    [mutableRequest addValue:@"1" forHTTPHeaderField:@"AppDeck-WebView"];
     me = [@[self] mutableCopy];
     if (self.enable_api)
         [NSURLProtocol setProperty:me forKey:@"ManagedUIWebViewController" inRequest:mutableRequest];

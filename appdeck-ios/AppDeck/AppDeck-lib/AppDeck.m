@@ -114,6 +114,18 @@
         self.userAgent = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" AppDeck-tablet"];
     else
         self.userAgent = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" AppDeck-phone"];
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        self.userAgentWebView = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" WebView AppDeck-tablet"];
+    else
+        self.userAgentWebView = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" WebView AppDeck-phone"];
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        self.userAgentChunk = @" WebView AppDeck-tablet";
+    else
+        self.userAgentChunk = @" WebView AppDeck-phone";
+    
+    
     
     // force user agent system wide
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.userAgent, @"UserAgent", nil];
@@ -426,10 +438,10 @@
     if ([call.command isEqualToString:@"clearcache"])
     {
         [self.cache cleanall];
-        NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+/*        NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
         [NSURLCache setSharedURLCache:sharedCache];
         self.cache = [[AppURLCache alloc] init];
-        [NSURLCache setSharedURLCache:self.cache];        
+        [NSURLCache setSharedURLCache:self.cache];        */
         return YES;
     }
     

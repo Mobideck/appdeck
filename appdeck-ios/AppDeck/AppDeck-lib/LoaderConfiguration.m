@@ -111,6 +111,21 @@
         [app.cache addCacheRegularExpressionFromString:regexp];
     }
     
+    // adBlock
+    self.adBlock = [[result query:@"adBlock"] boolValue];
+    app.cache.enableAdBlock = self.adBlock;
+    self.adBlockWhiteList = [[NSMutableArray alloc] init];
+    for (NSString *regexp in result[@"adBlockWhiteList"])
+    {
+        [self.adBlockWhiteList addObject:regexp];
+        [app.cache addAdBlockWhiteListCacheRegularExpressionFromString:regexp];
+    }
+    for (NSString *regexp in result[@"adBlockBlackList"])
+    {
+        [self.adBlockBlackList addObject:regexp];
+        [app.cache addAdBlockBlackListCacheRegularExpressionFromString:regexp];
+    }
+    
     // *** CDN ***
     
     self.cdn_enabled = [[result query:@"cdn_enabled"] boolValue];
@@ -197,39 +212,7 @@
     else
         self.icon_theme = IconThemeDark;
 
-    
     // light theme
-    /*
-    if (self.icon_theme == IconThemeLight)
-    {
-        self.icon_menu = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_menu" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/menu.png"] relativeToURL:self.url] height:44];
-        
-        self.image_loader = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"image_loader" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/images/loader.png"] relativeToURL:self.url] height:66];
-        self.image_pull_arrow = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"image_pull_arrow" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/images/pull_arrow.png"] relativeToURL:self.url] height:66];
-        
-        self.icon_action = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_action" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/action.png"] relativeToURL:self.url] height:44];
-        self.icon_cancel = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_cancel" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/cancel.png"] relativeToURL:self.url] height:44];
-        self.icon_close = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_close" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/close.png"] relativeToURL:self.url] height:44];
-        self.icon_next = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_next" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/next.png"] relativeToURL:self.url] height:44];
-        self.icon_previous = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_previous" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/previous.png"] relativeToURL:self.url] height:44];
-        self.icon_up = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_up" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/up.png"] relativeToURL:self.url] height:44];
-        self.icon_down = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_down" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/down.png"] relativeToURL:self.url] height:44];
-        self.icon_refresh = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_refresh" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/refresh.png"] relativeToURL:self.url] height:44];
-    } else {
-        self.icon_menu = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_menu" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/menu_dark.png"] relativeToURL:self.url] height:44];
-        
-        self.image_loader = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"image_loader" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/images/loader_dark.png"] relativeToURL:self.url] height:66];
-        self.image_pull_arrow = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"image_pull_arrow" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/images/pull_arrow_dark.png"] relativeToURL:self.url] height:66];
-        
-        self.icon_action = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_action" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/action_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_cancel = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_cancel" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/cancel_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_close = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_close" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/close_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_next = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_next" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/next_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_previous = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_previous" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/previous_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_up = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_up" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/up_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_down = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_down" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/down_dark.png"] relativeToURL:self.url] height:44];
-        self.icon_refresh = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_refresh" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios/icons/refresh_dark.png"] relativeToURL:self.url] height:44];
-    }*/
     if (self.icon_theme == IconThemeLight)
     {
         self.icon_menu = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_menu" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios7/icons/menu.png"] relativeToURL:self.baseUrl] height:44];

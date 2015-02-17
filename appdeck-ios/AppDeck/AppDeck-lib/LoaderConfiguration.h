@@ -62,6 +62,10 @@ typedef enum {
 
 @property (strong, nonatomic) NSMutableArray *cache;
 
+@property (assign, nonatomic) BOOL adBlock;
+@property (strong, nonatomic) NSMutableArray *adBlockWhiteList;
+@property (strong, nonatomic) NSMutableArray *adBlockBlackList;
+
 @property (assign, nonatomic) long prefetch_ttl;
 
 //@property (strong, nonatomic) UIView *statusBarInfo;
