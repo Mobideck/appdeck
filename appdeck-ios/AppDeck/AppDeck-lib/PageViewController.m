@@ -352,7 +352,14 @@
         [self.loader.log info:@"Load from network: %@", self.url.relativePath];
         NSLog(@"Load from network: %@", self.url.relativePath);
         self.loader.appIsBusy = YES;
-        NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:cachePolicy timeoutInterval:60];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:cachePolicy timeoutInterval:60];
+        // if screen ttl == -1
+        if (self.screenConfiguration.ttl == -1)
+        {
+            //cachePolicy = NSURLRequestReloadIgnoringCacheData;
+            [request setValue:@"" forHTTPHeaderField:@"If-Modified-Since"];
+            [request setValue:@"" forHTTPHeaderField:@"If-None-Match"];
+        }
         [contentCtl loadRequest:request progess:^(float progress){
             if (animated)
             {

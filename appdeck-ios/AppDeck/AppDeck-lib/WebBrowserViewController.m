@@ -13,6 +13,7 @@
 #import "GoogleAnalytics/GAIFields.h"
 #import "GoogleAnalytics/GAIDictionaryBuilder.h"
 #import "LoaderConfiguration.h"
+#import "ScreenConfiguration.h"
 #import "PageBarButtonContainer.h"
 #import "PageBarButton.h"
 #import "IOSVersion.h"
@@ -36,9 +37,16 @@
 
 -(NSURLRequest *)getRequest
 {
-    return [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
+    // if screen ttl == -1
+    if (self.screenConfiguration.ttl == -1)
+    {
+        //cachePolicy = NSURLRequestReloadIgnoringCacheData;
+        [request setValue:@"" forHTTPHeaderField:@"If-Modified-Since"];
+        [request setValue:@"" forHTTPHeaderField:@"If-None-Match"];
+    }
+    return request;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
