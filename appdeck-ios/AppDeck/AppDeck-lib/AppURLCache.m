@@ -257,6 +257,16 @@ static unsigned char gifData[] = {
     return YES;
 }
 
+-(BOOL)requestIsInEmbedCache:(NSURLRequest *)request
+{
+    NSString *file = [self getCachePathForEmbedResource:request];
+    if (file == nil)
+        return NO;
+    if ([fileManager fileExistsAtPath:file])
+        return YES;
+    return NO;
+}
+
 #pragma mark - beacon
 
 -(void)checkBeacon
@@ -292,16 +302,6 @@ static unsigned char gifData[] = {
     file = [@"/embedresource/" stringByAppendingString:file];
     file = [[[NSBundle mainBundle] resourcePath]  stringByAppendingPathComponent:file];
     return file;
-}
-
--(BOOL)requestIsInEmbedCache:(NSURLRequest *)request
-{
-    NSString *file = [self getCachePathForEmbedResource:request];
-    if (file == nil)
-        return NO;
-    if ([fileManager fileExistsAtPath:file])
-        return YES;
-    return NO;
 }
 
 -(NSString *)getCachePathForRequest:(NSURLRequest *)request
@@ -360,7 +360,7 @@ static unsigned char gifData[] = {
     {
         NSData *bodyData = [NSData dataWithContentsOfFile:file];
 
-        /*NSData *metaData = [NSData dataWithContentsOfFile:[file stringByAppendingString:@".meta"]];
+        NSData *metaData = [NSData dataWithContentsOfFile:[file stringByAppendingString:@".meta"]];
         
         NSError *error = NULL;
         NSMutableDictionary *headersTMP = [metaData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
@@ -384,7 +384,7 @@ static unsigned char gifData[] = {
             NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:bodyData.length textEncodingName:nil];
             cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:bodyData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
             return cachedResponse;
-        }*/
+        }
 
         //NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:headers];
         

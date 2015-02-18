@@ -2235,7 +2235,7 @@
 				ORGANIZATIONNAME = "Mathieu De Kermadec";
 				TargetAttributes = {
 					A91DFA0F16CE8D1400512CA0 = {
-						DevelopmentTeam = GL4J596NSJ;
+						DevelopmentTeam = 9K2HP594UT;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;

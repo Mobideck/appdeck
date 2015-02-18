@@ -2013,6 +2013,10 @@
     {
         NSLog(@"Auto reload conf not supported because this app don't use AppDeck Cloud Services");
     }
+    else if ([self.conf.app_api_key isEqualToString:@"218hf32d1901627d35131fa83b63f56ae906"])
+    {
+        NSLog(@"Auto reload conf enabled as this is AppDeck TestApp");
+    }
     else
         debug_timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(runAutoReloadConf:) userInfo:nil repeats:NO];
 }

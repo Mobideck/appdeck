@@ -291,7 +291,34 @@
     
     
     NSDate *date = nil;
-    if ([self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
+    // embed cache ?
+    if ([self.loader.appDeck.cache requestIsInEmbedCache:[NSURLRequest requestWithURL:self.url]] == YES)
+    {
+        shouldReloadInBackground = NO;
+        shouldAnimatedBackgroundReload = NO;
+        animated = NO;
+        [self.loader.log info:@"Load from embed cache: %@", self.url.relativePath];
+        NSLog(@"Load from embed cache: %@", self.url.relativePath);
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60];
+        [contentCtl loadRequest:request progess:^(float progress) {
+            if (animated)
+            {
+                if (progress == 0)
+                    [self.swipeContainer child:self startProgressWithExpectedProgress:0.25 inTime:60];
+                else
+                    [self.swipeContainer child:self updateProgressWithProgress:(progress / 100) duration:0.125];
+            }
+        } completed:^(NSError *error) {
+            if (animated)
+                [self.swipeContainer child:self endProgressDuration:0.125];
+            [self setupNextPreviousSwipe];
+            
+            [self contentCompleted:error]; // do this on last because on error contentCtl is free
+        }];
+    }
+    // cache ?
+    else if ([self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
     {
         cachePolicy = NSURLRequestReturnCacheDataElseLoad;
         if ([date compare:[NSDate dateWithTimeIntervalSinceNow:-self.screenConfiguration.ttl]] == NSOrderedAscending)
@@ -415,6 +442,8 @@
     
     __block PageViewController *me = self;
     [refreshCtl loadRequest:request progess:^(float progress){
+        if (self == nil || me == nil)
+            return;
         if (progress > 0)
         {
             if (animated)
@@ -422,10 +451,13 @@
         }
         [me setupNextPreviousSwipe];
     } completed:^(NSError *error) {
+        if (self == nil || me == nil)
+            return;
         if (animated)
             [me.swipeContainer child:self endProgressDuration:0.125];
         [me refreshCompleted:error animated:animated seamless:seamless];
-        [me setupNextPreviousSwipe];
+        if (error == nil && me != nil && self != nil)
+            [me setupNextPreviousSwipe];
     }];
 }
 

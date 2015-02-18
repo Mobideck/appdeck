@@ -95,7 +95,11 @@ easy_embed("icon_user", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/i
 
 easy_embed("image_loader", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/loader{$icon_theme}.png");
 easy_embed("image_pull_arrow", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/pull_arrow{$icon_theme}.png");
-easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/network_error{$icon_theme}.png");
+
+//easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/network_error.png");
+
+easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/default/images/network_error.png");
+
 
 easy_embed("logo");
 easy_embed("leftmenu.url");
