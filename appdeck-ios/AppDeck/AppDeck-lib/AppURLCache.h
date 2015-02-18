@@ -20,7 +20,7 @@
     NSMutableArray  *cacheRegex;
     
     RE2Regexp *cdnregexp;
-    RE2Regexp *adblockregexp;
+//    RE2Regexp *adblockregexp;
     NSMutableArray *adblockwhitelist;
     NSMutableArray *adblockblacklist;
     

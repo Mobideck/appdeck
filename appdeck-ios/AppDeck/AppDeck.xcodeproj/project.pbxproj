@@ -246,6 +246,7 @@
 		A93047C4176C8E7A0094CD57 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A93047C3176C8E7A0094CD57 /* libz.dylib */; };
 		A937A8671A30A07100ED6599 /* SpeechKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A937A8321A30A07100ED6599 /* SpeechKit.framework */; };
 		A937A8681A30A07200ED6599 /* WSLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A937A8331A30A07100ED6599 /* WSLibrary.framework */; };
+		A93FED0E1A94D46100F94B66 /* AdBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FED0D1A94D46100F94B66 /* AdBlock.m */; };
 		A948B4C4186B080B00F61664 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A948B4C3186B080A00F61664 /* libsqlite3.dylib */; };
 		A948B4C6186B082C00F61664 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A948B4C5186B082B00F61664 /* Twitter.framework */; };
 		A95154001861B6EE00B2C396 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95153FF1861B6EE00B2C396 /* Accelerate.framework */; };
@@ -803,6 +804,7 @@
 		A93047C3176C8E7A0094CD57 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A937A8321A30A07100ED6599 /* SpeechKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpeechKit.framework; sourceTree = "<group>"; };
 		A937A8331A30A07100ED6599 /* WSLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WSLibrary.framework; sourceTree = "<group>"; };
+		A93FED0D1A94D46100F94B66 /* AdBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdBlock.m; sourceTree = "<group>"; };
 		A948B4C3186B080A00F61664 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A948B4C5186B082B00F61664 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		A95153FF1861B6EE00B2C396 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -1727,6 +1729,7 @@
 				A916CBE51A1E03DB005FE1AE /* EmbedResources.h */,
 				A916CBE61A1E03DB005FE1AE /* EmbedResources.m */,
 				A92A67931A9385F6008A607E /* AdBlock.h */,
+				A93FED0D1A94D46100F94B66 /* AdBlock.m */,
 				A916CBD31A1E03DA005FE1AE /* AppURLCache.h */,
 				A916CBD41A1E03DB005FE1AE /* AppURLCache.m */,
 				A916CBD51A1E03DB005FE1AE /* CacheMonitoringURLProtocol.h */,
@@ -2372,6 +2375,7 @@
 				A916D35B1A1E03E7005FE1AE /* LoaderViewController.m in Sources */,
 				A916D3FE1A1E03E7005FE1AE /* arena.cc in Sources */,
 				A916CEB51A1E03E6005FE1AE /* HTMLChunkAdViewController.m in Sources */,
+				A93FED0E1A94D46100F94B66 /* AdBlock.m in Sources */,
 				A916D2DB1A1E03E7005FE1AE /* AppDeckProgressHUD.m in Sources */,
 				A916D2D61A1E03E7005FE1AE /* AppDeckAdEngine.m in Sources */,
 				A916D4051A1E03E7005FE1AE /* strutil.cc in Sources */,

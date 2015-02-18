@@ -46,6 +46,7 @@ static unsigned char gifData[] = {
     0x02, 0x44, 0x01, 0x00, 0x3b
 };
 
+
 @implementation AppURLCachedData
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -90,11 +91,11 @@ static unsigned char gifData[] = {
         /// empty response
 //        emptyResponse
         
-        // adblock regexp
+/*        // adblock regexp
         NSString *adblock64String = [NSString stringWithCString:adBlockbase64 encoding:NSUTF8StringEncoding];
         NSData *adblock64Data = [[NSData alloc] initWithBase64EncodedString:adblock64String options:0];
         NSString *adblockString = [[NSString alloc] initWithData:adblock64Data encoding:NSUTF8StringEncoding];
-        adblockregexp = [[RE2Regexp alloc] initWithString:adblockString];
+        adblockregexp = [[RE2Regexp alloc] initWithString:adblockString];*/
         
         // create cache directory if needed
         NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -584,6 +585,40 @@ static unsigned char gifData[] = {
     return NO;
 }
 
+-(BOOL)domainShouldBeBlockRec:(NSArray *)subs idx:(NSInteger)idx from:(NSDictionary *)blockedHost
+{
+    if (idx < 0 || idx >= subs.count)
+        return NO;
+    
+    NSString *sub = [subs objectAtIndex:idx];
+//    NSLog(@"check sub %@", sub);
+    
+    NSObject *item = [blockedHost objectForKey:sub];
+    
+//    NSLog(@"item: %@", item);
+    
+    if ([[item class] isSubclassOfClass:[NSDictionary class]])
+    {
+        NSDictionary *dict = (NSDictionary *)item;
+        return [self domainShouldBeBlockRec:subs idx:(idx -1) from:dict];
+    } else {
+        NSString *val = (NSString *)item;
+        if ([val isEqualToString:@"*"])
+            return YES;
+    }
+    
+    return NO;
+}
+
+-(BOOL)requestShouldBeBlock:(NSURLRequest *)request
+{
+    NSDictionary *blockedHost = getBlockedHosts();
+
+    NSArray *subs = [request.URL.host componentsSeparatedByString:@"."];
+    
+    return [self domainShouldBeBlockRec:subs idx:(subs.count - 1) from:blockedHost];
+}
+
 #pragma mark - cache
 
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request
@@ -592,14 +627,20 @@ static unsigned char gifData[] = {
     //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
 
     // adblock
-    if (fromWebView && NO)
+    if (fromWebView)
     {
         self.enableAdBlock = YES;
         BOOL shouldBlock = NO;
         const char *absoluteURL = [request.URL.absoluteString UTF8String];
-        const char *domain = [request.URL.host UTF8String];
-        if (self.enableAdBlock && [adblockregexp match:domain])
+
+        
+        if (self.enableAdBlock && [self requestShouldBeBlock:request])
             shouldBlock = YES;
+
+        //if (self.enableAdBlock && [adblockregexp match:domain])
+        //    shouldBlock = YES;
+
+        
         if (shouldBlock == YES)
         {
             for (RE2Regexp *regex in adblockwhitelist) {
@@ -628,8 +669,8 @@ static unsigned char gifData[] = {
         }
     }
     
-    if ([request.HTTPMethod isEqualToString:@"POST"])
-      NSLog(@"request: method: %@ url: %@ - cache: %lu", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
+//    if ([request.HTTPMethod isEqualToString:@"POST"])
+//      NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
     
     if (NO && [request.URL.host isEqualToString:@"fonts.googleapis.com"])
     {
