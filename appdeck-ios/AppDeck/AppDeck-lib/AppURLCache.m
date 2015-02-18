@@ -359,7 +359,8 @@ static unsigned char gifData[] = {
     if ([fileManager fileExistsAtPath:file])
     {
         NSData *bodyData = [NSData dataWithContentsOfFile:file];
-        NSData *metaData = [NSData dataWithContentsOfFile:[file stringByAppendingString:@".meta"]];
+
+        /*NSData *metaData = [NSData dataWithContentsOfFile:[file stringByAppendingString:@".meta"]];
         
         NSError *error = NULL;
         NSMutableDictionary *headersTMP = [metaData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
@@ -378,35 +379,16 @@ static unsigned char gifData[] = {
                     NSLog(@"EmbedHeaders: failed to convert: %@ for key %@", obj, key);
                 
             }];
-/*
-        // inject appdeck js in data ?
-        if ([ManagedUIWebViewController shouldInjectAppDeckJSInData:bodyData])
-        {
-            //NSLog(@"patch ressource: %@", request);
-            NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:bodyData];
-            if (patched_data)
-                bodyData = patched_data;
-        }
-        */
         if (headers == nil)
         {
             NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:bodyData.length textEncodingName:nil];
             cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:bodyData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
             return cachedResponse;
-        }
-        /*
-        // inject appdeck js in data ?
-        if ([ManagedUIWebViewController shouldInjectAppDeckJSInData:data])
-        {
-            //NSLog(@"patch ressource: %@", request);
-            NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:data];
-            if (patched_data)
-                data = patched_data;
         }*/
-//        NSLog(@"URL: %@ File: %@ Headers: %@", request.URL, file, headers);
-        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:headers];
+
+        //NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:headers];
         
-/*        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:data.length textEncodingName:nil];*/
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:bodyData.length textEncodingName:nil];
         
         cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:bodyData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
     }
@@ -610,8 +592,9 @@ static unsigned char gifData[] = {
     //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
 
     // adblock
-    if (fromWebView)
+    if (fromWebView && NO)
     {
+        self.enableAdBlock = YES;
         BOOL shouldBlock = NO;
         const char *absoluteURL = [request.URL.absoluteString UTF8String];
         const char *domain = [request.URL.host UTF8String];

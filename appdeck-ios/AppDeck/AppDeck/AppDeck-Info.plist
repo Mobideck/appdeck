@@ -4,8 +4,6 @@
 <dict>
 	<key>AppDeckApiKey</key>
 	<string>999h056edc07b49f95bb570e1af07b8eece8#UniversFreebox</string>
-	<key>AppDeckApiKey - 8</key>
-	<string>999h056edc07b49f95bb570e1af07b8eece8#UniversFreebox</string>
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
@@ -24,6 +22,8 @@
 	<string>914h091c82338d9cbcf6249444987b0778e2#Play3-Live 2.5</string>
 	<key>AppDeckApiKey - 7</key>
 	<string>1060hc931f3cbf173612382d474a58d3a78b0#Next INpact DEV</string>
+	<key>AppDeckApiKey - 8</key>
+	<string>999h056edc07b49f95bb570e1af07b8eece8#UniversFreebox</string>
 	<key>AppDeckApiKey - 8 - 2</key>
 	<string>985hfa5ba10d46bd8094b9131add88375d29#actuanimaux</string>
 	<key>AppDeckApiKey - 9</key>
@@ -71,7 +71,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>net.mobideck.appdeck.test</string>
+	<string>net.mobideck.appdeck.testreal</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

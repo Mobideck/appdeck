@@ -256,15 +256,10 @@
 		A95B952A1803FF6400106EF7 /* Icon-Small-40.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95281803FF6400106EF7 /* Icon-Small-40.png */; };
 		A95B952B1803FF6400106EF7 /* Icon-Small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95291803FF6400106EF7 /* Icon-Small-40@2x.png */; };
 		A95D7BC51A8C9B2900F73ACD /* MobFox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95D7B961A8C9B2900F73ACD /* MobFox.framework */; };
-		A95D7BC61A8C9B2900F73ACD /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = A95D7B981A8C9B2900F73ACD /* LICENSE */; };
-		A95D7BC71A8C9B2900F73ACD /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A95D7B991A8C9B2900F73ACD /* LICENSE.txt */; };
 		A95D7BC81A8C9B2900F73ACD /* MPAdBrowserController.nib in Resources */ = {isa = PBXBuildFile; fileRef = A95D7B9A1A8C9B2900F73ACD /* MPAdBrowserController.nib */; };
 		A95D7BC91A8C9B2900F73ACD /* MPCloseButtonX.png in Resources */ = {isa = PBXBuildFile; fileRef = A95D7B9B1A8C9B2900F73ACD /* MPCloseButtonX.png */; };
 		A95D7BCA1A8C9B2900F73ACD /* MPCloseButtonX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95D7B9C1A8C9B2900F73ACD /* MPCloseButtonX@2x.png */; };
 		A95D7BCB1A8C9B2900F73ACD /* MRAID.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A95D7B9D1A8C9B2900F73ACD /* MRAID.bundle */; };
-		A95D7BCC1A8C9B2900F73ACD /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = A95D7B9E1A8C9B2900F73ACD /* README.markdown */; };
-		A95D7BCD1A8C9B2900F73ACD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A95D7B9F1A8C9B2900F73ACD /* README.md */; };
-		A95D7BCE1A8C9B2900F73ACD /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = A95D7BA01A8C9B2900F73ACD /* README.txt */; };
 		A95D7BED1A8C9C6000F73ACD /* MobFoxAdEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D7BEA1A8C9C6000F73ACD /* MobFoxAdEngine.m */; };
 		A95D7BEE1A8C9C6000F73ACD /* MobFoxAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D7BEC1A8C9C6000F73ACD /* MobFoxAdViewController.m */; };
 		A95D7BF11A8C9FA000F73ACD /* MobFoxVideoInterstitialAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D7BF01A8C9FA000F73ACD /* MobFoxVideoInterstitialAdViewController.m */; };
@@ -818,15 +813,10 @@
 		A95B95281803FF6400106EF7 /* Icon-Small-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40.png"; sourceTree = SOURCE_ROOT; };
 		A95B95291803FF6400106EF7 /* Icon-Small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40@2x.png"; sourceTree = SOURCE_ROOT; };
 		A95D7B961A8C9B2900F73ACD /* MobFox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobFox.framework; sourceTree = "<group>"; };
-		A95D7B981A8C9B2900F73ACD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		A95D7B991A8C9B2900F73ACD /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		A95D7B9A1A8C9B2900F73ACD /* MPAdBrowserController.nib */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = MPAdBrowserController.nib; sourceTree = "<group>"; };
 		A95D7B9B1A8C9B2900F73ACD /* MPCloseButtonX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MPCloseButtonX.png; sourceTree = "<group>"; };
 		A95D7B9C1A8C9B2900F73ACD /* MPCloseButtonX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MPCloseButtonX@2x.png"; sourceTree = "<group>"; };
 		A95D7B9D1A8C9B2900F73ACD /* MRAID.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MRAID.bundle; sourceTree = "<group>"; };
-		A95D7B9E1A8C9B2900F73ACD /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
-		A95D7B9F1A8C9B2900F73ACD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		A95D7BA01A8C9B2900F73ACD /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		A95D7BE91A8C9C6000F73ACD /* MobFoxAdEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobFoxAdEngine.h; path = MobFox/MobFoxAdEngine.h; sourceTree = "<group>"; };
 		A95D7BEA1A8C9C6000F73ACD /* MobFoxAdEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MobFoxAdEngine.m; path = MobFox/MobFoxAdEngine.m; sourceTree = "<group>"; };
 		A95D7BEB1A8C9C6000F73ACD /* MobFoxAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobFoxAdViewController.h; path = MobFox/MobFoxAdViewController.h; sourceTree = "<group>"; };
@@ -2162,15 +2152,10 @@
 		A95D7B971A8C9B2900F73ACD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A95D7B981A8C9B2900F73ACD /* LICENSE */,
-				A95D7B991A8C9B2900F73ACD /* LICENSE.txt */,
 				A95D7B9A1A8C9B2900F73ACD /* MPAdBrowserController.nib */,
 				A95D7B9B1A8C9B2900F73ACD /* MPCloseButtonX.png */,
 				A95D7B9C1A8C9B2900F73ACD /* MPCloseButtonX@2x.png */,
 				A95D7B9D1A8C9B2900F73ACD /* MRAID.bundle */,
-				A95D7B9E1A8C9B2900F73ACD /* README.markdown */,
-				A95D7B9F1A8C9B2900F73ACD /* README.md */,
-				A95D7BA01A8C9B2900F73ACD /* README.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2296,10 +2281,8 @@
 				A9D4304616F3A64600F572E7 /* Icon-72@2x.png in Resources */,
 				A9A0B09E17326524003237E0 /* Icon-Small-50.png in Resources */,
 				A9A0B09F17326524003237E0 /* Icon-Small-50@2x.png in Resources */,
-				A95D7BC61A8C9B2900F73ACD /* LICENSE in Resources */,
 				A95D7BCB1A8C9B2900F73ACD /* MRAID.bundle in Resources */,
 				A9A0B0A017326524003237E0 /* Icon-Small.png in Resources */,
-				A95D7BCE1A8C9B2900F73ACD /* README.txt in Resources */,
 				A9A0B0A117326524003237E0 /* Icon-Small@2x.png in Resources */,
 				A916D2941A1E03E7005FE1AE /* vg_timer.png in Resources */,
 				A916D2861A1E03E7005FE1AE /* sas.bundle in Resources */,
@@ -2312,7 +2295,6 @@
 				A9A0B0AC1732654B003237E0 /* Default-Portrait.png in Resources */,
 				A916D4881A1E09C9005FE1AE /* iRate.bundle in Resources */,
 				A9A0B0AD1732654B003237E0 /* Default-Portrait@2x.png in Resources */,
-				A95D7BC71A8C9B2900F73ACD /* LICENSE.txt in Resources */,
 				A95B952B1803FF6400106EF7 /* Icon-Small-40@2x.png in Resources */,
 				A95B95271803FDCC00106EF7 /* Icon-76@2x.png in Resources */,
 				A9A0B0AE1732654B003237E0 /* Default.png in Resources */,
@@ -2361,7 +2343,6 @@
 				A916D2F01A1E03E7005FE1AE /* JSBadgeView.m in Sources */,
 				A916D3D11A1E03E7005FE1AE /* RE2Regexp.mm in Sources */,
 				A916D40D1A1E03E7005FE1AE /* NSDictionary+query.m in Sources */,
-				A95D7BCD1A8C9B2900F73ACD /* README.md in Sources */,
 				A916D3C21A1E03E7005FE1AE /* mimics_pcre.cc in Sources */,
 				A916D3DD1A1E03E7005FE1AE /* SDWebImageDownloader.m in Sources */,
 				A916D4891A1E09C9005FE1AE /* iRate.m in Sources */,
@@ -2465,7 +2446,6 @@
 				A916D2F21A1E03E7005FE1AE /* JSONKit.m in Sources */,
 				A916D3B01A1E03E7005FE1AE /* MRMessageInterceptor.m in Sources */,
 				A916D2ED1A1E03E7005FE1AE /* ImagePreload.m in Sources */,
-				A95D7BCC1A8C9B2900F73ACD /* README.markdown in Sources */,
 				A916D3AA1A1E03E7005FE1AE /* MRActivityIndicatorView.m in Sources */,
 				A916D2E51A1E03E7005FE1AE /* EmbedResources.m in Sources */,
 				A916D2891A1E03E7005FE1AE /* SwelenAdEngine.m in Sources */,

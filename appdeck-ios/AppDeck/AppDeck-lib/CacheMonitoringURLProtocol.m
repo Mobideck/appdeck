@@ -117,7 +117,8 @@
             [glLog debug:@"EMBED %@", log_url];
         else if (shouldStoreRequest && requestIsInCache)
             [glLog debug:@"CACHE HIT %@", log_url];
-        else if ([request.URL.host hasSuffix:@".appdeck.mobi"] || [request.URL.host hasSuffix:@".widespace.com"] || [request.URL.absoluteString containsString:@".google-analytics.com/collect"]|| [request.URL.host hasSuffix:@".mobfox.com"])
+        else if ([request.URL.host hasSuffix:@".appdeck.mobi"] || [request.URL.host hasSuffix:@".widespace.com"] || [request.URL.absoluteString containsString:@".google-analytics.com/collect"]
+                 || [request.URL.host hasSuffix:@".mobfox.com"] || [request.URL.host hasSuffix:@".mobpartner.mobi"])
             ;
         else if (shouldStoreRequest)
             [glLog debug:@"CACHE MISS %@", log_url];

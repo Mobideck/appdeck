@@ -100,22 +100,16 @@ function ezcurl($url, &$error = null)
            }
         }
     // clean headers
-    unset($h['Transfer-Encoding']);
-    unset($h['Set-Cookie']);
     unset($h['transfer-encoding']);
     unset($h['set-cookie']);    
     // extract gzip content
     if (isset($h['content-encoding']) && $h['content-encoding'] == 'gzip')
     {
       unset($h['content-encoding']);
-      file_put_contents('/tmp/gzip', $body);
-      $body = gzdecode($body);
-    }
-    else if (isset($h['Content-Encoding']) && $h['Content-Encoding'] == 'gzip')
-    {
-      unset($h['Content-Encoding']);
-      file_put_contents('/tmp/gzip', $body);
-      $body = gzdecode($body);
+      //file_put_contents('/tmp/gzip', $body);
+      $body_tmp = @gzdecode($body);
+      if ($body_tmp)
+        $body = $body_tmp;
     }
     return array($h, $body);
 }
@@ -362,8 +356,6 @@ function easy_embed_rec($names, $base_info, $default_url = false)
   $url = $default_url;
 
   $name = array_shift($names);
-
-var_dump($name);
 
   foreach (array($name, $name.'_tablet') as $field)
   {
