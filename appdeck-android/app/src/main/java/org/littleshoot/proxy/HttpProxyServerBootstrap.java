@@ -251,6 +251,30 @@ public interface HttpProxyServerBootstrap {
 
     /**
      * <p>
+     * Specify the timeout for connecting to the upstream server on a new
+     * connection, in milliseconds.
+     * </p>
+     * 
+     * <p>
+     * Default = 40000
+     * </p>
+     * 
+     * @param connectTimeout
+     * @return
+     */
+    HttpProxyServerBootstrap withConnectTimeout(
+            int connectTimeout);
+
+    /**
+     * Specify a custom {@link HostResolver} for resolving server addresses.
+     * 
+     * @param resolver
+     * @return
+     */
+    HttpProxyServerBootstrap withServerResolver(HostResolver serverResolver);
+
+    /**
+     * <p>
      * Add an {@link ActivityTracker} for tracking activity in this proxy.
      * </p>
      * 
@@ -258,6 +282,16 @@ public interface HttpProxyServerBootstrap {
      * @return
      */
     HttpProxyServerBootstrap plusActivityTracker(ActivityTracker activityTracker);
+
+    /**
+     * <p>
+     * Specify the read and/or write bandwidth throttles for this proxy server. 0 indicates not throttling.
+     * </p>
+     * @param readThrottleBytesPerSecond
+     * @param writeThrottleBytesPerSecond
+     * @return
+     */
+    HttpProxyServerBootstrap withThrottling(long readThrottleBytesPerSecond, long writeThrottleBytesPerSecond);
 
     /**
      * <p>

@@ -1,7 +1,5 @@
 package com.mobideck.appdeck;
 
-import com.mobideck.appdeck.R;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -88,7 +86,7 @@ public class PopUpFragment extends AppDeckFragment {
     	//params.height = (int)(height * density);
     	containerLayout.setLayoutParams(params);
     	
-    	webView = new SmartWebView(this);
+    	webView = new SmartWebViewClassic(this);
     	containerLayout.addView(webView, new ViewGroup.LayoutParams(
 		        ViewGroup.LayoutParams.MATCH_PARENT,
 		        ViewGroup.LayoutParams.MATCH_PARENT));

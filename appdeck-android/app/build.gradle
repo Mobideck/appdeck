@@ -33,11 +33,16 @@ android {
     lintOptions {
         abortOnError false
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
 repositories {
     maven {
         url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+        //url 'https://download.01.org/crosswalk/releases/crosswalk/android/canary/'
     }
     maven { url 'http://download.crashlytics.com/maven' }
 }
@@ -47,8 +52,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.android.support:multidex:1.0.0'
-    compile 'org.xwalk:xwalk_core_library_beta:11.40.277.6'
     compile 'com.crashlytics.android:crashlytics:1.+'
+
+    compile 'org.xwalk:xwalk_core_library_beta:11.40.277.6'
+    //compile 'org.xwalk:xwalk_core_library:10.39.235.16'
 }
 
 task assets {

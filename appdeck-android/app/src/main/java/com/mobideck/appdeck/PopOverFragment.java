@@ -1,12 +1,8 @@
 package com.mobideck.appdeck;
 
-import com.mobideck.appdeck.R;
-
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,11 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 public class PopOverFragment extends AppDeckFragment {
 
@@ -40,7 +33,7 @@ public class PopOverFragment extends AppDeckFragment {
     FrameLayout bgLayout;
     FrameLayout containerLayout;
     
-    private SmartWebView webView;
+    private SmartWebViewClassic webView;
     
     private View bgView;
     
@@ -118,7 +111,7 @@ public class PopOverFragment extends AppDeckFragment {
     	int margin = (int)(10 * density);
     	webViewLayoutParams.setMargins(margin, margin, margin, margin);
     	//webView.setLayoutParams(webViewLayoutParams);
-    	webView = new SmartWebView(this);
+    	webView = new SmartWebViewClassic(this);
     	containerLayout.addView(webView, webViewLayoutParams);
     	webView.loadUrl(url);    	
     	

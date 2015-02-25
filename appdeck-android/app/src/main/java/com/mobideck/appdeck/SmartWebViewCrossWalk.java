@@ -1,7 +1,5 @@
 package com.mobideck.appdeck;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
@@ -20,15 +18,13 @@ import org.xwalk.core.internal.XWalkViewBridge;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Proxy;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
+import android.os.Bundle;
 import android.os.Parcelable;
 //import android.util.ArrayMap;
 import android.support.v4.util.ArrayMap;
@@ -38,15 +34,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import org.xwalk.core.XWalkPreferences;
 
-public class XSmartWebView extends XWalkView {
-		
+
+
+public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInterface {
+
+    public static void setPreferences()
+    {
+        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
+    }
+
+
 	static String TAG = "XSmartWebView";
 	
 	static String appdeck_inject_js = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck_1.10.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";	
@@ -70,15 +72,7 @@ public class XSmartWebView extends XWalkView {
 	
     public boolean catchLink = true;
 
-/*    public XSmartWebView(Loader loader) {
-        super(loader, loader);
-        appDeck = AppDeck.getInstance();
-        configureWebView();
-        setResourceClient(new XSmartResourceClient(this));
-        setUIClient(new XSmartUIClient(this));
-    }*/
-
-	public XSmartWebView(AppDeckFragment root) {
+	public SmartWebViewCrossWalk(AppDeckFragment root) {
 		super(root.loader, root.loader);
 		this.root = root;
 		appDeck = AppDeck.getInstance();
@@ -192,66 +186,6 @@ public class XSmartWebView extends XWalkView {
 		userAgent = userAgent + " AppDeck"+(appDeck.isTablet? "-tablet" : "-phone" )+" "+appDeck.packageName+"/"+appDeck.config.app_version;
 		setWebViewUserAgent(this, userAgent);
 		
-		
-/*		
-		//setPersistentDrawingCache(ViewGroup.PERSISTENT_SCROLLING_CACHE);
-
-        XWalkSettings webSettings = getSettings();
-        webSettings.setJavaScriptEnabled(true);
-
-		String ua = webSettings.getUserAgentString();
-		webSettings.setUserAgentString(ua + " AppDeck "+appDeck.packageName+"/"+appDeck.config.app_version);
-        
-        String databasePath = root.loader.getBaseContext().getDir("databases", Context.MODE_PRIVATE).getPath();
-        //webSettings.setDatabasePath(databasePath);
-        //webSettings.setGeolocationDatabasePath(databasePath);
-
-        File cachePath = new File(Environment.getExternalStorageDirectory(), ".appdeck");
-        cachePath.mkdirs();        
-        
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(cachePath.getAbsolutePath());
-        Log.i(TAG, "appCache:"+cachePath.getAbsolutePath().toString());
-        //webSettings.setAppCacheMaxSize(Long.MAX_VALUE);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        //webSettings.setPluginState(PluginState.ON);
-        //webSettings.setRenderPriority(RenderPriority.HIGH);
-		setHorizontalScrollBarEnabled(false);
-        
-		
-		webSettings.setSupportMultipleWindows(true);
-		setLongClickable(true);
-		setDrawingCacheEnabled(true);
-		
-	    // Initialize the WebView
-		//webSettings.setSupportZoom(false);
-		//webSettings.setBuiltInZoomControls(false);
-		setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-		setScrollbarFadingEnabled(true);
-		webSettings.setLoadsImagesAutomatically(true);		
-
-        //setPictureListener(new MyPictureListener());
-        
-        if (appDeck.noCache)
-        {
-        	webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        	webSettings.setAppCacheEnabled(false);
-        	clearCache(true);
-        	//webSettings.setAppCacheMaxSize(0);
-        }
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }*/        
-        
-		try {
-			XSmartWebView.setProxyKK(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
-			//WebkitProxy2.setProxy(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}        
 	}
 	
 	// from https://stackoverflow.com/questions/19979578/android-webview-set-proxy-programatically-kitkat
@@ -359,11 +293,6 @@ public class XSmartWebView extends XWalkView {
 	
 	private void checkLoading()
 	{
-		/*if (loadingDone)
-		{
-			Log.e(TAG, "checkLoading call twice ...");
-			return;
-		}*/
         String jsTestIfOK = "(document.body.innerHTML.indexOf('Bad Gateway') == 0 || document.body.innerHTML.indexOf('Gateway Timeout') == 0 || document.body.innerHTML.length == 0 ? 'ko' : document.body.innerHTML)";
         
         evaluateJavascript(jsTestIfOK, new android.webkit.ValueCallback<java.lang.String> () {
@@ -405,8 +334,8 @@ public class XSmartWebView extends XWalkView {
 	{
 		//loadingDone = true;
 		root.progressFailed(this);
-/*		Toast.makeText(getContext(), "Error: " + url + ": " + errorCode + ": " + description, Toast.LENGTH_LONG).show();
-		setVisibility(View.INVISIBLE);*/
+//		Toast.makeText(getContext(), "Error: " + url + ": " + errorCode + ": " + description, Toast.LENGTH_LONG).show();
+//		setVisibility(View.INVISIBLE);
 	}
 	
 	public class XSmartResourceClient extends XWalkResourceClient {
@@ -421,7 +350,7 @@ public class XSmartWebView extends XWalkView {
 		
         @Override
         public void onProgressChanged(XWalkView view, int progressInPercent) {
-        	if (view != XSmartWebView.this)
+        	if (view != SmartWebViewCrossWalk.this)
         	{
         		Log.e(TAG, "not the right one ...");
         		return;
@@ -441,12 +370,7 @@ public class XSmartWebView extends XWalkView {
 	    //it will always be call.
 		@Override
 	      public void onLoadStarted(XWalkView view, String url) {
-	    	  /*if (firstLoad)
-	    	  {
-	    		  firstLoad = false;
-	    		  return;
-	    	  }
-	    	  Log.i(TAG, "OnLoadStarted (not firstLoad) :"+url);*/
+
 	      }		
 			      
 	    @Override
@@ -467,13 +391,7 @@ public class XSmartWebView extends XWalkView {
 	    	  
 	    	if (catchLink == false)
 	    		return false;
-	    	
-/*	    	if (XSmartWebView.this.url == url)
-	    		return false;
-	    	
-	    	if (true)
-	    		return false;*/
-	    	
+
 	    	root.loadUrl(url);
 	    	return true;
 	    }
@@ -523,30 +441,52 @@ public class XSmartWebView extends XWalkView {
         public void onLoadFinished(XWalkView view, String url) {
             //super.onPageFinished(view, url);
             Log.i(TAG, "**onLoadFinished "+url+"**");
-            
-            //checkLoading();
-                        
+
+                        // force inject of appdeck.js if needed
+            view.evaluateJavascript(SmartWebViewCrossWalk.this.appDeck.appdeck_inject_js, new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    Log.i(TAG, "JSResult: "+value);
+                }
+            });
+
+
         }
         
         @Override
         public void onReceivedLoadError(XWalkView view, int errorCode, String description, String failingUrl)
         {
         	Log.i(TAG, "**onReceivedLoadError "+failingUrl+": "+errorCode+": "+description+" **");
-/*
-        	// this is the main url that is falling
-        	if (failingUrl.equalsIgnoreCase(url) && shouldLoadFromCache == true)
-        	{
-        		loadingFailed(errorCode, description);
-        	}
-        	else
-        	{
-        		Toast.makeText(getContext(), "" + failingUrl+ ": ("+url+") " +description, Toast.LENGTH_LONG).show();
-        	}
-*/
         }
         
 	}
-        
+
+    public class SmartWebViewCrossWalkResult implements SmartWebViewResult
+    {
+        XWalkJavascriptResult result;
+
+        SmartWebViewCrossWalkResult(XWalkJavascriptResult result)
+        {
+            this.result = result;
+        }
+
+        public void SmartWebViewResultCancel()
+        {
+            result.cancel();
+        }
+
+        public void SmartWebViewResultConfirm()
+        {
+            result.confirm();
+        }
+
+        public void SmartWebViewResultConfirmWithResult(String strResult)
+        {
+            result.confirmWithResult(strResult);
+        }
+
+    }
+
         	
 	public class XSmartUIClient  extends XWalkUIClient {
 		
@@ -568,9 +508,9 @@ public class XSmartWebView extends XWalkView {
 		{
 			if (message.startsWith("appdeckapi:") == true)
 			{
-				AppDeckApiCall call = new AppDeckApiCall(message.substring(11), defaultValue, result);
-				call.webview = view;
-				call.smartWebView = XSmartWebView.this;
+				AppDeckApiCall call = new AppDeckApiCall(message.substring(11), defaultValue, new SmartWebViewCrossWalkResult(result));
+				call.webview = SmartWebViewCrossWalk.this;
+				call.smartWebView = SmartWebViewCrossWalk.this;
 				call.appDeckFragment = root;
 				Boolean res = apiCall(call); //root.apiCall(call);
 				call.sendResult(res);
@@ -623,7 +563,17 @@ public class XSmartWebView extends XWalkView {
 		this.onShow();
 	}
 
-	public boolean touchDisabled = false;
+	private boolean touchDisabled = false;
+
+    public void setTouchDisabled(boolean touchDisabled)
+    {
+        this.touchDisabled = touchDisabled;
+    }
+
+    public boolean getTouchDisabled()
+    {
+        return this.touchDisabled;
+    }
 
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -634,14 +584,9 @@ public class XSmartWebView extends XWalkView {
     	return super.onTouchEvent(event);
     	
     }
-        
-    public void copyScrollTo(XSmartWebView target)
-    {
-    	computeScroll();
-    	int x = computeHorizontalScrollOffset();
-    	int y = computeVerticalScrollOffset();
-    	target.scrollTo(x, y);
-    }
+
+    public int fetchHorizontalScrollOffset() {return computeHorizontalScrollOffset(); }
+    public int fetchVerticalScrollOffset() {return computeVerticalScrollOffset();}
 
     public void sendJsEvent(String eventName, String eventDetailJSon)
     {
@@ -662,7 +607,7 @@ public class XSmartWebView extends XWalkView {
 			Log.i("API", uri.getPath()+" **DISABLE CATCH LINK**");
 			
 			boolean value = call.input.getBoolean("param");
-			((XSmartWebView)call.smartWebView).catchLink = value;
+			((SmartWebViewCrossWalk)call.smartWebView).catchLink = value;
 			
 			return true;
 		}
@@ -703,5 +648,15 @@ public class XSmartWebView extends XWalkView {
     	
     	return super.canScrollVertically(direction);
     }
-    
+
+
+    public boolean smartWebViewRestoreState(Bundle savedInstanceState)
+    {
+        return restoreState(savedInstanceState);
+    }
+
+    public boolean smartWebViewSaveState(Bundle outState)
+    {
+        return saveState(outState);
+    }
 }

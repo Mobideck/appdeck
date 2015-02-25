@@ -1,10 +1,8 @@
 package com.mobideck.appdeck;
 
-import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -17,35 +15,24 @@ import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorPro
 //import android.animation.Animator;
 //import android.animation.AnimatorListenerAdapter;
 
-import com.mobideck.appdeck.R;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Browser;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebView;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
 public class PageFragmentSwap extends AppDeckFragment {
 	
@@ -53,8 +40,11 @@ public class PageFragmentSwap extends AppDeckFragment {
 	
 	public PageSwipe pageSwipe;
 	
-	private XSmartWebView pageWebView;
-	private XSmartWebView pageWebViewAlt;
+	//private SmartWebViewCrossWalk pageWebView;
+	//private SmartWebViewCrossWalk pageWebViewAlt;
+
+    private SmartWebView pageWebView;
+    private SmartWebView pageWebViewAlt;
 
 	private boolean pageWebViewReady = false;
 	private boolean pageWebViewAltReady = false;	
@@ -109,10 +99,10 @@ public class PageFragmentSwap extends AppDeckFragment {
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         
 		//pageWebView = new SmartWebView(this);
-		pageWebView = new XSmartWebView(this);
+		pageWebView = SmartWebViewFactory.createSmartWebView(this);// new SmartWebViewCrossWalk(this);
 
     	//pageWebViewAlt = new SmartWebView(this);
-    	pageWebViewAlt = new XSmartWebView(this);
+    	pageWebViewAlt = SmartWebViewFactory.createSmartWebView(this);//new SmartWebViewCrossWalk(this);
     			
 		mAnimationDuration = getResources().getInteger(
                 android.R.integer.config_shortAnimTime);
@@ -128,7 +118,7 @@ public class PageFragmentSwap extends AppDeckFragment {
                 reloadInBackground();
             }
         });
-        swipeView.addView(pageWebView);
+        swipeView.addView(pageWebView.view);
         
         swipeViewAlt = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeAlt);
         swipeViewAlt.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
@@ -140,7 +130,7 @@ public class PageFragmentSwap extends AppDeckFragment {
                 reloadInBackground();
             }
         });
-        swipeViewAlt.addView(pageWebViewAlt);
+        swipeViewAlt.addView(pageWebViewAlt.view);
         swipeViewAlt.setVisibility(View.GONE);
         
         rootView.bringChildToFront(swipeView);
@@ -157,7 +147,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     		loadURLConfiguration(currentPageUrl);
     		menuItems = screenConfiguration.getDefaultPageMenuItems(uri, this);
     		this.loader.setMenuItems(menuItems);
-        	pageWebView.restoreState(savedInstanceState);
+        	pageWebView.ctl.smartWebViewRestoreState(savedInstanceState);
         } else {
         	loadPage(currentPageUrl);
         	//pageWebView.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
@@ -177,8 +167,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void onResume() {
     	super.onResume();
     	CookieSyncManager.getInstance().stopSync();
-    	pageWebView.resume();
-    	pageWebViewAlt.resume();
+    	pageWebView.ctl.resume();
+    	pageWebViewAlt.ctl.resume();
     	/*if (adview != null)
     		adview.resume();*/
 
@@ -202,8 +192,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void onPause() {
     	super.onPause();
     	CookieSyncManager.getInstance().sync();
-    	pageWebView.pause();
-    	pageWebViewAlt.pause();
+    	pageWebView.ctl.pause();
+    	pageWebViewAlt.ctl.pause();
     	/*if (adview != null)
     		adview.pause();*/
     };
@@ -213,7 +203,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     {
     	super.onSaveInstanceState(outState);
     	if (pageWebView != null)
-    		pageWebView.saveState(outState);
+    		pageWebView.ctl.smartWebViewSaveState(outState);
     }
     
     @Override
@@ -226,9 +216,9 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void onDestroy()
     {
     	if (pageWebView != null)
-    		pageWebView.clean();
+    		pageWebView.ctl.clean();
     	if (pageWebViewAlt != null)
-    		pageWebViewAlt.clean();
+    		pageWebViewAlt.ctl.clean();
     	super.onDestroy();
     }
     
@@ -242,7 +232,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     {
 		if (absoluteURL.startsWith("javascript:"))
 		{
-			pageWebView.loadUrl(absoluteURL);
+			pageWebView.ctl.loadUrl(absoluteURL);
 			return;
 		}
 		
@@ -274,7 +264,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		
 		Log.v(TAG, "SCREEN: "+screenConfiguration.title+" TTL: "+screenConfiguration.ttl);
 				
-		progressStart(pageWebView);
+		progressStart(pageWebView.view);
 		
 		// does page is in cache ?
 		CacheManager.CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);		
@@ -302,14 +292,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 		
 		if (loadFromCache)
 		{
-			pageWebView.setForceCache(true);			
+			pageWebView.ctl.setForceCache(true);
 			if (reloadInBackground)
 				shouldAutoReloadInbackground = true;
 		} else {
-			pageWebView.setForceCache(false);
+			pageWebView.ctl.setForceCache(false);
 		}
 		
-		pageWebView.loadUrl(absoluteUrl);
+		pageWebView.ctl.loadUrl(absoluteUrl);
 		lastUrlLoad = System.currentTimeMillis();
 		loader.invalidateOptionsMenu();
 	}
@@ -331,14 +321,14 @@ public class PageFragmentSwap extends AppDeckFragment {
     	    	
     	swipeView.setRefreshing(false);
     	swipeViewAlt.setRefreshing(false);
-		if (origin == pageWebView && shouldAutoReloadInbackground == true)
+		if (origin == pageWebView.view && shouldAutoReloadInbackground == true)
 		{
 			Log.i(TAG, "+++ Reload In Background +++");
 			shouldAutoReloadInbackground = false;
 			reloadInBackground();
 		}
 		
-		if (origin == pageWebViewAlt)
+		if (origin == pageWebViewAlt.view)
 			swapWebView();
 				
     }
@@ -362,14 +352,14 @@ public class PageFragmentSwap extends AppDeckFragment {
     		return;
     	}*/
     	
-    	if (origin == pageWebView)
+    	if (origin == pageWebView.view)
     	{
     		//pageWebView.load(uri.toString(), "Check Your Network ...");
     		//Toast.makeText(origin.getContext(), "Check your network", Toast.LENGTH_LONG).show();    		
-    		pageWebView.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
+    		pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
     		
     	}
-    	if (origin == pageWebViewAlt)
+    	if (origin == pageWebViewAlt.view)
     	{
     		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
     		//setVisibility(View.INVISIBLE);
@@ -390,9 +380,9 @@ public class PageFragmentSwap extends AppDeckFragment {
     	}*/
     	reloadInProgress = true;
 
-    	pageWebView.stopLoading();
-    	pageWebViewAlt.stopLoading();
-    	pageWebViewAlt.setForceCache(false);
+    	pageWebView.ctl.stopLoading();
+    	pageWebViewAlt.ctl.stopLoading();
+    	pageWebViewAlt.ctl.setForceCache(false);
     	
     	rootView.bringChildToFront(swipeView);
     	if (adview != null)
@@ -402,8 +392,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	//page_layout_alt.removeAllViews();
     	//etSupportProgressBarIndeterminateVisibility(true);
     	//pageWebViewAlt.stopLoading();
-    	progressStart(pageWebViewAlt);
-    	pageWebViewAlt.loadUrl(currentPageUrl);
+    	progressStart(pageWebViewAlt.view);
+    	pageWebViewAlt.ctl.loadUrl(currentPageUrl);
 		lastUrlLoad = System.currentTimeMillis();
     }
     
@@ -424,11 +414,15 @@ public class PageFragmentSwap extends AppDeckFragment {
     	
     	swapInProgress = true;
 
-    	pageWebView.touchDisabled = true;
-    	pageWebViewAlt.touchDisabled = true;
-    	pageWebViewAlt.setVerticalScrollBarEnabled(false);
-    	
-    	pageWebView.copyScrollTo(pageWebViewAlt);
+    	pageWebView.ctl.setTouchDisabled(true);
+    	pageWebViewAlt.ctl.setTouchDisabled(true);
+    	pageWebViewAlt.view.setVerticalScrollBarEnabled(false);
+
+
+        int x = pageWebView.ctl.fetchHorizontalScrollOffset();
+        int y = pageWebView.ctl.fetchVerticalScrollOffset();
+        pageWebViewAlt.ctl.scrollTo(x, y);
+    	//pageWebView.copyScrollTo(pageWebViewAlt);
     	swipeViewAlt.setAlpha(0f);
     	swipeViewAlt.setVisibility(View.VISIBLE);
     	rootView.bringChildToFront(swipeViewAlt);
@@ -448,19 +442,19 @@ public class PageFragmentSwap extends AppDeckFragment {
     	                    @Override
     	                    public void onAnimationEnd(Animator animation) {
     	                    	swipeView.setVisibility(View.GONE);
-    	            			pageWebView.stopLoading();
+    	            			pageWebView.ctl.stopLoading();
     	            			
-    	            			pageWebView.touchDisabled = false;
-    	            	    	pageWebViewAlt.touchDisabled = false;
-    	            	    	pageWebViewAlt.setVerticalScrollBarEnabled(true);
+    	            			pageWebView.ctl.setTouchDisabled(false);
+    	            	    	pageWebViewAlt.ctl.setTouchDisabled(false);
+    	            	    	pageWebViewAlt.view.setVerticalScrollBarEnabled(true);
     	            	    	
     	            	    	// swap webview and layout
     	            	    	//SmartWebView tmpWebView = pageWebView;
-    	            	    	XSmartWebView tmpWebView = pageWebView;
+    	            	    	SmartWebView tmpWebView = pageWebView;
     	            	    	pageWebView = pageWebViewAlt;
     	            	    	pageWebViewAlt = tmpWebView;
     	            	    	
-    	            	    	pageWebViewAlt.unloadPage();
+    	            	    	pageWebViewAlt.ctl.unloadPage();
     	            	    	
     	            	    	SwipeRefreshLayout tmp = swipeView;
     	            	    	swipeView = swipeViewAlt;
@@ -733,9 +727,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 		if (pageWebView != null)
 		{
 			if (hidden)
-				pageWebView.pause();
+				pageWebView.ctl.pause();
 			else
-				pageWebView.resume();
+				pageWebView.ctl.resume();
 		}
 	}
 	

@@ -29,7 +29,7 @@ import android.widget.FrameLayout;
 public class PageSwipe extends AppDeckFragment {
 
 	public static final String TAG = "PageSwipe";
-	 public static final String ARG_OBJECT = "object";	
+	public static final String ARG_OBJECT = "object";
 	
 	 View adview;
 	 FrameLayout layout ;

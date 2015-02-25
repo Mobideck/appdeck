@@ -6,9 +6,9 @@ import android.webkit.JavascriptInterface;
 public class AppDeckJSApi {
 
 	public static String TAG = "AppDeckJSApi";
-	SmartWebView webview;
+	SmartWebViewClassic webview;
 	
-	AppDeckJSApi(SmartWebView webview)
+	AppDeckJSApi(SmartWebViewClassic webview)
 	{
 		this.webview = webview;
 		webview.jsLock.lock();

@@ -1,6 +1,5 @@
 package org.littleshoot.proxy.impl;
 
-import static org.littleshoot.proxy.impl.ConnectionState.*;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -18,9 +17,19 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+import org.littleshoot.proxy.ActivityTracker;
+import org.littleshoot.proxy.FlowContext;
+import org.littleshoot.proxy.FullFlowContext;
+import org.littleshoot.proxy.HttpFilters;
+import org.littleshoot.proxy.ProxyAuthenticator;
+import org.littleshoot.proxy.SslEngineSource;
 
+import javax.net.ssl.SSLSession;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -32,17 +41,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.net.ssl.SSLSession;
-
-import org.littleshoot.proxy.ActivityTracker;
-import org.littleshoot.proxy.FlowContext;
-import org.littleshoot.proxy.FullFlowContext;
-import org.littleshoot.proxy.HttpFilters;
-import org.littleshoot.proxy.SslEngineSource;
-import org.littleshoot.proxy.extras.Base64;
-import org.littleshoot.proxy.extras.StringUtils;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_INITIAL;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_PROXY_AUTHENTICATION;
+import static org.littleshoot.proxy.impl.ConnectionState.DISCONNECT_REQUESTED;
+import static org.littleshoot.proxy.impl.ConnectionState.NEGOTIATING_CONNECT;
 
 /**
  * <p>
@@ -118,11 +124,16 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      */
     private volatile boolean mitming = false;
 
+    private AtomicBoolean authenticated = new AtomicBoolean();
+
+    private final GlobalTrafficShapingHandler globalTrafficShapingHandler;
+
     ClientToProxyConnection(
             final DefaultHttpProxyServer proxyServer,
             SslEngineSource sslEngineSource,
             boolean authenticateClients,
-            ChannelPipeline pipeline) {
+            ChannelPipeline pipeline,
+            GlobalTrafficShapingHandler globalTrafficShapingHandler) {
         super(AWAITING_INITIAL, proxyServer, false);
 
         initChannelPipeline(pipeline);
@@ -145,6 +156,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
                                 }
                             });
         }
+        this.globalTrafficShapingHandler = globalTrafficShapingHandler;
 
         LOG.debug("Created ClientToProxyConnection");
     }
@@ -194,7 +206,8 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
                 originalRequest, ctx);
 
         // Do the pre filtering
-        if (shortCircuitRespond(currentFilters.requestPre(httpRequest))) {
+        if (shortCircuitRespond(currentFilters
+                .clientToProxyRequest(httpRequest))) {
             return DISCONNECT_REQUESTED;
         }
 
@@ -232,7 +245,15 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
                         proxyServer,
                         this,
                         serverHostAndPort,
-                        httpRequest);
+                        currentFilters,
+                        httpRequest,
+                        globalTrafficShapingHandler);
+                if (currentServerConnection == null) {
+                    LOG.debug("Unable to create server connection, probably no chained proxies available");
+                    writeBadGateway(httpRequest);
+                    resumeReading();
+                    return DISCONNECT_REQUESTED;
+                }
                 // Remember the connection for later
                 serverConnectionsByHostAndPort.put(serverHostAndPort,
                         currentServerConnection);
@@ -249,7 +270,8 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
         }
 
         modifyRequestHeadersToReflectProxying(httpRequest);
-        if (shortCircuitRespond(currentFilters.requestPost(httpRequest))) {
+        if (shortCircuitRespond(currentFilters
+                .proxyToServerRequest(httpRequest))) {
             return DISCONNECT_REQUESTED;
         }
 
@@ -268,8 +290,8 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
 
     @Override
     protected void readHTTPChunk(HttpContent chunk) {
-        currentFilters.requestPre(chunk);
-        currentFilters.requestPost(chunk);
+        currentFilters.clientToProxyRequest(chunk);
+        currentFilters.proxyToServerRequest(chunk);
         currentServerConnection.write(chunk);
     }
 
@@ -301,7 +323,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
     void respond(ProxyToServerConnection serverConnection, HttpFilters filters,
             HttpRequest currentHttpRequest, HttpResponse currentHttpResponse,
             HttpObject httpObject) {
-        httpObject = filters.responsePre(httpObject);
+        httpObject = filters.serverToProxyResponse(httpObject);
         if (httpObject == null) {
             forceDisconnect(serverConnection);
             return;
@@ -313,7 +335,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
             modifyResponseHeadersToReflectProxying(httpResponse);
         }
 
-        httpObject = filters.responsePost(httpObject);
+        httpObject = filters.proxyToClientResponse(httpObject);
         if (httpObject == null) {
             forceDisconnect(serverConnection);
             return;
@@ -586,7 +608,9 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
     @Override
     protected void exceptionCaught(Throwable cause) {
         String message = "Caught an exception on ClientToProxyConnection";
-        if (cause instanceof ClosedChannelException) {
+        boolean shouldWarn = cause instanceof ClosedChannelException ||
+                cause.getMessage().contains("Connection reset by peer");
+        if (shouldWarn) {
             LOG.warn(message, cause);
         } else {
             LOG.error(message, cause);
@@ -666,7 +690,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
             disconnect();
         }
     }
-    
+
     private void forceDisconnect(ProxyToServerConnection serverConnection) {
         LOG.debug("Forcing disconnect");
         serverConnection.disconnect();
@@ -689,8 +713,11 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
             // through to the same close semantics we'd otherwise use.
             if (httpObject != null) {
                 if (!ProxyUtils.isLastChunk(httpObject)) {
-                    LOG.debug("Not closing on middle chunk for {}",
-                            req.getUri());
+                    String uri = null;
+                    if (req != null) {
+                        uri = req.getUri();
+                    }
+                    LOG.debug("Not closing on middle chunk for {}", uri);
                     return false;
                 } else {
                     LOG.debug("Last chunk... using normal closing rules");
@@ -790,12 +817,20 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      * @return
      */
     private boolean authenticationRequired(HttpRequest request) {
-        if (!request.headers().contains(HttpHeaders.Names.PROXY_AUTHORIZATION)) {
-            if (proxyServer.getProxyAuthenticator() != null) {
-                writeAuthenticationRequired();
-                return true;
-            }
+
+        if (authenticated.get()) {
             return false;
+        }
+
+        final ProxyAuthenticator authenticator = proxyServer
+                .getProxyAuthenticator();
+
+        if (authenticator == null)
+            return false;
+
+        if (!request.headers().contains(HttpHeaders.Names.PROXY_AUTHORIZATION)) {
+            writeAuthenticationRequired();
+            return true;
         }
 
         List<String> values = request.headers().getAll(
@@ -803,14 +838,14 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
         String fullValue = values.iterator().next();
         String value = StringUtils.substringAfter(fullValue, "Basic ")
                 .trim();
-        byte[] decodedValue = Base64.decode(value);
+        byte[] decodedValue = Base64.decodeBase64(value);
         try {
             String decodedString = new String(decodedValue, "UTF-8");
             String userName = StringUtils.substringBefore(decodedString,
                     ":");
             String password = StringUtils.substringAfter(decodedString,
                     ":");
-            if (!proxyServer.getProxyAuthenticator().authenticate(userName,
+            if (!authenticator.authenticate(userName,
                     password)) {
                 writeAuthenticationRequired();
                 return true;
@@ -825,6 +860,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
                 HttpHeaders.Names.PROXY_AUTHORIZATION);
         LOG.info(authentication);
         request.headers().remove(HttpHeaders.Names.PROXY_AUTHORIZATION);
+        authenticated.set(true);
         return false;
     }
 
@@ -899,7 +935,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
         if (!proxyServer.isTransparent()) {
             LOG.debug("Modifying request headers for proxying");
 
-            if (!currentServerConnection.hasDownstreamChainedProxy()) {
+            if (!currentServerConnection.hasUpstreamChainedProxy()) {
                 LOG.debug("Modifying request for proxy chaining");
                 // Strip host from uri
                 String uri = httpRequest.getUri();
@@ -1037,7 +1073,6 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
 
     /**
      * Tells the client that the connection to the server timed out.
-     *
      */
     private void writeGatewayTimeout() {
         String body = "Gateway Timeout";
@@ -1232,6 +1267,9 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
     }
 
     public InetSocketAddress getClientAddress() {
+        if (channel == null) {
+            return null;
+        }
         return (InetSocketAddress) channel.remoteAddress();
     }
 

@@ -19,7 +19,7 @@
 
 
 
-    <link href="/css/jquery/cssclair?v=EWSO6bGyhhYe3DZ9z-HwqTzqkJuc1tv1seLI6nA0moY1" rel="stylesheet"/>
+    <link href="/css/jquery/cssclair?v=_IauXNgD5aVc-Jv9MTf5-z7osijgMbETLaOKwuG5LF41" rel="stylesheet"/>
 
 
 
@@ -45,10 +45,20 @@
         }
 
     </script>
-    
-    <meta name="appdeck-menu-entry" icon="!config" content="javascript:openright()" />
+
+    <meta name="appdeck-menu-entry" icon="!config" content="javascript:openright()"/>
+    <style>
+        #page, body {
+            background-color: #8A979D !important;
+        }
+
+        #menu {
+            width: inherit !important;
+        }
+    </style>
+
 </head>
-<body>
+<body class="appdeck">
     <div id="page" data-role="page" class="ui-responsive-panel" 
     class="gridded-bg";
 >
@@ -59,7 +69,7 @@
 
 
         <script src="/js/appoverride.js"></script>
-<section id="menu" class="menu">
+<section id="menu" class="menu appdeck">
     
 <div id="menu_content">
         <div id="closeMenu">
@@ -138,7 +148,7 @@
                 $.mobile.ajaxEnabled = false;
             });
         </script>
-    <script src="/js/app?v=SWBCRzjph99wrRtAc1ZpSEcTwYVDGON5-9QkPvk8FG81"></script>
+    <script src="/js/app?v=tpipA1qO7wePuYLi67LyUM0E6B2x1YarIeBOJR7dB3U1"></script>
 
     
 

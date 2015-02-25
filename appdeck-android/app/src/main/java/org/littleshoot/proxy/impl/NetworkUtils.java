@@ -9,21 +9,17 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
-import android.util.Log;
-
-/*import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;*/
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Network utilities methods.
  */
 public class NetworkUtils {
 
-/*    private static final Logger LOG =
-            LoggerFactory.getLogger(NetworkUtils.class);*/
+    private static final Logger LOG =
+            LoggerFactory.getLogger(NetworkUtils.class);
 
-	public static String TAG = "NetworkUtils";
-	
     /**
      * Many Linux systems typically return 127.0.0.1 as the localhost address
      * instead of the address assigned on the local network. It has to do with
@@ -67,7 +63,7 @@ public class NetworkUtils {
             final InetAddress address = sock.getLocalAddress();
             return address;
         } catch (final SocketException e) {
-            Log.i(TAG, "Exception getting address:" + e.getMessage());
+            LOG.info("Exception getting address", e);
             return InetAddress.getLocalHost();
         } finally {
             if (sock != null) {

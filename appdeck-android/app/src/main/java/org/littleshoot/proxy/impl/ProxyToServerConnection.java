@@ -1,16 +1,16 @@
 package org.littleshoot.proxy.impl;
 
-import static org.littleshoot.proxy.impl.ConnectionState.*;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ChannelFactory;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.AdaptiveRecvByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
-//import io.netty.channel.udt.nio.NioUdtProvider;
+import io.netty.channel.udt.nio.NioUdtProvider;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpMessage;
 import io.netty.handler.codec.http.HttpMethod;
@@ -20,21 +20,11 @@ import io.netty.handler.codec.http.HttpRequestEncoder;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.util.ReferenceCounted;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import javax.net.ssl.SSLSession;
-
-import org.littleshoot.dnssec4j.VerifiedAddressFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.littleshoot.proxy.ActivityTracker;
 import org.littleshoot.proxy.ChainedProxy;
 import org.littleshoot.proxy.ChainedProxyAdapter;
@@ -44,10 +34,22 @@ import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.MitmManager;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.UnknownTransportProtocolError;
-import org.littleshoot.proxy.extras.StringUtils;
-//import org.slf4j.spi.LocationAwareLogger;
+import org.slf4j.spi.LocationAwareLogger;
 
-import android.util.Log;
+import javax.net.ssl.SSLSession;
+import java.net.ConnectException;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CHUNK;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_CONNECT_OK;
+import static org.littleshoot.proxy.impl.ConnectionState.AWAITING_INITIAL;
+import static org.littleshoot.proxy.impl.ConnectionState.CONNECTING;
+import static org.littleshoot.proxy.impl.ConnectionState.DISCONNECTED;
+import static org.littleshoot.proxy.impl.ConnectionState.HANDSHAKING;
 
 /**
  * <p>
@@ -76,8 +78,6 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     private volatile ChainedProxy chainedProxy;
     private final Queue<ChainedProxy> availableChainedProxies;
 
-    public static String TAG = "ProxyToServerConnection";
-    
     /**
      * The filters to apply to response/chunks received from server.
      */
@@ -121,11 +121,22 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     private volatile HttpResponse currentHttpResponse;
 
     /**
+     * Limits bandwidth when throttling is enabled.
+     */
+    private volatile GlobalTrafficShapingHandler trafficHandler;
+
+    /**
+     * Minimum size of the adaptive recv buffer when throttling is enabled. 
+     */
+    private static final int MINIMUM_RECV_BUFFER_SIZE_BYTES = 64;
+    
+    /**
      * Create a new ProxyToServerConnection.
      * 
      * @param proxyServer
      * @param clientConnection
      * @param serverHostAndPort
+     * @param initialFilters
      * @param initialHttpRequest
      * @return
      * @throws UnknownHostException
@@ -133,7 +144,9 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     static ProxyToServerConnection create(DefaultHttpProxyServer proxyServer,
             ClientToProxyConnection clientConnection,
             String serverHostAndPort,
-            HttpRequest initialHttpRequest)
+            HttpFilters initialFilters,
+            HttpRequest initialHttpRequest,
+            GlobalTrafficShapingHandler globalTrafficShapingHandler)
             throws UnknownHostException {
         Queue<ChainedProxy> chainedProxies = new ConcurrentLinkedQueue<ChainedProxy>();
         ChainedProxyManager chainedProxyManager = proxyServer
@@ -141,9 +154,18 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
         if (chainedProxyManager != null) {
             chainedProxyManager.lookupChainedProxies(initialHttpRequest,
                     chainedProxies);
+            if (chainedProxies.size() == 0) {
+                // ChainedProxyManager returned no proxies, can't connect
+                return null;
+            }
         }
-        return new ProxyToServerConnection(proxyServer, clientConnection,
-                serverHostAndPort, chainedProxies.poll(), chainedProxies);
+        return new ProxyToServerConnection(proxyServer,
+                clientConnection,
+                serverHostAndPort,
+                chainedProxies.poll(),
+                chainedProxies,
+                initialFilters,
+                globalTrafficShapingHandler);
     }
 
     private ProxyToServerConnection(
@@ -151,13 +173,21 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
             ClientToProxyConnection clientConnection,
             String serverHostAndPort,
             ChainedProxy chainedProxy,
-            Queue<ChainedProxy> availableChainedProxies)
+            Queue<ChainedProxy> availableChainedProxies,
+            HttpFilters initialFilters,
+            GlobalTrafficShapingHandler globalTrafficShapingHandler)
             throws UnknownHostException {
         super(DISCONNECTED, proxyServer, true);
         this.clientConnection = clientConnection;
         this.serverHostAndPort = serverHostAndPort;
         this.chainedProxy = chainedProxy;
         this.availableChainedProxies = availableChainedProxies;
+        this.trafficHandler = globalTrafficShapingHandler;
+        this.currentFilters = initialFilters;
+
+        // Report connection status to HttpFilters
+        this.currentFilters.proxyToServerConnectionQueued();
+
         setupConnectionParameters();
     }
 
@@ -181,11 +211,17 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     protected ConnectionState readHTTPInitial(HttpResponse httpResponse) {
         LOG.debug("Received raw response: {}", httpResponse);
 
+        currentFilters.serverToProxyResponseReceiving();
+
         rememberCurrentResponse(httpResponse);
         respondWith(httpResponse);
 
-        return ProxyUtils.isChunked(httpResponse) ? AWAITING_CHUNK
-                : AWAITING_INITIAL;
+        if (ProxyUtils.isChunked(httpResponse)) {
+            return AWAITING_CHUNK;
+        } else {
+            currentFilters.serverToProxyResponseReceived();
+            return AWAITING_INITIAL;
+        }
     }
 
     @Override
@@ -303,6 +339,30 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
      **************************************************************************/
 
     @Override
+    protected void become(ConnectionState newState) {
+        // Report connection status to HttpFilters
+        if (getCurrentState() == DISCONNECTED && newState == CONNECTING) {
+            currentFilters.proxyToServerConnectionStarted();
+        } else if (getCurrentState() == CONNECTING) {
+            if (newState == HANDSHAKING) {
+                currentFilters.proxyToServerConnectionSSLHandshakeStarted();
+            } else if (newState == AWAITING_INITIAL) {
+                currentFilters.proxyToServerConnectionSucceeded();
+            } else if (newState == DISCONNECTED) {
+                currentFilters.proxyToServerConnectionFailed();
+            }
+        } else if (getCurrentState() == HANDSHAKING
+                && newState == AWAITING_INITIAL) {
+            currentFilters.proxyToServerConnectionSucceeded();
+        } else if (getCurrentState() == AWAITING_CHUNK
+                && newState != AWAITING_CHUNK) {
+            currentFilters.serverToProxyResponseReceived();
+        }
+
+        super.become(newState);
+    }
+
+    @Override
     protected void becameSaturated() {
         super.becameSaturated();
         this.clientConnection.serverBecameSaturated(this);
@@ -313,7 +373,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
         super.becameWritable();
         this.clientConnection.serverBecameWriteable(this);
     }
-    
+
     @Override
     protected void timedOut() {
         super.timedOut();
@@ -337,37 +397,23 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     @Override
     protected void exceptionCaught(Throwable cause) {
         String message = "Caught exception on proxy -> web connection";
-        //int logLevel = LocationAwareLogger.WARN_INT;
-        boolean debug = false;
+        int logLevel = LocationAwareLogger.WARN_INT;
         if (cause != null) {
             String causeMessage = cause.getMessage();
             if (cause instanceof ConnectException) {
-            	Log.d(TAG, message + ": "+ cause.getMessage());
-            	debug = true;
+                logLevel = LocationAwareLogger.DEBUG_INT;
             } else if (causeMessage != null) {
                 if (causeMessage.contains("Connection reset by peer")) {
-                    //logLevel = LocationAwareLogger.DEBUG_INT;
-                    Log.d(TAG, message + ": "+ cause.getMessage());
-                    debug = true;
+                    logLevel = LocationAwareLogger.DEBUG_INT;
                 } else if (causeMessage.contains("event executor terminated")) {
-                    //logLevel = LocationAwareLogger.DEBUG_INT;
-                    Log.d(TAG, message + ": "+ cause.getMessage());
-                    debug = true;
+                    logLevel = LocationAwareLogger.DEBUG_INT;
                 }
             }
         }
-        if (debug == false)
-        	Log.w(TAG, message + ": "+ cause.getMessage());
-        	//LOG.log(logLevel, message, cause);
+        LOG.log(logLevel, message, cause);
 
         if (!is(DISCONNECTED)) {
-            //LOG.log(logLevel, "Disconnecting open connection");
-            if (debug)
-            	Log.d(TAG, "Disconnecting open connection");
-            else
-            	Log.w(TAG, "Disconnecting open connection");
-
-        	//Log.d(TAG, "Disconnecting open connection");
+            LOG.log(logLevel, "Disconnecting open connection");
             disconnect();
         }
         // This can happen if we couldn't make the initial connection due
@@ -391,7 +437,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
         return serverHostAndPort;
     }
 
-    public boolean hasDownstreamChainedProxy() {
+    public boolean hasUpstreamChainedProxy() {
         return getChainedProxyAddress() != null;
     }
 
@@ -406,6 +452,11 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
 
     public HttpRequest getInitialRequest() {
         return initialRequest;
+    }
+
+    @Override
+    protected HttpFilters getHttpFiltersFromProxyServer(HttpRequest httpRequest) {
+        return currentFilters;
     }
 
     /***************************************************************************
@@ -443,7 +494,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
         // We need to make a copy here because the response will be
         // modified in various ways before we need to do things like
         // analyze response headers for whether or not to close the
-        // connection (which may not happen for awhile for large, chunked
+        // connection (which may not happen for a while for large, chunked
         // responses, for example).
         currentHttpResponse = ProxyUtils.copyMutableResponseFields(response);
     }
@@ -498,7 +549,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
                         .then(serverConnection.MitmEncryptClientChannel);
             } else {
                 // If we're chaining, forward the CONNECT request
-                if (hasDownstreamChainedProxy()) {
+                if (hasUpstreamChainedProxy()) {
                     connectionFlow.then(
                             serverConnection.HTTPCONNECTWithChainedProxy);
                 }
@@ -535,11 +586,11 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
                     }
                 });
                 break;
-            /*case UDT:
+            case UDT:
                 LOG.debug("Connecting to server with UDT");
                 cb.channelFactory(NioUdtProvider.BYTE_CONNECTOR)
                         .option(ChannelOption.SO_REUSEADDR, true);
-                break;*/
+                break;
             default:
                 throw new UnknownTransportProtocolError(transportProtocol);
             }
@@ -549,7 +600,8 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
                     initChannelPipeline(ch.pipeline(), initialRequest);
                 };
             });
-            cb.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 40 * 1000);
+            cb.option(ChannelOption.CONNECT_TIMEOUT_MILLIS,
+                    proxyServer.getConnectTimeout());
 
             if (localAddress != null) {
                 return cb.connect(remoteAddress, localAddress);
@@ -661,11 +713,15 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
         }
         this.chainedProxy = this.availableChainedProxies.poll();
         if (chainedProxy != null) {
+            // Remove ourselves as handler on the old context
+            this.ctx.pipeline().remove(this);
+            this.ctx.close();
+            this.ctx = null;
             this.setupConnectionParameters();
             this.connectAndWrite(initialRequest);
-            return true;
+            return true; // yes, we fell back
         } else {
-            return false;
+            return false; // nothing to fall back to
         }
     }
 
@@ -683,7 +739,20 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
             this.localAddress = chainedProxy.getLocalAddress();
         } else {
             this.transportProtocol = TransportProtocol.TCP;
-            this.remoteAddress = addressFor(serverHostAndPort, proxyServer);
+
+            // Report DNS resolution to HttpFilters
+            this.remoteAddress = this.currentFilters
+                    .proxyToServerResolutionStarted(serverHostAndPort);
+            if (this.remoteAddress == null) {
+                this.remoteAddress = addressFor(serverHostAndPort, proxyServer);
+            } else if (this.remoteAddress.isUnresolved()) {
+                // filter returned an unresolved address, so resolve it using the proxy server's resolver
+                this.remoteAddress = proxyServer.getServerResolver().resolve(this.remoteAddress.getHostName(),
+                        this.remoteAddress.getPort());
+            }
+            this.currentFilters.proxyToServerResolutionSucceeded(
+                    serverHostAndPort, this.remoteAddress);
+
             this.localAddress = null;
         }
     }
@@ -696,6 +765,11 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
      */
     private void initChannelPipeline(ChannelPipeline pipeline,
             HttpRequest httpRequest) {
+
+        if (trafficHandler != null) {
+            pipeline.addLast("global-traffic-shaping", trafficHandler);
+        }
+
         pipeline.addLast("bytesReadMonitor", bytesReadMonitor);
         pipeline.addLast("decoder", new HeadAwareHttpResponseDecoder(
                 8192,
@@ -760,6 +834,8 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
      * Build an {@link InetSocketAddress} for the given hostAndPort.
      * 
      * @param hostAndPort
+     * @param proxyServer
+     *            the current {@link DefaultHttpProxyServer}
      * @return
      * @throws UnknownHostException
      *             if hostAndPort could not be resolved
@@ -779,14 +855,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
             port = 80;
         }
 
-        if (proxyServer.isUseDnsSec()) {
-            return VerifiedAddressFactory.newInetSocketAddress(host, port,
-                    proxyServer.isUseDnsSec());
-        } else {
-            InetAddress ia = InetAddress.getByName(host);
-            String address = ia.getHostAddress();
-            return new InetSocketAddress(address, port);
-        }
+        return proxyServer.getServerResolver().resolve(host, port);
     }
 
     /***************************************************************************

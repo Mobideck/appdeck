@@ -23,22 +23,18 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
-import org.littleshoot.proxy.extras.NumberUtils;
-import org.littleshoot.proxy.extras.StringUtils;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
-import android.util.Log;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for the proxy.
  */
 public class ProxyUtils {
 
-    //private static final Logger LOG = LoggerFactory.getLogger(ProxyUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProxyUtils.class);
 
-	public static String TAG = "ProxyUtils"; 
-	
     private static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
     /**
@@ -53,7 +49,7 @@ public class ProxyUtils {
             final InetAddress localAddress = NetworkUtils.getLocalHost();
             hostName = localAddress.getHostName();
         } catch (final UnknownHostException e) {
-            Log.e(TAG, "Could not lookup host:" + e.getMessage());
+            LOG.error("Could not lookup host", e);
             throw new IllegalStateException("Could not determine host!", e);
         }
         final StringBuilder sb = new StringBuilder();
@@ -306,12 +302,16 @@ public class ProxyUtils {
     }
     
     public static int extractInt(final Properties props, final String key) {
+        return extractInt(props, key, -1);
+    }
+    
+    public static int extractInt(final Properties props, final String key, int defaultValue) {
         final String readThrottleString = props.getProperty(key);
         if (StringUtils.isNotBlank(readThrottleString) &&
             NumberUtils.isNumber(readThrottleString)) {
             return Integer.parseInt(readThrottleString);
         }
-        return -1;
+        return defaultValue;
     }
 
     public static boolean isCONNECT(HttpObject httpObject) {

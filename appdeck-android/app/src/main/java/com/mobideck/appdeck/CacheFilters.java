@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -185,7 +186,7 @@ public class CacheFilters implements HttpFilters {
     }
     
     @Override
-    public HttpResponse requestPre(HttpObject httpObject) {
+    public HttpResponse clientToProxyRequest(HttpObject httpObject) {
 		try {
     	if (httpObject instanceof DefaultHttpRequest)
     	{
@@ -281,14 +282,14 @@ public class CacheFilters implements HttpFilters {
     }
 
     @Override
-    public HttpResponse requestPost(HttpObject httpObject) {
-    	//Log.i(TAG, "requestPost < " + absoluteURL);
+    public HttpResponse proxyToServerRequest(HttpObject httpObject) {
+    	//Log.i(TAG, "proxyToServerRequest < " + absoluteURL);
 
         return null;
     }
     
     @Override
-    public HttpObject responsePre(HttpObject httpObject) {
+    public HttpObject serverToProxyResponse(HttpObject httpObject) {
     	try {
     	// create output stream that will store cache
 		if (skipCacheStream == false && cacheStream == null && httpObject instanceof HttpResponse)
@@ -308,7 +309,8 @@ public class CacheFilters implements HttpFilters {
 			}*/
 
 			if (code == 200)
-			{			
+			{
+                //Log.i(TAG, "< serverToProxyResponse CACHE_STORE " + absoluteURL);
 				String path = appDeck.cache.getCacheEntryPath(absoluteURL);
 				try {
 					cacheStream = new FileOutputStream(new File(path));
@@ -343,14 +345,17 @@ public class CacheFilters implements HttpFilters {
     	// write a chunk		
     	if (httpObject instanceof HttpContent)
     	{
-			//Log.i(TAG, "< HttpResponse CHUNK " + absoluteURL);
+			//Log.i(TAG, "< serverToProxyResponse CHUNK " + absoluteURL);
 			HttpContent content = (HttpContent)httpObject;
+
     		if (cacheStream != null)
 			{
 				try {
-					byte[] data = content.content().array();
-					//Log.i(TAG, "< HttpResponse CHUNK " + data.length);
-					cacheStream.write(data);
+                    ByteBuf bb = content.content();
+                    byte[] data = bb.array();
+                    //Log.i(TAG, "< serverToProxyResponse CHUNK " + bb.readableBytes() + " bytes");
+
+                    cacheStream.write(data, bb.arrayOffset(), bb.readableBytes());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -378,7 +383,7 @@ public class CacheFilters implements HttpFilters {
     }
 
     @Override
-    public HttpObject responsePost(HttpObject httpObject) {
+    public HttpObject proxyToClientResponse(HttpObject httpObject) {
     	
 		if (httpObject instanceof HttpResponse)
 		{
@@ -393,5 +398,59 @@ public class CacheFilters implements HttpFilters {
 		}
         return httpObject;
     }
-	
+
+    @Override
+    public void proxyToServerRequestSending() {
+
+    }
+
+    @Override
+    public void proxyToServerRequestSent() {
+
+    }
+
+    @Override
+    public void serverToProxyResponseReceiving() {
+
+    }
+
+    @Override
+    public void serverToProxyResponseReceived() {
+
+    }
+
+    @Override
+    public void proxyToServerConnectionQueued() {
+
+    }
+
+    @Override
+    public InetSocketAddress proxyToServerResolutionStarted(String resolvingServerHostAndPort) {
+        return null;
+    }
+
+    @Override
+    public void proxyToServerResolutionSucceeded(String serverHostAndPort, InetSocketAddress resolvedRemoteAddress) {
+
+    }
+
+    @Override
+    public void proxyToServerConnectionStarted() {
+
+    }
+
+    @Override
+    public void proxyToServerConnectionSSLHandshakeStarted() {
+
+    }
+
+    @Override
+    public void proxyToServerConnectionFailed() {
+
+    }
+
+    @Override
+    public void proxyToServerConnectionSucceeded() {
+
+    }
 }

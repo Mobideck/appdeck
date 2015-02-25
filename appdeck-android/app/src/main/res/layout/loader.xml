@@ -27,7 +27,7 @@
 		    android:id="@+id/adTakeOver"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    widespace:sid="2b8766c3-9cd4-4bf9-9cdf-8c8b3816cc7b"
+		    widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
 		    widespace:autostart="true"
 		    widespace:autoupdate="true"
 		/>
@@ -37,7 +37,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            widespace:sid="0c101de9-1dca-4163-b9fe-8d010df1422c"
+            widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
             widespace:autostart="true"
             widespace:autoupdate="true"
             />

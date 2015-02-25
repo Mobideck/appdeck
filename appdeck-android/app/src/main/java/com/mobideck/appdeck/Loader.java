@@ -12,9 +12,7 @@ import org.apache.http.Header;
 import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
-import org.xwalk.core.XWalkPreferences;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,7 +23,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -36,21 +33,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
-import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.View;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.mobideck.appdeck.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -66,7 +57,7 @@ public class Loader extends ActionBarActivity {
 
 
 	// widespace
-    private static final String SPLASH_SID = "db28f022-c588-4c4f-9ba3-f5fb12ace5d1";
+    private static final String SPLASH_SID = "92a487d3-3bc5-4bbe-bdb0-efe6bffe64f3";
 
     private AdSpace adSpaceSplash;
 	private AdSpace adSpacePanorama;
@@ -87,8 +78,8 @@ public class Loader extends ActionBarActivity {
 	
 	protected AppDeck appDeck;
 	
-	private PageWebViewMenu leftMenuWebView;
-	private PageWebViewMenu rightMenuWebView;
+	private SmartWebView leftMenuWebView;
+	private SmartWebView rightMenuWebView;
 	
     private DrawerLayout mDrawerLayout;
     private FrameLayout mDrawerLeftMenu;
@@ -137,7 +128,8 @@ public class Loader extends ActionBarActivity {
 		
 		if (app.isInitialLoading == false)
 		{
-			XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
+            SmartWebViewFactory.setPreferences();
+			//SmartWebViewCrossWalk.setPreferences();// XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
 			app.isInitialLoading = true;
 		}
 		//XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
@@ -164,7 +156,12 @@ public class Loader extends ActionBarActivity {
     	while (isAvailable == false);
     	
     	Log.i(TAG, "filter registered at @"+this.proxyPort);
-    	
+
+        System.setProperty("http.proxyHost", this.proxyHost);
+        System.setProperty("http.proxyPort", this.proxyPort + "");
+        System.setProperty("https.proxyHost", this.proxyHost);
+        System.setProperty("https.proxyPort", this.proxyPort + "");
+
     	CacheFiltersSource filtersSource = new CacheFiltersSource();
     	
     	proxyServerBootstrap = DefaultHttpProxyServer
@@ -181,19 +178,22 @@ public class Loader extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         
         if (appDeck.config.leftMenuUrl != null) {
-        	leftMenuWebView = new PageWebViewMenu(this, appDeck.config.leftMenuUrl.toString(), PageWebViewMenu.POSITION_LEFT);
+            leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
+
+            //leftMenuWebView = new PageWebViewMenuOld(this, appDeck.config.leftMenuUrl.toString(), PageWebViewMenuOld.POSITION_LEFT);
         	if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        		leftMenuWebView.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
+        		leftMenuWebView.view.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
         	mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
-        	mDrawerLeftMenu.addView(leftMenuWebView);
+        	mDrawerLeftMenu.addView(leftMenuWebView.view);
         }
         
         if (appDeck.config.rightMenuUrl != null) {
-        	rightMenuWebView = new PageWebViewMenu(this, appDeck.config.rightMenuUrl.toString(), PageWebViewMenu.POSITION_RIGHT);
+            rightMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.rightMenuUrl.toString(), SmartWebViewFactory.POSITION_RIGHT);
+            //rightMenuWebView = new PageWebViewMenuOld(this, appDeck.config.rightMenuUrl.toString(), PageWebViewMenuOld.POSITION_RIGHT);
         	if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        		rightMenuWebView.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
+        		rightMenuWebView.view.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
         	mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
-        	mDrawerRightMenu.addView(rightMenuWebView);
+        	mDrawerRightMenu.addView(rightMenuWebView.view);
         }
 
         // configure action bar
@@ -232,6 +232,7 @@ public class Loader extends ActionBarActivity {
 		if (savedInstanceState == null)
 		{
 			loadRootPage(appDeck.config.bootstrapUrl.toString());
+            //loadRootPage("http://www.appdeck.mobi/extra/test");
 		}
 
 
@@ -894,9 +895,9 @@ public class Loader extends ActionBarActivity {
         	f.reload();
         }
         if (leftMenuWebView != null)
-        	leftMenuWebView.reload();
+        	leftMenuWebView.ctl.reload();
         if (rightMenuWebView != null)
-        	rightMenuWebView.reload();
+        	rightMenuWebView.ctl.reload();
     }
     
     public Boolean apiCall(AppDeckApiCall call)
@@ -1026,7 +1027,7 @@ public class Loader extends ActionBarActivity {
 		if (call.command.equalsIgnoreCase("pageroot"))
 		{
 			Log.i("API", "**PAGE ROOT**");
-			String absoluteURL = ((XSmartWebView)call.smartWebView).resolve(call.input.getString("param"));
+			String absoluteURL = ((SmartWebView)call.smartWebView).ctl.resolve(call.input.getString("param"));
 			this.loadRootPage(absoluteURL);			
 			return true;
 		}
@@ -1034,19 +1035,19 @@ public class Loader extends ActionBarActivity {
 		if (call.command.equalsIgnoreCase("pagerootreload"))
 		{
 			Log.i("API", "**PAGE ROOT RELOAD**");
-			String absoluteURL = ((XSmartWebView)call.smartWebView).resolve(call.input.getString("param"));
+			String absoluteURL = ((SmartWebView)call.smartWebView).ctl.resolve(call.input.getString("param"));
 			this.loadRootPage(absoluteURL);
 	        if (leftMenuWebView != null)
-	        	leftMenuWebView.reload();
+	        	leftMenuWebView.ctl.reload();
 	        if (rightMenuWebView != null)
-	        	rightMenuWebView.reload();
+	        	rightMenuWebView.ctl.reload();
 			return true;
 		}		
 		
 		if (call.command.equalsIgnoreCase("pagepush"))
 		{
 			Log.i("API", "**PAGE PUSH**");
-			String absoluteURL = ((XSmartWebView)call.smartWebView).resolve(call.input.getString("param"));
+			String absoluteURL = ((SmartWebView)call.smartWebView).ctl.resolve(call.input.getString("param"));
 			this.loadPage(absoluteURL);			
 			return true;
 		}

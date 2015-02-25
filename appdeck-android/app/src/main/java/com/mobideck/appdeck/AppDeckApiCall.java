@@ -7,20 +7,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.xwalk.core.XWalkJavascriptResult;
-import org.xwalk.core.XWalkView;
+//import org.xwalk.core.XWalkJavascriptResult;
+//import org.xwalk.core.XWalkView;
 
-import android.util.Log;
+import android.view.View;
+
+/*import android.util.Log;
 import android.webkit.JsPromptResult;
-import android.webkit.WebView;
+import android.webkit.WebView;*/
 
 public class AppDeckApiCall {
 
 	//public WebView webview;
-	public XWalkView webview;
+	public View webview;
 	//public SmartWebView smartWebView;
 	//public XSmartWebView smartWebView;
-	public Object smartWebView;
+	public SmartWebViewInterface smartWebView;
 	public String command;
 	public String eventID;
 	public String inputJSON;
@@ -34,14 +36,15 @@ public class AppDeckApiCall {
 	public Boolean success;
 	public Boolean callBackSend;
 	//public JsPromptResult result;
-	public XWalkJavascriptResult result;
+    public SmartWebViewResult result;
+	//public XWalkJavascriptResult result;
 	public AppDeckFragment appDeckFragment;
 	
 	protected boolean postponeResult = false;
 	
 	protected boolean resultSent = false;
 	
-	public AppDeckApiCall(String command, String inputJSON, XWalkJavascriptResult/*JsPromptResult*/ result)
+	public AppDeckApiCall(String command, String inputJSON, SmartWebViewResult/*XWalkJavascriptResult*//*JsPromptResult*/ result)
 	{
 		this.command = command;
 		this.inputJSON = inputJSON;
@@ -109,7 +112,7 @@ public class AppDeckApiCall {
 			resultJSON = "[null]";
 		String ret = "{\"success\": \""+rs+"\", \"result\": "+resultJSON+"}";
 		//result.confirm(ret);
-		result.confirmWithResult(ret);
+		result.SmartWebViewResultConfirmWithResult(ret);
 	}	
 	
 	protected void finalize() throws Throwable
@@ -117,7 +120,7 @@ public class AppDeckApiCall {
 		super.finalize();
 
 		if (resultSent == false)
-			result.cancel();
+			result.SmartWebViewResultCancel();
 		
 	}
 	

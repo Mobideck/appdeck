@@ -79,7 +79,7 @@ function photoBrowser(origin, selector) {
         if (el == origin)
             index = images.length;
 
-        images.push({ url: el.href, thumbnail: img.src, caption: img.src });
+        images.push({ url: el.href, thumbnail: img.src, caption: img.alt });
 
     }
     try {
@@ -145,85 +145,88 @@ function endLessScrolling(routeList, navElement, dateDedup) {
         $('.pager').hide();
         $('#loader_actu_list ').show();
         var params = qsToObject(window.location.href.slice(window.location.href.indexOf('?') + 1));
-        $(window).scroll(function () {
-            if ($("#actu_list").css("display") != "none") {
-                var start = new Date();
-                start = start.getTime();
-                var offset = $(navElement + ' article').last().offset();
-                if (offset.top - $(window).height() <= $(window).scrollTop() && requestingListActu == false && nbHits <= maxScroll) {
-                    requestingListActu = true;
-                    var paramListNews = {
-                        page: pageListActu,
-                        t: Math.round((new Date()).getTime() / 1000)
-                    };
-                    if (params.cat != null) {
-                        paramListNews.cat = params.cat;
-                    }
-                    $.post(routeList, paramListNews, function (responseBrut) {
-                        var response = $(responseBrut);
-                        if (response.find('article').length != 0) {
-                            var a = window.location.href.indexOf('/dossiers') == -1;
-                            var b = window.location.href.indexOf('/tests') == -1;
-                            var c = window.location.href.indexOf('/test/') == -1;
-                            var d = window.location.href.indexOf('/dossier/') == -1;
-                            var e = window.location.href.indexOf('/bons-plans/') == -1;
-                            if (a && b && c && d && e) {
-                                if (dateDedup) {
-                                    //Retrait des dates en double
-                                    var firstNextDate = response.find(".actu_separator_date").first().html();
-                                    if (firstNextDate.toString() == $("#actu_list .actu_separator_date").last().html()) {
-                                        response.find(".actu_separator_date").first().text("");
-                                        response.find(".actu_separator_date").first().removeClass();
+        scrollingFunction(params, routeList, navElement, dateDedup);
+    }
+}
+function scrollingFunction(params, routeList, navElement, dateDedup) {
+    $(document).on("scroll", function () {
+        if ($("#actu_list").css("display") != "none") {
+            var start = new Date();
+            start = start.getTime();
+            var offset = $(navElement + ' article').last().offset();
+            if (offset.top - $(window).height() <= $(window).scrollTop() && requestingListActu == false && nbHits <= maxScroll) {
+                requestingListActu = true;
+                var paramListNews = {
+                    page: pageListActu,
+                    t: Math.round((new Date()).getTime() / 1000)
+                };
+                if (params.cat != null) {
+                    paramListNews.cat = params.cat;
+                }
+                $.post(routeList, paramListNews, function (responseBrut) {
+                    var response = $(responseBrut);
+                    if (response.find('article').length != 0) {
+                        var a = window.location.href.indexOf('/dossiers') == -1;
+                        var b = window.location.href.indexOf('/tests') == -1;
+                        var c = window.location.href.indexOf('/test/') == -1;
+                        var d = window.location.href.indexOf('/dossier/') == -1;
+                        var e = window.location.href.indexOf('/bons-plans/') == -1;
+                        if (a && b && c && d && e) {
+                            if (dateDedup) {
+                                //Retrait des dates en double
+                                var firstNextDate = response.find(".actu_separator_date").first().html();
+                                if (firstNextDate.toString() == $("#actu_list .actu_separator_date").last().html()) {
+                                    response.find(".actu_separator_date").first().text("");
+                                    response.find(".actu_separator_date").first().removeClass();
 
-                                    }
                                 }
                             }
-                            if (a || b || c || d) {
-                                response.find('.test_dossier_header').removeClass().text("");
-                            }
-                            //affichage du bloc
-                            //2sec min avant affichage
-                            var finish = new Date();
-                            finish = start + 2000 - finish.getTime();
-                            if (finish > 0) {
-                                interPointer = self.setInterval(function() {
-                                    $('.pager, #loader_actu_list').remove();
-                                    $(navElement + " article").last().after(response.find(navElement).html());
-                                    nbHits++;
-                                    requestingListActu = false;
-                                    pageListActu++;
-                                    clearInterval(interPointer);
-                                    $('.pager').hide();
-                                    setSize();
-                                    $('#loader_actu_list').show();
-                                }, finish);
-                            } else {
+                        }
+                        if (a || b || c || d) {
+                            response.find('.test_dossier_header').removeClass().text("");
+                        }
+                        //affichage du bloc
+                        //2sec min avant affichage
+                        var finish = new Date();
+                        finish = start + 2000 - finish.getTime();
+                        if (finish > 0) {
+                            interPointer = self.setInterval(function () {
                                 $('.pager, #loader_actu_list').remove();
-                                $(navElement + " article").last().after(response.find(navElement).html());
+                                $(navElement + " article:last-child").after($(response.find(navElement)).last().html());
                                 nbHits++;
                                 requestingListActu = false;
                                 pageListActu++;
+                                clearInterval(interPointer);
                                 $('.pager').hide();
                                 setSize();
                                 $('#loader_actu_list').show();
-                            }
+                            }, finish);
                         } else {
-                            $('#loader_actu_list').hide();
-                            $('.pager').show();
+                            $('.pager, #loader_actu_list').remove();
+                            $(navElement + " article:last-child").after($(response.find(navElement)).last().html());
+                            nbHits++;
+                            requestingListActu = false;
+                            pageListActu++;
+                            $('.pager').hide();
+                            setSize();
+                            $('#loader_actu_list').show();
                         }
-                    });
-                } else if (nbHits > maxScroll && !scrollFinalized) {
-                    $('#loader_actu_list ').hide();
-                    var url = $('.pager  ul li:last a').attr('href');
-                    var nextElm = $('<a></a>').attr('href', url).addClass("button_submit").addClass('next_endless').text("Afficher plus");
-                    $('.pager').replaceWith(nextElm);
-                    scrollFinalized = true;
-                    $(window).unbind('scroll');
-                    return;
-                }
+                    } else {
+                        $('#loader_actu_list').hide();
+                        $('.pager').show();
+                    }
+                });
+            } else if (nbHits > maxScroll && !scrollFinalized) {
+                $('#loader_actu_list ').hide();
+                var url = $('.pager  ul li:last a').attr('href');
+                var nextElm = $('<a></a>').attr('href', url).addClass("button_submit").addClass('next_endless').text("Afficher plus");
+                $('.pager').replaceWith(nextElm);
+                scrollFinalized = true;
+                $(window).unbind('scroll');
+                return;
             }
-        });
-    }
+        }
+    });
 }
 function getNumNextPage(url) {
     try {

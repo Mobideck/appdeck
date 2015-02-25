@@ -52,6 +52,7 @@
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data> -->
         <!--          PC INpact -->
         <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1060hc931f3cbf173612382d474a58d3a78b0" />-->
         <!--  Play3-Live iOS -->
         <!--  	 <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
         <!--  Play3-Live Android -->

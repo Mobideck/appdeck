@@ -11,11 +11,11 @@
             android:layout_height="wrap_content"
             />
 
-<!--     <EditText android:id="@+id/prompt_input_field"
+     <EditText android:id="@+id/prompt_input_field"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:selectAllOnFocus="true"
             android:scrollHorizontally="true"
             android:minWidth="250dp" 
-            /> -->
+            />
 </LinearLayout>

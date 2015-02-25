@@ -544,6 +544,7 @@ public class WebBrowserWebView extends WebView {
     		    {
 	            	try
 	            	{
+                        /*
 	            	    @SuppressWarnings("rawtypes")
 	            	    Class _VideoSurfaceView_Class_ = Class.forName("android.webkit.HTML5VideoFullScreen$VideoSurfaceView");
 	
@@ -560,23 +561,7 @@ public class WebBrowserWebView extends WebView {
 	            	    _mUri_Field_.setAccessible(true);
 	            	    mUri =  (Uri) _mUri_Field_.get(_HTML5VideoFullScreen_Instance_);
 	            	    
-	            	    /*MediaPlayer mPlayer = null;
-	            	    _mUri_Field_ = _HTML5VideoView_Class_.getDeclaredField("mPlayer");
-	            	    _mUri_Field_.setAccessible(true);
-	            	    mPlayer =  (MediaPlayer) _mUri_Field_.get(_HTML5VideoFullScreen_Instance_);
-
-	            	    mPlayer.stop();
-	            	    mPlayer.release();
-	            	    //mPlayer.reset();
-	            	    
-	            	    Method m = _HTML5VideoView_Class_.getDeclaredMethod("release", null);
-	    	            m.setAccessible(true);
-	    	            Object res = m.invoke(_HTML5VideoFullScreen_Instance_);
-	            	    */
-	            	    
-	            	    //callback.onCustomViewHidden();
-	            	    //return;
-
+*/
 	            	}
 	            	catch (Exception ex)
 	            	{   
@@ -642,7 +627,7 @@ public class WebBrowserWebView extends WebView {
             	if (mCustomView != null)
             	{
                 	try
-                	{
+                	{/*
                 	    @SuppressWarnings("rawtypes")
                 	    Class _VideoSurfaceView_Class_ = Class.forName("android.webkit.HTML5VideoFullScreen$VideoSurfaceView");
 
@@ -670,7 +655,7 @@ public class WebBrowserWebView extends WebView {
                 	    
                 	    //callback.onCustomViewHidden();
                 	    //return;
-
+*/
                 	}
                 	catch (Exception ex)
                 	{   
