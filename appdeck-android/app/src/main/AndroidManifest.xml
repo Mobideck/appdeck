@@ -46,22 +46,41 @@
         android:name="com.mobideck.appdeck.AppDeckApplication"
         android:theme="@style/AppTheme" >
 
-        <!--  Test Cache -->
+        <!-- Test Cache -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
-        <!--  AppDeck Test App -->
-        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data> -->
-        <!--          PC INpact -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />
+
+        <!-- AppDeck Test App -->
+        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
+
+        <!-- PC INpact -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />-->
+
+        <!-- PC INpact Dev -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1060hc931f3cbf173612382d474a58d3a78b0" />-->
+
         <!--  Play3-Live iOS -->
         <!--  	 <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
+
         <!--  Play3-Live Android -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
+
         <!--  Monsieur-Mademoiselle -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data> -->
 
         <!--  94 citoyens -->
-        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
+
+        <!-- Univers Freebox -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->
+
+        <!-- Actu Animaux -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/979hf2a89dc17ae78bd6e3ff60a65f301724"></meta-data>-->
+
+        <!-- Jeux Video Live -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>-->
+
+
+
         <meta-data android:name="noCache" android:value="false" />
 
 
@@ -70,7 +89,7 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.netavenir.play3live" />
+                <category android:name="com.mobideck.appdeck" />
             </intent-filter>
         </receiver>
 

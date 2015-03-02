@@ -18,8 +18,8 @@ android {
         applicationId "com.mobideck.appdeck"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.35"
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -52,10 +52,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.android.support:multidex:1.0.0'
+
     compile 'com.crashlytics.android:crashlytics:1.+'
+
+
 
     compile 'org.xwalk:xwalk_core_library_beta:11.40.277.6'
     //compile 'org.xwalk:xwalk_core_library:10.39.235.16'
+
+
 }
 
 task assets {

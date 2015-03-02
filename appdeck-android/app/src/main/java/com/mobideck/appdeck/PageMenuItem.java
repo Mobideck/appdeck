@@ -76,7 +76,7 @@ public class PageMenuItem {
         else if (icon.equalsIgnoreCase("!down") == true)
             icon = appDeck.config.icon_down.toString();
         else if (icon.equalsIgnoreCase("!user") == true)
-            icon = appDeck.config.icon_refresh.toString();		
+            icon = appDeck.config.icon_user.toString();
         else if (icon.equalsIgnoreCase("") == true)
             icon = appDeck.config.icon_action.toString();
         else if (baseUrl != null)

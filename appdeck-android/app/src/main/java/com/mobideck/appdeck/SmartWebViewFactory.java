@@ -5,6 +5,8 @@ import android.view.View;
 
 public class SmartWebViewFactory {
 
+    public static boolean forceCrossWalk = false;
+
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
 
@@ -28,7 +30,7 @@ public class SmartWebViewFactory {
     public static SmartWebView createSmartWebView(AppDeckFragment root)
     {
         // since kitkat, chrome is default webview
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !SmartWebViewFactory.forceCrossWalk)
         {
             SmartWebViewChrome obj = new SmartWebViewChrome(root);
             return new SmartWebView(obj, obj);
@@ -41,7 +43,7 @@ public class SmartWebViewFactory {
 
     public static void setPreferences()
     {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !SmartWebViewFactory.forceCrossWalk)
             SmartWebViewChrome.setPreferences();
         else
             SmartWebViewCrossWalk.setPreferences();

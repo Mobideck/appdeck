@@ -214,7 +214,7 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
         }
 
         try {
-            WebkitProxy2.setProxy(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
+            WebkitProxy3.setProxy(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -228,10 +228,10 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
         if (shouldLoadFromCache == false)
         {
             getSettings().setUserAgentString(userAgent);
-            //getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+            getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         } else {
             getSettings().setUserAgentString(userAgent+" FORCE_CACHE");
-            //getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
     }
 	

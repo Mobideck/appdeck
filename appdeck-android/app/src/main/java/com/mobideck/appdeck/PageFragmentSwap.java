@@ -245,7 +245,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	{
 			loader.replacePage(absoluteURL);
 			return;
-    	}		
+    	}
 		super.loadUrl(absoluteURL);
     }
     

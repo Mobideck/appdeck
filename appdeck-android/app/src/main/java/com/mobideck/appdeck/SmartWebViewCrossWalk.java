@@ -18,6 +18,7 @@ import org.xwalk.core.internal.XWalkViewBridge;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -185,7 +186,19 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 //		userAgent = userAgent + " AppDeck "+appDeck.packageName+"/"+appDeck.config.app_version;
 		userAgent = userAgent + " AppDeck"+(appDeck.isTablet? "-tablet" : "-phone" )+" "+appDeck.packageName+"/"+appDeck.config.app_version;
 		setWebViewUserAgent(this, userAgent);
-		
+
+        System.setProperty("http.proxyHost", root.loader.proxyHost);
+        System.setProperty("http.proxyPort", root.loader.proxyPort + "");
+        System.setProperty("https.proxyHost", root.loader.proxyHost);
+        System.setProperty("https.proxyPort", root.loader.proxyPort + "");
+/*
+        try {
+            setProxyKK(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+*/
 	}
 	
 	// from https://stackoverflow.com/questions/19979578/android-webview-set-proxy-programatically-kitkat
@@ -207,7 +220,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        Class loadedApkCls = Class.forName("android.app.LoadedApk");
 	        Field receiversField = loadedApkCls.getDeclaredField("mReceivers");
 	        receiversField.setAccessible(true);
-	        ArrayMap receivers = (ArrayMap) receiversField.get(loadedApk);
+	        Object tmp = receiversField.get(loadedApk);
+            //ArrayMap receivers = (ArrayMap) tmp;
+            java.util.HashMap receivers = (java.util.HashMap) tmp;
 	        for (Object receiverMap : receivers.values()) {
 	            for (Object rec : ((ArrayMap) receiverMap).keySet()) {
 	                Class clazz = rec.getClass();

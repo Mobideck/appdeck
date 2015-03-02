@@ -6,9 +6,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Queue;
 
 import org.apache.http.Header;
+import org.littleshoot.proxy.ChainedProxy;
+import org.littleshoot.proxy.ChainedProxyAdapter;
+import org.littleshoot.proxy.ChainedProxyManager;
 import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
@@ -53,6 +62,10 @@ import com.widespace.exception.ExceptionTypes;
 import com.widespace.interfaces.AdErrorEventListener;
 import com.widespace.interfaces.AdEventListener;
 
+import be.shouldit.proxy.lib.APL;
+import be.shouldit.proxy.lib.utils.ProxyUtils;
+import io.netty.handler.codec.http.HttpRequest;
+
 public class Loader extends ActionBarActivity {
 
 
@@ -75,6 +88,9 @@ public class Loader extends ActionBarActivity {
 	
 	public String proxyHost;
 	public int proxyPort;
+    String originalProxyHost = null;
+    int originalProxyPort = -1;
+
 	
 	protected AppDeck appDeck;
 	
@@ -142,7 +158,20 @@ public class Loader extends ActionBarActivity {
         String app_json_url = intent.getStringExtra(JSON_URL);
         appDeck = new AppDeck(getBaseContext(), app_json_url);
     	super.onCreate(savedInstanceState);
-    	
+
+        // original proxy host/port
+        Proxy proxyConf = null;
+        APL.setup(this);
+        try {
+            URI uri = URI.create("http://www.appdeck.mobi");
+            Proxy currentProxy = APL.getCurrentProxyConfiguration(uri);
+            originalProxyHost = ProxyUtils.getProxyHost(currentProxy);
+            originalProxyPort = ProxyUtils.getProxyPort(currentProxy);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     	this.proxyHost = "127.0.0.1";
     	
     	boolean isAvailable = false;
@@ -157,6 +186,7 @@ public class Loader extends ActionBarActivity {
     	
     	Log.i(TAG, "filter registered at @"+this.proxyPort);
 
+
         System.setProperty("http.proxyHost", this.proxyHost);
         System.setProperty("http.proxyPort", this.proxyPort + "");
         System.setProperty("https.proxyHost", this.proxyHost);
@@ -169,7 +199,30 @@ public class Loader extends ActionBarActivity {
                 .withPort(this.proxyPort)
                 .withAllowLocalOnly(true)
                 .withTransportProtocol(TransportProtocol.TCP)
-                .withFiltersSource(filtersSource);    	
+                .withFiltersSource(filtersSource);
+
+        if (originalProxyHost != null && originalProxyPort != -1)
+        {
+            proxyServerBootstrap.withChainProxyManager(new ChainedProxyManager() {
+                @Override
+                public void lookupChainedProxies(HttpRequest httpRequest, Queue<ChainedProxy> chainedProxies) {
+
+                    chainedProxies.add(new ChainedProxyAdapter() {
+                        @Override
+                        public InetSocketAddress getChainedProxyAddress() {
+                            try {
+                                return new InetSocketAddress(InetAddress.getByName(Loader.this.originalProxyHost), Loader.this.originalProxyPort);
+                            } catch (UnknownHostException uhe) {
+                                throw new RuntimeException(
+                                        "Unable to resolve "+Loader.this.originalProxyHost+"?!");
+                            }
+                        }
+
+                    });
+
+                };
+            });
+        }
     	    	
     	proxyServerBootstrap.start();
 
@@ -721,7 +774,18 @@ public class Loader extends ActionBarActivity {
     	if (loadSpecialURL(absoluteURL))
     		return -1;
 
-    	
+        Uri uri = Uri.parse(absoluteURL);
+        if (uri != null)
+        {
+            String host = uri.getHost();
+            if (!host.equalsIgnoreCase(this.appDeck.config.bootstrapUrl.getHost()))
+            {
+                Intent i = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(i);
+                return -1;
+            }
+        }
+
     	if (isForeground == false)
     	{
     		createIntent(PAGE_URL, absoluteURL);
@@ -1027,7 +1091,7 @@ public class Loader extends ActionBarActivity {
 		if (call.command.equalsIgnoreCase("pageroot"))
 		{
 			Log.i("API", "**PAGE ROOT**");
-			String absoluteURL = ((SmartWebView)call.smartWebView).ctl.resolve(call.input.getString("param"));
+			String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
 			this.loadRootPage(absoluteURL);			
 			return true;
 		}
@@ -1035,7 +1099,7 @@ public class Loader extends ActionBarActivity {
 		if (call.command.equalsIgnoreCase("pagerootreload"))
 		{
 			Log.i("API", "**PAGE ROOT RELOAD**");
-			String absoluteURL = ((SmartWebView)call.smartWebView).ctl.resolve(call.input.getString("param"));
+			String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
 			this.loadRootPage(absoluteURL);
 	        if (leftMenuWebView != null)
 	        	leftMenuWebView.ctl.reload();
@@ -1047,7 +1111,7 @@ public class Loader extends ActionBarActivity {
 		if (call.command.equalsIgnoreCase("pagepush"))
 		{
 			Log.i("API", "**PAGE PUSH**");
-			String absoluteURL = ((SmartWebView)call.smartWebView).ctl.resolve(call.input.getString("param"));
+			String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
 			this.loadPage(absoluteURL);			
 			return true;
 		}
