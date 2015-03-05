@@ -503,13 +503,20 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
     public void sendJsEvent(String eventName, String eventDetailJSon)
     {
         String js = null;
-        if (false && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-        {
-            js = "document.dispatchEvent(new CustomEvent('"+eventName+"', "+eventDetailJSon+"));";
-        } else {
-            js = "var evt = document.createEvent('Event');evt.initEvent('"+eventName+"',true,true); evt.detail = "+eventDetailJSon+"; document.dispatchEvent(evt);";
-        }
-        loadUrl("javascript:"+js);
+        //if (false && Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        //{
+        js = "document.dispatchEvent(new CustomEvent('"+eventName+"', "+eventDetailJSon+"));";
+        //} else {
+        //    js = "var evt = document.createEvent('Event');evt.initEvent('"+eventName+"',true,true); evt.detail = "+eventDetailJSon+"; document.dispatchEvent(evt);";
+        //}
+        Log.i(TAG, "sendJsEventJS: "+eventName+": "+js);
+        evaluateJavascript(js, new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                Log.i(TAG, "sendJsEventResult: "+value);
+            }
+        });
+
     }
 
     int page_height = -1;
@@ -538,6 +545,13 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
                 }
             }
         }
+    }
+
+    @Override
+    protected void onSizeChanged (int w, int h, int ow, int oh)
+    {
+        super.onSizeChanged(w, h, ow, oh);
+        page_height = h;
     }
 
     @Override

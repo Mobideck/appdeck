@@ -120,7 +120,7 @@ public class PopUp extends Loader {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	requestWindowFeature(Window.FEATURE_PROGRESS);
+    	supportRequestWindowFeature(Window.FEATURE_PROGRESS);
     	onCreatePass(savedInstanceState);
     	//SherlockFragmentActivity.this. super.onCreate(savedInstanceState);
         appDeck = AppDeck.getInstance();

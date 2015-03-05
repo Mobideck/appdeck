@@ -269,7 +269,7 @@ function resolve_url($url_str, $source_url_str)
 }
 
 $count_resource = 0;
-function appdeck_add_ressource($url, $data = false, $headers = false, $force = false)
+function appdeck_add_ressource($url, $data = false, $force = false, $headers = false)
 {
   global $output_dir_path, $count_resource;
 
@@ -329,7 +329,7 @@ function embed_url($embed_url)
     }
   $data = strip_c_comment($data);
   // we embed embed_url in application
-  appdeck_add_ressource($embed_url, $data, $headers, true);
+  appdeck_add_ressource($embed_url, $data, true, $headers);
   // we embed all url listed in this file
   $lines = explode("\n", $data);
   foreach ($lines as $line)

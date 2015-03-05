@@ -62,8 +62,6 @@ import com.widespace.exception.ExceptionTypes;
 import com.widespace.interfaces.AdErrorEventListener;
 import com.widespace.interfaces.AdEventListener;
 
-import be.shouldit.proxy.lib.APL;
-import be.shouldit.proxy.lib.utils.ProxyUtils;
 import io.netty.handler.codec.http.HttpRequest;
 
 public class Loader extends ActionBarActivity {
@@ -152,8 +150,8 @@ public class Loader extends ActionBarActivity {
 		
 		Crashlytics.start(this);
         //Crashlytics.getInstance().setDebugMode(true);
-		requestWindowFeature(Window.FEATURE_PROGRESS);
-		
+        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
         appDeck = new AppDeck(getBaseContext(), app_json_url);
@@ -161,12 +159,11 @@ public class Loader extends ActionBarActivity {
 
         // original proxy host/port
         Proxy proxyConf = null;
-        APL.setup(this);
         try {
             URI uri = URI.create("http://www.appdeck.mobi");
-            Proxy currentProxy = APL.getCurrentProxyConfiguration(uri);
-            originalProxyHost = ProxyUtils.getProxyHost(currentProxy);
-            originalProxyPort = ProxyUtils.getProxyPort(currentProxy);
+            Proxy currentProxy = Utils.getProxySelectorConfiguration(uri);
+            originalProxyHost = Utils.getProxyHost(currentProxy);
+            originalProxyPort = Utils.getProxyPort(currentProxy);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -254,7 +251,11 @@ public class Loader extends ActionBarActivity {
         
         
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo 
-        getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable       
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
+        if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer_light);
+        else
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);
         
 		if (appDeck.config.topbar_color != null)
 			getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());        
@@ -630,7 +631,7 @@ public class Loader extends ActionBarActivity {
     		String tag = fragment.getTag();
     		if (tag != null && tag.equalsIgnoreCase("AppDeckFragment"))
     		{
-    			fragList.add(new WeakReference((AppDeckFragment)fragment));
+    			fragList.add(new WeakReference(fragment));
     		}
     	}
     }
@@ -641,7 +642,7 @@ public class Loader extends ActionBarActivity {
         for(WeakReference<AppDeckFragment> ref : fragList) {
         	AppDeckFragment f = ref.get();
             if (f != fragment) {
-            	newlist.add(new WeakReference((AppDeckFragment)f));
+            	newlist.add(new WeakReference(f));
             }
         }    	
         fragList = newlist;
@@ -1025,7 +1026,7 @@ public class Loader extends ActionBarActivity {
 		    SharedPreferences.Editor editor = prefs.edit();
 		    String key = "appdeck_preferences_json1_" + name;
 		    editor.putString(key, finalValue.toJsonString());
-	        editor.commit();		    
+	        editor.apply();
 
 		    call.setResult(finalValue);
 		   
@@ -1229,7 +1230,7 @@ public class Loader extends ActionBarActivity {
 
     	if (keyCode == KeyEvent.KEYCODE_MENU)
     	{
-    		openMenu();
+    		toggleMenu();
     		return true;
     	}
 

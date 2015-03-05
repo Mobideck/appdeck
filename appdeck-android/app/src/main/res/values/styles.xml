@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
-        <item name="homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
+        <!--<item name="android:homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
+        <item name="homeAsUpIndicator">@drawable/ic_navigation_drawer</item>-->
     </style>
 
 

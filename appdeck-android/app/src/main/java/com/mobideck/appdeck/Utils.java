@@ -16,9 +16,15 @@ import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.ProxySelector;
 import java.net.ServerSocket;
+import java.net.SocketAddress;
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -41,6 +47,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -52,6 +59,9 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 public class Utils {
+
+    public static String TAG = "Utils";
+
     public static final int IO_BUFFER_SIZE = 8 * 1024;
 
     private Utils() {};
@@ -229,7 +239,7 @@ public class Utils {
 					uid = System.currentTimeMillis();
 					Editor editor = preferences.edit();
 					editor.putLong("uid", uid);
-					editor.commit();
+					editor.apply();
 				}
 				deviceId = String.valueOf(uid);
 			}
@@ -537,5 +547,44 @@ public class Utils {
 			e.printStackTrace();
 		} //or "SHA-1"
 		return null;	    
-	}	
+	}
+
+    public static Proxy getProxySelectorConfiguration(URI uri) throws Exception
+    {
+        ProxySelector defaultProxySelector = ProxySelector.getDefault();
+        Proxy proxy = null;
+
+        List<Proxy> proxyList = defaultProxySelector.select(uri);
+        if (proxyList.size() > 0)
+        {
+            proxy = proxyList.get(0);
+            Log.d(TAG, "Current Proxy Configuration: " + proxy.toString());
+        }
+
+        return proxy;
+    }
+
+    @SuppressLint("NewApi")
+    public static String getProxyHost(Proxy proxy)
+    {
+        SocketAddress sa = proxy.address();
+        InetSocketAddress isa = (InetSocketAddress) sa;
+
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            return isa.getHostString();
+        }
+        else
+        {
+            return isa.getHostName();
+        }
+    }
+
+    public static int getProxyPort(Proxy proxy)
+    {
+        SocketAddress sa = proxy.address();
+        InetSocketAddress isa = (InetSocketAddress) sa;
+
+        return isa.getPort();
+    }
 }

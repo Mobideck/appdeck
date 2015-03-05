@@ -243,7 +243,7 @@ public class CacheFilters implements HttpFilters {
     		    		return response;
            			}
         		}        		
-    			Log.i(TAG, " CACHE MISS " + absoluteURL + " (ETAG:"+etag+")");
+    			Log.i(TAG, " CACHE MISS " + absoluteURL);
     		}
     		    		
     		// embed file ?

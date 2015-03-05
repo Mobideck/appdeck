@@ -255,7 +255,7 @@ public class GoogleCloudMessagingHelper {
 	        editor.putString(PROPERTY_REG_ID, regId);
 	        editor.putInt(PROPERTY_APP_VERSION, appVersion);
 	        editor.putString(PROPERTY_SENDER_ID, SENDER_ID);
-	        editor.commit();
+	        editor.apply();
 	    }		
 	    
 }

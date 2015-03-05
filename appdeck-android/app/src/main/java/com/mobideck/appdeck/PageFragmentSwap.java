@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import com.mobideck.android.support.DatePickerDialogCustom;
 import com.mobideck.appdeck.CacheManager.CacheResult;
 
 /*import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
@@ -510,7 +509,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 				CacheResult value = this.appDeck.cache.isInCache(absoluteURL);
 				isInCache = value.isInCache;
 			}
-			Boolean result = new Boolean(isInCache);
+			Boolean result = Boolean.valueOf(isInCache);
 			
 			call.setResult(result);
 			

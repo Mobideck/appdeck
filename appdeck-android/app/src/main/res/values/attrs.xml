@@ -21,8 +21,4 @@
         <attr name="autoupdate" format="boolean"/>
         <attr name="gpsenabled" format="boolean"/>
     </declare-styleable>
-
-    <declare-styleable name="WifiEncryptionState">
-        <attr name="state_encrypted" format="boolean" />
-    </declare-styleable>
 </resources>

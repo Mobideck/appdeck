@@ -345,8 +345,8 @@ public class WebBrowserWebView extends WebView {
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
         {
-        	Toast.makeText(getContext(), "" + failingUrl+ ": " +description, Toast.LENGTH_LONG);
-        }        
+        	Toast.makeText(getContext(), "" + failingUrl+ ": " +description, Toast.LENGTH_LONG).show();
+        }
         
 //        private static final String LOG_TAG = "NoZoomedWebViewClient";
 //        private static final long STABLE_SCALE_CALCULATION_DURATION = 2 * 1000;

@@ -15,7 +15,7 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import dalvik.system.DexClassLoader;
 
-public class AppDeckApplication extends android.support.multidex.MultiDexApplication {
+public class AppDeckApplication extends Application/*android.support.multidex.MultiDexApplication*/ {
 	
 	public boolean isInitialLoading;
 	
@@ -50,6 +50,7 @@ public class AppDeckApplication extends android.support.multidex.MultiDexApplica
      * This method hacks the default PathClassLoader and load the secondary dex
      * file as it's parent.
      */
+     /*
     @SuppressLint("NewApi")
     private void dexTool() {
 
@@ -92,6 +93,6 @@ public class AppDeckApplication extends android.support.multidex.MultiDexApplica
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }	
+    }	*/
 	
 }
