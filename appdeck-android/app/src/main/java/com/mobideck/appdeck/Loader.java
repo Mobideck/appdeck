@@ -39,6 +39,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -106,7 +107,7 @@ public class Loader extends ActionBarActivity {
 	
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
-	
+	/*
 	private int mProgress = 100;
 	private int mTargetProgress = 0;
 	
@@ -127,7 +128,7 @@ public class Loader extends ActionBarActivity {
                 mHandler.postDelayed(mProgressRunner, 100);
             }
         }
-    };	
+    };	*/
     
     protected void onCreatePass(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -136,7 +137,12 @@ public class Loader extends ActionBarActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
     	//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		//Debug.startMethodTracing("calc");
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+        //supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        //supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+
+        //Debug.startMethodTracing("calc");
 		
 		AppDeckApplication app = (AppDeckApplication) getApplication();
 		
@@ -150,7 +156,7 @@ public class Loader extends ActionBarActivity {
 		
 		Crashlytics.start(this);
         //Crashlytics.getInstance().setDebugMode(true);
-        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+
 
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
@@ -265,7 +271,12 @@ public class Loader extends ActionBarActivity {
 		
 		setSupportProgressBarVisibility(false);
 		setSupportProgressBarIndeterminate(false);
-		
+
+        /*setSupportProgressBarVisibility(true);
+        setSupportProgressBarIndeterminateVisibility(true);
+        setSupportProgressBarIndeterminate(true);*/
+
+
 		getSupportFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener()
         {
             public void onBackStackChanged() 
@@ -560,6 +571,8 @@ public class Loader extends ActionBarActivity {
     public void openLeftMenu()
     {
     	closeMenu();
+        if (menuEnabled == false)
+            return;
     	if (mDrawerLayout == null)
     		return;
     	if (mDrawerLeftMenu != null)
@@ -569,6 +582,8 @@ public class Loader extends ActionBarActivity {
     public void openRightMenu()
     {
     	closeMenu();
+        if (menuEnabled == false)
+            return;
     	if (mDrawerLayout == null)
     		return;
 		if (mDrawerRightMenu != null)
@@ -578,6 +593,8 @@ public class Loader extends ActionBarActivity {
     public void openMenu()
     {
         closeMenu();
+        if (menuEnabled == false)
+            return;
     	if (mDrawerLayout == null)
     		return;
     	if (mDrawerLeftMenu != null)
@@ -598,20 +615,31 @@ public class Loader extends ActionBarActivity {
        		return;
        	mDrawerLayout.closeDrawers();   	
     }
-    
+
+    private boolean menuEnabled = true;
+
     public void disableMenu()
     {
+        menuEnabled = false;
     	closeMenu();
        	if (mDrawerLayout == null)
        		return;
-       	mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);   	
+       	mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // icon on the left of logo
+        getSupportActionBar().setDisplayShowHomeEnabled(false); // make icon + logo + title clickable
+
+
     }
 
     public void enableMenu()
     {
+        menuEnabled = true;
        	if (mDrawerLayout == null)
        		return;
        	mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
     }
     
     
@@ -690,8 +718,10 @@ public class Loader extends ActionBarActivity {
     
     public void progressStart()
     {
-    	setSupportProgressBarIndeterminate(true);    	
-    	mProgress = 100;
+        setSupportProgressBarVisibility(true);
+        setSupportProgressBarIndeterminateVisibility(true);
+    	setSupportProgressBarIndeterminate(true);
+    	//mProgress = 100;
     }
     
     public void progressSet(int percent)
@@ -705,6 +735,8 @@ public class Loader extends ActionBarActivity {
     
     public void progressStop()
     {
+        setSupportProgressBarVisibility(false);
+        setSupportProgressBarIndeterminateVisibility(false);
     	setSupportProgressBarIndeterminate(false);
     	
         int progress = (Window.PROGRESS_END - Window.PROGRESS_START);
@@ -779,7 +811,7 @@ public class Loader extends ActionBarActivity {
         if (uri != null)
         {
             String host = uri.getHost();
-            if (!host.equalsIgnoreCase(this.appDeck.config.bootstrapUrl.getHost()))
+            if (host != null && !host.equalsIgnoreCase(this.appDeck.config.bootstrapUrl.getHost()))
             {
                 Intent i = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(i);
@@ -836,6 +868,7 @@ public class Loader extends ActionBarActivity {
     	if (config != null && config.type != null && config.type.equalsIgnoreCase("browser"))
     	{
     		WebBrowser fragment = WebBrowser.newInstance(absoluteURL);
+            fragment.loader = this;
     		//pageSwipe.setRetainInstance(true);
     		fragment.screenConfiguration = config; 
     		return fragment;
@@ -911,9 +944,15 @@ public class Loader extends ActionBarActivity {
     	
     	if (fragment != current)
     		return false;
-    	
-    	AppDeckFragmentPushAnimation anim = new AppDeckFragmentPushAnimation(previous, current);
-    	anim.start();
+
+        if (fragment.isPopUp)
+        {
+            AppDeckFragmentUpAnimation anim = new AppDeckFragmentUpAnimation(previous, current);
+            anim.start();
+        } else {
+            AppDeckFragmentPushAnimation anim = new AppDeckFragmentPushAnimation(previous, current);
+            anim.start();
+        }
     	
     	
     	return true;
@@ -927,9 +966,13 @@ public class Loader extends ActionBarActivity {
     	if (current == null || previous == null)
     		return false;
     	
-    	onDettachFragment(current);    	
-    	
-    	if (current.enablePopAnimation)
+    	onDettachFragment(current);
+
+        if (current.isPopUp)
+        {
+            AppDeckFragmentDownAnimation anim = new AppDeckFragmentDownAnimation(current, previous);
+            anim.start();
+        } else if (current.enablePopAnimation)
     	{
     		AppDeckFragmentPopAnimation anim = new AppDeckFragmentPopAnimation(current, previous);
     		anim.start();
@@ -1224,7 +1267,23 @@ public class Loader extends ActionBarActivity {
         finish();      
 
     }
-    
+
+    // Full Screen API
+    public void enableFullScreen()
+    {
+        //getActivity().getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN, android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ActionBar actionBar = getSupportActionBar();
+        //actionBar.setShowHideAnimationEnabled(false);
+        actionBar.hide();
+    }
+
+    public void disableFullScreen()
+    {
+        ActionBar actionBar = getSupportActionBar();
+        //actionBar.setShowHideAnimationEnabled(false);
+        actionBar.show();
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -1315,6 +1374,9 @@ public class Loader extends ActionBarActivity {
 	
 	public void share(String title, String url, String imageURL)
 	{
+
+        android.support.v7.widget.ShareActionProvider shareProvider = null;
+
 //		ShareActionProvider shareAction = null;	
 //		shareAction = new ShareActionProvider(this);
 		
@@ -1447,10 +1509,54 @@ public class Loader extends ActionBarActivity {
 		popUpDialog.setContentView(popover.getView());*/
 	}
 	
-	public void showPopUp(AppDeckFragment origin, String url)
+	public void showPopUp(AppDeckFragment origin, String absoluteURL)
 	{
-		Log.w(TAG, "PopUp not suported on Android Platform, use push instead");
-		loadPage(url);		
+		//Log.w(TAG, "PopUp not suported on Android Platform, use push instead");
+		//loadPage(url);
+
+        AppDeckFragment fragment = initPageFragment(absoluteURL);
+        fragment.isPopUp = true;
+        pushFragment(fragment);
+
+/*        PopUpFragment popupfragment = PopUpFragment.newInstance(absoluteURL);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //fragmentTransaction.setTransitionStyle(1);
+        //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        //fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
+
+        //fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left);
+
+        //fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+        //fragmentTransaction.setCustomAnimations(R.anim.exit, R.anim.enter);
+
+        AppDeckFragment oldFragment = getCurrentAppDeckFragment();
+        if (oldFragment != null)
+        {
+            oldFragment.setIsMain(false);
+
+            //fragmentTransaction.hide(oldFragment);
+            //fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+            //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        }
+
+
+        fragmentTransaction.add(R.id.loader_container, popupfragment, "fragmentPopUp");
+        //fragmentTransaction.replace(R.id.loader_container, fragment, "AppDeckFragment");
+        //fragmentTransaction.addToBackStack("AppDeckFragment");
+
+        fragmentTransaction.addToBackStack("fragmentPopUp");
+
+        //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        //fragmentTransaction.setTransitionStyle()
+
+        //fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out);
+        //Animations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
+
+        fragmentTransaction.commitAllowingStateLoss();*/
+
+
 	}
 	
 	/*

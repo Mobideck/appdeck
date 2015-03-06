@@ -4,9 +4,12 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Point;
 import android.view.Display;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 
 public class AppDeckFragmentPushAnimation {
 	AppDeckFragment from;
@@ -29,6 +32,8 @@ public class AppDeckFragmentPushAnimation {
 		if (toView == null)
 			return;		
         AnimatorSet set = new AnimatorSet();
+        ValueAnimator.setFrameDelay(24);
+        set.setInterpolator(new LinearInterpolator());
         set.addListener(new AnimatorListener() {
 			
 			@Override
@@ -57,8 +62,12 @@ public class AppDeckFragmentPushAnimation {
 		});        
         
     	Display display = from.getActivity().getWindowManager().getDefaultDisplay();
-    	
-		float width = (float)display.getWidth();
+
+        Point size = new Point();
+        display.getSize(size);
+
+        float width = size.x;
+//        float width = (float)display.getWidth();
     	//float height = (float)display.getHeight();        
         
         set.playTogether(
@@ -66,7 +75,8 @@ public class AppDeckFragmentPushAnimation {
         		ObjectAnimator.ofFloat(fromView, "translationX", 0, -width/3),
                 //ObjectAnimator.ofFloat(fromView, "scaleX", 1.0f, 0.9f),
                 //ObjectAnimator.ofFloat(fromView, "scaleY", 1.0f, 0.9f),
-                ObjectAnimator.ofFloat(fromView, "alpha", 1.0f, 0.8f),
+
+                //ObjectAnimator.ofFloat(fromView, "alpha", 1.0f, 0.8f),
                 
                 //ObjectAnimator.ofInt(fromView, "color", Color.BLUE, Color.BLACK),
 

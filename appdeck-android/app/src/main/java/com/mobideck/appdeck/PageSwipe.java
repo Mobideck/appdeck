@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -32,7 +33,7 @@ public class PageSwipe extends AppDeckFragment {
 	public static final String ARG_OBJECT = "object";
 	
 	 View adview;
-	 FrameLayout layout ;
+	 FrameLayout layout;
 	 
 	AppDeck appDeck;
 	
@@ -87,7 +88,9 @@ public class PageSwipe extends AppDeckFragment {
         // Inflate the layout for this fragment
     	//pager = new CustomViewPager(getActivity());
     	pager = new ViewPager(getActivity());
-    	pager.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //pager.setBackground(appDeck.config.app_background_color.getDrawable());
+        pager.setBackgroundColor(Color.BLACK);
+        pager.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     	pager.setOffscreenPageLimit(2);
     	pager.setId(loader.findUnusedId(0x1000));
     	adapter = new PageSwipeAdapter(getChildFragmentManager(), this);
@@ -289,7 +292,7 @@ public class PageSwipe extends AppDeckFragment {
     public void onDetach() {
     	super.onDetach();
     	// we always set sliding menu as enabled in case pager disable it
-    	loader.enableMenu();    	
+    	loader.enableMenu();
     }
 
     @Override

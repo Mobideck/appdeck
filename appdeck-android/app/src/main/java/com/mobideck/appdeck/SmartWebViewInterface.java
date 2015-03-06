@@ -43,4 +43,12 @@ public interface SmartWebViewInterface {
         target.scrollTo(x, y);
     }*/
 
+
+    // Webview API
+    public void smartWebViewGoBack();
+    public void smartWebViewGoForward();
+    public String smartWebViewGetTitle();
+    public String smartWebViewGetUrl();
+    public boolean smartWebViewCanGoBack();
+    public boolean smartWebViewCanGoForward();
 }

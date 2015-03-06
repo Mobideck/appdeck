@@ -44,13 +44,18 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:name="com.mobideck.appdeck.AppDeckApplication"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.AppCompat" >
+        <!--android:theme="@style/AppTheme" >-->
+
 
         <!-- Test Cache -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
 
         <!-- AppDeck Test App -->
         <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
+
+        <!-- AppDeck Dev App -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
 
         <!-- PC INpact -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />-->

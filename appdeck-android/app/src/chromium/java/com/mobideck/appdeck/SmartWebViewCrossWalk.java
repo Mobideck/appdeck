@@ -116,4 +116,11 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     public int fetchVerticalScrollOffset() {
         return 0;
     }
+
+    public void smartWebViewGoBack() {  }
+    public void smartWebViewGoForward() {  }
+    public String smartWebViewGetTitle() { return null; }
+    public String smartWebViewGetUrl() { return null; }
+    public boolean smartWebViewCanGoBack() { return false; }
+    public boolean smartWebViewCanGoForward() { return false; }
 }

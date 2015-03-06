@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.xwalk.core.XWalkJavascriptResult;
+import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
@@ -674,4 +675,11 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
     {
         return saveState(outState);
     }
+
+    public void smartWebViewGoBack() { getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1); }
+    public void smartWebViewGoForward() { getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD, 1); }
+    public String smartWebViewGetTitle() { return getTitle(); }
+    public String smartWebViewGetUrl() { return getUrl(); }
+    public boolean smartWebViewCanGoBack() { return getNavigationHistory().canGoBack(); }
+    public boolean smartWebViewCanGoForward() { return getNavigationHistory().canGoForward(); }
 }

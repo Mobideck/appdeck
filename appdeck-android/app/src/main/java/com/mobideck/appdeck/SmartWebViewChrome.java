@@ -601,4 +601,10 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
     public int fetchHorizontalScrollOffset() {return computeHorizontalScrollOffset(); }
     public int fetchVerticalScrollOffset() {return computeVerticalScrollOffset();}
 
+    public void smartWebViewGoBack() { goBack(); }
+    public void smartWebViewGoForward() { goForward(); }
+    public String smartWebViewGetTitle() { return getTitle(); }
+    public String smartWebViewGetUrl() { return getUrl(); }
+    public boolean smartWebViewCanGoBack() { return canGoBack(); }
+    public boolean smartWebViewCanGoForward() { return canGoForward(); }
 }

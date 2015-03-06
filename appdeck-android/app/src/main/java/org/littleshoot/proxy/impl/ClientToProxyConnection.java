@@ -20,7 +20,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.handler.traffic.GlobalTrafficShapingHandler;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
-import org.apache.commons.codec.binary.Base64;
+//import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.littleshoot.proxy.ActivityTracker;
 import org.littleshoot.proxy.FlowContext;
@@ -838,7 +838,9 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
         String fullValue = values.iterator().next();
         String value = StringUtils.substringAfter(fullValue, "Basic ")
                 .trim();
-        byte[] decodedValue = Base64.decodeBase64(value);
+        //byte[] decodedValue = Base64.decodeBase64(value);
+        byte[] decodedValue = android.util.Base64.decode(value, android.util.Base64.NO_WRAP);
+
         try {
             String decodedString = new String(decodedValue, "UTF-8");
             String userName = StringUtils.substringBefore(decodedString,

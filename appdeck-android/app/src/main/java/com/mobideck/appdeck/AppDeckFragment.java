@@ -3,6 +3,7 @@ package com.mobideck.appdeck;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -38,7 +41,9 @@ public class AppDeckFragment extends Fragment {
 	
 	public boolean enablePushAnimation = true;
 	public boolean enablePopAnimation = true;
-	
+
+    public boolean isPopUp = false;
+
 	public AppDeckFragment()
 	{
 		
@@ -51,7 +56,18 @@ public class AppDeckFragment extends Fragment {
         fragment.loader = loader;
 		return fragment;
 	}
-	
+
+
+    public void animationInDidEnd()
+    {
+
+    }
+
+    public void animationOutDidEnd()
+    {
+
+    }
+
 	/*
 	@Override
 	public onCreateAnimation(int transit, boolean enter, int nextAnim)
@@ -59,14 +75,51 @@ public class AppDeckFragment extends Fragment {
 		
 	}
 	*/
-	
-	@Override
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+        this.loader = (Loader)activity;
+        if (isPopUp) {
+            this.loader.disableMenu();
+            //this.loader.enableFullScreen();
+        }
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+    }
+
+
+    @Override
 	public void onCreate(Bundle savedInstanceState)
 	{
     	super.onCreate(savedInstanceState);
         appDeck = AppDeck.getInstance();
 	}
-	
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View ret = super.onCreateView(inflater, container, savedInstanceState);
+
+        return ret;
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        if (isPopUp) {
+            this.loader.enableMenu();
+            //this.loader.disableFullScreen();
+        }
+    }
+
 	public String resolveURL(String relativeUrl)
 	{
 		URI uri;

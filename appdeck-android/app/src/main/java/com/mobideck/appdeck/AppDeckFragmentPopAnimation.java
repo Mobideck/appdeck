@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.graphics.Point;
 import android.view.Display;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -60,14 +61,18 @@ public class AppDeckFragmentPopAnimation {
         //set.setInterpolator(new AccelerateDecelerateInterpolator());
         
        	Display display = from.getActivity().getWindowManager().getDefaultDisplay();
-    	float width = (float)display.getWidth();
-    	//float height = (float)display.getHeight();          
+    	//float width = (float)display.getWidth();
+    	//float height = (float)display.getHeight();
+
+        Point size = new Point();
+        display.getSize(size);
+        float width = size.x;
         
         set.playTogether(
                 ObjectAnimator.ofFloat(toView, "translationX", -width/3, 0),
                 //ObjectAnimator.ofFloat(toView, "scaleX", 0.8f, 1.0f),
                 //ObjectAnimator.ofFloat(toView, "scaleY", 0.8f, 1.0f),
-                ObjectAnimator.ofFloat(toView, "alpha", 0.8f, 1.0f),
+                //ObjectAnimator.ofFloat(toView, "alpha", 0.8f, 1.0f),
 
                 ObjectAnimator.ofFloat(fromView, "translationX", 0, width)//,
                 //ObjectAnimator.ofFloat(fromView, "scaleX", 1.0f, 1.2f),

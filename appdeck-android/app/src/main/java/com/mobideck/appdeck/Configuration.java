@@ -131,7 +131,7 @@ public class Configuration {
 			app_base_url = json_url;
 		
 		// bootstrap
-		bootstrapUrl = readURI(root.get("bootstrap"), "url", "/");
+		bootstrapUrl = readURI(root.get("bootstrap"), "url", "");
 
 		// left menu
 		AppDeckJsonNode leftMenu = root.get("leftmenu");

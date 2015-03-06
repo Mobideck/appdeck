@@ -22,8 +22,9 @@ public class WebBrowser extends AppDeckFragment {
    	PageMenuItem menuItemCancel;
    	PageMenuItem menuItemRefresh;
 	
-   	WebBrowserWebView webView;
-   	
+   	//WebBrowserWebView webView;
+    private SmartWebView webView;
+
 	public static WebBrowser newInstance(String absoluteURL)
 	{
 		WebBrowser fragment = new WebBrowser();	
@@ -47,6 +48,7 @@ public class WebBrowser extends AppDeckFragment {
     	this.appDeck = this.loader.appDeck;
     	Bundle args = getArguments();
     	url = args.getString("url");
+        this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);
     	
 		menuItemPrevious = new PageMenuItem(loader.getResources().getString(R.string.previous), "!previous", "previous", "webbrowser:previous", null, this);
 		menuItemNext = new PageMenuItem(loader.getResources().getString(R.string.next), "!next", "next", "webbrowser:next", null, this);
@@ -55,15 +57,27 @@ public class WebBrowser extends AppDeckFragment {
 		menuItemRefresh = new PageMenuItem(loader.getResources().getString(R.string.refresh), "!refresh", "refresh", "webbrowser:refresh", null, this);
 		menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel, menuItemRefresh};		
 	}
-	
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (enablePushAnimation)
+        {
+            loader.pushFragmentAnimation(this);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-    	FrameLayout rootView = (FrameLayout)inflater.inflate(R.layout.web_browser_layout, container, false);
+    	rootView = (FrameLayout)inflater.inflate(R.layout.web_browser_layout, container, false);
+        rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-		webView = new WebBrowserWebView(this);
-		rootView.addView(webView, new ViewGroup.LayoutParams(
+        webView = SmartWebViewFactory.createSmartWebView(this);
+
+		rootView.addView(webView.view, new ViewGroup.LayoutParams(
 		        ViewGroup.LayoutParams.MATCH_PARENT,
 		        ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -72,9 +86,9 @@ public class WebBrowser extends AppDeckFragment {
         	Log.i(TAG, "onCreateView with State");
         	//loader = (Loader)getActivity();
     		//loadURLConfiguration(null);
-    		webView.restoreState(savedInstanceState);
+    		webView.ctl.smartWebViewRestoreState(savedInstanceState);
         } else {
-        	webView.loadUrl(url);
+        	webView.ctl.loadUrl(url);
         }		
 		
         return rootView;
@@ -93,7 +107,7 @@ public class WebBrowser extends AppDeckFragment {
     public void onPause() {
     	super.onPause();
     	CookieSyncManager.getInstance().sync();
-    	webView.pause();
+    	webView.ctl.pause();
     }
 
     @Override
@@ -106,7 +120,7 @@ public class WebBrowser extends AppDeckFragment {
     public void onResume() {
     	super.onResume();
     	CookieSyncManager.getInstance().stopSync();
-    	webView.resume();
+    	webView.ctl.resume();
     };
 
     @Override
@@ -114,29 +128,29 @@ public class WebBrowser extends AppDeckFragment {
     {
     	super.onSaveInstanceState(outState);
     	if (webView != null)
-    		webView.saveState(outState);
+    		webView.ctl.smartWebViewSaveState(outState);
     }    
     
     public void loadUrl(String absoluteURL)
     {
     	if (absoluteURL.equalsIgnoreCase("webbrowser:previous"))
-    		webView.goBack();
+    		webView.ctl.smartWebViewGoBack();
     	else if (absoluteURL.equalsIgnoreCase("webbrowser:next"))
-    		webView.goForward();
+    		webView.ctl.smartWebViewGoForward();
     	else if (absoluteURL.equalsIgnoreCase("webbrowser:cancel"))
-    		webView.stopLoading();
+    		webView.ctl.stopLoading();
     	else if (absoluteURL.equalsIgnoreCase("webbrowser:refresh"))
-    		webView.reload();
+    		webView.ctl.reload();
     	else if (absoluteURL.equalsIgnoreCase("webbrowser:share"))
-    		loader.share(webView.getTitle(), webView.getUrl(), null);
+    		loader.share(webView.ctl.smartWebViewGetTitle(), webView.ctl.smartWebViewGetUrl(), null);
     	else
-    		webView.loadUrl(absoluteURL);
+    		webView.ctl.loadUrl(absoluteURL);
     }
     
     void syncMenu()
     {
-    	menuItemPrevious.setAvailable(webView.canGoBack());
-       	menuItemNext.setAvailable(webView.canGoForward());
+    	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
+       	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
        	menuItemShare.setAvailable(true);
        	menuItemCancel.setAvailable(true);
        	menuItemRefresh.setAvailable(true);
@@ -147,8 +161,8 @@ public class WebBrowser extends AppDeckFragment {
        	menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel};       	
        	loader.setMenuItems(menuItems);
     	
-    	menuItemPrevious.setAvailable(webView.canGoBack());
-       	menuItemNext.setAvailable(webView.canGoForward());
+    	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
+       	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
        	menuItemShare.setAvailable(true);
        	menuItemCancel.setAvailable(true);
        	menuItemRefresh.setAvailable(true);
@@ -158,8 +172,8 @@ public class WebBrowser extends AppDeckFragment {
     
     public void progressSet(View origin, int percent)
     {
-    	menuItemPrevious.setAvailable(webView.canGoBack());
-       	menuItemNext.setAvailable(webView.canGoForward());
+    	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
+       	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
        	menuItemShare.setAvailable(true);
        	menuItemCancel.setAvailable(true);
        	menuItemRefresh.setAvailable(true);
@@ -172,8 +186,8 @@ public class WebBrowser extends AppDeckFragment {
        	menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel, menuItemRefresh};
        	loader.setMenuItems(menuItems);
 
-    	menuItemPrevious.setAvailable(webView.canGoBack());
-       	menuItemNext.setAvailable(webView.canGoForward());
+    	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
+       	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
        	menuItemShare.setAvailable(true);
        	menuItemCancel.setAvailable(false);
        	menuItemRefresh.setAvailable(true);    	
@@ -183,11 +197,11 @@ public class WebBrowser extends AppDeckFragment {
     
 	public boolean canGoBack()
 	{
-		return webView.canGoBack();
+		return webView.ctl.smartWebViewCanGoBack();
 	}
 	
 	public void goBack()
 	{
-		webView.goBack();
+		webView.ctl.smartWebViewGoBack();
 	}    
 }

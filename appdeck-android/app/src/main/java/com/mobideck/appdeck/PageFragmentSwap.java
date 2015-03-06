@@ -587,8 +587,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 		if (call.command.equalsIgnoreCase("popup"))
 		{
 			Log.i("API", uri.getPath()+" **POPUP**");
-			
-			loader.showPopUp(this, call.input.getString("param"));
+
+            String absoluteURL = uri.resolve(call.input.getString("param")).toString();
+            //String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
+			loader.showPopUp(this, absoluteURL);
 			
 			return true;
 		}
