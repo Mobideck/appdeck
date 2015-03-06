@@ -5,7 +5,7 @@ AppDeck is a mobile hybrid application engine for iOS and Android.
 
 http://www.appdeck.mobi/
 
-AppDeck can be view as a framework like JQuery Mobile write in native code.
+AppDeck can be view as a framework like JQuery Mobile writen in native code instead of Javascript.
 
 AppDeck still use HTML5 for page rendering, but everything else is in native code: Menu, Scroll, network, Photo Browser ...
 
@@ -23,6 +23,6 @@ AppDeck for iOS
 AppDeck for Android
 -------
 
- - Eclipse and ADT: http://developer.android.com/sdk/installing/installing-adt.html
- - PHP: When you build your app, a php script will be use to embed ressources into your app. On Mac php is already installed by default. On linux you can use your build in packgage system(Ex: on Ubuntu: apt-get install php5); On windows, if PHPwe recommend using http://www.wampserver.com/
+ - Android Studio: http://developer.android.com/sdk/
+ - PHP: When you build your app, a php script will be use to embed ressources into your app. On Mac php is already installed by default. On linux you can use your build in packgage system (Ex: on Ubuntu: apt-get install php5); On windows, you can install PHP using http://www.wampserver.com/.
 

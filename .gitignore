@@ -61,3 +61,5 @@ proguard/
 # Android Studio
 .idea
 
+appdeck-android/app/src/main/assets/httpcache/*
+
