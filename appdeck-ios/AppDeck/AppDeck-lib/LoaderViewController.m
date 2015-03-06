@@ -1429,7 +1429,7 @@
 
     if ([call.command isEqualToString:@"pageroot"])
     {
-        [self loadPage:[NSString stringWithFormat:@"%@",call.param] root:YES popup:LoaderPopUpDefault];
+        [self loadPage:[NSString stringWithFormat:@"%@",call.param] root:YES popup:LoaderPopUpNo];
         if (self.leftMenuOpen || self.rightMenuOpen)
             [self.slidingViewController resetTopView];
         return YES;

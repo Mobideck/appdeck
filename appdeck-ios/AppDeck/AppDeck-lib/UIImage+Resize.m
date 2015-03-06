@@ -238,6 +238,10 @@
         // Retina display
         image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(width * 2, height * 2) interpolationQuality:kCGInterpolationHigh];
         image = [UIImage imageWithCGImage:image.CGImage scale:2.0 orientation:UIImageOrientationUp];
+    } else if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 3.0)) {
+        // Retina 3x display
+        image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(width * 3, height * 3) interpolationQuality:kCGInterpolationHigh];
+        image = [UIImage imageWithCGImage:image.CGImage scale:3.0 orientation:UIImageOrientationUp];
     } else {
         // non-Retina display
         image = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFit bounds:CGSizeMake(width, height) interpolationQuality:kCGInterpolationHigh];

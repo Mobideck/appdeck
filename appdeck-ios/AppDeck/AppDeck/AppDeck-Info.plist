@@ -4,14 +4,14 @@
 <dict>
 	<key>AppDeckApiKey</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
-	<key>AppDeckApiKey - 13</key>
-	<string>1086h2bcaa38f9a89f2e90b3e19b46b583f41#JP.News</string>
-	<key>AppDeckApiKey - 12</key>
-	<string>1069hdaf84412b985ad99efa1037a6948c978#JVL</string>
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
 	<string>999h056edc07b49f95bb570e1af07b8eece8</string>
+	<key>AppDeckApiKey - 12</key>
+	<string>1069hdaf84412b985ad99efa1037a6948c978#JVL</string>
+	<key>AppDeckApiKey - 13</key>
+	<string>1086h2bcaa38f9a89f2e90b3e19b46b583f41#JP.News</string>
 	<key>AppDeckApiKey - 2</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
 	<key>AppDeckApiKey - 3</key>
@@ -83,11 +83,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.33</string>
+	<string>1.37</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>33</string>
+	<string>37</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIBackgroundModes</key>
