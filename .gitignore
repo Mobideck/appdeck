@@ -62,4 +62,5 @@ proguard/
 .idea
 
 appdeck-android/app/src/main/assets/httpcache/*
-
+appdeck-android/app/src/main/res/values/com_crashlytics_export_strings.xml
+appdeck-android/app/src/main/assets/crashlytics-build.properties
