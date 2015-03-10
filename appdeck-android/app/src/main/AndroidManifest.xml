@@ -44,7 +44,7 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:name="com.mobideck.appdeck.AppDeckApplication"
-        android:theme="@style/Theme.AppCompat" >
+        android:theme="@style/Theme.AppDeckTheme" >
         <!--android:theme="@style/AppTheme" >-->
 
 
@@ -70,7 +70,7 @@
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
 
         <!--  Monsieur-Mademoiselle -->
-        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
 
         <!--  94 citoyens -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
@@ -84,6 +84,8 @@
         <!-- Jeux Video Live -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>-->
 
+        <!-- Tool Fitness -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/989hb11900d8d83ee53fbe22c0e922f3ba09"></meta-data>-->
 
 
         <meta-data android:name="noCache" android:value="false" />

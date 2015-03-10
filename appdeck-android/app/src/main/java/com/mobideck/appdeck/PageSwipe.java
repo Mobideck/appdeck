@@ -249,7 +249,7 @@ public class PageSwipe extends AppDeckFragment {
     	{
     		loader.pushFragmentAnimation(this);
     	}
-    }    
+    }
     
     @Override
     public void onDestroyView()

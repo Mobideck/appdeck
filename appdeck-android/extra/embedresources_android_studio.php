@@ -28,3 +28,6 @@ define('APPDECK_JSON_URL', $app_json_url);
 define('APPDECK_OUTPUT_DIR', $project_path.'/app/src/main/assets/httpcache/');
 
 include('embedresources.php');
+
+buildAppDeckAndroidRes();
+//$appdeck_res = openxml($project_path.'/app/src/res/values/appdeck.xml');

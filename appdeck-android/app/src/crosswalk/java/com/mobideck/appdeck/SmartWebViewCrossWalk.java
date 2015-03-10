@@ -23,9 +23,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.net.Proxy;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 //import android.util.ArrayMap;
@@ -45,9 +47,16 @@ import org.xwalk.core.XWalkPreferences;
 
 public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInterface {
 
-    public static void setPreferences()
+    public static void setPreferences(Loader loader)
     {
         XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            if (0 != (loader.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
+            {
+                XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
+            }
+        }
     }
 
 

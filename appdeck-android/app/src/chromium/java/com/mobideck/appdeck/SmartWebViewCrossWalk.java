@@ -12,7 +12,7 @@ import android.webkit.ValueCallback;
 public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface {
 
 
-    public static void setPreferences()
+    public static void setPreferences(Loader loader)
     {
 
     }

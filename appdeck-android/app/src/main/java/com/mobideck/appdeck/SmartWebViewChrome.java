@@ -10,6 +10,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -67,9 +68,15 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
 
     public boolean catchLink = true;
 
-    public static void setPreferences()
+    public static void setPreferences(Loader loader)
     {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            if (0 != (loader.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
+            {
+                WebView.setWebContentsDebuggingEnabled(true);
+            }
+        }
     }
 
     public SmartWebViewChrome(AppDeckFragment root) {

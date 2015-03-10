@@ -41,12 +41,12 @@ public class SmartWebViewFactory {
 
     }
 
-    public static void setPreferences()
+    public static void setPreferences(Loader loader)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !SmartWebViewFactory.forceCrossWalk)
-            SmartWebViewChrome.setPreferences();
+            SmartWebViewChrome.setPreferences(loader);
         else
-            SmartWebViewCrossWalk.setPreferences();
+            SmartWebViewCrossWalk.setPreferences(loader);
 
     }
 

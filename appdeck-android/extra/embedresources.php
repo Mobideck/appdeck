@@ -101,4 +101,7 @@ appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_dev.js", fa
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck.js", false, true);
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/fastclick.js", false, true);
 
+if (EMBED_TYPE == 'android')
+  buildAppDeckAndroidRes();
+
 appdeck_ok("{$count_resource} resources embed in app");

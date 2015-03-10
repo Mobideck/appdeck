@@ -91,6 +91,9 @@ public class AppDeckJsonNode
 		try {
 			return root.getBoolean(name);
 		} catch (Exception e) {
+            String val = getString(name);
+            if (val.equalsIgnoreCase("1"))
+                return true;
 			return false;
 		}		
 	}

@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -49,7 +51,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -104,7 +109,13 @@ public class Loader extends ActionBarActivity {
 	
 	//private jProxy jp;
 	private HttpProxyServerBootstrap proxyServerBootstrap;
-	
+
+    //SmoothProgressBar mProgressBar;
+    //ProgressBarIndeterminateDeterminate mProgressBar;
+    ProgressBar mProgressBar;
+
+    Toolbar mToolbar;
+
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
 	/*
@@ -136,10 +147,7 @@ public class Loader extends ActionBarActivity {
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-    	//requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
-        //supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+        //supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         //supportRequestWindowFeature(Window.FEATURE_PROGRESS);
 
         //Debug.startMethodTracing("calc");
@@ -148,15 +156,13 @@ public class Loader extends ActionBarActivity {
 		
 		if (app.isInitialLoading == false)
 		{
-            SmartWebViewFactory.setPreferences();
+            SmartWebViewFactory.setPreferences(this);
 			//SmartWebViewCrossWalk.setPreferences();// XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
 			app.isInitialLoading = true;
 		}
-		//XWalkPreferences.setValue(XWalkPreferences.REMOTE_DEBUGGING, true);
-		
+
 		Crashlytics.start(this);
         //Crashlytics.getInstance().setDebugMode(true);
-
 
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
@@ -230,7 +236,12 @@ public class Loader extends ActionBarActivity {
     	proxyServerBootstrap.start();
 
 		setLoaderContentView();
-		
+
+        mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
+        setSupportActionBar(mToolbar);
+
+        mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         
         if (appDeck.config.leftMenuUrl != null) {
@@ -264,7 +275,7 @@ public class Loader extends ActionBarActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);
         
 		if (appDeck.config.topbar_color != null)
-			getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());        
+			getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
 
 		if (appDeck.config.title != null)
 			getSupportActionBar().setTitle(appDeck.config.title);
@@ -272,9 +283,24 @@ public class Loader extends ActionBarActivity {
 		setSupportProgressBarVisibility(false);
 		setSupportProgressBarIndeterminate(false);
 
-        /*setSupportProgressBarVisibility(true);
-        setSupportProgressBarIndeterminateVisibility(true);
-        setSupportProgressBarIndeterminate(true);*/
+
+        /*if (appDeck.config.topbar_color != null)
+            mProgressBar.setSmoothProgressDrawableBackgroundDrawable(appDeck.config.topbar_color.getDrawable());*/
+
+        /*mProgressBar.setIndeterminateDrawable(new SmoothProgressDrawable.Builder(this)
+                .color(0xff0000)
+                .interpolator(new DecelerateInterpolator())
+                .sectionsCount(4)
+                .separatorLength(8)         //You should use Resources#getDimensionPixelSize
+                .strokeWidth(8f)            //You should use Resources#getDimension
+                .speed(2f)                 //2 times faster
+                .progressiveStartSpeed(2)
+                .progressiveStopSpeed(3.4f)
+                .reversed(false)
+                .mirrorMode(false)
+                .progressiveStart(true)
+                //.progressiveStopEndedListener(mListener) //called when the stop animation is over
+                .build());*/
 
 
 		getSupportFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener()
@@ -640,6 +666,10 @@ public class Loader extends ActionBarActivity {
        	mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
+        if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer_light);
+        else
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);
     }
     
     
@@ -718,6 +748,7 @@ public class Loader extends ActionBarActivity {
     
     public void progressStart()
     {
+        setSupportProgress(0);
         setSupportProgressBarVisibility(true);
         setSupportProgressBarIndeterminateVisibility(true);
     	setSupportProgressBarIndeterminate(true);
@@ -726,11 +757,13 @@ public class Loader extends ActionBarActivity {
     
     public void progressSet(int percent)
     {
+        if (percent < 25)
+            return;
     	setSupportProgressBarIndeterminate(false);
         //Normalize our progress along the progress bar's scale
         int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * percent;
         //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
-        setSupportProgress(progress);    	
+        setSupportProgress(percent);
     }
     
     public void progressStop()
@@ -741,6 +774,7 @@ public class Loader extends ActionBarActivity {
     	
         int progress = (Window.PROGRESS_END - Window.PROGRESS_START);
         //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
+        progress = 100;
         setSupportProgress(progress);
         
     }
@@ -864,21 +898,22 @@ public class Loader extends ActionBarActivity {
     public AppDeckFragment initPageFragment(String absoluteURL)
     {
     	ScreenConfiguration config = appDeck.config.getConfiguration(absoluteURL);
-    	
+
+        AppDeckFragment fragment;
+
     	if (config != null && config.type != null && config.type.equalsIgnoreCase("browser"))
     	{
-    		WebBrowser fragment = WebBrowser.newInstance(absoluteURL);
-            fragment.loader = this;
-    		//pageSwipe.setRetainInstance(true);
-    		fragment.screenConfiguration = config; 
-    		return fragment;
-    	}
+    		fragment = WebBrowser.newInstance(absoluteURL);
+    	} else {
+            fragment = PageSwipe.newInstance(absoluteURL);
+            fragment.setRetainInstance(true);
+        }
     	
-    	PageSwipe pageSwipe = PageSwipe.newInstance(absoluteURL);
-    	pageSwipe.loader = this;
-    	pageSwipe.setRetainInstance(true);
-    	pageSwipe.screenConfiguration = config;//appDeck.config.getConfiguration(absoluteURL);
-    	return pageSwipe;
+    	fragment.loader = this;
+        fragment.screenConfiguration = config;//appDeck.config.getConfiguration(absoluteURL);
+        if (fragment.screenConfiguration.isPopUp)
+            fragment.isPopUp = true;
+        return fragment;
     }
     
     public int pushFragment(AppDeckFragment fragment)
@@ -919,17 +954,7 @@ public class Loader extends ActionBarActivity {
     	    	
     	fragmentTransaction.commitAllowingStateLoss();
     	
-    	// widespace
-	    if (adSpaceSplash != null)
-	    {
-	    	adSpaceSplash.bringToFront();
-	    	adSpaceSplash.requestLayout();
-	    }
-	    if (adSpacePanorama != null)
-	    {
-	    	adSpacePanorama.bringToFront();
-	    	adSpacePanorama.requestLayout();
-	    }
+        layoutSubViews();
 
     	return 0;
     }
@@ -994,7 +1019,25 @@ public class Loader extends ActionBarActivity {
     	/*prepareRootPage();
     	pushFragment(root);*/    	
     	return true;
-    }    
+    }
+
+    public void layoutSubViews()
+    {
+        // widespace
+        if (adSpaceSplash != null)
+        {
+            adSpaceSplash.bringToFront();
+            adSpaceSplash.requestLayout();
+        }
+        if (adSpacePanorama != null)
+        {
+            adSpacePanorama.bringToFront();
+            adSpacePanorama.requestLayout();
+        }
+        if (mProgressBar != null)
+            mProgressBar.bringToFront();
+
+    }
     
     public void reload()
     {
@@ -1159,7 +1202,15 @@ public class Loader extends ActionBarActivity {
 			this.loadPage(absoluteURL);			
 			return true;
 		}
-		
+
+        if (call.command.equalsIgnoreCase("popup"))
+        {
+            Log.i("API", "**PAGE POPUP**");
+            String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
+            this.showPopUp(call.appDeckFragment, absoluteURL);
+            return true;
+        }
+
 		if (call.command.equalsIgnoreCase("pagepop"))
 		{
 			Log.i("API", "**PAGE POP**");
@@ -1688,6 +1739,46 @@ public class Loader extends ActionBarActivity {
  		   getSupportActionBar().show();
  	   else
  		   getSupportActionBar().hide();
-    }    
-    
+    }
+
+    // Progress Bar
+    @Override
+    public void setSupportProgressBarVisibility(boolean visibility)
+    {
+        if (mProgressBar == null)
+            return;
+        if (visibility)
+            mProgressBar.setVisibility(View.VISIBLE);
+        else
+            mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setSupportProgressBarIndeterminateVisibility(boolean visibility)
+    {
+        if (mProgressBar == null)
+            return;
+        //setSupportProgressBarVisibility(visibility);
+        //mProgressBar.setIndeterminate(visibility);
+    }
+
+    @Override
+    public void setSupportProgressBarIndeterminate(boolean indeterminate)
+    {
+        if (mProgressBar == null)
+            return;
+        mProgressBar.setIndeterminate(indeterminate);
+
+        //mProgressBar.setProgress();
+    }
+
+    @Override
+    public void setSupportProgress(int progress)
+    {
+        if (mProgressBar == null)
+            return;
+        //mProgressBar.setIndeterminate(false);
+        mProgressBar.setProgress(progress);
+    }
+
 }

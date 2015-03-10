@@ -362,7 +362,6 @@ function easy_embed_rec($names, $base_info, $default_url = false)
   }
 }
 
-
 function easy_embed($name, $default_url = false)
 {
   global $info;
@@ -374,3 +373,25 @@ function easy_embed($name, $default_url = false)
   easy_embed_rec($names, $info, $default_url);
 }
 
+function buildAppDeckAndroidRes()
+{
+  global $info, $project_path;
+
+  $xml = file_get_contents($project_path.'/extra/appdeck.xml');
+  $conf = array('AppDeckColorPrimary' => '#FFFFFF',
+                'AppDeckColorPrimaryDark' => '#FFFFFF',
+                'AppDeckColorAccent' => '#000000');
+  // patch conf
+  if (isset($info->app_topbar_color[0]))
+    $conf['AppDeckColorPrimary'] = $info->app_topbar_color[0];
+  if (isset($info->app_topbar_color[1]))
+    $conf['AppDeckColorPrimaryDark'] = $info->app_topbar_color[1];
+  if (isset($info->icon_theme) && $info->icon_theme == 'light')
+    $conf['AppDeckColorAccent'] = '#FFFFFF';
+
+  foreach ($conf as $k => $v)
+  {
+    $xml = str_replace('##'.$k.'##', $v, $xml);
+  }
+  file_put_contents($project_path.'/app/src/main/res/values/appdeck.xml', $xml);
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AppDeckTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Set AppCompat’s actionBarStyle -->
+        <!--<item name="actionBarStyle">@style/MyActionBarStyle</item>-->
+
+        <!-- Set AppCompat’s color theming attrs -->
+        <item name="colorPrimary">@color/AppDeckColorPrimary</item>
+        <item name="colorPrimaryDark">@color/AppDeckColorPrimaryDark</item>
+        <item name="colorAccent">@color/AppDeckColorAccent</item>
+
+    <!-- The rest of your attributes -->
+    </style>
+
+</resources>

@@ -1,62 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
-<!-- <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/loader_container"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loader_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_30"
-    android:orientation="vertical"
-    > -->
-    
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/app_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        />
+
+<FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/loader_container"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        xmlns:widespace="http://schemas.android.com/apk/res/com.mobideck.appdeck"
         >
-        
-         <com.widespace.AdSpace
-		    android:id="@+id/adTakeOver"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
-		    widespace:autostart="true"
-		    widespace:autoupdate="true"
-		/>
 
-        <com.widespace.AdSpace
-            android:id="@+id/adPanorama"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
-            widespace:autostart="true"
-            widespace:autoupdate="true"
+        <!-- The main content view -->
+        <FrameLayout
+            android:id="@+id/loader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            xmlns:widespace="http://schemas.android.com/apk/res/com.mobideck.appdeck"
+            android:animateLayoutChanges="true"
+            >
+
+            <FrameLayout
+                android:id="@+id/loader_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+            >
+            </FrameLayout>
+
+             <com.widespace.AdSpace
+                android:id="@+id/adTakeOver"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
+                widespace:autostart="true"
+                widespace:autoupdate="true"
             />
-        
-    </FrameLayout>
-    <!-- The navigation drawer -->
-    <FrameLayout android:id="@+id/left_drawer"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
-    <FrameLayout android:id="@+id/right_drawer"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
-    
-</android.support.v4.widget.DrawerLayout>
+
+            <com.widespace.AdSpace
+                android:id="@+id/adPanorama"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
+                widespace:autostart="true"
+                widespace:autoupdate="true"
+                />
+
+            <!--<fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/AppDeckProgressBar"
+                android:indeterminate="true" />-->
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="fill_parent"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_height="8dp"
+                android:minHeight="8dp"
+                android:maxHeight="8dp"
+                android:progress="50"/>
+
+<!--            <com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate
+                android:id="@+id/progressBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#1E88E5" />-->
+
+
+        </FrameLayout>
+        <!-- The navigation drawer -->
+        <FrameLayout android:id="@+id/left_drawer"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="#111"/>
+        <FrameLayout android:id="@+id/right_drawer"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="#111"/>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</FrameLayout>
+
+</LinearLayout>
