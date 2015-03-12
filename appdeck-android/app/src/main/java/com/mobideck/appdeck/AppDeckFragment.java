@@ -209,6 +209,14 @@ public class AppDeckFragment extends Fragment {
     		loader.setMenuItems(menuItems);
     	if (isMain)
     	{
+            if (isCurrentAppDeckPage()) {
+                if (progressStart && progress == -1)
+                    loader.progressStart();
+                else if (progressStart)
+                    loader.progressSet(progress);
+                else
+                    loader.progressStop();
+            }
     		//currentPageUrl
     		AppDeck.getInstance().ga.view(currentPageUrl);
     	}
@@ -223,17 +231,24 @@ public class AppDeckFragment extends Fragment {
     		loader.loadRootPage(absoluteURL);
     	else
     		loader.loadPage(absoluteURL);
-    }    
+    }
+
+    boolean progressStart = false;
+    int progress = -1;
     
     public void progressStart(View origin)
     {
+        progressStart = true;
+        progress = -1;
     	if (isCurrentAppDeckPage() == false)
-    		return;    	
+    		return;
     	loader.progressStart();
     }
     
     public void progressSet(View origin, int percent)
     {
+        progressStart = true;
+        progress = percent;
     	if (isCurrentAppDeckPage() == false)
     		return;    	
     	loader.progressSet(percent);
@@ -241,6 +256,8 @@ public class AppDeckFragment extends Fragment {
     
     public void progressStop(View origin)
     {
+        progressStart = false;
+        progress = -1;
     	if (isCurrentAppDeckPage() == false)
     		return;    	
     	loader.progressStop();
@@ -248,6 +265,8 @@ public class AppDeckFragment extends Fragment {
 
     public void progressFailed(View origin)
     {
+        progressStart = false;
+        progress = -1;
     	if (isCurrentAppDeckPage() == false)
     		return;
     	loader.progressStop();

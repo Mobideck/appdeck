@@ -45,7 +45,7 @@ public class PhotoBrowser extends AppDeckFragment {
    	
    	AppDeckFragment origin;
    	
-	public static PhotoBrowser newInstance(AppDeckJsonNode config)
+	public static PhotoBrowser newInstance(AppDeckJsonNode config, AppDeckFragment root)
 	{
 		PhotoBrowser fragment = new PhotoBrowser();
 		
@@ -61,8 +61,14 @@ public class PhotoBrowser extends AppDeckFragment {
 		for (int i = 0; i < nbPhoto; i++)
 		{
 			AppDeckJsonNode image = images.getNode(i);
-			url[i] = image.getString("url");
-			thumbnail[i] = image.getString("thumbnail");
+            String imageUrl = image.getString("url");
+            String thumbnailUrl = image.getString("thumbnail");
+            if (imageUrl != null && imageUrl != "")
+                imageUrl = root.resolveURL(imageUrl);
+            if (thumbnailUrl != null && thumbnailUrl != "")
+                thumbnailUrl = root.resolveURL(thumbnailUrl);
+			url[i] = imageUrl;
+			thumbnail[i] = thumbnailUrl;
 			caption[i] = image.getString("caption"); 		
 		}
 		

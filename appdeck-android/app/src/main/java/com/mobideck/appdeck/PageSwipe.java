@@ -89,7 +89,6 @@ public class PageSwipe extends AppDeckFragment {
     	//pager = new CustomViewPager(getActivity());
     	pager = new ViewPager(getActivity());
         //pager.setBackground(appDeck.config.app_background_color.getDrawable());
-        pager.setBackgroundColor(Color.BLACK);
         pager.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     	pager.setOffscreenPageLimit(2);
     	pager.setId(loader.findUnusedId(0x1000));
@@ -345,6 +344,14 @@ public class PageSwipe extends AppDeckFragment {
     	if (currentPage != null)	
     		currentPage.setIsMain(isMain);
     }
+
+    public String resolveURL(String relativeUrl)
+    {
+        if (currentPage != null)
+            return currentPage.resolveURL(relativeUrl);
+        return super.resolveURL(relativeUrl);
+    }
+
     
 	@Override
 	public void reload()

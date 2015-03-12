@@ -317,7 +317,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void progressStop(View origin)
     {
     	super.progressStop(origin);
-    	    	
+
     	swipeView.setRefreshing(false);
     	swipeViewAlt.setRefreshing(false);
 		if (origin == pageWebView.view && shouldAutoReloadInbackground == true)
@@ -473,8 +473,12 @@ public class PageFragmentSwap extends AppDeckFragment {
     	
     	new Handler().postDelayed(r, 250);
     	    	
-    }   
-    
+    }
+
+    public String resolveURL(String relativeUrl)
+    {
+        return pageWebView.ctl.resolve(relativeUrl);
+    }
     
 	public boolean apiCall(final AppDeckApiCall call)
 	{

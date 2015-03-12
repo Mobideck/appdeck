@@ -893,15 +893,32 @@ public class Loader extends ActionBarActivity {
     	
     	//fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
     	return fragmentTransaction.commitAllowingStateLoss();
-    }    
+    }
 
     public AppDeckFragment initPageFragment(String absoluteURL)
+    {
+        return initPageFragment(absoluteURL, false, false);
+    }
+
+    public AppDeckFragment initPageFragment(String absoluteURL, boolean forcePopUp, boolean forceBrowser)
     {
     	ScreenConfiguration config = appDeck.config.getConfiguration(absoluteURL);
 
         AppDeckFragment fragment;
 
-    	if (config != null && config.type != null && config.type.equalsIgnoreCase("browser"))
+        // popup to external URL MUST be browser
+        Uri uri = Uri.parse(absoluteURL);
+        if (uri != null)
+        {
+            String host = uri.getHost();
+            if (host != null && !host.equalsIgnoreCase(this.appDeck.config.bootstrapUrl.getHost()))
+            {
+                if (forcePopUp)
+                    forceBrowser = true;
+            }
+        }
+
+    	if (forceBrowser || (config != null && config.type != null && config.type.equalsIgnoreCase("browser")))
     	{
     		fragment = WebBrowser.newInstance(absoluteURL);
     	} else {
@@ -911,7 +928,9 @@ public class Loader extends ActionBarActivity {
     	
     	fragment.loader = this;
         fragment.screenConfiguration = config;//appDeck.config.getConfiguration(absoluteURL);
-        if (fragment.screenConfiguration.isPopUp)
+        if (fragment.screenConfiguration != null && fragment.screenConfiguration.isPopUp != null && fragment.screenConfiguration.isPopUp)
+            fragment.isPopUp = true;
+        if (forcePopUp)
             fragment.isPopUp = true;
         return fragment;
     }
@@ -1126,7 +1145,7 @@ public class Loader extends ActionBarActivity {
 			AppDeckJsonArray images = call.param.getArray("images");
 			if (images.length() > 0)
 			{
-				PhotoBrowser photoBrowser = PhotoBrowser.newInstance(call.param);
+				PhotoBrowser photoBrowser = PhotoBrowser.newInstance(call.param, call.appDeckFragment);
 				photoBrowser.loader = this;
 				photoBrowser.appDeck = appDeck;
 				photoBrowser.currentPageUrl = "photo://browser";
@@ -1565,8 +1584,7 @@ public class Loader extends ActionBarActivity {
 		//Log.w(TAG, "PopUp not suported on Android Platform, use push instead");
 		//loadPage(url);
 
-        AppDeckFragment fragment = initPageFragment(absoluteURL);
-        fragment.isPopUp = true;
+        AppDeckFragment fragment = initPageFragment(absoluteURL, true, false);
         pushFragment(fragment);
 
 /*        PopUpFragment popupfragment = PopUpFragment.newInstance(absoluteURL);
