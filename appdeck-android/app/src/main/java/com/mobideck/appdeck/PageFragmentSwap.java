@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class PageFragmentSwap extends AppDeckFragment {
@@ -54,7 +55,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 	private long lastUrlLoad = 0;
 	
 	private FrameLayout wv_container;
-	
+
+    private ProgressBar preLoadingIndicator;
+    private boolean isPreLoading = true;
+
 	View adview;
 	
 	public URI uri;
@@ -96,7 +100,12 @@ public class PageFragmentSwap extends AppDeckFragment {
         // Inflate the layout for this fragment
         rootView = (FrameLayout)inflater.inflate(R.layout.page_fragment_swap, container, false);
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        
+
+        if (appDeck.config.app_background_color != null)
+            rootView.setBackground(appDeck.config.app_background_color.getDrawable());
+
+        preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
+
 		//pageWebView = new SmartWebView(this);
 		pageWebView = SmartWebViewFactory.createSmartWebView(this);// new SmartWebViewCrossWalk(this);
 
@@ -310,6 +319,13 @@ public class PageFragmentSwap extends AppDeckFragment {
     
     public void progressSet(View origin, int percent)
     {
+        if (percent > 50 && isPreLoading /*&& loader.getPreviousAppDeckFragment(this.pageSwipe) == null*/)
+        {
+            preLoadingIndicator.setVisibility(View.GONE);
+            swipeView.setVisibility(View.VISIBLE);
+            swipeViewAlt.setVisibility(View.VISIBLE);
+            isPreLoading = false;
+        }
     	super.progressSet(origin, percent);
 
     }

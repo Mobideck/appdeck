@@ -80,6 +80,6 @@ public class AppDeckFragmentPopAnimation {
                 //ObjectAnimator.ofFloat(fromView, "alpha", 1.0f, 0.0f)                
         );
         set.setInterpolator(new DecelerateInterpolator());
-        set.setDuration(300).start();
+        set.setDuration(350).start();
 	}
 }

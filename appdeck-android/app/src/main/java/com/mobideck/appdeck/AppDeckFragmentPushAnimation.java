@@ -94,6 +94,6 @@ public class AppDeckFragmentPushAnimation {
         set.setInterpolator(new DecelerateInterpolator());
         //set.setInterpolator(new BounceInterpolator());        
         //set.setInterpolator(new BounceInterpolator());
-        set.setDuration(300).start();
+        set.setDuration(350).start();
 	}
 }

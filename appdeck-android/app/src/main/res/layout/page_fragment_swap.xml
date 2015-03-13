@@ -9,7 +9,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/darker_gray">
+
+
 
 <android.support.v4.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
@@ -19,7 +23,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/swipe">
+    android:id="@+id/swipe"
+    android:visibility="invisible">
 
 <!--    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -39,7 +44,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/swipeAlt">
+    android:id="@+id/swipeAlt"
+    android:visibility="invisible">
 
 <!--    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -49,16 +55,23 @@
     
 	</FrameLayout>-->
     
-</android.support.v4.widget.SwipeRefreshLayout>  
-    
-<!-- <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ptr="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ptr_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-        
-</uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>    
- -->
+</android.support.v4.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/preLoadingIndicator"
+        android:layout_gravity="center" />
+
+    <!-- <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+     -->
 
 
 </FrameLayout>
