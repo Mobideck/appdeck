@@ -2,6 +2,7 @@ package com.mobideck.appdeck;
 
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 
 public class SmartWebViewFactory {
 
@@ -16,6 +17,10 @@ public class SmartWebViewFactory {
         tmp.alwaysLoadRootPage = true;
 
         SmartWebView smartWebView = SmartWebViewFactory.createSmartWebView(tmp);
+
+        smartWebView.view.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
 
         //this.url = url;
         //this.position = position;

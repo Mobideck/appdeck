@@ -28,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.JsPromptResult;
@@ -48,8 +49,11 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import android.annotation.TargetApi;
 
+import name.cpr.VideoEnabledWebChromeClient;
+import name.cpr.VideoEnabledWebView;
+
 @TargetApi(19)
-public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
+public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebViewInterface
 {
     static String TAG = "SmartWebViewChrome";
 
@@ -68,6 +72,8 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
 
     public boolean catchLink = true;
 
+    private SmartWebChromeChromeClient webViewChromeChromeClient;
+
     public static void setPreferences(Loader loader)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -80,12 +86,47 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
     }
 
     public SmartWebViewChrome(AppDeckFragment root) {
-        super(root.loader);
+        super((Context)root.loader);
         this.root = root;
         appDeck = AppDeck.getInstance();
         configureWebView();
+        View loadingView = root.loader.getLayoutInflater().inflate(R.layout.view_loading_video, null); // Your own view, read class comments
+        webViewChromeChromeClient = new SmartWebChromeChromeClient(root.loader.nonVideoLayout, root.loader.videoLayout, loadingView, this);
+        webViewChromeChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback()
+        {
+            @Override
+            public void toggledFullscreen(boolean fullscreen)
+            {
+                // Your code to handle the full-screen change, for example showing and hiding the title bar. Example:
+                if (fullscreen)
+                {
+                    WindowManager.LayoutParams attrs = SmartWebViewChrome.this.root.loader.getWindow().getAttributes();
+                    attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                    attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                    SmartWebViewChrome.this.root.loader.getWindow().setAttributes(attrs);
+                    if (android.os.Build.VERSION.SDK_INT >= 14)
+                    {
+                        //noinspection all
+                        SmartWebViewChrome.this.root.loader.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+                    }
+                }
+                else
+                {
+                    WindowManager.LayoutParams attrs = SmartWebViewChrome.this.root.loader.getWindow().getAttributes();
+                    attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                    attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+                    SmartWebViewChrome.this.root.loader.getWindow().setAttributes(attrs);
+                    if (android.os.Build.VERSION.SDK_INT >= 14)
+                    {
+                        //noinspection all
+                        SmartWebViewChrome.this.root.loader.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    }
+                }
+
+            }
+        });
         setWebViewClient(new SmartWebViewChromeClient());
-        setWebChromeClient(new SmartWebChromeChromeClient());
+        setWebChromeClient(webViewChromeChromeClient);
     }
 
     public void clean()
@@ -299,7 +340,7 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
             view.evaluateJavascript(SmartWebViewChrome.this.appDeck.appdeck_inject_js, new ValueCallback<String>() {
                 @Override
                 public void onReceiveValue(String value) {
-                    Log.i(TAG, "JSResult: "+value);
+                    Log.i(TAG, "onPageFinishedJSResult: "+value);
                 }
             });
 
@@ -324,7 +365,11 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
         }
     }
 
-    public class SmartWebChromeChromeClient extends WebChromeClient /*implements OnCompletionListener, OnErrorListener*/ {
+    public class SmartWebChromeChromeClient extends VideoEnabledWebChromeClient /*implements OnCompletionListener, OnErrorListener*/ {
+
+        public SmartWebChromeChromeClient(View activityNonVideoView, ViewGroup activityVideoView, View loadingView, VideoEnabledWebView webView) {
+            super(activityNonVideoView, activityVideoView, loadingView, webView);
+        }
 
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
@@ -614,4 +659,10 @@ public class SmartWebViewChrome extends WebView implements SmartWebViewInterface
     public String smartWebViewGetUrl() { return getUrl(); }
     public boolean smartWebViewCanGoBack() { return canGoBack(); }
     public boolean smartWebViewCanGoForward() { return canGoForward(); }
+
+    public boolean canGoBack()
+    {
+        return !webViewChromeChromeClient.onBackPressed();
+    }
+
 }

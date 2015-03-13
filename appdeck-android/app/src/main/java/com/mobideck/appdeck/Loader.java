@@ -28,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -49,6 +50,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
@@ -106,7 +108,10 @@ public class Loader extends ActionBarActivity {
     private FrameLayout mDrawerRightMenu;
     
 	private PageMenuItem[] menuItems;
-	
+
+    public View nonVideoLayout;
+    public ViewGroup videoLayout;
+
 	//private jProxy jp;
 	private HttpProxyServerBootstrap proxyServerBootstrap;
 
@@ -235,7 +240,11 @@ public class Loader extends ActionBarActivity {
     	    	
     	proxyServerBootstrap.start();
 
-		setLoaderContentView();
+        setContentView(R.layout.loader);
+
+        // for video support
+        nonVideoLayout = (View)findViewById(R.id.loader_content); // Your own view, read class comments
+        videoLayout = (ViewGroup)findViewById(R.id.videoLayout); // Your own view, read class comments
 
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
@@ -251,7 +260,25 @@ public class Loader extends ActionBarActivity {
         	if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         		leftMenuWebView.view.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
         	mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
-        	mDrawerLeftMenu.addView(leftMenuWebView.view);
+            //mDrawerLeftMenu.setVisibility(View.VISIBLE);
+            //mDrawerLeftMenu.setMinimumWidth(appDeck.config.leftMenuWidth);
+            mDrawerLeftMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.leftMenuWidth, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
+                    params.width = (int) (width);
+                    mDrawerLeftMenu.setLayoutParams(params);
+                    mDrawerLeftMenu.addView(leftMenuWebView.view);
+                }
+            });
+
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mDrawerLeftMenu);
+            //mDrawerLayout.removeView(mDrawerLeftMenu);
+            //mDrawerLeftMenu = null;
         }
         
         if (appDeck.config.rightMenuUrl != null) {
@@ -260,8 +287,55 @@ public class Loader extends ActionBarActivity {
         	if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         		rightMenuWebView.view.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
         	mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
-        	mDrawerRightMenu.addView(rightMenuWebView.view);
+            //mDrawerRightMenu.setVisibility(View.VISIBLE);
+            mDrawerRightMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.rightMenuWidth, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
+                    params.width = (int) (width);
+                    mDrawerRightMenu.setLayoutParams(params);
+                    mDrawerRightMenu.addView(rightMenuWebView.view);
+                }
+            });
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mDrawerRightMenu);
+            //mDrawerLayout.removeView(mDrawerRightMenu);
+            //mDrawerRightMenu = null;
         }
+/*
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+
+            @Override
+            public void onDrawerStateChanged(int arg0) {
+
+            }
+
+            @Override
+            public void onDrawerSlide(View view, float arg1) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View view) {
+                if(view == rightDrawerView) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, leftDrawerView);
+                } else if(view == leftDrawerView) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, rightDrawerView);
+                }
+            }
+
+            @Override
+            public void onDrawerClosed(View view) {
+                if(view == rightDrawerView) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, leftDrawerView);
+                } else if(view == leftDrawerView) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, rightDrawerView);
+                }
+            }
+        });*/
 
         // configure action bar
         appDeck.actionBarHeight = getActionBarHeight();
@@ -333,11 +407,6 @@ public class Loader extends ActionBarActivity {
 		initWideSpaceAds();		
 
     }
-	
-	public void setLoaderContentView()
-	{
-		setContentView(R.layout.loader);   	
-	}
 
 	// widespace
     private void initWideSpaceAds() {

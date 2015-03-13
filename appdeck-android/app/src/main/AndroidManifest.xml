@@ -64,10 +64,10 @@
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1060hc931f3cbf173612382d474a58d3a78b0" />-->
 
         <!--  Play3-Live iOS -->
-        <!--  	 <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
 
         <!--  Play3-Live Android -->
-        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
 
         <!--  Monsieur-Mademoiselle -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
@@ -87,6 +87,11 @@
         <!-- Tool Fitness -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/989hb11900d8d83ee53fbe22c0e922f3ba09"></meta-data>-->
 
+        <!-- JP News -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1086h2bcaa38f9a89f2e90b3e19b46b583f41"></meta-data>-->
+
+        <!-- xboxygen -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1089habcccfd19841b01be8f081b17e1d9dc1"></meta-data>-->
 
         <meta-data android:name="noCache" android:value="false" />
 

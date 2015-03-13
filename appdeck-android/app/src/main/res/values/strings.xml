@@ -2,7 +2,7 @@
     <string name="app_name">Appdeck</string>
 
     <string name="action_settings">Settings</string>
-    <string name="loading_video">Loading video</string>
+    <string name="loading_video">Loading video…</string>
 
     <string name="action">Share</string>
     <string name="cancel">Cancel</string>
