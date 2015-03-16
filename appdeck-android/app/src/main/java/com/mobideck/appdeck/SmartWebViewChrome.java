@@ -662,7 +662,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     public boolean canGoBack()
     {
-        return !webViewChromeChromeClient.onBackPressed();
+        return webViewChromeChromeClient.onBackPressed();
     }
 
 }

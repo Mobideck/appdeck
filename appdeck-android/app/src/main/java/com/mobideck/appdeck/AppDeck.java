@@ -148,7 +148,7 @@ public class AppDeck {
     	
         if (config.prefetch_url != null && !isLowSystem)
         {
-        	ArchiveExtractCallback.extractDir = this.cacheDir;
+        	//ArchiveExtractCallback.extractDir = this.cacheDir;
         	RemoteAppCache remote = new RemoteAppCache(config.prefetch_url.toString(), config.prefetch_ttl);
         	remote.downloadAppCache();
         }    	

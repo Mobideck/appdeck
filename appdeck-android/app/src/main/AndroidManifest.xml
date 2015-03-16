@@ -52,7 +52,7 @@
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
 
         <!-- AppDeck Test App -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>-->
+        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
 
         <!-- AppDeck Dev App -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
@@ -73,7 +73,7 @@
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
 
         <!--  94 citoyens -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
 
         <!-- Univers Freebox -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->

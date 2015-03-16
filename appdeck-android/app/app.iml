@@ -112,7 +112,6 @@
     <orderEntry type="library" exported="" name="nmdp_speech_kit" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.1" level="project" />
-    <orderEntry type="library" exported="" name="sevenzip" level="project" />
     <orderEntry type="library" exported="" name="disklrucache" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-6.5.87" level="project" />
     <orderEntry type="library" exported="" name="commons-io-2.4" level="project" />

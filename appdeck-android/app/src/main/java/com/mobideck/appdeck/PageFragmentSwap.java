@@ -101,8 +101,8 @@ public class PageFragmentSwap extends AppDeckFragment {
         rootView = (FrameLayout)inflater.inflate(R.layout.page_fragment_swap, container, false);
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-        if (appDeck.config.app_background_color != null)
-            rootView.setBackground(appDeck.config.app_background_color.getDrawable());
+        //if (appDeck.config.app_background_color != null)
+        //    rootView.setBackground(appDeck.config.app_background_color.getDrawable());
 
         preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
 
