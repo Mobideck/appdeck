@@ -110,7 +110,9 @@ public class Configuration {
 		}
 		AppDeckJsonNode root = new AppDeckJsonNode(node);
 		// load configuration from json
-		
+
+        AppDeck appDeck = AppDeck.getInstance();
+
 		app_version = root.getInt("version");
 		app_api_key = root.getString("api_key");
 		
@@ -207,7 +209,7 @@ public class Configuration {
 		}
 
 		// prefetch url
-		prefetch_url = readURI(root, "prefetch_url", String.format("http://%s.appdeckcdn.com/%s.7z", app_api_key, app_api_key));
+		prefetch_url = readURI(root, "prefetch_url", String.format("http://prefetch.appdeck.mobi/%s%s.7z", app_api_key, (appDeck.isTablet ? "_tablet" : "")));
 		prefetch_ttl = root.getInt("prefetch_ttl");
 		if (prefetch_ttl == 0)
 			prefetch_ttl = 600;
