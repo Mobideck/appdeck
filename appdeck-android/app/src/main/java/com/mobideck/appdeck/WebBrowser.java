@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 
 public class WebBrowser extends AppDeckFragment {
@@ -24,6 +25,9 @@ public class WebBrowser extends AppDeckFragment {
 	
    	//WebBrowserWebView webView;
     private SmartWebView webView;
+
+    private ProgressBar preLoadingIndicator;
+    private boolean isPreLoading = true;
 
 	public static WebBrowser newInstance(String absoluteURL)
 	{
@@ -55,7 +59,7 @@ public class WebBrowser extends AppDeckFragment {
 		menuItemShare = new PageMenuItem(loader.getResources().getString(R.string.action), "!action", "share", "webbrowser:share", null, this);
 		menuItemCancel = new PageMenuItem(loader.getResources().getString(R.string.cancel), "!cancel", "cancel", "webbrowser:cancel", null, this);
 		menuItemRefresh = new PageMenuItem(loader.getResources().getString(R.string.refresh), "!refresh", "refresh", "webbrowser:refresh", null, this);
-		menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel, menuItemRefresh};		
+		menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel, menuItemRefresh};
 	}
 
     @Override
@@ -75,7 +79,14 @@ public class WebBrowser extends AppDeckFragment {
     	rootView = (FrameLayout)inflater.inflate(R.layout.web_browser_layout, container, false);
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
+        preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
+
+        //if (appDeck.config.app_background_color != null)
+        //    rootView.setBackground(appDeck.config.app_background_color.getDrawable());
+
         webView = SmartWebViewFactory.createSmartWebView(this);
+
+        webView.view.setVisibility(View.GONE);
 
 		rootView.addView(webView.view, new ViewGroup.LayoutParams(
 		        ViewGroup.LayoutParams.MATCH_PARENT,
@@ -172,6 +183,13 @@ public class WebBrowser extends AppDeckFragment {
     
     public void progressSet(View origin, int percent)
     {
+        if (percent > 50 && isPreLoading)
+        {
+            preLoadingIndicator.setVisibility(View.GONE);
+            webView.view.setVisibility(View.VISIBLE);
+            isPreLoading = false;
+        }
+
     	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
        	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
        	menuItemShare.setAvailable(true);
