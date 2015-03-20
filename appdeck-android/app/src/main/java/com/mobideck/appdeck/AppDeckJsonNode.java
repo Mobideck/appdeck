@@ -23,14 +23,36 @@ public class AppDeckJsonNode
 			return null;
 		}
 	}
-	
+
+    private String[] getNames(String name)
+    {
+        String[] names = new String[4];
+        if (AppDeck.getInstance().isTablet)
+            names[0] = name+"_android_tablet";
+        else
+            names[0] = name+"_android_phone";
+        if (AppDeck.getInstance().isTablet)
+            names[1] = name+"_tablet";
+        else
+            names[1] = name+"_phone";
+        names[2] = name+"_android";
+        names[3] = name;
+        return names;
+    }
+
 	AppDeckJsonNode get(String name)
 	{
+        String[] names = getNames(name);
 		Object ret = null;
 		//
 		
 		try {
-			ret = root.get(name);
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    ret = root.get(names[k]);
+                    break;
+                }
+            }
 		} catch (Exception e) {
 			return null;
 		}
@@ -43,30 +65,47 @@ public class AppDeckJsonNode
 	
 	AppDeckJsonArray getArray(String name)
 	{
+        String[] names = getNames(name);
 		try {
-			return new AppDeckJsonArray(root.getJSONArray(name));
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    return new AppDeckJsonArray(root.getJSONArray(names[k]));
+                }
+            }
 		} catch (Exception e) {
-			return new AppDeckJsonArray(new JSONArray());
-		}		
+		}
+        return new AppDeckJsonArray(new JSONArray());
 	}
 	
 	int getInt(String name)
 	{
+        String[] names = getNames(name);
 		try {
-			return root.getInt(name);
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    return root.getInt(names[k]);
+                }
+            }
 		} catch (Exception e) {
-			return 0;
-		}		
+
+        }
+        return 0;
 	}
 	
 	boolean isInt(String name)
 	{
+        String[] names = getNames(name);
 		try {
-			root.getInt(name);
-			return true;
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    root.getInt(names[k]);
+                    return true;
+                }
+            }
 		} catch (Exception e) {
-			return false;
-		}		
+
+		}
+        return false;
 	}
 	
 	String getString(String name)
@@ -76,10 +115,15 @@ public class AppDeckJsonNode
 
 	String getString(String name, String defaultValue)
 	{
+        String[] names = getNames(name);
 		try {
-			Object ret = root.get(name);
-			if (ret instanceof String)
-				return (String)ret;
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    Object ret = root.get(names[k]);
+                    if (ret instanceof String)
+                        return (String)ret;
+                }
+            }
 			return defaultValue;//root.getString(name);
 		} catch (Exception e) {
 			return defaultValue;
@@ -88,91 +132,43 @@ public class AppDeckJsonNode
 		
 	boolean getBoolean(String name)
 	{
+        String[] names = getNames(name);
 		try {
-			return root.getBoolean(name);
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    return root.getBoolean(names[k]);
+                }
+            }
 		} catch (Exception e) {
-            String val = getString(name);
-            if (val.equalsIgnoreCase("1"))
-                return true;
-			return false;
-		}		
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    String val = getString(names[k]);
+                    if (val.equalsIgnoreCase("1"))
+                        return true;
+                }
+            }
+		}
+        return false;
 	}
 
 	float getFloat(String name)
 	{
+        String[] names = getNames(name);
 		try {
-			return (float)root.getDouble(name);
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    return (float)root.getDouble(names[k]);
+                }
+            }
 		} catch (Exception e) {
-			return 0;
-		}		
+
+		}
+        return 0;
 	}	
 	
 	String toJsonString()
 	{
 		return root.toString();
 	}
-	
-	/*
-	AppDeckJsonNode get(int idx)
-	{
-		JSONObject ret = root.path(idx);
-		if (ret.isMissingNode())
-			return null;
-		return new AppDeckJsonNode(ret);
-	}
-	*/
 
-/*
-	AppDeckJsonNode path(String name)
-	{
-		JsonNode ret = root.path(name);
-		if (AppDeck.getInstance().isTablet)
-		{
-			JsonNode alt = root.path(name+"_tablet");
-			if (alt.isMissingNode() == false)
-				ret = alt;
-		}
-		return new AppDeckJsonNode(ret);
-	}
-	
-	AppDeckJsonNode path(int idx)
-	{
-		JsonNode ret = root.path(idx);
-		return new AppDeckJsonNode(ret);
-	}
-
-	boolean isInt()
-	{
-		return root.isInt();
-	}
-	
-	int intValue()
-	{
-		return root.intValue();
-	}
-	
-	String textValue()
-	{
-		return root.textValue();
-	}
-	
-	boolean booleanValue()
-	{
-		return root.booleanValue();
-	}
-	
-	boolean isMissingNode()
-	{
-		return root.isMissingNode();
-	}
-			
-	boolean isArray()
-	{
-		return root.isArray();
-	}
-	
-	int size()
-	{
-		return root.size();
-	}*/
 }
