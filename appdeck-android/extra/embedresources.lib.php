@@ -271,15 +271,20 @@ function resolve_url($url_str, $source_url_str)
 $count_resource = 0;
 function appdeck_add_ressource($url, $data = false, $force = false, $headers = false)
 {
-  global $output_dir_path, $count_resource;
+  global $output_dir_path, $count_resource, $base_url;
 
   if (defined('FORCE_DOWNLOAD') && FORCE_DOWNLOAD === true)
     $force = true;
-  //print " - - add resource for {$url}\n";
+  $url = resolve_url($url, $base_url);
+  print " - - add resource for {$url}\n";
   $file_name = urlencode(str_replace('http://', '', $url));
-  print " - - FileName: {$file_name}\n";
+  //print " - - ORIGINAL FileName: {$file_name}\n";    
   if (strlen($file_name) > 48)
+  {
     $file_name = substr($file_name, 0, 48).'_'.md5($file_name);
+    //print " - - MD5 PATCH FileName: {$file_name}\n";  
+  }
+  print " - - FileName: {$file_name}\n";  
   $file_name_meta = EMBED_PREFIX.$file_name.'.meta'.EMBED_SUFFIX;
   $file_name = EMBED_PREFIX.$file_name.EMBED_SUFFIX;
   //$tmp_file_path = $tmp_dir_path."/".$file_name;
@@ -345,13 +350,13 @@ function easy_embed_rec($names, $base_info, $default_url = false)
 
   $name = array_shift($names);
 
-  foreach (array($name, $name.'_tablet') as $field)
+  foreach (array($name, $name.'_android', $name.'_iphone', $name.'_tablet', $name.'_phone', $name.'_android_tablet', $name.'_iphone_tablet', $name.'_android_phone', $name.'_iphone_phone') as $field)
   {
     if (count($names) == 0)
     {
       if (isset($base_info->$field))
         $url = resolve_url($base_info->$field, $base_url);
-      if ($url !== false/* && $field == $name*/)
+      if ($url !== false && $field == $name)
         appdeck_add_ressource($url);
     }
     else

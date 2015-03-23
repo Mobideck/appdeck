@@ -95,6 +95,9 @@ easy_embed("image_pull_arrow", "http://appdata.static.appdeck.mobi/res/".EMBED_T
 easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/network_error{$icon_theme}.png");
 
 easy_embed("logo");
+easy_embed("leftmenu.url");
+easy_embed("rightmenu.url");
+
 
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_1.10.js", false, true);
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_dev.js", false, true);
