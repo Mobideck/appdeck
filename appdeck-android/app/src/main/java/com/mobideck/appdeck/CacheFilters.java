@@ -208,7 +208,10 @@ public class CacheFilters implements HttpFilters {
     		
     		// change user agent
     		String ua = request.headers().get("User-Agent");
-    		forceReadFromCache = ua.indexOf("FORCE_CACHE") != -1;
+            if (ua != null)
+        		forceReadFromCache = ua.indexOf("FORCE_CACHE") != -1;
+            else
+            Log.e(TAG, "request without User-Agent: "+absoluteURL);
     		/*if (ua != null)
     		{
     			ua = ua + " AppDeck"+(appDeck.isTablet? "-tablet" : "-phone" )+" "+appDeck.packageName+"/"+appDeck.config.app_version;
