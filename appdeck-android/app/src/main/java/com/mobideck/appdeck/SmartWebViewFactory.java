@@ -27,6 +27,8 @@ public class SmartWebViewFactory {
 
         smartWebView.ctl.loadUrl(url);
 
+        smartWebView.ctl.setForceCache(true);
+
         return smartWebView;
 
     }
