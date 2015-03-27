@@ -156,7 +156,10 @@ public class Loader extends ActionBarActivity {
         //supportRequestWindowFeature(Window.FEATURE_PROGRESS);
 
         //Debug.startMethodTracing("calc");
-		
+
+//        String test = Utils.md5("app.jeuxvideo-live.com%2Fappdeck%2Fmenu%2Fmenu_178.html");
+//        Log.d(TAG, test);
+
 		AppDeckApplication app = (AppDeckApplication) getApplication();
 		
 		if (app.isInitialLoading == false)
@@ -719,7 +722,13 @@ public class Loader extends ActionBarActivity {
     	closeMenu();
        	if (mDrawerLayout == null)
        		return;
-       	mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        if (appDeck.config.leftMenuUrl != null)
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+        if (appDeck.config.rightMenuUrl != null)
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+
+       	//mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false); // icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(false); // make icon + logo + title clickable
@@ -732,7 +741,12 @@ public class Loader extends ActionBarActivity {
         menuEnabled = true;
        	if (mDrawerLayout == null)
        		return;
-       	mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        if (appDeck.config.leftMenuUrl != null)
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.left_drawer));
+        if (appDeck.config.rightMenuUrl != null)
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.right_drawer));
+
+       	//mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
         if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
