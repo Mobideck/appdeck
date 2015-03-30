@@ -38,11 +38,12 @@
                     android:id="@+id/loader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-                    xmlns:widespace="http://schemas.android.com/apk/res/com.mobideck.appdeck"
                     android:animateLayoutChanges="true"
                     >
-
+<!--
+                    xmlns:widespace="http://schemas.android.com/apk/res/com.mobideck.appdeck"
+                    >
+-->
                     <FrameLayout
                         android:id="@+id/loader_container"
                         android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                         android:paddingRight="0dp"
                         android:paddingBottom="0dp">
                     </FrameLayout>
-
+<!--
                      <com.widespace.AdSpace
                         android:id="@+id/adTakeOver"
                         android:layout_width="fill_parent"
@@ -71,7 +72,7 @@
                         widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
                         widespace:autostart="true"
                         widespace:autoupdate="true"
-                        />
+                        />-->
 
                     <!--<fr.castorflex.android.smoothprogressbar.SmoothProgressBar
                         android:id="@+id/progressBar"

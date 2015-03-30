@@ -62,25 +62,24 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
+/*
 import com.widespace.AdInfo.AdType;
 import com.widespace.AdSpace;
 import com.widespace.adspace.PrefetchStatus;
 import com.widespace.exception.ExceptionTypes;
 import com.widespace.interfaces.AdErrorEventListener;
 import com.widespace.interfaces.AdEventListener;
-
+*/
 import io.netty.handler.codec.http.HttpRequest;
 
 public class Loader extends ActionBarActivity {
 
-
+/*
 	// widespace
     private static final String SPLASH_SID = "92a487d3-3bc5-4bbe-bdb0-efe6bffe64f3";
-
     private AdSpace adSpaceSplash;
 	private AdSpace adSpacePanorama;
-
+*/
 	public final static String TAG = "LOADER";
 	public final static String JSON_URL = "com.mobideck.appdeck.JSON_URL";
 	
@@ -404,13 +403,14 @@ public class Loader extends ActionBarActivity {
 		}
 
 
+        /*
 		// widespace
 		
         // Let's listen to some events and run Splash Ad
 		initWideSpaceAds();		
-
+*/
     }
-
+/*
 	// widespace
     private void initWideSpaceAds() {
     	
@@ -516,7 +516,7 @@ public class Loader extends ActionBarActivity {
             Log.d(TAG, "onFailedWithError : error message # " + message);
         }
     };
-
+*/
 	boolean isForeground = true;
     @Override
     protected void onResume()
@@ -1125,6 +1125,8 @@ public class Loader extends ActionBarActivity {
 
     public void layoutSubViews()
     {
+        /*
+    }
         // widespace
         if (adSpaceSplash != null)
         {
@@ -1136,6 +1138,7 @@ public class Loader extends ActionBarActivity {
             adSpacePanorama.bringToFront();
             adSpacePanorama.requestLayout();
         }
+        */
         if (mProgressBar != null)
             mProgressBar.bringToFront();
 
