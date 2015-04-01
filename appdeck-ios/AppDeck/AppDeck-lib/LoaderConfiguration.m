@@ -61,7 +61,10 @@
     self.baseUrl = url;
     if ([result query:@"base_url"])
     {
-        NSURL *baseUrl = [NSURL URLWithString:[result query:@"base_url"]];
+        NSString *baseUrlTmp = [result query:@"base_url"];
+        if (!([baseUrlTmp hasPrefix:@"http://"] || [baseUrlTmp hasPrefix:@"https://"]))
+            baseUrlTmp = [@"http://" stringByAppendingString:baseUrlTmp];
+        NSURL *baseUrl = [NSURL URLWithString:baseUrlTmp];
         if (baseUrl)
             self.baseUrl = baseUrl;
     }
