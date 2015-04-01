@@ -209,8 +209,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     if (appDeck.iosVersion >= 6.0)
     {
         self.webView.keyboardDisplayRequiresUserAction = NO;
-    }
-
+    }   
+    
     topView = [[UIView alloc] initWithFrame:CGRectMake(0, -self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height)];
     
     [self.webView.scrollView addSubview:topView];
@@ -663,11 +663,17 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 //    if ([[[request URL] absoluteString] hasPrefix:@"http://c.brightcove.com/"])
 //        return YES;
     
+
     NSRange range = [[[request URL] absoluteString] rangeOfString:@"#"];
 //    if (range.location != NSNotFound)
 //        return YES;
-    if (range.location == 0)
-        return YES;
+    if (range.location != NSNotFound)
+    {
+        NSString *anchor_free_dest_url = [self.currentRequest.URL.absoluteString substringToIndex:range.location];
+        NSLog(@"amchor free: %@ <=> %@", anchor_free_dest_url, self.currentRequest.URL.absoluteString);
+        if ([self.currentRequest.URL.absoluteString hasPrefix:anchor_free_dest_url])
+            return YES;
+    }
 
     
     range = [[[request URL] absoluteString] rangeOfString:@"about:blank"];
