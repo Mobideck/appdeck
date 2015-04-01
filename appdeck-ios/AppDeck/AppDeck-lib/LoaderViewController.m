@@ -401,7 +401,8 @@
         return;
     }
 
-    if (self.appDeck.iosVersion >= 5.0)
+    // disabled as it make keyboard not easily readable
+    if (self.appDeck.iosVersion >= 5.0 && NO)
     {
         if (self.conf.icon_theme == IconThemeDark)
         {
