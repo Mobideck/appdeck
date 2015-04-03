@@ -11,6 +11,7 @@ import org.json.JSONTokener;
 //import org.xwalk.core.XWalkView;
 
 import android.view.View;
+import android.webkit.ValueCallback;
 
 /*import android.util.Log;
 import android.webkit.JsPromptResult;
@@ -68,12 +69,31 @@ public class AppDeckApiCall {
 	
 	public void sendCallBackWithError(String error)
 	{
-		
+        String[] params = new String[1];
+        params[0] = error;
+        sendCallbackWithResult("error", params);
 	}
-	
-	public void sendCallbackWithResult(String result)
+
+    public void sendCallbackWithResult(String type, Object resultObj)
+    {
+        Object[] params = new String[1];
+        params[0] = resultObj;
+        sendCallbackWithResult(type, params);
+    }
+
+	public void sendCallbackWithResult(String type, Object[] results)
 	{
-		
+        JSONArray results_json = new JSONArray();
+        for (int k = 0; k < results.length; k++)
+            results_json.put(results[k]);
+        String detail = "{\"type\": \""+type+"\", \"params\": "+results_json.toString()+"}";
+        String js = "var evt = document.createEvent('Event');evt.initEvent('"+this.eventID+"',true,true); evt.detail = "+detail+"; document.dispatchEvent(evt);";
+        this.smartWebView.evaluateJavascript(js, new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+
+                    }
+                });
 	}
 	
 	public void setResultJSON(String json)
@@ -86,7 +106,7 @@ public class AppDeckApiCall {
 		JSONArray result = new JSONArray();
 		result.put(res);
 		//JSONObject jsonObj = (JSONObject) JSONObject.wrap(res);
-		resultJSON = result.toString();		
+		resultJSON = result.toString();
 	}
 	
 	public void postponeResult()
