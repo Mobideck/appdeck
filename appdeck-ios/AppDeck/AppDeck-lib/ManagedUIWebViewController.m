@@ -669,8 +669,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 //        return YES;
     if (range.location != NSNotFound)
     {
-        NSString *anchor_free_dest_url = [self.currentRequest.URL.absoluteString substringToIndex:range.location];
-        NSLog(@"amchor free: %@ <=> %@", anchor_free_dest_url, self.currentRequest.URL.absoluteString);
+        NSString *anchor_free_dest_url = [request.URL.absoluteString substringToIndex:range.location];
+        NSLog(@"anchor free: %@ <=> %@", anchor_free_dest_url, self.currentRequest.URL.absoluteString);
         if ([self.currentRequest.URL.absoluteString hasPrefix:anchor_free_dest_url])
             return YES;
     }
