@@ -78,7 +78,12 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
+            boolean shouldEnableDebug = false;
+            if (AppDeck.getInstance().config.app_api_key.equalsIgnoreCase("218hf32d1901627d35131fa83b63f56ae906"))
+                shouldEnableDebug = true;
             if (0 != (loader.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
+                shouldEnableDebug = true;
+            if (shouldEnableDebug)
             {
                 WebView.setWebContentsDebuggingEnabled(true);
             }
@@ -203,10 +208,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         webSettings.setUserAgentString(userAgent);
 
         webSettings.setJavaScriptEnabled(true);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
 
         //setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
