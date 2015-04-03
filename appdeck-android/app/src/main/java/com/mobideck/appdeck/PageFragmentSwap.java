@@ -619,7 +619,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		{
 			Log.i("API", uri.getPath()+" **SELECT**");
 			
-			call.postponeResult();
+			//call.postponeResult();
 			
 			String title = call.param.getString("title");
 			AppDeckJsonArray values = call.param.getArray("values");
@@ -631,10 +631,25 @@ public class PageFragmentSwap extends AppDeckFragment {
         	AlertDialog.Builder builder = new AlertDialog.Builder(loader);
         	if (title != null && !title.isEmpty())
         		builder.setTitle(title);
+
+            builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    //call.setResult("Z");
+                    //call.sendPostponeResult(true);
+                    call.sendCallbackWithResult("error", "cancel");
+                }
+            })
+            .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //call.sendPostponeResult(false);
+                        call.sendCallbackWithResult("error", "cancel");
+                    }
+                });
+
         	builder.setOnCancelListener(
                     new DialogInterface.OnCancelListener() {
                         public void onCancel(DialogInterface dialog) {
-                        	call.sendPostponeResult(false);
+                            call.sendCallbackWithResult("error", "cancel");
                         }
                     });
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -644,11 +659,13 @@ public class PageFragmentSwap extends AppDeckFragment {
 				public void onDismiss(DialogInterface dialog) {
 					call.sendPostponeResult(false);
 				}
-			});        	
+			});
         	builder.setItems(items, new customDialogOnClickListener(call, items));
         	AlertDialog alert = builder.create();        	
         	//The above line didn't show the dialog i added this line:
-        	alert.show();			
+        	alert.show();
+
+            return true;
 		}
 
 		if (call.command.equalsIgnoreCase("selectdate"))
@@ -660,7 +677,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 			String month = call.param.getString("month");
 			String day = call.param.getString("day");
 			
-			call.postponeResult();
+			//call.postponeResult();
 			
 		    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
 		    	
@@ -676,8 +693,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 		        	      put("day", String.valueOf(dayOfMonth));
 		        	     }
 		        	 };
-					call.setResult(result);
-					call.sendPostponeResult(true);
+					//call.setResult(result);
+					//call.sendPostponeResult(true);
+                    call.sendCallbackWithResult("success", result);
 		        }
 		    };			
 			
@@ -696,14 +714,16 @@ public class PageFragmentSwap extends AppDeckFragment {
 			  datepicker.setOnCancelListener(
                     new DialogInterface.OnCancelListener() {
                         public void onCancel(DialogInterface dialog) {
-                        	call.sendPostponeResult(false);
+                        	//call.sendPostponeResult(false);
+                            call.sendCallbackWithResult("error", "cancel");
                         }
                     });
 			  datepicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
 				
 				@Override
 				public void onDismiss(DialogInterface dialog) {
-					call.sendPostponeResult(false);
+					//call.sendPostponeResult(false);
+                    call.sendCallbackWithResult("error", "cancel");
 				}
 			});
 			  
@@ -715,6 +735,8 @@ public class PageFragmentSwap extends AppDeckFragment {
 				  datepicker.setDayEnabled(false);			  
 			  datepicker.setTitle(title);
 			  datepicker.show();
+
+            return true;
 		}
 		
 		return super.apiCall(call);
@@ -735,9 +757,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			String result = (String) items[which];
-//			Toast.makeText(loader, result, Toast.LENGTH_SHORT).show();
-			call.setResult(result);
-			call.sendPostponeResult(true);
+			//call.setResult(result);
+			//call.sendPostponeResult(true);
+
+            call.sendCallbackWithResult("success", result);
 		}
 		
 	}
