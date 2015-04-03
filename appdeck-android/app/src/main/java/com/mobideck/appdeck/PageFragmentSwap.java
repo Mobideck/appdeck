@@ -738,7 +738,18 @@ public class PageFragmentSwap extends AppDeckFragment {
 
             return true;
 		}
-		
+
+        if (call.command.equalsIgnoreCase("loadingshow") || call.command.equalsIgnoreCase("loadingset"))
+        {
+            preLoadingIndicator.setVisibility(View.VISIBLE);
+            preLoadingIndicator.bringToFront();
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("loadinghide"))
+        {
+            preLoadingIndicator.setVisibility(View.GONE);
+            return true;
+        }
 		return super.apiCall(call);
 		
 	}
