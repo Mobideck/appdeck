@@ -162,19 +162,20 @@ public class Loader extends ActionBarActivity {
 
 		AppDeckApplication app = (AppDeckApplication) getApplication();
 		
-		if (app.isInitialLoading == false)
-		{
-            SmartWebViewFactory.setPreferences(this);
-			//SmartWebViewCrossWalk.setPreferences();// XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
-			app.isInitialLoading = true;
-		}
-
 		Crashlytics.start(this);
         //Crashlytics.getInstance().setDebugMode(true);
 
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
         appDeck = new AppDeck(getBaseContext(), app_json_url);
+
+        if (app.isInitialLoading == false)
+        {
+            SmartWebViewFactory.setPreferences(this);
+            //SmartWebViewCrossWalk.setPreferences();// XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
+            app.isInitialLoading = true;
+        }
+
     	super.onCreate(savedInstanceState);
 
         // original proxy host/port
@@ -400,6 +401,7 @@ public class Loader extends ActionBarActivity {
 		if (savedInstanceState == null)
 		{
 			loadRootPage(appDeck.config.bootstrapUrl.toString());
+            //loadRootPage("http://www.universfreebox.com.dev.dck.io/");
 		}
 
 
