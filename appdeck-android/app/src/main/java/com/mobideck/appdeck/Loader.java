@@ -43,6 +43,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -399,7 +400,6 @@ public class Loader extends ActionBarActivity {
 		if (savedInstanceState == null)
 		{
 			loadRootPage(appDeck.config.bootstrapUrl.toString());
-            //loadRootPage("http://www.appdeck.mobi/extra/test");
 		}
 
 
@@ -1483,7 +1483,9 @@ public class Loader extends ActionBarActivity {
     	this.menuItems = menuItems;
     	supportInvalidateOptionsMenu();
     }
-    
+
+    //ShareActionProvider mShareActionProvider;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -1497,6 +1499,15 @@ public class Loader extends ActionBarActivity {
 			
 			//item.setMenuItem(menu.add(0, i, 0, null));
 		}
+
+/*
+        // Get the provider and hold onto it to set/change the share intent.
+        mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
+        // Set history different from the default before getting the action
+        // view since a call to MenuItem.getActionView() calls
+        // onCreateActionView() which uses the backing file name. Omit this
+        // line if using the default share history file is desired.
+        mShareActionProvider.setShareHistoryFileName("custom_share_history.xml");*/
         return true;
     }
 
@@ -1545,7 +1556,7 @@ public class Loader extends ActionBarActivity {
 		sharingIntent.setType("text/plain");
 		if (title != null && !title.isEmpty())
 			sharingIntent.putExtra(Intent.EXTRA_SUBJECT, title);
-		if (url != null && !url.isEmpty() == false)
+		if (url != null && !url.isEmpty())
 			sharingIntent.putExtra(Intent.EXTRA_TEXT, url);
 		
 		// not an image ?
