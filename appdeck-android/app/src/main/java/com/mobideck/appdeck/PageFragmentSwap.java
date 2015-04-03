@@ -161,10 +161,24 @@ public class PageFragmentSwap extends AppDeckFragment {
         	//pageWebView.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
         	//pageWebViewAlt.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
         }
-		
+
+        mHandler = new Handler();
+        mHandler.postDelayed(myTask, 150);
+
         return rootView;
-    }    
-    
+    }
+
+    private Handler mHandler;
+    Runnable myTask = new Runnable() {
+        @Override
+        public void run() {
+            hidePreloading();
+            mHandler.removeCallbacks(myTask);
+        }
+    };
+
+
+
     @Override
     public void onStart() {
     	super.onStart();
@@ -311,20 +325,24 @@ public class PageFragmentSwap extends AppDeckFragment {
 		lastUrlLoad = System.currentTimeMillis();
 		loader.invalidateOptionsMenu();
 	}
-	
     public void progressStart(View origin)
     {
     	super.progressStart(origin);
     }
-    
+
+    void hidePreloading()
+    {
+        preLoadingIndicator.setVisibility(View.GONE);
+        swipeView.setVisibility(View.VISIBLE);
+        swipeViewAlt.setVisibility(View.VISIBLE);
+        isPreLoading = false;
+    }
+
     public void progressSet(View origin, int percent)
     {
         if (percent > 50 && isPreLoading /*&& loader.getPreviousAppDeckFragment(this.pageSwipe) == null*/)
         {
-            preLoadingIndicator.setVisibility(View.GONE);
-            swipeView.setVisibility(View.VISIBLE);
-            swipeViewAlt.setVisibility(View.VISIBLE);
-            isPreLoading = false;
+            hidePreloading();
         }
     	super.progressSet(origin, percent);
 
