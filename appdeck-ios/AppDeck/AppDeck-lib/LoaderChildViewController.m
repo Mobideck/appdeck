@@ -283,32 +283,62 @@
         {
             if ([call.param respondsToSelector:@selector(objectForKey:)])
             {
-                __block NSString *title = [NSString stringWithFormat:@"%@", [call.param objectForKey:@"title"]];
-                __block NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [call.param objectForKey:@"url"]] relativeToURL:self.url];
-                __block NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [call.param objectForKey:@"imageurl"]] relativeToURL:self.url];
-                __block LoaderChildViewController *me = self;
+                NSString *paramTitle = [call.param objectForKey:@"title"];
+                NSString *paramURL = [call.param objectForKey:@"url"];
+                NSString *paramImageURL = [call.param objectForKey:@"imageurl"];
 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:imageUrl] returningResponse:nil error:nil];
-                    UIImage *image = nil;
-                    if (data)
-                        image = [UIImage imageWithData:data];
+                __block NSString *title = nil;
+                __block NSURL *url = nil;
+                __block NSURL *imageUrl = nil;
+                
+                
+                if (paramTitle != nil && paramTitle.length > 0)
+                    title = [NSString stringWithFormat:@"%@", paramTitle];
+                if (paramURL != nil && paramURL.length > 0)
+                    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", paramURL] relativeToURL:self.url];
+                if (paramImageURL != nil && paramImageURL.length > 0)
+                    imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", paramImageURL] relativeToURL:self.url];
 
+                if (paramImageURL == nil)
+                {
                     NSMutableArray *dataToShare = [[NSMutableArray alloc] init];
                     if (title)
                         [dataToShare addObject:title];
                     if (url)
                         [dataToShare addObject:url];
-                    if (image)
-                        [dataToShare addObject:image];
-
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIActivityViewController* activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare applicationActivities:nil];
-                        activityViewController.popoverPresentationController.sourceView = me.view;
-                        [me presentViewController:activityViewController animated:YES completion:^{}];
-                    });
+                    UIActivityViewController* activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare applicationActivities:nil];
+                    if (self.loader.appDeck.iosVersion >= 8.0)
+                        activityViewController.popoverPresentationController.sourceView = self.view;
+                    [self presentViewController:activityViewController animated:YES completion:^{}];
                     
-                });
+                } else {
+                    __block LoaderChildViewController *me = self;
+                    
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:imageUrl] returningResponse:nil error:nil];
+                        UIImage *image = nil;
+                        if (data)
+                            image = [UIImage imageWithData:data];
+                        
+                        NSMutableArray *dataToShare = [[NSMutableArray alloc] init];
+                        if (title)
+                            [dataToShare addObject:title];
+                        if (url)
+                            [dataToShare addObject:url];
+                        if (image)
+                            [dataToShare addObject:image];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIActivityViewController* activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare applicationActivities:nil];
+                            if (me.loader.appDeck.iosVersion >= 8.0)
+                                activityViewController.popoverPresentationController.sourceView = me.view;
+                            [me presentViewController:activityViewController animated:YES completion:^{}];
+                        });
+                        
+                    });
+                }
+                
+                
                 
                 
                 // stats
