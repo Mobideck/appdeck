@@ -46,8 +46,8 @@ public class PageSwipe extends AppDeckFragment {
 	protected Fragment.SavedState nextPageState;
 	
 	PageSwipeAdapter adapter;
-	
-	ViewPager pager;
+
+    ViewPagerFixed pager;
 	
 	public boolean ready = false;
 	
@@ -87,7 +87,7 @@ public class PageSwipe extends AppDeckFragment {
     	
         // Inflate the layout for this fragment
     	//pager = new CustomViewPager(getActivity());
-    	pager = new ViewPager(getActivity());
+    	pager = new ViewPagerFixed(getActivity());
         //pager.setBackground(appDeck.config.app_background_color.getDrawable());
         pager.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     	pager.setOffscreenPageLimit(2);

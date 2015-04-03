@@ -13,7 +13,7 @@ public class ViewPagerFixed extends ViewPager {
 	public ViewPagerFixed(Context context, AttributeSet attrs) {
 	    super(context, attrs);
 	}
-
+/*
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
 	    try {
@@ -32,6 +32,34 @@ public class ViewPagerFixed extends ViewPager {
 	        ex.printStackTrace();
 	    }
 	    return false;
-	}
+	}*/
+
+    private int childId;
+
+
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        //return false;
+        int count = getAdapter().getCount();
+        if (count <= 1)
+            return false;
+        return super.onInterceptTouchEvent(event);
+        /*
+        if (childId > 0) {
+            ViewPager pager = (ViewPager)findViewById(childId);
+
+            if (pager != null) {
+                pager.requestDisallowInterceptTouchEvent(true);
+            }
+
+        }
+
+        return super.onInterceptTouchEvent(event);*/
+    }
+
+    public void setChildId(int id) {
+        this.childId = id;
+    }
 
 }
