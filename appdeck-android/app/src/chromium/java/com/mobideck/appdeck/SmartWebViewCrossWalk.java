@@ -37,6 +37,11 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    public void setRootAppDeckFragment(AppDeckFragment root)
+    {
+
+    }
+
     @Override
     public void setTouchDisabled(boolean touchDisabled) {
 

@@ -64,8 +64,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         }
     }
 
-
-	static String TAG = "XSmartWebView";
+    static String TAG = "XSmartWebView";
 	
 	static String appdeck_inject_js = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck_1.10.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";	
 	
@@ -97,7 +96,12 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		setResourceClient(new XSmartResourceClient(this));
 		setUIClient(new XSmartUIClient(this));
 	}
-	
+
+    public void setRootAppDeckFragment(AppDeckFragment root)
+    {
+        this.root = root;
+    }
+
 	public void unloadPage()
 	{
 		evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);		
@@ -346,6 +350,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	
 	private void loadingSuccess()
 	{
+        if (root == null)
+            return;
 		//loadingDone = true;
 		root.progressSet(this,  100);
 		// force inject of appdeck.js if needed
@@ -362,6 +368,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	
 	private void loadingFailed(int errorCode, String description)
 	{
+        if (root == null)
+            return;
 		//loadingDone = true;
 		root.progressFailed(this);
 //		Toast.makeText(getContext(), "Error: " + url + ": " + errorCode + ": " + description, Toast.LENGTH_LONG).show();
@@ -393,7 +401,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
             {
             	checkLoading();
             } else {
-            	root.progressSet(view, progressInPercent);
+                if (root != null)
+                	root.progressSet(view, progressInPercent);
             }
         }		
 		
@@ -422,7 +431,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (catchLink == false)
 	    		return false;
 
-	    	root.loadUrl(url);
+            if (root != null)
+    	    	root.loadUrl(url);
 	    	return true;
 	    }
 	    
@@ -536,6 +546,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
                 java.lang.String defaultValue,
                 final XWalkJavascriptResult result)
 		{
+            if (root == null) {
+                result.cancel();
+                return true;
+            }
 			if (message.startsWith("appdeckapi:") == true)
 			{
 				AppDeckApiCall call = new AppDeckApiCall(message.substring(11), defaultValue, new SmartWebViewCrossWalkResult(result));

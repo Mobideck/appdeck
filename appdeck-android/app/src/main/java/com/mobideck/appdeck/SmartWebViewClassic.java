@@ -116,7 +116,12 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
         //mFocusDistraction = new EditText(root.loader);
         //addView(mFocusDistraction);
 	}
-	
+
+    public void setRootAppDeckFragment(AppDeckFragment root)
+    {
+        this.root = root;
+    }
+
 	public void clean()
 	{
 		super.loadDataWithBaseURL("", "<!DOCTYPE html><html><head><title></title></head><body></body></html>",

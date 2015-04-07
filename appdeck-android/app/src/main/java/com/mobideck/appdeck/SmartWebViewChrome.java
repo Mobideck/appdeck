@@ -90,6 +90,11 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         }
     }
 
+    public void setRootAppDeckFragment(AppDeckFragment root)
+    {
+        this.root = root;
+    }
+
     public SmartWebViewChrome(AppDeckFragment root) {
         super((Context)root.loader);
         this.root = root;
@@ -347,7 +352,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             //view.loadUrl(SmartWebViewChrome.this.appDeck.appdeck_inject_js);
 
-            root.progressStop(view);
+            if (root != null)
+                root.progressStop(view);
 
             //CookieSyncManager.getInstance().sync();
 
@@ -376,56 +382,55 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
 
-            root.progressSet(view, newProgress);
+            if (root != null)
+                root.progressSet(view, newProgress);
 
         }
 
         @Override
         public boolean onJsAlert(WebView view, String url, String message, final JsResult result)
         {
-
-            new AlertDialog.Builder(root.loader)
-                    .setTitle("javaScript dialog")
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok,
-                            new AlertDialog.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int which)
+            if (root != null) {
+                new AlertDialog.Builder(root.loader)
+                        .setTitle("javaScript dialog")
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok,
+                                new AlertDialog.OnClickListener()
                                 {
-                                    result.confirm();
-                                }
-                            })
-                    .setCancelable(false)
-                    .create()
-                    .show();
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        result.confirm();
+                                    }
+                                })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+            }
             return true;
         };
 
         @Override
         public boolean onJsConfirm(WebView view, String url, String message, final JsResult result)
         {
-            new AlertDialog.Builder(root.loader)
-                    .setTitle("javaScript dialog")
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok,
-                            new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int which)
-                                {
-                                    result.confirm();
-                                }
-                            })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int which)
-                                {
-                                    result.cancel();
-                                }
-                            })
-                    .create()
-                    .show();
-
+            if (root != null) {
+                new AlertDialog.Builder(root.loader)
+                        .setTitle("javaScript dialog")
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        result.confirm();
+                                    }
+                                })
+                        .setNegativeButton(android.R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        result.cancel();
+                                    }
+                                })
+                        .create()
+                        .show();
+            }
             return true;
         };
 
@@ -458,6 +463,10 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         @Override
         public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final JsPromptResult result)
         {
+            if (root == null) {
+                result.cancel();
+                return true;
+            }
 			if (message.startsWith("appdeckapi:") == true)
 			{
 				AppDeckApiCall call = new AppDeckApiCall(message.substring(11), defaultValue, new SmartWebViewChromeResult(result));
