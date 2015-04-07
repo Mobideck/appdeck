@@ -16,6 +16,7 @@ import com.actionbarsherlock.internal.nineoldandroids.view.animation.AnimatorPro
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -100,6 +101,10 @@ public class PageFragmentSwap extends AppDeckFragment {
         // Inflate the layout for this fragment
         rootView = (FrameLayout)inflater.inflate(R.layout.page_fragment_swap, container, false);
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
+        LayoutTransition lt = new LayoutTransition();
+        lt.disableTransitionType(LayoutTransition.DISAPPEARING);
+        rootView.setLayoutTransition(lt);
 
         //if (appDeck.config.app_background_color != null)
         //    rootView.setBackground(appDeck.config.app_background_color.getDrawable());
@@ -232,15 +237,23 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void onDestroyView()
     {
     	super.onDestroyView();
+        /*
+    	if (pageWebView != null)
+    		pageWebView.ctl.clean();
+    	if (pageWebViewAlt != null)
+    		pageWebViewAlt.ctl.clean();
+    		*/
+        SmartWebViewFactory.recycleSmartWebView(pageWebView);
+        SmartWebViewFactory.recycleSmartWebView(pageWebViewAlt);
+        swipeView.removeAllViews();
+        swipeViewAlt.removeAllViews();
+        pageWebView = null;
+        pageWebViewAlt = null;
     }
     
     @Override
     public void onDestroy()
     {
-    	if (pageWebView != null)
-    		pageWebView.ctl.clean();
-    	if (pageWebViewAlt != null)
-    		pageWebViewAlt.ctl.clean();
     	super.onDestroy();
     }
     
@@ -475,6 +488,10 @@ public class PageFragmentSwap extends AppDeckFragment {
     	                    @Override
     	                    public void onAnimationEnd(Animator animation) {
     	                    	swipeView.setVisibility(View.GONE);
+
+                                if (pageWebView == null || pageWebViewAlt == null)
+                                    return;
+
     	            			pageWebView.ctl.stopLoading();
     	            			
     	            			pageWebView.ctl.setTouchDisabled(false);
