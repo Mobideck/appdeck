@@ -225,12 +225,13 @@ public class AppDeckFragment extends Fragment {
 
     public boolean alwaysLoadRootPage = false;
     
-    public void loadUrl(String absoluteURL)
+    public boolean loadUrl(String absoluteURL)
     {    	
     	if (alwaysLoadRootPage)
     		loader.loadRootPage(absoluteURL);
     	else
     		loader.loadPage(absoluteURL);
+        return true;
     }
 
     boolean progressStart = false;

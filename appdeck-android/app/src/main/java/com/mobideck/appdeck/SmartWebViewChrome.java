@@ -319,7 +319,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             if (catchLink == false)
                 return false;
-            root.loadUrl(url);
+            if (root.loadUrl(url) == false)
+                return false;
             return true;
         }
 

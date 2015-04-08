@@ -416,8 +416,10 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
 	        root.startActivity(intent);
 	    
 	        return true;*/
-	    	
-	    	root.loadUrl(url);
+
+            if (root.loadUrl(url) == false)
+                return false;
+
 	    	return true;
 	    }
 	    

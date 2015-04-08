@@ -263,25 +263,25 @@ public class PageFragmentSwap extends AppDeckFragment {
     	super.onDetach();
     }
     
-    public void loadUrl(String absoluteURL)
+    public boolean loadUrl(String absoluteURL)
     {
 		if (absoluteURL.startsWith("javascript:"))
 		{
-			pageWebView.ctl.loadUrl(absoluteURL);
-			return;
+			//pageWebView.ctl.loadUrl(absoluteURL);
+			return false;
 		}
 		
 		if (absoluteURL.startsWith("appdeckapi:refresh"))
 		{
 			reloadInBackground();
-			return;
+			return true;
 		}
 		if (screenConfiguration.isRelated(absoluteURL))
     	{
-			loader.replacePage(absoluteURL);
-			return;
+			//loader.replacePage(absoluteURL);
+			return false;
     	}
-		super.loadUrl(absoluteURL);
+		return super.loadUrl(absoluteURL);
     }
     
 	public void loadPage(String absoluteUrl)
