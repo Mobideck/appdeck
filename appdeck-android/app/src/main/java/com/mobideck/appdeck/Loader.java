@@ -1021,7 +1021,9 @@ public class Loader extends ActionBarActivity {
     }
     
     public int pushFragment(AppDeckFragment fragment)
-    {    	
+    {
+        setSupportProgressBarVisibility(false);
+
     	FragmentManager fragmentManager = getSupportFragmentManager();
     	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     	//fragmentTransaction.setTransitionStyle(1);
@@ -1094,7 +1096,9 @@ public class Loader extends ActionBarActivity {
     	
     	if (current == null || previous == null)
     		return false;
-    	
+
+        setSupportProgressBarVisibility(false);
+
     	onDettachFragment(current);
 
         if (current.isPopUp)
