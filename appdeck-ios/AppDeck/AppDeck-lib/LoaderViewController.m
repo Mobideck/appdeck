@@ -810,11 +810,11 @@
     {
 #if !TARGET_IPHONE_SIMULATOR
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-        if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
             // iOS 8 Notifications
-            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
             
-            [application registerForRemoteNotifications];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
         } else {
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNewsstandContentAvailability|
                                                                                    UIRemoteNotificationTypeBadge |
