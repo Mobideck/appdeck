@@ -773,7 +773,11 @@
 //    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_scroll.php"];
 //    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_slide2.php"];
     
-    LoaderChildViewController    *page = [self getChildViewControllerFromURL:self.conf.bootstrapUrl.absoluteString type:@"default"];
+//    LoaderChildViewController    *page = [self getChildViewControllerFromURL:self.conf.bootstrapUrl.absoluteString type:@"default"];
+    LoaderChildViewController    *page = [self getChildViewControllerFromURL:@"http://www.tool-fitness.com.dev.dck.io/fitness.html" type:@"default"];
+    
+    
+    
     [self loadChild:page root:YES popup:LoaderPopUpNo];
     
     // init ad engine
@@ -805,11 +809,24 @@
     if (self.conf.push_register_url || self.conf.enable_debug)
     {
 #if !TARGET_IPHONE_SIMULATOR
-//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+        if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            // iOS 8 Notifications
+            [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            
+            [application registerForRemoteNotifications];
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNewsstandContentAvailability|
+                                                                                   UIRemoteNotificationTypeBadge |
+                                                                                   UIRemoteNotificationTypeSound |
+                                                                                   UIRemoteNotificationTypeAlert)];
+        }
+#else
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNewsstandContentAvailability|
                                                                                UIRemoteNotificationTypeBadge |
                                                                                UIRemoteNotificationTypeSound |
                                                                                UIRemoteNotificationTypeAlert)];
+#endif
 #endif
     }
     // push notifivation ?
