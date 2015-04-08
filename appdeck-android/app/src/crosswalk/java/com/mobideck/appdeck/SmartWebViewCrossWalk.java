@@ -432,8 +432,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    		return false;
 
             if (root != null)
-    	    	root.loadUrl(url);
-	    	return true;
+                if (root.loadUrl(url) == false)
+                    return false;
+
+            return true;
 	    }
 	    
 	    
