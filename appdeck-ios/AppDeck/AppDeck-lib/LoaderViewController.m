@@ -773,10 +773,7 @@
 //    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_scroll.php"];
 //    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_slide2.php"];
     
-//    LoaderChildViewController    *page = [self getChildViewControllerFromURL:self.conf.bootstrapUrl.absoluteString type:@"default"];
-    LoaderChildViewController    *page = [self getChildViewControllerFromURL:@"http://www.tool-fitness.com.dev.dck.io/fitness.html" type:@"default"];
-    
-    
+    LoaderChildViewController    *page = [self getChildViewControllerFromURL:self.conf.bootstrapUrl.absoluteString type:@"default"];
     
     [self loadChild:page root:YES popup:LoaderPopUpNo];
     
