@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class SmartWebViewFactory {
 
-    public static boolean forceCrossWalk = true;
+    public static boolean forceCrossWalk = false;
 
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
