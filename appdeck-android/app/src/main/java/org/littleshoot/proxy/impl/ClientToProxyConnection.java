@@ -1,5 +1,7 @@
 package org.littleshoot.proxy.impl;
 
+import com.mobideck.appdeck.AppDeck;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -1066,6 +1068,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      */
     private void writeBadGateway(HttpRequest request) {
         String body = "Bad Gateway: " + request.getUri();
+        body = AppDeck.error_html;
         DefaultFullHttpResponse response = responseFor(HttpVersion.HTTP_1_1,
                 HttpResponseStatus.BAD_GATEWAY, body);
         response.headers().set(HttpHeaders.Names.CONNECTION, "close");
@@ -1078,6 +1081,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      */
     private void writeGatewayTimeout() {
         String body = "Gateway Timeout";
+        body = AppDeck.error_html;
         DefaultFullHttpResponse response = responseFor(HttpVersion.HTTP_1_1,
                 HttpResponseStatus.GATEWAY_TIMEOUT, body);
         response.headers().set(HttpHeaders.Names.CONNECTION, "close");
