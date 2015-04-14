@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobideck.appdeck" >
 
-    <!--  permission for appdeck --> -->
+    <!--  permission for appdeck -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -93,6 +93,14 @@
         <!-- xboxygen -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1089habcccfd19841b01be8f081b17e1d9dc1"></meta-data>-->
 
+        <!-- SNIIM -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/959hc85fdc336418aade8d2d86f6af4a5fa9"></meta-data>-->
+
+        <!-- RDD -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1109h4bed9177a3e9d426e75a0055ca5fefa2"></meta-data>-->
+
+
+
         <meta-data android:name="noCache" android:value="false" />
 
 
@@ -114,6 +122,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
         <meta-data android:name="com.crashlytics.ApiKey" android:value="06661b993731d02660ac43897854ae842acf59be"/>

@@ -142,7 +142,7 @@ public class WebBrowser extends AppDeckFragment {
     		webView.ctl.smartWebViewSaveState(outState);
     }    
     
-    public boolean loadUrl(String absoluteURL)
+    public void loadUrl(String absoluteURL)
     {
     	if (absoluteURL.equalsIgnoreCase("webbrowser:previous"))
     		webView.ctl.smartWebViewGoBack();
@@ -156,7 +156,6 @@ public class WebBrowser extends AppDeckFragment {
     		loader.share(webView.ctl.smartWebViewGetTitle(), webView.ctl.smartWebViewGetUrl(), null);
     	else
     		webView.ctl.loadUrl(absoluteURL);
-        return true;
     }
     
     void syncMenu()

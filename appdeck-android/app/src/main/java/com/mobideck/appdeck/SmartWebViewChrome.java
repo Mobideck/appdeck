@@ -149,6 +149,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     public void unloadPage()
     {
         evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);
+        clearHistory();
     }
 
     @Override
@@ -319,9 +320,11 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             if (catchLink == false)
                 return false;
-            if (root.loadUrl(url) == false)
-                return false;
-            return true;
+            if (root.shouldOverrideUrlLoading(url)) {
+                root.loadUrl(url);
+                return true;
+            }
+            return false;
         }
 
 /*

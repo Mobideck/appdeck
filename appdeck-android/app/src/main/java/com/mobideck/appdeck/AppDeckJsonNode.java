@@ -1,5 +1,7 @@
 package com.mobideck.appdeck;
 
+import android.util.Log;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,23 +45,23 @@ public class AppDeckJsonNode
 	AppDeckJsonNode get(String name)
 	{
         String[] names = getNames(name);
-		Object ret = null;
+        JSONObject ret = null;
 		//
 		
 		try {
             for (int k = 0; k < names.length; k++) {
                 if (root.has(names[k])) {
-                    ret = root.get(names[k]);
+                    ret = root.getJSONObject(names[k]);
                     break;
                 }
             }
 		} catch (Exception e) {
 			return null;
 		}
-		
+
 		if (ret instanceof JSONObject)
 			return new AppDeckJsonNode((JSONObject)ret);
-		
+
 		return null;
 	}
 	
@@ -168,7 +170,29 @@ public class AppDeckJsonNode
 	
 	String toJsonString()
 	{
-		return root.toString();
+		return (root == null ? "" : root.toString());
 	}
+
+    String optString(String name, String defaultValue)
+    {
+        String[] names = getNames(name);
+        try {
+            for (int k = 0; k < names.length; k++) {
+                if (root.has(names[k])) {
+                    Object ret = root.get(names[k]);
+                    if (ret instanceof String)
+                        return (String)ret;
+                    if (ret instanceof Number)
+                        return ((Number)ret).toString();
+                }
+            }
+            return defaultValue;//root.getString(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("mytag", "mymessage", e);
+            return defaultValue;
+        }
+    }
+
 
 }

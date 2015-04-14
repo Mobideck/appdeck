@@ -189,6 +189,7 @@ public class PageMenuItem {
 
     		
     	}
+        // ask fragment to handle URL
 		fragment.loadUrl(content);
     }
     

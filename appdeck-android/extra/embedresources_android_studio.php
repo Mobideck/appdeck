@@ -27,6 +27,20 @@ $app_json_url = (string)$app_json_url[0]['value'];
 define('APPDECK_JSON_URL', $app_json_url);
 define('APPDECK_OUTPUT_DIR', $project_path.'/app/src/main/assets/httpcache/');
 
+if (isset($argv[1]) && $argv[1] == 'clean')
+{
+	print "Clean downloaded assets ...";
+	$count = 0;
+	foreach (glob(APPDECK_OUTPUT_DIR.'/*') as $file)
+	{
+		unlink($file);
+		$count++;
+	}
+	print "{$count} files deleted\r\n";
+	exit;
+}
+
+
 include('embedresources.php');
 
 buildAppDeckAndroidRes();

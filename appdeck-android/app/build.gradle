@@ -54,28 +54,12 @@ android {
             flavorDimension "webview"
             minSdkVersion 15
             versionCode = 1
-            //defaultConfig.versionCode = defaultConfig.versionCode * 10 + 1
         }
-
-/*        arm {
-            flavorDimension "abi"
-            ndk {abiFilters "armeabi-v7a"}
-            versionCode = 2
-        }
-
-        x86 {
-            flavorDimension "abi"
-            ndk {abiFilters "x86"}
-            versionCode = 3
-        }*/
 
         chromium {
             flavorDimension "webview"
             minSdkVersion 19
             versionCode = 2
-            // this must be higher than the crosswalk version to ensure update of the
-            // app when the device gets a system update to kitkat and beyong
-            //defaultConfig.versionCode = defaultConfig.versionCode * 10 + 2
         }
     }
 
@@ -102,31 +86,24 @@ android {
 
         }
     }
-/*
-// map for the version code
-    project.ext.versionCodes = ['armeabi-v7a':1, 'x86':3]
-
-    //import com.android.build.OutputFile
-
-    android.applicationVariants.all { variant ->
-        // assign different version code for each output
-        variant.outputs.each { output ->
-            output.versionCodeOverride =
-                    project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI)) * 1000000 + android.defaultConfig.versionCode
-        }
-    }*/
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     //compile 'com.google.android.gms:play-services:6.5.87'
-    compile 'com.google.android.gms:play-services-base:6.5.87'
+    compile 'com.google.android.gms:play-services-base:7.0.0'
+    compile 'com.google.android.gms:play-services-analytics:7.0.0'
+    compile 'com.google.android.gms:play-services-gcm:7.0.0'
+
+
+
     //compile 'com.android.support:multidex:1.0.0'
 
     compile 'com.crashlytics.android:crashlytics:1.+'
 
-    crosswalkCompile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
+    //crosswalkCompile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:12.41.296.5'
     //crosswalkx86Compile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
     //compile 'org.xwalk:xwalk_core_library:10.39.235.16'
 
@@ -136,7 +113,11 @@ dependencies {
 //    compile 'com.github.chrisbanes.photoview:library:1.2.3'
 }
 
-task assets {
+preBuild.doFirst {
     // Download embed assets
-    println "php extra/embedresources_android_studio.php".execute(null, new File(".")).text
+    println "php extra/embedresources_android_studio.php build".execute(null, new File(".")).text
+}
+
+clean.doFirst {
+    println "php extra/embedresources_android_studio.php clean".execute(null, new File(".")).text
 }

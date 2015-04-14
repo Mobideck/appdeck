@@ -134,6 +134,7 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
         if (Build.VERSION.SDK_INT >= 19) {
             evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);
         }
+        clearHistory();
         //TODO: add code for SDK < 19
     }
 
@@ -417,10 +418,12 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
 	    
 	        return true;*/
 
-            if (root.loadUrl(url) == false)
-                return false;
-
-	    	return true;
+            if (root.shouldOverrideUrlLoading(url))
+            {
+                root.loadUrl(url);
+                return true;
+            }
+	    	return false;
 	    }
 	    
 	    

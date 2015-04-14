@@ -104,8 +104,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	public void unloadPage()
 	{
-		evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);		
-	}
+		evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);
+        getNavigationHistory().clear();
+    }
 	
 	public void clean()
 	{
@@ -335,7 +336,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			public void onReceiveValue(String value) {
 		
 				Log.i(TAG, "**onLoadFinished status:"+value+" **");
-				
+
 				// loading of webview was OK
 				if (value != null && !value.equalsIgnoreCase("\"ko\""))
 				{
@@ -431,11 +432,14 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (catchLink == false)
 	    		return false;
 
-            if (root != null)
-                if (root.loadUrl(url) == false)
-                    return false;
+            if (root != null) {
 
-            return true;
+                if (root.shouldOverrideUrlLoading(url)) {
+                    root.loadUrl(url);
+                    return true;
+                }
+            }
+            return false;
 	    }
 	    
 	    
@@ -483,6 +487,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         public void onLoadFinished(XWalkView view, String url) {
             //super.onPageFinished(view, url);
             Log.i(TAG, "**onLoadFinished "+url+"**");
+
+            getNavigationHistory().clear();
 
                         // force inject of appdeck.js if needed
             view.evaluateJavascript(SmartWebViewCrossWalk.this.appDeck.appdeck_inject_js, new ValueCallback<String>() {
@@ -706,8 +712,14 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         return saveState(outState);
     }
 
-    public void smartWebViewGoBack() { getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1); }
-    public void smartWebViewGoForward() { getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD, 1); }
+    public void smartWebViewGoBack() {
+        if (smartWebViewCanGoBack())
+            getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
+    }
+    public void smartWebViewGoForward() {
+        if (smartWebViewCanGoForward())
+            getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD, 1);
+    }
     public String smartWebViewGetTitle() { return getTitle(); }
     public String smartWebViewGetUrl() { return getUrl(); }
     public boolean smartWebViewCanGoBack() { return getNavigationHistory().canGoBack(); }

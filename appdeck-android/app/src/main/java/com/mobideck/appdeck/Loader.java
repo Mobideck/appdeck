@@ -97,6 +97,8 @@ public class Loader extends ActionBarActivity {
     String originalProxyHost = null;
     int originalProxyPort = -1;
 
+    private String alternativeBootstrapURL = null;
+
 	
 	protected AppDeck appDeck;
 	
@@ -168,6 +170,9 @@ public class Loader extends ActionBarActivity {
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
         appDeck = new AppDeck(getBaseContext(), app_json_url);
+
+        String action = intent.getAction();
+        Uri data = intent.getData();
 
         if (app.isInitialLoading == false)
         {
@@ -397,12 +402,18 @@ public class Loader extends ActionBarActivity {
 		initUI();
 		
 		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
-		
-		if (savedInstanceState == null)
+
+        if (data != null)
+        {
+            alternativeBootstrapURL = data.toString();
+            loadRootPage(alternativeBootstrapURL);
+        }
+		else if (savedInstanceState == null)
 		{
 			loadRootPage(appDeck.config.bootstrapUrl.toString());
             //loadRootPage("http://www.universfreebox.com.dev.dck.io/");
 		}
+
 
 
         /*
@@ -1182,7 +1193,7 @@ public class Loader extends ActionBarActivity {
 			Log.i("API", "**PREFERENCES GET**");
 					
 			String name = call.param.getString("name");
-			AppDeckJsonNode defaultValue = call.param.get("value");
+			String defaultValue = call.param.optString("value", "");
 
 		    SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
 		    
@@ -1190,7 +1201,7 @@ public class Loader extends ActionBarActivity {
 		    String finalValueJson = prefs.getString(key, null);
 		    
 		    if (finalValueJson == null)
-		    	call.setResult(defaultValue.toJsonString());
+		    	call.setResult(defaultValue);
 		    else
 		    	call.setResult(finalValueJson);
 		    /*{
@@ -1217,12 +1228,12 @@ public class Loader extends ActionBarActivity {
 			Log.i("API", "**PREFERENCES SET**");
 					
 			String name = call.param.getString("name");
-			AppDeckJsonNode finalValue = call.param.get("value");
+			String finalValue = call.param.optString("value", "");
 			
 		    SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
 		    SharedPreferences.Editor editor = prefs.edit();
 		    String key = "appdeck_preferences_json1_" + name;
-		    editor.putString(key, finalValue.toJsonString());
+		    editor.putString(key, finalValue);
 	        editor.apply();
 
 		    call.setResult(finalValue);
@@ -1408,7 +1419,7 @@ public class Loader extends ActionBarActivity {
 
         // current fragment can go back ?
         AppDeckFragment currentFragment = getCurrentAppDeckFragment();
-        if (currentFragment.canGoBack())
+        if (currentFragment != null && currentFragment.canGoBack())
         {
         	currentFragment.goBack();
         	return;
@@ -1419,12 +1430,14 @@ public class Loader extends ActionBarActivity {
         	return;
 
         // current fragment is home ?
-        if (currentFragment == null || currentFragment.currentPageUrl == null || currentFragment.currentPageUrl.compareToIgnoreCase(appDeck.config.bootstrapUrl.toString()) != 0)
-        {
-//        	Debug.stopMethodTracing();
-        	loadRootPage(appDeck.config.bootstrapUrl.toString());
-        	return;
-        }
+        if (alternativeBootstrapURL == null)
+            if (currentFragment != null && currentFragment.currentPageUrl != null)
+                if (/*currentFragment == null || currentFragment.currentPageUrl == null ||*/ currentFragment.currentPageUrl.compareToIgnoreCase(appDeck.config.bootstrapUrl.toString()) != 0)
+                {
+        //        	Debug.stopMethodTracing();
+                    loadRootPage(appDeck.config.bootstrapUrl.toString());
+                    return;
+                }
         
         finish();      
 
@@ -1457,7 +1470,19 @@ public class Loader extends ActionBarActivity {
 
         return super.onKeyDown(keyCode, event);
     }
-    
+/*
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_MENU)
+        {
+            toggleMenu();
+            return true;
+
+        }
+        return super.dispatchKeyEvent(event);
+    }
+*/
+
     public int getActionBarHeight()
     {
     	int actionBarHeight = 0;

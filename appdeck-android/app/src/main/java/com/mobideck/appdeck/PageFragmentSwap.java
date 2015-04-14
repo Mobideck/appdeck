@@ -262,26 +262,41 @@ public class PageFragmentSwap extends AppDeckFragment {
     {
     	super.onDetach();
     }
-    
-    public boolean loadUrl(String absoluteURL)
+
+    public boolean shouldOverrideUrlLoading(String absoluteURL)
+    {
+        if (absoluteURL.startsWith("javascript:"))
+        {
+            //pageWebView.ctl.loadUrl(absoluteURL);
+            return false;
+        }
+        if (screenConfiguration.isRelated(absoluteURL))
+        {
+            //loader.replacePage(absoluteURL);
+            return false;
+        }
+        return true;
+    }
+
+    public void loadUrl(String absoluteURL)
     {
 		if (absoluteURL.startsWith("javascript:"))
 		{
-			//pageWebView.ctl.loadUrl(absoluteURL);
-			return false;
+			pageWebView.ctl.loadUrl(absoluteURL);
+			return;
 		}
-		
 		if (absoluteURL.startsWith("appdeckapi:refresh"))
 		{
 			reloadInBackground();
-			return true;
+			return;
 		}
 		if (screenConfiguration.isRelated(absoluteURL))
     	{
+            pageWebView.ctl.loadUrl(absoluteURL);
 			//loader.replacePage(absoluteURL);
-			return false;
+			return;
     	}
-		return super.loadUrl(absoluteURL);
+		super.loadUrl(absoluteURL);
     }
     
 	public void loadPage(String absoluteUrl)
@@ -324,7 +339,13 @@ public class PageFragmentSwap extends AppDeckFragment {
 		} else {
 			Log.v("CACHE", "Cache MISS SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " page IS NOT IN CACHE");
 		}
-		
+
+        if (screenConfiguration.ttl == -1)
+        {
+            loadFromCache = false;
+            reloadInBackground = false;
+        }
+
 		if (loadFromCache)
 		{
 			pageWebView.ctl.setForceCache(true);
