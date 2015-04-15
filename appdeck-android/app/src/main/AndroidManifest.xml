@@ -120,13 +120,13 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!--
                 <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="http" />
-                <data android:scheme="https" />
+                <data android:scheme="http" android:host="testappv2.appdeck.mobi" />
+                <data android:scheme="https" android:host="testappv2.appdeck.mobi" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.BROWSABLE" />-->
             </intent-filter>
         </activity>
         <meta-data android:name="com.crashlytics.ApiKey" android:value="06661b993731d02660ac43897854ae842acf59be"/>
