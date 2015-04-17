@@ -13,6 +13,7 @@ import org.json.JSONTokener;
 
 import com.crashlytics.android.Crashlytics;
 
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -128,10 +129,22 @@ public class Configuration {
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 		if (app_base_url == null)
 			app_base_url = json_url;
-		
+/*
+        if (appDeck.isAppdeckTestApp || appDeck.isDebugBuild)
+        {
+            try {
+                String base_url_debug = root.getString("base_url_debug", null);
+                if (base_url_debug != null)
+                    app_base_url = new URI(base_url_debug);
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }*/
+
 		// bootstrap
 		bootstrapUrl = readURI(root.get("bootstrap"), "url", "");
 
