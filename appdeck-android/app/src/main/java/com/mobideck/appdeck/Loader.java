@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -58,6 +59,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -91,6 +95,7 @@ public class Loader extends ActionBarActivity {
 	/* push */
 	public final static String PUSH_URL = "com.mobideck.appdeck.PUSH_URL";
 	public final static String PUSH_TITLE = "com.mobideck.appdeck.PUSH_TITLE";
+    public final static String PUSH_IMAGE_URL = "com.mobideck.appdeck.PUSH_IMAGE_URL";
 	
 	public String proxyHost;
 	public int proxyPort;
@@ -98,6 +103,7 @@ public class Loader extends ActionBarActivity {
     int originalProxyPort = -1;
 
     private String alternativeBootstrapURL = null;
+
 
 	
 	protected AppDeck appDeck;
@@ -125,6 +131,7 @@ public class Loader extends ActionBarActivity {
 
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
+    private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
 	/*
 	private int mProgress = 100;
 	private int mTargetProgress = 0;
@@ -402,6 +409,7 @@ public class Loader extends ActionBarActivity {
 		initUI();
 		
 		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
+        appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
 
         if (data != null)
         {
@@ -536,12 +544,18 @@ public class Loader extends ActionBarActivity {
     {
     	super.onResume();
     	isForeground = true;
+
+        IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
+        filter.setPriority(1);
+        registerReceiver(appDeckBroadcastReceiver, filter);
     }
 
     @Override
     protected void onPause()
     {
     	isForeground = false;
+        appDeckBroadcastReceiver.clean();
+        unregisterReceiver(appDeckBroadcastReceiver);
     	super.onPause();
     	if (appDeck.noCache)
     		Utils.killApp(true);
@@ -1794,7 +1808,7 @@ public class Loader extends ActionBarActivity {
 	}
 	
     @Override
-    protected void onNewIntent (Intent intent)
+    protected void onNewIntent(Intent intent)
     {
     	super.onNewIntent(intent);
     	
@@ -1824,7 +1838,8 @@ public class Loader extends ActionBarActivity {
     	if (url != null && !url.isEmpty())
     	{
     		String title = extras.getString(PUSH_TITLE);
-    		new PushDialog(url, title).show();
+            String imageUrl = extras.getString(PUSH_IMAGE_URL);
+            handlePushNotification(title, url, imageUrl);
             return;
     	}
     	
@@ -1837,17 +1852,28 @@ public class Loader extends ActionBarActivity {
     		return;
     	}*/
     	
-    }	
+    }
+
+    public void handlePushNotification(String title, String url, String imageUrl)
+    {
+        if (url != null)
+            url = appDeck.config.app_base_url.resolve(url).toString();
+        if (imageUrl != null)
+            imageUrl = appDeck.config.app_base_url.resolve(imageUrl).toString();
+        new PushDialog(url, title, imageUrl).show();
+    }
 	
     public class PushDialog
     {
     	String url;
     	String title;
+        String imageUrl;
     	
-    	public PushDialog(String url, String title)
+    	public PushDialog(String url, String title, String imageUrl)
     	{
 			this.url = url;
 			this.title = title;
+            this.imageUrl = imageUrl;
 		}
     	
     	public void show()
