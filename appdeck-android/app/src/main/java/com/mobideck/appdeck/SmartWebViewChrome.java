@@ -79,7 +79,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             boolean shouldEnableDebug = false;
-            if (AppDeck.getInstance().config.app_api_key.equalsIgnoreCase("218hf32d1901627d35131fa83b63f56ae906"))
+            if (AppDeck.getInstance().isAppdeckTestApp)
                 shouldEnableDebug = true;
             if (0 != (loader.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
                 shouldEnableDebug = true;
