@@ -29,6 +29,10 @@ import android.webkit.CookieSyncManager;
 
 public class AppDeck {
 
+    public boolean isAppdeckTestApp = false;
+    public boolean isDebugBuild = false;
+
+
 	public static String TAG = "AppDeck";
 
     public static String appdeck_inject_js = "if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript'; scr.async = true; scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck.js'; scr.async = true; document.getElementsByTagName('head')[0].appendChild(scr); var result = true;} else { var result = false; }";
@@ -81,6 +85,12 @@ public class AppDeck {
 
     	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB)
     		isLowSystem = true;
+
+        if (context.getPackageName().equalsIgnoreCase("com.mobideck.appdeck"))
+            isAppdeckTestApp = true;
+
+        if (0 != (context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
+            isDebugBuild = true;
 
     	cacheDir = context.getCacheDir();
     	assetManager = context.getAssets();
