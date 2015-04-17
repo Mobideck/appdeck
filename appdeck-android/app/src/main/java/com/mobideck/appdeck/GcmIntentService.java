@@ -1,5 +1,6 @@
 package com.mobideck.appdeck;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mobideck.appdeck.R;
 /*import com.google.android.gms.gcm.GoogleCloudMessaging;*/
 
@@ -27,7 +28,7 @@ public class GcmIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        /*
+
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
@@ -55,7 +56,7 @@ public class GcmIntentService extends IntentService {
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
-        GcmBroadcastReceiver.completeWakefulIntent(intent);*/
+        GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
     // Put the message into a notification and post it.

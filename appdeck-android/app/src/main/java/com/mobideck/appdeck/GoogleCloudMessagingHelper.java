@@ -27,14 +27,14 @@ public class GoogleCloudMessagingHelper {
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final String PROPERTY_SENDER_ID = "senderId";
-	//private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;	
+	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	
-    String SENDER_ID = "105882851388"; // sender id is configured in app.json, this is default appDeck value usable for test only
+    String SENDER_ID = "630861581625"; // sender id is configured in app.json, this is default appDeck value usable for test only
 	
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     SharedPreferences prefs;
-    
+    //Context context;
     
     String regid;
 
@@ -44,7 +44,7 @@ public class GoogleCloudMessagingHelper {
 		appDeck = AppDeck.getInstance();
 		if (appDeck.config.push_google_cloud_messaging_sender_id != null && appDeck.config.push_google_cloud_messaging_sender_id.isEmpty() == false)
 			SENDER_ID = appDeck.config.push_google_cloud_messaging_sender_id;
-		//this.context = appDeck.getApplicationContext();
+		//this.context = context;
 		gcmRegister(context);
 	}
     
@@ -79,7 +79,7 @@ public class GoogleCloudMessagingHelper {
 	        //    GooglePlayServicesUtil.getErrorDialog(resultCode, appDeck.loader,
 	        //            PLAY_SERVICES_RESOLUTION_REQUEST).show();
 	        //} else {
-	        //    Log.i(TAG, "This device is not supported.");
+	        //    Log.e(TAG, "checkPlayServices: This device is not supported.");
 	        //    //finish();
 	        //}
 	        return false;
@@ -215,7 +215,10 @@ public class GoogleCloudMessagingHelper {
 
     		finalUrl.append("&apikey=");
     		finalUrl.append(appDeck.config.app_api_key);
-    		
+
+            finalUrl.append("&senderid=");
+            finalUrl.append(SENDER_ID);
+
     		finalUrl.append("&deviceuid=");
     		finalUrl.append(appDeck.uid);
     		
