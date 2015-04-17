@@ -26,8 +26,6 @@ public class AppDeckBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast toast = Toast.makeText(context, "hola", Toast.LENGTH_LONG);
-        toast.show();
         abortBroadcast();
 
         Bundle extras = intent.getExtras();
