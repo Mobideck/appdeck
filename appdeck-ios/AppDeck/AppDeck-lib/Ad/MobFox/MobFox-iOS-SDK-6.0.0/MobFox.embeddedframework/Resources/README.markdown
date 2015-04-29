@@ -1,1 +1,0 @@
-../MobFox.framework/Resources/README.markdown

@@ -839,7 +839,7 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
         NSString *message = self.ratedAnyVersion? self.updateMessage: self.message;
     
 #if TARGET_OS_IPHONE
-        
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
         UIViewController *topController = [UIApplication sharedApplication].delegate.window.rootViewController;
         while (topController.presentedViewController)
         {
@@ -897,7 +897,7 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
             self.visibleAlert = alert;
             [self.visibleAlert show];
         }
-        
+#endif
 #else
 
         //only show when main window is available

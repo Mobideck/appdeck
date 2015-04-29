@@ -1,1 +1,0 @@
-To use the InMobi Ad Network, download the InMobi SDK and place the header and static library files in this folder.

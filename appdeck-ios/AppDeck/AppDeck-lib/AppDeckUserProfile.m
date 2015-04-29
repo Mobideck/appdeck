@@ -60,7 +60,8 @@
     
     [self readData];
     
-    [[NSUserDefaults standardUserDefaults] setObject:profileData forKey:[NSString stringWithCString:kAppDeckProfileKey encoding:NSUTF8StringEncoding]];
+//    [[NSUserDefaults standardUserDefaults] setObject:profileData forKey:[NSString stringWithCString:kAppDeckProfileKey encoding:NSUTF8StringEncoding]];
+    [[NSUserDefaults standardUserDefaults] setObject:profileData forKey:self.key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
 }

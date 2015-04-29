@@ -60,6 +60,18 @@
     [self.appDeck application:app didReceiveRemoteNotification:userInfo];
 }
 
+// ios8
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [self.appDeck application:application didRegisterUserNotificationSettings:notificationSettings];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    [self.appDeck application:application handleActionWithIdentifier:identifier forRemoteNotification:userInfo completionHandler:completionHandler];
+}
+
 #pragma mark - Background Fetch
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler

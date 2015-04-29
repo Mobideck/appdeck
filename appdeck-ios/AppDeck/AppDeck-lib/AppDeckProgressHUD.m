@@ -68,6 +68,8 @@ static char AppDeckProgressHUDKey;
 
 -(void)showNow:(id)origin
 {
+    if (self.viewController == nil)
+        return;
     self.graceTimer = nil;
     self.showStarted = [NSDate date];
     if (NO && [[AppDeck sharedInstance] iosVersion] >= 7.0)

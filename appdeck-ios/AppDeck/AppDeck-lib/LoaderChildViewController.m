@@ -279,6 +279,8 @@
     // share ?
     if ([call.command isEqualToString:@"share"])
     {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+        
         if (self.loader.appDeck.iosVersion >= 6.0)
         {
             if ([call.param respondsToSelector:@selector(objectForKey:)])
@@ -361,6 +363,7 @@
         }
         else
             NSLog(@"Not supported in ios 5.0");
+#endif
         return YES;
     }
     

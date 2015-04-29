@@ -7,7 +7,7 @@
 //
 
 #import "../../AppDeckAdViewController.h"
-#import "widespace-sdk-ios-4.4.0/WSLibrary.framework/Headers/WSAdSpace.h"
+#import "widespace-sdk-ios-4.4.2/WSLibrary.framework/Headers/WSAdSpace.h"
 #import "WideSpaceAdEngine.h"
 
 @class WideSpaceAdEngine;

@@ -51,14 +51,20 @@
 
 -(void)setImageFromData:(NSData *)data forState:(UIControlState)state
 {
-    UIImage *buttonImage = [UIImage imageWithData:data];
+    NSLog(@"XXXXXX image size: %lu", data.length);
+   
+    
+    UIImage *buttonImage = [UIImage imageWithData:data scale:UIScreen.mainScreen.scale];
+//    UIImage *buttonImage = [UIImage imageWithData:data];
 
+    
     CGFloat height = self.child.navigationController.navigationBar.frame.size.height;
 
-    buttonImage = [buttonImage retinaEnabledImageScaledToFitHeight:height];
+//    buttonImage = [buttonImage retinaEnabledImageScaledToFitHeight:height];
     if (buttonImage)
     {
-        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, buttonImage.size.width, buttonImage.size.height)];
+//        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, buttonImage.size.width, buttonImage.size.height)];
+        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, height, height)];
         //self.backgroundColor = [UIColor redColor];
         [self setImage:buttonImage forState:state];
         [self setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
@@ -88,7 +94,7 @@
         [self setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
         
         [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue currentQueue]
+                                           queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if (error == nil)
                                    {

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-const char * kAppDeckProfileKey;
+//const char * kAppDeckProfileKey;
 
 typedef enum {
     ProfileEducationNotSet = 0,

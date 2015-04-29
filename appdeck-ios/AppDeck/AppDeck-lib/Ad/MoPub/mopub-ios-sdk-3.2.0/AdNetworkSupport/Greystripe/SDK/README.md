@@ -1,1 +1,0 @@
-To use the Greystripe Ad Network, download the Greystripe SDK and place the header and static library files in this folder.

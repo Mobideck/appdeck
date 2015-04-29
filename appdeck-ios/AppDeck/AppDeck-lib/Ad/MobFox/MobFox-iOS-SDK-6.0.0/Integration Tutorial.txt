@@ -1,5 +1,0 @@
-MobFox SDK Integration Tutorial
-
----------------------------------------------
-
-For Integration Documentation, please log into your MobFox Account and go to http://account.mobfox.com/v2/www/cp/integration.php

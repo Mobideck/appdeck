@@ -78,11 +78,6 @@
         [myRequest addValue:userAgent forHTTPHeaderField:@"User-Agent"];
     }
     
-    /*
-    if (userAgent && [userAgent containsString:@"Mozilla"])
-        [myRequest addValue:[[AppDeck sharedInstance] userAgentWebView] forHTTPHeaderField:@"User-Agent"];
-    else
-        [myRequest addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];*/
     //NSLog(@"%@", request.URL.absoluteString);
     
     BOOL isInEmbedCache = [appDeck.cache requestIsInEmbedCache:request];
@@ -117,7 +112,8 @@
             [glLog debug:@"EMBED %@", log_url];
         else if (shouldStoreRequest && requestIsInCache)
             [glLog debug:@"CACHE HIT %@", log_url];
-        else if ([request.URL.host hasSuffix:@".appdeck.mobi"] || [request.URL.host hasSuffix:@".widespace.com"] || [request.URL.absoluteString containsString:@".google-analytics.com/collect"]
+        else if ([request.URL.host hasSuffix:@".appdeck.mobi"] /*|| [request.URL.host hasSuffix:@".widespace.com"]*/
+                 || [request.URL.absoluteString rangeOfString:@".google-analytics.com/collect"].location != NSNotFound
                  || [request.URL.host hasSuffix:@".mobfox.com"] || [request.URL.host hasSuffix:@".mobpartner.mobi"])
             ;
         else if (shouldStoreRequest)
@@ -125,7 +121,7 @@
         else
             [glLog info:@"DOWNLOAD %@", log_url];
     }
-    
+
     // this will assign client
     self = [super initWithRequest:myRequest cachedResponse:cachedResponse client:client];
     

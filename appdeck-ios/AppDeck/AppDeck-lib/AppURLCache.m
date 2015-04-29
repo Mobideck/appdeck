@@ -623,13 +623,14 @@ static unsigned char gifData[] = {
 
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request
 {
-    BOOL fromWebView = [[request.allHTTPHeaderFields objectForKey:@"User-Agent"] containsString:@"Mozilla"];
+    BOOL fromWebView = [[request.allHTTPHeaderFields objectForKey:@"User-Agent"] rangeOfString:@"Mozilla"].location != NSNotFound;
+    
     //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
 
     // adblock
     if (fromWebView)
     {
-        self.enableAdBlock = YES;
+        //self.enableAdBlock = YES;
         BOOL shouldBlock = NO;
         const char *absoluteURL = [request.URL.absoluteString UTF8String];
 

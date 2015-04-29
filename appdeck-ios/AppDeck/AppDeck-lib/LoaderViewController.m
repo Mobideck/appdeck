@@ -802,38 +802,8 @@
 
 -(void)postLoadUI:(id)sender
 {
-    // register push registration
-    if (self.conf.push_register_url || self.conf.enable_debug)
-    {
-#if !TARGET_IPHONE_SIMULATOR
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-        if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-            // iOS 8 Notifications
-            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-            
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
-        } else {
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNewsstandContentAvailability|
-                                                                                   UIRemoteNotificationTypeBadge |
-                                                                                   UIRemoteNotificationTypeSound |
-                                                                                   UIRemoteNotificationTypeAlert)];
-        }
-#else
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNewsstandContentAvailability|
-                                                                               UIRemoteNotificationTypeBadge |
-                                                                               UIRemoteNotificationTypeSound |
-                                                                               UIRemoteNotificationTypeAlert)];
-#endif
-#endif
-    }
-    // push notifivation ?
-    NSDictionary *localNotif = [self.launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (localNotif)
-    {
-        NSLog(@"local notif: %@", localNotif);
-        [self application:[UIApplication sharedApplication] didReceiveRemoteNotification:localNotif];
-    }
-    
+    // push notification
+    [self handlePushNotification];
     // test pub
     /*
     UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bgtest.jpg"]];
@@ -1828,6 +1798,58 @@
 
 #pragma mark - push notification
 
+-(void)handlePushNotification
+{
+#if !TARGET_IPHONE_SIMULATOR
+    // register push registration
+    if (self.conf.push_register_url || self.conf.enable_debug)
+    {
+        if (self.appDeck.iosVersion >= 8.0)
+        {
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes: (UIRemoteNotificationTypeBadge
+                                                                                                  |UIRemoteNotificationTypeSound
+                                                                                                  |UIRemoteNotificationTypeAlert) categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+/*            // iOS 8 Notifications
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            
+            [[UIApplication sharedApplication] registerForRemoteNotifications];*/
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeNewsstandContentAvailability|
+                                                                                   UIRemoteNotificationTypeBadge |
+                                                                                   UIRemoteNotificationTypeSound |
+                                                                                   UIRemoteNotificationTypeAlert)];
+        }
+    }
+#endif
+    // push notification received ?
+    NSDictionary *localNotif = [self.launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (localNotif)
+    {
+        NSLog(@"local notif: %@", localNotif);
+        [self application:[UIApplication sharedApplication] didReceiveRemoteNotification:localNotif];
+    }
+    
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    //handle the actions
+    if ([identifier isEqualToString:@"declineAction"]){
+        
+    }
+    else if ([identifier isEqualToString:@"answerAction"]){
+        
+    }
+}
+
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {
     pushNotificationRegistered = YES;
@@ -1846,7 +1868,11 @@
         NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
         
         // Check what Notifications the user has turned on.  We registered for all three, but they may have manually disabled some or all of them.
-        NSUInteger rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        NSUInteger rntypes;
+        if (self.appDeck.iosVersion >= 8.0)
+            rntypes = [[[UIApplication sharedApplication] currentUserNotificationSettings] types];
+        else
+            rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
         
         // Set the defaults to disabled unless we find otherwise...
         NSString *pushBadge = @"disabled";
@@ -1893,6 +1919,12 @@
         NSString *deviceModel = dev.model;
         NSString *deviceSystemVersion = dev.systemVersion;
         
+#ifdef DEBUG
+        NSString *app_mode = @"dev";
+#else
+        NSString *app_mode = @"prod";
+#endif
+        
         NSString *type = @"iphone";
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
             type = @"ipad";
@@ -1903,8 +1935,8 @@
                                   stringByReplacingOccurrencesOfString:@">" withString:@""]
                                  stringByReplacingOccurrencesOfString: @" " withString: @""];
         
-        __block NSString *body = [NSString stringWithFormat:@"apikey=%@&type=%@&version=%d&task=%@&appid=%@&appname=%@&appversion=%@&deviceuid=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@",
-                          self.conf.app_api_key, type, self.conf.app_version, @"register", appId, appName, appVersion, deviceUuid, deviceToken, [deviceName urlEncodeUsingEncoding:NSASCIIStringEncoding] , deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
+        __block NSString *body = [NSString stringWithFormat:@"apikey=%@&type=%@&mode=%@&version=%ld&task=%@&appid=%@&appname=%@&appversion=%@&deviceuid=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@",
+                          self.conf.app_api_key, type, app_mode, self.conf.app_version, @"register", appId, appName, appVersion, deviceUuid, deviceToken, [deviceName urlEncodeUsingEncoding:NSASCIIStringEncoding] , deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
         
         NSDictionary *profileData = [self.appDeck.userProfile getComputedData];
         [profileData enumerateKeysAndObjectsUsingBlock: ^(NSString *key, NSString *obj, BOOL *stop) {
