@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -13,7 +14,9 @@ import android.widget.Toast;
  */
 public class AppDeckBroadcastReceiver extends BroadcastReceiver {
 
-    Loader loaderActivity;
+    public static String TAG = "AppDeckBroadcastReceiver";
+
+    public Loader loaderActivity;
 
     public AppDeckBroadcastReceiver(Loader loaderActivity) {
         this.loaderActivity = loaderActivity;
@@ -33,6 +36,10 @@ public class AppDeckBroadcastReceiver extends BroadcastReceiver {
         String url = extras.getString("action_url");
         String image_url = extras.getString("image_url");
 
+        if (loaderActivity == null)
+        {
+            Log.e(TAG, "receive Intent but null loaderActivity");
+        }
         loaderActivity.handlePushNotification(title, url, image_url);
 
     }

@@ -547,6 +547,7 @@ public class Loader extends ActionBarActivity {
 
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
+        appDeckBroadcastReceiver.loaderActivity = this;
         registerReceiver(appDeckBroadcastReceiver, filter);
     }
 
