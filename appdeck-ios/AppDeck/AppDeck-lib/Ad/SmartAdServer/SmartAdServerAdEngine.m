@@ -25,6 +25,11 @@
     if (self) {
         // Custom initialization
         self.siteID = [NSString stringWithFormat:@"%@", [config objectForKey:@"siteID"]];
+        self.pageID = [NSString stringWithFormat:@"%@", [config objectForKey:@"pageID"]];
+        self.formatBannerID = [NSString stringWithFormat:@"%@", [config objectForKey:@"formatBannerID"]];
+        self.formatRectangleID = [NSString stringWithFormat:@"%@", [config objectForKey:@"formatRectangleID"]];
+        self.formatinterstitialID = [NSString stringWithFormat:@"%@", [config objectForKey:@"formatinterstitialID"]];
+        self.networkID = [NSString stringWithFormat:@"%@", [config objectForKey:@"networkID"]];
         self.baseURL = [NSString stringWithFormat:@"%@", [config objectForKey:@"baseURL"]];
         
         [SASAdView setSiteID:self.siteID.integerValue baseURL:self.baseURL];

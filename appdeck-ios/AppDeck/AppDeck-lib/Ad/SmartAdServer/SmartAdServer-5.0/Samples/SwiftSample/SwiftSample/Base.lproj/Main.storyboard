@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pKk-jv-qX6">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+    </dependencies>
+    <scenes>
+        <!--Swift Sample-->
+        <scene sceneID="Cqd-vn-znB">
+            <objects>
+                <tableViewController id="5ds-gW-ebO" customClass="MainViewController" customModule="SwiftSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="tUZ-Rw-Y3B">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="sampleCell" textLabel="7TV-Kt-7SS" style="IBUITableViewCellStyleDefault" id="Qaa-c7-GiT">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qaa-c7-GiT" id="IHp-fd-Mi4">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7TV-Kt-7SS">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5ds-gW-ebO" id="2gs-3D-HgV"/>
+                            <outlet property="delegate" destination="5ds-gW-ebO" id="HeN-uO-Vbk"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Swift Sample" id="ofz-Wh-x0K"/>
+                    <connections>
+                        <segue destination="98n-hf-iIR" kind="show" identifier="BannerViewControllerSegue" id="hAM-px-dRF"/>
+                        <segue destination="qhK-Oy-FDh" kind="show" identifier="InterstitialViewControllerSegue" id="xpC-zm-Zrv"/>
+                        <segue destination="AhA-Gn-xG9" kind="show" identifier="ToasterViewControllerSegue" id="w0S-Rh-W6i"/>
+                        <segue destination="95X-25-1eF" kind="show" identifier="InterstitialDismissalAnimationViewControllerSegue" id="z61-uZ-Fdv"/>
+                        <segue destination="wga-7B-Zy4" kind="show" identifier="PrefetchInterstitialViewControllerSegue" id="LI6-VM-oEA"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qnd-k9-rjH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1434" y="441"/>
+        </scene>
+        <!--Banner-->
+        <scene sceneID="M8q-wM-KdY">
+            <objects>
+                <viewController title="Banner" id="98n-hf-iIR" customClass="BannerViewController" customModule="SwiftSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VRW-fO-7cE"/>
+                        <viewControllerLayoutGuide type="bottom" id="WGu-gz-I7F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ctQ-cy-gKj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Image banner (click on 'Reload' to load a new banner and release the old one)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="306-dc-RCV">
+                                <rect key="frame" x="160" y="215" width="280" height="170"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="Heh-eK-bbE"/>
+                                    <constraint firstAttribute="height" constant="170" id="pTi-8b-qz6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="See implementation in BannerViewController class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="VaS-2f-deE">
+                                <rect key="frame" x="160" y="552" width="280" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="Qfx-3E-xGS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VaS-2f-deE" firstAttribute="leading" secondItem="306-dc-RCV" secondAttribute="leading" id="5Ue-wV-Sdy"/>
+                            <constraint firstAttribute="bottom" secondItem="VaS-2f-deE" secondAttribute="bottom" constant="20" symbolic="YES" id="Gb7-6l-WPv"/>
+                            <constraint firstAttribute="centerX" secondItem="306-dc-RCV" secondAttribute="centerX" id="IS4-Oy-YMq"/>
+                            <constraint firstItem="VaS-2f-deE" firstAttribute="trailing" secondItem="306-dc-RCV" secondAttribute="trailing" id="jKL-m9-4Hu"/>
+                            <constraint firstAttribute="centerY" secondItem="306-dc-RCV" secondAttribute="centerY" id="zSa-0x-Ra9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MF9-Km-4m0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2235" y="-992"/>
+        </scene>
+        <!--Toaster-->
+        <scene sceneID="Vgk-W4-2fv">
+            <objects>
+                <viewController title="Toaster" id="AhA-Gn-xG9" customClass="ToasterViewController" customModule="SwiftSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Y5B-TA-wNH"/>
+                        <viewControllerLayoutGuide type="bottom" id="Snv-ag-IMc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aA7-Of-xEs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Image toaster (click on 'Reload' to load a new toaster and release the old one)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Smr-sy-mrA">
+                                <rect key="frame" x="160" y="215" width="280" height="170"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="WZ4-7K-7eO"/>
+                                    <constraint firstAttribute="height" constant="170" id="hl0-TN-3TX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="See implementation in ToasterViewController class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="CWo-tN-O6v">
+                                <rect key="frame" x="160" y="552" width="280" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="7yk-tc-s9q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Smr-sy-mrA" firstAttribute="centerY" secondItem="aA7-Of-xEs" secondAttribute="centerY" id="1Sg-oJ-xPL"/>
+                            <constraint firstItem="CWo-tN-O6v" firstAttribute="leading" secondItem="Smr-sy-mrA" secondAttribute="leading" id="2ug-vA-iNQ"/>
+                            <constraint firstItem="CWo-tN-O6v" firstAttribute="trailing" secondItem="Smr-sy-mrA" secondAttribute="trailing" id="B3n-sr-dTR"/>
+                            <constraint firstAttribute="bottom" secondItem="CWo-tN-O6v" secondAttribute="bottom" constant="20" symbolic="YES" id="qkF-iJ-IOI"/>
+                            <constraint firstItem="Smr-sy-mrA" firstAttribute="centerX" secondItem="aA7-Of-xEs" secondAttribute="centerX" id="zfN-Oy-X8E"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gak-9q-bbu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2235" y="-291"/>
+        </scene>
+        <!--Interstitial-->
+        <scene sceneID="eiz-rS-Ut4">
+            <objects>
+                <viewController title="Interstitial" id="qhK-Oy-FDh" customClass="InterstitialViewController" customModule="SwiftSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yTX-sW-MCG"/>
+                        <viewControllerLayoutGuide type="bottom" id="aDa-wA-vw6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="brc-Ye-V2f">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Image interstitial (click on 'Load' to open an interstitial)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="5A1-dm-49s">
+                                <rect key="frame" x="160" y="215" width="280" height="170"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="170" id="Hm2-K1-ldn"/>
+                                    <constraint firstAttribute="width" constant="280" id="K6B-Hp-FK8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="See implementation in InterstitialViewController class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Gef-Yy-nCJ">
+                                <rect key="frame" x="160" y="552" width="280" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="4rl-AS-muI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Gef-Yy-nCJ" firstAttribute="leading" secondItem="5A1-dm-49s" secondAttribute="leading" id="0BP-dd-Frh"/>
+                            <constraint firstAttribute="bottom" secondItem="Gef-Yy-nCJ" secondAttribute="bottom" constant="20" symbolic="YES" id="13s-ML-hh7"/>
+                            <constraint firstItem="Gef-Yy-nCJ" firstAttribute="trailing" secondItem="5A1-dm-49s" secondAttribute="trailing" id="5oP-3E-t1f"/>
+                            <constraint firstItem="5A1-dm-49s" firstAttribute="centerY" secondItem="brc-Ye-V2f" secondAttribute="centerY" id="HXy-Rm-gj4"/>
+                            <constraint firstItem="5A1-dm-49s" firstAttribute="centerX" secondItem="brc-Ye-V2f" secondAttribute="centerX" id="Olb-xO-ewJ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wSF-RB-ANZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2235" y="441"/>
+        </scene>
+        <!--Animation-->
+        <scene sceneID="ku6-oL-eDy">
+            <objects>
+                <viewController title="Animation" id="95X-25-1eF" customClass="InterstitialDismissalAnimationViewController" customModule="SwiftSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rGj-XE-Emb"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Lk-GS-kgc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z9E-b0-Z95">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Image interstitial with dismiss animation (click on 'Load' to open an interstitial)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="M5F-fO-0ty">
+                                <rect key="frame" x="160" y="215" width="280" height="170"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="170" id="4eA-pv-sQN"/>
+                                    <constraint firstAttribute="width" constant="280" id="kL2-jA-4HD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="See implementation in InterstitialDismissalAnimationViewController class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="V4p-9Y-vmP">
+                                <rect key="frame" x="160" y="552" width="280" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="3a5-Yh-alC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="M5F-fO-0ty" firstAttribute="centerY" secondItem="Z9E-b0-Z95" secondAttribute="centerY" id="D9i-az-wVU"/>
+                            <constraint firstAttribute="bottom" secondItem="V4p-9Y-vmP" secondAttribute="bottom" constant="20" symbolic="YES" id="FZ1-yA-MDF"/>
+                            <constraint firstItem="M5F-fO-0ty" firstAttribute="centerX" secondItem="Z9E-b0-Z95" secondAttribute="centerX" id="eDj-BG-Sjd"/>
+                            <constraint firstItem="V4p-9Y-vmP" firstAttribute="trailing" secondItem="M5F-fO-0ty" secondAttribute="trailing" id="fPv-PD-4Ck"/>
+                            <constraint firstItem="V4p-9Y-vmP" firstAttribute="leading" secondItem="M5F-fO-0ty" secondAttribute="leading" id="hz1-0z-VBF"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mCG-mA-0Mb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2235" y="1147"/>
+        </scene>
+        <!--Prefetch-->
+        <scene sceneID="pOj-Mp-Dbz">
+            <objects>
+                <viewController title="Prefetch" id="wga-7B-Zy4" customClass="PrefetchInterstitialViewController" customModule="SwiftSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="03I-1B-O6y"/>
+                        <viewControllerLayoutGuide type="bottom" id="FNz-H5-rZS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="P3z-CD-xwk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jrw-01-BjL">
+                                <rect key="frame" x="160" y="233" width="280" height="134"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="1Gb-nX-ALo"/>
+                                    <constraint firstAttribute="height" constant="134" id="CQx-kz-Slh"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Prefetch image interstitial" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="htq-84-3Hq">
+                                <rect key="frame" x="160" y="233" width="280" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="dON-P6-i1L"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="EKC-oG-Wab">
+                                <rect key="frame" x="160" y="267" width="280" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="jvi-GE-qOc"/>
+                                </constraints>
+                                <string key="text">First click on 'Load' will download the interstitial, next clicks will display it even if there is no network connection and even after the application is restarted (cache is cleared when application is uninstalled).</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="See implementation in PrefetchInterstitialViewController class" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Wlg-28-7gA">
+                                <rect key="frame" x="160" y="552" width="280" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="bwV-oI-8V1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EKC-oG-Wab" firstAttribute="leading" secondItem="jrw-01-BjL" secondAttribute="leading" id="7EZ-C3-QJd"/>
+                            <constraint firstItem="EKC-oG-Wab" firstAttribute="bottom" secondItem="jrw-01-BjL" secondAttribute="bottom" id="B1A-CI-d9r"/>
+                            <constraint firstItem="jrw-01-BjL" firstAttribute="leading" secondItem="Wlg-28-7gA" secondAttribute="leading" id="KqC-gj-img"/>
+                            <constraint firstItem="htq-84-3Hq" firstAttribute="top" secondItem="jrw-01-BjL" secondAttribute="top" id="MZl-9h-sR7"/>
+                            <constraint firstItem="jrw-01-BjL" firstAttribute="centerX" secondItem="P3z-CD-xwk" secondAttribute="centerX" id="Oev-TT-k0p"/>
+                            <constraint firstItem="htq-84-3Hq" firstAttribute="trailing" secondItem="jrw-01-BjL" secondAttribute="trailing" id="Z2L-ub-RxD"/>
+                            <constraint firstAttribute="bottom" secondItem="Wlg-28-7gA" secondAttribute="bottom" constant="20" symbolic="YES" id="ZqB-in-K9a"/>
+                            <constraint firstItem="htq-84-3Hq" firstAttribute="leading" secondItem="jrw-01-BjL" secondAttribute="leading" id="aCu-do-28B"/>
+                            <constraint firstItem="jrw-01-BjL" firstAttribute="trailing" secondItem="Wlg-28-7gA" secondAttribute="trailing" id="gbF-G2-is4"/>
+                            <constraint firstItem="jrw-01-BjL" firstAttribute="centerY" secondItem="P3z-CD-xwk" secondAttribute="centerY" id="v8r-6L-n1u"/>
+                            <constraint firstItem="EKC-oG-Wab" firstAttribute="trailing" secondItem="htq-84-3Hq" secondAttribute="trailing" id="vFb-av-ahV"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oRw-yW-tsl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2235" y="1848"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ppe-Rq-Ecr">
+            <objects>
+                <navigationController id="pKk-jv-qX6" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="roJ-ho-SlZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="5ds-gW-ebO" kind="relationship" relationship="rootViewController" id="iJi-4M-sM0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DmE-cB-MFW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="700" y="441"/>
+        </scene>
+    </scenes>
+</document>

@@ -55,6 +55,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.view.opaque = NO;
 }
 
 - (void)didReceiveMemoryWarning

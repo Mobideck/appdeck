@@ -1692,7 +1692,11 @@
     
     if (_interstitialAd)
     {
-        _interstitialAd.view.frame = self.view.bounds;
+        //_interstitialAd.view.frame = self.view.bounds;
+        _interstitialAd.view.frame = CGRectMake((frame.size.width - _interstitialAd.width) / 2,
+                                                (frame.size.height - _interstitialAd.height) / 2,
+                                                _interstitialAd.width,
+                                                _interstitialAd.height);
         [self.view bringSubviewToFront:_interstitialAd.view];
         if (frame.size.width <  frame.size.height)
             _interstitialAd.view.hidden = NO;
