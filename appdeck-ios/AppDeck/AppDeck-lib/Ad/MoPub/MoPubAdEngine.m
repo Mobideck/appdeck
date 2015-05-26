@@ -10,7 +10,7 @@
 #import "MoPubAdViewController.h"
 #import "MoPubInterstitialAdViewController.h"
 #import <SwelenSDK/swAdAPI.h>
-#import <GADBannerView.h>
+//#import <GADBannerView.h>
 #import <SwelenSDK/swAdAPI.h>
 #import <InMobi.h>
 #import "AdManager.h"
@@ -69,7 +69,7 @@
             NSString *swelenPassBackADMOB = [NSString stringWithFormat:@"%@", [config objectForKey:@"swelenPassBackADMOB"]];
             if ([swelenPassBackADMOB isEqualToString:@"1"])
             {
-                SW_LOAD_ADMOB();
+                //SW_LOAD_ADMOB();
             }
         }
         

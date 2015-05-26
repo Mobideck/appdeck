@@ -7,7 +7,7 @@
 //
 
 #import "../../AppDeckAdViewController.h"
-#import <MobFox-iOS-SDK-20150317/MobFox.h>
+#import <MobFox-iOS-SDK-20150526/Core/MobFox.h>
 #import "MobFoxAdEngine.h"
 
 @class MobFoxAdEngine;

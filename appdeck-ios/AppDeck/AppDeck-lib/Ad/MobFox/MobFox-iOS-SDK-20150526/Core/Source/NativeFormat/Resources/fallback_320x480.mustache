@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<title>{{textassets.headline}}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<style>a,a:link,a:visited,a:hover,a:active{color:#000;text-decoration:none;font-weight:400;display:block}body{width:320px;height:480px;position:relative;margin:0;padding:0;font-family:'open sans',arial,sans-serif,'Helvetica Neue',Helvetica,sans-serif;font-size:24px;font-weight:400;-webkit-perspective:150;-moz-perspective:150;-ms-perspective:150;perspective:150;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.screen{z-index:-2}.screen,.bg{position:absolute;top:0;left:0}.bg{width:320px;height:480px;z-index:-1}.bg-color{background:#000;opacity:.6;filter:alpha(opacity=60)}canvas{background-color:transparent;top:0;left:0}canvas,.icon{position:absolute}.icon{z-index:-1;margin:96px}.icon-move{-webkit-animation:icon-move 5s infinite linear;-moz-animation:icon-move 5s infinite linear;-ms-animation:icon-move 5s infinite linear;animation:icon-move 5s infinite linear}.title{text-align:center;overflow:hidden;text-overflow:ellipsis;font-size:20px;font-weight:100;line-height:20px;width:100%;height:24px;color:#fff}.title-position{padding-top:330px}.stars{width:70px;height:13px;margin:0 auto}.star{width:14px;height:13px;background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAANCAYAAAC6hw6qAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAStJREFUeNpiYMABvpxhagFibgYSQVooYwsQ49THhMMyXSBVAcQlJFpGUB8TDvEuIGYGaQRaLkGCnXB9QMsliLIQaIELkPKAcnmAuJFI3xGljxFogT2QNgFiAyA2BGINqCuRwVMgvgDFZ4F4b1Hnf0Ny9LEACWUg7gZZjscD0lDsDcSbgHgLufqYeEz+zQMyiomMo31AHAHU83vW6v8k6wPq+Q2OQ6AB/UCqiYCmk0AcCFT7HSYANIBofUC1YH2MaAnmI5Diw6HRHWjZLhwJBq8+oGW7MFIp0DJ+PJpAQBaHZSTpQ84WCmgK7wHxXzzyZOnDZuEhIPYCYhVoUp8FxD+JsJAofSxI7LdAbAWMp+NIYneAOB0Y3A1A2hGHhWB9wHjC0AcMbgx9AAEGAHiMZy3N9TzoAAAAAElFTkSuQmCC');background-position:top right;float:left}.btn{margin:15px auto 0;width:180px;height:50px}.btn-style{-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-moz-background-clip:padding;-webkit-background-clip:padding-box;background-clip:padding-box;background:#ff9500;-webkit-box-shadow:0 5px 0 0 #ffc56b;-moz-box-shadow:0 5px 0 0 #ffc56b;box-shadow:0 5px 0 0 #ffc56b}.btn-txt{font-size:30px;font-weight:100;line-height:50px;text-align:center;color:#fff}#displayLink{position:absolute;color:#efefef;font-size:12px;bottom:5px;right:10px}</style>
+{{{libs}}}
+</head>
+<body data-rating="{{textassets.rating}}">
+<a id="clickLink" href="{{{click_url}}}" target="_top">
+<div class="bg bg-color"></div>
+<div class="title title-position">
+{{textassets.headline}}
+</div>
+<div class="stars">
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+<div class="star"></div>
+</div>
+<div class="btn btn-style btn-txt">Install</div>
+
+</a>
+<script>!function(){var e,t=document.querySelectorAll(".star"),o=document.querySelector(".stars");if(e=Math.ceil(parseFloat(document.body.dataset.rating)),e>3)for(var a=0;e>a;a++)t[a].style.backgroundPosition="top left";else o.style.display="none"}();</script>
+<script>function init(){renderer=Detector.webgl?new THREE.WebGLRenderer({alpha:!0}):new THREE.CanvasRenderer({alpha:!0}),renderer.setPixelRatio(window.devicePixelRatio),renderer.setSize(320,320),renderer.domElement.style.pointerEvents="none",document.body.appendChild(renderer.domElement),camera=new THREE.PerspectiveCamera(50,1,1,1e3),camera.position.z=400,scene=new THREE.Scene;var e=[new THREE.MeshBasicMaterial({color:16711680,transparent:!0,opacity:.5,side:THREE.BackSide}),new THREE.MeshBasicMaterial({color:16776960,transparent:!0,opacity:.5,side:THREE.BackSide}),new THREE.MeshBasicMaterial({color:65280,transparent:!0,opacity:.5,side:THREE.DoubleSide}),new THREE.MeshBasicMaterial({color:65535,transparent:!0,opacity:.5,side:THREE.DoubleSide}),new THREE.MeshBasicMaterial({color:255,transparent:!0,opacity:.5,side:THREE.DoubleSide}),new THREE.MeshBasicMaterial({color:16777215,transparent:!0,opacity:.5,side:THREE.DoubleSide})];e.anisotropy=renderer.getMaxAnisotropy(),mesh=new THREE.Mesh(new THREE.BoxGeometry(225,225,225),new THREE.MeshFaceMaterial(e)),scene.add(mesh);var a=new THREE.PlaneBufferGeometry(200,200,50),t=new THREE.MeshBasicMaterial({map:THREE.ImageUtils.loadTexture("{{{imageassets.icon.url}}}"),side:THREE.DoubleSide});t.minFilter=t.magFilter=THREE.LinearFilter,plane=new THREE.Mesh(a,t),scene.add(plane)}function animate(){requestAnimationFrame(animate),mesh.rotation.y+=.015,Math.abs(plane.rotation.y)>=.25?(rotStep*=-1,plane.rotation.y+=rotStep,plane.rotation.x+=rotStep):(plane.rotation.y+=rotStep,plane.rotation.x+=rotStep),Math.abs(plane.position.x)>=15?(posStep*=-1,plane.position.x+=posStep,plane.position.y+=posStep):(plane.position.x+=posStep,plane.position.y+=posStep),renderer.render(scene,camera)}var rotStep=.002,posStep=.05;init(),animate();</script>
+</body>
+</html>
