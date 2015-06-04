@@ -44,6 +44,7 @@ public class AppDeckBroadcastReceiver extends BroadcastReceiver {
         {
             Log.e(TAG, "receive Intent but null loaderActivity");
         }
+        Log.i(TAG, "Push: "+title);
         loaderActivity.handlePushNotification(title, url, image_url);
 
     }
