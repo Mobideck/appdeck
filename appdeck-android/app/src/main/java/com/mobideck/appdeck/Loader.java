@@ -1847,7 +1847,12 @@ public class Loader extends ActionBarActivity {
             String imageUrl = extras.getString(PUSH_IMAGE_URL);
             Log.i(TAG, "Auto Open Push: "+title+" url: "+url);
             //handlePushNotification(title, url, imageUrl);
-            loadPage(url);
+            try {
+                url = appDeck.config.app_base_url.resolve(url).toString();
+                loadPage(url);
+            } catch (Exception e) {
+
+            }
             return;
     	}
     	
@@ -1861,6 +1866,8 @@ public class Loader extends ActionBarActivity {
     	}*/
     	
     }
+
+    boolean pushDialogInProgress = false;
 
     public void handlePushNotification(String title, String url, String imageUrl)
     {
@@ -1888,6 +1895,9 @@ public class Loader extends ActionBarActivity {
     	
     	public void show()
     	{
+            if (pushDialogInProgress)
+                return;
+            pushDialogInProgress = true;
             new AlertDialog.Builder(Loader.this)
             //.setTitle("javaScript dialog")
             .setMessage(title)
@@ -1904,7 +1914,7 @@ public class Loader extends ActionBarActivity {
                     {
                         public void onClick(DialogInterface dialog, int which) 
                         {
-                            
+                            pushDialogInProgress = false;
                         }
                     })
             .create()
