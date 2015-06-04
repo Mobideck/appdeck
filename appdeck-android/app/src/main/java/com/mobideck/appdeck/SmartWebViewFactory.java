@@ -29,7 +29,7 @@ public class SmartWebViewFactory {
         //this.url = url;
         //this.position = position;
 
-        smartWebView.ctl.setForceCache(true);
+        //smartWebView.ctl.setForceCache(true);
 
         smartWebView.ctl.loadUrl(url);
 

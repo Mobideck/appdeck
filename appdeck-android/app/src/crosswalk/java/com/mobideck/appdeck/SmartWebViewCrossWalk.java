@@ -105,7 +105,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	public void unloadPage()
 	{
 		evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);
-        getNavigationHistory().clear();
+        XWalkNavigationHistory navigationHistory = getNavigationHistory();
+		if (navigationHistory != null) {
+            navigationHistory.clear();
+        }
     }
 	
 	public void clean()

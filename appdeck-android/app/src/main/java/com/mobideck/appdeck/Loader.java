@@ -1,6 +1,7 @@
 package com.mobideck.appdeck;
 
 import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -170,9 +171,9 @@ public class Loader extends ActionBarActivity {
 //        Log.d(TAG, test);
 
 		AppDeckApplication app = (AppDeckApplication) getApplication();
-		
-		Crashlytics.start(this);
-        //Crashlytics.getInstance().setDebugMode(true);
+
+        Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, crashlytics);
 
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
@@ -555,8 +556,12 @@ public class Loader extends ActionBarActivity {
     protected void onPause()
     {
     	isForeground = false;
-        appDeckBroadcastReceiver.clean();
-        unregisterReceiver(appDeckBroadcastReceiver);
+        try {
+            appDeckBroadcastReceiver.clean();
+            unregisterReceiver(appDeckBroadcastReceiver);
+        } catch (Exception e) {
+
+        }
     	super.onPause();
     	if (appDeck.noCache)
     		Utils.killApp(true);
@@ -1840,7 +1845,9 @@ public class Loader extends ActionBarActivity {
     	{
     		String title = extras.getString(PUSH_TITLE);
             String imageUrl = extras.getString(PUSH_IMAGE_URL);
-            handlePushNotification(title, url, imageUrl);
+            Log.i(TAG, "Auto Open Push: "+title+" url: "+url);
+            //handlePushNotification(title, url, imageUrl);
+            loadPage(url);
             return;
     	}
     	
@@ -1861,6 +1868,8 @@ public class Loader extends ActionBarActivity {
             url = appDeck.config.app_base_url.resolve(url).toString();
         if (imageUrl != null)
             imageUrl = appDeck.config.app_base_url.resolve(imageUrl).toString();
+        if (title == null || title.equalsIgnoreCase(""))
+            return;
         new PushDialog(url, title, imageUrl).show();
     }
 	

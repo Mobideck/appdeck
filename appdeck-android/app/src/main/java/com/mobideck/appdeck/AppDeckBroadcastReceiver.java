@@ -29,13 +29,17 @@ public class AppDeckBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        abortBroadcast();
 
         Bundle extras = intent.getExtras();
         String title = extras.getString("title");
         String url = extras.getString("action_url");
         String image_url = extras.getString("image_url");
 
+        // not a push ?
+        if (title == null || url == null || title.equalsIgnoreCase("")|| url.equalsIgnoreCase(""))
+            return;
+
+        abortBroadcast();
         if (loaderActivity == null)
         {
             Log.e(TAG, "receive Intent but null loaderActivity");

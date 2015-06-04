@@ -1,21 +1,21 @@
 buildscript {
     repositories {
-        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
 
 repositories {
     maven {
         url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
         //url 'https://download.01.org/crosswalk/releases/crosswalk/android/canary/'
     }
-    maven { url 'http://download.crashlytics.com/maven' }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 android {
@@ -94,23 +94,26 @@ dependencies {
     //compile 'com.google.android.gms:play-services:6.5.87'
     //compile 'com.google.android.gms:play-services-base:6.5.87'
 
-    compile 'com.google.android.gms:play-services-base:7.0.0'
-    compile 'com.google.android.gms:play-services-analytics:7.0.0'
-    compile 'com.google.android.gms:play-services-gcm:7.0.0'
+    compile 'com.google.android.gms:play-services-base:7.3.0'
+    compile 'com.google.android.gms:play-services-analytics:7.3.0'
+    compile 'com.google.android.gms:play-services-gcm:7.3.0'
 
     //compile 'com.android.support:multidex:1.0.0'
 
-    compile 'com.crashlytics.android:crashlytics:1.+'
-
-    //crosswalkCompile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
-    crosswalkCompile 'org.xwalk:xwalk_core_library:12.41.296.5'
-    //crosswalkx86Compile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
     //compile 'org.xwalk:xwalk_core_library:10.39.235.16'
+    //crosswalkCompile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
+    //crosswalkCompile 'org.xwalk:xwalk_core_library:12.41.296.5'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:13.42.319.11'
+    //crosswalkx86Compile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
+
 
     //compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     //compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
 
 //    compile 'com.github.chrisbanes.photoview:library:1.2.3'
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {
+        transitive = true;
+    }
 }
 
 preBuild.doFirst {

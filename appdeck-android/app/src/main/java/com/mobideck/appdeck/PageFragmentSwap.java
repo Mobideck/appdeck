@@ -103,7 +103,9 @@ public class PageFragmentSwap extends AppDeckFragment {
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         LayoutTransition lt = new LayoutTransition();
-        lt.disableTransitionType(LayoutTransition.DISAPPEARING);
+		if (Build.VERSION.SDK_INT >= 16) {
+			lt.disableTransitionType(LayoutTransition.DISAPPEARING);
+		}
         rootView.setLayoutTransition(lt);
 
         //if (appDeck.config.app_background_color != null)
