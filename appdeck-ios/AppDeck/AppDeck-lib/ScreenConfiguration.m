@@ -55,6 +55,8 @@
         
         for (NSString *regexString in configuration[@"urls"])
         {
+            if (regexString.length == 0)
+                continue;
             RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
             //NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString options:NSRegularExpressionCaseInsensitive error:NULL];
             if (regex == nil)
