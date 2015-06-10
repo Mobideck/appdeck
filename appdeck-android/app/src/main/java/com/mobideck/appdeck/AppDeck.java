@@ -72,8 +72,9 @@ public class AppDeck {
 	public java.net.CookieManager cookieMamager;
 	
 	private static AppDeck instance;
-	
-	
+
+	public RemoteAppCache remote = null;
+
 	public static AppDeck getInstance()
 	{
         return instance;
@@ -115,9 +116,11 @@ public class AppDeck {
     	isTablet = Utils.isTabletDevice(context);
 
     	java.net.CookieManager cookieManager = new java.net.CookieManager(null, java.net.CookiePolicy.ACCEPT_ALL);
-    	java.net.CookieHandler.setDefault(cookieManager);    	
-    	
-    	CookieSyncManager.createInstance(context);
+    	java.net.CookieHandler.setDefault(cookieManager);
+
+		//if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			CookieSyncManager.createInstance(context);
+		//}
     	CookieManager.getInstance().setAcceptCookie(true);
     	    	
     	ready = false;    	
@@ -161,7 +164,7 @@ public class AppDeck {
         if (config.prefetch_url != null && !isLowSystem)
         {
         	//ArchiveExtractCallback.extractDir = this.cacheDir;
-        	RemoteAppCache remote = new RemoteAppCache(config.prefetch_url.toString(), config.prefetch_ttl);
+        	remote = new RemoteAppCache(config.prefetch_url.toString(), config.prefetch_ttl);
         	remote.downloadAppCache();
         }    	
     }

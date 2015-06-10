@@ -12,6 +12,7 @@ public class SmartWebViewFactory {
 
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
+    public static final int POSITION_HIDEN = 3;
 
     public static ArrayList<SmartWebView> smartWebViews = null;
 
@@ -31,9 +32,8 @@ public class SmartWebViewFactory {
 
         //smartWebView.ctl.setForceCache(true);
 
-        smartWebView.ctl.loadUrl(url);
-
-
+        if (url != null)
+            smartWebView.ctl.loadUrl(url);
 
         return smartWebView;
 
@@ -79,5 +79,4 @@ public class SmartWebViewFactory {
             SmartWebViewCrossWalk.setPreferences(loader);
 
     }
-
 }

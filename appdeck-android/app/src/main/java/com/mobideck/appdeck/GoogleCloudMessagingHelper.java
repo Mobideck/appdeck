@@ -176,7 +176,7 @@ public class GoogleCloudMessagingHelper {
 
 	                // Persist the regID - no need to register again.
 	                storeRegistrationId(context, regid);
-	            } catch (IOException ex) {
+	            } catch (Exception ex) {
 	                msg = "Error :" + ex.getMessage();
 	                // If there is an error, don't just keep trying to register.
 	                // Require the user to click a button again, or perform

@@ -284,7 +284,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     {
 		if (absoluteURL.startsWith("javascript:"))
 		{
-			pageWebView.ctl.loadUrl(absoluteURL);
+			if (pageWebView != null && pageWebView.ctl != null)
+				pageWebView.ctl.loadUrl(absoluteURL);
 			return;
 		}
 		if (absoluteURL.startsWith("appdeckapi:refresh"))
@@ -294,7 +295,8 @@ public class PageFragmentSwap extends AppDeckFragment {
 		}
 		if (screenConfiguration.isRelated(absoluteURL))
     	{
-            pageWebView.ctl.loadUrl(absoluteURL);
+			if (pageWebView != null && pageWebView.ctl != null)
+            	pageWebView.ctl.loadUrl(absoluteURL);
 			//loader.replacePage(absoluteURL);
 			return;
     	}

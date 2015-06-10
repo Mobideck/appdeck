@@ -7,6 +7,8 @@ import android.os.Bundle;
  */
 public interface SmartWebViewInterface {
 
+    public String getUrl();
+
     public void setTouchDisabled(boolean touchDisabled);
     public boolean getTouchDisabled();
 

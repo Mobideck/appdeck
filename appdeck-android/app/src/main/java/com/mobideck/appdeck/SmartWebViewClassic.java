@@ -404,7 +404,7 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
 
 	    	if (catchLink == false)
 	    		return false;
-	    	
+
 	    	/*if (Uri.parse(url).getHost().equals(uri.getHost())) {
 	            // This is my web site, so do not override; let my WebView load the page
 
@@ -505,6 +505,10 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
             
             String c = CookieManager.getInstance().getCookie(url);
             Log.i(TAG, "Cookie: "+c);
+
+			if (root != null) {
+				root.loader.historyUrls.add(url);
+			}
 			// set the cookie on the "root" class thats managing the 
 			// entire application
 			//MyApplication.getInstance().
@@ -1308,4 +1312,6 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
     public String smartWebViewGetUrl() { return getUrl(); }
     public boolean smartWebViewCanGoBack() { return canGoBack(); }
     public boolean smartWebViewCanGoForward() { return canGoForward(); }
+
+	public String getUrl() { return url; }
 }

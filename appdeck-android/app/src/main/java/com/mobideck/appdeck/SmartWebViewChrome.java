@@ -354,10 +354,20 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 }
             });
 
+				/*
+				evaluateJavascript("history.pushState(null, null, 'http://www.universfreebox.com.dev.dck.io/article/30638/The-OVH-Box-une-nouvelle-box-en-preparation-chez-OVH');", new ValueCallback<String>() {
+					@Override
+					public void onReceiveValue(String value) {
+						Log.d(TAG, value);
+					}
+				});*/
+
             //view.loadUrl(SmartWebViewChrome.this.appDeck.appdeck_inject_js);
 
-            if (root != null)
+            if (root != null) {
                 root.progressStop(view);
+                root.loader.historyUrls.add(url);
+            }
 
             //CookieSyncManager.getInstance().sync();
 
@@ -678,5 +688,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     {
         return webViewChromeChromeClient.onBackPressed();
     }
+
+    public String getUrl() { return url; }
 
 }

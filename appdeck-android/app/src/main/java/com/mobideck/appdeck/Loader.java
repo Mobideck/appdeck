@@ -13,7 +13,11 @@ import java.net.Proxy;
 import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import org.apache.http.Header;
 import org.littleshoot.proxy.ChainedProxy;
@@ -57,6 +61,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
+import android.webkit.ValueCallback;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -108,7 +113,7 @@ public class Loader extends ActionBarActivity {
 
 	
 	protected AppDeck appDeck;
-	
+
 	private SmartWebView leftMenuWebView;
 	private SmartWebView rightMenuWebView;
 	
@@ -129,6 +134,11 @@ public class Loader extends ActionBarActivity {
     ProgressBar mProgressBar;
 
     Toolbar mToolbar;
+
+    private boolean historyInjected = false;
+    //public ArrayList<String> historyUrls = new ArrayList<String>();
+    public List<String> historyUrls = new ArrayList<String>();
+
 
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
@@ -269,7 +279,7 @@ public class Loader extends ActionBarActivity {
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        
+
         if (appDeck.config.leftMenuUrl != null) {
             leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
 
@@ -572,7 +582,15 @@ public class Loader extends ActionBarActivity {
     {
     	outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");    	
     	super.onSaveInstanceState(outState);
-    	Log.i(TAG, "onSaveInstanceState");
+
+        SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
+
+        //Set<String> hs = prefs.getStringSet("set", new HashSet<String>());
+        Set<String> in = new HashSet<String>(historyUrls);
+        //in.add(String.valueOf(hs.size() + 1));
+        prefs.edit().putStringSet("historyUrls", in).commit(); // brevity
+
+        Log.i(TAG, "onSaveInstanceState");
     }
     
     @Override
@@ -1194,8 +1212,34 @@ public class Loader extends ActionBarActivity {
     }
     
     public Boolean apiCall(AppDeckApiCall call)
-	{		
-		if (call.command.equalsIgnoreCase("share"))
+	{
+        if (call.command.equalsIgnoreCase("ready")) {
+            Log.i("API", "**READY**");
+
+            if (historyInjected == false) {
+                historyInjected = true;
+
+                SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
+                Set<String> hs = prefs.getStringSet("historyUrls", new HashSet<String>());
+
+                String js = "var appdeckCurrentHistoryURL = Location.href;\r\n";
+                for (String historyUrl : hs) {
+                    js += "history.pushState(null, null, '"+historyUrl+"');\r\n";
+                }
+                js += "history.pushState(null, null, appdeckCurrentHistoryURL);\r\n";
+
+                call.smartWebView.evaluateJavascript(js, new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        Log.i(TAG, "onReadyFinishedJSResult: " + value);
+                    }
+                });
+            }
+
+            //historyUrls.add(call.smartWebView.getUrl());
+        }
+
+        if (call.command.equalsIgnoreCase("share"))
 		{
 			Log.i("API", "**SHARE**");
 					
@@ -1603,6 +1647,10 @@ public class Loader extends ActionBarActivity {
 		
 		// create share intent
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        // trim title if needed
+        if (title != null)
+            title = title.trim();
 
 		sharingIntent.setType("text/plain");
 		if (title != null && !title.isEmpty())

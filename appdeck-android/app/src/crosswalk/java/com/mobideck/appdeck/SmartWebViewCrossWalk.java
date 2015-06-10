@@ -27,6 +27,7 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.net.Proxy;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -367,6 +368,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         
         String c = CookieManager.getInstance().getCookie(url);
         Log.i(TAG, "Cookie: "+c);
+
+		root.loader.historyUrls.add(url);
 		
 	}
 	
@@ -422,7 +425,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	// this is a form ?
 	    	if (url.indexOf("_appdeck_is_form=1") != -1)
 	    		return false;
-	    	
+
 	    	  if (firstLoad)
 	    	  {
 	    		  Log.i(TAG, "shouldOverrideUrlLoading (firstload) :"+url);
@@ -509,7 +512,13 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         {
         	Log.i(TAG, "**onReceivedLoadError "+failingUrl+": "+errorCode+": "+description+" **");
         }
-        
+
+
+		@Override
+		public void onReceivedSslError(XWalkView view, ValueCallback<Boolean> callback, SslError error) {
+			//super.onReceivedSslError(view, callback, error);
+		}
+
 	}
 
     public class SmartWebViewCrossWalkResult implements SmartWebViewResult
@@ -605,6 +614,12 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
             return true;
 
 		}
+
+		@Override
+		public boolean onCreateWindowRequested(XWalkView view, InitiateBy initiator, ValueCallback<XWalkView> callback) {
+			return super.onCreateWindowRequested(view, initiator, callback);
+		}
+
 		// TODO: import code from SmartWebView
 	}
 	
@@ -716,15 +731,33 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
     }
 
     public void smartWebViewGoBack() {
-        if (smartWebViewCanGoBack())
-            getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
+        if (smartWebViewCanGoBack()) {
+			XWalkNavigationHistory navigationHistory = getNavigationHistory();
+			if (navigationHistory != null)
+				getNavigationHistory().navigate(XWalkNavigationHistory.Direction.BACKWARD, 1);
+		}
     }
     public void smartWebViewGoForward() {
-        if (smartWebViewCanGoForward())
-            getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD, 1);
+        if (smartWebViewCanGoForward()) {
+			XWalkNavigationHistory navigationHistory = getNavigationHistory();
+			if (navigationHistory != null)
+				getNavigationHistory().navigate(XWalkNavigationHistory.Direction.FORWARD, 1);
+		}
     }
     public String smartWebViewGetTitle() { return getTitle(); }
     public String smartWebViewGetUrl() { return getUrl(); }
-    public boolean smartWebViewCanGoBack() { return getNavigationHistory().canGoBack(); }
-    public boolean smartWebViewCanGoForward() { return getNavigationHistory().canGoForward(); }
+    public boolean smartWebViewCanGoBack() {
+		XWalkNavigationHistory navigationHistory = getNavigationHistory();
+		if (navigationHistory != null)
+			return navigationHistory .canGoBack();
+		return false;
+	}
+    public boolean smartWebViewCanGoForward() {
+		XWalkNavigationHistory navigationHistory = getNavigationHistory();
+		if (navigationHistory != null)
+			return navigationHistory.canGoForward();
+		return false;
+	}
+
+	public String getUrl() { return url; }
 }

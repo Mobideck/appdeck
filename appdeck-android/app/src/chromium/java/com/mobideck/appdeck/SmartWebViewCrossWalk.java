@@ -128,4 +128,6 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     public String smartWebViewGetUrl() { return null; }
     public boolean smartWebViewCanGoBack() { return false; }
     public boolean smartWebViewCanGoForward() { return false; }
+
+    public String getUrl() { return null; }
 }
