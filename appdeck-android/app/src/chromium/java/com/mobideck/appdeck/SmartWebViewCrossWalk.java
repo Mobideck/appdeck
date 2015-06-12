@@ -1,6 +1,7 @@
 package com.mobideck.appdeck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -60,6 +61,10 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     @Override
     public void resume() {
 
+    }
+
+    @Override
+    public void destroy() {
     }
 
     @Override
@@ -130,4 +135,12 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     public boolean smartWebViewCanGoForward() { return false; }
 
     public String getUrl() { return null; }
+
+    public void onActivityPause(Loader loader) { }
+
+    public void onActivityResume(Loader loader) { }
+
+    public void onActivityDestroy(Loader loader) { }
+    public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data) { }
+    public void onActivityNewIntent(Loader loader, Intent intent) { }
 }

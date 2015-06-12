@@ -105,6 +105,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	public void unloadPage()
 	{
+		stopLoading();
 		evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);
         XWalkNavigationHistory navigationHistory = getNavigationHistory();
 		if (navigationHistory != null) {
@@ -114,6 +115,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	
 	public void clean()
 	{
+		//super.load(appDeck.config.bootstrapUrl.toString(), "<!DOCTYPE html><html><head><title>Bootstrap</title></head><body></body></html>");
 		super.load("", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
 		onDestroy();
 	}
@@ -624,16 +626,21 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	}
 	
 	public void pause() {
-		Log.i(TAG, "hide: "+this.url);
+		Log.i(TAG, "pause: "+this.url);
 		this.onHide();
 	}
 	
 	public void resume() {
-		Log.i(TAG, "show: "+this.url);
+		Log.i(TAG, "resume: "+this.url);
 		this.onShow();
 	}
 
-	private boolean touchDisabled = false;
+    public void destroy() {
+        super.onDestroy();
+    }
+
+
+    private boolean touchDisabled = false;
 
     public void setTouchDisabled(boolean touchDisabled)
     {
@@ -760,4 +767,31 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	}
 
 	public String getUrl() { return url; }
+
+    // Activity API
+
+    public void onActivityPause(Loader loader)
+    {
+        pauseTimers();
+    }
+
+    public void onActivityResume(Loader loader)
+    {
+        resumeTimers();
+    }
+
+    public void onActivityDestroy(Loader loader)
+    {
+
+    }
+
+    public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data)
+    {
+        onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onActivityNewIntent(Loader loader, Intent intent)
+    {
+        onNewIntent(intent);
+    }
 }
