@@ -963,7 +963,11 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
 			e.printStackTrace();
 		} 
 	}
-	
+
+	public void destroy() {
+		super.destroy();
+	}
+
 	/*
 	private synchronized boolean hideCustomView(){
 		if(mPlayingVideo && mPlayingCallback!=null){
@@ -1314,4 +1318,30 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
     public boolean smartWebViewCanGoForward() { return canGoForward(); }
 
 	public String getUrl() { return url; }
+
+
+	public void onActivityPause(Loader loader)
+	{
+		pauseTimers();
+	}
+
+	public void onActivityResume(Loader loader)
+	{
+		resumeTimers();
+	}
+
+	public void onActivityDestroy(Loader loader)
+	{
+
+	}
+
+	public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data)
+	{
+
+	}
+
+	public void onActivityNewIntent(Loader loader, Intent intent)
+	{
+
+	}
 }

@@ -48,7 +48,8 @@ public class CacheManagerCachedResponse {
 				node = (JSONObject) new JSONTokener(json).nextValue();
 				streamHeaders.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
+				node = null;
 			}
 		}
 		return new CacheManagerCachedResponse(absoluteURL, streamData, node);		

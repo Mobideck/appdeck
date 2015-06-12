@@ -404,16 +404,13 @@ public class Loader extends ActionBarActivity {
                 .build());*/
 
 
-		getSupportFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener()
-        {
-            public void onBackStackChanged() 
-            {                   
-            	AppDeckFragment fragment = getCurrentAppDeckFragment();
-                
-                if (fragment != null)
-                {
-                	fragment.setIsMain(true);
-                }          
+		getSupportFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener() {
+            public void onBackStackChanged() {
+                AppDeckFragment fragment = getCurrentAppDeckFragment();
+
+                if (fragment != null) {
+                    fragment.setIsMain(true);
+                }
             }
         });
 		
@@ -555,7 +552,7 @@ public class Loader extends ActionBarActivity {
     {
     	super.onResume();
     	isForeground = true;
-
+        SmartWebViewFactory.onActivityResume(this);
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
         appDeckBroadcastReceiver.loaderActivity = this;
@@ -565,14 +562,15 @@ public class Loader extends ActionBarActivity {
     @Override
     protected void onPause()
     {
+        super.onPause();
     	isForeground = false;
+        SmartWebViewFactory.onActivityPause(this);
         try {
             appDeckBroadcastReceiver.clean();
             unregisterReceiver(appDeckBroadcastReceiver);
         } catch (Exception e) {
 
         }
-    	super.onPause();
     	if (appDeck.noCache)
     		Utils.killApp(true);
     }
@@ -603,8 +601,9 @@ public class Loader extends ActionBarActivity {
     @Override
     protected void onDestroy()
     {        
-    	isForeground = false;
     	super.onDestroy();
+        isForeground = false;
+        SmartWebViewFactory.onActivityDestroy(this);
     }    
     /*
     public void forceFullRedraw()
@@ -1865,7 +1864,9 @@ public class Loader extends ActionBarActivity {
     protected void onNewIntent(Intent intent)
     {
     	super.onNewIntent(intent);
-    	
+
+        SmartWebViewFactory.onActivityNewIntent(this, intent);
+
     	isForeground = true;
     	Bundle extras = intent.getExtras();
     	if (extras == null)
@@ -1914,6 +1915,14 @@ public class Loader extends ActionBarActivity {
     	}*/
     	
     }
+
+    @Override
+    public  void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        SmartWebViewFactory.onActivityResult(this, requestCode, resultCode, data);
+    }
+
+
 
     boolean pushDialogInProgress = false;
 

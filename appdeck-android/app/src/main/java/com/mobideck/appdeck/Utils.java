@@ -570,6 +570,9 @@ public class Utils {
         SocketAddress sa = proxy.address();
         InetSocketAddress isa = (InetSocketAddress) sa;
 
+		if (isa == null)
+			return null;
+
         if (Build.VERSION.SDK_INT >= 19)
         {
             return isa.getHostString();

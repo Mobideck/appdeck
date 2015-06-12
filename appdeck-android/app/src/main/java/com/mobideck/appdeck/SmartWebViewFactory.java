@@ -1,5 +1,6 @@
 package com.mobideck.appdeck;
 
+import android.content.Intent;
 import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ public class SmartWebViewFactory {
 
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
-    public static final int POSITION_HIDEN = 3;
+    public static final int POSITION_HIDDEN = 3;
 
     public static ArrayList<SmartWebView> smartWebViews = null;
 
@@ -38,7 +39,6 @@ public class SmartWebViewFactory {
         return smartWebView;
 
     }
-
 
     public static SmartWebView createSmartWebView(AppDeckFragment root)
     {
@@ -68,7 +68,8 @@ public class SmartWebViewFactory {
         smartWebView.ctl.setRootAppDeckFragment(null);
         smartWebView.ctl.unloadPage();
         smartWebView.ctl.pause();
-        smartWebViews.add(smartWebView);
+        smartWebView.ctl.destroy();
+        //smartWebViews.add(smartWebView);
     }
 
     public static void setPreferences(Loader loader)
@@ -78,5 +79,43 @@ public class SmartWebViewFactory {
         else
             SmartWebViewCrossWalk.setPreferences(loader);
 
+    }
+
+    public static boolean activityPaused = false;
+
+    public static void onActivityPause(Loader loader)
+    {
+        SmartWebViewFactory.activityPaused = true;
+        SmartWebView smartWebView = SmartWebViewFactory.createMenuSmartWebView(loader, null, POSITION_HIDDEN);
+        smartWebView.ctl.onActivityPause(loader);
+        smartWebView.ctl.destroy();
+    }
+
+    public static void onActivityResume(Loader loader)
+    {
+        if (SmartWebViewFactory.activityPaused) {
+            SmartWebView smartWebView = SmartWebViewFactory.createMenuSmartWebView(loader, null, POSITION_HIDDEN);
+            smartWebView.ctl.onActivityResume(loader);
+            smartWebView.ctl.destroy();
+        }
+    }
+
+    public static void onActivityDestroy(Loader loader)
+    {
+
+    }
+
+    public  static void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data)
+    {
+        SmartWebView smartWebView = SmartWebViewFactory.createMenuSmartWebView(loader, null, POSITION_HIDDEN);
+        smartWebView.ctl.onActivityResult(loader, requestCode, resultCode, data);
+        smartWebView.ctl.destroy();
+    }
+
+    public  static void onActivityNewIntent(Loader loader, Intent intent)
+    {
+        SmartWebView smartWebView = SmartWebViewFactory.createMenuSmartWebView(loader, null, POSITION_HIDDEN);
+        smartWebView.ctl.onActivityNewIntent(loader, intent);
+        smartWebView.ctl.destroy();
     }
 }

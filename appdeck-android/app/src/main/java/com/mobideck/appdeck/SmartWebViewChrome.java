@@ -532,7 +532,11 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     public void resume(){
         onResume();
     }
-	
+
+    public void destroy() {
+        super.destroy();
+    }
+
     private boolean touchDisabled = false;
 
     public void setTouchDisabled(boolean touchDisabled)
@@ -690,5 +694,30 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     }
 
     public String getUrl() { return url; }
+
+    public void onActivityPause(Loader loader)
+    {
+        pauseTimers();
+    }
+
+    public void onActivityResume(Loader loader)
+    {
+        resumeTimers();
+    }
+
+    public void onActivityDestroy(Loader loader)
+    {
+
+    }
+
+    public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data)
+    {
+
+    }
+
+    public void onActivityNewIntent(Loader loader, Intent intent)
+    {
+
+    }
 
 }

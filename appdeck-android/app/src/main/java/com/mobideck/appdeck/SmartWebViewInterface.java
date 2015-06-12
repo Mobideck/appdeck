@@ -1,5 +1,6 @@
 package com.mobideck.appdeck;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 /**
@@ -28,6 +29,8 @@ public interface SmartWebViewInterface {
     public void stopLoading();
     public void setForceCache(boolean forceCache);
 
+    public void destroy();
+
 
     void	evaluateJavascript(java.lang.String script, android.webkit.ValueCallback<java.lang.String> callback);
 
@@ -55,4 +58,11 @@ public interface SmartWebViewInterface {
     public String smartWebViewGetUrl();
     public boolean smartWebViewCanGoBack();
     public boolean smartWebViewCanGoForward();
+
+    // Activity API
+    public void onActivityPause(Loader loader);
+    public void onActivityResume(Loader loader);
+    public void onActivityDestroy(Loader loader);
+    public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data);
+    public void onActivityNewIntent(Loader loader, Intent intent);
 }

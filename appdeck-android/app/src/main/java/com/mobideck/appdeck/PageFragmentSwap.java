@@ -192,12 +192,18 @@ public class PageFragmentSwap extends AppDeckFragment {
     	
     }
 
+	private boolean wasPaused = false;
+
     @Override
     public void onResume() {
     	super.onResume();
     	CookieSyncManager.getInstance().stopSync();
-    	pageWebView.ctl.resume();
-    	pageWebViewAlt.ctl.resume();
+		if (wasPaused == false) {
+			return;
+		}
+		pageWebView.ctl.resume();
+		pageWebViewAlt.ctl.resume();
+
     	/*if (adview != null)
     		adview.resume();*/
 
@@ -220,6 +226,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     @Override
     public void onPause() {
     	super.onPause();
+		wasPaused = true;
     	CookieSyncManager.getInstance().sync();
     	pageWebView.ctl.pause();
     	pageWebViewAlt.ctl.pause();
@@ -433,6 +440,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	if (origin == pageWebViewAlt.view)
     	{
     		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
+			pageWebViewAlt.ctl.stopLoading();
     		//setVisibility(View.INVISIBLE);
     		reloadInProgress = false;
     	}
@@ -528,7 +536,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	            	    	SmartWebView tmpWebView = pageWebView;
     	            	    	pageWebView = pageWebViewAlt;
     	            	    	pageWebViewAlt = tmpWebView;
-    	            	    	
+
     	            	    	pageWebViewAlt.ctl.unloadPage();
     	            	    	
     	            	    	SwipeRefreshLayout tmp = swipeView;
