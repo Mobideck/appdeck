@@ -22,6 +22,7 @@
     BOOL    loadingInprogress;
     BOOL    shouldReloadInBackground;
     BOOL    shouldAnimatedBackgroundReload;
+    BOOL    shouldForceReloadInBackground;
     
     MBProgressHUD   *progressHUD;
     BOOL            progressHUDEnabled;

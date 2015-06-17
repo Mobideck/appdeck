@@ -433,7 +433,7 @@
     refreshCtl.delegate = self;
 
     // remove any pending observer
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"WebProgressEstimateChangedNotification" object:nil];
     
     if (animated)
         [self.swipeContainer child:self startProgressWithExpectedProgress:0.25 inTime:60];
@@ -597,6 +597,7 @@
 {
     if (self.isMain)
         [self.loader.adManager pageViewController:self appearWithEvent:AdManagerEventWakeUp];
+    shouldForceReloadInBackground = YES;
     [self checkReloadContent:nil];
 }
 
@@ -607,6 +608,13 @@
 
 -(void)checkReloadContent:(id)origin
 {
+    if (shouldForceReloadInBackground == YES)
+    {
+        NSLog(@"checkReloadContent: forced");
+        shouldForceReloadInBackground = NO;
+        [self reLoadContent];
+        return;
+    }
     if (self.loader.appRunInBackground == YES)
     {
         NSLog(@"checkReloadContent: don't refresh as application is in background");
