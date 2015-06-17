@@ -794,4 +794,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
     {
         onNewIntent(intent);
     }
+
+	public void clearAllCache()
+	{
+		clearCache(true);
+	}
 }

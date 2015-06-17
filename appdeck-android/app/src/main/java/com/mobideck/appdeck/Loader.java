@@ -201,6 +201,8 @@ public class Loader extends ActionBarActivity {
 
     	super.onCreate(savedInstanceState);
 
+        appDeck.cache.checkBeacon(this);
+
         // original proxy host/port
         Proxy proxyConf = null;
         try {
@@ -582,6 +584,11 @@ public class Loader extends ActionBarActivity {
     	super.onSaveInstanceState(outState);
 
         SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
+
+        // only keep maxHistoryUrlsSize URLS
+        int maxHistoryUrlsSize = 5;
+        if (historyUrls.size() > maxHistoryUrlsSize)
+            historyUrls = historyUrls.subList(historyUrls.size() - maxHistoryUrlsSize - 1, historyUrls.size() - 1);
 
         //Set<String> hs = prefs.getStringSet("set", new HashSet<String>());
         Set<String> in = new HashSet<String>(historyUrls);

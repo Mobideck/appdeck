@@ -143,4 +143,7 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     public void onActivityDestroy(Loader loader) { }
     public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data) { }
     public void onActivityNewIntent(Loader loader, Intent intent) { }
+
+
+    public void clearAllCache() { }
 }

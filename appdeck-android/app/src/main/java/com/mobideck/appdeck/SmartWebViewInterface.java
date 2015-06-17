@@ -51,6 +51,8 @@ public interface SmartWebViewInterface {
 
     public void setRootAppDeckFragment(AppDeckFragment root);
 
+    public void clearAllCache();
+
     // Webview API
     public void smartWebViewGoBack();
     public void smartWebViewGoForward();

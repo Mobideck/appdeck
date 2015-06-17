@@ -31,7 +31,7 @@ public class SmartWebViewFactory {
         //this.url = url;
         //this.position = position;
 
-        //smartWebView.ctl.setForceCache(true);
+        smartWebView.ctl.setForceCache(true);
 
         if (url != null)
             smartWebView.ctl.loadUrl(url);
@@ -116,6 +116,13 @@ public class SmartWebViewFactory {
     {
         SmartWebView smartWebView = SmartWebViewFactory.createMenuSmartWebView(loader, null, POSITION_HIDDEN);
         smartWebView.ctl.onActivityNewIntent(loader, intent);
+        smartWebView.ctl.destroy();
+    }
+
+    public static void clearAllCache(Loader loader)
+    {
+        SmartWebView smartWebView = SmartWebViewFactory.createMenuSmartWebView(loader, null, POSITION_HIDDEN);
+        smartWebView.ctl.clearAllCache();
         smartWebView.ctl.destroy();
     }
 }

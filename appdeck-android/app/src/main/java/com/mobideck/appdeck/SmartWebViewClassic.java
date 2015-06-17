@@ -1344,4 +1344,10 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
 	{
 
 	}
+
+
+	public void clearAllCache()
+	{
+		clearCache(true);
+	}
 }

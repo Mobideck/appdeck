@@ -36,6 +36,7 @@ import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -327,7 +328,15 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             return false;
         }
 
-/*
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Log.i(TAG, "shouldInterceptRequest:"+request.getMethod()+" "+request.getUrl()+request.getRequestHeaders().toString());
+            }
+            return super.shouldInterceptRequest(view, request);
+        }
+
+        /*
         @Override
         public WebResourceResponse shouldInterceptRequest(final WebView view, String absoluteURL) {
 
@@ -589,14 +598,14 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         //} else {
         //    js = "var evt = document.createEvent('Event');evt.initEvent('"+eventName+"',true,true); evt.detail = "+eventDetailJSon+"; document.dispatchEvent(evt);";
         //}
-        Log.i(TAG, "sendJsEventJS: "+eventName+": "+js);
+        Log.i(TAG, "sendJsEventJS: " + eventName + ": " + js);
         evaluateJavascript(js, new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String value) {
-                Log.i(TAG, "sendJsEventResult: "+value);
+                Log.i(TAG, "sendJsEventResult: " + value);
             }
         });
-
+//        document.dispatchEvent(new CustomEvent('scrollToBottom', ''));
     }
 
     int page_height = -1;
@@ -718,6 +727,11 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     public void onActivityNewIntent(Loader loader, Intent intent)
     {
 
+    }
+
+    public void clearAllCache()
+    {
+        clearCache(true);
     }
 
 }

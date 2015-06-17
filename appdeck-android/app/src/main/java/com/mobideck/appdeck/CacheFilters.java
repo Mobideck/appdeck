@@ -56,7 +56,9 @@ public class CacheFilters implements HttpFilters {
 	protected boolean isInCache = false;
 	protected boolean shouldStoreInCache = false;
 	protected int shouldStoreInCacheTTL = 0;
-	
+
+    protected boolean disableCache = false;
+
     protected final HttpRequest originalRequest;
     protected final ChannelHandlerContext ctx;
     
@@ -219,9 +221,14 @@ public class CacheFilters implements HttpFilters {
     		}*/
     		
     		forceCache = appDeck.cache.shouldCache(absoluteURL);
-    		
+
+			if (!originalMethod.toString().equalsIgnoreCase("GET"))
+			{
+                disableCache = true;
+			}
+
     		// request should be cached ?
-    		if (forceCache || forceReadFromCache)
+            if (disableCache == false && (forceCache || forceReadFromCache))
     		{
     			
         		// Already in browser cache ?
@@ -251,7 +258,7 @@ public class CacheFilters implements HttpFilters {
     		    		
     		// embed file ?
     		CacheManagerCachedResponse embedResponse = appDeck.cache.getEmbedResponse(absoluteURL);
-    		if (embedResponse != null)
+    		if (disableCache == false && embedResponse != null)
     		{
         		// already in browser cache ?
         		String etag = request.headers().get("If-None-Match");

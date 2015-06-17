@@ -295,13 +295,40 @@ public class CacheManager {
 	    if (deleteCurrent)
 	    	dir.delete();
 	}	
-	
+
 	public void clear()
 	{
 		String cache_path = getCachePath();
 		File dir = new File(cache_path);
 		DeleteRecursive(dir, false);
 	}
+
+    public void checkBeacon(Loader loader)
+    {
+        String embed_beacon = "embed";
+        AssetManager manager = appDeck.assetManager;
+        try {
+            InputStream stream = manager.open("httpcache/beacon");
+            embed_beacon = Utils.streamGetContent(stream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String last_beacon = "last";
+        String last_beacon_path = getCachePath() + "beacon";
+        try {
+            last_beacon = Utils.fileGetContents(last_beacon_path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!embed_beacon.equalsIgnoreCase(last_beacon)) {
+            Log.i(TAG, "Check Beacon failed: "+embed_beacon+" != "+last_beacon+" : we clear cache");
+            clear();
+            SmartWebViewFactory.clearAllCache(loader);
+        }
+
+        Utils.filePutContents(last_beacon_path, embed_beacon);
+    }
 	/*
 	public CacheResponse getEmbedResourceCacheResponse(String absoluteURL)
 	{
