@@ -7,7 +7,7 @@
 //
 
 #import "../../AppDeckAdEngine.h"
-#import "SwelenAds-50000c/SwelenSDK/swAdAPI.h"
+#import "SwelenAds-50000e/SwelenSDK/swAdAPI.h"
 
 @interface SwelenAdEngine : AppDeckAdEngine
 

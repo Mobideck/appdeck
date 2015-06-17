@@ -1,0 +1,9 @@
+# OSX Metadata
+.DS_Store
+
+# Xcode Builds
+DerivedData/
+build/
+
+# Xcode User-specific
+xcuserdata
