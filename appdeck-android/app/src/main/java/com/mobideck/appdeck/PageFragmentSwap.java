@@ -385,7 +385,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 
     public void progressSet(View origin, int percent)
     {
-        if (percent > 50 && isPreLoading /*&& loader.getPreviousAppDeckFragment(this.pageSwipe) == null*/)
+        if (percent > 25 && isPreLoading /*&& loader.getPreviousAppDeckFragment(this.pageSwipe) == null*/)
         {
             hidePreloading();
         }
