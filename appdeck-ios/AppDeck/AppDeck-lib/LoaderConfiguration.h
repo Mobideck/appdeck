@@ -62,6 +62,10 @@ typedef enum {
 
 @property (strong, nonatomic) NSMutableArray *cache;
 
+@property (strong, nonatomic) NSMutableArray    *otherDomainRegex;
+@property (strong, nonatomic) NSMutableArray    *otherDomainRegexStrings;
+
+
 @property (assign, nonatomic) BOOL adBlock;
 @property (strong, nonatomic) NSMutableArray *adBlockWhiteList;
 @property (strong, nonatomic) NSMutableArray *adBlockBlackList;

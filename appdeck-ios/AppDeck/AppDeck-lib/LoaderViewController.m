@@ -45,6 +45,7 @@
 #import "AppDeckUserProfile.h"
 #import "JSONKit.h"
 #import "NSDictionary+query.h"
+#import "RE2Regexp.h"
 
 @interface LoaderViewController ()
 
@@ -1073,6 +1074,18 @@
     }
 }*/
 
+-(BOOL)isSameDomain:(NSString *)domain
+{
+    if ([domain isEqualToString:self.conf.baseUrl.host])
+        return YES;
+    for (RE2Regexp *regex in self.conf.otherDomainRegex) {
+        if ([regex match:[domain UTF8String]])
+            return YES;
+    }
+    return NO;
+}
+
+
 -(LoaderChildViewController *)getChildViewControllerFromURL:(NSString *)pageUrlString type:(NSString *)type
 {
     LoaderChildViewController    *page = nil;
@@ -1097,7 +1110,7 @@
         {
             type = screenConfiguration.type;
         }
-        else if (screenConfiguration == nil && [pageUrl.host isEqualToString:self.conf.baseUrl.host] == NO)
+        else if (screenConfiguration == nil && [self isSameDomain:pageUrl.host] == NO)
         {
             screenConfiguration = [ScreenConfiguration defaultConfigurationWitehLoader:self];
             screenConfiguration.isPopUp = YES;

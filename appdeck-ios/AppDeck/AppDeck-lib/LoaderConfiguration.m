@@ -15,6 +15,7 @@
 #import "AppURLCache.h"
 #import "IOSVersion.h"
 #import "LoaderViewController.h"
+#import "RE2Regexp.h"
 
 @implementation LoaderConfiguration
 
@@ -127,6 +128,23 @@
     {
         [self.adBlockBlackList addObject:regexp];
         [app.cache addAdBlockBlackListCacheRegularExpressionFromString:regexp];
+    }
+    
+    // other Domain
+    self.otherDomainRegex = [[NSMutableArray alloc] init];
+    self.otherDomainRegexStrings = [[NSMutableArray alloc] init];
+    for (NSString *regexString in result[@"other_domain"])
+    {
+        if (regexString.length == 0)
+            continue;
+        RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
+        if (regex == nil)
+        {
+            NSLog(@"invalid Rexep URL : %@", regexString);
+            continue;
+        }
+        [self.otherDomainRegex addObject:regex];
+        [self.otherDomainRegexStrings addObject:regexString];
     }
     
     // *** CDN ***
