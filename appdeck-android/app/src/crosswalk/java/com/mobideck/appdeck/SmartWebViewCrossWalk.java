@@ -80,7 +80,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	
 	private String userAgent = null;
 	
-	private boolean firstLoad = true; 
+	private boolean firstLoad = true;
+
+	private boolean pageHasFinishLoading = false;
 
 //	private boolean initialized = false;
 	
@@ -428,6 +430,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (url.indexOf("_appdeck_is_form=1") != -1)
 	    		return false;
 
+			if (pageHasFinishLoading == false)
+				return false;
+
 	    	  if (firstLoad)
 	    	  {
 	    		  Log.i(TAG, "shouldOverrideUrlLoading (firstload) :"+url);
@@ -495,6 +500,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         public void onLoadFinished(XWalkView view, String url) {
             //super.onPageFinished(view, url);
             Log.i(TAG, "**onLoadFinished "+url+"**");
+
+			pageHasFinishLoading = true;
 
             getNavigationHistory().clear();
 

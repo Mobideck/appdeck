@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.http.Header;
 import org.littleshoot.proxy.ChainedProxy;
@@ -201,8 +202,6 @@ public class Loader extends ActionBarActivity {
 
     	super.onCreate(savedInstanceState);
 
-        appDeck.cache.checkBeacon(this);
-
         // original proxy host/port
         Proxy proxyConf = null;
         try {
@@ -236,8 +235,10 @@ public class Loader extends ActionBarActivity {
         System.setProperty("https.proxyPort", this.proxyPort + "");
 
     	CacheFiltersSource filtersSource = new CacheFiltersSource();
-    	
-    	proxyServerBootstrap = DefaultHttpProxyServer
+
+        appDeck.cache.checkBeacon(this);
+
+        proxyServerBootstrap = DefaultHttpProxyServer
                 .bootstrap()
                 .withPort(this.proxyPort)
                 .withAllowLocalOnly(true)
@@ -975,7 +976,27 @@ public class Loader extends ActionBarActivity {
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
     	pushFragment(fragment);
     }
-    
+
+    public boolean isSameDomain(String domain)
+    {
+        if (domain.equalsIgnoreCase(this.appDeck.config.bootstrapUrl.getHost()))
+            return true;
+        Pattern otherDomainRegexp[] = AppDeck.getInstance().config.other_domain;
+
+        if (otherDomainRegexp == null)
+            return false;
+
+        for (int i = 0; i < otherDomainRegexp.length; i++) {
+            Pattern p = otherDomainRegexp[i];
+
+            if (p.matcher(domain).find())
+                return true;
+
+        }
+
+        return false;
+    }
+
     public int loadPage(String absoluteURL)
     {
     	if (loadSpecialURL(absoluteURL))
@@ -985,7 +1006,7 @@ public class Loader extends ActionBarActivity {
         if (uri != null)
         {
             String host = uri.getHost();
-            if (host != null && !host.equalsIgnoreCase(this.appDeck.config.bootstrapUrl.getHost()))
+            if (host != null && isSameDomain(host) == false)
             {
                 Intent i = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(i);
@@ -1740,7 +1761,8 @@ public class Loader extends ActionBarActivity {
 		if (popover != null)
 		{
 	    	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-	    	fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);		    	
+	    	//fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 	    	fragmentTransaction.remove(popover);
 	    	fragmentTransaction.commitAllowingStateLoss();			
 		}

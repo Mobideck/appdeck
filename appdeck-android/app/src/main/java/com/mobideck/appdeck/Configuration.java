@@ -194,7 +194,19 @@ public class Configuration {
 				cache[i] = p;
 			}
 		}
-		
+
+		// other domain
+		AppDeckJsonArray otherDomainNodes = root.getArray("other_domain");
+		if (otherDomainNodes.length() > 0)
+		{
+			other_domain = new Pattern[otherDomainNodes.length()];
+			for (int i = 0; i < otherDomainNodes.length(); i++) {
+				String regexp = otherDomainNodes.getString(i);
+				Pattern p = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
+				other_domain[i] = p;
+			}
+		}
+
 		// CDN
 		cdn_enabled = root.getBoolean("cdn_enabled");
 		cdn_host = root.getString("cdn_host", null);
@@ -384,6 +396,8 @@ public class Configuration {
 	public URI logoUrl;
 
 	public Pattern cache[];
+
+	public Pattern other_domain[];
 
 
 	//@property (strong, nonatomic) UIView *statusBarInfo;

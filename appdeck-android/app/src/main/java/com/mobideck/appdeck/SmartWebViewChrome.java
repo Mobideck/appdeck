@@ -69,6 +69,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     private boolean firstLoad = true;
 
+    private boolean pageHasFinishLoading = false;
+
     public boolean shouldLoadFromCache = false;
 
     public boolean catchLink = true;
@@ -319,6 +321,14 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
+            // if there is a url loading before page finish it is a redirection
+            if (pageHasFinishLoading == false)
+                return false;
+
+            // this is a form ?
+            if (url.indexOf("_appdeck_is_form=1") != -1)
+                return false;
+
             if (catchLink == false)
                 return false;
             if (root.shouldOverrideUrlLoading(url)) {
@@ -354,6 +364,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             Log.i(TAG, "**onPageFinished**");
+
+            pageHasFinishLoading = true;
 
             // force inject of appdeck.js if needed
             view.evaluateJavascript(SmartWebViewChrome.this.appDeck.appdeck_inject_js, new ValueCallback<String>() {
