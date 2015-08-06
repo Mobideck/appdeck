@@ -9,9 +9,6 @@
 #import "WebBrowserViewController.h"
 #import "SwipeViewController.h"
 #import "LoaderViewController.h"
-#import "GoogleAnalytics/GAI.h"
-#import "GoogleAnalytics/GAIFields.h"
-#import "GoogleAnalytics/GAIDictionaryBuilder.h"
 #import "LoaderConfiguration.h"
 #import "ScreenConfiguration.h"
 #import "PageBarButtonContainer.h"
@@ -38,15 +35,17 @@
 -(NSURLRequest *)getRequest
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
-    // if screen ttl == -1
+    // if screen ttl == -1 force no cache
     if (self.screenConfiguration.ttl == -1)
     {
         //cachePolicy = NSURLRequestReloadIgnoringCacheData;
+//        request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
         [request setValue:@"" forHTTPHeaderField:@"If-Modified-Since"];
         [request setValue:@"" forHTTPHeaderField:@"If-None-Match"];
     }
     return request;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -102,13 +101,6 @@
     [super childIsMain:isMain];
     if (isMain)
     {
-        if (self.loader.tracker)
-        {
-//            [self.loader.tracker sendView:[NSString stringWithFormat:@"Browser %@", self.url.host]];
-            [self.loader.tracker set:kGAIScreenName value:[NSString stringWithFormat:@"Browser %@", self.url.host]];
-            [self.loader.tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-            
-        }
         self.content.webView.scrollView.scrollsToTop = YES;
 //        [self.loader.globalTracker trackEventWithCategory:@"browser" withAction:@"MobclixFullScreenAdViewController" withLabel:@"failed" withValue:[NSNumber numberWithInt:1]];
     }

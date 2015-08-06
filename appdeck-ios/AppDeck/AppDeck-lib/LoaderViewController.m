@@ -38,7 +38,7 @@
 #import "OpenUDID.h"
 #import "CRNavigationController/CRNavigationBar.h"
 #import "CRNavigationController/CRNavigationController.h"
-#import "GoogleAnalytics/GAI.h"
+#import "AppDeckAnalytics.h"
 #import "UIAlertView+Blocks.h"
 #import "AdManager.h"
 #import "LoaderNavigationController.h"
@@ -365,25 +365,8 @@
             remoteAppCache = [[RemoteAppCache alloc] initWithURL:self.conf.prefetch_url andTTL:self.conf.prefetch_ttl];
         }
         
-        // GA
-//        if (self.appDeck.isTestApp == YES)
-//            [[GAI sharedInstance].logger setLogLevel:kGAILogLevelVerbose];
-//        [GAI sharedInstance].debug = NO;
-        [GAI sharedInstance].dispatchInterval = 20;
-        [GAI sharedInstance].trackUncaughtExceptions = YES;
-        if (self.conf.ga)
-            self.tracker = [[GAI sharedInstance] trackerWithTrackingId:self.conf.ga];
-        self.globalTracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-39746493-1"];
-        NSString *appId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-        [self.globalTracker set:[GAIFields customDimensionForIndex:1] value:appId];
-
-        //[self.globalTracker setCustom:1 dimension:appId];
-        if (self.conf.app_api_key)
-            [self.globalTracker set:[GAIFields customDimensionForIndex:2] value:self.conf.app_api_key];
-            //[self.globalTracker setCustom:2 dimension:self.conf.app_api_key];
-        else
-            [self.globalTracker set:[GAIFields customDimensionForIndex:2] value:@"none"];
-//            [self.globalTracker setCustom:2 dimension:@"none"];
+        // analytics
+        self.analytics = [[AppDeckAnalytics alloc] initWithLoader:self];
         
         /*if ((self.conf.enable_debug || self.syncEmbedResource) && self.conf.embed_url)
         {

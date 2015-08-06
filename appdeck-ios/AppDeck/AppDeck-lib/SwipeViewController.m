@@ -11,9 +11,7 @@
 #import "LoaderChildViewController.h"
 #import "UINavigationBar+Progress.h"
 #import "AppDeckApiCall.h"
-#import "GoogleAnalytics/GAI.h"
-#import "GoogleAnalytics/GAIFields.h"
-#import "GoogleAnalytics/GAIDictionaryBuilder.h"
+#import "AppDeckAnalytics.h"
 #import "TestUIScrollView.h"
 #import "RSTimingFunction.h"
 #import <QuartzCore/QuartzCore.h>
@@ -310,10 +308,7 @@
                          // stats
 //                         [self.current.loader.globalTracker trackEventWithCategory:@"swipe" withAction:@"previous" withLabel:self.current.url.absoluteString withValue:[NSNumber numberWithInt:1]];
                          
-                         [self.current.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"swipe"
-                                                                                                 action:@"previous"
-                                                                                                  label:self.current.url.absoluteString
-                                                                                                  value:[NSNumber numberWithInt:1]] build]];
+                         [self.current.loader.analytics sendEventWithName:@"swipe" action:@"previous" label:self.current.url.absoluteString value:[NSNumber numberWithInt:1]];
                          
                          //LoaderChildViewController *old = self.next;
                          
@@ -369,18 +364,7 @@
                      }
                      completion:^(BOOL finished){
                          
-                         //NSLog(@"should go to previous!");
-                         // stats
-//                         [self.current.loader.globalTracker trackEventWithCategory:@"swipe" withAction:@"next" withLabel:self.current.url.absoluteString withValue:[NSNumber numberWithInt:1]];
-                         
-                         [self.current.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"swipe"
-                                                                                                 action:@"next"
-                                                                                                  label:self.current.url.absoluteString
-                                                                                                  value:[NSNumber numberWithInt:1]] build]];
-                         
-                         //LoaderChildViewController *old = self.next;
-                         
-                         //LoaderChildViewController *tmp = self.previous;
+                         [self.current.loader.analytics sendEventWithName:@"swipe" action:@"next" label:self.current.url.absoluteString value:[NSNumber numberWithInt:1]];
                          
                          self.previous = nil;
                          _previous = _current;

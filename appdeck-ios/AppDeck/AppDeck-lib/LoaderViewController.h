@@ -43,7 +43,7 @@ typedef enum AdManagerEvent: int {
 @class AdManager;
 @class JSonHTTPApi;
 @class LoaderNavigationController;
-@protocol GAITracker;
+@class AppDeckAnalytics;
 
 @interface LoaderViewController : UIViewController <UIWebViewDelegate, UINavigationControllerDelegate, AppDeckApiCallDelegate, UIGestureRecognizerDelegate>
 {
@@ -135,8 +135,7 @@ typedef enum AdManagerEvent: int {
 -(void)showStatusBarError:(NSString *)message;
 -(void)showStatusBarNotice:(NSString *)message;
 
-@property(nonatomic, retain) id<GAITracker> tracker;
-@property(nonatomic, retain) id<GAITracker> globalTracker;
+@property(nonatomic, retain) AppDeckAnalytics *analytics;
 
 //-(void)loadAppWithURL:(NSString *)base_url andConf:(NSString *)conf_url;
 

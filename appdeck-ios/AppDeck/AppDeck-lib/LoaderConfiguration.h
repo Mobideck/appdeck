@@ -128,6 +128,7 @@ typedef enum {
 @property (strong, nonatomic) NSString *mobiclickAdMobSub;
 
 @property (strong, nonatomic) NSString *ga;
+@property (strong, nonatomic) NSString *flurry;
 @property (strong, nonatomic) NSURL *embed_url;
 @property (strong, nonatomic) NSURL *embed_runtime_url;
 

@@ -14,9 +14,7 @@
 #import "QuartzCore/QuartzCore.h"
 #import "SwipeViewController.h"
 #import "ScreenConfiguration.h"
-#import "GoogleAnalytics/GAI.h"
-#import "GoogleAnalytics/GAIDictionaryBuilder.h"
-#import "GoogleAnalytics/GAIFields.h"
+#import "AppDeckAnalytics.h"
 #import "LoaderConfiguration.h"
 #import "PageBarButtonContainer.h"
 #import "LoaderConfiguration.h"
@@ -177,13 +175,6 @@
     {
         if (self.loader.appDeck.iosVersion >= 6.0)
             contentCtl.webView.suppressesIncrementalRendering = NO;
-        if (self.loader.tracker)
-        {
-//            [self.loader.tracker sendView:self.url.relativePath];
-            [self.loader.tracker set:kGAIScreenName value:self.url.relativePath];
-            [self.loader.tracker send:[[GAIDictionaryBuilder createScreenView] build]];
-            
-        }
         [contentCtl addURLInOtherHistory:self.url.absoluteString];
         contentCtl.webView.scrollView.scrollsToTop = YES;
 
@@ -679,11 +670,7 @@
         // stats
 //        [self.loader.globalTracker trackEventWithCategory:@"child" withAction:@"reload" withLabel:self.url.absoluteString withValue:[NSNumber numberWithInt:1]];
         
-        [self.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"child"
-                                                                                action:@"reload"
-                                                                                 label:self.url.absoluteString
-                                                                                 value:[NSNumber numberWithInt:1]] build]];
-        
+        [self.loader.analytics sendEventWithName:@"child" action:@"reload" label:self.url.absoluteString value:[NSNumber numberWithInt:1]];       
         
         if (errorView)
             [self initialLoad];

@@ -15,9 +15,7 @@
 #import "SwipeViewController.h"
 #import "UIView+align.h"
 #import "LoaderViewController.h"
-#import "GoogleAnalytics/GAI.h"
-#import "GoogleAnalytics/GAIFields.h"
-#import "GoogleAnalytics/GAIDictionaryBuilder.h"
+#import "AppDeckAnalytics.h"
 #import "IOSVersion.h"
 
 @interface PhotoBrowserViewController ()
@@ -176,11 +174,7 @@
         // stats
 //        [self.loader.globalTracker trackEventWithCategory:@"photo" withAction:@"change" withLabel:photo.url.absoluteString withValue:[NSNumber numberWithInt:1]];
         
-        [self.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"photo"
-                                                                                action:@"change"
-                                                                                 label:photo.url.absoluteString
-                                                                                 value:[NSNumber numberWithInt:1]] build]];
-        
+        [self.loader.analytics sendEventWithName:@"photo" action:@"change" label:photo.url.absoluteString value:[NSNumber numberWithInt:1]];
         
     }
 }
@@ -246,21 +240,8 @@
     {
         PhotoViewController *photo = [self getCurrentPhoto];
         // stats
-        if (self.loader.tracker)
-        {
-//            [self.loader.tracker trackEventWithCategory:@"action" withAction:@"share" withLabel:photo.url.absoluteString withValue:[NSNumber numberWithInt:1]];
-            [self.loader.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"action"
-                                                                                    action:@"share"
-                                                                                     label:photo.url.absoluteString
-                                                                                     value:[NSNumber numberWithInt:1]] build]];
-            
+        [self.loader.analytics sendEventWithName:@"action" action:@"share" label:photo.url.absoluteString value:[NSNumber numberWithInt:1]];
 
-        }
-//        [self.loader.globalTracker trackEventWithCategory:@"action" withAction:@"share" withLabel:photo.url.absoluteString withValue:[NSNumber numberWithInt:1]];
-        [self.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"action"
-                                                                                action:@"share"
-                                                                                 label:photo.url.absoluteString
-                                                                                 value:[NSNumber numberWithInt:1]] build]];
         AppDeck *appDeck = [AppDeck sharedInstance];
         if (appDeck.iosVersion >= 6.0)
         {

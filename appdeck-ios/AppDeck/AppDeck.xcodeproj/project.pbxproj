@@ -220,6 +220,8 @@
 		A925D52F17003D60000F6EEC /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D52E17003D60000F6EEC /* EventKit.framework */; };
 		A925D53117003D67000F6EEC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D53017003D67000F6EEC /* MediaPlayer.framework */; };
 		A925D53317003D6E000F6EEC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D53217003D6E000F6EEC /* MessageUI.framework */; };
+		A92783051B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A92783041B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.m */; };
+		A927830B1B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A927830A1B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.m */; };
 		A928F97A1B307178009F0FE8 /* SpeechKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A928F9781B307178009F0FE8 /* SpeechKit.framework */; };
 		A928F97B1B307178009F0FE8 /* WSLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A928F9791B307178009F0FE8 /* WSLibrary.framework */; };
 		A928F98A1B3071F5009F0FE8 /* libInMobi-4.5.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A928F9891B3071F5009F0FE8 /* libInMobi-4.5.3.a */; };
@@ -386,7 +388,6 @@
 		A9573C351AF9084E0086FCC2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A9573C2A1AF9084E0086FCC2 /* .gitignore */; };
 		A9573C361AF9084E0086FCC2 /* libGreystripeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C341AF9084E0086FCC2 /* libGreystripeSDK.a */; };
 		A9573C3B1AF908F00086FCC2 /* MillennialMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C391AF908F00086FCC2 /* MillennialMedia.framework */; };
-		A9573C3C1AF908F00086FCC2 /* SpeechKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C3A1AF908F00086FCC2 /* SpeechKit.framework */; };
 		A9573C461AF90C770086FCC2 /* __vungle.db in Resources */ = {isa = PBXBuildFile; fileRef = A9573C3F1AF90C770086FCC2 /* __vungle.db */; };
 		A9573C471AF90C770086FCC2 /* vg_close.png in Resources */ = {isa = PBXBuildFile; fileRef = A9573C401AF90C770086FCC2 /* vg_close.png */; };
 		A9573C481AF90C770086FCC2 /* vg_cta.png in Resources */ = {isa = PBXBuildFile; fileRef = A9573C411AF90C770086FCC2 /* vg_cta.png */; };
@@ -395,6 +396,18 @@
 		A9573C4B1AF90C770086FCC2 /* vg_timer.png in Resources */ = {isa = PBXBuildFile; fileRef = A9573C441AF90C770086FCC2 /* vg_timer.png */; };
 		A9573C4C1AF90C770086FCC2 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C451AF90C770086FCC2 /* VungleSDK.framework */; };
 		A9573C4E1AF9104E0086FCC2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C4D1AF9104E0086FCC2 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A9587FC71B68FE010037FD53 /* AppDeckAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FC51B68FE010037FD53 /* AppDeckAnalytics.m */; };
+		A9587FEC1B68FE1F0037FD53 /* libFlurry_6.5.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9587FCD1B68FE1F0037FD53 /* libFlurry_6.5.0.a */; };
+		A9587FED1B68FE1F0037FD53 /* libFlurryAds_6.5.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9587FDA1B68FE1F0037FD53 /* libFlurryAds_6.5.0.a */; };
+		A9587FEE1B68FE1F0037FD53 /* FlurryBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FE21B68FE1F0037FD53 /* FlurryBannerCustomEvent.m */; };
+		A9587FEF1B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FE41B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.m */; };
+		A9587FF11B68FE1F0037FD53 /* FlurryMPConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FE71B68FE1F0037FD53 /* FlurryMPConfig.m */; };
+		A9587FF21B68FE1F0037FD53 /* FlurryNativeAdAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FE91B68FE1F0037FD53 /* FlurryNativeAdAdapter.m */; };
+		A9587FF31B68FE1F0037FD53 /* FlurryNativeCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FEB1B68FE1F0037FD53 /* FlurryNativeCustomEvent.m */; };
+		A9587FF91B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FF61B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m */; };
+		A9587FFA1B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FF81B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m */; };
+		A9587FFE1B6A13740037FD53 /* AdBuddiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9587FFD1B6A13740037FD53 /* AdBuddiz.framework */; };
+		A95880011B6A15300037FD53 /* AdBuddizLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A95880001B6A15300037FD53 /* AdBuddizLoader.m */; };
 		A95B95241803FDCC00106EF7 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95201803FDCC00106EF7 /* Icon-60.png */; };
 		A95B95251803FDCC00106EF7 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95211803FDCC00106EF7 /* Icon-60@2x.png */; };
 		A95B95261803FDCC00106EF7 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95221803FDCC00106EF7 /* Icon-76.png */; };
@@ -847,6 +860,10 @@
 		A925D52E17003D60000F6EEC /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		A925D53017003D67000F6EEC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		A925D53217003D6E000F6EEC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		A92783031B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDeckInMobiBannerCustomEvent.h; sourceTree = "<group>"; };
+		A92783041B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDeckInMobiBannerCustomEvent.m; sourceTree = "<group>"; };
+		A92783091B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDeckInMobiInterstitialCustomEvent.h; sourceTree = "<group>"; };
+		A927830A1B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDeckInMobiInterstitialCustomEvent.m; sourceTree = "<group>"; };
 		A928F9781B307178009F0FE8 /* SpeechKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpeechKit.framework; sourceTree = "<group>"; };
 		A928F9791B307178009F0FE8 /* WSLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WSLibrary.framework; sourceTree = "<group>"; };
 		A928F97E1B3071F5009F0FE8 /* IMBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBanner.h; sourceTree = "<group>"; };
@@ -1221,6 +1238,41 @@
 		A9573C441AF90C770086FCC2 /* vg_timer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_timer.png; sourceTree = "<group>"; };
 		A9573C451AF90C770086FCC2 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VungleSDK.framework; sourceTree = "<group>"; };
 		A9573C4D1AF9104E0086FCC2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		A9587FC51B68FE010037FD53 /* AppDeckAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckAnalytics.m; path = "AppDeck-lib/AppDeckAnalytics.m"; sourceTree = "<group>"; };
+		A9587FC61B68FE010037FD53 /* AppDeckAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckAnalytics.h; path = "AppDeck-lib/AppDeckAnalytics.h"; sourceTree = "<group>"; };
+		A9587FCB1B68FE1F0037FD53 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		A9587FCC1B68FE1F0037FD53 /* FlurryWatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryWatch.h; sourceTree = "<group>"; };
+		A9587FCD1B68FE1F0037FD53 /* libFlurry_6.5.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_6.5.0.a; sourceTree = "<group>"; };
+		A9587FD01B68FE1F0037FD53 /* FlurryAdBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdBanner.h; sourceTree = "<group>"; };
+		A9587FD11B68FE1F0037FD53 /* FlurryAdBannerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdBannerDelegate.h; sourceTree = "<group>"; };
+		A9587FD31B68FE1F0037FD53 /* FlurryAdInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdInterstitial.h; sourceTree = "<group>"; };
+		A9587FD41B68FE1F0037FD53 /* FlurryAdInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdInterstitialDelegate.h; sourceTree = "<group>"; };
+		A9587FD61B68FE1F0037FD53 /* FlurryAdNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdNative.h; sourceTree = "<group>"; };
+		A9587FD71B68FE1F0037FD53 /* FlurryAdNativeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdNativeAsset.h; sourceTree = "<group>"; };
+		A9587FD81B68FE1F0037FD53 /* FlurryAdNativeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdNativeDelegate.h; sourceTree = "<group>"; };
+		A9587FD91B68FE1F0037FD53 /* FlurryAdNativeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdNativeStyle.h; sourceTree = "<group>"; };
+		A9587FDA1B68FE1F0037FD53 /* libFlurryAds_6.5.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAds_6.5.0.a; sourceTree = "<group>"; };
+		A9587FDC1B68FE1F0037FD53 /* FlurryAdError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdError.h; sourceTree = "<group>"; };
+		A9587FDD1B68FE1F0037FD53 /* FlurryAdTargeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdTargeting.h; sourceTree = "<group>"; };
+		A9587FDF1B68FE1F0037FD53 /* FlurryAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAdDelegate.h; sourceTree = "<group>"; };
+		A9587FE01B68FE1F0037FD53 /* FlurryAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAds.h; sourceTree = "<group>"; };
+		A9587FE11B68FE1F0037FD53 /* FlurryBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryBannerCustomEvent.h; path = Flurry/FlurryBannerCustomEvent.h; sourceTree = "<group>"; };
+		A9587FE21B68FE1F0037FD53 /* FlurryBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryBannerCustomEvent.m; path = Flurry/FlurryBannerCustomEvent.m; sourceTree = "<group>"; };
+		A9587FE31B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryInterstitialCustomEvent.h; path = Flurry/FlurryInterstitialCustomEvent.h; sourceTree = "<group>"; };
+		A9587FE41B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryInterstitialCustomEvent.m; path = Flurry/FlurryInterstitialCustomEvent.m; sourceTree = "<group>"; };
+		A9587FE61B68FE1F0037FD53 /* FlurryMPConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryMPConfig.h; path = Flurry/FlurryMPConfig.h; sourceTree = "<group>"; };
+		A9587FE71B68FE1F0037FD53 /* FlurryMPConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryMPConfig.m; path = Flurry/FlurryMPConfig.m; sourceTree = "<group>"; };
+		A9587FE81B68FE1F0037FD53 /* FlurryNativeAdAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryNativeAdAdapter.h; path = Flurry/FlurryNativeAdAdapter.h; sourceTree = "<group>"; };
+		A9587FE91B68FE1F0037FD53 /* FlurryNativeAdAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryNativeAdAdapter.m; path = Flurry/FlurryNativeAdAdapter.m; sourceTree = "<group>"; };
+		A9587FEA1B68FE1F0037FD53 /* FlurryNativeCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryNativeCustomEvent.h; path = Flurry/FlurryNativeCustomEvent.h; sourceTree = "<group>"; };
+		A9587FEB1B68FE1F0037FD53 /* FlurryNativeCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryNativeCustomEvent.m; path = Flurry/FlurryNativeCustomEvent.m; sourceTree = "<group>"; };
+		A9587FF51B6A0D0E0037FD53 /* SwelenBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwelenBannerCustomEvent.h; sourceTree = "<group>"; };
+		A9587FF61B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwelenBannerCustomEvent.m; sourceTree = "<group>"; };
+		A9587FF71B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwelenInterstitialCustomEvent.h; sourceTree = "<group>"; };
+		A9587FF81B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwelenInterstitialCustomEvent.m; sourceTree = "<group>"; };
+		A9587FFD1B6A13740037FD53 /* AdBuddiz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdBuddiz.framework; sourceTree = "<group>"; };
+		A9587FFF1B6A15300037FD53 /* AdBuddizLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdBuddizLoader.h; path = AdBuddiz/AdBuddizLoader.h; sourceTree = "<group>"; };
+		A95880001B6A15300037FD53 /* AdBuddizLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdBuddizLoader.m; path = AdBuddiz/AdBuddizLoader.m; sourceTree = "<group>"; };
 		A95B95201803FDCC00106EF7 /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60.png"; sourceTree = SOURCE_ROOT; };
 		A95B95211803FDCC00106EF7 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = SOURCE_ROOT; };
 		A95B95221803FDCC00106EF7 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = SOURCE_ROOT; };
@@ -1263,9 +1315,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A90B3B9618293E4A0039A48A /* EventKitUI.framework in Frameworks */,
 				A9573C4E1AF9104E0086FCC2 /* WebKit.framework in Frameworks */,
 				A928FBA11B307431009F0FE8 /* AdColony.framework in Frameworks */,
-				A90B3B9618293E4A0039A48A /* EventKitUI.framework in Frameworks */,
 				A948B4C6186B082C00F61664 /* Twitter.framework in Frameworks */,
 				A948B4C4186B080B00F61664 /* libsqlite3.dylib in Frameworks */,
 				A928FBA41B3074D5009F0FE8 /* GoogleMobileAds.framework in Frameworks */,
@@ -1283,6 +1335,7 @@
 				A9573C3B1AF908F00086FCC2 /* MillennialMedia.framework in Frameworks */,
 				A9ADBD5B18102ABF00EE23C1 /* OpenGLES.framework in Frameworks */,
 				A9ADBD5A18102AA700EE23C1 /* CoreVideo.framework in Frameworks */,
+				A9587FED1B68FE1F0037FD53 /* libFlurryAds_6.5.0.a in Frameworks */,
 				A9ADBD5818102AA200EE23C1 /* CoreMedia.framework in Frameworks */,
 				A95739FE1AF265CE0086FCC2 /* libSmartAdServer.a in Frameworks */,
 				A9ADBD5618102A8C00EE23C1 /* AssetsLibrary.framework in Frameworks */,
@@ -1296,7 +1349,7 @@
 				A9B611AA17039A4F00311942 /* StoreKit.framework in Frameworks */,
 				A91DFA7C16CE971D00512CA0 /* QuartzCore.framework in Frameworks */,
 				A928F97A1B307178009F0FE8 /* SpeechKit.framework in Frameworks */,
-				A9573C3C1AF908F00086FCC2 /* SpeechKit.framework in Frameworks */,
+				A9587FEC1B68FE1F0037FD53 /* libFlurry_6.5.0.a in Frameworks */,
 				A916D2EA1A1E03E7005FE1AE /* libGoogleAnalyticsServices.a in Frameworks */,
 				A925D53317003D6E000F6EEC /* MessageUI.framework in Frameworks */,
 				A925D53117003D67000F6EEC /* MediaPlayer.framework in Frameworks */,
@@ -1310,6 +1363,7 @@
 				A91DFAA916CFAE8C00512CA0 /* MobileCoreServices.framework in Frameworks */,
 				A91DFA7A16CE971700512CA0 /* CFNetwork.framework in Frameworks */,
 				A91DFA7616CE970A00512CA0 /* CoreImage.framework in Frameworks */,
+				A9587FFE1B6A13740037FD53 /* AdBuddiz.framework in Frameworks */,
 				A91DFA1416CE8D1400512CA0 /* UIKit.framework in Frameworks */,
 				A91DFA1616CE8D1400512CA0 /* Foundation.framework in Frameworks */,
 				A91DFA1816CE8D1400512CA0 /* CoreGraphics.framework in Frameworks */,
@@ -1324,6 +1378,8 @@
 		A916C2B81A1E03D4005FE1AE /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				A9587FFB1B6A13690037FD53 /* AdBuddiz */,
+				A9587FC81B68FE0C0037FD53 /* Flurry */,
 				A928F98B1B3072DA009F0FE8 /* MoPub */,
 				A916C2B91A1E03D4005FE1AE /* AdColony */,
 				A916C33E1A1E03D5005FE1AE /* AdMob */,
@@ -1334,6 +1390,7 @@
 				A916C4CF1A1E03D5005FE1AE /* MMedia */,
 				A916CAA61A1E03D8005FE1AE /* SmartAdServer */,
 				A916CB4A1A1E03D8005FE1AE /* Swelen */,
+				A9587FF41B6A0D0E0037FD53 /* Swelen-Mopub */,
 				A916CB591A1E03D8005FE1AE /* Vungle */,
 				A916CB631A1E03D8005FE1AE /* WideSpace */,
 			);
@@ -1392,6 +1449,10 @@
 			isa = PBXGroup;
 			children = (
 				A928F97C1B3071F5009F0FE8 /* InMobi-iOS-SDK-4.5.3 */,
+				A92783031B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.h */,
+				A92783041B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.m */,
+				A92783091B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.h */,
+				A927830A1B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.m */,
 			);
 			path = InMobi;
 			sourceTree = "<group>";
@@ -1941,6 +2002,8 @@
 		A916D4921A1E0B18005FE1AE /* AppDeck */ = {
 			isa = PBXGroup;
 			children = (
+				A9587FC61B68FE010037FD53 /* AppDeckAnalytics.h */,
+				A9587FC51B68FE010037FD53 /* AppDeckAnalytics.m */,
 				A916CDAA1A1E03E1005FE1AE /* SelectActionSheet.h */,
 				A916CDAB1A1E03E2005FE1AE /* SelectActionSheet.m */,
 				A916CBCF1A1E03DA005FE1AE /* AppDeckProgressHUD.h */,
@@ -2938,6 +3001,134 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A9587FC81B68FE0C0037FD53 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FC91B68FE1F0037FD53 /* Flurry-iOS-6.5.0 */,
+				A9587FE11B68FE1F0037FD53 /* FlurryBannerCustomEvent.h */,
+				A9587FE21B68FE1F0037FD53 /* FlurryBannerCustomEvent.m */,
+				A9587FE31B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.h */,
+				A9587FE41B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.m */,
+				A9587FE61B68FE1F0037FD53 /* FlurryMPConfig.h */,
+				A9587FE71B68FE1F0037FD53 /* FlurryMPConfig.m */,
+				A9587FE81B68FE1F0037FD53 /* FlurryNativeAdAdapter.h */,
+				A9587FE91B68FE1F0037FD53 /* FlurryNativeAdAdapter.m */,
+				A9587FEA1B68FE1F0037FD53 /* FlurryNativeCustomEvent.h */,
+				A9587FEB1B68FE1F0037FD53 /* FlurryNativeCustomEvent.m */,
+			);
+			name = Flurry;
+			sourceTree = "<group>";
+		};
+		A9587FC91B68FE1F0037FD53 /* Flurry-iOS-6.5.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FCA1B68FE1F0037FD53 /* Flurry */,
+				A9587FCE1B68FE1F0037FD53 /* FlurryAds */,
+			);
+			name = "Flurry-iOS-6.5.0";
+			path = "Flurry/Flurry-iOS-6.5.0";
+			sourceTree = "<group>";
+		};
+		A9587FCA1B68FE1F0037FD53 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FCB1B68FE1F0037FD53 /* Flurry.h */,
+				A9587FCC1B68FE1F0037FD53 /* FlurryWatch.h */,
+				A9587FCD1B68FE1F0037FD53 /* libFlurry_6.5.0.a */,
+			);
+			path = Flurry;
+			sourceTree = "<group>";
+		};
+		A9587FCE1B68FE1F0037FD53 /* FlurryAds */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FCF1B68FE1F0037FD53 /* FlurryAdBanner */,
+				A9587FD21B68FE1F0037FD53 /* FlurryAdInterstitial */,
+				A9587FD51B68FE1F0037FD53 /* FlurryAdNative */,
+				A9587FDA1B68FE1F0037FD53 /* libFlurryAds_6.5.0.a */,
+				A9587FDB1B68FE1F0037FD53 /* Shared */,
+				A9587FDE1B68FE1F0037FD53 /* StaticAPI */,
+			);
+			path = FlurryAds;
+			sourceTree = "<group>";
+		};
+		A9587FCF1B68FE1F0037FD53 /* FlurryAdBanner */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FD01B68FE1F0037FD53 /* FlurryAdBanner.h */,
+				A9587FD11B68FE1F0037FD53 /* FlurryAdBannerDelegate.h */,
+			);
+			path = FlurryAdBanner;
+			sourceTree = "<group>";
+		};
+		A9587FD21B68FE1F0037FD53 /* FlurryAdInterstitial */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FD31B68FE1F0037FD53 /* FlurryAdInterstitial.h */,
+				A9587FD41B68FE1F0037FD53 /* FlurryAdInterstitialDelegate.h */,
+			);
+			path = FlurryAdInterstitial;
+			sourceTree = "<group>";
+		};
+		A9587FD51B68FE1F0037FD53 /* FlurryAdNative */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FD61B68FE1F0037FD53 /* FlurryAdNative.h */,
+				A9587FD71B68FE1F0037FD53 /* FlurryAdNativeAsset.h */,
+				A9587FD81B68FE1F0037FD53 /* FlurryAdNativeDelegate.h */,
+				A9587FD91B68FE1F0037FD53 /* FlurryAdNativeStyle.h */,
+			);
+			path = FlurryAdNative;
+			sourceTree = "<group>";
+		};
+		A9587FDB1B68FE1F0037FD53 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FDC1B68FE1F0037FD53 /* FlurryAdError.h */,
+				A9587FDD1B68FE1F0037FD53 /* FlurryAdTargeting.h */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A9587FDE1B68FE1F0037FD53 /* StaticAPI */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FDF1B68FE1F0037FD53 /* FlurryAdDelegate.h */,
+				A9587FE01B68FE1F0037FD53 /* FlurryAds.h */,
+			);
+			path = StaticAPI;
+			sourceTree = "<group>";
+		};
+		A9587FF41B6A0D0E0037FD53 /* Swelen-Mopub */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FF51B6A0D0E0037FD53 /* SwelenBannerCustomEvent.h */,
+				A9587FF61B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m */,
+				A9587FF71B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.h */,
+				A9587FF81B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m */,
+			);
+			path = "Swelen-Mopub";
+			sourceTree = "<group>";
+		};
+		A9587FFB1B6A13690037FD53 /* AdBuddiz */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FFC1B6A13740037FD53 /* AdBuddiz-MoPub-ObjectiveC-2.5.2 */,
+				A9587FFF1B6A15300037FD53 /* AdBuddizLoader.h */,
+				A95880001B6A15300037FD53 /* AdBuddizLoader.m */,
+			);
+			name = AdBuddiz;
+			sourceTree = "<group>";
+		};
+		A9587FFC1B6A13740037FD53 /* AdBuddiz-MoPub-ObjectiveC-2.5.2 */ = {
+			isa = PBXGroup;
+			children = (
+				A9587FFD1B6A13740037FD53 /* AdBuddiz.framework */,
+			);
+			name = "AdBuddiz-MoPub-ObjectiveC-2.5.2";
+			path = "AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2";
+			sourceTree = "<group>";
+		};
 		A99FA47D172FE8C80070663C /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -3131,6 +3322,7 @@
 				A916D3C21A1E03E7005FE1AE /* mimics_pcre.cc in Sources */,
 				A928FB4E1B3072E6009F0FE8 /* MRError.m in Sources */,
 				A928FB491B3072E6009F0FE8 /* MRBundleManager.m in Sources */,
+				A9587FEE1B68FE1F0037FD53 /* FlurryBannerCustomEvent.m in Sources */,
 				A916D3DD1A1E03E7005FE1AE /* SDWebImageDownloader.m in Sources */,
 				A916D4891A1E09C9005FE1AE /* iRate.m in Sources */,
 				A928FB331B3072E6009F0FE8 /* MPLogEventCommunicator.m in Sources */,
@@ -3156,6 +3348,7 @@
 				A928FB281B3072E6009F0FE8 /* MPAdDestinationDisplayAgent.m in Sources */,
 				A928FB111B3072E6009F0FE8 /* InMobiNativeAdAdapter.m in Sources */,
 				A916D3F71A1E03E7005FE1AE /* UINavigationBar+Progress.m in Sources */,
+				A927830B1B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.m in Sources */,
 				A928FB531B3072E6009F0FE8 /* MRProperty.m in Sources */,
 				A916D3B21A1E03E7005FE1AE /* NSFileManager+Tar.m in Sources */,
 				A916D2E41A1E03E7005FE1AE /* ECSlidingViewController.m in Sources */,
@@ -3263,6 +3456,7 @@
 				A916D3B91A1E03E7005FE1AE /* PageBarButtonContainer.m in Sources */,
 				A916D3B61A1E03E7005FE1AE /* NSString+URLEncoding.m in Sources */,
 				A916D3741A1E03E7005FE1AE /* CustomMMPickerView.m in Sources */,
+				A95880011B6A15300037FD53 /* AdBuddizLoader.m in Sources */,
 				A916D3D81A1E03E7005FE1AE /* MKAnnotationView+WebCache.m in Sources */,
 				A916D3AE1A1E03E7005FE1AE /* MRProgressOverlayView.m in Sources */,
 				A928FB0D1B3072E6009F0FE8 /* MPiAdBannerCustomEvent.m in Sources */,
@@ -3271,6 +3465,7 @@
 				A928FB2F1B3072E6009F0FE8 /* MPLastResortDelegate.m in Sources */,
 				A928FB9C1B3072FF009F0FE8 /* MoPubInterstitialAdViewController.m in Sources */,
 				A916D3C11A1E03E7005FE1AE /* filtered_re2.cc in Sources */,
+				A9587FF11B68FE1F0037FD53 /* FlurryMPConfig.m in Sources */,
 				A916D2CA1A1E03E7005FE1AE /* WideSpaceAdViewController.m in Sources */,
 				A928FB171B3072E6009F0FE8 /* MPInstanceProvider+Vungle.m in Sources */,
 				A916D3C61A1E03E7005FE1AE /* perl_groups.cc in Sources */,
@@ -3283,6 +3478,7 @@
 				A928FB7D1B3072E6009F0FE8 /* MPNativeAd.m in Sources */,
 				A916D2E01A1E03E7005FE1AE /* CRNavigationBar.m in Sources */,
 				A916D3CB1A1E03E7005FE1AE /* regexp.cc in Sources */,
+				A9587FFA1B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m in Sources */,
 				A916D3691A1E03E7005FE1AE /* Ppmd7.c in Sources */,
 				A916D3C31A1E03E7005FE1AE /* nfa.cc in Sources */,
 				A928FB461B3072E6009F0FE8 /* MPMRAIDInterstitialCustomEvent.m in Sources */,
@@ -3291,6 +3487,8 @@
 				A916D3F51A1E03E7005FE1AE /* UIImageView+Animation.m in Sources */,
 				A916D35C1A1E03E7005FE1AE /* LogViewController.m in Sources */,
 				A916D3DA1A1E03E7005FE1AE /* SDImageCache.m in Sources */,
+				A9587FEF1B68FE1F0037FD53 /* FlurryInterstitialCustomEvent.m in Sources */,
+				A9587FF21B68FE1F0037FD53 /* FlurryNativeAdAdapter.m in Sources */,
 				A928FB5E1B3072E6009F0FE8 /* MPIdentityProvider.m in Sources */,
 				A916D2E61A1E03E7005FE1AE /* FPPopoverController.m in Sources */,
 				A916D2E91A1E03E7005FE1AE /* FPPopoverController+JSon.m in Sources */,
@@ -3306,6 +3504,7 @@
 				A928FB901B3072E6009F0FE8 /* MPRewardedVideo.m in Sources */,
 				A928FB731B3072E6009F0FE8 /* MPMoPubNativeCustomEvent.m in Sources */,
 				A916D3AA1A1E03E7005FE1AE /* MRActivityIndicatorView.m in Sources */,
+				A9587FC71B68FE010037FD53 /* AppDeckAnalytics.m in Sources */,
 				A928FB431B3072E6009F0FE8 /* MPInstanceProvider.m in Sources */,
 				A928FB181B3072E6009F0FE8 /* MPVungleRouter.m in Sources */,
 				A916D2E51A1E03E7005FE1AE /* EmbedResources.m in Sources */,
@@ -3331,11 +3530,13 @@
 				A928FB391B3072E6009F0FE8 /* MPAdWebViewAgent.m in Sources */,
 				A916D2CF1A1E03E7005FE1AE /* AdRequest.m in Sources */,
 				A928FB3D1B3072E6009F0FE8 /* MPBaseInterstitialAdapter.m in Sources */,
+				A9587FF31B68FE1F0037FD53 /* FlurryNativeCustomEvent.m in Sources */,
 				A916D40B1A1E03E7005FE1AE /* NetWorkTester.m in Sources */,
 				A928FB4A1B3072E6009F0FE8 /* MRCalendarManager.m in Sources */,
 				A928FB811B3072E6009F0FE8 /* MPNativeAdRequest.m in Sources */,
 				A928FB881B3072E6009F0FE8 /* MPTableViewAdManager.m in Sources */,
 				A916D36D1A1E03E7005FE1AE /* 7zAlloc.c in Sources */,
+				A9587FF91B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m in Sources */,
 				A916D3621A1E03E7005FE1AE /* 7zStream.c in Sources */,
 				A916D2DF1A1E03E7005FE1AE /* CookieStorage.m in Sources */,
 				A916D36E1A1E03E7005FE1AE /* 7zMain.c in Sources */,
@@ -3428,6 +3629,7 @@
 				A916D2881A1E03E7005FE1AE /* SmartAdServerAdViewController.m in Sources */,
 				A916D40A1A1E03E7005FE1AE /* WebViewModuleViewController.m in Sources */,
 				A916D3D21A1E03E7005FE1AE /* Reachability.m in Sources */,
+				A92783051B7393A800FF39E3 /* AppDeckInMobiBannerCustomEvent.m in Sources */,
 				A928FB511B3072E6009F0FE8 /* MRNativeCommandHandler.m in Sources */,
 				A928FB861B3072E6009F0FE8 /* MPStreamAdPlacementData.m in Sources */,
 				A928FAF51B3072E5009F0FE8 /* AdColonyCustomEvent.m in Sources */,
@@ -3541,6 +3743,8 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/WideSpace/widespace-sdk-ios-4.6.0",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdColony/AdColony-iOS-SDK-2.5.1",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdMob/GoogleMobileAdsSdkiOS-7.3.1",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppDeck/AppDeck-Prefix.pch";
@@ -3563,6 +3767,10 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Greystripe/conversant-ios-sdk-4.4.0/ConversantSDK",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/InMobi/InMobi-iOS-SDK-4.5.3/Libs",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Swelen/SwelenAds-50000e/SwelenSDK",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-6.5.0/Flurry",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-6.5.0/FlurryAds",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -3593,6 +3801,8 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/WideSpace/widespace-sdk-ios-4.6.0",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdColony/AdColony-iOS-SDK-2.5.1",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdMob/GoogleMobileAdsSdkiOS-7.3.1",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppDeck/AppDeck-Prefix.pch";
@@ -3615,6 +3825,10 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Greystripe/conversant-ios-sdk-4.4.0/ConversantSDK",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/InMobi/InMobi-iOS-SDK-4.5.3/Libs",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Swelen/SwelenAds-50000e/SwelenSDK",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-6.5.0/Flurry",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-6.5.0/FlurryAds",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = (

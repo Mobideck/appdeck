@@ -13,8 +13,8 @@
 #import "AppURLCache.h"
 #import "ManagedUIWebViewController.h"
 #import "LoaderViewController.h"
-#import "GoogleAnalytics/GAI.h"
-#import "GoogleAnalytics/GAIDictionaryBuilder.h"
+#import "AppDeckAnalytics.h"
+
 //#import <Crashlytics/Crashlytics.h>
 
 @implementation RemoteAppCache
@@ -63,12 +63,7 @@ int main_unused_7z(int numargs, char *args[]);
             AppDeck *appDeck = [AppDeck sharedInstance];
 //            [appDeck.loader.globalTracker trackEventWithCategory:@"prefetch" withAction:@"finished" withLabel:url.absoluteString withValue:[NSNumber numberWithInt:1]];
             
-            [appDeck.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"prefetch"
-                                                                                       action:@"finished"
-                                                                                        label:url.absoluteString
-                                                                                        value:[NSNumber numberWithInt:1]] build]];
-            
-            
+            [appDeck.loader.analytics sendEventWithName:@"prefetch" action:@"finished" label:url.absoluteString value:[NSNumber numberWithInt:1]];
             
             self.state = RemoteAppCacheStateWait;
         });

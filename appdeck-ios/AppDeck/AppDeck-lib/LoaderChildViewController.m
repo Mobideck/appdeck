@@ -9,9 +9,7 @@
 #import "LoaderChildViewController.h"
 #import "SwipeViewController.h"
 #import "LoaderViewController.h"
-#import "GoogleAnalytics/GAI.h"
-#import "GoogleAnalytics/GAIDictionaryBuilder.h"
-#import "GoogleAnalytics/GAIFields.h"
+#import "AppDeckAnalytics.h"
 #import "PopOverWebViewViewController.h"
 #import "PhotoBrowserViewController.h"
 #import "IOSVersion.h"
@@ -192,17 +190,11 @@
 
 -(void)childIsMain:(BOOL)isMain
 {
-    if (self.loader.globalTracker)
+    if (isMain)
     {
-        //NSLog(@"child: %@", self.url.absoluteString);
-//        [self.loader.globalTracker sendView:self.url.absoluteString];
-        
-        // This screen name value will remain set on the tracker and sent with
-        // hits until it is set to a new value or to nil.
-        [self.loader.globalTracker set:kGAIScreenName value:self.url.absoluteString];
-        [self.loader.globalTracker send:[[GAIDictionaryBuilder createScreenView] build]];
-        
+        [self.loader.analytics sendScreenView:self.url.absoluteString];
     }
+    
     if (isMain)
     {
         self.swipeContainer.navigationItem.rightBarButtonItems = self.rightBarButtonItems;
@@ -344,20 +336,7 @@
                 
                 
                 // stats
-                if (self.loader.tracker)
-                {
-//                    [self.loader.tracker trackEventWithCategory:@"action" withAction:@"share" withLabel:(url ? url.absoluteString : title) withValue:[NSNumber numberWithInt:1]];
-                    [self.loader.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"action"
-                                                                                      action:@"share"
-                                                                                       label:(url ? url.absoluteString : title)
-                                                                                       value:[NSNumber numberWithInt:1]] build]];
-                    
-                }
-//                [self.loader.globalTracker trackEventWithCategory:@"action" withAction:@"share" withLabel:(url ? url.absoluteString : title) withValue:[NSNumber numberWithInt:1]];
-                [self.loader.globalTracker send:[[GAIDictionaryBuilder createEventWithCategory:@"action"
-                                                                                        action:@"share"
-                                                                                         label:(url ? url.absoluteString : title)
-                                                                                         value:[NSNumber numberWithInt:1]] build]];
+                [self.loader.analytics sendEventWithName:@"action" action:@"share" label:(url ? url.absoluteString : title) value:[NSNumber numberWithInt:1]];
                 
             }
         }

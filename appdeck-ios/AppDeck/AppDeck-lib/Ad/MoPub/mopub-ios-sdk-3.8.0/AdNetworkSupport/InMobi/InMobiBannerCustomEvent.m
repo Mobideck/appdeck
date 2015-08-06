@@ -61,6 +61,11 @@ static NSString *gAppId = nil;
     }
 
     NSString *appId = gAppId;
+
+    if ([appId length] == 0) {
+        appId = [info objectForKey:@"app_id"];
+    }
+
     if ([appId length] == 0) {
         appId = kInMobiAppID;
     }
