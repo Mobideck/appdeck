@@ -134,7 +134,14 @@ public class PhotoBrowser extends AppDeckFragment {
         viewPager = (ViewPager)rootView.findViewById(R.id.photo_browser_pager);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(startIndex);
-       	viewPager.setBackgroundColor(Color.parseColor(bgcolor));
+
+		try {
+			viewPager.setBackgroundColor(Color.parseColor(bgcolor));
+		} catch (IllegalArgumentException e) {
+
+		}
+
+
         
         viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			

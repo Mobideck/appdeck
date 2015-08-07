@@ -71,6 +71,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubInterstitial;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -84,7 +86,7 @@ import com.widespace.interfaces.AdEventListener;
 */
 import io.netty.handler.codec.http.HttpRequest;
 
-public class Loader extends ActionBarActivity {
+public class Loader extends ActionBarActivity implements MoPubInterstitial.InterstitialAdListener {
 
 /*
 	// widespace
@@ -111,6 +113,9 @@ public class Loader extends ActionBarActivity {
 
     private String alternativeBootstrapURL = null;
 
+    private MoPubInterstitial mInterstitial = null;
+
+    public AppDeckAdManager adManager;
 
 	
 	protected AppDeck appDeck;
@@ -418,7 +423,15 @@ public class Loader extends ActionBarActivity {
         });
 		
 		initUI();
-		
+
+        adManager = new AppDeckAdManager(this);
+
+        mInterstitial = new MoPubInterstitial(this, adManager.mopubInterstitialId);
+        mInterstitial.setInterstitialAdListener(this);
+
+        if (adManager.shouldShowInterstitial())
+            mInterstitial.load();
+
 		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
         appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
 
@@ -608,7 +621,9 @@ public class Loader extends ActionBarActivity {
     
     @Override
     protected void onDestroy()
-    {        
+    {
+        if (mInterstitial != null)
+            mInterstitial.destroy();
     	super.onDestroy();
         isForeground = false;
         SmartWebViewFactory.onActivityDestroy(this);
@@ -2057,6 +2072,38 @@ public class Loader extends ActionBarActivity {
             return;
         //mProgressBar.setIndeterminate(false);
         mProgressBar.setProgress(progress);
+    }
+
+    // Mopub
+
+    // InterstitialAdListener methods
+    @Override
+    public void onInterstitialLoaded(MoPubInterstitial interstitial) {
+        if (interstitial.isReady()) {
+            mInterstitial.show();
+        } else {
+            // Other code
+        }
+    }
+
+    @Override
+    public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
+        Log.d(TAG, "InterstitialFailed");
+    }
+
+    @Override
+    public void onInterstitialShown(MoPubInterstitial interstitial) {
+        Log.d(TAG, "onInterstitialShown");
+    }
+
+    @Override
+    public void onInterstitialClicked(MoPubInterstitial interstitial) {
+        Log.d(TAG, "onInterstitialClicked");
+    }
+
+    @Override
+    public void onInterstitialDismissed(MoPubInterstitial interstitial) {
+        Log.d(TAG, "onInterstitialDismissed");
     }
 
 }

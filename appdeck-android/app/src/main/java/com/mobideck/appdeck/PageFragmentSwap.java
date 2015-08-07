@@ -7,6 +7,8 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import com.mobideck.appdeck.CacheManager.CacheResult;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubView;
 
 /*import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -60,7 +62,10 @@ public class PageFragmentSwap extends AppDeckFragment {
     private ProgressBar preLoadingIndicator;
     private boolean isPreLoading = true;
 
-	View adview;
+	private MoPubView bannerAdView;
+    MoPubBannerAdListener bannerAdViewListener;
+
+    View adview;
 	
 	public URI uri;
 	
@@ -125,8 +130,8 @@ public class PageFragmentSwap extends AppDeckFragment {
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
         swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-        	
-        	@Override
+
+            @Override
             public void onRefresh() {
                 swipeViewAlt.setRefreshing(true);
                 swipeView.setRefreshing(true);
@@ -172,7 +177,42 @@ public class PageFragmentSwap extends AppDeckFragment {
         mHandler = new Handler();
         mHandler.postDelayed(myTask, 150);
 
+        // MoPub
+        bannerAdViewListener = new MoPubBannerAdListener();
+        bannerAdView = (MoPubView)rootView.findViewById(R.id.bannerAdview);
+        bannerAdView.setAdUnitId(this.loader.adManager.mopubBannerId);
+        bannerAdView.setBannerAdListener(bannerAdViewListener);
+        bannerAdView.loadAd();
+
         return rootView;
+    }
+
+    class MoPubBannerAdListener implements MoPubView.BannerAdListener {
+        // Sent when the banner has successfully retrieved an ad.
+        public void onBannerLoaded(MoPubView banner) {
+			Log.d(TAG, "MoPub banner loaded");
+			rootView.bringChildToFront(bannerAdView);
+        }
+
+        // Sent when the banner has failed to retrieve an ad. You can use the MoPubErrorCode value to diagnose the cause of failure.
+        public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
+			Log.d(TAG, "MoPub banner failed");
+        }
+
+        // Sent when the user has tapped on the banner.
+        public void onBannerClicked(MoPubView banner) {
+			Log.d(TAG, "MoPub banner clicked");
+        }
+
+        // Sent when the banner has just taken over the screen.
+        public void onBannerExpanded(MoPubView banner) {
+			Log.d(TAG, "MoPub banner expanded");
+        }
+
+        // Sent when an expanded banner has collapsed back to its original size.
+        public void onBannerCollapsed(MoPubView banner) {
+			Log.d(TAG, "MoPub banner collapsed");
+        }
     }
 
     private Handler mHandler;
@@ -258,6 +298,8 @@ public class PageFragmentSwap extends AppDeckFragment {
         swipeViewAlt.removeAllViews();
         pageWebView = null;
         pageWebViewAlt = null;
+        bannerAdView.destroy();
+        bannerAdView = null;
     }
     
     @Override
@@ -464,8 +506,11 @@ public class PageFragmentSwap extends AppDeckFragment {
     	pageWebViewAlt.ctl.setForceCache(false);
     	
     	rootView.bringChildToFront(swipeView);
-    	if (adview != null)
+        if (adview != null)
     		rootView.bringChildToFront(adview);
+
+        rootView.bringChildToFront(bannerAdView);
+
 //    	swipeViewAlt.setVisibility(View.VISIBLE);
     	
     	//page_layout_alt.removeAllViews();
@@ -507,6 +552,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	rootView.bringChildToFront(swipeViewAlt);
     	if (adview != null)
     		rootView.bringChildToFront(adview);
+
+		rootView.bringChildToFront(bannerAdView);
     	
     	final Runnable r = new Runnable()
     	{
@@ -546,6 +593,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	            	    	rootView.bringChildToFront(swipeView);
     	            	    	if (adview != null)
     	            	    		rootView.bringChildToFront(adview);
+
+								rootView.bringChildToFront(bannerAdView);
     	            	    	    	            	    	
     	            	    	swapInProgress = false;
     	            	    	reloadInProgress = false;    	            	   

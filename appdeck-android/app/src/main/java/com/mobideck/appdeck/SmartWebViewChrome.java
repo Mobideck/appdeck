@@ -91,6 +91,10 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 WebView.setWebContentsDebuggingEnabled(true);
             }
         }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            WebView.enableSlowWholeDocumentDraw();
+        }
     }
 
     public void setRootAppDeckFragment(AppDeckFragment root)
@@ -217,6 +221,20 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         webSettings.setUserAgentString(userAgent);
 
         webSettings.setJavaScriptEnabled(true);
+
+        // Allow third party cookies for Android Lollipop
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptThirdPartyCookies(this, true);
+        }
+
+        // allow mixed content
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
 
         //setLayerType(View.LAYER_TYPE_HARDWARE, null);
 

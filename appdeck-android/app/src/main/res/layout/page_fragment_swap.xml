@@ -72,5 +72,10 @@
     </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
      -->
 
-
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/bannerAdview"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"
+        />
 </FrameLayout>
