@@ -50,6 +50,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -71,8 +72,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubInterstitial;
+/*import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubInterstitial;*/
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -86,7 +87,7 @@ import com.widespace.interfaces.AdEventListener;
 */
 import io.netty.handler.codec.http.HttpRequest;
 
-public class Loader extends ActionBarActivity implements MoPubInterstitial.InterstitialAdListener {
+public class Loader extends ActionBarActivity /*implements MoPubInterstitial.InterstitialAdListener*/ {
 
 /*
 	// widespace
@@ -113,7 +114,7 @@ public class Loader extends ActionBarActivity implements MoPubInterstitial.Inter
 
     private String alternativeBootstrapURL = null;
 
-    private MoPubInterstitial mInterstitial = null;
+    //private MoPubInterstitial mInterstitial = null;
 
     public AppDeckAdManager adManager;
 
@@ -426,11 +427,11 @@ public class Loader extends ActionBarActivity implements MoPubInterstitial.Inter
 
         adManager = new AppDeckAdManager(this);
 
-        mInterstitial = new MoPubInterstitial(this, adManager.mopubInterstitialId);
+/*        mInterstitial = new MoPubInterstitial(this, adManager.mopubInterstitialId);
         mInterstitial.setInterstitialAdListener(this);
 
         if (adManager.shouldShowInterstitial())
-            mInterstitial.load();
+            mInterstitial.load();*/
 
 		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
         appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
@@ -622,8 +623,8 @@ public class Loader extends ActionBarActivity implements MoPubInterstitial.Inter
     @Override
     protected void onDestroy()
     {
-        if (mInterstitial != null)
-            mInterstitial.destroy();
+/*        if (mInterstitial != null)
+            mInterstitial.destroy();*/
     	super.onDestroy();
         isForeground = false;
         SmartWebViewFactory.onActivityDestroy(this);
@@ -1392,6 +1393,12 @@ public class Loader extends ActionBarActivity implements MoPubInterstitial.Inter
 			    	else
 			    		Log.e(TAG, "failed to fetch config: "+this.getRequestURI().toString());
 				}
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                    // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                    Log.e(TAG, "Error: "+statusCode);
+                }
 			});
 			
 			return true;
@@ -2074,6 +2081,7 @@ public class Loader extends ActionBarActivity implements MoPubInterstitial.Inter
         mProgressBar.setProgress(progress);
     }
 
+    /*
     // Mopub
 
     // InterstitialAdListener methods
@@ -2104,6 +2112,6 @@ public class Loader extends ActionBarActivity implements MoPubInterstitial.Inter
     @Override
     public void onInterstitialDismissed(MoPubInterstitial interstitial) {
         Log.d(TAG, "onInterstitialDismissed");
-    }
+    }*/
 
 }

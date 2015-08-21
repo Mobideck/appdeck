@@ -48,7 +48,7 @@ public class RemoteAppCache {
 		client.get(url, new BinaryHttpResponseHandler(new String[] { ".*" /*"application/x-7z-compressed"*/}) {
 				
 		     @Override
-		     public void onSuccess(byte[] data) {
+			 public void onSuccess(int statusCode, Header[] headers, byte[] data) {
 		         // Successfully got a response
 		    	 Log.d(TAG,"URL Downloaded: " + url);
 		    	 _data = data;
@@ -88,25 +88,12 @@ public class RemoteAppCache {
                         }
 		    	    }).start();
 		     }
-		     
-		     @Override
-		    public void onFinish() {
-		    	// TODO Auto-generated method stub
-		    	super.onFinish();
-		    }
-		     
-		     @Override
-		    public void onStart() {
-		    	// TODO Auto-generated method stub
-		    	super.onStart();
-		    }
+
 
 			@Override
-			public void onFailure(int statusCode, Header[] headers, byte[] binaryData,
-					Throwable error) {
-				// TODO Auto-generated method stub
-				Log.d(TAG,"Failed to download: " + url);
-				super.onFailure(statusCode, headers, binaryData, error);
+			public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+				// called when response HTTP status is "4XX" (eg. 401, 403, 404)
+				Log.d(TAG, "Failed to download: " + url);
 			}
 		     
 		 });	

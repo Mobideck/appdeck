@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import com.mobideck.appdeck.R;
 
@@ -73,8 +74,13 @@ public class ScreenConfiguration {
 			urlRegexp = new Pattern[urlsNode.length()];
 			for (int i = 0; i < urlsNode.length(); i++) {
 				String regexp = urlsNode.getString(i);
-				Pattern p = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
-				urlRegexp[i] = p;
+				try {
+					Pattern p = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
+					urlRegexp[i] = p;
+				} catch (PatternSyntaxException e) {
+					e.printStackTrace();
+					urlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
+				}
 			}
 		}		
 	}

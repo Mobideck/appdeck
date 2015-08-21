@@ -17,6 +17,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+
 public class GoogleCloudMessagingHelper {
 
 	AppDeck appDeck;
@@ -236,9 +239,21 @@ public class GoogleCloudMessagingHelper {
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.get(register_push_url, new AsyncHttpResponseHandler() {
 			    @Override
-			    public void onSuccess(String response) {
-			        Log.i(TAG, response);
+				public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+					try {
+						String response = responseBody == null?null:new String(responseBody, this.getCharset());
+			        	Log.i(TAG, response);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			    }
+
+				@Override
+				public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+					// called when response HTTP status is "4XX" (eg. 401, 403, 404)
+					Log.e(TAG, "Error: " + statusCode);
+				}
 			});
 
 	    }	

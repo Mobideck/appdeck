@@ -31,6 +31,16 @@ public class AppDeckAdManager {
     public String mopubRectangleId = "";
     public String mopubInterstitialId = "";
 
+
+    public static final String ADMOB_BANNER_ID = "admob_banner_id";
+    public static final String ADMOB_RECTANGLE_ID = "admob_rectangle_id";
+    public static final String ADMOB_INTERSTITIAL_ID = "admob_interstitial_id";
+
+    public String adMobBannerId = "";
+    public String adMobRectangleId = "";
+    public String adMobInterstitialId = "";
+
+
     private AsyncHttpClient httpClient;
 
     AppDeckAdManager(Loader loader) {
@@ -71,22 +81,44 @@ public class AppDeckAdManager {
         httpClient.get(url, new AsyncHttpResponseHandler() {
 
             @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Log.e(TAG, "Error: "+statusCode);
+            }
+
+
+            @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
                     String response = responseBody == null?null:new String(responseBody, this.getCharset());
                     Log.i(TAG, "Response: "+response);
                     try {
                         JSONObject conf = (JSONObject) new JSONTokener(response).nextValue();
+
+                        // MoPub
+
                         String newMopubBannerId = conf.getString("mopubBannerId");
                         String newMopubRectangleId = conf.getString("mopubRectangleId");
                         String newMopubInterstitialId = conf.getString("mopubInterstitialId");
 
-                        if (newMopubBannerId.equals(mopubBannerId) && newMopubRectangleId.equals(mopubRectangleId) && newMopubInterstitialId.equals(mopubInterstitialId))
-                            return;
-
                         mopubBannerId = newMopubBannerId;
                         mopubRectangleId = newMopubRectangleId;
                         mopubInterstitialId = newMopubInterstitialId;
+
+                        // AdMob
+
+                        String newAdMobBannerId = conf.getString("adMobBannerId");
+                        String newAdMobRectangleId = conf.getString("adMobRectangleId");
+                        String newAdMobInterstitialId = conf.getString("adMobInterstitialId");
+
+
+                        if (newMopubBannerId.equals(mopubBannerId) && newMopubRectangleId.equals(mopubRectangleId) && newMopubInterstitialId.equals(mopubInterstitialId) &&
+                            newAdMobBannerId.equals(adMobBannerId) && newAdMobRectangleId.equals(adMobRectangleId) && newAdMobInterstitialId.equals(adMobInterstitialId))
+                            return;
+
+                        adMobBannerId = newAdMobBannerId;
+                        adMobRectangleId = newAdMobRectangleId;
+                        adMobInterstitialId = newAdMobInterstitialId;
 
                         setAdConf(loader);
 
@@ -110,6 +142,10 @@ public class AppDeckAdManager {
         this.mopubRectangleId = prefs.getString(MOPUB_RECTANGLE_ID, "");
         this.mopubInterstitialId = prefs.getString(MOPUB_INTERSTITIAL_ID, "");
         Log.i(TAG, "Read: mopubBannerId:"+mopubBannerId+" mopubRectangleId:"+mopubRectangleId+" mopubInterstitialId:"+mopubInterstitialId);
+        this.adMobBannerId = prefs.getString(ADMOB_BANNER_ID, "");
+        this.adMobRectangleId = prefs.getString(ADMOB_RECTANGLE_ID, "");
+        this.adMobInterstitialId = prefs.getString(ADMOB_INTERSTITIAL_ID, "");
+        Log.i(TAG, "Read: AdMobBannerId:"+adMobBannerId+" AdMobRectangleId:"+adMobRectangleId+" AdMobInterstitialId:"+adMobInterstitialId);
     }
 
     private void setAdConf(Context context) {
@@ -119,6 +155,13 @@ public class AppDeckAdManager {
         editor.putString(MOPUB_BANNER_ID, mopubBannerId);
         editor.putString(MOPUB_RECTANGLE_ID, mopubRectangleId);
         editor.putString(MOPUB_INTERSTITIAL_ID, mopubInterstitialId);
+
+        Log.i(TAG, "Store: AdMobBannerId:"+adMobBannerId+" AdMobRectangleId:"+adMobRectangleId+" AdMobInterstitialId:"+adMobInterstitialId);
+        editor.putString(ADMOB_BANNER_ID, adMobBannerId);
+        editor.putString(ADMOB_RECTANGLE_ID, adMobRectangleId);
+        editor.putString(ADMOB_INTERSTITIAL_ID, adMobInterstitialId);
+
+
         editor.apply();
     }
 
