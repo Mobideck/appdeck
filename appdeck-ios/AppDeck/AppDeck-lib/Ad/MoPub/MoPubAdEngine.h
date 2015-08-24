@@ -8,9 +8,9 @@
 
 #import "../../AppDeckAdEngine.h"
 
-#import "mopub-ios-sdk-3.8.0/MoPubSDK/MPAdView.h"
-#import "mopub-ios-sdk-3.8.0/MoPubSDK/MPInterstitialAdController.h"
-#import "mopub-ios-sdk-3.8.0/MoPubSDK/Internal/Utility/MPSessionTracker.h"
+#import "MPAdView.h"
+#import "MPInterstitialAdController.h"
+#import "MPSessionTracker.h"
 
 @interface MoPubAdEngine : AppDeckAdEngine
 

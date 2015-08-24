@@ -28,24 +28,24 @@
     return self;
 }
 
-/*
-- (id)initWithAdManager:(AdManager *)adManager type:(NSString *)adType engine:(AppsFireAdEngine *)engine
-{
-    self = [super initWithAdManager:adManager type:adType engine:engine];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}*/
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [AppsfireSDK connectWithAPIKey:self.adEngine.api_key];
+//    [AppsfireSDK connectWithAPIKey:self.adEngine.api_key];
+    [AppsfireSDK connectWithSDKToken:self.adEngine.api_key secretKey:self.adEngine.api_secret features:AFSDKFeatureMonetization parameters:nil];
+    
+    
 #ifdef DEBUG
     [AppsfireAdSDK setDebugModeEnabled:YES];
 #endif
-    [AppsfireAdSDK prepare];
+    // check if there is an ad available, and that none is currently displayed
+    if ([AppsfireAdSDK isThereAModalAdAvailableForType:AFAdSDKModalTypeSushi] == AFAdSDKAdAvailabilityYes && ![AppsfireAdSDK isModalAdDisplayed]) {
+
+    } else {
+        self.state = AppDeckAdStateCancel;
+    }
+    
+    //[AppsfireAdSDK prepare];
     [AppsfireAdSDK setDelegate:self];
     self.width = 0;
     self.height = 0;
@@ -68,18 +68,42 @@
 
 -(void)adWillAppearInViewController:(LoaderChildViewController *)ctl
 {
-    [AppsfireAdSDK requestModalAd:AFAdSDKModalTypeUraMaki withController:(UIViewController *)ctl];
+
+//    [AppsfireAdSDK requestModalAd:AFAdSDKModalTypeUraMaki withController:(UIViewController *)ctl];
+    
+    // delay a bit the request because ‘applicationDidBecomeActive:’ could prevent a part of the animation
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [AppsfireAdSDK requestModalAd:AFAdSDKModalTypeSushi withController:(UIViewController *)ctl withDelegate:self];
+    });
 }
 
 #pragma mark - AppsFire Ad Delegate
 
 /*!
- *  @brief Called when the library is initialized.
+ *  @brief Called when ads were refreshed and that at least one modal ad is available.
+ *  @since 2.4
+ *
+ *  @note You are responsible to check whether there is a modal ad available for the format you are willing to display.
  */
-- (void)adUnitDidInitialize
+- (void)modalAdsRefreshedAndAvailable
 {
-    
+    self.state = AppDeckAdStateReady;
 }
+
+/*!
+ *  @brief Called when ads were refreshed but that none is available for any modal format.
+ *  @since 2.4
+ *
+ *  @note You could decide to act differently knowing that there is currently no ad to display.
+ */
+- (void)modalAdsRefreshedAndNotAvailable
+{
+    self.state = AppDeckAdStateFailed;
+}
+
+#pragma mark - AppsFire Modal Ad Delegate
 
 /*!
  *  @brief Called when there is a modal ad available,
@@ -106,40 +130,13 @@
 /*!
  *  @brief Called when a modal ad failed to present.
  *  You can use the code in the NSError to analyze precisely what went wrong.
+ *
+ *  @param error The error object filled with the appropriate 'code' and 'localizedDescription'.
  */
 - (void)modalAdRequestDidFailWithError:(NSError *)error
 {
     NSLog(@"Ad Unit Request Failed = %@", error.localizedDescription);
     self.state = AppDeckAdStateFailed;
-    /*
-     // optional, you can implement a reaction
-     switch (error.code) {
-     case AFSDKErrorCodeAdvertisingBadCall:
-     break;
-     case AFSDKErrorCodeAdvertisingNoAd:
-     break;
-     case AFSDKErrorCodeAdvertisingAlreadyDisplayed:
-     break;
-     default:
-     break;
-     }
-     */
-}
-
-/*!
- *  @brief Called when the modal ad is going to be presented.
- */
-- (void)modalAdWillAppear
-{
-    
-}
-
-/*!
- *  @brief Called when the modal ad was presented.
- */
-- (void)modalAdDidAppear
-{
-    
 }
 
 /*!
@@ -159,6 +156,5 @@
 {
     self.state = AppDeckAdStateClose;
 }
-
 
 @end

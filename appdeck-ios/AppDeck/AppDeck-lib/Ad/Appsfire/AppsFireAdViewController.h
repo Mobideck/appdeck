@@ -9,7 +9,7 @@
 #import "../../AppDeckAdViewController.h"
 #import "AppsFireAdEngine.h"
 
-@interface AppsFireAdViewController : AppDeckAdViewController <AppsfireAdSDKDelegate>
+@interface AppsFireAdViewController : AppDeckAdViewController <AppsfireAdSDKDelegate, AFAdSDKModalDelegate>
 
 - (id)initWithAdRation:(AdRation *)adRation engine:(AppsFireAdEngine *)adEngine config:(NSDictionary *)config;
 //- (id)initWithAdManager:(AdManager *)adManager type:(NSString *)adType engine:(AppsFireAdEngine *)engine;

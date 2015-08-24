@@ -628,7 +628,7 @@ static unsigned char gifData[] = {
     //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
 
     // adblock
-    if (fromWebView)
+    if (fromWebView && NO)
     {
         //self.enableAdBlock = YES;
         BOOL shouldBlock = NO;

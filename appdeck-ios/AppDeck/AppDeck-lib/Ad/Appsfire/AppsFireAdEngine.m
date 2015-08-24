@@ -24,6 +24,7 @@
     if (self) {
         // Custom initialization
         self.api_key = [NSString stringWithFormat:@"%@", [config objectForKey:@"api_key"]];
+        self.api_secret = [NSString stringWithFormat:@"%@", [config objectForKey:@"api_secret"]];        
         self.type = AFAdSDKModalTypeSushi;
         NSString *type = [config objectForKey:@"type"];
         if (type && [type isEqualToString:@"uramaki"])
