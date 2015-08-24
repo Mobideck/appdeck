@@ -26,14 +26,17 @@ repositories {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.1"
+
+//    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.mobideck.appdeck"
+
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 42
-        versionName "1.42"
+        versionName "1.5"
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -92,6 +95,11 @@ android {
 
         }
     }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
@@ -104,10 +112,12 @@ dependencies {
     //compile 'com.google.android.gms:play-services-base:6.5.87'
 
     //compile 'com.google.android.gms:play-services-base:7.0.0'
-    compile 'com.google.android.gms:play-services-analytics:7.5.0'
-    compile 'com.google.android.gms:play-services-gcm:7.5.0'
+    compile 'com.google.android.gms:play-services-analytics:7.8.0'
+    compile 'com.google.android.gms:play-services-gcm:7.8.0'
 
-    compile 'com.google.android.gms:play-services-ads:7.5.0'
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
+
+    compile 'com.loopj.android:android-async-http:1.4.8'
 
     //compile 'com.android.support:multidex:1.0.0'
 
@@ -125,7 +135,8 @@ dependencies {
     compile 'org.slf4j:slf4j-android:1.7.10'
     //compile 'com.widespace:widespace-sdk-4.6.0-e10401f@aar'
 
-//    compile 'com.github.chrisbanes.photoview:library:1.2.3'
+    compile 'com.github.chrisbanes.photoview:library:1.2.3'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {
         transitive = true;
     }
@@ -133,6 +144,7 @@ dependencies {
     compile('com.mopub:mopub-sdk:3.10.0@aar') {
         transitive = true
     }
+
 }
 
 preBuild.doFirst {
