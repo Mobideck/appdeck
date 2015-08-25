@@ -133,7 +133,7 @@ dependencies {
     //compile 'org.xwalk:xwalk_core_library:10.39.235.16'
     //crosswalkCompile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
     //crosswalkCompile 'org.xwalk:xwalk_core_library:12.41.296.5'
-    crosswalkCompile 'org.xwalk:xwalk_core_library:14.43.343.17'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:14.43.343.23'
     //crosswalkx86Compile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
 
 
