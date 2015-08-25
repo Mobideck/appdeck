@@ -11,14 +11,23 @@ import java.lang.reflect.Field;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
+import android.support.multidex.MultiDex;
+
 import dalvik.system.DexClassLoader;
 
-public class AppDeckApplication extends Application/*android.support.multidex.MultiDexApplication*/ {
+public class AppDeckApplication extends android.support.multidex.MultiDexApplication {
 	
 	public boolean isInitialLoading;
-	
+
+    @Override
+    public void attachBaseContext(Context base) {
+        MultiDex.install(base);
+        super.attachBaseContext(base);
+    }
+
 	@Override
 	public void onCreate()
 	{
