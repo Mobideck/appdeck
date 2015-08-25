@@ -98,6 +98,7 @@ android {
 
     dexOptions {
         incremental true
+        jumboMode true
         javaMaxHeapSize "4g"
     }
 }
