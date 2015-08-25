@@ -420,7 +420,11 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    //it will always be call.
 		@Override
 	      public void onLoadStarted(XWalkView view, String url) {
-
+            if (firstLoad) {
+                firstLoad = false;
+                return;
+            }
+            //Log.d(TAG, "onLoadStarted (not firstLoad) :" + url);
 	      }		
 			      
 	    @Override
@@ -433,12 +437,12 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			if (pageHasFinishLoading == false)
 				return false;
 
-	    	  if (firstLoad)
-	    	  {
-	    		  Log.i(TAG, "shouldOverrideUrlLoading (firstload) :"+url);
-	    		  firstLoad = false;
-	    		  return false;
-	    	  }	    	
+	    	if (firstLoad)
+	    	{
+	    		Log.i(TAG, "shouldOverrideUrlLoading (firstload) :"+url);
+	    		firstLoad = false;
+	    		return false;
+			}
 	    	
 	    	  Log.i(TAG, "shouldOverrideUrlLoading (not firstLoad) :"+url);
 	    	  
