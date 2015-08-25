@@ -96,33 +96,40 @@ public class AppDeckAdManager {
                         JSONObject conf = (JSONObject) new JSONTokener(response).nextValue();
 
                         // MoPub
+                        try {
+                            String newMopubBannerId = conf.getString("mopubBannerId");
+                            String newMopubRectangleId = conf.getString("mopubRectangleId");
+                            String newMopubInterstitialId = conf.getString("mopubInterstitialId");
 
-                        String newMopubBannerId = conf.getString("mopubBannerId");
-                        String newMopubRectangleId = conf.getString("mopubRectangleId");
-                        String newMopubInterstitialId = conf.getString("mopubInterstitialId");
-
-                        mopubBannerId = newMopubBannerId;
-                        mopubRectangleId = newMopubRectangleId;
-                        mopubInterstitialId = newMopubInterstitialId;
+                            mopubBannerId = newMopubBannerId;
+                            mopubRectangleId = newMopubRectangleId;
+                            mopubInterstitialId = newMopubInterstitialId;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         // AdMob
+                        try {
+                            String newAdMobBannerId = conf.getString("adMobBannerId");
+                            String newAdMobRectangleId = conf.getString("adMobRectangleId");
+                            String newAdMobInterstitialId = conf.getString("adMobInterstitialId");
 
-                        String newAdMobBannerId = conf.getString("adMobBannerId");
-                        String newAdMobRectangleId = conf.getString("adMobRectangleId");
-                        String newAdMobInterstitialId = conf.getString("adMobInterstitialId");
+                            adMobBannerId = newAdMobBannerId;
+                            adMobRectangleId = newAdMobRectangleId;
+                            adMobInterstitialId = newAdMobInterstitialId;
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                        if (newMopubBannerId.equals(mopubBannerId) && newMopubRectangleId.equals(mopubRectangleId) && newMopubInterstitialId.equals(mopubInterstitialId) &&
-                            newAdMobBannerId.equals(adMobBannerId) && newAdMobRectangleId.equals(adMobRectangleId) && newAdMobInterstitialId.equals(adMobInterstitialId))
-                            return;
+//                            if (newMopubBannerId.equals(mopubBannerId) && newMopubRectangleId.equals(mopubRectangleId) && newMopubInterstitialId.equals(mopubInterstitialId) &&
+//                                    newAdMobBannerId.equals(adMobBannerId) && newAdMobRectangleId.equals(adMobRectangleId) && newAdMobInterstitialId.equals(adMobInterstitialId))
+//                                return;
 
-                        adMobBannerId = newAdMobBannerId;
-                        adMobRectangleId = newAdMobRectangleId;
-                        adMobInterstitialId = newAdMobInterstitialId;
 
                         setAdConf(loader);
 
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
