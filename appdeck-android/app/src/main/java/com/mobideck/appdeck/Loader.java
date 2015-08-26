@@ -196,6 +196,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         String app_json_url = intent.getStringExtra(JSON_URL);
         appDeck = new AppDeck(getBaseContext(), app_json_url);
 
+        Log.d(TAG, "Use AppDeck version "+AppDeck.version);
+
         String action = intent.getAction();
         Uri data = intent.getData();
 
