@@ -187,6 +187,9 @@ public class PageFragmentSwap extends AppDeckFragment {
             bannerAdView.setAdSize(AdSize.BANNER);
             bannerAdView.setAdUnitId(loader.adManager.adMobBannerId);
             bannerAdView.setAdListener(new AdListener() {
+
+                public static final String TAG = "PageFragmentSwapAds";
+
                 @Override
                 public void onAdLoaded() {
                     // Code to be executed when an ad finishes loading.
@@ -202,11 +205,11 @@ public class PageFragmentSwap extends AppDeckFragment {
                     if (errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR)
                         Log.e(TAG, "onAdFailedToLoad: Internal Error");
                     else if (errorCode == AdRequest.ERROR_CODE_INVALID_REQUEST)
-                        Log.e(TAG, "onAdFailedToLoad: Internal Error");
+                        Log.e(TAG, "onAdFailedToLoad: Invalid Request");
                     else if (errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR)
-                        Log.e(TAG, "onAdFailedToLoad: Internal Error");
+                        Log.e(TAG, "onAdFailedToLoad: Network Error");
                     else if (errorCode == AdRequest.ERROR_CODE_NO_FILL)
-                        Log.e(TAG, "onAdFailedToLoad: Internal Error");
+                        Log.e(TAG, "onAdFailedToLoad: No Fill");
                     else
                         Log.e(TAG, "onAdFailedToLoad: Unknow Error: "+errorCode);
 
@@ -257,7 +260,7 @@ public class PageFragmentSwap extends AppDeckFragment {
             bannerAdRequest = new AdRequest.Builder()
                     // Test Device
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("36944D3B0DA78530")  // Mobideck Galaxy S4
+                    .addTestDevice("315E930E16E8C801")  // Mobideck Galaxy S4
                     .build();
             bannerAdView.loadAd(bannerAdRequest);
         }
