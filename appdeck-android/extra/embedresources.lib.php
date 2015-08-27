@@ -307,6 +307,9 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
       $res = file_put_contents($output_file_path, $data);
       if ($res == false)
         appdeck_warning("failed to write resource {$url} in {$output_file_path}");
+      // clean headers
+      unset($headers['Set-Cookie']);
+      unset($headers['set-cookie']);
       $res = file_put_contents($output_file_path_meta, json_encode($headers));
       if ($res == false)
         appdeck_warning("failed to write resource meta {$url} in {$output_file_path_meta}");
