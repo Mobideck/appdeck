@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -43,6 +45,9 @@ public class AppDeckFragment extends Fragment {
 	public boolean enablePopAnimation = true;
 
     public boolean isPopUp = false;
+
+	public AdView bannerAdView = null;
+	public AdRequest bannerAdRequest = null;
 
 	public AppDeckFragment()
 	{

@@ -50,6 +50,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -67,6 +68,7 @@ import android.webkit.ValueCallback;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -118,7 +120,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
     public AppDeckAdManager adManager;
 
-	
 	protected AppDeck appDeck;
 
 	private SmartWebView leftMenuWebView;
@@ -127,6 +128,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     private DrawerLayout mDrawerLayout;
     private FrameLayout mDrawerLeftMenu;
     private FrameLayout mDrawerRightMenu;
+    private ActionBarDrawerToggle mDrawerToggle;
     
 	private PageMenuItem[] menuItems;
 
@@ -233,8 +235,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     			this.proxyPort = Utils.randInt(10000, 60000);	
     	}
     	while (isAvailable == false);
-    	
-    	Log.i(TAG, "filter registered at @"+this.proxyPort);
+
+        Log.i(TAG, "filter registered at @" + this.proxyPort);
 
 
         System.setProperty("http.proxyHost", this.proxyHost);
@@ -275,8 +277,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 };
             });
         }
-    	    	
-    	proxyServerBootstrap.start();
+
+        proxyServerBootstrap.start();
 
         setContentView(R.layout.loader);
 
@@ -290,6 +292,10 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {};
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
 
         if (appDeck.config.leftMenuUrl != null) {
             leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
@@ -377,15 +383,20 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         // configure action bar
         appDeck.actionBarHeight = getActionBarHeight();
-        
-        
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo 
         getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
-        if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
+        getSupportActionBar().setHomeButtonEnabled(true); // ???
+
+        // status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //getWindow().setStatusBarColor(getResources().getColor(R.color.AppDeckColorPrimary));
+            //getWindow().setTitleColor(getResources().getColor(R.color.AppDeckColorPrimary));
+        /*if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer_light);
         else
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);
-        
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);*/
+        }
 		if (appDeck.config.topbar_color != null)
 			getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
 
@@ -428,7 +439,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 		initUI();
 
         adManager = new AppDeckAdManager(this);
-
+        adManager.showAds(AppDeckAdManager.EVENT_START);
 /*        mInterstitial = new MoPubInterstitial(this, adManager.mopubInterstitialId);
         mInterstitial.setInterstitialAdListener(this);
 
@@ -457,6 +468,12 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         // Let's listen to some events and run Splash Ad
 		initWideSpaceAds();		
 */
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 /*
 	// widespace
@@ -825,16 +842,17 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
        	//mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
-        if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
+        /*if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer_light);
         else
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);*/
     }
     
     
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
         initUI();
     }
     
@@ -978,7 +996,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 	    while( this.findViewById(android.R.id.content).findViewById(++fID) != null );
 	    return fID;
 	}    
-    
+
     public void loadRootPage(String absoluteURL)
     {
     	fragList = new ArrayList<WeakReference<AppDeckFragment>>();
@@ -993,6 +1011,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		return;
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
     	pushFragment(fragment);
+        adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     }
 
     public boolean isSameDomain(String domain)
@@ -1045,7 +1064,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		showPopUp(null, absoluteURL);
        		return -1;
     	}*/
-		
+
+        adManager.showAds(AppDeckAdManager.EVENT_PUSH);
     	return pushFragment(fragment);
 
     }
@@ -1204,6 +1224,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		AppDeckFragmentPopAnimation anim = new AppDeckFragmentPopAnimation(current, previous);
     		anim.start();
     	}
+        adManager.showAds(AppDeckAdManager.EVENT_POP);
     	return true;
     }
 
@@ -1219,7 +1240,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	//fragmentManager.popBackStack(root, FragmentManager.POP_BACK_STACK_INCLUSIVE); 
     	
     	/*prepareRootPage();
-    	pushFragment(root);*/    	
+    	pushFragment(root);*/
+        adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     	return true;
     }
 
@@ -1541,8 +1563,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         }
         
         // try to pop a fragment if possible
-        if (popFragment())
-        	return;
+        if (popFragment()) {
+            return;
+        }
 
         // current fragment is home ?
         if (alternativeBootstrapURL == null)

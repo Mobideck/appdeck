@@ -46,7 +46,7 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:name="com.mobideck.appdeck.AppDeckApplication"
-        android:theme="@style/Theme.AppDeckTheme" >
+        android:theme="@style/Theme.MyAppDeckTheme" >
         <!--android:theme="@style/AppTheme" >-->
 
         <!-- AppDeck Test App -->
@@ -156,6 +156,22 @@
         <!-- Millennial Media -->
         <!--<activity android:name="com.millennialmedia.android.MMActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="keyboardHidden|orientation|keyboard" />
         <activity android:name="com.millennialmedia.android.VideoPlayer" android:configChanges="keyboardHidden|orientation|keyboard" />-->
+
+        <!-- InMobi -->
+        <activity android:name="com.inmobi.androidsdk.IMBrowserActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:hardwareAccelerated="true" />
+        <receiver
+            android:name="com.inmobi.commons.analytics.androidsdk.IMAdTrackerReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.inmobi.share.id" />
+            </intent-filter>
+        </receiver>
 
         <meta-data android:name="com.crashlytics.ApiKey" android:value="e62d5eb16cef87dc2d56665e3205360edcbd44bb"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />

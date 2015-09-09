@@ -30,7 +30,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.webkit.CookieSyncManager;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
@@ -66,11 +68,11 @@ public class PageFragmentSwap extends AppDeckFragment {
 	//private MoPubView bannerAdView;
     //MoPubBannerAdListener bannerAdViewListener;
 
-	private AdView bannerAdView;
-    private AdRequest bannerAdRequest;
+	//private AdView bannerAdView;
+    //private AdRequest bannerAdRequest;
 
-    View adview;
-	
+    //View adview;
+
 	public URI uri;
 	
 	private boolean shouldAutoReloadInbackground;
@@ -181,89 +183,9 @@ public class PageFragmentSwap extends AppDeckFragment {
         mHandler = new Handler();
         mHandler.postDelayed(myTask, 150);
 
-        if (loader.adManager.adMobBannerId != null && loader.adManager.adMobBannerId.length() > 0) {
-            bannerAdView = new AdView(loader);
-            //bannerAdView = (AdView)rootView.findViewById(R.id.bannerAdview);
-            bannerAdView.setAdSize(AdSize.BANNER);
-            bannerAdView.setAdUnitId(loader.adManager.adMobBannerId);
-            bannerAdView.setAdListener(new AdListener() {
-
-                public static final String TAG = "PageFragmentSwapAds";
-
-                @Override
-                public void onAdLoaded() {
-                    // Code to be executed when an ad finishes loading.
-                    Log.d(TAG, "onAdLoaded");
-                    if (bannerAdView != null)
-                        rootView.bringChildToFront(bannerAdView);
-                }
-
-                @Override
-                public void onAdFailedToLoad(int errorCode) {
-                    // Code to be executed when an ad request fails.
-
-                    if (errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR)
-                        Log.e(TAG, "onAdFailedToLoad: Internal Error");
-                    else if (errorCode == AdRequest.ERROR_CODE_INVALID_REQUEST)
-                        Log.e(TAG, "onAdFailedToLoad: Invalid Request");
-                    else if (errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR)
-                        Log.e(TAG, "onAdFailedToLoad: Network Error");
-                    else if (errorCode == AdRequest.ERROR_CODE_NO_FILL)
-                        Log.e(TAG, "onAdFailedToLoad: No Fill");
-                    else
-                        Log.e(TAG, "onAdFailedToLoad: Unknow Error: "+errorCode);
-
-                    if (bannerAdView != null) {
-                        rootView.removeView(bannerAdView);
-                        bannerAdView.destroy();
-                        bannerAdView = null;
-                    }
-                }
-
-                @Override
-                public void onAdOpened() {
-                    // Code to be executed when an ad opens an overlay that
-                    // covers the screen.
-                    Log.d(TAG, "onAdOpened");
-                }
-
-                @Override
-                public void onAdLeftApplication() {
-                    // Code to be executed when the user has left the app.
-                    Log.d(TAG, "onAdLeftApplication");
-                    if (bannerAdView != null) {
-                        rootView.removeView(bannerAdView);
-                        bannerAdView.destroy();
-                        bannerAdView = null;
-                    }
-                }
-
-                @Override
-                public void onAdClosed() {
-                    // Code to be executed when when the user is about to return
-                    // to the app after tapping on an ad.
-                    Log.d(TAG, "onAdClosed");
-                    /*if (bannerAdView != null) {
-                        rootView.removeView(bannerAdView);
-                        bannerAdView.destroy();
-                        bannerAdView = null;
-                    }*/
-                }
-            });
-
-
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.CENTER | Gravity.BOTTOM;
-
-            rootView.addView(bannerAdView, layoutParams);
-
-            bannerAdRequest = new AdRequest.Builder()
-                    // Test Device
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("315E930E16E8C801")  // Mobideck Galaxy S4
-                    .build();
-            bannerAdView.loadAd(bannerAdRequest);
-        }
+        AdView adView = loader.adManager.getBannerAd();
+        if (adView != null)
+            setBannerAdView(adView);
 
         /*// MoPub
         bannerAdViewListener = new MoPubBannerAdListener();
@@ -273,6 +195,78 @@ public class PageFragmentSwap extends AppDeckFragment {
         bannerAdView.loadAd();*/
 
         return rootView;
+    }
+
+    public void setBannerAdView(AdView adView)
+    {
+        this.bannerAdView = adView;
+
+        bannerAdView.setAdListener(new AdListener() {
+
+            public static final String TAG = "PageFragmentSwapAds";
+
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                Log.d(TAG, "onAdLoaded");
+                if (bannerAdView != null)
+                    rootView.bringChildToFront(bannerAdView);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+
+                if (errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR)
+                    Log.e(TAG, "onAdFailedToLoad: Internal Error");
+                else if (errorCode == AdRequest.ERROR_CODE_INVALID_REQUEST)
+                    Log.e(TAG, "onAdFailedToLoad: Invalid Request");
+                else if (errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR)
+                    Log.e(TAG, "onAdFailedToLoad: Network Error");
+                else if (errorCode == AdRequest.ERROR_CODE_NO_FILL)
+                    Log.e(TAG, "onAdFailedToLoad: No Fill");
+                else
+                    Log.e(TAG, "onAdFailedToLoad: Unknow Error: " + errorCode);
+
+                if (bannerAdView != null) {
+                    rootView.removeView(bannerAdView);
+                    bannerAdView.destroy();
+                    bannerAdView = null;
+                }
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.d(TAG, "onAdOpened");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+                Log.d(TAG, "onAdLeftApplication");
+                if (bannerAdView != null) {
+                    rootView.removeView(bannerAdView);
+                    bannerAdView.destroy();
+                    bannerAdView = null;
+                }
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when when the user is about to return
+                // to the app after tapping on an ad.
+                Log.d(TAG, "onAdClosed");
+
+            }
+        });
+
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER | Gravity.BOTTOM;
+
+        rootView.addView(bannerAdView, layoutParams);
     }
 
 
@@ -542,7 +536,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		
 		if (origin == pageWebViewAlt.view)
 			swapWebView();
-				
+
     }
     
     public void progressFailed(View origin)
@@ -598,8 +592,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	pageWebViewAlt.ctl.setForceCache(false);
     	
     	rootView.bringChildToFront(swipeView);
-        if (adview != null)
-    		rootView.bringChildToFront(adview);
+        //if (adview != null)
+    	//	rootView.bringChildToFront(adview);
 
         if (bannerAdView != null)
             rootView.bringChildToFront(bannerAdView);
@@ -643,8 +637,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	swipeViewAlt.setAlpha(0f);
     	swipeViewAlt.setVisibility(View.VISIBLE);
     	rootView.bringChildToFront(swipeViewAlt);
-    	if (adview != null)
-    		rootView.bringChildToFront(adview);
+    	//if (adview != null)
+    	//	rootView.bringChildToFront(adview);
 
         if (bannerAdView != null)
 		    rootView.bringChildToFront(bannerAdView);
@@ -685,8 +679,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	            	    	swipeViewAlt = tmp;
     	            	    	
     	            	    	rootView.bringChildToFront(swipeView);
-    	            	    	if (adview != null)
-    	            	    		rootView.bringChildToFront(adview);
+    	            	    	//if (adview != null)
+    	            	    	//	rootView.bringChildToFront(adview);
 
                                 if (bannerAdView != null)
 								    rootView.bringChildToFront(bannerAdView);
@@ -710,6 +704,36 @@ public class PageFragmentSwap extends AppDeckFragment {
     
 	public boolean apiCall(final AppDeckApiCall call)
 	{
+        /*
+        if (call.command.equalsIgnoreCase("share"))
+        {
+            // get the center for the clipping circle
+            int cx = (rootView.getLeft() + rootView.getRight()) / 2;
+            int cy = (rootView.getTop() + rootView.getBottom()) / 2;
+
+            // get the initial radius for the clipping circle
+            int initialRadius = rootView.getWidth();
+
+            // create the animation (the final radius is zero)
+            Animator anim = ViewAnimationUtils.createCircularReveal(rootView, cx, cy,
+                    initialRadius, 0);
+            anim.setDuration(500);
+
+            // make the view invisible when the animation is done
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    rootView.setVisibility(View.INVISIBLE);
+                }
+            });
+
+
+            // start the animation
+            anim.start();
+            return true;
+        }*/
+
 		if (call.command.equalsIgnoreCase("load"))
 		{
 			Log.i("API", uri.getPath()+" **LOAD**");
