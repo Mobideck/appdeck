@@ -386,16 +386,41 @@ function buildAppDeckAndroidRes()
   global $info, $project_path;
 
   $xml = file_get_contents($project_path.'/extra/appdeck.xml');
-  $conf = array('AppDeckColorPrimary' => '#FFFFFF',
-                'AppDeckColorPrimaryDark' => '#FFFFFF',
-                'AppDeckColorAccent' => '#000000');
+  if (isset($info->icon_theme) && $info->icon_theme == 'dark')
+    $conf = array('AppDeckColorPrimary' => '#FFFFFF',
+                  'AppDeckColorPrimaryDark' => '#000000',
+                  'AppDeckColorAccent' => '#FFFFFF',
+                  'AppDeckControlNormal' => '#FFFFFF');
+  else
+    $conf = array('AppDeckColorPrimary' => '#000000',
+                  'AppDeckColorPrimaryDark' => '#BDBDBD',
+                  'AppDeckColorAccent' => '#000000',
+                  'AppDeckControlNormal' => '#000000');
   // patch conf
   if (isset($info->app_topbar_color[0]))
     $conf['AppDeckColorPrimary'] = $info->app_topbar_color[0];
-  if (isset($info->app_topbar_color[1]))
-    $conf['AppDeckColorPrimaryDark'] = $info->app_topbar_color[1];
+  /*if (isset($info->app_topbar_color[1]))
+    $conf['AppDeckColorAccent'] = $info->app_topbar_color[1];*/
+  if (isset($info->button_color))
+    $conf['AppDeckColorAccent'] = $info->button_color;
+  if (isset($info->button_color))
+    $conf['AppDeckControlNormal'] = $info->button_color;
+
+  /*if (isset($info->icon_theme) && $info->icon_theme == 'light')
+  {
+    //$conf['AppDeckColorPrimary'] = '#FFFFFF';
+    $conf['AppDeckColorPrimaryDark'] = '#BDBDBD';
+    //$conf['AppDeckColorAccent'] = '#FF0000';
+  }
+  if (isset($info->icon_theme) && $info->icon_theme == 'dark')
+  {
+    $conf['AppDeckColorPrimaryDark'] = '#000000';
+    //$conf['AppDeckColorAccent'] = '#000000';
+  }*/
   if (isset($info->icon_theme) && $info->icon_theme == 'light')
-    $conf['AppDeckColorAccent'] = '#FFFFFF';
+    $xml = str_replace('Theme.AppCompat.NoActionBar', 'Theme.AppCompat.Light.NoActionBar', $xml);
+  if (isset($info->icon_theme) && $info->icon_theme == 'dark')
+    $xml = str_replace('Theme.AppCompat.NoActionBar', 'Theme.AppCompat.NoActionBar', $xml);
 
   foreach ($conf as $k => $v)
   {

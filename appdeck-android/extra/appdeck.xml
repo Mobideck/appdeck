@@ -8,6 +8,11 @@
     -->
 
     <!--
+        App Theme
+    -->
+    <style name="Theme.AppDeckTheme" parent="Theme.AppCompat.NoActionBar"></style>
+
+    <!--
         App Color
     -->
     <!-- app_topbar_color[0], colorPrimary is used for the default action bar background -->
@@ -17,5 +22,6 @@
     <!-- icon_theme, colorAccent is used as the default value for colorControlActivated, which is used to tint widgets -->
     <color name="AppDeckColorAccent">##AppDeckColorAccent##</color>
 
+    <color name="AppDeckControlNormal">##AppDeckControlNormal##</color>
 
 </resources>
