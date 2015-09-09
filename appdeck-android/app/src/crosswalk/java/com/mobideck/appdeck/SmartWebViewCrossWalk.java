@@ -462,7 +462,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    
 	    @Override
 	    public WebResourceResponse shouldInterceptLoadRequest(XWalkView view, String absoluteURL) {
-	    	
+
 	    	if (absoluteURL.indexOf("data:") == 0)
 	    		return null;
 

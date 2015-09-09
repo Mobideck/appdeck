@@ -36,12 +36,14 @@ public class ScreenConfiguration {
 	
 	public PageMenuItem[] getDefaultPageMenuItems(URI baseUrl, AppDeckFragment fragment)
 	{
-		PageMenuItem refresh = new PageMenuItem(fragment.loader.getResources().getString(R.string.refresh), "!refresh", "button", "appdeckapi:refresh", baseUrl, fragment);
-		
-		PageMenuItem items[] = new PageMenuItem[1];
-		items[0] = refresh;
-		
-		return items;
+		if (false) {
+			PageMenuItem refresh = new PageMenuItem(fragment.loader.getResources().getString(R.string.refresh), "!refresh", "button", "appdeckapi:refresh", baseUrl, fragment);
+
+			PageMenuItem items[] = new PageMenuItem[1];
+			items[0] = refresh;
+			return items;
+		}
+		return new PageMenuItem[0];
 	}	
 	
 	private String readString(AppDeckJsonNode node, String name)
