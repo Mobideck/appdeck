@@ -4,12 +4,6 @@
 <dict>
 	<key>AppDeckApiKey</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
-	<key>AppDeckApiKey - 16</key>
-	<string>987hd3f4117daeb1be598d4eacbc13085473#Dev Webdeck</string>
-	<key>AppDeckApiKey - 15</key>
-	<string>1282h3a3bf9a93a263a6e3118e9ef55dcf69d#Jeux Online</string>
-	<key>AppDeckApiKey - 14</key>
-	<string>1089habcccfd19841b01be8f081b17e1d9dc1#xboxygene</string>
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
@@ -18,6 +12,14 @@
 	<string>1069hdaf84412b985ad99efa1037a6948c978#JVL</string>
 	<key>AppDeckApiKey - 13</key>
 	<string>1086h2bcaa38f9a89f2e90b3e19b46b583f41#JP.News</string>
+	<key>AppDeckApiKey - 14</key>
+	<string>1089habcccfd19841b01be8f081b17e1d9dc1#xboxygene</string>
+	<key>AppDeckApiKey - 15</key>
+	<string>1282h3a3bf9a93a263a6e3118e9ef55dcf69d#Jeux Online</string>
+	<key>AppDeckApiKey - 16</key>
+	<string>987hd3f4117daeb1be598d4eacbc13085473#Dev Webdeck</string>
+	<key>AppDeckApiKey - 17</key>
+	<string>1279hf8895674d261055a2a3818b41cbd4d03#Team AAA</string>
 	<key>AppDeckApiKey - 2</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
 	<key>AppDeckApiKey - 3</key>
@@ -81,7 +83,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>net.mobideck.appdeck.test</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -96,6 +98,11 @@
 	<string>38</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
