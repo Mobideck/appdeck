@@ -44,7 +44,7 @@
     if (self.loader.appDeck.iosVersion >= 7.0)
     {
         fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - width, 20)];
-        if (self.loader.conf.icon_theme == IconThemeLight)
+        if (self.loader.conf.icon_theme == IconThemeDark)
             fakeStatusBar.backgroundColor = [UIColor blackColor];
         else
             fakeStatusBar.backgroundColor = [UIColor whiteColor];
