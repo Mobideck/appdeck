@@ -127,10 +127,9 @@ public class AppDeckAdManager {
                 (ConnectivityManager)loader.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-        boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+        boolean isWiFi = activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
         if (isWiFi)
             finalUrl.append("&network=wifi");
         else
