@@ -234,7 +234,7 @@
         self.icon_theme = IconThemeDark;
 
     // light theme
-    if (self.icon_theme == IconThemeLight)
+    if (self.icon_theme == IconThemeDark)
     {
         self.icon_menu = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_menu" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios7/icons/menu.png"] relativeToURL:self.baseUrl] height:44];
         
