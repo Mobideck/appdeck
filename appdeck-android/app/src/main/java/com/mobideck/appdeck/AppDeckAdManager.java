@@ -483,6 +483,8 @@ public class AppDeckAdManager {
     {
         if (adMobBannerId.isEmpty())
             return;
+        if (mBannerAd != null)
+            return;
         mBannerAd = new AdView(loader);
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mBannerAd.setElevation(2.0f);

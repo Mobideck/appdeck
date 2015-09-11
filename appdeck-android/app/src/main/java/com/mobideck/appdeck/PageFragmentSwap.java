@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -72,6 +74,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     //private AdRequest bannerAdRequest;
 
     //View adview;
+
+    private TaskScheduler adTimer;
 
 	public URI uri;
 	
@@ -183,10 +187,6 @@ public class PageFragmentSwap extends AppDeckFragment {
         mHandler = new Handler();
         mHandler.postDelayed(myTask, 150);
 
-        AdView adView = loader.adManager.getBannerAd();
-        if (adView != null)
-            setBannerAdView(adView);
-
         /*// MoPub
         bannerAdViewListener = new MoPubBannerAdListener();
         bannerAdView = (MoPubView)rootView.findViewById(R.id.bannerAdview);
@@ -194,13 +194,42 @@ public class PageFragmentSwap extends AppDeckFragment {
         bannerAdView.setBannerAdListener(bannerAdViewListener);
         bannerAdView.loadAd();*/
 
+        /*if (bannerAdView != null)
+            setBannerAdView(bannerAdView);*/
+
+        adTimer = new TaskScheduler();
+        adTimer.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                if (isMain == true && bannerAdView == null) {
+                    bannerAdView = loader.adManager.getBannerAd();
+                    if (bannerAdView != null)
+                        setBannerAdView(bannerAdView);
+                }
+            }
+        }, 1000);
+
         return rootView;
+    }
+
+
+    public void setIsMain(boolean isMain)
+    {
+        super.setIsMain(isMain);
+        if (isMain) {
+            /*if (bannerAdView == null && loader != null) {
+                AdView adView = loader.adManager.getBannerAd();
+                if (adView != null) {
+                    this.bannerAdView = adView;
+                    if (rootView != null)
+                        setBannerAdView(this.bannerAdView);
+                }
+            }*/
+        }
     }
 
     public void setBannerAdView(AdView adView)
     {
-        this.bannerAdView = adView;
-
         bannerAdView.setAdListener(new AdListener() {
 
             public static final String TAG = "PageFragmentSwapAds";
@@ -265,39 +294,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER | Gravity.BOTTOM;
-
         rootView.addView(bannerAdView, layoutParams);
+
+        rootView.bringChildToFront(bannerAdView);
     }
-
-
-/*
-    class MoPubBannerAdListener implements MoPubView.BannerAdListener {
-        // Sent when the banner has successfully retrieved an ad.
-        public void onBannerLoaded(MoPubView banner) {
-			Log.d(TAG, "MoPub banner loaded");
-			rootView.bringChildToFront(bannerAdView);
-        }
-
-        // Sent when the banner has failed to retrieve an ad. You can use the MoPubErrorCode value to diagnose the cause of failure.
-        public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
-			Log.d(TAG, "MoPub banner failed");
-        }
-
-        // Sent when the user has tapped on the banner.
-        public void onBannerClicked(MoPubView banner) {
-			Log.d(TAG, "MoPub banner clicked");
-        }
-
-        // Sent when the banner has just taken over the screen.
-        public void onBannerExpanded(MoPubView banner) {
-			Log.d(TAG, "MoPub banner expanded");
-        }
-
-        // Sent when an expanded banner has collapsed back to its original size.
-        public void onBannerCollapsed(MoPubView banner) {
-			Log.d(TAG, "MoPub banner collapsed");
-        }
-    }*/
 
     private Handler mHandler;
     Runnable myTask = new Runnable() {
@@ -386,6 +386,8 @@ public class PageFragmentSwap extends AppDeckFragment {
             bannerAdView.destroy();
             bannerAdView = null;
         }
+        if (adTimer != null)
+            adTimer.removeCallbacksAndMessages(null);
     }
     
     @Override
@@ -537,6 +539,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 		if (origin == pageWebViewAlt.view)
 			swapWebView();
 
+        if (bannerAdView != null)
+            rootView.bringChildToFront(bannerAdView);
+
     }
     
     public void progressFailed(View origin)
@@ -572,6 +577,9 @@ public class PageFragmentSwap extends AppDeckFragment {
     		//setVisibility(View.INVISIBLE);
     		reloadInProgress = false;
     	}
+
+        if (bannerAdView != null)
+            rootView.bringChildToFront(bannerAdView);
 
     }
 	

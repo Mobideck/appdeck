@@ -76,6 +76,7 @@ public class PageSwipe extends AppDeckFragment {
     	currentPageUrl = getArguments().getString("absoluteURL");
     	this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);    	
     	currentPage = PageFragmentSwap.newInstance(currentPageUrl);
+		currentPage.loader = this.loader;
     	currentPage.pageSwipe = this;    	
 	}
 	
@@ -379,6 +380,7 @@ public class PageSwipe extends AppDeckFragment {
     	{
     		//previousPage = new PageFragment(currentPage.previousPageUrl);
     		previousPage = PageFragmentSwap.newInstance(currentPage.previousPageUrl);
+			previousPage.loader = this.loader;
     		previousPage.pageSwipe = this;
     		shouldUpdate = true;
     	}
@@ -386,6 +388,7 @@ public class PageSwipe extends AppDeckFragment {
     	{
     		//nextPage = new PageFragment(currentPage.nextPageUrl);
     		nextPage = PageFragmentSwap.newInstance(currentPage.nextPageUrl);
+			nextPage.loader = this.loader;
     		nextPage.pageSwipe = this;
     		shouldUpdate = true;
     	}
