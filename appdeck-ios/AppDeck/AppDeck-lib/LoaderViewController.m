@@ -323,7 +323,7 @@
         if (self.slidingViewController.underLeftShowing || self.slidingViewController.underRightShowing)
             return UIStatusBarStyleLightContent;
     }*/
-    if (self.conf.icon_theme == IconThemeLight)
+    if (self.conf.icon_theme == IconThemeDark)
         return UIStatusBarStyleLightContent;
     return UIStatusBarStyleDefault;
     //return UIStatusBarStyleLightContent;
@@ -503,7 +503,7 @@
         navCtl.navigationBar.translucent = NO;
         //[navCtl.navigationBar setBarTintColor:[self.conf.topbar_color1 colorWithAlphaComponent:0.6]];
         [navCtl.navigationBar setBarTintColor:self.conf.topbar_color1];
-        navCtl.navigationBar.tintColor = (self.conf.icon_theme == IconThemeLight ? [UIColor whiteColor] : [UIColor blackColor]);
+        navCtl.navigationBar.tintColor = (self.conf.icon_theme == IconThemeDark ? [UIColor whiteColor] : [UIColor blackColor]);
     }
     
     /*
@@ -737,7 +737,7 @@
     if (self.appDeck.iosVersion >= 7.0)
     {
         fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
-        if (self.conf.icon_theme == IconThemeLight)
+        if (self.conf.icon_theme == IconThemeDark)
             fakeStatusBar.backgroundColor = [UIColor blackColor];
         else
             fakeStatusBar.backgroundColor = [UIColor whiteColor];
@@ -1779,6 +1779,22 @@
     //                                          pullTorefreshArrow.frame.size.width / 4, pullTorefreshArrow.frame.size.height / 4);
     
     pullTorefreshLoading.frame = pullTorefreshArrow.frame;*/
+    
+    
+    if (_interstitialAd)
+    {
+        CGRect frame = self.view.frame;
+        //_interstitialAd.view.frame = self.view.bounds;
+        _interstitialAd.view.frame = CGRectMake((frame.size.width - _interstitialAd.width) / 2,
+                                                (frame.size.height - _interstitialAd.height) / 2,
+                                                _interstitialAd.width,
+                                                _interstitialAd.height);
+        [self.view bringSubviewToFront:_interstitialAd.view];
+        if (frame.size.width <  frame.size.height)
+            _interstitialAd.view.hidden = NO;
+        else
+            _interstitialAd.view.hidden = YES;
+    }
 }
 
 /*
@@ -2222,6 +2238,62 @@
     NSLog(@"applicationBackgroundRefreshStatusDidChangeNotification");
 }
 
+#pragma mark - Ads
+
+-(void)setInterstitialAd:(AppDeckAdViewController *)interstitialAd
+{
+    if (_interstitialAd)
+    {
+        AppDeckAdViewController *old = _interstitialAd;
+        old.page = nil;
+        
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^(){
+            old.view.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [old removeFromParentViewController];
+            [old.view removeFromSuperview];
+        }];
+    }
+    
+    _interstitialAd = interstitialAd;
+    
+    if (_interstitialAd == nil)
+    {
+//        self.swipeContainer.swipeEnabled = YES;
+        [self setFullScreen:NO animation:YES];
+//        self.isFullScreen = NO;
+//        self.adRequest = nil;
+        return;
+    }
+    
+//    _interstitialAd.page = self;
+    
+//    self.swipeContainer.swipeEnabled = NO;
+    [self setFullScreen:YES animation:YES];
+    
+//    _interstitialAd.page = self;
+    
+    [self addChildViewController:_interstitialAd];
+    [self.view addSubview:_interstitialAd.view];
+    [self.view bringSubviewToFront:_interstitialAd.view];
+    
+    _interstitialAd.view.alpha = 0.0;
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^(){
+        
+        _interstitialAd.view.alpha = 1.0;
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+    _interstitialAd.state = AppDeckAdStateLoad;
+    
+    //[contentCtl addChildViewController:_interstitialAd];
+    //[contentCtl.webView.scrollView addSubview:_interstitialAd.view];
+    
+    _interstitialAd.state = AppDeckAdStateAppear;
+    
+}
 
 
 @end

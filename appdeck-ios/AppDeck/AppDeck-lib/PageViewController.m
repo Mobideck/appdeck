@@ -156,7 +156,7 @@
     
     self.bannerAd = nil;
     self.rectangleAd = nil;
-    self.interstitialAd = nil;
+    //self.interstitialAd = nil;
 }
 
 -(void)dealloc
@@ -187,8 +187,8 @@
             _bannerAd.state = AppDeckAdStateAppear;
         if (_rectangleAd)
             _rectangleAd.state = AppDeckAdStateAppear;
-        if (_interstitialAd)
-            _interstitialAd.state = AppDeckAdStateAppear;
+        //if (_interstitialAd)
+        //    _interstitialAd.state = AppDeckAdStateAppear;
         
         if (oldIsMain != isMain && glLog)
         {
@@ -210,7 +210,7 @@
         
          self.bannerAd = nil;
          self.rectangleAd = nil;
-         self.interstitialAd = nil;
+         //self.interstitialAd = nil;
         
         if (oldIsMain != isMain && glLog)
         {
@@ -784,7 +784,7 @@
         self.disableAds = YES;
         self.bannerAd = nil;
         self.rectangleAd = nil;
-        self.interstitialAd = nil;
+        //self.interstitialAd = nil;
         return YES;
     }    
     
@@ -1290,6 +1290,7 @@
     
 }
 
+/*
 -(void)setInterstitialAd:(AppDeckAdViewController *)interstitialAd
 {
     if (_interstitialAd)
@@ -1301,8 +1302,8 @@
             old.view.alpha = 0.0;
         } completion:^(BOOL finished) {
             
-/*            if (old.state == AppDeckAdStateAppear)
-                old.state = AppDeckAdStateDisappear;*/
+        //if (old.state == AppDeckAdStateAppear)
+        //        old.state = AppDeckAdStateDisappear;
             
             [old removeFromParentViewController];
             [old.view removeFromSuperview];
@@ -1342,14 +1343,14 @@
 
     _interstitialAd.state = AppDeckAdStateLoad;
     
-/*    [contentCtl addChildViewController:_interstitialAd];
-    [contentCtl.webView.scrollView addSubview:_interstitialAd.view];*/
+    //[contentCtl addChildViewController:_interstitialAd];
+    //[contentCtl.webView.scrollView addSubview:_interstitialAd.view];
     
     if (self.isMain)
         _interstitialAd.state = AppDeckAdStateAppear;
     
 }
-
+*/
 -(void)setRectangleAd:(AppDeckAdViewController *)rectangleAd
 {
     if (_rectangleAd)
@@ -1685,7 +1686,7 @@
         // show banner only in portrait
     }
     
-    if (_interstitialAd)
+    /*if (_interstitialAd)
     {
         //_interstitialAd.view.frame = self.view.bounds;
         _interstitialAd.view.frame = CGRectMake((frame.size.width - _interstitialAd.width) / 2,
@@ -1697,7 +1698,7 @@
             _interstitialAd.view.hidden = NO;
         else
             _interstitialAd.view.hidden = YES;
-    }
+    }*/
 
 }
 

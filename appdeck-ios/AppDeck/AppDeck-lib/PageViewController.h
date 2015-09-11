@@ -66,7 +66,7 @@
 @property (assign, nonatomic) BOOL          showAdView;
 @property (assign, nonatomic) BOOL          showAdViewOver;
 
-@property (strong, nonatomic)     AppDeckAdViewController   *interstitialAd;
+//@property (strong, nonatomic)     AppDeckAdViewController   *interstitialAd;
 @property (strong, nonatomic)     AppDeckAdViewController   *rectangleAd;
 @property (strong, nonatomic)     AppDeckAdViewController   *bannerAd;
 @property (strong, nonatomic)     NSString                  *tagAd;

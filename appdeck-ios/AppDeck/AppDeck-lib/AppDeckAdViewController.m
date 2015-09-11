@@ -86,6 +86,8 @@
     {
         //self.page.disableAds = YES;
         [self adDidUnloadFromViewController:self.page];
+        if ([self.adType isEqualToString:@"interstitial"])
+            self.adManager.loader.interstitialAd = nil;
     }
     [self.adManager ad:self didUpdateState:_state];    
 }
@@ -139,8 +141,8 @@
         page.bannerAd = nil;
     else if (page.rectangleAd == self)
         page.rectangleAd = nil;
-    else if (page.interstitialAd == self)
-        page.interstitialAd = nil;
+    //else if (page.interstitialAd == self)
+    //    page.interstitialAd = nil;
     
 }
 

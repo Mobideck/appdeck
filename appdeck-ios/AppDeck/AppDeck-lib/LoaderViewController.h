@@ -44,6 +44,7 @@ typedef enum AdManagerEvent: int {
 @class JSonHTTPApi;
 @class LoaderNavigationController;
 @class AppDeckAnalytics;
+@class AppDeckAdViewController;
 
 @interface LoaderViewController : UIViewController <UIWebViewDelegate, UINavigationControllerDelegate, AppDeckApiCallDelegate, UIGestureRecognizerDelegate>
 {
@@ -111,6 +112,8 @@ typedef enum AdManagerEvent: int {
 
 
 @property (assign, nonatomic) BOOL appRunInBackground;
+
+@property (strong, nonatomic)     AppDeckAdViewController   *interstitialAd;
 
 /*
 #if OS_OBJECT_USE_OBJC

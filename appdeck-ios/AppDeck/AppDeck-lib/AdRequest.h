@@ -11,7 +11,7 @@
 #import "AdManager.h"
 #import "JSonHTTPApi.h"
 
-@interface AdRequest : NSObject
+@interface AdRequest : NSObject /* <NSURLSessionDelegate>*/
 {
     JSonHTTPApi     *api;
     

