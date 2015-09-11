@@ -252,7 +252,7 @@
 // Notifies the delegate that the modal view will be dismissed.
 - (void)adViewWillDismissModalView:(SASAdView *)adView
 {
-    if ([self.adType isEqualToString:@"interstitial"])
+//    if ([self.adType isEqualToString:@"interstitial"])
         self.state = AppDeckAdStateClose;
 }
 

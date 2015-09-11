@@ -90,7 +90,7 @@
          [ctl.loader dismissViewControllerAnimated:NO completion:^{
          [self.interstitial showFromViewController:ctl.loader];
          }];*/
-        [self.interstitial showFromViewController:ctl];
+        [self.interstitial showFromViewController:self.adManager.loader];
     }
     else
         NSLog(@"Ad was not ready ...");
@@ -98,7 +98,7 @@
 
 -(void)adWillDisappearInViewController:(LoaderChildViewController *)ctl
 {
-    
+
 }
 
 -(void)adDidUnloadFromViewController:(LoaderChildViewController *)ctl
