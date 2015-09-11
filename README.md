@@ -1,7 +1,7 @@
 AppDeck iOS/Android application library
 =======================================
 
-**Last Version**: 1.6.0
+**Last Version**: 1.6.2
 
 About
 =====
