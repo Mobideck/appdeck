@@ -1,7 +1,8 @@
 package com.mobideck.appdeck;
 
 import android.os.Handler;
-import android.util.ArrayMap;
+import android.support.v4.util.ArrayMap;
+//import android.util.ArrayMap;
 
 /**
  * Created by Ofek on 19/08/2015.
