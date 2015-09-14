@@ -252,7 +252,7 @@ public class Configuration {
 
 		icon_theme = "light";
 		String icon_theme_suffix = "";
-		if (root.getString("icon_theme").equalsIgnoreCase("dark"))
+		if (root.getString("icon_theme").equalsIgnoreCase("light"))
 		{
 			icon_theme = "dark";
 			icon_theme_suffix = "_dark";
