@@ -43,7 +43,7 @@
     //self.interstitial.testing = YES;
     
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,7 +78,7 @@
 
 -(void)adWillLoadInViewController:(LoaderChildViewController *)ctl
 {
-
+    
 }
 
 
@@ -98,7 +98,7 @@
 
 -(void)adWillDisappearInViewController:(LoaderChildViewController *)ctl
 {
-
+    
 }
 
 -(void)adDidUnloadFromViewController:(LoaderChildViewController *)ctl
@@ -140,7 +140,7 @@
  */
 - (void)interstitialWillAppear:(MPInterstitialAdController *)interstitial
 {
-
+    
 }
 
 /**

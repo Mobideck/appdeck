@@ -58,6 +58,8 @@
     BOOL    showLoading;
     
     BOOL keyboardWasVisible;
+    
+    NSMutableDictionary *nativeAds;
 }
 
 @property (strong, nonatomic) UIWebView *header;

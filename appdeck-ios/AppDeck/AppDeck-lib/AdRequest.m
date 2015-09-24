@@ -15,7 +15,6 @@
 #import "SecureUDID.h"
 #import "AppDeck.h"
 #import "NetWorkTester.h"
-#import "JSONKit.h"
 #import "NSData+Zlib.h"
 #import "LoaderViewController.h"
 #import "LoaderConfiguration.h"
@@ -463,19 +462,19 @@
             NSString *uid = [config objectForKey:@"uid"];
             NSString *ua = [config objectForKey:@"ua"];
             
-            NSLog(@"Scenario: sid:%@ uid:%@ %@", sid, uid, config);
+            //NSLog(@"Scenario: sid:%@ uid:%@ %@", sid, uid, config);
             
             // load cookies
             NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *cookie_storage_path = [cachesPath stringByAppendingPathComponent:sid];
             NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithFile:cookie_storage_path];
             
-            NSLog(@"result: %@", cookies);
+            //NSLog(@"result: %@", cookies);
             
             NSArray *urls = [config objectForKey:@"urls"];
             for (NSDictionary *item in urls)
             {
-                NSLog(@"Item: %@", item);
+                //NSLog(@"Item: %@", item);
                 
                 NSString *url = [item objectForKey:@"url"];
                 NSString *method = [item objectForKey:@"method"];
@@ -520,13 +519,13 @@
                     [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
                 }
                 
-                NSLog(@"request headers: %@", request.allHTTPHeaderFields);
+                //NSLog(@"request headers: %@", request.allHTTPHeaderFields);
                 
                 NSHTTPURLResponse* response;
                 NSError* error = nil;
                 [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
                 
-                NSLog(@"response headers: %@", response.allHeaderFields);
+                //NSLog(@"response headers: %@", response.allHeaderFields);
                 
                 // get cookie
                 NSArray *new_cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:[NSURL URLWithString:url]];
@@ -539,7 +538,7 @@
                 }
                 cookies = [all_cookies allValues];
                 
-                NSLog(@"response cookies: %@", response.allHeaderFields);
+                //NSLog(@"response cookies: %@", response.allHeaderFields);
                 
                 // clean
                 [NSURLProtocol removePropertyForKey:@"CacheMonitoringURLProtocol" inRequest:request];

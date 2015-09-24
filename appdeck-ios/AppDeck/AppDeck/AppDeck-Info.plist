@@ -20,6 +20,8 @@
 	<string>987hd3f4117daeb1be598d4eacbc13085473#Dev Webdeck</string>
 	<key>AppDeckApiKey - 17</key>
 	<string>1279hf8895674d261055a2a3818b41cbd4d03#Team AAA</string>
+	<key>AppDeckApiKey - 18</key>
+	<string>982h553006d57a69ecc3e5c73b36a48d9051#dev test</string>
 	<key>AppDeckApiKey - 2</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
 	<key>AppDeckApiKey - 3</key>
@@ -191,6 +193,8 @@
 			<string>{375, 667}</string>
 		</dict>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>

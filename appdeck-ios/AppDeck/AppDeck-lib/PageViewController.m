@@ -26,6 +26,8 @@
 #import "AppDeckProgressHUD.h"
 #import "LogViewController.h"
 
+#import "AppDeckAdNative.h"
+
 @interface PageViewController ()
 
 @end
@@ -773,6 +775,31 @@
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
 
+    if ([call.command isEqualToString:@"nativead"])
+    {
+        NSString *divId = [NSString stringWithFormat:@"%@", [call.param objectForKey:@"id"]];
+        if (nativeAds == nil)
+            nativeAds = [[NSMutableDictionary alloc] init];
+        AppDeckAdNative *nativeAd = [nativeAds objectForKey:divId];
+        if (nativeAd == nil)
+        {
+            nativeAd = [[AppDeckAdNative alloc] init];
+            [nativeAds setObject:nativeAd forKey:divId];
+        }
+        [nativeAd addApiCall:call];     
+        return YES;
+    }
+
+    if ([call.command isEqualToString:@"nativeadclick"])
+    {
+        NSString *divId = [NSString stringWithFormat:@"%@", [call.param objectForKey:@"id"]];
+        AppDeckAdNative *nativeAd = [nativeAds objectForKey:divId];
+        if (nativeAd != nil)
+        {
+            [nativeAd click:self];
+        }
+        return YES;
+    }
     if ([call.command isEqualToString:@"disable_cache"])
     {
         [self.loader.appDeck.cache removeCachedResponseForRequest:contentCtl.currentRequest];
