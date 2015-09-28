@@ -65,10 +65,12 @@ public class AppDeckAdManager {
     public static final String MOPUB_BANNER_ID = "mopub_banner_id";
     public static final String MOPUB_RECTANGLE_ID = "mopub_rectangle_id";
     public static final String MOPUB_INTERSTITIAL_ID = "mopub_interstitial_id";
+    public static final String MOPUB_NATIVE_ID = "mopub_native_id";
 
     public String mopubBannerId = "";
     public String mopubRectangleId = "";
     public String mopubInterstitialId = "";
+    public String mopubNativeId = "";
 
 
     public static final String ADMOB_BANNER_ID = "admob_banner_id";
@@ -93,6 +95,7 @@ public class AppDeckAdManager {
 
     AppDeckAdManager(Loader loader) {
         this.loader = loader;
+        this.loader.adManager = this;
         this.appLaunch = System.currentTimeMillis()/1000;
         getAdConf(loader);
         syncAdConf();
@@ -163,10 +166,13 @@ public class AppDeckAdManager {
                             String newMopubBannerId = conf.getString("mopubBannerId");
                             String newMopubRectangleId = conf.getString("mopubRectangleId");
                             String newMopubInterstitialId = conf.getString("mopubInterstitialId");
+                            String newMopubNativeId = conf.getString("mopubNativeId");
 
                             mopubBannerId = newMopubBannerId;
                             mopubRectangleId = newMopubRectangleId;
                             mopubInterstitialId = newMopubInterstitialId;
+                            mopubNativeId = newMopubNativeId;
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -223,7 +229,8 @@ public class AppDeckAdManager {
         this.mopubBannerId = prefs.getString(MOPUB_BANNER_ID, "");
         this.mopubRectangleId = prefs.getString(MOPUB_RECTANGLE_ID, "");
         this.mopubInterstitialId = prefs.getString(MOPUB_INTERSTITIAL_ID, "");
-        Log.i(TAG, "Read: mopubBannerId:" + mopubBannerId + " mopubRectangleId:" + mopubRectangleId + " mopubInterstitialId:" + mopubInterstitialId);
+        this.mopubNativeId = prefs.getString(MOPUB_NATIVE_ID, "");
+        Log.i(TAG, "Read: mopubBannerId:" + mopubBannerId + " mopubRectangleId:" + mopubRectangleId + " mopubInterstitialId:" + mopubInterstitialId + " mopubNativeId:" + mopubNativeId);
         this.adMobBannerId = prefs.getString(ADMOB_BANNER_ID, "");
         this.adMobRectangleId = prefs.getString(ADMOB_RECTANGLE_ID, "");
         this.adMobInterstitialId = prefs.getString(ADMOB_INTERSTITIAL_ID, "");
@@ -237,6 +244,7 @@ public class AppDeckAdManager {
         editor.putString(MOPUB_BANNER_ID, mopubBannerId);
         editor.putString(MOPUB_RECTANGLE_ID, mopubRectangleId);
         editor.putString(MOPUB_INTERSTITIAL_ID, mopubInterstitialId);
+        editor.putString(MOPUB_NATIVE_ID, mopubNativeId);
 
         Log.i(TAG, "Store: AdMobBannerId:"+adMobBannerId+" AdMobRectangleId:"+adMobRectangleId+" AdMobInterstitialId:"+adMobInterstitialId);
         editor.putString(ADMOB_BANNER_ID, adMobBannerId);
@@ -374,6 +382,7 @@ public class AppDeckAdManager {
     {
         startInterstitialAd();
         startBannerAd();
+        startNativeAd();
     }
 
     public boolean showAds(int event) {
@@ -431,6 +440,8 @@ public class AppDeckAdManager {
     }
 
     private boolean showInterstitial(int event) {
+        if (event != EVENT_PUSH)
+            return false;
         long currentTime = System.currentTimeMillis()/1000;
         if (lastSeenInterstitial == 0 && appLaunch + timeBeforeFirstInterstitial > currentTime) {
             Log.v(TAG, "No interstitial as we need to wait "+timeBeforeFirstInterstitial+" before first interstitial");
@@ -458,13 +469,21 @@ public class AppDeckAdManager {
     AdView mBannerAd = null;
     AdRequest mBannerAdRequest = null;
 
-    public void startBannerAd()
-    {
+    ArrayList<AdView> mBannerRecycle;
+
+    public void startBannerAd()   {
+
+        mBannerRecycle = new ArrayList<AdView>();
         initNewAdBanner();
     }
 
     public AdView getBannerAd()
     {
+        if (mBannerRecycle.size() > 0)
+        {
+            AdView banner = mBannerRecycle.remove(0);
+            return banner;
+        }
         if (adMobBannerId.isEmpty())
             return null;
         if (mBannerAd != null && mBannerAd.getAdUnitId().equalsIgnoreCase(adMobBannerId) == false)
@@ -477,6 +496,11 @@ public class AppDeckAdManager {
         mBannerAd = null;
         initNewAdBanner();
         return adView;
+    }
+
+    public void recycleBannerAd(AdView banner)
+    {
+        mBannerRecycle.add(banner);
     }
 
     private void initNewAdBanner()
@@ -534,5 +558,33 @@ public class AppDeckAdManager {
     public void startBannerAd() {
 
     }    */
+
+    /* Native Ads */
+
+    // preload banner in advance
+    // give them to AppDeckFragment on demands
+
+    NativeAd mNativeAd = null;
+
+    public void startNativeAd()
+    {
+        requestNewNativeAd();
+    }
+
+    public NativeAd getNativeAd()
+    {
+        if (mNativeAd == null)
+            requestNewNativeAd();
+        NativeAd nativeAd = mNativeAd;
+        requestNewNativeAd();
+        return mNativeAd;
+    }
+
+    private void requestNewNativeAd()
+    {
+        if (mopubNativeId.isEmpty())
+            return;
+        mNativeAd = new NativeAd(loader);
+    }
 
 }

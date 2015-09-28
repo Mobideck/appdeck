@@ -1065,6 +1065,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
        		return -1;
     	}*/
 
+        fragment.event = AppDeckAdManager.EVENT_PUSH;
         adManager.showAds(AppDeckAdManager.EVENT_PUSH);
     	return pushFragment(fragment);
 
@@ -1224,6 +1225,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		AppDeckFragmentPopAnimation anim = new AppDeckFragmentPopAnimation(current, previous);
     		anim.start();
     	}
+        //previous.event = AppDeckAdManager.EVENT_POP;
         adManager.showAds(AppDeckAdManager.EVENT_POP);
     	return true;
     }

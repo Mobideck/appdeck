@@ -76,6 +76,7 @@ public class PageSwipe extends AppDeckFragment {
     	currentPageUrl = getArguments().getString("absoluteURL");
     	this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);    	
     	currentPage = PageFragmentSwap.newInstance(currentPageUrl);
+		currentPage.event = this.event;
 		currentPage.loader = this.loader;
     	currentPage.pageSwipe = this;    	
 	}

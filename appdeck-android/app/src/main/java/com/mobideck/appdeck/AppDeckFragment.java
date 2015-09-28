@@ -25,7 +25,9 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 public class AppDeckFragment extends Fragment {
 
 	public static final String TAG = "AppDeckFragment";	
-	
+
+	public int event = -1;
+
 	public Loader loader;
 	
 	public AppDeck appDeck;
