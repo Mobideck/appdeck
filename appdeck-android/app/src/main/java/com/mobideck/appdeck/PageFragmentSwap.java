@@ -271,17 +271,18 @@ public class PageFragmentSwap extends AppDeckFragment {
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
                 Log.d(TAG, "onAdOpened");
+                loader.adManager.willShowAdActivity = true;
             }
 
             @Override
             public void onAdLeftApplication() {
                 // Code to be executed when the user has left the app.
                 Log.d(TAG, "onAdLeftApplication");
-                if (bannerAdView != null) {
+                /*if (bannerAdView != null) {
                     rootView.removeView(bannerAdView);
                     bannerAdView.destroy();
                     bannerAdView = null;
-                }
+                }*/
             }
 
             @Override
@@ -396,13 +397,13 @@ public class PageFragmentSwap extends AppDeckFragment {
     @Override
     public void onDestroy()
     {
-    	super.onDestroy();
+        super.onDestroy();
     }
     
     @Override
     public void onDetach ()
     {
-    	super.onDetach();
+        super.onDetach();
     }
 
     public boolean shouldOverrideUrlLoading(String absoluteURL)

@@ -537,9 +537,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
     	super.onResume();
     	isForeground = true;
-        if (adManager.willShowInterstitial == false)
+        if (adManager.willShowAdActivity == false)
             SmartWebViewFactory.onActivityResume(this);
-        adManager.willShowInterstitial = false; // always set it to false
+        adManager.willShowAdActivity = false; // always set it to false
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
         appDeckBroadcastReceiver.loaderActivity = this;
@@ -551,7 +551,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
         super.onPause();
     	isForeground = false;
-        if (adManager.willShowInterstitial == false)
+        if (adManager.willShowAdActivity == false)
             SmartWebViewFactory.onActivityPause(this);
         try {
             appDeckBroadcastReceiver.clean();
