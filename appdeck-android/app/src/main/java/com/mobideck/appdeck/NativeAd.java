@@ -45,9 +45,13 @@ public class NativeAd {
 
     public ArrayList<AppDeckApiCall> mApiCalls;
 
+    private Loader loader;
+
     public NativeAd(Loader loader)
     {
         Log.d(TAG, "New Native Ad");
+
+        this.loader = loader;
 
         mApiCalls = new ArrayList<AppDeckApiCall>();
 
@@ -138,6 +142,7 @@ public class NativeAd {
 
     public void click(AppDeckApiCall call)
     {
+        loader.adManager.willShowInterstitial = true;
         mNativeResponse.handleClick(call.appDeckFragment.getView());
     }
 }
