@@ -736,12 +736,12 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     public void onActivityPause(Loader loader)
     {
-        pauseTimers();
+        //pauseTimers();
     }
 
     public void onActivityResume(Loader loader)
     {
-        resumeTimers();
+        //resumeTimers();
     }
 
     public void onActivityDestroy(Loader loader)

@@ -91,6 +91,7 @@ public class AppDeckAdManager {
 
     private AsyncHttpClient httpClient;
 
+    public boolean willShowInterstitial = false;
 
 
     AppDeckAdManager(Loader loader) {
@@ -411,6 +412,7 @@ public class AppDeckAdManager {
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
+                willShowInterstitial = false;
                 requestNewInterstitial();
                 //beginPlayingGame();
             }
@@ -452,6 +454,7 @@ public class AppDeckAdManager {
             return false;
         }
         if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            willShowInterstitial = true;
             mInterstitialAd.show();
             lastSeenInterstitial = currentTime;
             return true;

@@ -148,7 +148,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     //public ArrayList<String> historyUrls = new ArrayList<String>();
     public List<String> historyUrls = new ArrayList<String>();
 
-
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
     private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
@@ -181,14 +180,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-        //supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        //supportRequestWindowFeature(Window.FEATURE_PROGRESS);
 
         //Debug.startMethodTracing("calc");
-
-//        String test = Utils.md5("app.jeuxvideo-live.com%2Fappdeck%2Fmenu%2Fmenu_178.html");
-//        Log.d(TAG, test);
-
 		AppDeckApplication app = (AppDeckApplication) getApplication();
 
         Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
@@ -206,7 +199,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (app.isInitialLoading == false)
         {
             SmartWebViewFactory.setPreferences(this);
-            //SmartWebViewCrossWalk.setPreferences();// XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
             app.isInitialLoading = true;
         }
 
@@ -237,7 +229,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	while (isAvailable == false);
 
         Log.i(TAG, "filter registered at @" + this.proxyPort);
-
 
         System.setProperty("http.proxyHost", this.proxyHost);
         System.setProperty("http.proxyPort", this.proxyPort + "");
@@ -300,12 +291,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (appDeck.config.leftMenuUrl != null) {
             leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
 
-            //leftMenuWebView = new PageWebViewMenuOld(this, appDeck.config.leftMenuUrl.toString(), PageWebViewMenuOld.POSITION_LEFT);
         	if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         		leftMenuWebView.view.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
         	mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
-            //mDrawerLeftMenu.setVisibility(View.VISIBLE);
-            //mDrawerLeftMenu.setMinimumWidth(appDeck.config.leftMenuWidth);
             mDrawerLeftMenu.post(new Runnable() {
                 @Override
                 public void run() {
@@ -320,18 +308,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         } else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
-            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mDrawerLeftMenu);
-            //mDrawerLayout.removeView(mDrawerLeftMenu);
-            //mDrawerLeftMenu = null;
         }
         
         if (appDeck.config.rightMenuUrl != null) {
             rightMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.rightMenuUrl.toString(), SmartWebViewFactory.POSITION_RIGHT);
-            //rightMenuWebView = new PageWebViewMenuOld(this, appDeck.config.rightMenuUrl.toString(), PageWebViewMenuOld.POSITION_RIGHT);
         	if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         		rightMenuWebView.view.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
         	mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
-            //mDrawerRightMenu.setVisibility(View.VISIBLE);
             mDrawerRightMenu.post(new Runnable() {
                 @Override
                 public void run() {
@@ -345,47 +328,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
             });
         } else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
-            //mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, mDrawerRightMenu);
-            //mDrawerLayout.removeView(mDrawerRightMenu);
-            //mDrawerRightMenu = null;
         }
-/*
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-
-            @Override
-            public void onDrawerStateChanged(int arg0) {
-
-            }
-
-            @Override
-            public void onDrawerSlide(View view, float arg1) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View view) {
-                if(view == rightDrawerView) {
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, leftDrawerView);
-                } else if(view == leftDrawerView) {
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, rightDrawerView);
-                }
-            }
-
-            @Override
-            public void onDrawerClosed(View view) {
-                if(view == rightDrawerView) {
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, leftDrawerView);
-                } else if(view == leftDrawerView) {
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, rightDrawerView);
-                }
-            }
-        });*/
 
         // configure action bar
         appDeck.actionBarHeight = getActionBarHeight();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo 
-        getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
         getSupportActionBar().setHomeButtonEnabled(true); // ???
 
         // status bar
@@ -588,7 +537,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
     	super.onResume();
     	isForeground = true;
-        SmartWebViewFactory.onActivityResume(this);
+        if (adManager.willShowInterstitial == false)
+            SmartWebViewFactory.onActivityResume(this);
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
         appDeckBroadcastReceiver.loaderActivity = this;
@@ -600,7 +550,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
         super.onPause();
     	isForeground = false;
-        SmartWebViewFactory.onActivityPause(this);
+        if (adManager.willShowInterstitial == false)
+            SmartWebViewFactory.onActivityPause(this);
         try {
             appDeckBroadcastReceiver.clean();
             unregisterReceiver(appDeckBroadcastReceiver);
@@ -703,7 +654,24 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
     	//forceFullRedraw();
     }
-    
+
+    // arrow
+    public void setArrowEnabled(boolean enabled)
+    {
+        if (enabled) {
+
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            mDrawerToggle.syncState();
+
+            /*getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        } else {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+        }
+    }
+
     // Sliding Menu API
     
     public void toggleMenu()
@@ -840,7 +808,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.right_drawer));
 
        	//mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // icon on the left of logo
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // make icon + logo + title clickable
         /*if (appDeck.config.icon_theme.equalsIgnoreCase("light"))
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer_light);
@@ -1176,6 +1144,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	fragmentTransaction.commitAllowingStateLoss();
     	
         layoutSubViews();
+
+        //mDrawerToggle.setDrawerIndicatorEnabled(true);
+        //setArrowEnabled(oldFragment != null);
 
     	return 0;
     }
@@ -1686,6 +1657,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        mDrawerToggle.onOptionsItemSelected(item);
 
     	int idx = item.getItemId();
 
