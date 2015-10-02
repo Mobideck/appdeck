@@ -26,6 +26,15 @@
         self.api_key = [NSString stringWithFormat:@"%@", [config objectForKey:@"api_key"]];
         self.api_secret = [NSString stringWithFormat:@"%@", [config objectForKey:@"api_secret"]];        
         self.type = AFAdSDKModalTypeSushi;
+        
+        [AppsfireSDK connectWithSDKToken:self.api_key secretKey:self.api_secret features:AFSDKFeatureMonetization parameters:nil];
+        
+        //[AppsfireAdSDK setDebugModeEnabled:YES];
+        /*
+#ifdef DEBUG
+        [AppsfireAdSDK setDebugModeEnabled:YES];
+#endif
+        */
         NSString *type = [config objectForKey:@"type"];
         if (type && [type isEqualToString:@"uramaki"])
             self.type = AFAdSDKModalTypeUraMaki;

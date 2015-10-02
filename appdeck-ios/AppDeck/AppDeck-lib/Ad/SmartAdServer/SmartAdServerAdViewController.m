@@ -69,6 +69,7 @@
 
     //adView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     adView.delegate = self;
+    adView.modalParentViewController = self.adManager.loader;
     
 //    self.view.clipsToBounds = YES;
     
@@ -100,6 +101,7 @@
 -(void)cancel
 {
     adView.delegate = nil;
+    adView.modalParentViewController = nil;
 //    [adView closeAd];
  //   [adView stop];
     [adView removeFromSuperview];
@@ -177,13 +179,6 @@
     self.state = AppDeckAdStateFailed;
 }
 
-// Notifies the delegate that the ad view received a message from the MRAID creative.
-- (void)adView:(SASAdView *)adView didReceiveMessage:(NSString *)message
-{
-    
-}
-
-
 // Notifies the delegate that the ad view was resized.
 - (void)adView:(SASAdView *)adView didResizeWithFrame:(CGRect)frame
 {
@@ -191,13 +186,6 @@
     self.height = frame.size.height;
 //    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.width, self.height);
 }
-
-/*
-// Asks the delegate whether to execute the ad action.
-- (BOOL)adView:(SASAdView *)adView shouldHandleURL:(NSURL *)URL
-{
-    
-}*/
 
 // Notifies the delegate that an ad action has been made (for example the user tapped the ad).
 - (void)adView:(SASAdView *)adView willPerformActionWithExit:(BOOL)willExit
@@ -235,56 +223,24 @@
 // Notifies the delegate that the creative from the current ad has been loaded and displayed.
 - (void)adViewDidLoad:(SASAdView *)myAdView
 {
-    [self.view addSubview:myAdView];
+    if ([self.adType isEqualToString:@"banner"])
+    {
+        [self.view addSubview:myAdView];
+    }
+    else if ([self.adType isEqualToString:@"rectangle"])
+    {
+        [self.view addSubview:myAdView];
+    }
+    else if ([self.adType isEqualToString:@"interstitial"])
+    {
+        [self.adManager.loader.view addSubview:myAdView];
+    }
+    
     self.width = adView.frame.size.width;
     self.height = adView.frame.size.height;
     //self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.width, self.height);
 //    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, adView.frame.size.width, adView.frame.size.height);
     self.state = AppDeckAdStateReady;
 }
-
-// Notifies the delegate that the creative from the current ad has been prefetched in cache.
-- (void)adViewDidPrefetch:(SASAdView *)adView
-{
-    
-}
-
-// Notifies the delegate that the modal view will be dismissed.
-- (void)adViewWillDismissModalView:(SASAdView *)adView
-{
-//    if ([self.adType isEqualToString:@"interstitial"])
-        self.state = AppDeckAdStateClose;
-}
-
-// Notifies the delegate that the ad view is about to be expanded.
-- (void)adViewWillExpand:(SASAdView *)adView
-{
-    
-}
-
-//Notifies the delegate that a modal view will appear to display the ad’s redirect URL web page if appropriate. This won’t be called in case of URLs which should not be displayed in a browser like YouTube, iTunes,… In this case, it will call adView:shouldHandleURL:.
-- (void)adViewWillPresentModalView:(SASAdView *)adView
-{
-    
-}
-/*
-// Returns the animations used to dismiss the ad view.
-- (NSTimeInterval)animationDurationForDismissingAdView:(SASAdView *)adView
-{
-    
-}
-
-
-// Returns the animations used to dismiss the ad view.
-- (UIViewAnimationOptions)animationOptionsForDismissingAdView:(SASAdView *)adView
-{
-    
-}
-
-// Asks the delegate for a View Controller to manage the modal view that displays the redirect URL.
-- (UIViewController *)viewControllerForAdView:(SASAdView *)adView
-{
-    
-}*/
 
 @end

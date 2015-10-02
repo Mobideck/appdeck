@@ -35,7 +35,7 @@
         [SASAdView setSiteID:self.siteID.integerValue baseURL:self.baseURL];
         
         [SASAdView setLoggingEnabled:YES];
-        [SASAdView setTestModeEnabled:NO];
+        //[SASAdView setTestModeEnabled:YES];
     }
     return self;
 }

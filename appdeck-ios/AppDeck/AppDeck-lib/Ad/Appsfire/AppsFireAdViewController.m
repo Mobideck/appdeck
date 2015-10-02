@@ -8,6 +8,13 @@
 
 #import "AppsFireAdViewController.h"
 
+#import "../../LoaderChildViewController.h"
+#import "../../PageViewController.h"
+#import "../../LoaderChildViewController.h"
+#import "../../AppDeck.h"
+#import "../../AppDeckUserProfile.h"
+#import "../../AdManager.h"
+
 @interface AppsFireAdViewController ()
 
 @end
@@ -31,26 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [AppsfireSDK connectWithAPIKey:self.adEngine.api_key];
-    [AppsfireSDK connectWithSDKToken:self.adEngine.api_key secretKey:self.adEngine.api_secret features:AFSDKFeatureMonetization parameters:nil];
-    
-    
-#ifdef DEBUG
-    [AppsfireAdSDK setDebugModeEnabled:YES];
-#endif
-    // check if there is an ad available, and that none is currently displayed
-    if ([AppsfireAdSDK isThereAModalAdAvailableForType:AFAdSDKModalTypeSushi] == AFAdSDKAdAvailabilityYes && ![AppsfireAdSDK isModalAdDisplayed]) {
-
-    } else {
-        self.state = AppDeckAdStateCancel;
-    }
-    
-    //[AppsfireAdSDK prepare];
     [AppsfireAdSDK setDelegate:self];
-    self.width = 0;
-    self.height = 0;
-    self.view.frame = CGRectZero;
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,55 +52,7 @@
 
 }
 
-#pragma mark - AppDeckAdViewController
-
--(void)adWillAppearInViewController:(LoaderChildViewController *)ctl
-{
-
-//    [AppsfireAdSDK requestModalAd:AFAdSDKModalTypeUraMaki withController:(UIViewController *)ctl];
-    
-    // delay a bit the request because ‘applicationDidBecomeActive:’ could prevent a part of the animation
-    double delayInSeconds = 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [AppsfireAdSDK requestModalAd:AFAdSDKModalTypeSushi withController:(UIViewController *)ctl withDelegate:self];
-    });
-}
-
-#pragma mark - AppsFire Ad Delegate
-
-/*!
- *  @brief Called when ads were refreshed and that at least one modal ad is available.
- *  @since 2.4
- *
- *  @note You are responsible to check whether there is a modal ad available for the format you are willing to display.
- */
-- (void)modalAdsRefreshedAndAvailable
-{
-    self.state = AppDeckAdStateReady;
-}
-
-/*!
- *  @brief Called when ads were refreshed but that none is available for any modal format.
- *  @since 2.4
- *
- *  @note You could decide to act differently knowing that there is currently no ad to display.
- */
-- (void)modalAdsRefreshedAndNotAvailable
-{
-    self.state = AppDeckAdStateFailed;
-}
-
 #pragma mark - AppsFire Modal Ad Delegate
-
-/*!
- *  @brief Called when there is a modal ad available,
- *  even if there are some pending requests (before handling the requests queue).
- */
-- (void)modalAdIsReadyForRequest
-{
-    self.state = AppDeckAdStateReady;
-}
 
 /*!
  *  @brief Called when a modal ad is going to be presented on the screen.
@@ -140,6 +80,30 @@
 }
 
 /*!
+ *  @brief Called when the modal ad is going to be presented.
+ */
+- (void)modalAdWillAppear
+{
+    
+}
+
+/*!
+ *  @brief Called when the modal ad was presented.
+ */
+- (void)modalAdDidAppear
+{
+    
+}
+
+/*!
+ *  @brief Called when the modal ad was clicked.
+ */
+- (void)modalAdDidRecordClick
+{
+    
+}
+
+/*!
  *  @brief Called when the modal ad is going to be dismissed.
  *
  *  @note In case of in-app download, the method is called when the last modal disappears.
@@ -155,6 +119,34 @@
 - (void)modalAdDidDisappear
 {
     self.state = AppDeckAdStateClose;
+}
+
+/*!
+ *  @brief Called when ads were refreshed and that at least one modal ad is available.
+ *  @since 2.4
+ *
+ *  @note You are responsible to check whether there is a modal ad available for the format you are willing to display.
+ */
+- (void)modalAdsRefreshedAndAvailable
+{
+    if ([AppsfireAdSDK isThereAModalAdAvailableForType:self.adEngine.type] == AFAdSDKAdAvailabilityYes) {
+        UIViewController *ctl = self.adManager.loader;
+        [AppsfireAdSDK requestModalAd:self.adEngine.type withController:ctl withDelegate:self];
+        self.state = AppDeckAdStateReady;
+    } else {
+        self.state = AppDeckAdStateFailed;
+    }
+}
+
+/*!
+ *  @brief Called when ads were refreshed but that none is available for any modal format.
+ *  @since 2.4
+ *
+ *  @note You could decide to act differently knowing that there is currently no ad to display.
+ */
+- (void)modalAdsRefreshedAndNotAvailable
+{
+    self.state = AppDeckAdStateFailed;
 }
 
 @end
