@@ -132,7 +132,7 @@ dependencies {
     //compile 'org.xwalk:xwalk_core_library:10.39.235.16'
     //crosswalkCompile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
     //crosswalkCompile 'org.xwalk:xwalk_core_library:12.41.296.5'
-    crosswalkCompile 'org.xwalk:xwalk_core_library:14.43.343.24'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:14.43.343.25'
     //crosswalkx86Compile 'org.xwalk:xwalk_core_library_beta:11.40.277.7'
     //compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     //compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
@@ -143,6 +143,9 @@ dependencies {
         transitive = true;
     }
     compile('com.mopub:mopub-sdk:3.13.0@aar') {
+        transitive = true
+    }
+    compile('com.mikepenz:actionitembadge:3.1.2@aar') {
         transitive = true
     }
     //compile files('libs/AudienceNetwork.jar')

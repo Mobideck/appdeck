@@ -2,8 +2,13 @@ package com.mobideck.appdeck;
 
 import java.net.URI;
 
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
+import com.mikepenz.actionitembadge.library.ActionItemBadgeAdder;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import android.app.Activity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,6 +28,7 @@ public class PageMenuItem {
 	public String icon;
 	public String type;
 	public String content;
+	public String badge;
 	
 	public MenuItem menuItem;
 	
@@ -37,7 +43,7 @@ public class PageMenuItem {
 	
 	BitmapDrawable draw;
 	
-	public PageMenuItem(String title, String icon, String type, String content, URI baseUrl, AppDeckFragment fragment)
+	public PageMenuItem(String title, String icon, String type, String content, String badge, URI baseUrl, AppDeckFragment fragment)
 	{
 		appDeck = AppDeck.getInstance();
 		this.fragment = fragment;
@@ -85,7 +91,9 @@ public class PageMenuItem {
 		this.icon = icon;
 		this.type = type;
 		this.content = content;
-				
+
+        this.badge = badge;
+
 	}
 	
 	public void cancel()
@@ -115,28 +123,48 @@ public class PageMenuItem {
 	    };
 	}	
 	
-	public void setMenuItem(MenuItem menuItem, final Context context)
+	public void setMenuItem(MenuItem menuItem, final Loader loader, Menu menu)
 	{
 		isValid = true;
-		this.menuItem = menuItem;
-		this.menuItem.setTitle(title);
-		Utils.downloadIcon(icon, appDeck.actionBarHeight, new SimpleMenuItemImageLoadingListener(this) {
-			@Override
-			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-				this.pageMenuItem.draw = new BitmapDrawable(context.getResources(), loadedImage);
-				this.pageMenuItem.draw.setAntiAlias(true);
-				if (isValid)
-				{
+        this.menuItem = menuItem;
+        this.menuItem.setTitle(title);
+        //this.menuItem.setActionView(ActionItemBadge.BadgeStyles.DARK_GREY.getLayout());
+
+
+        //this.menuItem.setShowAsAction(true);
+
+        //ActionItemBadge.update(this, menu.findItem(R.id.item_samplebadge), FontAwesome.Icon.faw_android, ActionItemBadge.BadgeStyles.DARK_GREY, badgeCount);
+        Utils.downloadIcon(icon, appDeck.actionBarHeight, new SimpleMenuItemImageLoadingListener(this) {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                this.pageMenuItem.draw = new BitmapDrawable(loader.getResources(), loadedImage);
+                this.pageMenuItem.draw.setAntiAlias(true);
+                if (isValid) {
 		    		/*ImageView myView = new ImageView(fragment.loader);
 		    		myView.setImageDrawable(this.pageMenuItem.draw);
 		    		this.pageMenuItem.menuItem.setActionView(myView);*/
-					this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-					rotate();
-					//this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-				}
-				this.pageMenuItem.setAvailable(this.pageMenuItem.available);
-        		}
-    		}, context);		
+
+
+                    if (this.pageMenuItem.badge != null && this.pageMenuItem.badge.length() > 0)
+                        ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, Integer.parseInt(this.pageMenuItem.badge));
+                    else
+                        this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw);//.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+                    //IconicsDrawable iconDraw = new IconicsDrawable(loader, icon)/*.color()*/.actionBar();
+
+
+                    //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, 4);
+
+                    this.pageMenuItem.menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+                    //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.DARK_GREY, 42);
+
+                    rotate();
+                    //this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                }
+                this.pageMenuItem.setAvailable(this.pageMenuItem.available);
+            }
+        }, loader);
 	}
 	
     public class SimpleMenuItemImageLoadingListener extends SimpleImageLoadingListener

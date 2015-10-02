@@ -54,11 +54,11 @@ public class WebBrowser extends AppDeckFragment {
     	url = args.getString("url");
         this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);
     	
-		menuItemPrevious = new PageMenuItem(loader.getResources().getString(R.string.previous), "!previous", "previous", "webbrowser:previous", null, this);
-		menuItemNext = new PageMenuItem(loader.getResources().getString(R.string.next), "!next", "next", "webbrowser:next", null, this);
-		menuItemShare = new PageMenuItem(loader.getResources().getString(R.string.action), "!action", "share", "webbrowser:share", null, this);
-		menuItemCancel = new PageMenuItem(loader.getResources().getString(R.string.cancel), "!cancel", "cancel", "webbrowser:cancel", null, this);
-		menuItemRefresh = new PageMenuItem(loader.getResources().getString(R.string.refresh), "!refresh", "refresh", "webbrowser:refresh", null, this);
+		menuItemPrevious = new PageMenuItem(loader.getResources().getString(R.string.previous), "!previous", "previous", "webbrowser:previous", null, null, this);
+		menuItemNext = new PageMenuItem(loader.getResources().getString(R.string.next), "!next", "next", "webbrowser:next", null, null, this);
+		menuItemShare = new PageMenuItem(loader.getResources().getString(R.string.action), "!action", "share", "webbrowser:share", null, null, this);
+		menuItemCancel = new PageMenuItem(loader.getResources().getString(R.string.cancel), "!cancel", "cancel", "webbrowser:cancel", null, null, this);
+		menuItemRefresh = new PageMenuItem(loader.getResources().getString(R.string.refresh), "!refresh", "refresh", "webbrowser:refresh", null, null, this);
 		menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel, menuItemRefresh};
 	}
 

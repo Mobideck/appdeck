@@ -835,9 +835,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 					String content = entry.getString("content");
 					String icon = entry.getString("icon");
 					String type = entry.getString("type");
+                    String badge = entry.getString("badge");
 					
 			        //UIImage *iconImage = self.child.loader.conf.icon_action.image;
-					PageMenuItem item = new PageMenuItem(title, icon, type, content, uri, this);
+					PageMenuItem item = new PageMenuItem(title, icon, type, content, badge, uri, this);
 					menuItems[i] = item;
 				}
 				for (int j = 0; j < defaultMenu.length; j++, i++) {

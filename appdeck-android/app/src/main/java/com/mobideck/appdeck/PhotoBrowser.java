@@ -116,9 +116,9 @@ public class PhotoBrowser extends AppDeckFragment {
     	self = this;
     	//shouldRenderActionBar = true;
     	
-		menuItemPrevious = new PageMenuItem(loader.getResources().getString(R.string.previous), "!previous", "button", "photobrowser:previous", null, this);
-		menuItemNext = new PageMenuItem(loader.getResources().getString(R.string.next), "!next", "button", "photobrowser:next", null, this);
-		menuItemShare = new PageMenuItem(loader.getResources().getString(R.string.action), "!action", "button", "photobrowser:share", null, this);
+		menuItemPrevious = new PageMenuItem(loader.getResources().getString(R.string.previous), "!previous", "button", "photobrowser:previous", null, null, this);
+		menuItemNext = new PageMenuItem(loader.getResources().getString(R.string.next), "!next", "button", "photobrowser:next", null, null, this);
+		menuItemShare = new PageMenuItem(loader.getResources().getString(R.string.action), "!action", "button", "photobrowser:share", null, null, this);
 
 		menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare};		
     	

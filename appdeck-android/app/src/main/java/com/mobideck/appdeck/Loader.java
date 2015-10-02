@@ -1638,7 +1638,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 		for (int i = 0; i < menuItems.length; i++) {
 			PageMenuItem item = menuItems[i];
 			
-			item.setMenuItem(menu.add("button"), getBaseContext());
+			item.setMenuItem(menu.add("button"), this, menu);
 			
 			//item.setMenuItem(menu.add(0, i, 0, null));
 		}

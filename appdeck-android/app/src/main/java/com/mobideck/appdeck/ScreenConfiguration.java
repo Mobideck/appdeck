@@ -37,7 +37,7 @@ public class ScreenConfiguration {
 	public PageMenuItem[] getDefaultPageMenuItems(URI baseUrl, AppDeckFragment fragment)
 	{
 		if (false) {
-			PageMenuItem refresh = new PageMenuItem(fragment.loader.getResources().getString(R.string.refresh), "!refresh", "button", "appdeckapi:refresh", baseUrl, fragment);
+			PageMenuItem refresh = new PageMenuItem(fragment.loader.getResources().getString(R.string.refresh), "!refresh", "button", "appdeckapi:refresh", null, baseUrl, fragment);
 
 			PageMenuItem items[] = new PageMenuItem[1];
 			items[0] = refresh;
