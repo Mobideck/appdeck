@@ -114,7 +114,8 @@
             [glLog debug:@"CACHE HIT %@", log_url];
         else if ([request.URL.host hasSuffix:@".appdeck.mobi"] /*|| [request.URL.host hasSuffix:@".widespace.com"]*/
                  || [request.URL.absoluteString rangeOfString:@".google-analytics.com/collect"].location != NSNotFound
-                 || [request.URL.host hasSuffix:@".mobfox.com"] || [request.URL.host hasSuffix:@".mobpartner.mobi"])
+                 || [request.URL.host hasSuffix:@".mobfox.com"] || [request.URL.host hasSuffix:@".mobpartner.mobi"]
+                 || [request.URL.host hasSuffix:@".mopub.com"])
             ;
         else if (shouldStoreRequest)
             [glLog debug:@"CACHE MISS %@", log_url];
