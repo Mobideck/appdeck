@@ -145,9 +145,6 @@ dependencies {
     compile('com.mopub:mopub-sdk:3.13.0@aar') {
         transitive = true
     }
-    compile('com.mikepenz:actionitembadge:3.1.2@aar') {
-        transitive = true
-    }
     //compile files('libs/AudienceNetwork.jar')
 }
 
