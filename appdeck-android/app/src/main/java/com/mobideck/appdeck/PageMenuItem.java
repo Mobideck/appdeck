@@ -2,9 +2,6 @@ package com.mobideck.appdeck;
 
 import java.net.URI;
 
-import com.mikepenz.actionitembadge.library.ActionItemBadge;
-import com.mikepenz.actionitembadge.library.ActionItemBadgeAdder;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.Activity;
@@ -28,7 +25,7 @@ public class PageMenuItem {
 	public String icon;
 	public String type;
 	public String content;
-	public String badge;
+	public int badge = 0;
 	
 	public MenuItem menuItem;
 	
@@ -92,8 +89,11 @@ public class PageMenuItem {
 		this.type = type;
 		this.content = content;
 
-        this.badge = badge;
+        try {
+            this.badge = Integer.parseInt(badge);
+        } catch (Exception e) {
 
+        }
 	}
 	
 	public void cancel()
@@ -144,18 +144,28 @@ public class PageMenuItem {
 		    		myView.setImageDrawable(this.pageMenuItem.draw);
 		    		this.pageMenuItem.menuItem.setActionView(myView);*/
 
+                    BadgeDrawable badgeDrawable = new BadgeDrawable(loader);
+                    badgeDrawable.setCount(this.pageMenuItem.badge);
+                    Drawable[] layers = new Drawable[2];
+                    layers[0] = this.pageMenuItem.draw;
+                    layers[1] = badgeDrawable;
+                    LayerDrawable layer = new LayerDrawable(layers);
 
+                    this.pageMenuItem.menuItem.setIcon(layer);
+
+                    /*
                     if (this.pageMenuItem.badge != null && this.pageMenuItem.badge.length() > 0)
                         ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, Integer.parseInt(this.pageMenuItem.badge));
                     else
                         this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw);//.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                    */
 
                     //IconicsDrawable iconDraw = new IconicsDrawable(loader, icon)/*.color()*/.actionBar();
 
 
                     //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, 4);
 
-                    this.pageMenuItem.menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                    this.pageMenuItem.menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
                     //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.DARK_GREY, 42);
 
