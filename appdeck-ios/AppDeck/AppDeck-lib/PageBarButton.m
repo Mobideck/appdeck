@@ -33,7 +33,7 @@
     self.icon = [infos objectForKey:@"icon"];
     self.iconalt = [infos objectForKey:@"iconalt"];
     if ([infos objectForKey:@"badge"] != nil)
-        self.badgeValue = [[infos objectForKey:@"badge"] intValue];
+        self.badgeValue = [infos objectForKey:@"badge"];
     
     NSString *enabled = [infos objectForKey:@"enabled"];
     if (enabled != nil && ([enabled isEqualToString:@"no"] || [enabled isEqualToString:@"false"] || [enabled isEqualToString:@"0"]))
@@ -184,17 +184,20 @@
     self.imageView.clipsToBounds = NO;
 }
 
--(void)setBadgeValue:(int)badgeValue
+-(void)setBadgeValue:(NSString *)badgeValue
 {
     _badgeValue = badgeValue;
     if (badgeView == nil)
     {
+        badgeView = [[JSBadgeView alloc] initWithParentView:self alignment:JSBadgeViewAlignmentTopRight];
+        /*
         badgeView = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake( -37, -20, 74, 40)];
         badgeView.shadow = NO;
         badgeView.shine = YES;
         badgeView.strokeWidth = 1.0;
-        [self adjustBadgeView];
+        [self adjustBadgeView];*/
     }
-    badgeView.value = _badgeValue;
+    badgeView.badgeText = _badgeValue;
+//    badgeView.value = _badgeValue;
 }
 @end

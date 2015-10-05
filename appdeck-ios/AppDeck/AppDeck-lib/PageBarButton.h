@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MKNumberBadgeView/MKNumberBadgeView.h"
+#import "JSBadgeView/JSBadgeView.h"
 
 @class LoaderChildViewController;
 
 @interface PageBarButton : UIButton
 {
 //    UIButton *button;
-    MKNumberBadgeView *badgeView;
+    JSBadgeView *badgeView;
 }
 
 @property (nonatomic, weak) LoaderChildViewController* child;
@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSString *icon;
 @property (nonatomic, strong) NSString *iconalt;
 
-@property (nonatomic, assign) int   badgeValue;
+@property (nonatomic, assign) NSString *badgeValue;
 
 -(id)initWithInfos:(id)infos andChild:(LoaderChildViewController *)child;
 
