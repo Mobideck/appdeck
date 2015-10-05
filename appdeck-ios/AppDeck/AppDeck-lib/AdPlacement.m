@@ -93,7 +93,10 @@
 
     // ad disabled in user profile ?
     if (self.adRequest.page.loader.appDeck.userProfile.enable_ad == NO)
+    {
+        NSLog(@"Ads disabled for this profile");
         return NO;
+    }
     
     // only one ad per page
     //if (self.adRequest.page.interstitialAd != nil || self.adRequest.page.rectangleAd != nil || self.adRequest.page.bannerAd != nil)
@@ -101,7 +104,10 @@
     
     // ad disabled ?
     if (self.adRequest.page.disableAds)
+    {
+        NSLog(@"Ads disabled for this profile");
         return NO;
+    }
 
     return YES;
 }
