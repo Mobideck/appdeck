@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A900BB7E1BBC1297005D1ECF /* libAppsfireSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A900BB741BBC1297005D1ECF /* libAppsfireSDK.a */; settings = {ASSET_TAGS = (); }; };
+		A900BB891BBC223F005D1ECF /* libSmartAdServer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A900BB871BBC223F005D1ECF /* libSmartAdServer.a */; settings = {ASSET_TAGS = (); }; };
+		A900BB8A1BBC223F005D1ECF /* sas.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A900BB881BBC223F005D1ECF /* sas.bundle */; settings = {ASSET_TAGS = (); }; };
+		A900BBA21BBEE92B005D1ECF /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A900BBA11BBEE92B005D1ECF /* JSBadgeView.m */; settings = {ASSET_TAGS = (); }; };
 		A908D777170C668C00C858BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A908D779170C668C00C858BA /* Localizable.strings */; };
 		A90B3B9218293E1B0039A48A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9118293E1B0039A48A /* CoreLocation.framework */; };
 		A90B3B9418293E350039A48A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9318293E350039A48A /* CoreTelephony.framework */; };
 		A90B3B9618293E4A0039A48A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9518293E4A0039A48A /* EventKitUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A90B3B9818293E600039A48A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9718293E600039A48A /* Security.framework */; };
 		A914751E1744E0540000BCA3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A914751D1744E0540000BCA3 /* ImageIO.framework */; };
-		A916BB9D1B8B5B06000F8D47 /* libAppsfireSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BB931B8B5B06000F8D47 /* libAppsfireSDK.a */; };
 		A916BBA61B8B5BDF000F8D47 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BB9F1B8B5BDF000F8D47 /* GoogleMobileAds.framework */; };
 		A916BBBC1B8B5D03000F8D47 /* MMAdSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BBB51B8B5D03000F8D47 /* MMAdSDK.framework */; };
 		A916BBCC1B8B5D8F000F8D47 /* libInMobi-4.5.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BBCB1B8B5D8F000F8D47 /* libInMobi-4.5.3.a */; };
@@ -64,7 +67,6 @@
 		A916D2EC1A1E03E7005FE1AE /* iCarouselWebViewModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC001A1E03DC005FE1AE /* iCarouselWebViewModuleViewController.m */; };
 		A916D2ED1A1E03E7005FE1AE /* ImagePreload.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC021A1E03DC005FE1AE /* ImagePreload.m */; };
 		A916D2EF1A1E03E7005FE1AE /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC081A1E03DC005FE1AE /* JRSwizzle.m */; };
-		A916D2F01A1E03E7005FE1AE /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC0B1A1E03DC005FE1AE /* JSBadgeView.m */; };
 		A916D2F11A1E03E7005FE1AE /* JSonHTTPApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC0D1A1E03DC005FE1AE /* JSonHTTPApi.m */; };
 		A916D2F21A1E03E7005FE1AE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC0F1A1E03DC005FE1AE /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A916D2F31A1E03E7005FE1AE /* KeyboardStateListener.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC111A1E03DC005FE1AE /* KeyboardStateListener.m */; };
@@ -243,8 +245,6 @@
 		A948B4C4186B080B00F61664 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A948B4C3186B080A00F61664 /* libsqlite3.dylib */; };
 		A948B4C6186B082C00F61664 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A948B4C5186B082B00F61664 /* Twitter.framework */; };
 		A95154001861B6EE00B2C396 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95153FF1861B6EE00B2C396 /* Accelerate.framework */; };
-		A95739FE1AF265CE0086FCC2 /* libSmartAdServer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A95739B61AF265CE0086FCC2 /* libSmartAdServer.a */; };
-		A95739FF1AF265CE0086FCC2 /* sas.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A95739B71AF265CE0086FCC2 /* sas.bundle */; };
 		A9573C351AF9084E0086FCC2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A9573C2A1AF9084E0086FCC2 /* .gitignore */; };
 		A9573C361AF9084E0086FCC2 /* libGreystripeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C341AF9084E0086FCC2 /* libGreystripeSDK.a */; };
 		A9573C4E1AF9104E0086FCC2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C4D1AF9104E0086FCC2 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -454,6 +454,31 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A900BB6C1BBC1297005D1ECF /* AppsfireAdSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireAdSDK.h; sourceTree = "<group>"; };
+		A900BB6D1BBC1297005D1ECF /* AppsfireEngageSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireEngageSDK.h; sourceTree = "<group>"; };
+		A900BB6E1BBC1297005D1ECF /* AppsfireSDK-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppsfireSDK-Bridging-Header.h"; sourceTree = "<group>"; };
+		A900BB6F1BBC1297005D1ECF /* AppsfireSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireSDK.h; sourceTree = "<group>"; };
+		A900BB701BBC1297005D1ECF /* AppsfireSDKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireSDKConstants.h; sourceTree = "<group>"; };
+		A900BB721BBC1297005D1ECF /* AFAdSDKIAP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKIAP.h; sourceTree = "<group>"; };
+		A900BB731BBC1297005D1ECF /* AFAdSDKIAPProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKIAPProperty.h; sourceTree = "<group>"; };
+		A900BB741BBC1297005D1ECF /* libAppsfireSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppsfireSDK.a; sourceTree = "<group>"; };
+		A900BB761BBC1297005D1ECF /* AFNativeAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNativeAd.h; sourceTree = "<group>"; };
+		A900BB781BBC1297005D1ECF /* AFAdSDKAdBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKAdBadgeView.h; sourceTree = "<group>"; };
+		A900BB791BBC1297005D1ECF /* AFAdSDKHimonoBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKHimonoBannerView.h; sourceTree = "<group>"; };
+		A900BB7A1BBC1297005D1ECF /* AFAdSDKSashimiExtendedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKSashimiExtendedView.h; sourceTree = "<group>"; };
+		A900BB7B1BBC1297005D1ECF /* AFAdSDKSashimiMinimalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKSashimiMinimalView.h; sourceTree = "<group>"; };
+		A900BB7C1BBC1297005D1ECF /* AFAdSDKSashimiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKSashimiView.h; sourceTree = "<group>"; };
+		A900BB7D1BBC1297005D1ECF /* AFAdSDKUdonNoodleControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKUdonNoodleControl.h; sourceTree = "<group>"; };
+		A900BB811BBC223F005D1ECF /* SASAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASAd.h; sourceTree = "<group>"; };
+		A900BB821BBC223F005D1ECF /* SASAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASAdView.h; sourceTree = "<group>"; };
+		A900BB831BBC223F005D1ECF /* SASAdViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASAdViewDelegate.h; sourceTree = "<group>"; };
+		A900BB841BBC223F005D1ECF /* SASBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASBannerView.h; sourceTree = "<group>"; };
+		A900BB851BBC223F005D1ECF /* SASInterstitialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASInterstitialView.h; sourceTree = "<group>"; };
+		A900BB861BBC223F005D1ECF /* SASMediationAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASMediationAd.h; sourceTree = "<group>"; };
+		A900BB871BBC223F005D1ECF /* libSmartAdServer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSmartAdServer.a; sourceTree = "<group>"; };
+		A900BB881BBC223F005D1ECF /* sas.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = sas.bundle; sourceTree = "<group>"; };
+		A900BBA01BBEE92B005D1ECF /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = "AppDeck-lib/JSBadgeView/JSBadgeView.h"; sourceTree = SOURCE_ROOT; };
+		A900BBA11BBEE92B005D1ECF /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = "AppDeck-lib/JSBadgeView/JSBadgeView.m"; sourceTree = SOURCE_ROOT; };
 		A908D778170C668C00C858BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A908D77A170C671300C858BA /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A90B3B9118293E1B0039A48A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -461,21 +486,6 @@
 		A90B3B9518293E4A0039A48A /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		A90B3B9718293E600039A48A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A914751D1744E0540000BCA3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		A916BB8B1B8B5B06000F8D47 /* AppsfireAdSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireAdSDK.h; sourceTree = "<group>"; };
-		A916BB8C1B8B5B06000F8D47 /* AppsfireEngageSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireEngageSDK.h; sourceTree = "<group>"; };
-		A916BB8D1B8B5B06000F8D47 /* AppsfireSDK-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppsfireSDK-Bridging-Header.h"; sourceTree = "<group>"; };
-		A916BB8E1B8B5B06000F8D47 /* AppsfireSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireSDK.h; sourceTree = "<group>"; };
-		A916BB8F1B8B5B06000F8D47 /* AppsfireSDKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppsfireSDKConstants.h; sourceTree = "<group>"; };
-		A916BB911B8B5B06000F8D47 /* AFAdSDKIAP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKIAP.h; sourceTree = "<group>"; };
-		A916BB921B8B5B06000F8D47 /* AFAdSDKIAPProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKIAPProperty.h; sourceTree = "<group>"; };
-		A916BB931B8B5B06000F8D47 /* libAppsfireSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppsfireSDK.a; sourceTree = "<group>"; };
-		A916BB951B8B5B06000F8D47 /* AFNativeAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNativeAd.h; sourceTree = "<group>"; };
-		A916BB971B8B5B06000F8D47 /* AFAdSDKAdBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKAdBadgeView.h; sourceTree = "<group>"; };
-		A916BB981B8B5B06000F8D47 /* AFAdSDKHimonoBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKHimonoBannerView.h; sourceTree = "<group>"; };
-		A916BB991B8B5B06000F8D47 /* AFAdSDKSashimiExtendedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKSashimiExtendedView.h; sourceTree = "<group>"; };
-		A916BB9A1B8B5B06000F8D47 /* AFAdSDKSashimiMinimalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKSashimiMinimalView.h; sourceTree = "<group>"; };
-		A916BB9B1B8B5B06000F8D47 /* AFAdSDKSashimiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKSashimiView.h; sourceTree = "<group>"; };
-		A916BB9C1B8B5B06000F8D47 /* AFAdSDKUdonNoodleControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAdSDKUdonNoodleControl.h; sourceTree = "<group>"; };
 		A916BB9F1B8B5BDF000F8D47 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		A916BBA11B8B5BDF000F8D47 /* GADMAdNetworkAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADMAdNetworkAdapterProtocol.h; sourceTree = "<group>"; };
 		A916BBA21B8B5BDF000F8D47 /* GADMAdNetworkConnectorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADMAdNetworkConnectorProtocol.h; sourceTree = "<group>"; };
@@ -600,8 +610,6 @@
 		A916CC031A1E03DC005FE1AE /* IOSVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IOSVersion.h; path = "AppDeck-lib/IOSVersion.h"; sourceTree = "<group>"; };
 		A916CC071A1E03DC005FE1AE /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRSwizzle.h; path = "AppDeck-lib/JRSwizzle.h"; sourceTree = "<group>"; };
 		A916CC081A1E03DC005FE1AE /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRSwizzle.m; path = "AppDeck-lib/JRSwizzle.m"; sourceTree = "<group>"; };
-		A916CC0A1A1E03DC005FE1AE /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
-		A916CC0B1A1E03DC005FE1AE /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
 		A916CC0C1A1E03DC005FE1AE /* JSonHTTPApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSonHTTPApi.h; path = "AppDeck-lib/JSonHTTPApi.h"; sourceTree = "<group>"; };
 		A916CC0D1A1E03DC005FE1AE /* JSonHTTPApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSonHTTPApi.m; path = "AppDeck-lib/JSonHTTPApi.m"; sourceTree = "<group>"; };
 		A916CC0E1A1E03DC005FE1AE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = "AppDeck-lib/JSONKit.h"; sourceTree = "<group>"; };
@@ -930,15 +938,6 @@
 		A948B4C3186B080A00F61664 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A948B4C5186B082B00F61664 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		A95153FF1861B6EE00B2C396 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		A95739AF1AF265CE0086FCC2 /* SASAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASAd.h; sourceTree = "<group>"; };
-		A95739B01AF265CE0086FCC2 /* SASAdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASAdView.h; sourceTree = "<group>"; };
-		A95739B11AF265CE0086FCC2 /* SASAdViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASAdViewDelegate.h; sourceTree = "<group>"; };
-		A95739B21AF265CE0086FCC2 /* SASBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASBannerView.h; sourceTree = "<group>"; };
-		A95739B31AF265CE0086FCC2 /* SASInterstitialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASInterstitialView.h; sourceTree = "<group>"; };
-		A95739B41AF265CE0086FCC2 /* SASMediationAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SASMediationAd.h; sourceTree = "<group>"; };
-		A95739B51AF265CE0086FCC2 /* SmartAdServerAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartAdServerAd.h; sourceTree = "<group>"; };
-		A95739B61AF265CE0086FCC2 /* libSmartAdServer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSmartAdServer.a; sourceTree = "<group>"; };
-		A95739B71AF265CE0086FCC2 /* sas.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = sas.bundle; sourceTree = "<group>"; };
 		A9573C2A1AF9084E0086FCC2 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A9573C2C1AF9084E0086FCC2 /* GSAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSAd.h; sourceTree = "<group>"; };
 		A9573C2D1AF9084E0086FCC2 /* GSAdDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSAdDelegate.h; sourceTree = "<group>"; };
@@ -1356,6 +1355,7 @@
 				A916BBCC1B8B5D8F000F8D47 /* libInMobi-4.5.3.a in Frameworks */,
 				A90B3B9418293E350039A48A /* CoreTelephony.framework in Frameworks */,
 				A9CC035E1BA1DD5200C0F799 /* libFlurryAds_7.1.0.a in Frameworks */,
+				A900BB891BBC223F005D1ECF /* libSmartAdServer.a in Frameworks */,
 				A90B3B9218293E1B0039A48A /* CoreLocation.framework in Frameworks */,
 				A928F97B1B307178009F0FE8 /* WSLibrary.framework in Frameworks */,
 				A9ADBD5F18102B3400EE23C1 /* GLKit.framework in Frameworks */,
@@ -1363,18 +1363,17 @@
 				A9ADBD5B18102ABF00EE23C1 /* OpenGLES.framework in Frameworks */,
 				A9ADBD5A18102AA700EE23C1 /* CoreVideo.framework in Frameworks */,
 				A9ADBD5818102AA200EE23C1 /* CoreMedia.framework in Frameworks */,
-				A95739FE1AF265CE0086FCC2 /* libSmartAdServer.a in Frameworks */,
 				A9ADBD5618102A8C00EE23C1 /* AssetsLibrary.framework in Frameworks */,
 				A93047C4176C8E7A0094CD57 /* libz.dylib in Frameworks */,
 				A93022CF17461C0400FD07F5 /* MapKit.framework in Frameworks */,
 				A914751E1744E0540000BCA3 /* ImageIO.framework in Frameworks */,
-				A916BB9D1B8B5B06000F8D47 /* libAppsfireSDK.a in Frameworks */,
 				A91DFA7816CE971200512CA0 /* SystemConfiguration.framework in Frameworks */,
 				A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */,
 				A9B611AA17039A4F00311942 /* StoreKit.framework in Frameworks */,
 				A91DFA7C16CE971D00512CA0 /* QuartzCore.framework in Frameworks */,
 				A928F97A1B307178009F0FE8 /* SpeechKit.framework in Frameworks */,
 				A916D2EA1A1E03E7005FE1AE /* libGoogleAnalyticsServices.a in Frameworks */,
+				A900BB7E1BBC1297005D1ECF /* libAppsfireSDK.a in Frameworks */,
 				A925D53317003D6E000F6EEC /* MessageUI.framework in Frameworks */,
 				A925D53117003D67000F6EEC /* MediaPlayer.framework in Frameworks */,
 				A925D52F17003D60000F6EEC /* EventKit.framework in Frameworks */,
@@ -1401,50 +1400,82 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A916BB8A1B8B5B06000F8D47 /* appsfire-sdk-2.7.3 */ = {
+		A900BB6B1BBC1297005D1ECF /* appsfire-sdk-2.7.8 */ = {
 			isa = PBXGroup;
 			children = (
-				A916BB8B1B8B5B06000F8D47 /* AppsfireAdSDK.h */,
-				A916BB8C1B8B5B06000F8D47 /* AppsfireEngageSDK.h */,
-				A916BB8D1B8B5B06000F8D47 /* AppsfireSDK-Bridging-Header.h */,
-				A916BB8E1B8B5B06000F8D47 /* AppsfireSDK.h */,
-				A916BB8F1B8B5B06000F8D47 /* AppsfireSDKConstants.h */,
-				A916BB901B8B5B06000F8D47 /* iap */,
-				A916BB931B8B5B06000F8D47 /* libAppsfireSDK.a */,
-				A916BB941B8B5B06000F8D47 /* native */,
-				A916BB961B8B5B06000F8D47 /* sashimi */,
+				A900BB6C1BBC1297005D1ECF /* AppsfireAdSDK.h */,
+				A900BB6D1BBC1297005D1ECF /* AppsfireEngageSDK.h */,
+				A900BB6E1BBC1297005D1ECF /* AppsfireSDK-Bridging-Header.h */,
+				A900BB6F1BBC1297005D1ECF /* AppsfireSDK.h */,
+				A900BB701BBC1297005D1ECF /* AppsfireSDKConstants.h */,
+				A900BB711BBC1297005D1ECF /* iap */,
+				A900BB741BBC1297005D1ECF /* libAppsfireSDK.a */,
+				A900BB751BBC1297005D1ECF /* native */,
+				A900BB771BBC1297005D1ECF /* sashimi */,
 			);
-			path = "appsfire-sdk-2.7.3";
+			path = "appsfire-sdk-2.7.8";
 			sourceTree = "<group>";
 		};
-		A916BB901B8B5B06000F8D47 /* iap */ = {
+		A900BB711BBC1297005D1ECF /* iap */ = {
 			isa = PBXGroup;
 			children = (
-				A916BB911B8B5B06000F8D47 /* AFAdSDKIAP.h */,
-				A916BB921B8B5B06000F8D47 /* AFAdSDKIAPProperty.h */,
+				A900BB721BBC1297005D1ECF /* AFAdSDKIAP.h */,
+				A900BB731BBC1297005D1ECF /* AFAdSDKIAPProperty.h */,
 			);
 			path = iap;
 			sourceTree = "<group>";
 		};
-		A916BB941B8B5B06000F8D47 /* native */ = {
+		A900BB751BBC1297005D1ECF /* native */ = {
 			isa = PBXGroup;
 			children = (
-				A916BB951B8B5B06000F8D47 /* AFNativeAd.h */,
+				A900BB761BBC1297005D1ECF /* AFNativeAd.h */,
 			);
 			path = native;
 			sourceTree = "<group>";
 		};
-		A916BB961B8B5B06000F8D47 /* sashimi */ = {
+		A900BB771BBC1297005D1ECF /* sashimi */ = {
 			isa = PBXGroup;
 			children = (
-				A916BB971B8B5B06000F8D47 /* AFAdSDKAdBadgeView.h */,
-				A916BB981B8B5B06000F8D47 /* AFAdSDKHimonoBannerView.h */,
-				A916BB991B8B5B06000F8D47 /* AFAdSDKSashimiExtendedView.h */,
-				A916BB9A1B8B5B06000F8D47 /* AFAdSDKSashimiMinimalView.h */,
-				A916BB9B1B8B5B06000F8D47 /* AFAdSDKSashimiView.h */,
-				A916BB9C1B8B5B06000F8D47 /* AFAdSDKUdonNoodleControl.h */,
+				A900BB781BBC1297005D1ECF /* AFAdSDKAdBadgeView.h */,
+				A900BB791BBC1297005D1ECF /* AFAdSDKHimonoBannerView.h */,
+				A900BB7A1BBC1297005D1ECF /* AFAdSDKSashimiExtendedView.h */,
+				A900BB7B1BBC1297005D1ECF /* AFAdSDKSashimiMinimalView.h */,
+				A900BB7C1BBC1297005D1ECF /* AFAdSDKSashimiView.h */,
+				A900BB7D1BBC1297005D1ECF /* AFAdSDKUdonNoodleControl.h */,
 			);
 			path = sashimi;
+			sourceTree = "<group>";
+		};
+		A900BB7F1BBC223F005D1ECF /* SmartAdServer-6.1 */ = {
+			isa = PBXGroup;
+			children = (
+				A900BB801BBC223F005D1ECF /* headers */,
+				A900BB871BBC223F005D1ECF /* libSmartAdServer.a */,
+				A900BB881BBC223F005D1ECF /* sas.bundle */,
+			);
+			path = "SmartAdServer-6.1";
+			sourceTree = "<group>";
+		};
+		A900BB801BBC223F005D1ECF /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				A900BB811BBC223F005D1ECF /* SASAd.h */,
+				A900BB821BBC223F005D1ECF /* SASAdView.h */,
+				A900BB831BBC223F005D1ECF /* SASAdViewDelegate.h */,
+				A900BB841BBC223F005D1ECF /* SASBannerView.h */,
+				A900BB851BBC223F005D1ECF /* SASInterstitialView.h */,
+				A900BB861BBC223F005D1ECF /* SASMediationAd.h */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		A900BB941BBECFDC005D1ECF /* JSBadgeView */ = {
+			isa = PBXGroup;
+			children = (
+				A900BBA01BBEE92B005D1ECF /* JSBadgeView.h */,
+				A900BBA11BBEE92B005D1ECF /* JSBadgeView.m */,
+			);
+			path = JSBadgeView;
 			sourceTree = "<group>";
 		};
 		A916BB9E1B8B5BDF000F8D47 /* GoogleMobileAdsSdkiOS-7.4.1 */ = {
@@ -1554,7 +1585,7 @@
 		A916C3611A1E03D5005FE1AE /* Appsfire */ = {
 			isa = PBXGroup;
 			children = (
-				A916BB8A1B8B5B06000F8D47 /* appsfire-sdk-2.7.3 */,
+				A900BB6B1BBC1297005D1ECF /* appsfire-sdk-2.7.8 */,
 				A916C36D1A1E03D5005FE1AE /* AppsFireAdEngine.h */,
 				A916C36E1A1E03D5005FE1AE /* AppsFireAdEngine.m */,
 				A916C36F1A1E03D5005FE1AE /* AppsFireAdViewController.h */,
@@ -1605,7 +1636,7 @@
 		A916CAA61A1E03D8005FE1AE /* SmartAdServer */ = {
 			isa = PBXGroup;
 			children = (
-				A95739241AF265CE0086FCC2 /* SmartAdServer-5.0 */,
+				A900BB7F1BBC223F005D1ECF /* SmartAdServer-6.1 */,
 				A916CB461A1E03D8005FE1AE /* SmartAdServerAdEngine.h */,
 				A916CB471A1E03D8005FE1AE /* SmartAdServerAdEngine.m */,
 				A916CB481A1E03D8005FE1AE /* SmartAdServerAdViewController.h */,
@@ -1723,16 +1754,6 @@
 			);
 			name = iRate;
 			path = "AppDeck-lib/iRate";
-			sourceTree = "<group>";
-		};
-		A916CC091A1E03DC005FE1AE /* JSBadgeView */ = {
-			isa = PBXGroup;
-			children = (
-				A916CC0A1A1E03DC005FE1AE /* JSBadgeView.h */,
-				A916CC0B1A1E03DC005FE1AE /* JSBadgeView.m */,
-			);
-			name = JSBadgeView;
-			path = "AppDeck-lib/JSBadgeView";
 			sourceTree = "<group>";
 		};
 		A916CCA41A1E03DE005FE1AE /* LZMASDK */ = {
@@ -2010,6 +2031,7 @@
 		A916D48A1A1E0AA4005FE1AE /* import */ = {
 			isa = PBXGroup;
 			children = (
+				A900BB941BBECFDC005D1ECF /* JSBadgeView */,
 				A916D4941A1E0C51005FE1AE /* Other */,
 				A916CCD21A1E03DE005FE1AE /* MKNumberBadgeView */,
 				A916CCD51A1E03DE005FE1AE /* MMPickerView */,
@@ -2023,7 +2045,6 @@
 				A916CBE71A1E03DB005FE1AE /* FPPopover */,
 				A916CBF11A1E03DB005FE1AE /* GoogleAnalytics */,
 				A916CC041A1E03DC005FE1AE /* iRate */,
-				A916CC091A1E03DC005FE1AE /* JSBadgeView */,
 				A916CCA41A1E03DE005FE1AE /* LZMASDK */,
 				A916D48B1A1E0AB0005FE1AE /* AMBlur */,
 			);
@@ -2458,38 +2479,6 @@
 				A928FBA91B30753E009F0FE8 /* swAdAPI.h */,
 			);
 			path = SwelenSDK;
-			sourceTree = "<group>";
-		};
-		A95739241AF265CE0086FCC2 /* SmartAdServer-5.0 */ = {
-			isa = PBXGroup;
-			children = (
-				A95739AD1AF265CE0086FCC2 /* sdk */,
-			);
-			path = "SmartAdServer-5.0";
-			sourceTree = "<group>";
-		};
-		A95739AD1AF265CE0086FCC2 /* sdk */ = {
-			isa = PBXGroup;
-			children = (
-				A95739AE1AF265CE0086FCC2 /* headers */,
-				A95739B61AF265CE0086FCC2 /* libSmartAdServer.a */,
-				A95739B71AF265CE0086FCC2 /* sas.bundle */,
-			);
-			path = sdk;
-			sourceTree = "<group>";
-		};
-		A95739AE1AF265CE0086FCC2 /* headers */ = {
-			isa = PBXGroup;
-			children = (
-				A95739AF1AF265CE0086FCC2 /* SASAd.h */,
-				A95739B01AF265CE0086FCC2 /* SASAdView.h */,
-				A95739B11AF265CE0086FCC2 /* SASAdViewDelegate.h */,
-				A95739B21AF265CE0086FCC2 /* SASBannerView.h */,
-				A95739B31AF265CE0086FCC2 /* SASInterstitialView.h */,
-				A95739B41AF265CE0086FCC2 /* SASMediationAd.h */,
-				A95739B51AF265CE0086FCC2 /* SmartAdServerAd.h */,
-			);
-			path = headers;
 			sourceTree = "<group>";
 		};
 		A9573C291AF9084E0086FCC2 /* conversant-ios-sdk-4.4.0 */ = {
@@ -3317,12 +3306,12 @@
 				A95B95241803FDCC00106EF7 /* Icon-60.png in Resources */,
 				A9A0B0AC1732654B003237E0 /* Default-Portrait.png in Resources */,
 				A9CC03681BA1DE1100C0F799 /* __vungle.db in Resources */,
-				A95739FF1AF265CE0086FCC2 /* sas.bundle in Resources */,
 				A916D4881A1E09C9005FE1AE /* iRate.bundle in Resources */,
 				A9A0B0AD1732654B003237E0 /* Default-Portrait@2x.png in Resources */,
 				A9CC05421BA1DEF800C0F799 /* MPCloseButtonX.png in Resources */,
 				A9CC05431BA1DEF800C0F799 /* MPCloseButtonX@2x.png in Resources */,
 				A9CC036B1BA1DE1100C0F799 /* vg_mute_off.png in Resources */,
+				A900BB8A1BBC223F005D1ECF /* sas.bundle in Resources */,
 				A95B952B1803FF6400106EF7 /* Icon-Small-40@2x.png in Resources */,
 				A95B95271803FDCC00106EF7 /* Icon-76@2x.png in Resources */,
 				A9A0B0AE1732654B003237E0 /* Default.png in Resources */,
@@ -3376,7 +3365,6 @@
 				A916D3BC1A1E03E7005FE1AE /* PhotoViewController.m in Sources */,
 				A916D2E71A1E03E7005FE1AE /* FPPopoverView.m in Sources */,
 				A916D3A91A1E03E7005FE1AE /* UIImage+MRImageEffects.m in Sources */,
-				A916D2F01A1E03E7005FE1AE /* JSBadgeView.m in Sources */,
 				A916D3D11A1E03E7005FE1AE /* RE2Regexp.mm in Sources */,
 				A9CC053C1BA1DEF800C0F799 /* MPNativeCustomEvent.m in Sources */,
 				A916D40D1A1E03E7005FE1AE /* NSDictionary+query.m in Sources */,
@@ -3647,6 +3635,7 @@
 				A916D36B1A1E03E7005FE1AE /* Ppmd8.c in Sources */,
 				A9CC04D01BA1DEF800C0F799 /* MPVungleRouter.m in Sources */,
 				A9CC052C1BA1DEF800C0F799 /* MPNativeAdSourceQueue.m in Sources */,
+				A900BBA21BBEE92B005D1ECF /* JSBadgeView.m in Sources */,
 				A916D3CF1A1E03E7005FE1AE /* unicode_casefold.cc in Sources */,
 				A916D4031A1E03E7005FE1AE /* stringpiece.cc in Sources */,
 				A9CC04CC1BA1DEF800C0F799 /* InMobiNativeCustomEvent.m in Sources */,
@@ -3831,6 +3820,8 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK/MediationAdapters/InMobi",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/Flurry",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/FlurryAds",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/Appsfire/appsfire-sdk-2.7.8",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/SmartAdServer/SmartAdServer-6.1",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -3890,6 +3881,8 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK/MediationAdapters/InMobi",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/Flurry",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/FlurryAds",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/Appsfire/appsfire-sdk-2.7.8",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/SmartAdServer/SmartAdServer-6.1",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = (
