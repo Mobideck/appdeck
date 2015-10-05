@@ -23,6 +23,7 @@
 #import "JSBadgeView.h"
 
 #import <QuartzCore/QuartzCore.h>
+#include <mach-o/dyld.h>
 
 #if !__has_feature(objc_arc)
 #error JSBadgeView must be compiled with ARC.
@@ -54,19 +55,12 @@ static BOOL JSBadgeViewIsUIKitFlatMode(void)
 #ifndef kCFCoreFoundationVersionNumber_iOS_7_0
 #define kCFCoreFoundationVersionNumber_iOS_7_0 847.2
 #endif
-
-        if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0)
-        {
-            // If your app is running in legacy mode, tintColor will be nil - else it must be set to some color.
-            if (UIApplication.sharedApplication.keyWindow)
-            {
-                isUIKitFlatMode = [UIApplication.sharedApplication.keyWindow performSelector:@selector(tintColor)] != nil;
-            }
-            else
-            {
-                // Possible that we're called early on (e.g. when used in a Storyboard). Adapt and use a temporary window.
-                isUIKitFlatMode = [[[UIWindow alloc] init] performSelector:@selector(tintColor)] != nil;
-            }
+#ifndef UIKitVersionNumber_iOS_7_0
+#define UIKitVersionNumber_iOS_7_0 0xB57
+#endif
+        // We get the modern UIKit if system is running >= iOS 7 and we were linked with >= SDK 7.
+        if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
+            isUIKitFlatMode = (NSVersionOfLinkTimeLibrary("UIKit") >> 16) >= UIKitVersionNumber_iOS_7_0;
         }
     });
 
@@ -154,13 +148,13 @@ static BOOL JSBadgeViewIsUIKitFlatMode(void)
     const CGFloat textWidth = [self sizeOfTextForCurrentSettings].width;
 
     const CGFloat marginToDrawInside = [self marginToDrawInside];
-    const CGFloat viewWidth = textWidth + JSBadgeViewTextSideMargin + (marginToDrawInside * 2);
+    const CGFloat viewWidth = MAX(_badgeMinWidth, textWidth + JSBadgeViewTextSideMargin + (marginToDrawInside * 2));
     const CGFloat viewHeight = JSBadgeViewHeight + (marginToDrawInside * 2);
     
     const CGFloat superviewWidth = superviewBounds.size.width;
     const CGFloat superviewHeight = superviewBounds.size.height;
     
-    newFrame.size.width = viewWidth;
+    newFrame.size.width = MAX(viewWidth, viewHeight);
     newFrame.size.height = viewHeight;
     
     switch (self.badgeAlignment) {
@@ -201,7 +195,7 @@ static BOOL JSBadgeViewIsUIKitFlatMode(void)
             newFrame.origin.y = (superviewHeight - viewHeight) / 2.0f;
             break;
         default:
-            NSAssert(NO, @"Unimplemented JSBadgeAligment type %d", self.badgeAlignment);
+            NSAssert(NO, @"Unimplemented JSBadgeAligment type %lul", (unsigned long)self.badgeAlignment);
     }
     
     newFrame.origin.x += _badgePositionAdjustment.x;
@@ -285,6 +279,7 @@ static BOOL JSBadgeViewIsUIKitFlatMode(void)
     {
         _badgeTextFont = badgeTextFont;
         
+        [self setNeedsLayout];
         [self setNeedsDisplay];
     }
 }
@@ -416,7 +411,7 @@ static BOOL JSBadgeViewIsUIKitFlatMode(void)
             const CGSize textSize = [self sizeOfTextForCurrentSettings];
             
             textFrame.size.height = textSize.height;
-            textFrame.origin.y = rectToDraw.origin.y + ceilf((rectToDraw.size.height - textFrame.size.height) / 2.0f);
+            textFrame.origin.y = rectToDraw.origin.y + floorf((rectToDraw.size.height - textFrame.size.height) / 2.0f);
 
             JSBadgeViewSilenceDeprecatedMethodStart();
             [self.badgeText drawInRect:textFrame
