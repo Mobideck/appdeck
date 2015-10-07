@@ -6,6 +6,3 @@
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
 #endif
-
-// for mobfox
-#define SDK_VERSION @"6.0.2"

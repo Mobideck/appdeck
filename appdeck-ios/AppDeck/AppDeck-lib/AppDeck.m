@@ -33,6 +33,10 @@
 #import "UIScrollView+ScrollsToTop.h"
 #import "iRate/iRate-1.11.3/iRate/iRate.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <TwitterKit/TwitterKit.h>
+
 @implementation AppDeck
 
 +(AppDeck *)sharedInstance
@@ -475,6 +479,60 @@
         [AppDeck reloadFrom:jsonurl];
         return YES;
     }
+    
+    if ([call.command isEqualToString:@"facebooklogin"])
+    {
+        NSArray *permissions = [call.param objectForKey:@"permissions"];
+        if (permissions == nil || [[permissions class] isSubclassOfClass:[NSArray class]] == false)
+            permissions = @[@"public_profile"];
+        FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+        
+        [login logInWithReadPermissions:permissions
+                     fromViewController:call.loader
+                                handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                                    if (error) {
+                                        NSLog(@"Facebook: Process error");
+                                        [call sendCallbackWithResult:@[[NSNumber numberWithBool:NO]]];
+                                    } else if (result.isCancelled) {
+                                        NSLog(@"Facebook: Cancelled");
+                                        [call sendCallbackWithResult:@[[NSNumber numberWithBool:NO]]];
+                                    } else {
+                                        NSLog(@"Facebook: Logged in");
+                                        NSDictionary *result_cb = @{
+                                                                 @"appID": result.token.appID,
+//                                                                 @"tokenExpirationDate": result.token.expirationDate,
+//                                                                 @"tokenRefreshDate": result.token.refreshDate,
+                                                                 @"token": result.token.tokenString,
+                                                                 @"userID": result.token.userID
+                                                                 };
+
+                                        
+                                        [call sendCallbackWithResult:@[result_cb]];
+                                    }
+                                }];
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"twitterlogin"])
+    {
+        [[Twitter sharedInstance] logInWithCompletion:^(TWTRSession *session, NSError *error) {
+            if (session) {
+                NSLog(@"signed in as %@", [session userName]);
+                NSDictionary *result_cb = @{
+                                            @"userName": session.userName,
+                                            @"authToken": session.authToken,
+                                            @"authTokenSecret": session.authTokenSecret,
+                                            @"userID": session.userID
+                                            };
+                [call sendCallbackWithResult:@[result_cb]];
+            } else {
+                NSLog(@"error: %@", [error localizedDescription]);
+                [call sendCallbackWithResult:@[[NSNumber numberWithBool:NO]]];
+            }
+        }];
+        return YES;
+    }
+
     
     
     return NO;

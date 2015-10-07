@@ -8,7 +8,10 @@
 #import "AppDelegate.h"
 
 #import <QuartzCore/CALayer.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 //#import <Crashlytics/Crashlytics.h>
+#import <TwitterKit/TwitterKit.h>
+#import <Fabric/Fabric.h>
 
 @implementation AppDelegate
 
@@ -16,6 +19,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    [[Twitter sharedInstance] startWithConsumerKey:@"EDpLDR3wMOmNe6DYC1vk1jH87" consumerSecret:@"IV7UIMn8VWETAJwmZljcZUvqPuZpgVuJWNP5jgXTzAOuwsSAMn"];
+    [Fabric with:@[[Twitter sharedInstance]]];
+    
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     //[Crashlytics startWithAPIKey:@"06661b993731d02660ac43897854ae842acf59be"];
     
@@ -40,7 +46,8 @@
     
     [self.window makeKeyAndVisible];
 
-    return YES;
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                    didFinishLaunchingWithOptions:launchOptions];
 }
 
 #pragma mark - Push \Notification
@@ -100,12 +107,23 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    [FBSDKAppEvents activateApp];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 @end

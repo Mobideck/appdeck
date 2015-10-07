@@ -18,6 +18,7 @@
 {
     self = [super init];
     if (self) {
+        
         self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"062e493d055c4a6784b4d4a902da06c4"]; // UFB
         //self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"76a3fefaced247959582d2d2df6f4757"]; // mopub
 
