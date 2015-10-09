@@ -36,6 +36,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <TwitterKit/TwitterKit.h>
+#import <Fabric/Fabric.h>
+
 
 @implementation AppDeck
 
@@ -538,92 +540,12 @@
     return NO;
 }
 
-/*
--(id)api:(NSString *)command param:(id)param
+// call after json config is loaded
+-(void)configureApp
 {
-    NSLog(@"API %@: %@", command, param);
-    if ([command isEqualToString:@"menu"])
-    {
-        LoaderChildViewController * child = [self.loader getCurrentChild];
-        
-        return @"";
-    }
-    if ([command isEqualToString:@"ping"])
-    {
-        return param;
-    }
-    if ([command isEqualToString:@"debug"])
-    {
-        [self.loader.log debug:@"%@", param];
-        return @"";
-    }
-    if ([command isEqualToString:@"info"])
-    {
-        [self.loader.log info:@"%@", param];
-        return @"";
-    }
-    if ([command isEqualToString:@"warning"])
-    {
-        [self.loader.log warning:@"%@", param];
-        return @"";
-    }
-    if ([command isEqualToString:@"error"])
-    {
-        [self.loader.log error:@"%@", param];
-        return @"";
-    }
-    if ([command isEqualToString:@"test"])
-    {
-        return [NSString stringWithFormat:@" --- %@ ---", param];
-    }
-
-    return @"";
+    [[Twitter sharedInstance] startWithConsumerKey:self.loader.conf.twitter_consumer_key consumerSecret:self.loader.conf.twitter_consumer_secret];
+    [Fabric with:@[[Twitter sharedInstance]]];
+    
 }
 
--(NSString *)JSapi:(NSString *)command param:(NSString *)paramJSON
-{
-    NSError *error = nil;
-    
-    NSData *paramJSONData = [paramJSON dataUsingEncoding:NSUTF8StringEncoding];
-    id param = nil;
-    @try {
-        param = [NSJSONSerialization JSONObjectWithData:paramJSONData options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:&error];
-        //param = [paramJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"JSAPI: Exception while reading JSon: %@: %@", exception, paramJSON);
-        return @"false";
-    }
-
-    if (error != nil)
-    {
-        NSLog(@"JSAPI: Error while reading JSon: %@: %@", error, paramJSON);
-        return @"false";
-    }
-    
-    id realparam = [param objectForKey:@"param"];
-    
-    id ret = [self api:command param:realparam];
-    NSDictionary *retDic = @{@"param" : ret};
-    
-    NSData *retData = nil;
-    @try {
-        retData = [NSJSONSerialization dataWithJSONObject:retDic options:NSJSONWritingPrettyPrinted error:&error];
-        //retData = [retArray JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"JSAPI: Exception while writing JSon: %@: %@", exception, ret);
-        return @"false";
-    }
-
-    if (error != nil)
-    {
-        NSLog(@"JSAPI: Error while writing JSon: %@: %@", error, ret);
-        return @"false";
-    }
-    
-    NSString *retJson = [[NSString alloc] initWithData:retData encoding:NSUTF8StringEncoding];
-    return retJson;
-}
-*/
 @end

@@ -10,17 +10,12 @@
 #import <QuartzCore/CALayer.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 //#import <Crashlytics/Crashlytics.h>
-#import <TwitterKit/TwitterKit.h>
-#import <Fabric/Fabric.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    [[Twitter sharedInstance] startWithConsumerKey:@"EDpLDR3wMOmNe6DYC1vk1jH87" consumerSecret:@"IV7UIMn8VWETAJwmZljcZUvqPuZpgVuJWNP5jgXTzAOuwsSAMn"];
-    [Fabric with:@[[Twitter sharedInstance]]];
     
     //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     //[Crashlytics startWithAPIKey:@"06661b993731d02660ac43897854ae842acf59be"];
