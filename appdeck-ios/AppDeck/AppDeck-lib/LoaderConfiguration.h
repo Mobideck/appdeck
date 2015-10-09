@@ -129,6 +129,12 @@ typedef enum {
 
 @property (strong, nonatomic) NSString *ga;
 @property (strong, nonatomic) NSString *flurry;
+@property (strong, nonatomic) NSString *facebook_app_id;
+@property (strong, nonatomic) NSString *fabric_api_key;
+@property (strong, nonatomic) NSString *fabric_build_secret;
+@property (strong, nonatomic) NSString *twitter_consumer_key;
+@property (strong, nonatomic) NSString *twitter_consumer_secret;
+
 @property (strong, nonatomic) NSURL *embed_url;
 @property (strong, nonatomic) NSURL *embed_runtime_url;
 

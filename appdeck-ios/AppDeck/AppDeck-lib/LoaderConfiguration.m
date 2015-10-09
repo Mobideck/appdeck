@@ -206,6 +206,13 @@
     
     self.ga = [result query:@"ga"];
     
+    self.flurry = [result query:@"flurry_ios_key"];
+    self.facebook_app_id = [result query:@"facebook_ios_app_id"];
+    self.fabric_api_key = [result query:@"fabric_api_key"];
+    self.fabric_build_secret = [result query:@"fabric_build_secret"];
+    self.twitter_consumer_key = [result query:@"twitter_consumer_key"];
+    self.twitter_consumer_secret = [result query:@"twitter_consumer_secret"];
+    
     // push register
     self.push_register_url = [NSURL URLWithString:[result query:@"push_register"] relativeToURL:self.baseUrl];
     if (self.push_register_url == nil)
