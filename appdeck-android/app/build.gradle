@@ -1,16 +1,18 @@
-buildscript {
+/*buildscript {
     repositories {
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
     }
-}
+}*/
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
+    mavenCentral()
     maven {
         url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
         //url 'https://download.01.org/crosswalk/releases/crosswalk/android/canary/'
@@ -139,12 +141,20 @@ dependencies {
     compile 'org.slf4j:slf4j-android:1.7.10'
     //compile 'com.widespace:widespace-sdk-4.6.0-e10401f@aar'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {
         transitive = true;
     }
+
+    compile('com.twitter.sdk.android:twitter:1.8.0@aar') {
+        transitive = true
+    }
+
     compile('com.mopub:mopub-sdk:3.13.0@aar') {
         transitive = true
     }
+
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     //compile files('libs/AudienceNetwork.jar')
 }
 
