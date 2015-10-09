@@ -271,7 +271,7 @@ public class PageFragmentSwap extends AppDeckFragment {
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
                 Log.d(TAG, "onAdOpened");
-                loader.adManager.willShowAdActivity = true;
+                loader.willShowActivity = true;
             }
 
             @Override

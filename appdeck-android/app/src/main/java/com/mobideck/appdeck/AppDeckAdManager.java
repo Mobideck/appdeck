@@ -91,7 +91,7 @@ public class AppDeckAdManager {
 
     private AsyncHttpClient httpClient;
 
-    public boolean willShowAdActivity = false;
+    //public boolean willShowAdActivity = false;
 
     AppDeckAdManager(Loader loader) {
         this.loader = loader;
@@ -452,7 +452,7 @@ public class AppDeckAdManager {
             return false;
         }
         if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-            willShowAdActivity = true;
+            loader.willShowActivity = true;
             mInterstitialAd.show();
             lastSeenInterstitial = currentTime;
             return true;

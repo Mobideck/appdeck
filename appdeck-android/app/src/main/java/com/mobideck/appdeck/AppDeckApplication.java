@@ -16,7 +16,11 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+
 import dalvik.system.DexClassLoader;
+import io.fabric.sdk.android.Fabric;
 
 public class AppDeckApplication extends android.support.multidex.MultiDexApplication {
 	
@@ -49,6 +53,7 @@ public class AppDeckApplication extends android.support.multidex.MultiDexApplica
         //Initialize TestFlight with your app token.
         //TestFlight.takeOff(this, "d1574e34-b01a-44b7-b44f-231bad62036d");
 		//dexTool();
+
 	}		
 
 	

@@ -142,7 +142,7 @@ public class NativeAd {
 
     public void click(AppDeckApiCall call)
     {
-        loader.adManager.willShowAdActivity = true;
+        loader.willShowActivity = true;
         mNativeResponse.handleClick(call.appDeckFragment.getView());
     }
 }

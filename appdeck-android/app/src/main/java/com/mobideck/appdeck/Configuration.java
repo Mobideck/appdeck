@@ -11,7 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
@@ -73,7 +73,7 @@ public class Configuration {
 				e.printStackTrace();
 			}
 		}
-		Crashlytics.log("JSon not in embed ressources");
+		//Crashlytics.log("JSon not in embed ressources");
 		Log.e(TAG, "JSon not in embed ressources");
 		Utils.killApp(true);
 		/*
@@ -106,7 +106,7 @@ public class Configuration {
 	{
 		if (node == null)
 		{
-			Crashlytics.log("JSon null node");
+			//Crashlytics.log("JSon null node");
 			return;
 		}
 		AppDeckJsonNode root = new AppDeckJsonNode(node);
@@ -118,7 +118,7 @@ public class Configuration {
 		app_api_key = root.getString("api_key");
 		
 		Log.d("Configuration", "Version: " + app_version + " API Key: "+ app_api_key);		
-		Crashlytics.log("JSon Version: " + app_version + " API Key: "+ app_api_key);
+		//Crashlytics.log("JSon Version: " + app_version + " API Key: "+ app_api_key);
 		
 		enable_debug = root.getBoolean("enable_debug");
 		
@@ -240,6 +240,12 @@ public class Configuration {
 			prefetch_ttl = 600;
 		
 		ga = root.getString("ga");
+		flurry_android_key = root.getString("flurry_android_key");
+		facebook_android_app_id = root.getString("facebook_android_app_id");
+		fabric_api_key = root.getString("fabric_api_key");
+		fabric_build_secret = root.getString("fabric_build_secret");
+		twitter_consumer_key = root.getString("twitter_consumer_key");
+		twitter_consumer_secret = root.getString("twitter_consumer_secret");
 		
 		push_register_url = readURI(root, "push_register_url", "http://push.appdeck.mobi/register");
 
@@ -283,7 +289,7 @@ public class Configuration {
 		image_network_error_url = readURI(root, "image_network_error", "http://appdata.static.appdeck.mobi/res/android/images/network_error.png");
 		image_network_error_background_color = readColor(root, "image_network_error_background_color");
 		
-		Crashlytics.log("Read JSON configuration");
+		//Crashlytics.log("Read JSON configuration");
 		
 	}
     
@@ -441,6 +447,15 @@ public class Configuration {
 	public String mobiclickAdMobSub;
 
 	public String ga;
+
+
+	public String flurry_android_key;
+	public String facebook_android_app_id;
+	public String fabric_api_key;
+	public String fabric_build_secret;
+	public String twitter_consumer_key;
+	public String twitter_consumer_secret;
+
 	public URI embed_url;
 	public URI embed_runtime_url;
 

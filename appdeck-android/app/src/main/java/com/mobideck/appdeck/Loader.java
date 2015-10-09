@@ -14,6 +14,9 @@ import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
@@ -29,6 +32,7 @@ import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,7 +71,14 @@ import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -76,9 +87,18 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 /*import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubInterstitial;*/
+import com.mopub.common.MoPub;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.facebook.FacebookSdk;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 /*
 import com.widespace.AdInfo.AdType;
 import com.widespace.AdSpace;
@@ -148,6 +168,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     //public ArrayList<String> historyUrls = new ArrayList<String>();
     public List<String> historyUrls = new ArrayList<String>();
 
+    public boolean willShowActivity = false;
+
+    CallbackManager callbackManager;
+    TwitterAuthClient mTwitterAuthClient;
+
+    public SmartWebViewInterface smartWebViewRegiteredForActivityResult = null;
+
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
     private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
@@ -184,12 +211,24 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         //Debug.startMethodTracing("calc");
 		AppDeckApplication app = (AppDeckApplication) getApplication();
 
-        Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
-        Fabric.with(this, crashlytics);
 
 		Intent intent = getIntent();
         String app_json_url = intent.getStringExtra(JSON_URL);
         appDeck = new AppDeck(getBaseContext(), app_json_url);
+
+
+
+        Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
+        if (appDeck.config.twitter_consumer_key != null && appDeck.config.twitter_consumer_secret != null &&
+                appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
+                ) {
+            TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
+            //Fabric.with(app, crashlytics, new TwitterCore(authConfig), new MoPub());
+            Fabric.with(app, crashlytics, new TwitterCore(authConfig));
+            mTwitterAuthClient = new TwitterAuthClient();
+        } else {
+            Fabric.with(app, crashlytics);
+        }
 
         Log.d(TAG, "Use AppDeck version "+AppDeck.version);
 
@@ -203,6 +242,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         }
 
     	super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
 
         // original proxy host/port
         Proxy proxyConf = null;
@@ -230,10 +272,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         Log.i(TAG, "filter registered at @" + this.proxyPort);
 
-        System.setProperty("http.proxyHost", this.proxyHost);
-        System.setProperty("http.proxyPort", this.proxyPort + "");
-        System.setProperty("https.proxyHost", this.proxyHost);
-        System.setProperty("https.proxyPort", this.proxyPort + "");
+        enableProxy();
 
     	CacheFiltersSource filtersSource = new CacheFiltersSource();
 
@@ -411,6 +450,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
 
 
+
         /*
 		// widespace
 		
@@ -422,7 +462,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        if (mDrawerToggle != null)
+            mDrawerToggle.syncState();
     }
 /*
 	// widespace
@@ -537,13 +578,17 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
     	super.onResume();
     	isForeground = true;
-        if (adManager.willShowAdActivity == false)
+        if (willShowActivity == false)
             SmartWebViewFactory.onActivityResume(this);
-        adManager.willShowAdActivity = false; // always set it to false
+        willShowActivity = false; // always set it to false
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
         appDeckBroadcastReceiver.loaderActivity = this;
         registerReceiver(appDeckBroadcastReceiver, filter);
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+        enableProxy();
     }
 
     @Override
@@ -551,7 +596,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
         super.onPause();
     	isForeground = false;
-        if (adManager.willShowAdActivity == false)
+        if (willShowActivity == false)
             SmartWebViewFactory.onActivityPause(this);
         try {
             appDeckBroadcastReceiver.clean();
@@ -561,6 +606,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         }
     	if (appDeck.noCache)
     		Utils.killApp(true);
+        disableProxy();
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override
@@ -1507,8 +1555,111 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 			call.setResult(Boolean.valueOf(result));
 			
 			return true;
-		}		
-		
+		}
+
+
+        if (call.command.equalsIgnoreCase("facebooklogin")) {
+            Log.i("API", "** FACEBOOK LOGIN **");
+
+            Collection permissions = Arrays.asList("publish_actions");
+
+            AppDeckJsonArray values = call.param.getArray("permissions");
+            if (values != null && values.length() > 0) {
+                List<String> var = new ArrayList<>();
+                for (int i = 0; i < values.length(); i++) {
+                    var.add(values.getString(i));
+                }
+                permissions = var;
+            }
+            final AppDeckApiCall mycall = call;
+
+            LoginManager.getInstance().registerCallback(callbackManager,
+                    new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            // App code
+                            Log.d(TAG, "facebook login ok");
+                            HashMap<String, String> result = new HashMap<String, String>() {
+                                {
+                                    put("year", "2005");
+                                    put("month", "10");
+                                    put("day", "today");
+                                }
+                            };
+                            //call.setResult(result);
+                            //call.sendPostponeResult(true);
+                            //mycall.sendCallbackWithResult("success", result);
+                            mycall.setResult(result);
+                            mycall.sendPostponeResult(true);
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            // App code
+                            Log.d(TAG, "facebook login cancel");
+                            mycall.sendPostponeResult(false);
+                        }
+
+                        @Override
+                        public void onError(FacebookException exception) {
+                            // App code
+                            Log.d(TAG, "facebook login error");
+                            mycall.sendPostponeResult(false);
+                        }
+                    });
+            call.postponeResult();
+            willShowActivity = true;
+            LoginManager.getInstance().logInWithReadPermissions(this, permissions);
+
+            return true;
+
+        }
+
+        if (call.command.equalsIgnoreCase("twitterlogin")) {
+            Log.i("API", "** TWITTER LOGIN **");
+
+            if (mTwitterAuthClient == null)
+            {
+                Toast.makeText(getApplicationContext(), "Twitter is not configured for this app", Toast.LENGTH_LONG).show();
+                return true;
+            }
+
+            call.postponeResult();
+            willShowActivity = true;
+
+            final AppDeckApiCall mycall = call;
+            mTwitterAuthClient.authorize(this, new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+
+                @Override
+                public void success(final Result<TwitterSession> twitterSessionResult) {
+                    // Success
+                    Log.d(TAG, "Twitter login ok");
+                    HashMap<String, String> result = new HashMap<String, String>() {
+                        {
+                            put("userName", twitterSessionResult.data.getUserName());
+                            put("authToken", twitterSessionResult.data.getAuthToken().token);
+                            put("authTokenSecret", twitterSessionResult.data.getAuthToken().secret);
+                            put("userID", twitterSessionResult.data.getUserId() + "");
+                        }
+                    };
+                    //call.setResult(result);
+                    //call.sendPostponeResult(true);
+                    mycall.setResult(result);
+                    mycall.sendPostponeResult(true);
+                    //mycall.sendCallbackWithResult("success", result);
+                }
+
+                @Override
+                public void failure(TwitterException e) {
+                    Log.d(TAG, "twitter login failed");
+                    mycall.sendPostponeResult(false);
+                    e.printStackTrace();
+                }
+            });
+            return true;
+
+        }
+
 		Log.i("API ERROR", call.command);
 		return false;
 	}
@@ -1971,7 +2122,17 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     @Override
     public  void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        SmartWebViewFactory.onActivityResult(this, requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (smartWebViewRegiteredForActivityResult != null) {
+            smartWebViewRegiteredForActivityResult.onActivityResult(this, requestCode, resultCode, data);
+            smartWebViewRegiteredForActivityResult = null;
+        } else {
+            SmartWebViewFactory.onActivityResult(this, requestCode, resultCode, data);
+        }
+        if (callbackManager != null)
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (mTwitterAuthClient != null)
+            mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -2115,4 +2276,33 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         Log.d(TAG, "onInterstitialDismissed");
     }*/
 
+
+    void enableProxy()
+    {
+        System.setProperty("http.proxyHost", this.proxyHost);
+        System.setProperty("http.proxyPort", this.proxyPort + "");
+        //System.setProperty("https.proxyHost", this.proxyHost);
+        //System.setProperty("https.proxyPort", this.proxyPort + "");
+        try {
+            //WebkitProxy3.setProxy(null, proxyHost, proxyPort, Application.class.getCanonicalName());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    void disableProxy()
+    {
+        if (this.originalProxyHost != null) {
+            System.setProperty("http.proxyHost", this.proxyHost);
+            System.setProperty("http.proxyPort", this.proxyPort + "");
+            //System.setProperty("https.proxyHost", this.proxyHost);
+            //System.setProperty("https.proxyPort", this.proxyPort + "");
+        } else {
+            System.setProperty("http.proxyHost", "");
+            System.setProperty("http.proxyPort", "");
+            //System.setProperty("https.proxyHost", "");
+            //System.setProperty("https.proxyPort", "");
+        }
+    }
 }
