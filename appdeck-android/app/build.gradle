@@ -148,6 +148,7 @@ dependencies {
 
     compile('com.twitter.sdk.android:twitter:1.8.0@aar') {
         transitive = true
+        exclude module: 'gson';
     }
 
     compile('com.mopub:mopub-sdk:3.13.0@aar') {
