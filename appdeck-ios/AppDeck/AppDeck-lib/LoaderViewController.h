@@ -113,6 +113,8 @@ typedef enum AdManagerEvent: int {
 
 @property (assign, nonatomic) BOOL appRunInBackground;
 
+@property (assign, nonatomic) BOOL appDidLaunch;
+
 @property (strong, nonatomic)     AppDeckAdViewController   *interstitialAd;
 
 /*

@@ -287,6 +287,7 @@
     // embed cache ?
     if ([self.loader.appDeck.cache requestIsInEmbedCache:[NSURLRequest requestWithURL:self.url]] == YES)
     {
+        self.loader.appDidLaunch = NO;
         shouldReloadInBackground = NO;
         shouldAnimatedBackgroundReload = NO;
         animated = NO;
@@ -311,7 +312,7 @@
         }];
     }
     // cache ?
-    else if ([self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
+    else if (self.loader.appDidLaunch == NO && [self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
     {
         cachePolicy = NSURLRequestReturnCacheDataElseLoad;
         if ([date compare:[NSDate dateWithTimeIntervalSinceNow:-self.screenConfiguration.ttl]] == NSOrderedAscending)
@@ -342,6 +343,7 @@
     }
     else
     {
+        self.loader.appDidLaunch = NO;
         [self.loader.log info:@"Load from network: %@", self.url.relativePath];
         NSLog(@"Load from network: %@", self.url.relativePath);
         self.loader.appIsBusy = YES;

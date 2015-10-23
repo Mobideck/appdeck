@@ -10,5 +10,6 @@ target 'AppDeck' do
   pod 'FBSDKLoginKit'
   pod 'FBSDKShareKit'
   pod 'FBAudienceNetwork'
+  pod 'ECSlidingViewController', '~> 2.0.3'  
 end
 

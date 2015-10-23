@@ -22,6 +22,7 @@
 @interface AppDeck : NSObject <AppDeckApiCallDelegate>
 {
     UIWebView *firstWebView;
+    BOOL shouldConfigureApp;
 }
 +(AppDeck *)sharedInstance;
 
@@ -52,5 +53,7 @@
 //-(NSString *)JSapi:(NSString *)command param:(NSString *)paramJSON;
 
 -(BOOL)apiCall:(AppDeckApiCall *)call;
+
+-(void)configureApp;
 
 @end

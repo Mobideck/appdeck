@@ -17,6 +17,13 @@
 		A90B3B9418293E350039A48A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9318293E350039A48A /* CoreTelephony.framework */; };
 		A90B3B9618293E4A0039A48A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9518293E4A0039A48A /* EventKitUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A90B3B9818293E600039A48A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9718293E600039A48A /* Security.framework */; };
+		A913C7CC1BDA7A9E0054B590 /* NetAvenirAdEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A913C7BB1BDA7A9E0054B590 /* NetAvenirAdEngine.m */; settings = {ASSET_TAGS = (); }; };
+		A913C7CD1BDA7A9E0054B590 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = A913C7BD1BDA7A9E0054B590 /* close.png */; settings = {ASSET_TAGS = (); }; };
+		A913C7CE1BDA7A9E0054B590 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A913C7BE1BDA7A9E0054B590 /* close@2x.png */; settings = {ASSET_TAGS = (); }; };
+		A913C7CF1BDA7A9E0054B590 /* libNetAvenirAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A913C7BF1BDA7A9E0054B590 /* libNetAvenirAds.a */; settings = {ASSET_TAGS = (); }; };
+		A913C7D01BDA7A9F0054B590 /* libical.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A913C7C61BDA7A9E0054B590 /* libical.a */; settings = {ASSET_TAGS = (); }; };
+		A913C7D11BDA7A9F0054B590 /* libYuMeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A913C7C71BDA7A9E0054B590 /* libYuMeSDK.a */; settings = {ASSET_TAGS = (); }; };
+		A913C7D21BDA7A9F0054B590 /* NetAvenirAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A913C7CB1BDA7A9E0054B590 /* NetAvenirAdViewController.m */; settings = {ASSET_TAGS = (); }; };
 		A914751E1744E0540000BCA3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A914751D1744E0540000BCA3 /* ImageIO.framework */; };
 		A916BBA61B8B5BDF000F8D47 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BB9F1B8B5BDF000F8D47 /* GoogleMobileAds.framework */; };
 		A916BBBC1B8B5D03000F8D47 /* MMAdSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BBB51B8B5D03000F8D47 /* MMAdSDK.framework */; };
@@ -57,7 +64,6 @@
 		A916D2E11A1E03E7005FE1AE /* CRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBDD1A1E03DB005FE1AE /* CRNavigationController.m */; };
 		A916D2E21A1E03E7005FE1AE /* CustomUIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBDF1A1E03DB005FE1AE /* CustomUIWebView.m */; };
 		A916D2E31A1E03E7005FE1AE /* CustomWebViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBE11A1E03DB005FE1AE /* CustomWebViewFactory.m */; };
-		A916D2E41A1E03E7005FE1AE /* ECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBE41A1E03DB005FE1AE /* ECSlidingViewController.m */; };
 		A916D2E51A1E03E7005FE1AE /* EmbedResources.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBE61A1E03DB005FE1AE /* EmbedResources.m */; };
 		A916D2E61A1E03E7005FE1AE /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBEA1A1E03DB005FE1AE /* FPPopoverController.m */; };
 		A916D2E71A1E03E7005FE1AE /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBEC1A1E03DB005FE1AE /* FPPopoverView.m */; };
@@ -485,6 +491,21 @@
 		A90B3B9318293E350039A48A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A90B3B9518293E4A0039A48A /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		A90B3B9718293E600039A48A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A913C7BA1BDA7A9E0054B590 /* NetAvenirAdEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetAvenirAdEngine.h; path = NetAvenir/NetAvenirAdEngine.h; sourceTree = "<group>"; };
+		A913C7BB1BDA7A9E0054B590 /* NetAvenirAdEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetAvenirAdEngine.m; path = NetAvenir/NetAvenirAdEngine.m; sourceTree = "<group>"; };
+		A913C7BD1BDA7A9E0054B590 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		A913C7BE1BDA7A9E0054B590 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		A913C7BF1BDA7A9E0054B590 /* libNetAvenirAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libNetAvenirAds.a; sourceTree = "<group>"; };
+		A913C7C01BDA7A9E0054B590 /* NAAdPlacement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAdPlacement.h; sourceTree = "<group>"; };
+		A913C7C11BDA7A9E0054B590 /* NAAdTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAAdTypes.h; sourceTree = "<group>"; };
+		A913C7C21BDA7A9E0054B590 /* NetAvenirAds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetAvenirAds.h; sourceTree = "<group>"; };
+		A913C7C51BDA7A9E0054B590 /* ical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ical.h; sourceTree = "<group>"; };
+		A913C7C61BDA7A9E0054B590 /* libical.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libical.a; sourceTree = "<group>"; };
+		A913C7C71BDA7A9E0054B590 /* libYuMeSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libYuMeSDK.a; sourceTree = "<group>"; };
+		A913C7C81BDA7A9E0054B590 /* YuMeSDKInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuMeSDKInterface.h; sourceTree = "<group>"; };
+		A913C7C91BDA7A9E0054B590 /* YuMeTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuMeTypes.h; sourceTree = "<group>"; };
+		A913C7CA1BDA7A9E0054B590 /* NetAvenirAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetAvenirAdViewController.h; path = NetAvenir/NetAvenirAdViewController.h; sourceTree = "<group>"; };
+		A913C7CB1BDA7A9E0054B590 /* NetAvenirAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetAvenirAdViewController.m; path = NetAvenir/NetAvenirAdViewController.m; sourceTree = "<group>"; };
 		A914751D1744E0540000BCA3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		A916BB9F1B8B5BDF000F8D47 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		A916BBA11B8B5BDF000F8D47 /* GADMAdNetworkAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADMAdNetworkAdapterProtocol.h; sourceTree = "<group>"; };
@@ -577,8 +598,6 @@
 		A916CBDF1A1E03DB005FE1AE /* CustomUIWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomUIWebView.m; path = "AppDeck-lib/CustomUIWebView.m"; sourceTree = "<group>"; };
 		A916CBE01A1E03DB005FE1AE /* CustomWebViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomWebViewFactory.h; path = "AppDeck-lib/CustomWebViewFactory.h"; sourceTree = "<group>"; };
 		A916CBE11A1E03DB005FE1AE /* CustomWebViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomWebViewFactory.m; path = "AppDeck-lib/CustomWebViewFactory.m"; sourceTree = "<group>"; };
-		A916CBE31A1E03DB005FE1AE /* ECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingViewController.h; sourceTree = "<group>"; };
-		A916CBE41A1E03DB005FE1AE /* ECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingViewController.m; sourceTree = "<group>"; };
 		A916CBE51A1E03DB005FE1AE /* EmbedResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmbedResources.h; path = "AppDeck-lib/EmbedResources.h"; sourceTree = "<group>"; };
 		A916CBE61A1E03DB005FE1AE /* EmbedResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmbedResources.m; path = "AppDeck-lib/EmbedResources.m"; sourceTree = "<group>"; };
 		A916CBE81A1E03DB005FE1AE /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
@@ -1337,6 +1356,7 @@
 			files = (
 				A916BBCE1B8B717E000F8D47 /* libxml2.dylib in Frameworks */,
 				A916BBA61B8B5BDF000F8D47 /* GoogleMobileAds.framework in Frameworks */,
+				A913C7D01BDA7A9F0054B590 /* libical.a in Frameworks */,
 				A90B3B9618293E4A0039A48A /* EventKitUI.framework in Frameworks */,
 				A9573C4E1AF9104E0086FCC2 /* WebKit.framework in Frameworks */,
 				A928FBA11B307431009F0FE8 /* AdColony.framework in Frameworks */,
@@ -1359,6 +1379,7 @@
 				A9ADBD5B18102ABF00EE23C1 /* OpenGLES.framework in Frameworks */,
 				A9ADBD5A18102AA700EE23C1 /* CoreVideo.framework in Frameworks */,
 				A9ADBD5818102AA200EE23C1 /* CoreMedia.framework in Frameworks */,
+				A913C7D11BDA7A9F0054B590 /* libYuMeSDK.a in Frameworks */,
 				A9ADBD5618102A8C00EE23C1 /* AssetsLibrary.framework in Frameworks */,
 				A93047C4176C8E7A0094CD57 /* libz.dylib in Frameworks */,
 				A93022CF17461C0400FD07F5 /* MapKit.framework in Frameworks */,
@@ -1386,6 +1407,7 @@
 				A9CC036E1BA1DE1100C0F799 /* VungleSDK.framework in Frameworks */,
 				A91DFA7616CE970A00512CA0 /* CoreImage.framework in Frameworks */,
 				A9587FFE1B6A13740037FD53 /* AdBuddiz.framework in Frameworks */,
+				A913C7CF1BDA7A9E0054B590 /* libNetAvenirAds.a in Frameworks */,
 				A91DFA1416CE8D1400512CA0 /* UIKit.framework in Frameworks */,
 				A91DFA1616CE8D1400512CA0 /* Foundation.framework in Frameworks */,
 				A91DFA1816CE8D1400512CA0 /* CoreGraphics.framework in Frameworks */,
@@ -1491,6 +1513,53 @@
 			name = Facebook;
 			sourceTree = "<group>";
 		};
+		A913C7B91BDA7A790054B590 /* NetAvenir */ = {
+			isa = PBXGroup;
+			children = (
+				A913C7BC1BDA7A9E0054B590 /* NetAvenirAds-15.10 */,
+				A913C7BA1BDA7A9E0054B590 /* NetAvenirAdEngine.h */,
+				A913C7BB1BDA7A9E0054B590 /* NetAvenirAdEngine.m */,
+				A913C7CA1BDA7A9E0054B590 /* NetAvenirAdViewController.h */,
+				A913C7CB1BDA7A9E0054B590 /* NetAvenirAdViewController.m */,
+			);
+			name = NetAvenir;
+			sourceTree = "<group>";
+		};
+		A913C7BC1BDA7A9E0054B590 /* NetAvenirAds-15.10 */ = {
+			isa = PBXGroup;
+			children = (
+				A913C7BD1BDA7A9E0054B590 /* close.png */,
+				A913C7BE1BDA7A9E0054B590 /* close@2x.png */,
+				A913C7BF1BDA7A9E0054B590 /* libNetAvenirAds.a */,
+				A913C7C01BDA7A9E0054B590 /* NAAdPlacement.h */,
+				A913C7C11BDA7A9E0054B590 /* NAAdTypes.h */,
+				A913C7C21BDA7A9E0054B590 /* NetAvenirAds.h */,
+				A913C7C31BDA7A9E0054B590 /* Vendor */,
+			);
+			name = "NetAvenirAds-15.10";
+			path = "NetAvenir/NetAvenirAds-15.10";
+			sourceTree = "<group>";
+		};
+		A913C7C31BDA7A9E0054B590 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				A913C7C41BDA7A9E0054B590 /* libYuMeSDK */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		A913C7C41BDA7A9E0054B590 /* libYuMeSDK */ = {
+			isa = PBXGroup;
+			children = (
+				A913C7C51BDA7A9E0054B590 /* ical.h */,
+				A913C7C61BDA7A9E0054B590 /* libical.a */,
+				A913C7C71BDA7A9E0054B590 /* libYuMeSDK.a */,
+				A913C7C81BDA7A9E0054B590 /* YuMeSDKInterface.h */,
+				A913C7C91BDA7A9E0054B590 /* YuMeTypes.h */,
+			);
+			path = libYuMeSDK;
+			sourceTree = "<group>";
+		};
 		A916BB9E1B8B5BDF000F8D47 /* GoogleMobileAdsSdkiOS-7.4.1 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1559,6 +1628,7 @@
 		A916C2B81A1E03D4005FE1AE /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				A913C7B91BDA7A790054B590 /* NetAvenir */,
 				A91124B41BC5015800B28405 /* Facebook */,
 				A9587FFB1B6A13690037FD53 /* AdBuddiz */,
 				A9587FC81B68FE0C0037FD53 /* Flurry */,
@@ -1713,16 +1783,6 @@
 			);
 			name = CRNavigationController;
 			path = "AppDeck-lib/CRNavigationController";
-			sourceTree = "<group>";
-		};
-		A916CBE21A1E03DB005FE1AE /* ECSlidingViewController */ = {
-			isa = PBXGroup;
-			children = (
-				A916CBE31A1E03DB005FE1AE /* ECSlidingViewController.h */,
-				A916CBE41A1E03DB005FE1AE /* ECSlidingViewController.m */,
-			);
-			name = ECSlidingViewController;
-			path = "AppDeck-lib/ECSlidingViewController";
 			sourceTree = "<group>";
 		};
 		A916CBE71A1E03DB005FE1AE /* FPPopover */ = {
@@ -1984,7 +2044,6 @@
 				A916CD861A1E03E1005FE1AE /* SDWebImage */,
 				A916CBB91A1E03D9005FE1AE /* AHEasing */,
 				A916CBD91A1E03DB005FE1AE /* CRNavigationController */,
-				A916CBE21A1E03DB005FE1AE /* ECSlidingViewController */,
 				A916CBE71A1E03DB005FE1AE /* FPPopover */,
 				A916CBF11A1E03DB005FE1AE /* GoogleAnalytics */,
 				A916CC041A1E03DC005FE1AE /* iRate */,
@@ -3332,6 +3391,8 @@
 				A900BB8A1BBC223F005D1ECF /* sas.bundle in Resources */,
 				A95B952B1803FF6400106EF7 /* Icon-Small-40@2x.png in Resources */,
 				A95B95271803FDCC00106EF7 /* Icon-76@2x.png in Resources */,
+				A913C7CE1BDA7A9E0054B590 /* close@2x.png in Resources */,
+				A913C7CD1BDA7A9E0054B590 /* close.png in Resources */,
 				A9A0B0AE1732654B003237E0 /* Default.png in Resources */,
 				A9ADF1F31BC53EBC0026305E /* MPCloseButtonX.png in Resources */,
 				A9A0B0AF1732654B003237E0 /* Default@2x.png in Resources */,
@@ -3456,7 +3517,6 @@
 				A9ADF18F1BC53EBC0026305E /* MPAdConfiguration.m in Sources */,
 				A927830B1B73A63200FF39E3 /* AppDeckInMobiInterstitialCustomEvent.m in Sources */,
 				A916D3B21A1E03E7005FE1AE /* NSFileManager+Tar.m in Sources */,
-				A916D2E41A1E03E7005FE1AE /* ECSlidingViewController.m in Sources */,
 				A9BA70F71BC524D0005A212E /* prefilter.cc in Sources */,
 				A9ADF1FF1BC53EBC0026305E /* MPRewardedVideoReward.m in Sources */,
 				A9ADF18D1BC53EBC0026305E /* MPAdBrowserController.m in Sources */,
@@ -3543,6 +3603,7 @@
 				A9ADF1F11BC53EBC0026305E /* MPTableViewAdManager.m in Sources */,
 				A916D3B91A1E03E7005FE1AE /* PageBarButtonContainer.m in Sources */,
 				A9ADF1931BC53EBC0026305E /* MPAPIEndpoints.m in Sources */,
+				A913C7CC1BDA7A9E0054B590 /* NetAvenirAdEngine.m in Sources */,
 				A916D3B61A1E03E7005FE1AE /* NSString+URLEncoding.m in Sources */,
 				A916D3741A1E03E7005FE1AE /* CustomMMPickerView.m in Sources */,
 				A9ADF18B1BC53EBC0026305E /* MPActivityViewControllerHelper+TweetShare.m in Sources */,
@@ -3650,6 +3711,7 @@
 				A916D3621A1E03E7005FE1AE /* 7zStream.c in Sources */,
 				A916D2DF1A1E03E7005FE1AE /* CookieStorage.m in Sources */,
 				A916D36E1A1E03E7005FE1AE /* 7zMain.c in Sources */,
+				A913C7D21BDA7A9F0054B590 /* NetAvenirAdViewController.m in Sources */,
 				A916D2C91A1E03E7005FE1AE /* WideSpaceAdEngine.m in Sources */,
 				A916D3ED1A1E03E7005FE1AE /* UIAlertView+Blocks.m in Sources */,
 				A9BA71291BC524D0005A212E /* valgrind.cc in Sources */,
@@ -3840,6 +3902,7 @@
 			baseConfigurationReference = 660567CF3C36FD551F1D7B3B /* Pods-AppDeck.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3885,6 +3948,8 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/FlurryAds",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Appsfire/appsfire-sdk-2.7.8",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/SmartAdServer/SmartAdServer-6.1",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10/Vendor/libYuMeSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -3949,6 +4014,8 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/FlurryAds",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Appsfire/appsfire-sdk-2.7.8",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/SmartAdServer/SmartAdServer-6.1",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10",
+					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10/Vendor/libYuMeSDK",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				"OTHER_LDFLAGS[arch=*]" = (
