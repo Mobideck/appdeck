@@ -1244,6 +1244,16 @@
             popupcompletion();
         }
         self.forceStatusBarHidden = NO;
+        
+        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
+        {
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
+                self.leftMenuOpen = NO;
+                [leftController isMain:NO];
+                self.rightMenuOpen = NO;
+                [leftController isMain:NO];
+            }];
+        }
         return page;
     }
     
@@ -1285,6 +1295,16 @@
             [navController pushViewController:container animated:NO];
             if ([page isKindOfClass:[PageViewController class]])
                 [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventPush];
+        }
+        
+        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
+        {
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
+                self.leftMenuOpen = NO;
+                [leftController isMain:NO];
+                self.rightMenuOpen = NO;
+                [leftController isMain:NO];
+            }];
         }
 /*        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
         {
