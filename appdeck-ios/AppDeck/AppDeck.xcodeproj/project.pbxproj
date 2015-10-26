@@ -24,6 +24,7 @@
 		A913C7D01BDA7A9F0054B590 /* libical.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A913C7C61BDA7A9E0054B590 /* libical.a */; settings = {ASSET_TAGS = (); }; };
 		A913C7D11BDA7A9F0054B590 /* libYuMeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A913C7C71BDA7A9E0054B590 /* libYuMeSDK.a */; settings = {ASSET_TAGS = (); }; };
 		A913C7D21BDA7A9F0054B590 /* NetAvenirAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A913C7CB1BDA7A9E0054B590 /* NetAvenirAdViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A913C7D51BDE4D550054B590 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = A913C7D41BDE4D550054B590 /* MEZoomAnimationController.m */; settings = {ASSET_TAGS = (); }; };
 		A914751E1744E0540000BCA3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A914751D1744E0540000BCA3 /* ImageIO.framework */; };
 		A916BBA61B8B5BDF000F8D47 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BB9F1B8B5BDF000F8D47 /* GoogleMobileAds.framework */; };
 		A916BBBC1B8B5D03000F8D47 /* MMAdSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A916BBB51B8B5D03000F8D47 /* MMAdSDK.framework */; };
@@ -506,6 +507,8 @@
 		A913C7C91BDA7A9E0054B590 /* YuMeTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YuMeTypes.h; sourceTree = "<group>"; };
 		A913C7CA1BDA7A9E0054B590 /* NetAvenirAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetAvenirAdViewController.h; path = NetAvenir/NetAvenirAdViewController.h; sourceTree = "<group>"; };
 		A913C7CB1BDA7A9E0054B590 /* NetAvenirAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetAvenirAdViewController.m; path = NetAvenir/NetAvenirAdViewController.m; sourceTree = "<group>"; };
+		A913C7D31BDE4D550054B590 /* MEZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEZoomAnimationController.h; sourceTree = "<group>"; };
+		A913C7D41BDE4D550054B590 /* MEZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEZoomAnimationController.m; sourceTree = "<group>"; };
 		A914751D1744E0540000BCA3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		A916BB9F1B8B5BDF000F8D47 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		A916BBA11B8B5BDF000F8D47 /* GADMAdNetworkAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADMAdNetworkAdapterProtocol.h; sourceTree = "<group>"; };
@@ -2100,6 +2103,8 @@
 		A916D48E1A1E0AE5005FE1AE /* Loader */ = {
 			isa = PBXGroup;
 			children = (
+				A913C7D31BDE4D550054B590 /* MEZoomAnimationController.h */,
+				A913C7D41BDE4D550054B590 /* MEZoomAnimationController.m */,
 				A916CDAC1A1E03E2005FE1AE /* SwipeViewController.h */,
 				A916CDAD1A1E03E2005FE1AE /* SwipeViewController.m */,
 				A916CD841A1E03E1005FE1AE /* ScreenConfiguration.h */,
@@ -3721,6 +3726,7 @@
 				A9ADF1CF1BC53EBC0026305E /* MPUserInteractionGestureRecognizer.m in Sources */,
 				A916D2E81A1E03E7005FE1AE /* FPTouchView.m in Sources */,
 				A9ADF1AA1BC53EBC0026305E /* MPInterstitialViewController.m in Sources */,
+				A913C7D51BDE4D550054B590 /* MEZoomAnimationController.m in Sources */,
 				A9ADF1B61BC53EBC0026305E /* MRConstants.m in Sources */,
 				A9ADF1A91BC53EBC0026305E /* MPInterstitialCustomEventAdapter.m in Sources */,
 				A9ADF1FA1BC53EBC0026305E /* MPRewardedVideoAdapter.m in Sources */,
