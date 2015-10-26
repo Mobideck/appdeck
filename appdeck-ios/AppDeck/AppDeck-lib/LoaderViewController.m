@@ -47,6 +47,8 @@
 #import "NSDictionary+query.h"
 #import "RE2Regexp.h"
 
+#import "MEZoomAnimationController.h"
+
 @interface LoaderViewController ()
 
 @end
@@ -100,13 +102,11 @@
         }
     }
 
-    backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
+    /*backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
     backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth  | UIViewAutoresizingFlexibleHeight;
-    //backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-    //backgroundImageView.autoresizesSubviews = YES;
     backgroundImageView.image = [UIImage imageNamed:launchImageName];
-    
-    [self.view addSubview:backgroundImageView];
+    [self.view addSubview:backgroundImageView];*/
+    self.view.backgroundColor = [UIColor blackColor];
 
     overlay = [[UIView alloc] initWithFrame:self.view.bounds];
     overlay.backgroundColor = [UIColor blackColor];
@@ -663,7 +663,11 @@
     self.slidingViewController.underLeftViewController = leftController;
     self.slidingViewController.underRightViewController = rightController;
     self.slidingViewController.topViewController = centerController;
+    self.slidingViewController.view.backgroundColor = [UIColor blackColor];
     
+    MEZoomAnimationController *zoom = [[MEZoomAnimationController alloc] init];
+    self.menuTransition = zoom;
+    self.slidingViewController.delegate = zoom;
     
     //TODO: restore
 /*    self.slidingViewController.topViewCenterMoved = ^(float x){
@@ -990,7 +994,7 @@
     
     ECSlidingViewControllerTopViewPosition position = self.slidingViewController.currentTopViewPosition;
     
-    if (self.leftMenuOpen == NO && self.rightMenuOpen == NO/*self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered*/) {
+    if (/*self.leftMenuOpen == NO && self.rightMenuOpen == NO*/self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered) {
         [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
             self.leftMenuOpen = YES;
             [leftController isMain:YES];
@@ -1259,28 +1263,41 @@
     
     if (root)
     {
-        NSArray *ctls = [NSArray arrayWithObject:container];
-        [navController setViewControllers:ctls];
-        
-        if (leftController)
-        {
-            navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
 
-        }
-        [navController setNavigationBarHidden:NO animated:NO];
         
-        if ([page isKindOfClass:[PageViewController class]])
-            [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
-        animated = NO;
+        ECSlidingViewControllerTopViewPosition position = self.slidingViewController.currentTopViewPosition;
         
-        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
+        if (position != ECSlidingViewControllerTopViewPositionCentered)
         {
             [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
-                self.leftMenuOpen = NO;
-                [leftController isMain:NO];
-                self.rightMenuOpen = NO;
-                [leftController isMain:NO];
+                NSArray *ctls = [NSArray arrayWithObject:container];
+                [navController setViewControllers:ctls];
+                
+                if (leftController)
+                {
+                    navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
+                    
+                }
+                [navController setNavigationBarHidden:NO animated:NO];
+                
+                if ([page isKindOfClass:[PageViewController class]])
+                    [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
+                //animated = NO;
             }];
+        } else {
+            NSArray *ctls = [NSArray arrayWithObject:container];
+            [navController setViewControllers:ctls];
+            
+            if (leftController)
+            {
+                navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
+                
+            }
+            [navController setNavigationBarHidden:NO animated:NO];
+            
+            if ([page isKindOfClass:[PageViewController class]])
+                [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
+            //animated = NO;
         }
     } else {
         BOOL same = NO;
@@ -1292,23 +1309,14 @@
             [viewControllers addObject:page];
             [navController setViewControllers:viewControllers animated:NO];
         } else {
-            [navController pushViewController:container animated:NO];
+            [navController pushViewController:container animated:YES];
             if ([page isKindOfClass:[PageViewController class]])
                 [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventPush];
         }
         
-        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
-        {
-            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
-                self.leftMenuOpen = NO;
-                [leftController isMain:NO];
-                self.rightMenuOpen = NO;
-                [leftController isMain:NO];
-            }];
-        }
 /*        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
         {
-            [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
                 self.leftMenuOpen = NO;
                 [leftController isMain:NO];
                 self.rightMenuOpen = NO;

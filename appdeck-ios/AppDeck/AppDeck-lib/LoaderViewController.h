@@ -117,6 +117,8 @@ typedef enum AdManagerEvent: int {
 
 @property (strong, nonatomic)     AppDeckAdViewController   *interstitialAd;
 
+@property (strong, nonatomic)     id                        menuTransition;
+
 /*
 #if OS_OBJECT_USE_OBJC
 @property (nonatomic, strong) dispatch_queue_t backgroundQueue; // this is for Xcode 4.5 with LLVM 4.1 and iOS 6 SDK
