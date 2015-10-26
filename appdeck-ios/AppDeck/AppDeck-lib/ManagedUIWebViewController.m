@@ -204,7 +204,7 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     self.webView.scrollView.showsVerticalScrollIndicator = YES;
     [self.webView.scrollView setDelaysContentTouches:NO];
     self.webView.scalesPageToFit = YES;
-    self.webView.mediaPlaybackRequiresUserAction = NO;
+    self.webView.mediaPlaybackRequiresUserAction = YES;
     
     if (appDeck.iosVersion >= 6.0)
     {
