@@ -665,9 +665,9 @@
     self.slidingViewController.topViewController = centerController;
     self.slidingViewController.view.backgroundColor = [UIColor blackColor];
     
-    MEZoomAnimationController *zoom = [[MEZoomAnimationController alloc] init];
+/*    MEZoomAnimationController *zoom = [[MEZoomAnimationController alloc] init];
     self.menuTransition = zoom;
-    self.slidingViewController.delegate = zoom;
+    self.slidingViewController.delegate = zoom;*/
     
     //TODO: restore
 /*    self.slidingViewController.topViewCenterMoved = ^(float x){
