@@ -102,11 +102,10 @@
         }
     }
 
-    /*backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
+    backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
     backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth  | UIViewAutoresizingFlexibleHeight;
     backgroundImageView.image = [UIImage imageNamed:launchImageName];
-    [self.view addSubview:backgroundImageView];*/
-    self.view.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:backgroundImageView];
 
     overlay = [[UIView alloc] initWithFrame:self.view.bounds];
     overlay.backgroundColor = [UIColor blackColor];
