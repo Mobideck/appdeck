@@ -840,8 +840,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
        	//mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // icon on the left of logo
-        getSupportActionBar().setDisplayShowHomeEnabled(false); // make icon + logo + title clickable
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false); // icon on the left of logo
+        //getSupportActionBar().setDisplayShowHomeEnabled(false); // make icon + logo + title clickable
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // show icon on the left of logo
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
+        getSupportActionBar().setHomeButtonEnabled(true); // ???
+
 
 
     }
