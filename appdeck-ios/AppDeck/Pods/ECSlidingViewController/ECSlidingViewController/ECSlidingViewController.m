@@ -813,6 +813,10 @@
 
 - (void)cancelInteractiveTransition {
     _transitionWasCancelled = YES;
+
+    // Reset all the animation and reset frame to the original position here in order to prevent flickering
+    [self.topViewController.view.layer removeAllAnimations];
+    self.topViewController.view.frame = [self initialFrameForViewController:self.topViewController];
 }
 
 - (void)completeTransition:(BOOL)didComplete {
