@@ -74,6 +74,7 @@
 
 -(void)load:(NSString *)url;
 
+-(NSString *)executeJS:(NSString *)js;
 
 -(void)reload;
 //-(void)playAdVideo;

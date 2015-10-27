@@ -264,6 +264,11 @@
     [self.loader loadPage:url];
 }
 
+-(NSString *)executeJS:(NSString *)js
+{
+    return @"";
+}
+
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
     call.child = self;

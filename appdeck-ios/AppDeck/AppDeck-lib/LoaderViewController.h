@@ -152,6 +152,8 @@ typedef enum AdManagerEvent: int {
 
 -(void)loadConf;
 
+-(void)executeJS:(NSString *)js;
+
 -(BOOL)apiCall:(AppDeckApiCall *)call;
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken;

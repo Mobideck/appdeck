@@ -1351,6 +1351,22 @@
     return [self loadPage:pageUrlString root:NO popup:LoaderPopUpDefault];
 }
 
+-(void)executeJS:(NSString *)js
+{
+    [leftController executeJS:js];
+    [rightController executeJS:js];
+    
+    for (UIViewController *ctl in navController.viewControllers)
+    {
+        if ([[ctl class] isSubclassOfClass:[SwipeViewController class]])
+        {
+            SwipeViewController *swipe = (SwipeViewController *)ctl;
+            [swipe executeJS:js];
+        }
+    }
+}
+
+
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
     call.loader = self;

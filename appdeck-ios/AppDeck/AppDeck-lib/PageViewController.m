@@ -776,7 +776,23 @@
 
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
-
+    if ([call.command isEqualToString:@"postmessage"])
+    {
+        NSString *js = [NSString stringWithFormat:@"try {app.receiveMessage(%@.param);} catch (e) {}", call.inputJSON];
+        [self.loader executeJS:js];
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"disable_pulltorefresh"])
+    {
+        [self disablePullToRefresh:contentCtl.webView];
+        return YES;
+    }
+    if ([call.command isEqualToString:@"enable_pulltorefresh"])
+    {
+        [self enablePullToRefresh:contentCtl.webView];
+        return YES;
+    }
     if ([call.command isEqualToString:@"nativead"])
     {
         NSString *divId = [NSString stringWithFormat:@"%@", [call.param objectForKey:@"id"]];

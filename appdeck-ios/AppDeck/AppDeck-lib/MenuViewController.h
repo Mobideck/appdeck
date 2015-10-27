@@ -37,6 +37,8 @@ typedef enum {
 
 -(void)isMain:(BOOL)isMain;
 
+-(NSString *)executeJS:(NSString *)js;
+
 @property (strong, nonatomic) NSURL *url;
 
 @property (nonatomic)     LoaderViewController *loader;

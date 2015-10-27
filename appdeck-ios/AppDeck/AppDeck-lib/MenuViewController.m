@@ -169,6 +169,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSString *)executeJS:(NSString *)js
+{
+    return [content executeJS:js];
+}
+
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
     if ([call.command isEqualToString:@"load"])
