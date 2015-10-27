@@ -1304,7 +1304,19 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (rightMenuWebView != null)
         	rightMenuWebView.ctl.reload();
     }
-    
+
+    public void evaluateJavascript(String js)
+    {
+        if (leftMenuWebView != null)
+            leftMenuWebView.ctl.evaluateJavascript(js, null);
+        if (rightMenuWebView != null)
+            rightMenuWebView.ctl.evaluateJavascript(js, null);
+        for(WeakReference<AppDeckFragment> ref : fragList) {
+            AppDeckFragment f = ref.get();
+            f.evaluateJavascript(js);
+        }
+    }
+
     public Boolean apiCall(AppDeckApiCall call)
 	{
         if (call.command.equalsIgnoreCase("ready")) {

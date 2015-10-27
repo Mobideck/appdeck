@@ -282,8 +282,13 @@ public class AppDeckFragment extends Fragment {
     	if (isCurrentAppDeckPage() == false)
     		return;
     	loader.progressStop();
-    }    
-    
+    }
+
+	public String evaluateJavascript(String js)
+	{
+		return "";
+	}
+
 	public boolean apiCall(AppDeckApiCall call)
 	{	
 		return loader.apiCall(call);

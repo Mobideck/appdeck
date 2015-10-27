@@ -715,8 +715,17 @@ public class PageFragmentSwap extends AppDeckFragment {
     {
         return pageWebView.ctl.resolve(relativeUrl);
     }
-    
-	public boolean apiCall(final AppDeckApiCall call)
+
+    public String evaluateJavascript(String js)
+    {
+        if (pageWebView != null)
+            pageWebView.ctl.evaluateJavascript(js, null);
+        if (pageWebViewAlt != null)
+            pageWebViewAlt.ctl.evaluateJavascript(js, null);
+        return "";
+    }
+
+    public boolean apiCall(final AppDeckApiCall call)
 	{
         /*
         if (call.command.equalsIgnoreCase("share"))
@@ -765,6 +774,32 @@ public class PageFragmentSwap extends AppDeckFragment {
 	        }
 			return true;
 		}
+
+        if (call.command.equalsIgnoreCase("postmessage"))
+        {
+            Log.i("API", uri.getPath()+" **POST MESSAGE**");
+
+            String js = "try {app.receiveMessage("+call.inputJSON+".param);} catch (e) {}";
+            this.loader.evaluateJavascript(js);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("disable_pulltorefresh"))
+        {
+            Log.i("API", uri.getPath()+" **DISABLE PULLTOREFRESH**");
+            this.swipeView.setEnabled(false);
+            this.swipeViewAlt.setEnabled(false);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("enable_pulltorefresh"))
+        {
+            Log.i("API", uri.getPath()+" **ENABLE PULLTOREFRESH**");
+            this.swipeView.setEnabled(true);
+            this.swipeViewAlt.setEnabled(true);
+            return true;
+        }
+
 
         if (call.command.equalsIgnoreCase("nativead"))
         {

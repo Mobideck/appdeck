@@ -589,6 +589,16 @@ public class PageSwipe extends AppDeckFragment {
             nextPage = (PageFragmentSwap)fm.getFragment(bundle, "nextPage");
 	    }	*/	
     }
-    
+
+	public String evaluateJavascript(String js)
+	{
+		if (previousPage != null)
+			previousPage.evaluateJavascript(js);
+		if (currentPage != null)
+			currentPage.evaluateJavascript(js);
+		if (nextPage != null)
+			nextPage.evaluateJavascript(js);
+		return "";
+	}
 }
 
