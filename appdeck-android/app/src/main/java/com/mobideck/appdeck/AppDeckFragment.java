@@ -139,61 +139,67 @@ public class AppDeckFragment extends Fragment {
 		return relativeUrl;		
 	}
 
+	private void refreshConfiguration()
+	{
+		if (screenConfiguration == null)
+			return;
+		// configure action bar
+		String actionBarTitle = appDeck.config.title;
+		if (screenConfiguration.title != null)
+			actionBarTitle = screenConfiguration.title;
+
+		String actionBarLogoUrl = null;
+		if (appDeck.config.logoUrl != null)
+			actionBarLogoUrl = appDeck.config.logoUrl.toString();
+		if (screenConfiguration.logo != null)
+			actionBarLogoUrl = screenConfiguration.logo;
+		if (actionBarLogoUrl != null)
+		{
+			Utils.downloadImage(actionBarLogoUrl, appDeck.actionBarHeight, new SimpleImageLoadingListener() {
+				@Override
+				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+					if (loader == null || imageUri == null || loadedImage == null)
+						return;
+					BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
+					ActionBarActivity sa = (ActionBarActivity)AppDeckFragment.this.getActivity();
+					if (sa == null)
+						return;
+					ActionBar ac = sa.getSupportActionBar();
+					if (ac == null)
+						return;
+					ac.setDisplayShowTitleEnabled(false);
+					ac.setDisplayUseLogoEnabled(true);
+					ac.setIcon(draw);
+					Log.i(TAG, "logo have been set in action bar");
+				}
+
+				@Override
+				public void onLoadingStarted(String imageUri, View view) {
+					Log.i(TAG, "logo action bar onLoadingStarted");
+				}
+
+				@Override
+				public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+					Log.i(TAG, "logo action bar onLoadingFailed");
+				}
+
+				@Override
+				public void onLoadingCancelled(String imageUri, View view) {
+					Log.i(TAG, "logo action bar onLoadingCancelled");
+				}
+			}, getActivity());
+		} else {
+			ActionBarActivity aba = (ActionBarActivity)AppDeckFragment.this.getActivity();
+			aba.getSupportActionBar().setTitle(actionBarTitle);
+		}
+	}
+
 	public void loadURLConfiguration(String absoluteURL)
 	{
 		if (screenConfiguration == null)
 			screenConfiguration = appDeck.config.getConfiguration(absoluteURL);
-		
-		// configure action bar
-        String actionBarTitle = appDeck.config.title;
-        if (screenConfiguration.title != null)
-        	actionBarTitle = screenConfiguration.title;
-        
-        String actionBarLogoUrl = null;
-        if (appDeck.config.logoUrl != null)
-        	actionBarLogoUrl = appDeck.config.logoUrl.toString();
-        if (screenConfiguration.logo != null)
-        	actionBarLogoUrl = screenConfiguration.logo;
-        if (actionBarLogoUrl != null)
-        {
-        	Utils.downloadImage(actionBarLogoUrl, appDeck.actionBarHeight, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-            	if (loader == null || imageUri == null || loadedImage == null)
-            		return;
-            	BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
-            	ActionBarActivity sa = (ActionBarActivity)AppDeckFragment.this.getActivity();
-            	if (sa == null)
-            		return;
-            	ActionBar ac = sa.getSupportActionBar();
-            	if (ac == null)
-            		return;
-           		ac.setDisplayShowTitleEnabled(false);
-           		ac.setDisplayUseLogoEnabled(true);
-           		ac.setIcon(draw);
-           		Log.i(TAG, "logo have been set in action bar");
-            	}
-            
-        	@Override
-        	public void onLoadingStarted(String imageUri, View view) {
-        		Log.i(TAG, "logo action bar onLoadingStarted");
-        	}
 
-        	@Override
-        	public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-        		Log.i(TAG, "logo action bar onLoadingFailed");
-        	}
-
-        	@Override
-        	public void onLoadingCancelled(String imageUri, View view) {
-        		Log.i(TAG, "logo action bar onLoadingCancelled");
-        	}            
-        	}, getActivity());
-        } else {
-        	ActionBarActivity aba = (ActionBarActivity)AppDeckFragment.this.getActivity();
-        	aba.getSupportActionBar().setTitle(actionBarTitle);
-        }
-
+		refreshConfiguration();
 	}
 	
 	public boolean isCurrentAppDeckPage()
@@ -226,6 +232,7 @@ public class AppDeckFragment extends Fragment {
             }
     		//currentPageUrl
     		AppDeck.getInstance().ga.view(currentPageUrl);
+			refreshConfiguration();
     	}
     	this.isMain = isMain;
     }
