@@ -174,7 +174,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        // Could not set user agent
 	        e.printStackTrace();
 	    }
-	}	
+	}
 
 	private String getWebViewUserAgent(XWalkView webView)
 	{
@@ -185,7 +185,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        XWalkViewBridge xWalkViewBridge = null;
 	        xWalkViewBridge = (XWalkViewBridge)___getBridge.invoke(webView);
 	        XWalkSettings xWalkSettings = xWalkViewBridge.getSettings();
-	        return xWalkSettings.getUserAgentString();
+			String ua = xWalkSettings.getUserAgentString();
+			if (root.loader.appDeck.userAgent == null)
+				root.loader.appDeck.userAgent = ua;
 	    }
 	    catch (Exception e)
 	    {
