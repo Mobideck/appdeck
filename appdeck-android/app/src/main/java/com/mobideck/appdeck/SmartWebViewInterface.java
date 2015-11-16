@@ -67,4 +67,6 @@ public interface SmartWebViewInterface {
     public void onActivityDestroy(Loader loader);
     public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data);
     public void onActivityNewIntent(Loader loader, Intent intent);
+
+
 }

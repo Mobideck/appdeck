@@ -107,6 +107,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         {
             WebView.enableSlowWholeDocumentDraw();
         }
+
+        loader.appDeck.userAgent = new WebView(loader).getSettings().getUserAgentString();
     }
 
     public void setRootAppDeckFragment(AppDeckFragment root)
