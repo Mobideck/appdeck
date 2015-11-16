@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import org.apache.http.HttpHost;
+import cz.msebera.android.httpclient.HttpHost;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

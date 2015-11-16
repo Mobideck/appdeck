@@ -8,7 +8,7 @@ import android.os.Build;
 import android.util.Log;
 import android.webkit.WebView;
 
-import org.apache.http.HttpHost;
+import cz.msebera.android.httpclient.HttpHost;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

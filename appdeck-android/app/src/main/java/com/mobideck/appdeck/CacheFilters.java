@@ -32,8 +32,6 @@ import io.netty.handler.codec.http.HttpVersion;
 
 import org.apache.commons.io.IOUtils;
 //import org.apache.commons.io.IOUtils;
-import org.apache.http.impl.cookie.DateParseException;
-import org.apache.http.impl.cookie.DateUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.littleshoot.proxy.HttpFilters;
