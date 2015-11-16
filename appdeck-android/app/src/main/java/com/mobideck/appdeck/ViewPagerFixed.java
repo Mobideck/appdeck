@@ -44,18 +44,13 @@ public class ViewPagerFixed extends ViewPager {
         int count = getAdapter().getCount();
         if (count <= 1)
             return false;
-        return super.onInterceptTouchEvent(event);
-        /*
-        if (childId > 0) {
-            ViewPager pager = (ViewPager)findViewById(childId);
 
-            if (pager != null) {
-                pager.requestDisallowInterceptTouchEvent(true);
-            }
-
-        }
-
-        return super.onInterceptTouchEvent(event);*/
+		try {
+			return super.onInterceptTouchEvent(event);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
     }
 
     public void setChildId(int id) {
