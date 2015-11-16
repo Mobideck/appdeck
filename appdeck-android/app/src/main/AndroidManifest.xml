@@ -37,6 +37,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
+    <!-- WideSapce minSdk 17 override -->
+    <uses-sdk android:minSdkVersion="15" tools:overrideLibrary="com.widespace" />
 
     <application
         tools:replace="android:icon,android:theme"
@@ -195,8 +197,17 @@
             android:exported="true" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <!-- Flurry -->
+        <activity
+            android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize">
+        </activity>
+
         <meta-data android:name="com.crashlytics.ApiKey" android:value="e62d5eb16cef87dc2d56665e3205360edcbd44bb"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+
+
 
     </application>
 
