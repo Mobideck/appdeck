@@ -40,7 +40,9 @@ public class AppDeck {
     public static String appdeck_inject_js = "if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript'; scr.async = true; scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck.js'; scr.async = true; document.getElementsByTagName('head')[0].appendChild(scr); var result = true;} else { var result = false; }";
     //public static String appdeck_inject_js_inline = "javascript:" + appdeck_inject_js;
 
-    public static String error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;network error/&gt;</div>";
+    public static String error_html_old = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;network error/&gt;</div></body></html>";
+
+	public static String error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>body{margin:0;padding:0;overflow:hidden}.frame {height: 100%; width: 100%; position: relative;} img { max-height: 100%; max-width: 100%; width: auto; height: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto;}</style><body><div class=\"framr\"><img src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNS4wLjIsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNDQxLjA3OHB4IiB2aWV3Qm94PSIwIDAgNTEyIDQ0MS4wNzgiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUxMiA0NDEuMDc4IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik01MTIsMTIyLjE3NGMtOS44OC03LjQ3OS0xMDguMzE1LTg3Ljk3NS0yNTUuOTk0LTg3Ljk3NWMtMzMuMDk5LDAtNjMuNTYxLDQuMTc3LTkxLjI3MiwxMC41NTdsMjI3LjE4MiwyMjYuOTY2TDUxMiwxMjIuMTc0ICB6IE02NC4xMDcsMGwtMjguMDQsMjguMDRsNDUuMTk2LDQ1LjE5NUMzNC4xOTksOTQuOTAyLDUuMTY2LDExOC4zMjQsMCwxMjIuMjgxbDI1NS43ODUsMzE4LjY5bDAuMjIxLDAuMTA2bDAuMjItMC4yMTQgIGw4NS43NzMtMTA2Ljg5OGw3Mi45MTksNzIuOTE5bDI4LjAyOS0yOC4wNTFMNjQuMTA3LDB6IiBmaWxsPSIjQ0Q1QzVDIi8+DQo8L3N2Zz4NCg==\"></div></body></html>";
 
 	public boolean noCache = false;
 	
@@ -81,6 +83,8 @@ public class AppDeck {
 	{
         return instance;
     }
+
+	public String userAgent;
 
     AppDeck(Context context, String app_conf_url)
     {
