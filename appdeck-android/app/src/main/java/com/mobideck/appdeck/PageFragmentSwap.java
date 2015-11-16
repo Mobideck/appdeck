@@ -5,13 +5,7 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.mobideck.appdeck.CacheManager.CacheResult;
 
 //import com.mopub.mobileads.MoPubErrorCode;
@@ -29,16 +23,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.webkit.CookieSyncManager;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -81,7 +71,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 	
 	private boolean shouldAutoReloadInbackground;
 
-    private HashMap<String, NativeAd> nativeAds = null;
+    private HashMap<String, AppDeckAdNative> nativeAds = null;
 
 	public static PageFragmentSwap newInstance(String absoluteURL)
 	{
@@ -199,6 +189,7 @@ public class PageFragmentSwap extends AppDeckFragment {
         /*if (bannerAdView != null)
             setBannerAdView(bannerAdView);*/
 
+        /*
         adTimer = new TaskScheduler();
         adTimer.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -210,7 +201,7 @@ public class PageFragmentSwap extends AppDeckFragment {
                 }
             }
         }, 1000);
-
+*/
         return rootView;
     }
 
@@ -230,6 +221,7 @@ public class PageFragmentSwap extends AppDeckFragment {
         }
     }
 
+    /*
     public void setBannerAdView(AdView adView)
     {
         bannerAdView.setAdListener(new AdListener() {
@@ -278,11 +270,11 @@ public class PageFragmentSwap extends AppDeckFragment {
             public void onAdLeftApplication() {
                 // Code to be executed when the user has left the app.
                 Log.d(TAG, "onAdLeftApplication");
-                /*if (bannerAdView != null) {
-                    rootView.removeView(bannerAdView);
-                    bannerAdView.destroy();
-                    bannerAdView = null;
-                }*/
+                //if (bannerAdView != null) {
+                //    rootView.removeView(bannerAdView);
+                //    bannerAdView.destroy();
+                //    bannerAdView = null;
+                //}
             }
 
             @Override
@@ -300,7 +292,7 @@ public class PageFragmentSwap extends AppDeckFragment {
         rootView.addView(bannerAdView, layoutParams);
 
         rootView.bringChildToFront(bannerAdView);
-    }
+    }*/
 
     private Handler mHandler;
     Runnable myTask = new Runnable() {
@@ -331,8 +323,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 		pageWebView.ctl.resume();
 		pageWebViewAlt.ctl.resume();
 
+        /*
         if (bannerAdView != null)
             bannerAdView.resume();
+            */
 
     	long now = System.currentTimeMillis();
     	if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0)
@@ -356,8 +350,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	CookieSyncManager.getInstance().sync();
     	pageWebView.ctl.pause();
     	pageWebViewAlt.ctl.pause();
-    	if (bannerAdView != null)
-            bannerAdView.pause();
+    	/*if (bannerAdView != null)
+            bannerAdView.pause();*/
         super.onPause();
     };
 
@@ -385,13 +379,13 @@ public class PageFragmentSwap extends AppDeckFragment {
         swipeViewAlt.removeAllViews();
         pageWebView = null;
         pageWebViewAlt = null;
-        if (bannerAdView != null) {
+        /*if (bannerAdView != null) {
             rootView.removeView(bannerAdView);
             loader.adManager.recycleBannerAd(bannerAdView);
             bannerAdView = null;
         }
         if (adTimer != null)
-            adTimer.removeCallbacksAndMessages(null);
+            adTimer.removeCallbacksAndMessages(null);*/
     }
     
     @Override
@@ -544,8 +538,8 @@ public class PageFragmentSwap extends AppDeckFragment {
 		if (origin == pageWebViewAlt.view)
 			swapWebView();
 
-        if (bannerAdView != null)
-            rootView.bringChildToFront(bannerAdView);
+/*        if (bannerAdView != null)
+            rootView.bringChildToFront(bannerAdView);*/
 
 
     }
@@ -584,8 +578,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     		reloadInProgress = false;
     	}
 
-        if (bannerAdView != null)
-            rootView.bringChildToFront(bannerAdView);
+/*        if (bannerAdView != null)
+            rootView.bringChildToFront(bannerAdView);*/
 
     }
 	
@@ -609,8 +603,8 @@ public class PageFragmentSwap extends AppDeckFragment {
         //if (adview != null)
     	//	rootView.bringChildToFront(adview);
 
-        if (bannerAdView != null)
-            rootView.bringChildToFront(bannerAdView);
+/*        if (bannerAdView != null)
+            rootView.bringChildToFront(bannerAdView);*/
 
 //    	swipeViewAlt.setVisibility(View.VISIBLE);
     	
@@ -654,8 +648,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	//if (adview != null)
     	//	rootView.bringChildToFront(adview);
 
-        if (bannerAdView != null)
-		    rootView.bringChildToFront(bannerAdView);
+/*        if (bannerAdView != null)
+		    rootView.bringChildToFront(bannerAdView);*/
     	
     	final Runnable r = new Runnable()
     	{
@@ -696,8 +690,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	            	    	//if (adview != null)
     	            	    	//	rootView.bringChildToFront(adview);
 
-                                if (bannerAdView != null)
-								    rootView.bringChildToFront(bannerAdView);
+/*                                if (bannerAdView != null)
+								    rootView.bringChildToFront(bannerAdView);*/
     	            	    	    	            	    	
     	            	    	swapInProgress = false;
     	            	    	reloadInProgress = false;    	            	   
@@ -807,14 +801,15 @@ public class PageFragmentSwap extends AppDeckFragment {
 
             String divId = call.param.getString("id");
             if (nativeAds == null)
-                nativeAds = new HashMap<String, NativeAd>();
-            NativeAd nativeAd = nativeAds.get(divId);
+                nativeAds = new HashMap<String, AppDeckAdNative>();
+            AppDeckAdNative nativeAd = nativeAds.get(divId);
             if (nativeAd == null)
             {
                 nativeAd = loader.adManager.getNativeAd();//new NativeAd(loader);
                 nativeAds.put(divId, nativeAd);
             }
-            nativeAd.addApiCall(call);
+            if (nativeAd != null)
+                nativeAd.addApiCall(call);
             return true;
         }
 
@@ -823,7 +818,7 @@ public class PageFragmentSwap extends AppDeckFragment {
             Log.i("API", uri.getPath()+" **NATIVE AD CLICK**");
 
             String divId = call.param.getString("id");
-            NativeAd nativeAd = nativeAds.get(divId);
+            AppDeckAdNative nativeAd = nativeAds.get(divId);
             if (nativeAd != null)
             {
                 nativeAd.click(call);
