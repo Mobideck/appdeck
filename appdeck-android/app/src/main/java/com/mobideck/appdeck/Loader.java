@@ -1,6 +1,9 @@
 package com.mobideck.appdeck;
 
 import com.crashlytics.android.Crashlytics;
+
+import hotchemi.android.rate.AppRate;
+import hotchemi.android.rate.OnClickButtonListener;
 import io.fabric.sdk.android.Fabric;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,7 +26,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.http.Header;
+import cz.msebera.android.httpclient.Header;
 import org.littleshoot.proxy.ChainedProxy;
 import org.littleshoot.proxy.ChainedProxyAdapter;
 import org.littleshoot.proxy.ChainedProxyManager;
@@ -31,6 +34,8 @@ import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
@@ -65,7 +70,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
@@ -79,44 +83,22 @@ import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-/*import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubInterstitial;*/
-import com.mopub.common.MoPub;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.facebook.FacebookSdk;
-import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-/*
-import com.widespace.AdInfo.AdType;
-import com.widespace.AdSpace;
-import com.widespace.adspace.PrefetchStatus;
-import com.widespace.exception.ExceptionTypes;
-import com.widespace.interfaces.AdErrorEventListener;
-import com.widespace.interfaces.AdEventListener;
-*/
 import io.netty.handler.codec.http.HttpRequest;
 
-public class Loader extends ActionBarActivity /*implements MoPubInterstitial.InterstitialAdListener*/ {
+public class Loader extends ActionBarActivity {
 
-/*
-	// widespace
-    private static final String SPLASH_SID = "92a487d3-3bc5-4bbe-bdb0-efe6bffe64f3";
-    private AdSpace adSpaceSplash;
-	private AdSpace adSpacePanorama;
-*/
 	public final static String TAG = "LOADER";
 	public final static String JSON_URL = "com.mobideck.appdeck.JSON_URL";
 	
@@ -136,8 +118,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
     private String alternativeBootstrapURL = null;
 
-    //private MoPubInterstitial mInterstitial = null;
-
     public AppDeckAdManager adManager;
 
 	protected AppDeck appDeck;
@@ -155,17 +135,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     public View nonVideoLayout;
     public ViewGroup videoLayout;
 
-	//private jProxy jp;
 	private HttpProxyServerBootstrap proxyServerBootstrap;
 
-    //SmoothProgressBar mProgressBar;
-    //ProgressBarIndeterminateDeterminate mProgressBar;
     ProgressBar mProgressBar;
 
     Toolbar mToolbar;
 
     private boolean historyInjected = false;
-    //public ArrayList<String> historyUrls = new ArrayList<String>();
     public List<String> historyUrls = new ArrayList<String>();
 
     public boolean willShowActivity = false;
@@ -178,28 +154,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
     private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
-	/*
-	private int mProgress = 100;
-	private int mTargetProgress = 0;
-	
-    Handler mHandler = new Handler();
-    Runnable mProgressRunner = new Runnable() {
-        @Override
-        public void run() {
-                    	
-        	if (mProgress < mTargetProgress)
-        		mProgress += 5;
-        	
-            //Normalize our progress along the progress bar's scale
-            int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * mProgress;
-            //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
-            setSupportProgress(progress);
-            //setSupportSecondaryProgress((Window.PROGRESS_END - Window.PROGRESS_START) / 100 * 75);
-            if (mProgress < 100) {
-                mHandler.postDelayed(mProgressRunner, 100);
-            }
-        }
-    };	*/
     
     protected void onCreatePass(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -223,7 +177,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
                 ) {
             TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
-            //Fabric.with(app, crashlytics, new TwitterCore(authConfig), new MoPub());
             Fabric.with(app, crashlytics, new TwitterCore(authConfig));
             mTwitterAuthClient = new TwitterAuthClient();
         } else {
@@ -323,7 +276,31 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {};
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
+
+/*            @Override
+            public boolean onOptionsItemSelected(MenuItem item) {
+
+                if (isMenuOpen() == false) {
+                    if (menuArrowIsShown) {
+                        // try to pop a fragment if possible
+                        if (popFragment()) {
+                            return true;
+                        }
+                    }
+                }
+                return super.onOptionsItemSelected(item);
+            }*/
+
+            /*
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                if (menuArrowIsShown)
+                    super.onDrawerSlide(drawerView, 0); // this disables the animation
+                else
+                    super.onDrawerSlide(drawerView, slideOffset);
+            }*/
+        };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
@@ -423,16 +400,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 }
             }
         });
-		
-		initUI();
 
         adManager = new AppDeckAdManager(this);
         adManager.showAds(AppDeckAdManager.EVENT_START);
-/*        mInterstitial = new MoPubInterstitial(this, adManager.mopubInterstitialId);
-        mInterstitial.setInterstitialAdListener(this);
-
-        if (adManager.shouldShowInterstitial())
-            mInterstitial.load();*/
 
 		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
         appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
@@ -445,18 +415,25 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 		else if (savedInstanceState == null)
 		{
 			loadRootPage(appDeck.config.bootstrapUrl.toString());
-            //loadRootPage("http://www.universfreebox.com.dev.dck.io/");
 		}
 
+        AppRate.with(this)
+                .setInstallDays(10) // default 10, 0 means install day.
+                .setLaunchTimes(10) // default 10
+                .setRemindInterval(1) // default 1
+                .setShowLaterButton(true) // default true
+                //.setDebug(true) // default false
+                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                    @Override
+                    public void onClickButton(int which) {
+                        Log.d(Loader.class.getName()+" AppRater Click", Integer.toString(which));
+                    }
+                })
+                .monitor();
 
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
 
-
-        /*
-		// widespace
-		
-        // Let's listen to some events and run Splash Ad
-		initWideSpaceAds();		
-*/
     }
 
     @Override
@@ -465,113 +442,16 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (mDrawerToggle != null)
             mDrawerToggle.syncState();
     }
-/*
-	// widespace
-    private void initWideSpaceAds() {
-    	
-    	// Splash
 
-        // Please use Auto Update and Auto Start false for the splash ad;
-    	adSpaceSplash = new AdSpace(this, SPLASH_SID, false, false);
-    	
-    	adSpaceSplash.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
-        
-    	adSpaceSplash.setAdEventListener(new AdEventListener() {
+    public FrameLayout getBannerAdViewContainer()
+    {
+        return (FrameLayout)findViewById(R.id.loader);
+    }
+    public FrameLayout getInterstitialAdViewContainer()
+    {
+        return (FrameLayout)findViewById(R.id.app_container);
+    }
 
-			@Override
-			public void onAdClosed(AdSpace adSpace, AdType adType) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdClosing(AdSpace adSpace, AdType adType) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdLoaded(AdSpace adSpace, AdType adType) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdLoading(AdSpace adSpace) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onNoAdRecieved(AdSpace adSpace) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onPrefetchAd(AdSpace adSpace, PrefetchStatus prefetchStatus) {
-				// TODO Auto-generated method stub
-				adSpace.runAd();
-				
-			}
-
-			@Override
-			public void onAdDismissed(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdDismissing(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdPresented(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdPresenting(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-    });
-        
-    	adSpaceSplash.setAdErrorEventListener(adErrorListener);
-        
-    	// panorama
-
-    	//adSpacePanorama = (AdSpace) findViewById(R.id.adPanorama);
-    	//adSpacePanorama.setAdErrorEventListener(adErrorListener);
-
-    	
-        //adSpace.setAdEventListener(adEventListener);
-        //adSpace.setAdErrorEventListener(adErrorListener);
-        //adSpace.setAdAnimationEventListener(adAnimationListener);
-        //adSpace.setAdMediaEventListener(adMediaEventListener);
-        // It is better to pre-fetch the ad and then on the onPrefetchAd event
-        // call the runAd method of the adSpace. Please explore the advanced
-        // demo to see the varieties of implementations of Splash Ad.
-        // For this basic demo we are going to use runAd method.
-        //adSpace.runAd();
-    }	
-    
-    // Please implement this event listener while you are in development mode,
-    // so that you get notification if there is any errors.
-    private AdErrorEventListener adErrorListener = new AdErrorEventListener() {
-
-        @Override
-        public void onFailedWithError(Object sender, ExceptionTypes type, String message,
-                Exception exeception) {
-            Log.d(TAG, "onFailedWithError : error message # " + message);
-        }
-    };
-*/
 	boolean isForeground = true;
     @Override
     protected void onResume()
@@ -642,67 +522,10 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     @Override
     protected void onDestroy()
     {
-/*        if (mInterstitial != null)
-            mInterstitial.destroy();*/
     	super.onDestroy();
         isForeground = false;
         SmartWebViewFactory.onActivityDestroy(this);
     }    
-    /*
-    public void forceFullRedraw()
-    {
-		FrameLayout frameLayout = (FrameLayout)findViewById (R.id.loader_container);
-		if (frameLayout != null)
-		{
-			frameLayout.invalidate();
-			frameLayout.refreshDrawableState();
-			this.getWindow().getDecorView().invalidate();
-		}    	
-    }*/
-    
-    @SuppressWarnings("deprecation")
-	public void initUI()
-    {
-    	/*
-    	// enable hardware layer type
-    	slidingMenu.forceLayerType(View.LAYER_TYPE_HARDWARE);
-   	
-    	// for smartphone
-    	Display display = getWindowManager().getDefaultDisplay();
-    	float width = (float)display.getWidth();
-    	float height = (float)display.getHeight();
-    	float screen_width = (width > height ? height : width);
-    	float virtual_menu_width = appDeck.config.leftMenuWidth;
-    	if (virtual_menu_width > 280)
-    		virtual_menu_width = 280;
-    	if (virtual_menu_width < 0)
-    		virtual_menu_width = 0;
-    	float menu_width = 0;
-    	if (appDeck.isTablet)
-    	{
-    		float base_width = getResources().getDimension(R.dimen.slidingmenu_base_width);    		
-    		menu_width = virtual_menu_width * base_width / 280;
-    	} else {
-    		menu_width = screen_width * virtual_menu_width / (appDeck.isTablet ? 768 : 320);
-    	}
-    	
-    	//float density = getResources().getDisplayMetrics().density;
-    	//float width = density *  menu_width;
-    	Log.d("Loader", "virtual menu: " + appDeck.config.leftMenuWidth);
-    	Log.d("Loader", "screen_width: " + screen_width);
-    	Log.d("Loader", "menu width: " + menu_width);
-    	
-    	//slidingMenu.setSideNavigationWidth((int)menu_width);
-    	
-    	// test set in pixel directly
-    	float density = getResources().getDisplayMetrics().density;
-    	slidingMenu.setSideNavigationWidth((int)(appDeck.config.leftMenuWidth * density));
-    	//slidingMenu.setSideNavigationWidth(280);
-    	*/
-    	//slidingMenu.setBehindWidth((int)menu_width);
-
-    	//forceFullRedraw();
-    }
 
     // arrow
     public void setArrowEnabled(boolean enabled)
@@ -869,13 +692,58 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         else
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);*/
     }
-    
+
+    boolean menuArrowIsShown = false;
+    public void setMenuArrow(boolean show)
+    {
+        if (menuArrowIsShown == show)
+            return;
+        menuArrowIsShown = show;
+        float start = (show ? 0 : 1);
+        float end = (show ? 1 : 0);
+        ValueAnimator anim = ValueAnimator.ofFloat(start, end);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float slideOffset = (Float) valueAnimator.getAnimatedValue();
+                mDrawerToggle.onDrawerSlide(mDrawerLayout, slideOffset);
+            }
+        });
+        anim.setInterpolator(new DecelerateInterpolator());
+        // You can change this duration to more closely match that of the default animation.
+        anim.setDuration(500);
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (menuArrowIsShown == false)
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (menuArrowIsShown)
+                    mDrawerToggle.setDrawerIndicatorEnabled(false);
+                else
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
+    }
     
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-        initUI();
     }
     
     ArrayList<WeakReference<AppDeckFragment>> fragList = new ArrayList<WeakReference<AppDeckFragment>>();
@@ -951,7 +819,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         setSupportProgressBarVisibility(true);
         setSupportProgressBarIndeterminateVisibility(true);
     	setSupportProgressBarIndeterminate(true);
-    	//mProgress = 100;
     }
     
     public void progressSet(int percent)
@@ -959,9 +826,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (percent < 25)
             return;
     	setSupportProgressBarIndeterminate(false);
-        //Normalize our progress along the progress bar's scale
-        int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * percent;
-        //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
+        //int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * percent;
         setSupportProgress(percent);
     }
     
@@ -972,7 +837,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	setSupportProgressBarIndeterminate(false);
     	
         int progress = (Window.PROGRESS_END - Window.PROGRESS_START);
-        //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
         progress = 100;
         setSupportProgress(progress);
         
@@ -1180,10 +1044,20 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		//fragmentTransaction.hide(oldFragment);
     		//fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
     		//fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    	}    	
-    	
-    	
-    	fragmentTransaction.add(R.id.loader_container, fragment, "AppDeckFragment");
+    	}
+
+        // if there is an old fragment it means that we need to show back arrow
+        if (oldFragment != null) {
+            setMenuArrow(true);
+            //mDrawerToggle.setDrawerIndicatorEnabled(false);
+
+        }
+        else {
+            setMenuArrow(false);
+
+        }
+
+        fragmentTransaction.add(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.replace(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.addToBackStack("AppDeckFragment");
 
@@ -1252,6 +1126,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	}
         //previous.event = AppDeckAdManager.EVENT_POP;
         adManager.showAds(AppDeckAdManager.EVENT_POP);
+
+        // check if we pop to root
+        previous = getPreviousAppDeckFragment(previous);
+        if (previous == null) {
+            setMenuArrow(false);
+        }
+
     	return true;
     }
 
@@ -1274,23 +1155,8 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
     public void layoutSubViews()
     {
-        /*
-    }
-        // widespace
-        if (adSpaceSplash != null)
-        {
-            adSpaceSplash.bringToFront();
-            adSpaceSplash.requestLayout();
-        }
-        if (adSpacePanorama != null)
-        {
-            adSpacePanorama.bringToFront();
-            adSpacePanorama.requestLayout();
-        }
-        */
         if (mProgressBar != null)
             mProgressBar.bringToFront();
-
     }
     
     public void reload()
@@ -1827,7 +1693,17 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        mDrawerToggle.onOptionsItemSelected(item);
+        if (isMenuOpen() == false) {
+            if (menuArrowIsShown) {
+                // try to pop a fragment if possible
+                if (popFragment()) {
+                    return true;
+                }
+            }
+        }
+
+        if (mDrawerToggle.onOptionsItemSelected(item))
+            return true;
 
     	int idx = item.getItemId();
 
@@ -2259,40 +2135,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         //mProgressBar.setIndeterminate(false);
         mProgressBar.setProgress(progress);
     }
-
-    /*
-    // Mopub
-
-    // InterstitialAdListener methods
-    @Override
-    public void onInterstitialLoaded(MoPubInterstitial interstitial) {
-        if (interstitial.isReady()) {
-            mInterstitial.show();
-        } else {
-            // Other code
-        }
-    }
-
-    @Override
-    public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
-        Log.d(TAG, "InterstitialFailed");
-    }
-
-    @Override
-    public void onInterstitialShown(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialShown");
-    }
-
-    @Override
-    public void onInterstitialClicked(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialClicked");
-    }
-
-    @Override
-    public void onInterstitialDismissed(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialDismissed");
-    }*/
-
 
     void enableProxy()
     {
