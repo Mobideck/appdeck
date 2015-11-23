@@ -2,6 +2,8 @@ package com.mobideck.appdeck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.ValueCallback;
 
 /**
  * Created by mathieudekermadec on 19/02/15.
@@ -33,6 +35,8 @@ public interface SmartWebViewInterface {
 
 
     void	evaluateJavascript(java.lang.String script, android.webkit.ValueCallback<java.lang.String> callback);
+
+    public void sendJsEvent(String eventName, String eventDetailJSon);
 
     //public void copyScrollTo(SmartWebView target);
 

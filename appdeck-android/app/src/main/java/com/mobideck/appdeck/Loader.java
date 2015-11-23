@@ -58,7 +58,6 @@ import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -83,6 +82,10 @@ import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.gc.materialdesign.views.ProgressBarDeterminate;
+import com.gc.materialdesign.views.ProgressBarIndeterminate;
+import com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -97,7 +100,7 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import io.netty.handler.codec.http.HttpRequest;
 
-public class Loader extends ActionBarActivity {
+public class Loader extends AppCompatActivity {
 
 	public final static String TAG = "LOADER";
 	public final static String JSON_URL = "com.mobideck.appdeck.JSON_URL";
@@ -137,7 +140,8 @@ public class Loader extends ActionBarActivity {
 
 	private HttpProxyServerBootstrap proxyServerBootstrap;
 
-    ProgressBar mProgressBar;
+    ProgressBarDeterminate mProgressBarDeterminate;
+    ProgressBarIndeterminate mProgressBarIndeterminate;
 
     Toolbar mToolbar;
 
@@ -272,7 +276,10 @@ public class Loader extends ActionBarActivity {
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
 
-        mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+        mProgressBarDeterminate = (ProgressBarDeterminate)findViewById(R.id.progressBarDeterminate);
+        mProgressBarDeterminate.setMin(0);
+        mProgressBarDeterminate.setMax(100);
+        mProgressBarIndeterminate = (ProgressBarIndeterminate)findViewById(R.id.progressBarIndeterminate);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -300,6 +307,24 @@ public class Loader extends ActionBarActivity {
                 else
                     super.onDrawerSlide(drawerView, slideOffset);
             }*/
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                if (leftMenuWebView != null && drawerView == mDrawerLeftMenu)
+                    leftMenuWebView.ctl.sendJsEvent("disappear", "null");
+                if (rightMenuWebView != null && drawerView == mDrawerRightMenu)
+                    rightMenuWebView.ctl.sendJsEvent("disappear", "null");
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                if (leftMenuWebView != null && drawerView == mDrawerLeftMenu)
+                    leftMenuWebView.ctl.sendJsEvent("appear", "null");
+                if (rightMenuWebView != null && drawerView == mDrawerRightMenu)
+                    rightMenuWebView.ctl.sendJsEvent("appear", "null");
+            }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -445,7 +470,7 @@ public class Loader extends ActionBarActivity {
 
     public FrameLayout getBannerAdViewContainer()
     {
-        return (FrameLayout)findViewById(R.id.loader);
+        return (FrameLayout)findViewById(R.id.bannerContainer);
     }
     public FrameLayout getInterstitialAdViewContainer()
     {
@@ -469,6 +494,8 @@ public class Loader extends ActionBarActivity {
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
         enableProxy();
+        if (adManager != null)
+            adManager.onActivityResume();
     }
 
     @Override
@@ -489,6 +516,8 @@ public class Loader extends ActionBarActivity {
         disableProxy();
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
+        if (adManager != null)
+            adManager.onActivityPause();
     }
 
     @Override
@@ -509,6 +538,9 @@ public class Loader extends ActionBarActivity {
         //in.add(String.valueOf(hs.size() + 1));
         prefs.edit().putStringSet("historyUrls", in).commit(); // brevity
 
+        if (adManager != null)
+            adManager.onActivitySaveInstanceState(outState);
+
         Log.i(TAG, "onSaveInstanceState");
     }
     
@@ -516,6 +548,9 @@ public class Loader extends ActionBarActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
       super.onRestoreInstanceState(savedInstanceState);
+
+      if (adManager != null)
+         adManager.onActivityRestoreInstanceState(savedInstanceState);
       Log.i(TAG, "onRestoreInstanceState");
     }
     
@@ -815,30 +850,41 @@ public class Loader extends ActionBarActivity {
     
     public void progressStart()
     {
-        setSupportProgress(0);
+        mProgressBarDeterminate.setVisibility(View.GONE);
+        mProgressBarIndeterminate.setVisibility(View.VISIBLE);
+        /*setSupportProgress(0);
         setSupportProgressBarVisibility(true);
         setSupportProgressBarIndeterminateVisibility(true);
-    	setSupportProgressBarIndeterminate(true);
+    	setSupportProgressBarIndeterminate(true);*/
     }
     
     public void progressSet(int percent)
     {
+        mProgressBarDeterminate.setVisibility(View.VISIBLE);
+        mProgressBarIndeterminate.setVisibility(View.GONE);
+        mProgressBarDeterminate.setProgress(percent);
+/*
+
         if (percent < 25)
             return;
     	setSupportProgressBarIndeterminate(false);
         //int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * percent;
-        setSupportProgress(percent);
+        setSupportProgress(percent);*/
     }
     
     public void progressStop()
     {
+        mProgressBarDeterminate.setVisibility(View.GONE);
+        mProgressBarIndeterminate.setVisibility(View.GONE);
+        mProgressBarDeterminate.setProgress(0);
+        /*
         setSupportProgressBarVisibility(false);
         setSupportProgressBarIndeterminateVisibility(false);
     	setSupportProgressBarIndeterminate(false);
     	
         int progress = (Window.PROGRESS_END - Window.PROGRESS_START);
         progress = 100;
-        setSupportProgress(progress);
+        setSupportProgress(progress);*/
         
     }
     
@@ -897,6 +943,7 @@ public class Loader extends ActionBarActivity {
     		return;
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
     	pushFragment(fragment);
+        setMenuArrow(false);
         adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     }
 
@@ -931,8 +978,21 @@ public class Loader extends ActionBarActivity {
             String host = uri.getHost();
             if (host != null && isSameDomain(host) == false)
             {
-                Intent i = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(i);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                // enable custom tab for chrome
+                String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
+                Bundle extras = new Bundle();
+                extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null/*sessionICustomTabsCallback.asBinder() Set to null for no session */);
+
+                String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
+                //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
+                //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
+                extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
+
+                intent.putExtras(extras);
+
+                startActivity(intent);
                 return -1;
             }
         }
@@ -953,6 +1013,7 @@ public class Loader extends ActionBarActivity {
 
         fragment.event = AppDeckAdManager.EVENT_PUSH;
         adManager.showAds(AppDeckAdManager.EVENT_PUSH);
+        setMenuArrow(true);
     	return pushFragment(fragment);
 
     }
@@ -1046,6 +1107,7 @@ public class Loader extends ActionBarActivity {
     		//fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     	}
 
+        /*
         // if there is an old fragment it means that we need to show back arrow
         if (oldFragment != null) {
             setMenuArrow(true);
@@ -1055,7 +1117,7 @@ public class Loader extends ActionBarActivity {
         else {
             setMenuArrow(false);
 
-        }
+        }*/
 
         fragmentTransaction.add(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.replace(R.id.loader_container, fragment, "AppDeckFragment");
@@ -1155,8 +1217,10 @@ public class Loader extends ActionBarActivity {
 
     public void layoutSubViews()
     {
-        if (mProgressBar != null)
-            mProgressBar.bringToFront();
+        if (mProgressBarDeterminate != null)
+            mProgressBarDeterminate.bringToFront();
+        if (mProgressBarIndeterminate != null)
+            mProgressBarIndeterminate.bringToFront();
     }
     
     public void reload()
@@ -2100,40 +2164,45 @@ public class Loader extends ActionBarActivity {
     @Override
     public void setSupportProgressBarVisibility(boolean visibility)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        if (visibility)
-            mProgressBar.setVisibility(View.VISIBLE);
-        else
-            mProgressBar.setVisibility(View.GONE);
+        if (visibility) {
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            mProgressBarDeterminate.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            mProgressBarDeterminate.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void setSupportProgressBarIndeterminateVisibility(boolean visibility)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        //setSupportProgressBarVisibility(visibility);
-        //mProgressBar.setIndeterminate(visibility);
+        if (visibility) {
+            mProgressBarIndeterminate.setVisibility(View.VISIBLE);
+            mProgressBarDeterminate.setVisibility(View.GONE);
+        } else {
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            mProgressBarDeterminate.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void setSupportProgressBarIndeterminate(boolean indeterminate)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        mProgressBar.setIndeterminate(indeterminate);
-
-        //mProgressBar.setProgress();
+        mProgressBarDeterminate.setProgress(0);
     }
 
     @Override
     public void setSupportProgress(int progress)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        //mProgressBar.setIndeterminate(false);
-        mProgressBar.setProgress(progress);
+        mProgressBarDeterminate.setProgress(progress);
     }
 
     void enableProxy()

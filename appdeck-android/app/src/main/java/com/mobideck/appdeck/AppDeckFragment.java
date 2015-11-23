@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,7 +158,7 @@ public class AppDeckFragment extends Fragment {
 					if (loader == null || imageUri == null || loadedImage == null)
 						return;
 					BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
-					ActionBarActivity sa = (ActionBarActivity)AppDeckFragment.this.getActivity();
+					AppCompatActivity sa = (AppCompatActivity)AppDeckFragment.this.getActivity();
 					if (sa == null)
 						return;
 					ActionBar ac = sa.getSupportActionBar();
@@ -184,9 +184,9 @@ public class AppDeckFragment extends Fragment {
 				public void onLoadingCancelled(String imageUri, View view) {
 					Log.i(TAG, "logo action bar onLoadingCancelled");
 				}
-			}, getActivity());
+			}, loader);
 		} else {
-			ActionBarActivity aba = (ActionBarActivity)AppDeckFragment.this.getActivity();
+			AppCompatActivity aba = (AppCompatActivity)AppDeckFragment.this.getActivity();
 			aba.getSupportActionBar().setTitle(actionBarTitle);
 		}
 	}

@@ -146,4 +146,6 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
 
 
     public void clearAllCache() { }
+
+    public void sendJsEvent(String eventName, String eventDetailJSon) { }
 }

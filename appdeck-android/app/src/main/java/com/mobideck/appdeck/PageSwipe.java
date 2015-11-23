@@ -32,8 +32,7 @@ public class PageSwipe extends AppDeckFragment {
 	public static final String TAG = "PageSwipe";
 	public static final String ARG_OBJECT = "object";
 	
-	 View adview;
-	 FrameLayout layout;
+	FrameLayout layout;
 	 
 	AppDeck appDeck;
 	
@@ -50,7 +49,9 @@ public class PageSwipe extends AppDeckFragment {
     ViewPagerFixed pager;
 	
 	public boolean ready = false;
-	
+
+	public View circularView;
+
 	public static PageSwipe newInstance(String absoluteURL)
 	{
 		PageSwipe pageSwipe = new PageSwipe();
@@ -161,72 +162,10 @@ public class PageSwipe extends AppDeckFragment {
 		webviewParams.gravity = Gravity.TOP | Gravity.CENTER; 
 		//webviewParams.weight = 1;	        
         layout.addView(pager, webviewParams);
-        
-		Activity activity = getActivity();
-		if (activity != null)
-		{				
 
-			/*
-			//adParams.addRule(LinearLayout.  ALIGN_PARENT_BOTTOM);
-			//adParams.addRule(LinearLayout.ALIGN_PARENT_CENTER);
-			adview = new MobclixMMABannerXLAdView(activity);
-			//adview .setVisibility(View.GONE);
-			adview.addMobclixAdViewListener(new MobclixAdViewListener() {
+		//circularView = layout.findViewById(R.id.circualView);
+		//layout.bringChildToFront(circularView);
 
-				@Override
-				public String keywords() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-
-				@Override
-				public void onAdClick(MobclixAdView arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onCustomAdTouchThrough(MobclixAdView arg0,
-						String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFailedLoad(MobclixAdView arg0, int arg1) {
-					// TODO Auto-generated method stub
-					adview = null;
-				}
-
-				@Override
-				public boolean onOpenAllocationLoad(MobclixAdView arg0, int arg1) {
-					// TODO Auto-generated method stub
-					return false;
-				}
-
-				@Override
-				public void onSuccessfulLoad(MobclixAdView arg0) {
-					// TODO Auto-generated method stub
-					//adview .setVisibility(View.VISIBLE);
-					LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-					//LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(320, 50);
-					adParams.gravity = Gravity.BOTTOM | Gravity.CENTER;
-					adParams.weight = 0;
-					layout.addView(adview, adParams);
-				}
-
-				@Override
-				public String query() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				
-			});
-			
-			*/
-			//return adview;
-		}        
-        
     	return layout;
     }
     
@@ -302,18 +241,15 @@ public class PageSwipe extends AppDeckFragment {
     	super.onSaveInstanceState(outState);
     	Log.i(TAG, "onSaveInstanceState");
     }
-    
-    //public void onViewStateRestored (Bundle savedInstanceState)    
-    
-    /*
+
+/*
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState)
     {
       super.onRestoreInstanceState(savedInstanceState);
       Log.i(TAG, "onRestoreInstanceState");
-    }
-    */    
-    
+    }*/
+
 	@Override
 	public void onHiddenChanged(boolean hidden)
 	{

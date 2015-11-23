@@ -1,9 +1,12 @@
 package com.mobideck.appdeck;
 
+import android.animation.Animator;
 import android.support.v4.view.ViewPager;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 
 public class ViewPagerFixed extends ViewPager {
 	public ViewPagerFixed(Context context) {
@@ -56,5 +59,23 @@ public class ViewPagerFixed extends ViewPager {
     public void setChildId(int id) {
         this.childId = id;
     }
+
+	/* material design test */
+/*	@Override
+	public boolean onTouch(View view, MotionEvent motionEvent) {
+		if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+			// get the final radius for the clipping circle
+			int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
+
+			// create the animator for this view (the start radius is zero)
+			Animator anim =
+					ViewAnimationUtils.createCircularReveal(myView, (int) motionEvent.getX(), (int) motionEvent.getY(), 0, finalRadius);
+
+			// make the view visible and start the animation
+			myView.setVisibility(View.VISIBLE);
+			anim.start();
+		}
+		return false;
+	}*/
 
 }

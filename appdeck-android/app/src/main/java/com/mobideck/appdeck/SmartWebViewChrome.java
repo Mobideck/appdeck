@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,6 +33,7 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -42,6 +44,7 @@ import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -349,8 +352,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
             // if there is a url loading before page finish it is a redirection
-            if (pageHasFinishLoading == false)
-                return false;
+            //if (pageHasFinishLoading == false)
+            //    return false;
 
             // this is a form ?
             if (url.indexOf("_appdeck_is_form=1") != -1)
@@ -423,15 +426,27 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            Log.d(TAG, "Error:" + errorCode + ":" + description);
+
+            //root.progressFailed(view);
+
             // this is the main url that is falling
             if (failingUrl.equalsIgnoreCase(url) && shouldLoadFromCache == true) {
                 Toast.makeText(getContext(), "Not in cache: " + failingUrl, Toast.LENGTH_LONG).show();
                 view.setVisibility(View.INVISIBLE);
+
             } else {
                 Toast.makeText(getContext(), "" + failingUrl + ": (" + url + ") " + description, Toast.LENGTH_LONG).show();
             }
-
         }
+/*
+        @TargetApi(Build.VERSION_CODES.M)
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            Log.d(TAG, "Error:"+error.getDescription());
+            //loadData(AppDeck.error_html, "text/html", "utf8");
+            root.progressFailed(view);
+        }
+*/
     }
 
     public class SmartWebChromeChromeClient extends VideoEnabledWebChromeClient /*implements OnCompletionListener, OnErrorListener*/ {
@@ -872,5 +887,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     {
         clearCache(true);
     }
+
 
 }
