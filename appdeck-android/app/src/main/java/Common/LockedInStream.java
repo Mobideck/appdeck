@@ -1,6 +1,6 @@
 package Common;
 
-import SevenZip.IInStream;
+import MySevenZip.IInStream;
 
 public class LockedInStream {
     IInStream _stream;

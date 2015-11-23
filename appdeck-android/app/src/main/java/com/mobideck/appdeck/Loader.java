@@ -70,6 +70,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
 import android.widget.FrameLayout;
@@ -561,23 +564,6 @@ public class Loader extends AppCompatActivity {
         isForeground = false;
         SmartWebViewFactory.onActivityDestroy(this);
     }    
-
-    // arrow
-    public void setArrowEnabled(boolean enabled)
-    {
-        if (enabled) {
-
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            mDrawerToggle.syncState();
-
-            /*getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-        } else {
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-        }
-    }
 
     // Sliding Menu API
     
@@ -1732,14 +1718,18 @@ public class Loader extends AppCompatActivity {
 
     	if (menuItems == null)
     		return true;
-    	
-		for (int i = 0; i < menuItems.length; i++) {
+
+
+
+        for (int i = 0; i < menuItems.length; i++) {
 			PageMenuItem item = menuItems[i];
-			
-			item.setMenuItem(menu.add("button"), this, menu);
-			
-			//item.setMenuItem(menu.add(0, i, 0, null));
+
+            MenuItem menuItem = menu.add("button");
+
+			item.setMenuItem(menuItem, this, menu);
+
 		}
+
 
 /*
         // Get the provider and hold onto it to set/change the share intent.

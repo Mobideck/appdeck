@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -140,9 +141,6 @@ public class PageMenuItem {
                 this.pageMenuItem.draw = new BitmapDrawable(loader.getResources(), loadedImage);
                 this.pageMenuItem.draw.setAntiAlias(true);
                 if (isValid) {
-		    		/*ImageView myView = new ImageView(fragment.loader);
-		    		myView.setImageDrawable(this.pageMenuItem.draw);
-		    		this.pageMenuItem.menuItem.setActionView(myView);*/
 
                     BadgeDrawable badgeDrawable = new BadgeDrawable(loader);
                     badgeDrawable.setCount(this.pageMenuItem.badge);
@@ -153,24 +151,25 @@ public class PageMenuItem {
 
                     this.pageMenuItem.menuItem.setIcon(layer);
 
-                    /*
-                    if (this.pageMenuItem.badge != null && this.pageMenuItem.badge.length() > 0)
-                        ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, Integer.parseInt(this.pageMenuItem.badge));
-                    else
-                        this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw);//.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-                    */
-
-                    //IconicsDrawable iconDraw = new IconicsDrawable(loader, icon)/*.color()*/.actionBar();
-
-
-                    //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, 4);
-
                     this.pageMenuItem.menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-                    //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.DARK_GREY, 42);
+                    /*
+					// Setup animation
+					Animation fade_in = AnimationUtils.loadAnimation(loader, android.R.anim.fade_in);
+					fade_in.setInterpolator(new AccelerateInterpolator());
+					fade_in.setDuration(250);
+					*/
 
+					//item.setMenuItem(menu.add(0, i, 0, null));
+
+                    /*
+					View itemView = this.pageMenuItem.menuItem.getActionView();
+					if (itemView != null)
+						itemView.startAnimation(fade_in); // NPE HERE
+
+						*/
                     rotate();
-                    //this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
                 }
                 this.pageMenuItem.setAvailable(this.pageMenuItem.available);
             }
