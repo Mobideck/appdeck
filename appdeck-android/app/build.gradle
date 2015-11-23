@@ -142,7 +142,11 @@ dependencies {
 
     compile 'com.loopj.android:android-async-http:1.4.9'
 
-    crosswalkCompile 'org.xwalk:xwalk_core_library:14.43.343.25'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
+
+/*    compile ('org.xwalk:xwalk_core_library:15.44.384.13') {
+        exclude group: 'SevenZip'
+    }*/
     //crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
 
     compile 'org.slf4j:slf4j-android:1.7.10'
