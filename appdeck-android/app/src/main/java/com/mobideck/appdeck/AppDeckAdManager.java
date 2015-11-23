@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
-import com.flurry.android.FlurryAgent;
-import com.flurry.android.ads.FlurryAdErrorType;
-import com.flurry.android.ads.FlurryAdInterstitial;
-import com.flurry.android.ads.FlurryAdInterstitialListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -66,13 +64,6 @@ public class AppDeckAdManager {
     private long appLaunch;
 
     private AsyncHttpClient httpClient;
-
-    /*AppDeckAdNetworkAdMob admob;
-    AppDeckAdNetworkMoPub mopub;
-    AppDeckAdNetworkFacebook facebook;
-    AppDeckAdNetworkFlurry flurry;
-    AppDeckAdNetworkWideSpace widespace;
-    AppDeckAdNetworkAditic aditic;*/
 
     HashMap<String, AppDeckAdNetwork> networksByName;
 
@@ -159,6 +150,22 @@ public class AppDeckAdManager {
         });
 
     }
+
+    /* Ad Context */
+
+    private void loadAdContext() {
+        final SharedPreferences prefs = getAdPreferences(loader);
+        lastSeenInterstitial = prefs.getLong("lastSeenInterstitial", 0);
+    }
+
+    private void saveAdContext() {
+        final SharedPreferences prefs = getAdPreferences(loader);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("lastSeenInterstitial", lastSeenInterstitial);
+        editor.apply();
+    }
+
+    /* Ad Conf */
 
     private String getAdConf() {
         final SharedPreferences prefs = getAdPreferences(loader);
@@ -298,16 +305,23 @@ public class AppDeckAdManager {
             return;
 
         networks = new ArrayList<AppDeckAdNetwork>();
-        networksByName = new HashMap<String, AppDeckAdNetwork>(5);
+        networksByName = new HashMap<String, AppDeckAdNetwork>(8);
 
         try {
             JSONObject conf = (JSONObject) new JSONTokener(adConf).nextValue();
 
+            // read ads configuration
+            timeBeforeFirstInterstitial = conf.optLong("timeBeforeFirstInterstitial", timeBeforeFirstInterstitial);
+            timeBetweenInterstitial = conf.optLong("timeBetweenInterstitial", timeBetweenInterstitial);
+            timeBeforeFirstRectangle = conf.optLong("timeBeforeFirstRectangle", timeBeforeFirstRectangle);
+            timeBetweenRectangle = conf.optLong("timeBetweenRectangle", timeBetweenRectangle);
+            timeBeforeFirstBanner = conf.optLong("timeBeforeFirstBanner", timeBeforeFirstBanner);
+            timeBetweenBanner = conf.optLong("timeBetweenBanner", timeBetweenBanner);
+            timeBetweenBannerRefresh = conf.optLong("timeBetweenBannerRefresh", timeBetweenBannerRefresh);
+
+            // read networks configuration
             JSONObject networksConf = conf.getJSONObject("networks");
-
-
             Iterator<?> keys = networksConf.keys();
-
             while( keys.hasNext() ) {
                 String key = (String)keys.next();
                 JSONObject netWorkConf = networksConf.optJSONObject(key);
@@ -327,6 +341,12 @@ public class AppDeckAdManager {
                         network = new AppDeckAdNetworkAditic(AppDeckAdManager.this, netWorkConf);
                     else if (key.equalsIgnoreCase("smart"))
                         network = new AppDeckAdNetworkSmartAdServer(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("startapp"))
+                        network = new AppDeckAdNetworkStartApp(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("smaato"))
+                        network = new AppDeckAdNetworkSmaato(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("mobilecore"))
+                        network = new AppDeckAdNetworkMobileCore(AppDeckAdManager.this, netWorkConf);
                     else
                         Log.e(TAG, "Unsupported Ad Network:"+key);
                     if (network == null)
@@ -357,6 +377,8 @@ public class AppDeckAdManager {
         }
 
         // start ads
+
+        loadAdContext();
 
         mInterstitialHandler = new Handler();
         mInterstitialHandler.postDelayed(mInterstitialRunnable, timeBeforeFirstInterstitial * 1000);
@@ -403,6 +425,10 @@ public class AppDeckAdManager {
 
     void startInterstitialAd(int idx)
     {
+        if (interstitialAdNetwork != null) {
+            interstitialAdNetwork.destroyInterstitial();
+            interstitialAdNetwork = null;
+        }
         isFetchingInterstitialAd = false;
         interstitialAdNetwork = null;
         for (; idx < networks.size(); idx++) {
@@ -416,9 +442,12 @@ public class AppDeckAdManager {
         }
     }
 
-    void startBannerAd(int idx)
-    {
-        bannerAdNetwork = null;
+    void startBannerAd(int idx) {
+        if (bannerAdNetwork != null) {
+            bannerAdNetwork.removeBannerViewInLoader();
+            bannerAdNetwork.destroyBannerAd();
+            bannerAdNetwork = null;
+        }
         for (; idx < networks.size(); idx++) {
             AppDeckAdNetwork adNetwork = networks.get(idx);
             if (adNetwork.supportBanner()) {
@@ -526,6 +555,7 @@ public class AppDeckAdManager {
             Log.v(TAG, "Show interstitial from netowork "+interstitialAdNetwork.getName());
             boolean res = interstitialAdNetwork.showInterstitial();
             lastSeenInterstitial = currentTime;
+            saveAdContext();
             return res;
         } else {
             Log.v(TAG, "No interstitial as interstitial is not loaded yet");
@@ -542,74 +572,57 @@ public class AppDeckAdManager {
         return null;
     }
 
-    /* Flurry */
+    /* Activity Api */
 
-    private void initFlurry(Context context, String api_key)
+    public void onActivityResume()
     {
-        // configure Flurry
-        FlurryAgent.setLogEnabled(true);
-        // init Flurry
-        FlurryAgent.init(context, api_key);
-
-
-        mFlurryAdInterstitial = new FlurryAdInterstitial(context, "UFB Android Interstitial");
-
-        // allow us to get callbacks for ad events
-        mFlurryAdInterstitial.setListener(interstitialAdListener);
-
-        mFlurryAdInterstitial.fetchAd();
+        if (networks == null)
+            return;
+        for (int idx = 0; idx < networks.size(); idx++) {
+            AppDeckAdNetwork adNetwork = networks.get(idx);
+            adNetwork.onActivityResume();
+        }
     }
 
-
-    FlurryAdInterstitialListener interstitialAdListener = new FlurryAdInterstitialListener() {
-
-        @Override
-        public void onDisplay(FlurryAdInterstitial flurryAdInterstitial) {
-
+    public void onActivityPause()
+    {
+        if (networks == null)
+            return;
+        for (int idx = 0; idx < networks.size(); idx++) {
+            AppDeckAdNetwork adNetwork = networks.get(idx);
+            adNetwork.onActivityPause();
         }
+    }
 
-        @Override
-        public void onRendered(FlurryAdInterstitial flurryAdInterstitial) {
-
+    public void onActivitySaveInstanceState(Bundle outState) {
+        if (networks == null)
+            return;
+        for (int idx = 0; idx < networks.size(); idx++) {
+            AppDeckAdNetwork adNetwork = networks.get(idx);
+            adNetwork.onActivitySaveInstanceState(outState);
         }
+    }
 
-        @Override
-        public void onVideoCompleted(FlurryAdInterstitial flurryAdInterstitial) {
-
+    public void onActivityRestoreInstanceState(Bundle outState) {
+        if (networks == null)
+            return;
+        for (int idx = 0; idx < networks.size(); idx++) {
+            AppDeckAdNetwork adNetwork = networks.get(idx);
+            adNetwork.onActivityRestoreInstanceState(outState);
         }
+    }
 
-        @Override
-        public void onAppExit(FlurryAdInterstitial flurryAdInterstitial) {
-
-        }
-
-        @Override
-        public void onClicked(FlurryAdInterstitial flurryAdInterstitial) {
-
-        }
-
-        @Override
-        public void onClose(FlurryAdInterstitial flurryAdInterstitial) {
-
-        }
-
-        @Override
-        public void onFetched(FlurryAdInterstitial adInterstitial) {
-            adInterstitial.displayAd();
-        }
-
-        @Override
-        public void onError(FlurryAdInterstitial adInterstitial, FlurryAdErrorType adErrorType, int errorCode) {
-            adInterstitial.destroy();
-        }
-        //..
-        //the remainder of listener callbacks
-    };
-    private FlurryAdInterstitial mFlurryAdInterstitial = null;
-
-
-    public void onDestroy() {
-        mFlurryAdInterstitial.destroy();
+    public boolean shouldEnableTestMode()
+    {
+        if (loader.appDeck.isDebugBuild)
+            return true;
+        if (Build.FINGERPRINT.contains("generic"))
+            return true;
+        if (Build.HARDWARE.contains("golfdish"))
+            return true;
+        if ("google_sdk".equals(Build.PRODUCT) || "sdk".equals(Build.PRODUCT) || "sdk_x86".equals(Build.PRODUCT) || "vbox86p".equals(Build.PRODUCT))
+            return true;
+        return false;
     }
 
 }

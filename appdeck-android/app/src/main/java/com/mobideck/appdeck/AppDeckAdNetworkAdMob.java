@@ -146,9 +146,6 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
             mBannerAd = null;
         bannerFetchedCalled = false;
         mBannerAd = new AdView(manager.loader);
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBannerAd.setElevation(2.0f);
-        }*/
         mBannerAd.setAdSize(AdSize.BANNER);
         mBannerAd.setAdUnitId(adMobBannerId);
         mBannerAd.setAdListener(new AdListener() {
@@ -221,7 +218,7 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR);
         builder.addTestDevice("315E930E16E8C801");  // Mobideck Galaxy S4
-        if (manager.loader.appDeck.isDebugBuild) //debug flag from somewhere that you set
+        if (manager.shouldEnableTestMode()) //debug flag from somewhere that you set
         {
             String android_id = Settings.Secure.getString(manager.loader.getContentResolver(), Settings.Secure.ANDROID_ID);
             String deviceId = Utils.md5(android_id).toUpperCase();

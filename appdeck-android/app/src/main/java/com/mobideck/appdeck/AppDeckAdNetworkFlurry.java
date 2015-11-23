@@ -10,6 +10,7 @@ import com.flurry.android.ads.FlurryAdInterstitial;
 import com.flurry.android.ads.FlurryAdInterstitialListener;
 import com.flurry.android.ads.FlurryAdBanner;
 import com.flurry.android.ads.FlurryAdBannerListener;
+import com.flurry.android.ads.FlurryAdTargeting;
 
 import org.json.JSONObject;
 
@@ -110,6 +111,11 @@ public class AppDeckAdNetworkFlurry extends AppDeckAdNetwork {
                 manager.onInterstitialAdFailed(AppDeckAdNetworkFlurry.this);
             }
         });
+        if (manager.shouldEnableTestMode()) {
+            FlurryAdTargeting adTargeting = new FlurryAdTargeting();
+            adTargeting.setEnableTestAds(true);
+            mFlurryAdInterstitial.setTargeting(adTargeting);
+        }
         mFlurryAdInterstitial.fetchAd();
     }
 
@@ -182,10 +188,15 @@ public class AppDeckAdNetworkFlurry extends AppDeckAdNetwork {
 
             @Override
             public void onError(FlurryAdBanner flurryAdBanner, FlurryAdErrorType flurryAdErrorType, int i) {
-                Log.d(TAG, "onBannerAdError:"+flurryAdErrorType.toString()+":"+i);
+                Log.d(TAG, "onBannerAdError:" + flurryAdErrorType.toString() + ":" + i);
                 manager.onBannerAdFailed(AppDeckAdNetworkFlurry.this, mFlurryAdBannerContainer);
             }
         });
+        if (manager.shouldEnableTestMode()) {
+            FlurryAdTargeting adTargeting = new FlurryAdTargeting();
+            adTargeting.setEnableTestAds(true);
+            mFlurryAdBanner.setTargeting(adTargeting);
+        }
         mFlurryAdBanner.fetchAd();
     }
 

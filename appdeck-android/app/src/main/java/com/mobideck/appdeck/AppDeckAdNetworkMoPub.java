@@ -14,7 +14,7 @@ import org.json.JSONObject;
 /**
  * Created by mathieudekermadec on 10/11/15.
  */
-public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork implements MoPubView.BannerAdListener, MoPubInterstitial.InterstitialAdListener {
+public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork {
 
     public static String TAG = "MoPub";
 
@@ -50,7 +50,37 @@ public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork implements MoPubView
     }
     public void fetchInterstitialAd() {
         mInterstitial = new MoPubInterstitial(manager.loader, mopubInterstitialId);
-        mInterstitial.setInterstitialAdListener(this);
+        mInterstitial.setInterstitialAdListener(new MoPubInterstitial.InterstitialAdListener() {
+            @Override
+            public void onInterstitialLoaded(MoPubInterstitial interstitial) {
+                Log.d(TAG, "onInterstitialLoaded");
+                manager.onInterstitialAdFetched(AppDeckAdNetworkMoPub.this);
+            }
+
+            @Override
+            public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
+                Log.d(TAG, "onInterstitialFailed");
+                manager.onInterstitialAdFailed(AppDeckAdNetworkMoPub.this);
+            }
+
+            @Override
+            public void onInterstitialShown(MoPubInterstitial interstitial) {
+                Log.d(TAG, "onInterstitialShown");
+                manager.onInterstitialAdDisplayed(AppDeckAdNetworkMoPub.this);
+            }
+
+            @Override
+            public void onInterstitialClicked(MoPubInterstitial interstitial) {
+                Log.d(TAG, "onInterstitialClicked");
+                manager.onInterstitialAdClicked(AppDeckAdNetworkMoPub.this);
+            }
+
+            @Override
+            public void onInterstitialDismissed(MoPubInterstitial interstitial) {
+                Log.d(TAG, "onInterstitialDismissed");
+                manager.onInterstitialAdClosed(AppDeckAdNetworkMoPub.this);
+            }
+        });
         mInterstitial.load();
     }
 
@@ -64,38 +94,10 @@ public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork implements MoPubView
     }
 
     public void destroyInterstitial() {
-        mInterstitial.destroy();
-        mInterstitial = null;
-    }
-
-    @Override
-    public void onInterstitialLoaded(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialLoaded");
-        manager.onInterstitialAdFetched(this);
-    }
-
-    @Override
-    public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
-        Log.d(TAG, "onInterstitialFailed");
-        manager.onInterstitialAdFailed(this);
-    }
-
-    @Override
-    public void onInterstitialShown(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialShown");
-        manager.onInterstitialAdDisplayed(this);
-    }
-
-    @Override
-    public void onInterstitialClicked(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialClicked");
-        manager.onInterstitialAdClicked(this);
-    }
-
-    @Override
-    public void onInterstitialDismissed(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialDismissed");
-        manager.onInterstitialAdClosed(this);
+        if (mInterstitial != null) {
+            mInterstitial.destroy();
+            mInterstitial = null;
+        }
     }
 
     /* Banner Ads */
@@ -112,45 +114,48 @@ public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork implements MoPubView
         moPubViewContainer = (LinearLayout)LayoutInflater.from(manager.loader).inflate(R.layout.ad_mopub_banner, null);
         moPubView = (MoPubView) moPubViewContainer.findViewById(R.id.mopub_banner);
         moPubView.setAdUnitId(mopubBannerId);
-        moPubView.setBannerAdListener(this);
+        moPubView.setBannerAdListener(new MoPubView.BannerAdListener() {
+            @Override
+            public void onBannerLoaded(MoPubView banner) {
+                Log.d(TAG, "onBannerLoaded");
+                manager.onBannerAdFetched(AppDeckAdNetworkMoPub.this, moPubViewContainer);
+            }
+
+            @Override
+            public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
+                Log.d(TAG, "onBannerFailed:"+errorCode);
+                manager.onBannerAdFailed(AppDeckAdNetworkMoPub.this, moPubViewContainer);
+            }
+
+            @Override
+            public void onBannerClicked(MoPubView banner) {
+                Log.d(TAG, "onBannerClicked");
+                manager.onBannerAdClicked(AppDeckAdNetworkMoPub.this, moPubViewContainer);
+            }
+
+            @Override
+            public void onBannerExpanded(MoPubView banner) {
+                Log.d(TAG, "onBannerExpanded");
+            }
+
+            @Override
+            public void onBannerCollapsed(MoPubView banner) {
+                Log.d(TAG, "onBannerCollapsed");
+            }
+        });
         moPubView.setAutorefreshEnabled(false);
         moPubView.setTesting(true);
         moPubView.loadAd();
     }
 
     public void destroyBannerAd() {
-        if (moPubView != null)
+        if (moPubView != null) {
             moPubView.destroy();
-        moPubView = null;
+            moPubView = null;
+        }
     }
 
-    @Override
-    public void onBannerLoaded(MoPubView banner) {
-        Log.d(TAG, "onBannerLoaded");
-        manager.onBannerAdFetched(this, moPubViewContainer);
-    }
 
-    @Override
-    public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
-        Log.d(TAG, "onBannerFailed:"+errorCode);
-        manager.onBannerAdFailed(this, moPubViewContainer);
-    }
-
-    @Override
-    public void onBannerClicked(MoPubView banner) {
-        Log.d(TAG, "onBannerClicked");
-        manager.onBannerAdClicked(this, moPubViewContainer);
-    }
-
-    @Override
-    public void onBannerExpanded(MoPubView banner) {
-        Log.d(TAG, "onBannerExpanded");
-    }
-
-    @Override
-    public void onBannerCollapsed(MoPubView banner) {
-        Log.d(TAG, "onBannerCollapsed");
-    }
 
     /* Native Ads */
 

@@ -87,16 +87,15 @@ public class AppDeckAdNetworkSmartAdServer extends AppDeckAdNetwork {
                 });
             }
         };
+        if (manager.shouldEnableTestMode()) {
+            mInterstitialView.enableLogging();
+        }
         mInterstitialView.loadAd(smartSiteId, smartPageId, smartInterstitialFormatId, true, "appdeck", adResponseHandler);
 
     }
 
     public boolean showInterstitial() {
-/*        if (mInterstitial.isReady()) {
-            manager.loader.willShowActivity = true;
-            mInterstitial.show();
-            return true;
-        }*/
+        // ad Auto Shows themself
         return false;
     }
 
@@ -125,35 +124,40 @@ public class AppDeckAdNetworkSmartAdServer extends AppDeckAdNetwork {
             public String TAG = "SmartAdServer::Banner";
             @Override
             public void adLoadingCompleted(SASAdElement sasAdElement) {
+
                 Log.d(TAG, "adLoadingCompleted");
-                mBannerView.executeOnUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        manager.onBannerAdFetched(AppDeckAdNetworkSmartAdServer.this, mBannerViewContainer);
-                    }
-                });
+                if (mBannerView != null) {
+                    mBannerView.executeOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (manager != null)
+                                manager.onBannerAdFetched(AppDeckAdNetworkSmartAdServer.this, mBannerViewContainer);
+                        }
+                    });
+                }
             }
 
             @Override
             public void adLoadingFailed(Exception e) {
-                Log.d(TAG, "adLoadingFailed:"+e.getMessage());
-                mBannerView.executeOnUIThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        manager.onBannerAdFailed(AppDeckAdNetworkSmartAdServer.this, mBannerViewContainer);
-                    }
-                });
+                Log.d(TAG, "adLoadingFailed:"+(e != null ? e.getMessage() : "unset error"));
+                if (mBannerView != null) {
+                    mBannerView.executeOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (manager != null)
+                                manager.onBannerAdFailed(AppDeckAdNetworkSmartAdServer.this, mBannerViewContainer);
+                        }
+                    });
+                }
             }
         };
 
-        /*
-        int dpHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, manager.loader.getResources().getDisplayMetrics());
-        mBannerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, dpHeight));
-        mBannerViewContainer = (LinearLayout)LayoutInflater.from(manager.loader).inflate(R.layout.ad_smart, null);
-        mBannerViewContainer.addView(mBannerView);*/
-
         mBannerViewContainer = (LinearLayout)LayoutInflater.from(manager.loader).inflate(R.layout.ad_smart, null);
         mBannerView = (SASBannerView)mBannerViewContainer.findViewById(R.id.smartBanner);
+
+        if (manager.shouldEnableTestMode()) {
+            mBannerView.enableLogging();
+        }
 
         mBannerView.loadAd(smartSiteId, smartPageId, smartBannerFormatId, true, "appdeck", adResponseHandler);
     }
