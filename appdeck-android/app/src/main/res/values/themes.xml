@@ -30,5 +30,8 @@
         <item name="color">@color/purple_dark</item>
     </style>
 -->
-
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/AppDeckControlNormal</item>
+    </style>
 </resources>
