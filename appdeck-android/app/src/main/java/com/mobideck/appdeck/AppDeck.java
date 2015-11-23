@@ -2,7 +2,7 @@ package com.mobideck.appdeck;
 
 import java.io.File;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -143,10 +143,12 @@ public class AppDeck {
     	imageLoaderDefaultOptions = getDisplayImageOptionsBuilder().build();    	
     	
     	ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(context);
-    	
+
+
+
     	builder.defaultDisplayImageOptions(imageLoaderDefaultOptions)
-    	.discCache(new UnlimitedDiscCache(new File(cache.getCachePath()),  new AppDeckCacheFileNameGenerator()))
-    	//.discCache(new TotalSizeLimitedDiscCache(new File(cache.getCachePath()), new AppDeckCacheFileNameGenerator(), 1024 * 1024 * 100)) // default    	
+    	.discCache(new UnlimitedDiskCache(new File(cache.getCachePath())))
+    	//.discCache(new TotalSizeLimitedDiscCache(new File(cache.getCachePath()), new AppDeckCacheFileNameGenerator(), 1024 * 1024 * 100)) // default
     	.imageDownloader(new AppDeckBaseImageDownloader(context))
     	.writeDebugLogs();
     	

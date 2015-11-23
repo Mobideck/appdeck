@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <DrawerLayoutFixed
+            <com.mobideck.appdeck.DrawerLayoutFixed
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/drawer_layout"
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                     android:dividerHeight="0dp"
                     android:background="#111" />
 
-            </DrawerLayoutFixed>
+            </com.mobideck.appdeck.DrawerLayoutFixed>
 
         </FrameLayout>
 
