@@ -207,7 +207,34 @@
         <meta-data android:name="com.crashlytics.ApiKey" android:value="e62d5eb16cef87dc2d56665e3205360edcbd44bb"/>
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
+        <!-- Start Apps -->
+        <activity android:name="com.startapp.android.publish.list3d.List3DActivity"
+            android:theme="@android:style/Theme" />
 
+        <activity android:name="com.startapp.android.publish.OverlayActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity android:name="com.startapp.android.publish.FullScreenActivity"
+            android:theme="@android:style/Theme"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <!-- Smaato -->
+        <activity android:name="com.smaato.soma.ExpandedBannerActivity" ></activity>
+        <activity android:name="com.smaato.soma.interstitial.InterstitialActivity" ></activity>
+
+        <!-- Mobile Core -->
+        <service
+            android:name="com.ironsource.mobilcore.MobileCoreReport"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name="com.ironsource.mobilcore.InstallationTracker"
+            android:enabled="true" />
+        <activity
+            android:name="com.ironsource.mobilcore.InterstitialVideoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:keepScreenOn="true" />
 
     </application>
 

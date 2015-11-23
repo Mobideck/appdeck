@@ -63,3 +63,13 @@
 -keepclassmembers class com.smartadserver.android.library.** {
 @android.webkit.JavascriptInterface <methods>;
 }
+
+# Start App
+-keep class com.startapp.** {
+      *;
+}
+-dontwarn android.webkit.JavascriptInterface
+-dontwarn com.startapp.**
+
+# Mobile Core
+-keep class com.ironsource.mobilcore.**{ *; }
