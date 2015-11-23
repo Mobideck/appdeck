@@ -47,7 +47,6 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
     }
 
     InterstitialAd mInterstitialAd = null;
-    AdRequest mInterstitialAdRequest = null;
 
     public void fetchInterstitialAd()
     {
@@ -88,28 +87,22 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
             }
 
         });
-        requestNewInterstitial();
-    }
 
-    private void requestNewInterstitial() {
         AdRequest.Builder builder = new AdRequest.Builder();
 
         builder.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR);
         builder.addTestDevice("315E930E16E8C801");  // Mobideck Galaxy S4
 
-        if (manager.loader.appDeck.isDebugBuild) //debug flag from somewhere that you set
+        if (manager.shouldEnableTestMode()) //debug flag from somewhere that you set
         {
             String android_id = Settings.Secure.getString(manager.loader.getContentResolver(), Settings.Secure.ANDROID_ID);
             String deviceId = Utils.md5(android_id).toUpperCase();
             builder.addTestDevice(deviceId);
         }
-
-        mInterstitialAdRequest = builder.build();
-
-        boolean isTestDevice = mInterstitialAdRequest.isTestDevice(manager.loader);
-
+        AdRequest interstitialAdRequest = builder.build();
+        boolean isTestDevice = interstitialAdRequest.isTestDevice(manager.loader);
         Log.v(TAG, "is Admob Test Device ? " + isTestDevice); //to confirm it worked
-        mInterstitialAd.loadAd(mInterstitialAdRequest);
+        mInterstitialAd.loadAd(interstitialAdRequest);
     }
 
 
@@ -124,13 +117,14 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
     }
 
     public void destroyInterstitial() {
-        mInterstitialAd = null;
+        if (mInterstitialAd != null) {
+            mInterstitialAd = null;
+        }
     }
 
     /* Banner Ads */
 
     AdView mBannerAd = null;
-    AdRequest mBannerAdRequest = null;
 
     public boolean supportBanner() {
         if (adMobBannerId == null || adMobBannerId.isEmpty())
@@ -138,13 +132,8 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
         return true;
     }
 
-    boolean bannerFetchedCalled;
-
     public void fetchBannerAd()
     {
-        if (mBannerAd != null && mBannerAd.getAdUnitId().equalsIgnoreCase(adMobBannerId) == false)
-            mBannerAd = null;
-        bannerFetchedCalled = false;
         mBannerAd = new AdView(manager.loader);
         mBannerAd.setAdSize(AdSize.BANNER);
         mBannerAd.setAdUnitId(adMobBannerId);
@@ -154,19 +143,12 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
 
             @Override
             public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
                 Log.d(TAG, "onAdLoaded");
-
-                if (bannerFetchedCalled == false) {
-                    manager.onBannerAdFetched(AppDeckAdNetworkAdMob.this, mBannerAd);
-                    bannerFetchedCalled = true;
-                }
+                manager.onBannerAdFetched(AppDeckAdNetworkAdMob.this, mBannerAd);
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-
                 if (errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR)
                     Log.e(TAG, "onAdFailedToLoad: Internal Error");
                 else if (errorCode == AdRequest.ERROR_CODE_INVALID_REQUEST)
@@ -177,15 +159,11 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
                     Log.e(TAG, "onAdFailedToLoad: No Fill");
                 else
                     Log.e(TAG, "onAdFailedToLoad: Unknow Error: " + errorCode);
-
                 manager.onBannerAdFailed(AppDeckAdNetworkAdMob.this, mBannerAd);
-
             }
 
             @Override
             public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
                 Log.d(TAG, "onAdOpened");
                 manager.onBannerAdClicked(AppDeckAdNetworkAdMob.this, mBannerAd);
                 manager.loader.willShowActivity = true;
@@ -193,28 +171,16 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
 
             @Override
             public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
                 Log.d(TAG, "onAdLeftApplication");
-                //if (bannerAdView != null) {
-                //    rootView.removeView(bannerAdView);
-                //    bannerAdView.destroy();
-                //    bannerAdView = null;
-                //}
             }
 
             @Override
             public void onAdClosed() {
-                // Code to be executed when when the user is about to return
-                // to the app after tapping on an ad.
                 Log.d(TAG, "onAdClosed");
                 manager.onBannerAdClosed(AppDeckAdNetworkAdMob.this, mBannerAd);
             }
         });
 
-        requestNewBanner(mBannerAd);
-    }
-
-    private void requestNewBanner(AdView adView) {
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR);
         builder.addTestDevice("315E930E16E8C801");  // Mobideck Galaxy S4
@@ -224,9 +190,14 @@ public class AppDeckAdNetworkAdMob extends AppDeckAdNetwork {
             String deviceId = Utils.md5(android_id).toUpperCase();
             builder.addTestDevice(deviceId);
         }
-        mBannerAdRequest = builder.build();
-        adView.loadAd(mBannerAdRequest);
+        mBannerAd.loadAd(builder.build());
     }
 
-
+    @Override
+    public void destroyBannerAd() {
+        if (mBannerAd != null) {
+            mBannerAd.destroy();
+            mBannerAd = null;
+        }
+    }
 }
