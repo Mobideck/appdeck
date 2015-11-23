@@ -3,6 +3,10 @@ package com.mobideck.appdeck;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import org.json.JSONObject;
@@ -70,6 +74,12 @@ public class AppDeckAdNetwork {
         container.addView(adView, layoutParams);
 
         container.bringChildToFront(adView);
+        
+        AlphaAnimation animation = new AlphaAnimation( 0.0f, 1.0f );
+        animation.setDuration(250);
+        animation.setFillAfter(true);
+        animation.setInterpolator(new AccelerateInterpolator());
+        bannerAdView.startAnimation(animation);
     }
 
     public void removeBannerViewInLoader()
@@ -79,7 +89,7 @@ public class AppDeckAdNetwork {
         if (container == null)
             return;
 
-        container.removeView(bannerAdView);
+        container.removeAllViews();
 
         bannerAdView = null;
     }
