@@ -7,7 +7,7 @@
 //
 
 #import "LoaderViewController.h"
-#import "ECSlidingViewController.h"
+#import "CustomECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "LoaderChildViewController.h"
 #import "RemoteAppCache.h"
@@ -601,9 +601,20 @@
     centerController = [[UIViewController alloc] init];
     centerController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
     centerController.view.backgroundColor = self.view.backgroundColor;
+
+    /*
+    self.closeMenuGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenuGesture:)];
+    self.closeMenuGestureRecognizer.numberOfTapsRequired = 1;
+    self.closeMenuGestureRecognizer.delegate = self;
+    self.closeMenuGestureRecognizer.enabled = YES;
+    [centerController.view addGestureRecognizer:self.closeMenuGestureRecognizer];
+    */
     
     // create navigation controller
     navController = [self createNavigationController];
+    
+
+    
     
     /*
     navController = [[CRNavigationController alloc] init];//initWithRootViewController:centerController];
@@ -658,25 +669,37 @@
     [centerController.view addSubview:navController.view];
         //navController.view.backgroundColor = self.view.backgroundColor;
     //
-    self.slidingViewController = [[ECSlidingViewController alloc] init];
+    self.slidingViewController = [[CustomECSlidingViewController alloc] init];
+    self.slidingViewController.loader = self;
     self.slidingViewController.underLeftViewController = leftController;
     self.slidingViewController.underRightViewController = rightController;
     self.slidingViewController.topViewController = centerController;
     self.slidingViewController.view.backgroundColor = [UIColor blackColor];
+    self.slidingViewController.topViewAnchoredGesture = /*ECSlidingViewControllerAnchoredGesturePanning |*/
+                                                        ECSlidingViewControllerAnchoredGestureTapping;
     
 /*    MEZoomAnimationController *zoom = [[MEZoomAnimationController alloc] init];
     self.menuTransition = zoom;
     self.slidingViewController.delegate = zoom;*/
-    
+
+    /*
     //TODO: restore
-/*    self.slidingViewController.topViewCenterMoved = ^(float x){
-        [self_ topViewCenterMoved:x];
+    __weak __typeof__(self) weakSelf = self;
+    self.slidingViewController.topViewCenterMoved = ^(float x) {
+        if (weakSelf == nil)
+            return;
+        __typeof__(self) strongSelf = weakSelf;
+        [strongSelf topViewCenterMoved:x];
     };*/
     [self registerECSlidingViewControllerNotification];
     self.slidingViewController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
     self.slidingViewController.anchorRightRevealAmount = (self.conf.leftMenuWidth > 280 ? 280 : self.conf.leftMenuWidth);
     self.slidingViewController.anchorLeftRevealAmount = (self.conf.rightMenuWidth > 280 ? 280 : self.conf.rightMenuWidth);
 
+    self.slidingViewController.underLeftViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
+    
+    self.slidingViewController.underRightViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
+    
 /*    self.slidingViewController.shouldAddPanGestureRecognizerToTopViewSnapshot = YES;
     self.slidingViewController.shouldAllowPanningPastAnchor = NO;
     if (self.appDeck.iosVersion >= 6.0)
@@ -689,8 +712,10 @@
 
     //    [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     
+//    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
+//    self.slidingViewController.panGesture.delegate = self;
+    
 
-   
     UIGestureRecognizer *panGesture = [self.slidingViewController panGesture];
     panGesture.delegate = self;
     [self.slidingViewController.view addGestureRecognizer:panGesture];
@@ -827,10 +852,11 @@
 
 #pragma mark - ECSlidingViewController Notification
 
--(void)topViewCenterMoved:(float)xPos
+-(void)topViewCenterMoved:(float)percentMoved
 {
     if (self.appDeck.iosVersion >= 7.0)
     {
+        /*
         CGFloat offsetX = (xPos - self.view.bounds.size.width/2);
         CGFloat alpha = 0;
         if (offsetX > 0)
@@ -839,7 +865,9 @@
             alpha = -offsetX / self.slidingViewController.anchorLeftRevealAmount;
         //NSLog(@"topViewCenterMoved: offset: %f - alpha: %f", offsetX, alpha);
         
-        fakeStatusBar.alpha = alpha;
+        fakeStatusBar.alpha = alpha;*/
+        
+        fakeStatusBar.alpha = percentMoved;
 
     }
 }
@@ -907,7 +935,6 @@
 
 -(void)registerECSlidingViewControllerNotification
 {
-    /*
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
                                                  name: ECSlidingViewUnderLeftWillDisappear object:self.slidingViewController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
@@ -917,7 +944,6 @@
                                                  name: ECSlidingViewTopDidAnchorLeft object:self.slidingViewController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
                                                  name: ECSlidingViewTopDidAnchorRight object:self.slidingViewController];
-    */
 }
 
 // When the movie is done, release the controller.
@@ -925,31 +951,34 @@
 {
     BOOL shouldHideFakeStatusBar = NO;
 
-//    NSLog(@"ECSlidingViewControllerNotification: %@ left: %d right: %d", aNotification.name);
+    NSLog(@"ECSlidingViewControllerNotification: %@", aNotification.name);
 
-    /*
     if ([aNotification.name isEqualToString:ECSlidingViewTopDidAnchorRight])
     {
         self.leftMenuOpen = YES;
         [leftController isMain:YES];
+        //centerController.view.userInteractionEnabled = NO;
     }
     else if ([aNotification.name isEqualToString:ECSlidingViewTopDidAnchorLeft])
     {
         self.rightMenuOpen = YES;
         [rightController isMain:YES];
+        //centerController.view.userInteractionEnabled = NO;
     }
     else if ([aNotification.name isEqualToString:ECSlidingViewUnderLeftWillDisappear])
     {
         self.leftMenuOpen = NO;
         [leftController isMain:NO];
+        //centerController.view.userInteractionEnabled = YES;
         return;
     }
     else if ([aNotification.name isEqualToString:ECSlidingViewUnderRightWillDisappear])
     {
         self.rightMenuOpen = NO;
         [rightController isMain:NO];
+        //centerController.view.userInteractionEnabled = YES;
         return;
-    }*/
+    }
     
     [self setGlobalUserInteractionEnabled:YES];
     
@@ -995,18 +1024,18 @@
     
     if (/*self.leftMenuOpen == NO && self.rightMenuOpen == NO*/self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered) {
         [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
-            self.leftMenuOpen = YES;
+            /*self.leftMenuOpen = YES;
             [leftController isMain:YES];
             self.rightMenuOpen = NO;
-            [leftController isMain:NO];
+            [leftController isMain:NO];*/
         }];
 
     } else {
         [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
-            self.leftMenuOpen = NO;
+            /*self.leftMenuOpen = NO;
             [leftController isMain:NO];
             self.rightMenuOpen = NO;
-            [leftController isMain:NO];
+            [leftController isMain:NO];*/
         }];
     }
 }
@@ -1251,10 +1280,10 @@
         if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
         {
             [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
-                self.leftMenuOpen = NO;
+                /*self.leftMenuOpen = NO;
                 [leftController isMain:NO];
                 self.rightMenuOpen = NO;
-                [leftController isMain:NO];
+                [leftController isMain:NO];*/
             }];
         }
         return page;

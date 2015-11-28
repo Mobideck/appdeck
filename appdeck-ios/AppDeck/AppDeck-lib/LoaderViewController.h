@@ -36,7 +36,7 @@ typedef enum AdManagerEvent: int {
 @class EmbedResources;
 @class RemoteAppCache;
 @class MenuViewController;
-@class ECSlidingViewController;
+@class CustomECSlidingViewController;
 @class LoaderChildViewController;
 @class LoaderConfiguration;
 @class MobclixFullScreenAdViewController;
@@ -99,7 +99,7 @@ typedef enum AdManagerEvent: int {
 @property (assign, nonatomic) float width;
 @property (assign, nonatomic) float height;
 
-@property (strong, nonatomic) ECSlidingViewController *slidingViewController;
+@property (strong, nonatomic) CustomECSlidingViewController *slidingViewController;
 
 @property (strong, nonatomic) NSDictionary *launchOptions;
 
@@ -147,6 +147,8 @@ typedef enum AdManagerEvent: int {
 //-(void)loadAppWithURL:(NSString *)base_url andConf:(NSString *)conf_url;
 
 -(LoaderChildViewController *)getChildViewControllerFromURL:(NSString *)pageUrlString type:(NSString *)type;
+
+-(void)topViewCenterMoved:(float)percentMoved;
 
 -(void)setFullScreen:(BOOL)fullScreen animation:(UIStatusBarAnimation)animation;
 
