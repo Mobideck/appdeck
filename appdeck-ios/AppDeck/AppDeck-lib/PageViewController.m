@@ -603,13 +603,6 @@
 
 -(void)checkReloadContent:(id)origin
 {
-    if (shouldForceReloadInBackground == YES)
-    {
-        NSLog(@"checkReloadContent: forced");
-        shouldForceReloadInBackground = NO;
-        [self reLoadContent];
-        return;
-    }
     if (self.loader.appRunInBackground == YES)
     {
         NSLog(@"checkReloadContent: don't refresh as application is in background");
@@ -650,6 +643,17 @@
         return;
     }
 
+    if (shouldForceReloadInBackground == YES)
+    {
+        shouldForceReloadInBackground = NO;
+//        NSString *input = [[NSProcessInfo processInfo] globallyUniqueString];
+        NSString *ping = [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"app.healthCheck('ping')"];
+        if ([ping isEqualToString:@"ok:ping"] == NO) {
+            NSLog(@"checkReloadContent: forced, we try to ping page but it reply '%@' instead of pong", ping);
+            [self reLoadContent];
+            return;
+        }
+    }
     NSLog(@"checkReloadContent: don't Refresh as last update: %f seconds ago. Screen TTL: %ld seconds", time, self.screenConfiguration.ttl);
 }
 
