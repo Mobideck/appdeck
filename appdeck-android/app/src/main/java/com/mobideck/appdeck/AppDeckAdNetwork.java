@@ -74,7 +74,7 @@ public class AppDeckAdNetwork {
         container.addView(adView, layoutParams);
 
         container.bringChildToFront(adView);
-        
+
         AlphaAnimation animation = new AlphaAnimation( 0.0f, 1.0f );
         animation.setDuration(250);
         animation.setFillAfter(true);

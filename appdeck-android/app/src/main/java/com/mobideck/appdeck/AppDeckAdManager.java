@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -52,13 +53,18 @@ public class AppDeckAdManager {
     static final int EVENT_SWIPE = 4;
     static final int EVENT_WAKEUP = 5;
 
+    public boolean enableInterstitial = true;
     public long timeBeforeFirstInterstitial = 0;
     public long timeBetweenInterstitial = 3600;
+
+    public boolean enableRectangle = true;
     public long timeBeforeFirstRectangle = 60;
     public long timeBetweenRectangle = 600;
+
+    public boolean enableBanner = true;
     public long timeBeforeFirstBanner = 0;
     public long timeBetweenBanner = 0;
-    public long timeBetweenBannerRefresh = 60;
+    public long timeBetweenBannerRefresh = 30;
 
     private long lastSeenInterstitial = 0;
     private long appLaunch;
@@ -311,16 +317,21 @@ public class AppDeckAdManager {
             JSONObject conf = (JSONObject) new JSONTokener(adConf).nextValue();
 
             // read ads configuration
+            enableInterstitial = conf.optBoolean("enableInterstitial", true);
             timeBeforeFirstInterstitial = conf.optLong("timeBeforeFirstInterstitial", timeBeforeFirstInterstitial);
             timeBetweenInterstitial = conf.optLong("timeBetweenInterstitial", timeBetweenInterstitial);
+            enableRectangle = conf.optBoolean("enableRectangle", true);
             timeBeforeFirstRectangle = conf.optLong("timeBeforeFirstRectangle", timeBeforeFirstRectangle);
             timeBetweenRectangle = conf.optLong("timeBetweenRectangle", timeBetweenRectangle);
+            enableBanner = conf.optBoolean("enableBanner", true);
             timeBeforeFirstBanner = conf.optLong("timeBeforeFirstBanner", timeBeforeFirstBanner);
             timeBetweenBanner = conf.optLong("timeBetweenBanner", timeBetweenBanner);
-            timeBetweenBannerRefresh = conf.optLong("timeBetweenBannerRefresh", timeBetweenBannerRefresh);
+            timeBetweenBannerRefresh = conf.optLong("timeBetweenBanner", timeBetweenBannerRefresh);
 
             // read networks configuration
-            JSONObject networksConf = conf.getJSONObject("networks");
+            JSONObject networksConf = conf.optJSONObject("networks");
+            if (networksConf == null)
+                return;
             Iterator<?> keys = networksConf.keys();
             while( keys.hasNext() ) {
                 String key = (String)keys.next();
@@ -380,11 +391,15 @@ public class AppDeckAdManager {
 
         loadAdContext();
 
-        mInterstitialHandler = new Handler();
-        mInterstitialHandler.postDelayed(mInterstitialRunnable, timeBeforeFirstInterstitial * 1000);
+        if (enableInterstitial) {
+            mInterstitialHandler = new Handler();
+            mInterstitialHandler.postDelayed(mInterstitialRunnable, timeBeforeFirstInterstitial * 1000);
+        }
 
-        mBannerHandler = new Handler();
-        mBannerHandler.postDelayed(mBannerRunnable, timeBeforeFirstBanner * 1000);
+        if (enableBanner) {
+            mBannerHandler = new Handler();
+            mBannerHandler.postDelayed(mBannerRunnable, timeBeforeFirstBanner * 1000);
+        }
 
         startNativeAd(0);
 
@@ -404,7 +419,7 @@ public class AppDeckAdManager {
             }
 
             startBannerAd(0);
-            mBannerHandler.postDelayed(this, timeBetweenBannerRefresh * 1000);
+            mBannerHandler.postDelayed(this, (timeBetweenBanner + timeBetweenBannerRefresh) * 1000);
         }
     };
 
@@ -483,28 +498,36 @@ public class AppDeckAdManager {
 
     public void onInterstitialAdFetched(AppDeckAdNetwork network)
     {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onInterstitialAdFetched: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         interstitialAdNetwork = network;
         isFetchingInterstitialAd = false;
     }
 
     public void onInterstitialAdFailed(AppDeckAdNetwork network)
     {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onInterstitialAdFailed: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         int idx = networks.indexOf(network);
         startInterstitialAd(idx + 1);
     }
 
     public void onInterstitialAdDisplayed(AppDeckAdNetwork network)
     {
-
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onInterstitialAdDisplayed: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
     }
 
     public void onInterstitialAdClicked(AppDeckAdNetwork network)
     {
-
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onInterstitialAdClicked: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
     }
 
     public void onInterstitialAdClosed(AppDeckAdNetwork network)
     {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onInterstitialAdClosed: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         if (interstitialAdNetwork != null)
             interstitialAdNetwork.destroyInterstitial();
         interstitialAdNetwork = null;
@@ -514,12 +537,16 @@ public class AppDeckAdManager {
 
     public void onBannerAdFetched(AppDeckAdNetwork network, View adView)
     {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onBannerAdFetched: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         bannerAdNetwork = network;
         network.setupBannerViewInLoader(adView);
     }
 
     public void onBannerAdFailed(AppDeckAdNetwork network, View adView)
     {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onBannerAdFailed: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         network.destroyBannerAd();
         int idx = networks.indexOf(network);
         startBannerAd(idx + 1);
@@ -527,6 +554,8 @@ public class AppDeckAdManager {
 
     public void onBannerAdClosed(AppDeckAdNetwork network, View adView)
     {
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onBannerAdClosed: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         network.removeBannerViewInLoader();
         network.destroyBannerAd();
         bannerAdNetwork = null;
@@ -534,7 +563,8 @@ public class AppDeckAdManager {
 
     public void onBannerAdClicked(AppDeckAdNetwork network, View adView)
     {
-
+        if (Looper.myLooper() != Looper.getMainLooper())
+            Log.e(TAG, "onBannerAdClicked: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
     }
 
     /* interstitial */

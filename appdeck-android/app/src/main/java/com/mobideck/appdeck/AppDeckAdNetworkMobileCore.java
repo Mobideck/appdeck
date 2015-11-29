@@ -60,63 +60,69 @@ public class AppDeckAdNetworkMobileCore extends AppDeckAdNetwork {
 
         MobileCore.setAdUnitEventListener(new AdUnitEventListener() {
             @Override
-            public void onAdUnitEvent(MobileCore.AD_UNITS adUnit, EVENT_TYPE eventType,
+            public void onAdUnitEvent(MobileCore.AD_UNITS adUnit, final EVENT_TYPE eventType,
                                       MobileCore.AD_UNIT_TRIGGER... trigger) {
-                if (adUnit != MobileCore.AD_UNITS. STICKEEZ)
+                if (adUnit != MobileCore.AD_UNITS.STICKEEZ)
                     return;
-                if (eventType == EVENT_TYPE.AD_UNIT_INIT_SUCCEEDED) {
-                    Log.d(TAG, "AD_UNIT_INIT_SUCCEEDED");
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_INIT_FAILED) {
-                    Log.d(TAG, "AD_UNIT_INIT_FAILED");
-                    manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_LOAD_ERROR) {
-                    Log.d(TAG, "AD_UNIT_LOAD_ERROR");
-                    manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_ALREADY_LOADING) {
-                    Log.d(TAG, "AD_UNIT_ALREADY_LOADING");
-                    manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_TRIGGER_DISABLED) {
-                    Log.d(TAG, "AD_UNIT_TRIGGER_DISABLED");
-                    manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_READY) {
-                    Log.d(TAG, "AD_UNIT_READY");
-                    manager.onBannerAdFetched(AppDeckAdNetworkMobileCore.this, null);
-                    MobileCore.showStickee(manager.loader, MobileCore.AD_UNIT_TRIGGER.APP_START);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_NOT_READY) {
-                    Log.d(TAG, "AD_UNIT_NOT_READY");
-                    manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_SHOW) {
-                    Log.d(TAG, "AD_UNIT_SHOW");
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_SHOW_ERROR) {
-                    Log.d(TAG, "AD_UNIT_SHOW_ERROR");
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_ALREADY_SHOWING) {
-                    Log.d(TAG, "AD_UNIT_ALREADY_SHOWING");
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_CLICK) {
-                    Log.d(TAG, "AD_UNIT_CLICK");
-                    manager.onBannerAdClicked(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_DISMISSED) {
-                    Log.d(TAG, "AD_UNIT_DISMISSED");
-                    manager.onBannerAdClosed(AppDeckAdNetworkMobileCore.this, null);
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_SENT_TO_STORE) {
-                    Log.d(TAG, "AD_UNIT_SENT_TO_STORE");
-                }
-                if (eventType == EVENT_TYPE.AD_UNIT_SENT_TO_STORE_FAILED) {
-                    Log.d(TAG, "AD_UNIT_SENT_TO_STORE_FAILED");
-                }
-        }
-    });
+
+                AppDeckAdNetworkMobileCore.this.manager.loader.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (eventType == EVENT_TYPE.AD_UNIT_INIT_SUCCEEDED) {
+                            Log.d(TAG, "AD_UNIT_INIT_SUCCEEDED");
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_INIT_FAILED) {
+                            Log.d(TAG, "AD_UNIT_INIT_FAILED");
+                            manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_LOAD_ERROR) {
+                            Log.d(TAG, "AD_UNIT_LOAD_ERROR");
+                            manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_ALREADY_LOADING) {
+                            Log.d(TAG, "AD_UNIT_ALREADY_LOADING");
+                            manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_TRIGGER_DISABLED) {
+                            Log.d(TAG, "AD_UNIT_TRIGGER_DISABLED");
+                            manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_READY) {
+                            Log.d(TAG, "AD_UNIT_READY");
+                            manager.onBannerAdFetched(AppDeckAdNetworkMobileCore.this, null);
+                            MobileCore.showStickee(manager.loader, MobileCore.AD_UNIT_TRIGGER.APP_START);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_NOT_READY) {
+                            Log.d(TAG, "AD_UNIT_NOT_READY");
+                            manager.onBannerAdFailed(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_SHOW) {
+                            Log.d(TAG, "AD_UNIT_SHOW");
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_SHOW_ERROR) {
+                            Log.d(TAG, "AD_UNIT_SHOW_ERROR");
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_ALREADY_SHOWING) {
+                            Log.d(TAG, "AD_UNIT_ALREADY_SHOWING");
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_CLICK) {
+                            Log.d(TAG, "AD_UNIT_CLICK");
+                            manager.onBannerAdClicked(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_DISMISSED) {
+                            Log.d(TAG, "AD_UNIT_DISMISSED");
+                            manager.onBannerAdClosed(AppDeckAdNetworkMobileCore.this, null);
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_SENT_TO_STORE) {
+                            Log.d(TAG, "AD_UNIT_SENT_TO_STORE");
+                        }
+                        if (eventType == EVENT_TYPE.AD_UNIT_SENT_TO_STORE_FAILED) {
+                            Log.d(TAG, "AD_UNIT_SENT_TO_STORE_FAILED");
+                        }
+                    }
+                });
+            }});
 
         MobileCore.loadAdUnit(MobileCore.AD_UNITS.STICKEEZ, MobileCore.AD_UNIT_TRIGGER.APP_START);
 
