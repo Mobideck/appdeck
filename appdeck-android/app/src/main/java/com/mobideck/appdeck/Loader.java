@@ -47,6 +47,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -75,6 +77,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -232,7 +235,7 @@ public class Loader extends AppCompatActivity {
 
         Log.i(TAG, "filter registered at @" + this.proxyPort);
 
-        enableProxy();
+        //enableProxy();
 
     	CacheFiltersSource filtersSource = new CacheFiltersSource();
 
@@ -287,29 +290,6 @@ public class Loader extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
-
-/*            @Override
-            public boolean onOptionsItemSelected(MenuItem item) {
-
-                if (isMenuOpen() == false) {
-                    if (menuArrowIsShown) {
-                        // try to pop a fragment if possible
-                        if (popFragment()) {
-                            return true;
-                        }
-                    }
-                }
-                return super.onOptionsItemSelected(item);
-            }*/
-
-            /*
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                if (menuArrowIsShown)
-                    super.onDrawerSlide(drawerView, 0); // this disables the animation
-                else
-                    super.onDrawerSlide(drawerView, slideOffset);
-            }*/
 
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -376,6 +356,10 @@ public class Loader extends AppCompatActivity {
 
         // configure action bar
         appDeck.actionBarHeight = getActionBarHeight();
+
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
+        mDrawerToggle.setHomeAsUpIndicator(upArrow);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
@@ -496,7 +480,7 @@ public class Loader extends AppCompatActivity {
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
-        enableProxy();
+        //enableProxy();
         if (adManager != null)
             adManager.onActivityResume();
     }
@@ -516,7 +500,7 @@ public class Loader extends AppCompatActivity {
         }
     	if (appDeck.noCache)
     		Utils.killApp(true);
-        disableProxy();
+        //disableProxy();
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
         if (adManager != null)
@@ -974,7 +958,7 @@ public class Loader extends AppCompatActivity {
                 String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
                 //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
                 //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
-                extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
+                extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorApp);
 
                 intent.putExtras(extras);
 
@@ -1070,6 +1054,7 @@ public class Loader extends AppCompatActivity {
     
     public int pushFragment(AppDeckFragment fragment)
     {
+        disableMenuItem();
         setSupportProgressBarVisibility(false);
 
     	FragmentManager fragmentManager = getSupportFragmentManager();
@@ -1093,18 +1078,6 @@ public class Loader extends AppCompatActivity {
     		//fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     	}
 
-        /*
-        // if there is an old fragment it means that we need to show back arrow
-        if (oldFragment != null) {
-            setMenuArrow(true);
-            //mDrawerToggle.setDrawerIndicatorEnabled(false);
-
-        }
-        else {
-            setMenuArrow(false);
-
-        }*/
-
         fragmentTransaction.add(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.replace(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.addToBackStack("AppDeckFragment");
@@ -1120,9 +1093,6 @@ public class Loader extends AppCompatActivity {
     	fragmentTransaction.commitAllowingStateLoss();
     	
         layoutSubViews();
-
-        //mDrawerToggle.setDrawerIndicatorEnabled(true);
-        //setArrowEnabled(oldFragment != null);
 
     	return 0;
     }
@@ -1699,27 +1669,69 @@ public class Loader extends AppCompatActivity {
        return actionBarHeight;
     }
 
-    
-    public void setMenuItems(PageMenuItem[] menuItems)
+    public void disableMenuItem()
     {
-    	if (menuItems != null)
-    		for (int i = 0; i < menuItems.length; i++) {
-    			PageMenuItem item = menuItems[i];
+        if (menuItems != null)
+            for (int i = 0; i < menuItems.length; i++) {
+                PageMenuItem item = menuItems[i];
+                item.cancel();
+            }
+    }
+    
+    public void setMenuItems(PageMenuItem[] newMenuItems)
+    {/*
+        // does new Menu is compatible with old menu ? (meaning we only remove or add things)
+        if (newMenuItems != null && menuItems != null && menu != null && newMenuItems.length > 0 && menuItems.length > 0) {
+            int newIdx = newMenuItems.length - 1;
+            int oldIdx = menuItems.length - 1;
+            PageMenuItem newItem = newMenuItems[newIdx];
+            PageMenuItem oldItem = menuItems[oldIdx];
+            if (newItem.icon.equalsIgnoreCase(oldItem.icon)) {
+                while (newIdx >= 0 && oldIdx >= 0) {
+                    newItem = newMenuItems[newIdx];
+                    oldItem = menuItems[oldIdx];
+
+                    if (!newItem.icon.equalsIgnoreCase(oldItem.icon))
+                        return;
+
+                    oldItem.title = newItem.title;
+                    oldItem.content = newItem.content;
+                    oldItem.badge = newItem.badge;
+                    oldItem.type = newItem.type;
+                    oldItem.badgeDrawable.setCount(oldItem.badge);
+                    Log.d("setMenuItems", newItem.icon);
+
+                    newIdx--;
+                    oldIdx--;
+                }
+                return;
+            }
+        }*/
+
+        // hide previous menu
+    	if (this.menuItems != null)
+    		for (int i = 0; i < this.menuItems.length; i++) {
+    			PageMenuItem item = this.menuItems[i];
     			item.cancel();
     		}
-    	this.menuItems = menuItems;
+    	this.menuItems = newMenuItems;
     	supportInvalidateOptionsMenu();
     }
 
     //ShareActionProvider mShareActionProvider;
 
+    private Menu menu = null;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        this.menu = menu;
 
     	if (menuItems == null)
     		return true;
 
-
+        if (menuItems.length == 0)
+            return true;
 
         for (int i = 0; i < menuItems.length; i++) {
 			PageMenuItem item = menuItems[i];
@@ -1747,11 +1759,26 @@ public class Loader extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (isMenuOpen() == false) {
-            if (menuArrowIsShown) {
-                // try to pop a fragment if possible
-                if (popFragment()) {
+        // topbar button
+        if (menuItems != null) {
+            for (int i = 0; i < menuItems.length; i++) {
+                PageMenuItem pageMenuItem = menuItems[i];
+                if (pageMenuItem.menuItem == item) {
+                    pageMenuItem.fire();
                     return true;
+                }
+            }
+        }
+
+        int idx = item.getItemId();
+
+        if (idx == android.R.id.home) {
+            if (isMenuOpen() == false) {
+                if (menuArrowIsShown) {
+                    // try to pop a fragment if possible
+                    if (popFragment()) {
+                        return true;
+                    }
                 }
             }
         }
@@ -1759,26 +1786,12 @@ public class Loader extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
 
-    	int idx = item.getItemId();
-
     	if (idx == android.R.id.home)
     	{
    			toggleMenu();
    			return true;	
     	}
-    	
-    	if (menuItems == null)
-    		return false;    	
 
-		for (int i = 0; i < menuItems.length; i++)
-		{
-			PageMenuItem pageMenuItem = menuItems[i];
-			if (pageMenuItem.menuItem == item)
-			{
-				pageMenuItem.fire();
-	    		return true;				
-			}
-		}
 		return super.onOptionsItemSelected(item);
     }    
 	
@@ -2194,7 +2207,7 @@ public class Loader extends AppCompatActivity {
             return;
         mProgressBarDeterminate.setProgress(progress);
     }
-
+/*
     void enableProxy()
     {
         System.setProperty("http.proxyHost", this.proxyHost);
@@ -2202,7 +2215,7 @@ public class Loader extends AppCompatActivity {
         //System.setProperty("https.proxyHost", this.proxyHost);
         //System.setProperty("https.proxyPort", this.proxyPort + "");
         try {
-            //WebkitProxy3.setProxy(null, proxyHost, proxyPort, Application.class.getCanonicalName());
+            //WebkitProxy3.setProxy(this, new WebView(), proxyHost, proxyPort, Application.class.getCanonicalName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -2222,5 +2235,5 @@ public class Loader extends AppCompatActivity {
             //System.setProperty("https.proxyHost", "");
             //System.setProperty("https.proxyPort", "");
         }
-    }
+    }*/
 }

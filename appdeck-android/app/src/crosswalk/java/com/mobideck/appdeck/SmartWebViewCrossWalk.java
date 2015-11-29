@@ -1,5 +1,6 @@
 package com.mobideck.appdeck;
 
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
@@ -8,7 +9,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
+import org.json.JSONObject;
 import org.xwalk.core.XWalkJavascriptResult;
 import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
@@ -31,8 +38,8 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-//import android.util.ArrayMap;
-import android.support.v4.util.ArrayMap;
+import android.util.ArrayMap;
+//import android.support.v4.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -83,7 +90,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	private boolean firstLoad = true;
 
 	private boolean pageHasFinishLoading = false;
-
+	private boolean pageHasFinishLoadingWithError = false;
 //	private boolean initialized = false;
 	
 	public boolean shouldLoadFromCache = false;
@@ -143,6 +150,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			firstLoad = true;
 		}
 		super.load(url, null);
+	}
+
+	public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl) {
+		load(baseUrl, data);
 	}
 	
 	public String resolve(String relativeURL)
@@ -221,14 +232,14 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         System.setProperty("http.proxyPort", root.loader.proxyPort + "");
         System.setProperty("https.proxyHost", root.loader.proxyHost);
         System.setProperty("https.proxyPort", root.loader.proxyPort + "");
-/*
+
         try {
             setProxyKK(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-*/
+
 	}
 	
 	// from https://stackoverflow.com/questions/19979578/android-webview-set-proxy-programatically-kitkat
@@ -251,15 +262,15 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        Field receiversField = loadedApkCls.getDeclaredField("mReceivers");
 	        receiversField.setAccessible(true);
 	        Object tmp = receiversField.get(loadedApk);
-            //ArrayMap receivers = (ArrayMap) tmp;
-            java.util.HashMap receivers = (java.util.HashMap) tmp;
+            ArrayMap receivers = (ArrayMap) tmp;
+            //java.util.HashMap receivers = (java.util.HashMap) tmp;
 	        for (Object receiverMap : receivers.values()) {
 	            for (Object rec : ((ArrayMap) receiverMap).keySet()) {
 	                Class clazz = rec.getClass();
 	                if (clazz.getName().contains("ProxyChangeListener")) {
 	                    Method onReceiveMethod = clazz.getDeclaredMethod("onReceive", Context.class, Intent.class);
 	                    Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
-
+/*
 	                    // *********** optional, may be need in future ************
 	                    final String CLASS_NAME = "android.net.ProxyProperties";
 	                    Class cls = Class.forName(CLASS_NAME);
@@ -268,7 +279,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	                    Object proxyProperties = constructor.newInstance(host, port, null);
 	                    intent.putExtra("proxy", (Parcelable) proxyProperties);
 	                    // *********** optional, may be need in future *************
-
+*/
 	                    onReceiveMethod.invoke(rec, appContext, intent);
 	                }
 	            }
@@ -312,13 +323,13 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        String exceptionAsString = sw.toString();
 	        Log.v(TAG, e.getMessage());
 	        Log.v(TAG, exceptionAsString);
-	    } catch (InstantiationException e) {
+	    }/* catch (InstantiationException e) {
 	        StringWriter sw = new StringWriter();
 	        e.printStackTrace(new PrintWriter(sw));
 	        String exceptionAsString = sw.toString();
 	        Log.v(TAG, e.getMessage());
 	        Log.v(TAG, exceptionAsString);
-	    }
+	    }*/
 	    return false;
 	}	
 	
@@ -460,7 +471,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
             }
             return false;
 	    }
-	    
+
+
 	    
 	    @Override
 	    public WebResourceResponse shouldInterceptLoadRequest(XWalkView view, String absoluteURL) {
@@ -470,24 +482,49 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	    	if (absoluteURL.indexOf("_appdeck_is_form") != -1)
 	    		return null;
-	    	
+
 	    	if (appDeck.noCache)
 	    		return null;
-	    	
-	    	if (true)
-	    		return null;
-	    	
+
+            // present in embed ressources ?
+            CacheManagerCachedResponse cachedResponse = appDeck.cache.getEmbedResponse(absoluteURL);
+
+            // present in cache AND should be cache forever ?
+            if (cachedResponse == null && appDeck.cache.shouldCache(absoluteURL))
+                cachedResponse = appDeck.cache.getCachedResponse(absoluteURL);
+
+            // cached response + ask to cache forever header
+            if (cachedResponse != null)
+            {
+                JSONObject headers = cachedResponse.getHeaders();
+                String mimeType = headers.optString("Content-Type", "application/octet-stream");
+                String encoding = headers.optString("Content-Encoding", null);
+                InputStream stream = cachedResponse.getStream();
+                if (stream != null) {
+                    WebResourceResponse response = new WebResourceResponse (mimeType, encoding, stream);
+                    return response;
+                }
+                Log.e(TAG, "shouldInterceptRequest: Stream of cached response "+absoluteURL+" is NULL");
+                cachedResponse = null;
+            }
+
+            /*
 	    	// resource is in embed resources
 	    	WebResourceResponse response = appDeck.cache.getEmbedResource(absoluteURL);
 	    	if (response != null)
 	    	{
 	    		Log.i(TAG, "FROM EMBED: "+absoluteURL);
 	    		return response;
-	    	}
+	    	}*/
+
+            if (true)
+                return null;
+
 
 	    	if (true)
 	    		return null;
-	    	
+
+            /*
 	    	if (appDeck.cache.shouldCache(absoluteURL) || shouldLoadFromCache)
 	    	{
 	    		response = appDeck.cache.getCachedResource(absoluteURL);
@@ -496,10 +533,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    			Log.i(TAG, "FROM CACHE: "+absoluteURL);
 	    			return response;
 	    		}
-	    	}
-	    	
+	    	}*/
+
 	    	return null;
-	    }	    
+	    }
 	    
 	    
         @Override
@@ -508,6 +545,12 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
             Log.i(TAG, "**onLoadFinished "+url+"**");
 
 			pageHasFinishLoading = true;
+
+			if (root != null && pageHasFinishLoadingWithError == true) {
+				root.progressFailed(view);
+				pageHasFinishLoadingWithError = false;
+				return;
+			}
 
             getNavigationHistory().clear();
 
@@ -526,6 +569,11 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         public void onReceivedLoadError(XWalkView view, int errorCode, String description, String failingUrl)
         {
         	Log.i(TAG, "**onReceivedLoadError "+failingUrl+": "+errorCode+": "+description+" **");
+
+			if (failingUrl.equalsIgnoreCase(url)) {
+				pageHasFinishLoadingWithError = true;
+				return;
+			}
         }
 
 

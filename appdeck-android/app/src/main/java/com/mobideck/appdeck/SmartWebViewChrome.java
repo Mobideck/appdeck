@@ -1,12 +1,19 @@
 package com.mobideck.appdeck;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -59,6 +66,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import android.annotation.TargetApi;
 
+import org.json.JSONObject;
+
 import name.cpr.VideoEnabledWebChromeClient;
 import name.cpr.VideoEnabledWebView;
 
@@ -84,7 +93,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     private boolean firstLoad = true;
 
-    private boolean pageHasFinishLoading = false;
+    private boolean pageHasFinishLoadingWithError = false;
 
     public boolean shouldLoadFromCache = false;
 
@@ -209,10 +218,10 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     @Override
     public void loadDataWithBaseURL(String baseUrl, String data,
                                     String mimeType, String encoding, String historyUrl) {
-        if (baseUrl.startsWith("javascript:") == false)
+        if (baseUrl != null && baseUrl.startsWith("javascript:") == false)
         {
             CookieManager cookieManager = CookieManager.getInstance();
-            if (cookieManager != null)
+            if (url != null && cookieManager != null)
                 cookie = cookieManager.getCookie(url);
             else
                 cookie = null;
@@ -306,7 +315,9 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             webSettings.setAppCacheMaxSize(0);
         }
 
-        root.loader.enableProxy();
+        WebkitProxy3.setProxy(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
+
+        //root.loader.enableProxy();
     }
 
     public void setForceCache(boolean forceCache)
@@ -368,11 +379,99 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             return false;
         }
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Log.i(TAG, "shouldInterceptRequest:"+request.getMethod()+" "+request.getUrl()+request.getRequestHeaders().toString());
             }
+
+            if (true)
+                return null;
+
+            String absoluteUrl = request.getUrl().toString();
+
+            if (absoluteUrl.startsWith("about:") || absoluteUrl.startsWith("data:"))
+                return null;
+
+            if (absoluteUrl.equalsIgnoreCase("http://appdeck/error")) {
+                WebResourceResponse response = new WebResourceResponse(null, null, 200, "OK", null, new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
+                return response;
+            }
+
+
+            // handle If-None-Match header
+            String IfNoneMatch = request.getRequestHeaders().get("If-None-Match");
+            if (IfNoneMatch != null && IfNoneMatch.startsWith("appdeckcache")) {
+                if (shouldLoadFromCache || appDeck.cache.shouldCache(absoluteUrl) || appDeck.cache.getEmbedResource(absoluteUrl) != null) {
+                    WebResourceResponse response = new WebResourceResponse(null, null, 304, "Not Modified", null, new ByteArrayInputStream( "".getBytes() ));
+                    return response;
+                }
+            }
+
+            // present in embed ressources ?
+            CacheManagerCachedResponse cachedResponse = appDeck.cache.getEmbedResponse(absoluteUrl);
+
+            // present in cache AND should be cache forever ?
+            if (cachedResponse == null && appDeck.cache.shouldCache(absoluteUrl))
+                cachedResponse = appDeck.cache.getCachedResponse(absoluteUrl);
+
+            // cached response + ask to cache forever header
+            if (cachedResponse != null)
+            {
+                JSONObject headers = cachedResponse.getHeaders();
+                String mimeType = headers.optString("Content-Type", "application/octet-stream");
+                String encoding = headers.optString("Content-Encoding", null);
+                int statusCode = 200;
+                String reasonPhrase = "OK";
+                Map<String, String> responseHeaders = new HashMap<String, String>();
+                responseHeaders.put("ETag", "appdeckcache"+System.currentTimeMillis());
+                responseHeaders.put("Content-Type", mimeType);
+                if (encoding != null)
+                    responseHeaders.put("Content-Encoding", encoding);
+                int cacheTTL = 3600 * 24 * 30 * 365;
+                responseHeaders.put("Cache-Control", "public, max-age=" + cacheTTL);
+                responseHeaders.put("'X-Accel-Expires", ""+cacheTTL);
+                Calendar calendar = Calendar.getInstance(); // gets a calendar using the default time zone and locale.
+                calendar.add(Calendar.SECOND, cacheTTL);
+                DateFormat df = DateFormat.getTimeInstance();
+                df.setTimeZone(TimeZone.getTimeZone("gmt"));
+                String gmtTime = df.format(calendar.getTime());
+                //responseHeaders.put("Expires", gmtTime);
+
+                InputStream stream = cachedResponse.getStream();
+                if (stream != null) {
+                    WebResourceResponse response = new WebResourceResponse(mimeType, encoding, statusCode, reasonPhrase, responseHeaders, stream);
+                    return response;
+                }
+                Log.e(TAG, "shouldInterceptRequest: Stream of cached response "+absoluteUrl+" is NULL");
+                cachedResponse = null;
+            }
+
+            if (cachedResponse == null && shouldLoadFromCache)
+                cachedResponse = appDeck.cache.getCachedResponse(absoluteUrl);
+
+            // cached response
+            if (cachedResponse != null)
+            {
+                JSONObject headers = cachedResponse.getHeaders();
+                String mimeType = headers.optString("Content-Type", "application/octet-stream");
+                String encoding = headers.optString("Content-Encoding", null);
+                int statusCode = 200;
+                String reasonPhrase = "OK";
+                Map<String, String> responseHeaders = new HashMap<String, String>();
+                responseHeaders.put("ETag", "appdeckcache"+System.currentTimeMillis());
+                responseHeaders.put("Content-Type", mimeType);
+                if (encoding != null)
+                    responseHeaders.put("Content-Encoding", encoding);
+                InputStream stream = cachedResponse.getStream();
+                if (stream != null) {
+                    WebResourceResponse response = new WebResourceResponse(mimeType, encoding, statusCode, reasonPhrase, responseHeaders, stream);
+                    return response;
+                }
+                Log.e(TAG, "shouldInterceptRequest: Stream of cached response "+absoluteUrl+" is NULL");
+            }
+
             return super.shouldInterceptRequest(view, request);
         }
 
@@ -395,15 +494,22 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             super.onPageFinished(view, url);
             Log.i(TAG, "**onPageFinished**");
 
-            pageHasFinishLoading = true;
+            if (root != null && pageHasFinishLoadingWithError == true) {
+                root.progressFailed(view);
+                pageHasFinishLoadingWithError = false;
+                return;
+            }
+                //pageHasFinishLoading = true;
 
             // force inject of appdeck.js if needed
-            view.evaluateJavascript(SmartWebViewChrome.this.appDeck.appdeck_inject_js, new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String value) {
-                    Log.i(TAG, "onPageFinishedJSResult: "+value);
-                }
-            });
+            if (!url.startsWith("about:") && !url.startsWith("data:")) {
+                view.evaluateJavascript(SmartWebViewChrome.this.appDeck.appdeck_inject_js, new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        Log.i(TAG, "onPageFinishedJSResult: " + value);
+                    }
+                });
+            }
 
 				/*
 				evaluateJavascript("history.pushState(null, null, 'http://www.universfreebox.com.dev.dck.io/article/30638/The-OVH-Box-une-nouvelle-box-en-preparation-chez-OVH');", new ValueCallback<String>() {
@@ -428,7 +534,14 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             Log.d(TAG, "Error:" + errorCode + ":" + description);
 
-            //root.progressFailed(view);
+            if (failingUrl.equalsIgnoreCase(url)) {
+                pageHasFinishLoadingWithError = true;
+                return;
+            }
+
+            Toast.makeText(getContext(), "" + failingUrl + ": (" + url + ") " + description, Toast.LENGTH_LONG).show();
+
+            /*
 
             // this is the main url that is falling
             if (failingUrl.equalsIgnoreCase(url) && shouldLoadFromCache == true) {
@@ -437,7 +550,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             } else {
                 Toast.makeText(getContext(), "" + failingUrl + ": (" + url + ") " + description, Toast.LENGTH_LONG).show();
-            }
+            }*/
         }
 /*
         @TargetApi(Build.VERSION_CODES.M)

@@ -98,6 +98,9 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     }
 
     @Override
+    public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl) {}
+
+    @Override
     public void reload() {
 
     }

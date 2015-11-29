@@ -40,9 +40,6 @@ public class PageFragmentSwap extends AppDeckFragment {
 	
 	public PageSwipe pageSwipe;
 	
-	//private SmartWebViewCrossWalk pageWebView;
-	//private SmartWebViewCrossWalk pageWebViewAlt;
-
     private SmartWebView pageWebView;
     private SmartWebView pageWebViewAlt;
 
@@ -53,27 +50,18 @@ public class PageFragmentSwap extends AppDeckFragment {
 	private SwipeRefreshLayout swipeViewAlt;
 	
 	private long lastUrlLoad = 0;
-	
-	private FrameLayout wv_container;
 
     private ProgressBarCircularIndeterminate preLoadingIndicator;
     private boolean isPreLoading = true;
-
-	//private MoPubView bannerAdView;
-    //MoPubBannerAdListener bannerAdViewListener;
-
-	//private AdView bannerAdView;
-    //private AdRequest bannerAdRequest;
-
-    //View adview;
-
-    private TaskScheduler adTimer;
 
 	public URI uri;
 	
 	private boolean shouldAutoReloadInbackground;
 
     private HashMap<String, AppDeckAdNative> nativeAds = null;
+
+	// loadPage not called
+	private boolean shouldCallLoadPage = false;
 
 	public static PageFragmentSwap newInstance(String absoluteURL)
 	{
@@ -107,7 +95,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
     	super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
+
         rootView = (FrameLayout)inflater.inflate(R.layout.page_fragment_swap, container, false);
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
@@ -117,22 +105,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 		}
         rootView.setLayoutTransition(lt);
 
-        //if (appDeck.config.app_background_color != null)
-        //    rootView.setBackground(appDeck.config.app_background_color.getDrawable());
-
         preLoadingIndicator = (ProgressBarCircularIndeterminate)rootView.findViewById(R.id.preLoadingIndicator);
 
-		//pageWebView = new SmartWebView(this);
-		pageWebView = SmartWebViewFactory.createSmartWebView(this);// new SmartWebViewCrossWalk(this);
-
-    	//pageWebViewAlt = new SmartWebView(this);
-    	pageWebViewAlt = SmartWebViewFactory.createSmartWebView(this);//new SmartWebViewCrossWalk(this);
+		pageWebView = SmartWebViewFactory.createSmartWebView(this);
+    	pageWebViewAlt = SmartWebViewFactory.createSmartWebView(this);
     			
-		mAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
+		mAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 				
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-        //swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -143,10 +123,9 @@ public class PageFragmentSwap extends AppDeckFragment {
             }
         });
         swipeView.addView(pageWebView.view);
-        swipeView.setColorSchemeResources(R.color.AppDeckColorAccent, R.color.AppDeckColorPrimaryDark, R.color.AppDeckColorAccent, R.color.AppDeckColorPrimary);
+        swipeView.setColorSchemeResources(R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg1, R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg2);
         
         swipeViewAlt = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeAlt);
-        //swipeViewAlt.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeViewAlt.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
@@ -157,7 +136,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		});
         swipeViewAlt.addView(pageWebViewAlt.view);
         swipeViewAlt.setVisibility(View.GONE);
-        swipeViewAlt.setColorSchemeResources(R.color.AppDeckColorAccent, R.color.AppDeckColorPrimaryDark, R.color.AppDeckColorAccent, R.color.AppDeckColorPrimary);
+        swipeViewAlt.setColorSchemeResources(R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg1, R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg2);
         
         rootView.bringChildToFront(swipeView);
         rootView.bringChildToFront(preLoadingIndicator);
@@ -176,23 +155,33 @@ public class PageFragmentSwap extends AppDeckFragment {
     		this.loader.setMenuItems(menuItems);
         	pageWebView.ctl.smartWebViewRestoreState(savedInstanceState);
         } else {
-        	loadPage(currentPageUrl);
-        	//pageWebView.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
-        	//pageWebViewAlt.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
+			if (isMain)
+	        	loadPage(currentPageUrl);
+			else
+				shouldCallLoadPage = true;
         }
 
         mHandler = new Handler();
         mHandler.postDelayed(myTask, 150);
 
-        //hidePreloading();
         return rootView;
     }
+
+	public void setIsOnScreen(boolean isOnScreen) {
+		if (isOnScreen) {
+			if (shouldCallLoadPage)
+				loadPage(currentPageUrl);
+		} else {
+		}
+	}
 
     public void setIsMain(boolean isMain)
     {
         super.setIsMain(isMain);
         if (isMain) {
-            if (pageWebView != null)
+			if (shouldCallLoadPage)
+				loadPage(currentPageUrl);
+            else if (pageWebView != null)
                 pageWebView.ctl.sendJsEvent("appear", "null");
         } else {
             if (pageWebView != null)
@@ -324,7 +313,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     }
     
 	public void loadPage(String absoluteUrl)
-	{		
+	{
+		shouldCallLoadPage = false;
 		currentPageUrl = absoluteUrl;
 		try {
 			uri = new URI(currentPageUrl);
@@ -352,8 +342,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 			
 			if (screenConfiguration.ttl > ((now - cacheResult.lastModified) / 1000))
 			{
-				Log.v(TAG, "Cache HIT SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified)/1000);				
-				//pageWebView.setForceCache(true);
+				Log.v(TAG, "Cache HIT SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified)/1000);
 				loadFromCache = true;
 			} else {
 				Log.v(TAG, "Cache HIT DEPRECATED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + "diff: " + (now - cacheResult.lastModified)/1000);
@@ -378,10 +367,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 		} else {
 			pageWebView.ctl.setForceCache(false);
 		}
-		
+
 		pageWebView.ctl.loadUrl(absoluteUrl);
 		lastUrlLoad = System.currentTimeMillis();
-		loader.invalidateOptionsMenu();
 	}
     public void progressStart(View origin)
     {
@@ -402,8 +390,8 @@ public class PageFragmentSwap extends AppDeckFragment {
         {
             hidePreloading();
         }
-        progressStop(origin);
-        //super.progressSet(origin, percent);
+        //progressStop(origin);
+        super.progressSet(origin, percent);
 
     }
     
@@ -432,7 +420,11 @@ public class PageFragmentSwap extends AppDeckFragment {
     	super.progressFailed(origin);
 
         hidePreloading();
-    	
+        swipeView.setRefreshing(false);
+        swipeViewAlt.setRefreshing(false);
+
+
+
 /*    	if (origin == pageWebView && pageWebViewReady == false)
     	{
     		pageWebViewReady = true;
@@ -450,13 +442,26 @@ public class PageFragmentSwap extends AppDeckFragment {
     	
     	if (origin == pageWebView.view)
     	{
-    		//pageWebView.load(uri.toString(), "Check Your Network ...");
-    		//Toast.makeText(origin.getContext(), "Check your network", Toast.LENGTH_LONG).show();
-            //pageWebView.ctl.loadData(AppDeck.error_html, "text/html", "utf8");
-    		pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
-    		
+            CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);
+
+            if (cacheResult.isInCache) {
+                swipeViewAlt.setVisibility(View.VISIBLE);
+                rootView.bringChildToFront(swipeViewAlt);
+                rootView.bringChildToFront(preLoadingIndicator);
+                pageWebViewAlt.ctl.setForceCache(true);
+                pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+            } else {
+                //pageWebView.ctl.stopLoading();
+                //pageWebView.view.setVisibility(View.INVISIBLE);
+                swipeViewAlt.setVisibility(View.VISIBLE);
+                rootView.bringChildToFront(swipeViewAlt);
+                rootView.bringChildToFront(preLoadingIndicator);
+                pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+                //pageWebViewAlt.ctl.loadDataWithBaseURL("file:///android_asset/", AppDeck.error_html, "text/html", "UTF-8", null);
+                //pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
+            }
     	}
-    	if (origin == pageWebViewAlt.view)
+    	else if (origin == pageWebViewAlt.view)
     	{
     		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
 			pageWebViewAlt.ctl.stopLoading();

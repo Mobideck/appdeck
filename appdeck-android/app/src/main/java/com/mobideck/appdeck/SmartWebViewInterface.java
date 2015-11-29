@@ -27,6 +27,8 @@ public interface SmartWebViewInterface {
     public String resolve(String relativeURL);
 
     public void loadUrl(String absoluteURL);
+    public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl);
+
     public void reload();
     public void stopLoading();
     public void setForceCache(boolean forceCache);
