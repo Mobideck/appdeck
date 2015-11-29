@@ -55,14 +55,14 @@
                         android:id="@+id/progressBarIndeterminate"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/AppDeckColorAccent"
+                        android:background="@color/AppDeckColorApp"
                         android:visibility="gone"/>
 
                     <com.gc.materialdesign.views.ProgressBarDeterminate
                         android:id="@+id/progressBarDeterminate"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/AppDeckColorAccent"
+                        android:background="@color/AppDeckColorApp"
                         android:visibility="gone" />
 
                     <FrameLayout

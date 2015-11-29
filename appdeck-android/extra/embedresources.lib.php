@@ -387,36 +387,30 @@ function buildAppDeckAndroidRes()
 
   $xml = file_get_contents($project_path.'/extra/appdeck.xml');
   if (isset($info->icon_theme) && $info->icon_theme == 'dark')
-    $conf = array('AppDeckColorPrimary' => '#FFFFFF',
-                  'AppDeckColorPrimaryDark' => '#000000',
-                  'AppDeckColorAccent' => '#FFFFFF',
-                  'AppDeckControlNormal' => '#FFFFFF');
+    $conf = array('AppDeckColorTopBarBg1' => '#000000',
+                  'AppDeckColorTopBarBg2' => '#000000',
+                  'AppDeckColorTopBarText' => '#FFFFFF',
+                  'AppDeckColorTheme' => '#000000',
+                  'AppDeckColorApp' => '#000000');
   else
-    $conf = array('AppDeckColorPrimary' => '#000000',
-                  'AppDeckColorPrimaryDark' => '#BDBDBD',
-                  'AppDeckColorAccent' => '#000000',
-                  'AppDeckControlNormal' => '#000000');
-  // patch conf
-  if (isset($info->app_topbar_color[0]))
-    $conf['AppDeckColorPrimary'] = $info->app_topbar_color[0];
-  /*if (isset($info->app_topbar_color[1]))
-    $conf['AppDeckColorAccent'] = $info->app_topbar_color[1];*/
-  if (isset($info->button_color))
-    $conf['AppDeckColorAccent'] = $info->button_color;
-  if (isset($info->button_color))
-    $conf['AppDeckControlNormal'] = $info->button_color;
+    $conf = array('AppDeckColorTopBarBg1' => '#FFFFFF',
+                  'AppDeckColorTopBarBg2' => '#FFFFFF',
+                  'AppDeckColorTopBarText' => '#000000',
+                  'AppDeckColorTheme' => '#FFFFFF',
+                  'AppDeckColorApp' => '#000000');
 
-  /*if (isset($info->icon_theme) && $info->icon_theme == 'light')
-  {
-    //$conf['AppDeckColorPrimary'] = '#FFFFFF';
-    $conf['AppDeckColorPrimaryDark'] = '#BDBDBD';
-    //$conf['AppDeckColorAccent'] = '#FF0000';
+  // patch conf
+  if (isset($info->app_topbar_color[0])) {
+    $conf['AppDeckColorTopBarBg1'] = $info->app_topbar_color[0];
+    $conf['AppDeckColorTopBarBg2'] = $info->app_topbar_color[0];
   }
-  if (isset($info->icon_theme) && $info->icon_theme == 'dark')
-  {
-    $conf['AppDeckColorPrimaryDark'] = '#000000';
-    //$conf['AppDeckColorAccent'] = '#000000';
-  }*/
+  if (isset($info->app_topbar_color[1]))
+    $conf['AppDeckColorTopBarBg2'] = $info->app_topbar_color[1];
+  if (isset($info->app_topbar_text_color))
+    $conf['AppDeckColorTopBarText'] = $info->app_topbar_text_color;
+  if (isset($info->app_color))
+    $conf['AppDeckColorApp'] = $info->button_color;
+
   if (isset($info->icon_theme) && $info->icon_theme == 'light')
     $xml = str_replace('Theme.AppCompat.NoActionBar', 'Theme.AppCompat.Light.NoActionBar', $xml);
   if (isset($info->icon_theme) && $info->icon_theme == 'dark')
@@ -426,5 +420,6 @@ function buildAppDeckAndroidRes()
   {
     $xml = str_replace('##'.$k.'##', $v, $xml);
   }
-  file_put_contents($project_path.'/app/src/main/res/values/appdeck.xml', $xml);
+  if (file_get_contents($project_path.'/app/src/main/res/values/appdeck.xml') != $xml)
+    file_put_contents($project_path.'/app/src/main/res/values/appdeck.xml', $xml);
 }

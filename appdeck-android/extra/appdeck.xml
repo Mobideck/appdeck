@@ -15,13 +15,17 @@
     <!--
         App Color
     -->
-    <!-- app_topbar_color[0], colorPrimary is used for the default action bar background -->
-    <color name="AppDeckColorPrimary">##AppDeckColorPrimary##</color>
-    <!-- app_topbar_color[1], colorPrimaryDark is used for the status bar -->
-    <color name="AppDeckColorPrimaryDark">##AppDeckColorPrimaryDark##</color>
-    <!-- icon_theme, colorAccent is used as the default value for colorControlActivated, which is used to tint widgets -->
-    <color name="AppDeckColorAccent">##AppDeckColorAccent##</color>
+    <!-- app_topbar_color[0], action bar background -->
+    <color name="AppDeckColorTopBarBg1">##AppDeckColorTopBarBg1##</color>
+    <!-- app_topbar_color[1], action bar background -->
+    <color name="AppDeckColorTopBarBg2">##AppDeckColorTopBarBg2##</color>
+    <!-- app_topbar_text_color, actionbar text color -->
+    <color name="AppDeckColorTopBarText">##AppDeckColorTopBarText##</color>
 
-    <color name="AppDeckControlNormal">##AppDeckControlNormal##</color>
+    <!-- icon_theme, black or white theme -->
+    <color name="AppDeckColorTheme">##AppDeckColorTheme##</color>
+
+    <!-- app_color, color of loading, scrollbar, ... -->
+    <color name="AppDeckColorApp">##AppDeckColorApp##</color>
 
 </resources>
