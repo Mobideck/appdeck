@@ -98,24 +98,33 @@ public class PageSwipe extends AppDeckFragment {
     	adapter = new PageSwipeAdapter(getChildFragmentManager(), this);
     	pager.setAdapter(adapter);
 
-        pager.setOnPageChangeListener(new OnPageChangeListener() {
-			
+        pager.addOnPageChangeListener(new OnPageChangeListener() {
+
 			@Override
 			public void onPageSelected(int position) {
 				currentPageIdx = position;
 			}
-			
+
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+				if (position == 0 && previousPage != null)
+				{
+					previousPage.setIsOnScreen(true);
+				}
+				if (position == 1 && nextPage != null)
+				{
+					nextPage.setIsOnScreen(true);
+				}
 			}
-			
+
 			@Override
-			public void onPageScrollStateChanged(int state) {				
-	            // scroll just end, we check if we should update page
-	            if (state == ViewPager.SCROLL_STATE_IDLE) {
-	                // if only one page ... there is nothing to do
-	                if (adapter.getCount() <= 1)
-	                	return;
+			public void onPageScrollStateChanged(int state) {
+				// scroll just end, we check if we should update page
+				if (state == ViewPager.SCROLL_STATE_IDLE) {
+					// if only one page ... there is nothing to do
+					if (adapter.getCount() <= 1)
+						return;
 					int position = currentPageIdx;
 					Log.i("PageSwipe", "position " + position);
 					if (position == 0 && previousPage == null)
@@ -123,28 +132,25 @@ public class PageSwipe extends AppDeckFragment {
 					//if (position == 1)
 					//	return;
 					currentPage.setIsMain(false);
-					if (position == 1 && previousPage == null && nextPage != null)
-					{
+					if (position == 1 && previousPage == null && nextPage != null) {
 						previousPage = currentPage;
 						currentPage = nextPage;
 						nextPage = null;
 					}
-					if (position == 0)
-					{
+					if (position == 0) {
 						nextPage = currentPage;
 						currentPage = previousPage;
 						previousPage = null;
 					}
-					if (position == 2)
-					{
+					if (position == 2) {
 						previousPage = currentPage;
 						currentPage = nextPage;
-						nextPage = null;						
+						nextPage = null;
 					}
 					currentPage.setIsMain(true);
 					initPreviousNext();
 					adapter.notifyDataSetChanged();
-	            }
+				}
 			}
 		});    	
     	
@@ -315,7 +321,6 @@ public class PageSwipe extends AppDeckFragment {
     	boolean shouldUpdate = false;    	
     	if (previousPage == null && currentPage.previousPageUrl != null && currentPage.previousPageUrl.isEmpty() == false)
     	{
-    		//previousPage = new PageFragment(currentPage.previousPageUrl);
     		previousPage = PageFragmentSwap.newInstance(currentPage.previousPageUrl);
 			previousPage.loader = this.loader;
     		previousPage.pageSwipe = this;
@@ -323,7 +328,6 @@ public class PageSwipe extends AppDeckFragment {
     	}
     	if (nextPage == null && currentPage.nextPageUrl != null && currentPage.nextPageUrl.isEmpty() == false)
     	{
-    		//nextPage = new PageFragment(currentPage.nextPageUrl);
     		nextPage = PageFragmentSwap.newInstance(currentPage.nextPageUrl);
 			nextPage.loader = this.loader;
     		nextPage.pageSwipe = this;
@@ -337,16 +341,6 @@ public class PageSwipe extends AppDeckFragment {
     	if (origin != currentPage)
     		return;
     	boolean shouldUpdate = false;
-/*    	if (previousPage != null && previousPage.currentPageUrl.equalsIgnoreCase(currentPage.previousPageUrl) == false && currentPage.previousPageUrl.isEmpty() == false)
-    	{
-    		previousPage = null;
-    		shouldUpdate = true;
-    	}
-    	if (nextPage != null && nextPage.currentPageUrl.equalsIgnoreCase(currentPage.nextPageUrl) == false && currentPage.nextPageUrl.isEmpty() == false)
-    	{
-    		nextPage = null;
-    		shouldUpdate = true;
-    	}*/
     	shouldUpdate = shouldUpdate || initPreviousNext();
     	if (shouldUpdate)
     	{
@@ -443,18 +437,7 @@ public class PageSwipe extends AppDeckFragment {
         
 		@Override
 		public int getCount() {
-			// if there is a previous page, we must disable sliding menu to be able to slide to it
-			
-			//if (currentPage.slidingEnabled == false)
-			
-			/*if (currentPage.slidingEnabled == false)
-				appDeck.loader.slidingMenu.setSlidingEnabled(false);
-			else if (previousPage == null && nextPage == null)
-    			appDeck.loader.slidingMenu.setSlidingEnabled(true);
-    		else
-    			appDeck.loader.slidingMenu.setSlidingEnabled(false);*/
             int count = (pageSwipe.currentPage != null ? 1 : 0)  + (pageSwipe.previousPage != null ? 1 : 0) + (pageSwipe.nextPage != null ? 1 : 0);
-            
             return count;
 		}
 
@@ -471,8 +454,7 @@ public class PageSwipe extends AppDeckFragment {
 			
 		}*/
 		
-	    public int getFragmentPosition (AppDeckFragment fragment) {        	
-
+	    public int getFragmentPosition (AppDeckFragment fragment) {
 	    	int position = 0;
         	
         	if (fragment == previousPage)
@@ -489,15 +471,11 @@ public class PageSwipe extends AppDeckFragment {
 
 		
 		@Override
-	    public int getItemPosition (Object object) {        	
-			
+	    public int getItemPosition (Object object) {
 			AppDeckFragment fragment = (AppDeckFragment)object;
 	    	int position = getFragmentPosition(fragment);
 	    	if (position == -1)
 	    		return POSITION_NONE;
-/*	    	//if (position == fragment.oldPosition)
-	    	//	return POSITION_UNCHANGED;
-	    	fragment.oldPosition = position;*/
 	    	return position;
 	    }
 				
