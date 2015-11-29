@@ -41,8 +41,8 @@ android {
 
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 66
-        versionName "1.6.6"
+        versionCode 67
+        versionName "1.6.7"
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -62,6 +62,7 @@ android {
 
         crosswalk {
             flavorDimension "webview"
+            // 15 by default, set 21 for faster build time
             minSdkVersion 15
             versionCode = 1
         }
@@ -143,6 +144,8 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
 
     crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
+
+//    crosswalkCompile 'org.xwalk:xwalk_core_library:17.46.443.0'
 
 /*    compile ('org.xwalk:xwalk_core_library:15.44.384.13') {
         exclude group: 'SevenZip'
