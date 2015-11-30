@@ -248,7 +248,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	private static boolean setProxyKK(XWalkView webView, String host, int port, String applicationClassName) {
 
         if (true)
-            return;
+            return true;
 
 	    Log.d(TAG, "Setting proxy with >= 4.4 API.");
 
