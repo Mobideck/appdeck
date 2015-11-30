@@ -894,7 +894,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     @Override
     public WebBackForwardList restoreState(Bundle inState) {
         url = inState.getString("url");
-        uri = Uri.parse(url);
+        if (url != null)
+            uri = Uri.parse(url);
         return super.restoreState(inState);
     }
 
