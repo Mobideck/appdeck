@@ -11,7 +11,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -38,8 +37,9 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.ArrayMap;
+//import android.util.ArrayMap;
 //import android.support.v4.util.ArrayMap;
+import java.util.HashMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -243,12 +243,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	}
 	
 	// from https://stackoverflow.com/questions/19979578/android-webview-set-proxy-programatically-kitkat
-	@SuppressLint("NewApi")
-	@SuppressWarnings("all")
+	//@SuppressLint("NewApi")
+	//@SuppressWarnings("all")
 	private static boolean setProxyKK(XWalkView webView, String host, int port, String applicationClassName) {
-
-        if (true)
-            return true;
 
 	    Log.d(TAG, "Setting proxy with >= 4.4 API.");
 
@@ -266,10 +263,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        Field receiversField = loadedApkCls.getDeclaredField("mReceivers");
 	        receiversField.setAccessible(true);
 	        Object tmp = receiversField.get(loadedApk);
-            ArrayMap receivers = (ArrayMap) tmp;
+            HashMap receivers = (HashMap) tmp;
             //java.util.HashMap receivers = (java.util.HashMap) tmp;
 	        for (Object receiverMap : receivers.values()) {
-	            for (Object rec : ((ArrayMap) receiverMap).keySet()) {
+	            for (Object rec : ((HashMap) receiverMap).keySet()) {
 	                Class clazz = rec.getClass();
 	                if (clazz.getName().contains("ProxyChangeListener")) {
 	                    Method onReceiveMethod = clazz.getDeclaredMethod("onReceive", Context.class, Intent.class);
