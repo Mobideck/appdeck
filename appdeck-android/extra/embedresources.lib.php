@@ -400,16 +400,16 @@ function buildAppDeckAndroidRes()
                   'AppDeckColorApp' => '#000000');
 
   // patch conf
-  if (isset($info->app_topbar_color[0])) {
+  if (isset($info->app_topbar_color[0]) && $info->app_topbar_color[0] != '') {
     $conf['AppDeckColorTopBarBg1'] = $info->app_topbar_color[0];
     $conf['AppDeckColorTopBarBg2'] = $info->app_topbar_color[0];
   }
-  if (isset($info->app_topbar_color[1]))
+  if (isset($info->app_topbar_color[1]) && $info->app_topbar_color[1] != '')
     $conf['AppDeckColorTopBarBg2'] = $info->app_topbar_color[1];
-  if (isset($info->app_topbar_text_color))
+  if (isset($info->app_topbar_text_color) && $info->app_topbar_text_color != '')
     $conf['AppDeckColorTopBarText'] = $info->app_topbar_text_color;
-  if (isset($info->app_color))
-    $conf['AppDeckColorApp'] = $info->button_color;
+  if (isset($info->app_color) && $info->app_color != '')
+    $conf['AppDeckColorApp'] = $info->app_color;
 
   if (isset($info->icon_theme) && $info->icon_theme == 'light')
     $xml = str_replace('Theme.AppCompat.NoActionBar', 'Theme.AppCompat.Light.NoActionBar', $xml);
