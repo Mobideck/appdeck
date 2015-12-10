@@ -448,8 +448,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (url.indexOf("_appdeck_is_form=1") != -1)
 	    		return false;
 
-			if (pageHasFinishLoading == false)
-				return false;
+			//if (pageHasFinishLoading == false)
+			//	return false;
 
 	    	if (firstLoad)
 	    	{
@@ -486,6 +486,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	    	if (appDeck.noCache)
 	    		return null;
+
+			if (true)
+				return null;
 
             // present in embed ressources ?
             CacheManagerCachedResponse cachedResponse = appDeck.cache.getEmbedResponse(absoluteURL);
