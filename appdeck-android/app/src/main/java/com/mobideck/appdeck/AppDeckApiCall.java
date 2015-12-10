@@ -76,7 +76,10 @@ public class AppDeckApiCall {
 
     public void sendCallbackWithResult(String type, Object resultObj)
     {
-        Object[] params = new String[1];
+/*		JSONArray result = new JSONArray();
+		result.put(resultObj);
+		resultJSON = result.toString();*/
+        Object[] params = new Object[1];
         params[0] = resultObj;
         sendCallbackWithResult(type, params);
     }
