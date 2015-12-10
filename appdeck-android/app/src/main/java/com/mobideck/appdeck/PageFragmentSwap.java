@@ -34,6 +34,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class PageFragmentSwap extends AppDeckFragment {
 	
 	public static final String TAG = "PageFragmentSwap";	
@@ -873,15 +876,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 		                final int dayOfMonth) {
 		        	
 		        	Log.d("Date", "selected");
-		        	 HashMap<String,String> result = new HashMap<String, String>() {
-		        	     {
-		        	      put("year", String.valueOf(year));
-		        	      put("month", String.valueOf(monthOfYear + 1));
-		        	      put("day", String.valueOf(dayOfMonth));
-		        	     }
-		        	 };
-					//call.setResult(result);
-					//call.sendPostponeResult(true);
+					JSONObject result = new JSONObject();
+					try {
+						result.put("year", String.valueOf(year));
+						result.put("month", String.valueOf(monthOfYear + 1));
+						result.put("day", String.valueOf(dayOfMonth));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
                     call.sendCallbackWithResult("success", result);
 		        }
 		    };			
