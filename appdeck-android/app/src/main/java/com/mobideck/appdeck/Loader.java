@@ -98,6 +98,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.facebook.FacebookSdk;
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -187,7 +188,7 @@ public class Loader extends AppCompatActivity {
                 appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
                 ) {
             TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
-            Fabric.with(app, crashlytics, new TwitterCore(authConfig));
+            Fabric.with(app, crashlytics, new Twitter(authConfig));
             mTwitterAuthClient = new TwitterAuthClient();
         } else {
             Fabric.with(app, crashlytics);
@@ -219,7 +220,6 @@ public class Loader extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     	this.proxyHost = "127.0.0.1";
     	
@@ -512,7 +512,6 @@ public class Loader extends AppCompatActivity {
     {
     	outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");    	
     	super.onSaveInstanceState(outState);
-
         SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
 
         // only keep maxHistoryUrlsSize URLS
@@ -535,7 +534,6 @@ public class Loader extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
       super.onRestoreInstanceState(savedInstanceState);
-
       if (adManager != null)
          adManager.onActivityRestoreInstanceState(savedInstanceState);
       Log.i(TAG, "onRestoreInstanceState");
@@ -1527,7 +1525,9 @@ public class Loader extends AppCompatActivity {
                 return true;
             }
 
-            call.postponeResult();
+            //call.postponeResult();
+            call.setResultJSON("true");
+
             willShowActivity = true;
 
             final AppDeckApiCall mycall = call;
@@ -1545,17 +1545,20 @@ public class Loader extends AppCompatActivity {
                             put("userID", twitterSessionResult.data.getUserId() + "");
                         }
                     };
+
+                    //mycall.setResult(result);
+                    //mycall.sendPostponeResult(true);
+
+
                     //call.setResult(result);
                     //call.sendPostponeResult(true);
-                    mycall.setResult(result);
-                    mycall.sendPostponeResult(true);
-                    //mycall.sendCallbackWithResult("success", result);
+                    mycall.sendCallbackWithResult("success", result);
                 }
 
                 @Override
                 public void failure(TwitterException e) {
                     Log.d(TAG, "twitter login failed");
-                    mycall.sendPostponeResult(false);
+                    mycall.sendPostponeResult(new Boolean(false));
                     e.printStackTrace();
                 }
             });
