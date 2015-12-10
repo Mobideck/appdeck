@@ -107,15 +107,13 @@ public class Utils {
 			}
 		})
         .build();
-        
         // Load image, decode it to Bitmap and return Bitmap to callback
         //appDeck.imageLoader.loadImage(url, options, listener);
         ImageSize targetSize = new ImageSize(0, 0);
         ImageView fakeImage = new ImageView(context);
         fakeImage.setLayoutParams(new LayoutParams(targetSize.getWidth(), targetSize.getHeight()));
         fakeImage.setScaleType(ScaleType.CENTER_CROP);
-        appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});        
-        
+        appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});
     }
     
     public static void downloadIcon(String url, final int maxHeight, SimpleImageLoadingListener listener, Context context)

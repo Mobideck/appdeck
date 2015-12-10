@@ -27,6 +27,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.littleshoot.proxy.ChainedProxy;
 import org.littleshoot.proxy.ChainedProxyAdapter;
 import org.littleshoot.proxy.ChainedProxyManager;
@@ -1480,32 +1484,30 @@ public class Loader extends AppCompatActivity {
                         public void onSuccess(LoginResult loginResult) {
                             // App code
                             Log.d(TAG, "facebook login ok");
-                            HashMap<String, String> result = new HashMap<String, String>() {
-                                {
-                                    put("year", "2005");
-                                    put("month", "10");
-                                    put("day", "today");
-                                }
-                            };
-                            //call.setResult(result);
-                            //call.sendPostponeResult(true);
-                            //mycall.sendCallbackWithResult("success", result);
-                            mycall.setResult(result);
-                            mycall.sendPostponeResult(true);
+
+                            JSONObject result = new JSONObject();
+                            try {
+                                result.put("appID", loginResult.getAccessToken().getApplicationId());
+                                result.put("token", loginResult.getAccessToken().getToken());
+                                result.put("userID", loginResult.getAccessToken().getUserId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            mycall.sendCallbackWithResult("success", result);
                         }
 
                         @Override
                         public void onCancel() {
                             // App code
                             Log.d(TAG, "facebook login cancel");
-                            mycall.sendPostponeResult(false);
+                            mycall.sendCallBackWithError("cancel");
                         }
 
                         @Override
                         public void onError(FacebookException exception) {
                             // App code
                             Log.d(TAG, "facebook login error");
-                            mycall.sendPostponeResult(false);
+                            mycall.sendCallBackWithError(exception.getMessage());
                         }
                     });
             call.postponeResult();
@@ -1537,28 +1539,23 @@ public class Loader extends AppCompatActivity {
                 public void success(final Result<TwitterSession> twitterSessionResult) {
                     // Success
                     Log.d(TAG, "Twitter login ok");
-                    HashMap<String, String> result = new HashMap<String, String>() {
-                        {
-                            put("userName", twitterSessionResult.data.getUserName());
-                            put("authToken", twitterSessionResult.data.getAuthToken().token);
-                            put("authTokenSecret", twitterSessionResult.data.getAuthToken().secret);
-                            put("userID", twitterSessionResult.data.getUserId() + "");
-                        }
-                    };
 
-                    //mycall.setResult(result);
-                    //mycall.sendPostponeResult(true);
-
-
-                    //call.setResult(result);
-                    //call.sendPostponeResult(true);
+                    JSONObject result = new JSONObject();
+                    try {
+                        result.put("userName", twitterSessionResult.data.getUserName());
+                        result.put("authToken", twitterSessionResult.data.getAuthToken().token);
+                        result.put("authTokenSecret", twitterSessionResult.data.getAuthToken().secret);
+                        result.put("userID", twitterSessionResult.data.getUserId() + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     mycall.sendCallbackWithResult("success", result);
                 }
 
                 @Override
                 public void failure(TwitterException e) {
                     Log.d(TAG, "twitter login failed");
-                    mycall.sendPostponeResult(new Boolean(false));
+                    mycall.sendCallBackWithError(e.getMessage());
                     e.printStackTrace();
                 }
             });
