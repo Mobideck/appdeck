@@ -22,6 +22,9 @@
 @property (strong, nonatomic) NSMutableArray    *urlRegex;
 @property (strong, nonatomic) NSMutableArray    *urlRegexStrings;
 
+@property (strong, nonatomic) NSMutableArray    *notUrlRegex;
+@property (strong, nonatomic) NSMutableArray    *notUrlRegexStrings;
+
 @property (assign, nonatomic) long         ttl;
 
 @property (weak, nonatomic) LoaderViewController         *loader;
