@@ -10,7 +10,9 @@
         <item name="colorPrimary">@color/AppDeckColorTopBarBg1</item>
 
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/AppDeckColorTopBarBg2</item>
+        <item name="colorPrimaryDark">@color/AppDeckColorApp</item>
+
+        <item name="android:statusBarColor">@color/AppDeckColorApp</item>
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
