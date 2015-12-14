@@ -12,6 +12,4 @@
 
 @interface NetAvenirAdEngine : AppDeckAdEngine
 
-@property (strong, nonatomic) NSString *zid;
-
 @end
