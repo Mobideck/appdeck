@@ -60,6 +60,8 @@
 //#warning remove this
 //    self.isTestApp = NO;
 
+    shouldConfigureApp = YES;
+    
     //configure iRate
     [iRate sharedInstance].promptForNewVersionIfUserRated = YES;
     
@@ -383,7 +385,7 @@
         id day = [call.param objectForKey:@"day"];
         
         UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"AppDeck" delegate:nil cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
-        
+        action.actionSheetStyle = (self.loader.conf.icon_theme == IconThemeLight ? UIBarStyleDefault : UIBarStyleBlackOpaque);
         // init the date
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
@@ -543,9 +545,18 @@
 // call after json config is loaded
 -(void)configureApp
 {
-    [[Twitter sharedInstance] startWithConsumerKey:self.loader.conf.twitter_consumer_key consumerSecret:self.loader.conf.twitter_consumer_secret];
-    [Fabric with:@[[Twitter sharedInstance]]];
-    
+    if (shouldConfigureApp == YES)
+    {
+        if (self.loader.conf.twitter_consumer_key && self.loader.conf.twitter_consumer_secret &&
+            self.loader.conf.twitter_consumer_key.length > 0 && self.loader.conf.twitter_consumer_secret.length > 0)
+        {
+            [[Twitter sharedInstance] startWithConsumerKey:self.loader.conf.twitter_consumer_key consumerSecret:self.loader.conf.twitter_consumer_secret];
+            [Fabric with:@[[Twitter sharedInstance]]];
+        } else {
+            [Fabric with:@[[Twitter sharedInstance]]];
+        }
+    }
+    shouldConfigureApp = NO;
 }
 
 @end

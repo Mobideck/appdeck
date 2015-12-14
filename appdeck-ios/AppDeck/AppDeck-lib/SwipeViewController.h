@@ -45,4 +45,6 @@
 
 -(void)adjustFullScreen;
 
+-(void)executeJS:(NSString *)js;
+
 @end

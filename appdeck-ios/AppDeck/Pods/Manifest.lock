@@ -1,33 +1,35 @@
 PODS:
-  - Bolts (1.3.0):
-    - Bolts/AppLinks (= 1.3.0)
-    - Bolts/Tasks (= 1.3.0)
-  - Bolts/AppLinks (1.3.0):
+  - Bolts (1.4.0):
+    - Bolts/AppLinks (= 1.4.0)
+    - Bolts/Tasks (= 1.4.0)
+  - Bolts/AppLinks (1.4.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.3.0)
+  - Bolts/Tasks (1.4.0)
   - Crashlytics (3.3.4)
+  - ECSlidingViewController (2.0.3)
   - Fabric (1.5.5):
     - Fabric/Base (= 1.5.5)
   - Fabric/Base (1.5.5)
-  - FBAudienceNetwork (4.6.0)
-  - FBSDKCoreKit (4.6.0):
+  - FBAudienceNetwork (4.7.0)
+  - FBSDKCoreKit (4.7.0):
     - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.6.0)
-    - FBSDKCoreKit/no-arc (= 4.6.0)
-  - FBSDKCoreKit/arc (4.6.0):
+    - FBSDKCoreKit/arc (= 4.7.0)
+    - FBSDKCoreKit/no-arc (= 4.7.0)
+  - FBSDKCoreKit/arc (4.7.0):
     - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.6.0):
+  - FBSDKCoreKit/no-arc (4.7.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc
-  - FBSDKLoginKit (4.6.0):
+  - FBSDKLoginKit (4.7.0.1):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.6.0):
+  - FBSDKShareKit (4.7.0):
     - FBSDKCoreKit
-  - TwitterCore (1.11.4)
-  - TwitterKit (1.11.4)
+  - TwitterCore (1.12.0)
+  - TwitterKit (1.12.0)
 
 DEPENDENCIES:
   - Crashlytics
+  - ECSlidingViewController (from `https://github.com/mdekermadec/ECSlidingViewController.git`)
   - Fabric
   - FBAudienceNetwork
   - FBSDKCoreKit
@@ -36,15 +38,25 @@ DEPENDENCIES:
   - TwitterCore
   - TwitterKit
 
+EXTERNAL SOURCES:
+  ECSlidingViewController:
+    :git: https://github.com/mdekermadec/ECSlidingViewController.git
+
+CHECKOUT OPTIONS:
+  ECSlidingViewController:
+    :commit: de679d61b31b07b0fbe645acc951e57b9f579eee
+    :git: https://github.com/mdekermadec/ECSlidingViewController.git
+
 SPEC CHECKSUMS:
-  Bolts: 805a4a87413e49d4a0c2b7d469084cbc46b09342
+  Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   Crashlytics: 41c082440d2e14da444186fff65e79c0b4b35d4c
+  ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
   Fabric: 190bf1a6eb65f7500de1347d027d2e59a7e53db1
-  FBAudienceNetwork: a1bcfb9eb2fecfc5c2caa6e5cfd3331aa5ddda08
-  FBSDKCoreKit: 9954492d90c5fd65ae831395697a1660360d61f1
-  FBSDKLoginKit: 3d07febbfa884b9878cacba54f705bb41f07d4b6
-  FBSDKShareKit: f474f1123791e215d0299b98b3ee92ddd9187d86
-  TwitterCore: 171dbd2f8d55707397f461af5158d987fb34aa36
-  TwitterKit: e96cc8d3bd32d544b8bc6d1b2febf2eab1c5298e
+  FBAudienceNetwork: 4d69cb1946c3ba83491e2470ce288e559b7215bf
+  FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
+  FBSDKLoginKit: 028c5a205990441123764609fe795e65027c447f
+  FBSDKShareKit: 1f927bb05e4d36a99d5d5bf2f4b1ff294ce3e15c
+  TwitterCore: a1feadb793512962003ed2bad23e846c8daa4efd
+  TwitterKit: c27e7b997cd82d5c626fcfd8b1dead1e15dac7ca
 
 COCOAPODS: 0.38.2

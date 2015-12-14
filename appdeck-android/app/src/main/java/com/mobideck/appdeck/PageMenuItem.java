@@ -5,9 +5,15 @@ import java.net.URI;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -20,6 +26,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 
 public class PageMenuItem {
+
+	public static int transitionTime = 250;
 
 	public String title;
 	public String icon;
@@ -39,7 +47,10 @@ public class PageMenuItem {
 	AppDeckFragment fragment;
 	
 	BitmapDrawable draw;
-	
+
+	TransitionDrawable transitionDrawable;
+	BadgeDrawable badgeDrawable;
+
 	public PageMenuItem(String title, String icon, String type, String content, String badge, URI baseUrl, AppDeckFragment fragment)
 	{
 		appDeck = AppDeck.getInstance();
@@ -99,7 +110,14 @@ public class PageMenuItem {
 	public void cancel()
 	{
 		isValid = false;
+		if (transitionDrawable != null)
+            transitionDrawable.reverseTransition(transitionTime);
 	}
+/*
+    //public void disable()
+    {
+        isValid = false;
+    }*/
 	
 	public void setAvailable(boolean available)
 	{
@@ -140,37 +158,55 @@ public class PageMenuItem {
                 this.pageMenuItem.draw = new BitmapDrawable(loader.getResources(), loadedImage);
                 this.pageMenuItem.draw.setAntiAlias(true);
                 if (isValid) {
-		    		/*ImageView myView = new ImageView(fragment.loader);
-		    		myView.setImageDrawable(this.pageMenuItem.draw);
-		    		this.pageMenuItem.menuItem.setActionView(myView);*/
 
-                    BadgeDrawable badgeDrawable = new BadgeDrawable(loader);
+                    badgeDrawable = new BadgeDrawable(loader);
                     badgeDrawable.setCount(this.pageMenuItem.badge);
                     Drawable[] layers = new Drawable[2];
                     layers[0] = this.pageMenuItem.draw;
                     layers[1] = badgeDrawable;
                     LayerDrawable layer = new LayerDrawable(layers);
 
-                    this.pageMenuItem.menuItem.setIcon(layer);
+					Drawable[] Translayers = new Drawable[2];
+					Translayers[0] = new ColorDrawable(Color.TRANSPARENT);
+					Translayers[1] = layer;
 
-                    /*
-                    if (this.pageMenuItem.badge != null && this.pageMenuItem.badge.length() > 0)
-                        ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, Integer.parseInt(this.pageMenuItem.badge));
-                    else
-                        this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw);//.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-                    */
-
-                    //IconicsDrawable iconDraw = new IconicsDrawable(loader, icon)/*.color()*/.actionBar();
-
-
-                    //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.RED, 4);
+					transitionDrawable = new TransitionDrawable(Translayers);
+					transitionDrawable.setCrossFadeEnabled(true);
+					transitionDrawable.startTransition(transitionTime);
+                    this.pageMenuItem.menuItem.setIcon(transitionDrawable);
 
                     this.pageMenuItem.menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-                    //ActionItemBadge.update(loader, this.pageMenuItem.menuItem, this.pageMenuItem.draw, ActionItemBadge.BadgeStyles.DARK_GREY, 42);
+                    /*
+					// Setup animation
+					Animation fade_in = AnimationUtils.loadAnimation(loader, android.R.anim.fade_in);
+					fade_in.setInterpolator(new AccelerateInterpolator());
+					fade_in.setDuration(250);
+					*/
+
+					//item.setMenuItem(menu.add(0, i, 0, null));
+
+                    /*
+					View itemView = this.pageMenuItem.menuItem.getActionView();
+					if (itemView != null)
+						itemView.startAnimation(fade_in); // NPE HERE
+
+						*/
+
+
+
+/*					View itemView = this.pageMenuItem.menuItem.getActionView();
+					if (itemView != null) {
+						AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
+						animation.setDuration(250);
+						animation.setFillAfter(true);
+						animation.setInterpolator(new AccelerateInterpolator());
+						itemView.startAnimation(animation);
+					}*/
+
 
                     rotate();
-                    //this.pageMenuItem.menuItem.setIcon(this.pageMenuItem.draw).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
                 }
                 this.pageMenuItem.setAvailable(this.pageMenuItem.available);
             }
@@ -220,6 +256,8 @@ public class PageMenuItem {
     
     public void fire()
     {
+        if (isValid == false)
+            return;
     	if (rotateOnRefresh)
     	{
     		//rotate();

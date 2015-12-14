@@ -18,6 +18,7 @@ public class ScreenConfiguration {
 	public Boolean enableShare;
 	
 	public Pattern urlRegexp[];
+	public Pattern notUrlRegexp[];
 	
 	public int ttl;
 	
@@ -75,7 +76,11 @@ public class ScreenConfiguration {
 		{
 			urlRegexp = new Pattern[urlsNode.length()];
 			for (int i = 0; i < urlsNode.length(); i++) {
-				String regexp = urlsNode.getString(i);
+				String regexp = urlsNode.getString(i).trim();
+				if (regexp.isEmpty()) {
+                    urlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
+                    continue;
+                }
 				try {
 					Pattern p = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
 					urlRegexp[i] = p;
@@ -84,13 +89,41 @@ public class ScreenConfiguration {
 					urlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
 				}
 			}
-		}		
+		}
+		AppDeckJsonArray notUrlsNode = node.getArray("not_urls");
+		if (urlsNode.length() > 0)
+		{
+			notUrlRegexp = new Pattern[notUrlsNode.length()];
+			for (int i = 0; i < notUrlsNode.length(); i++) {
+				String regexp = notUrlsNode.getString(i).trim();
+                if (regexp.isEmpty()) {
+                    urlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
+                    continue;
+                }
+				try {
+					Pattern p = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
+					notUrlRegexp[i] = p;
+				} catch (PatternSyntaxException e) {
+					e.printStackTrace();
+					notUrlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
+				}
+			}
+		}
+
 	}
 	
 	public Boolean match(String absoluteURL)
 	{
 		if (urlRegexp == null)
 			return false;
+		if (notUrlRegexp != null) {
+			for (int i = 0; i < notUrlRegexp.length; i++) {
+				Pattern regexp = notUrlRegexp[i];
+				Matcher m = regexp.matcher(absoluteURL);
+				if (m.find())
+					return false;
+			}
+		}
 		for (int i = 0; i < urlRegexp.length; i++) {
 			Pattern regexp = urlRegexp[i];
 			Matcher m = regexp.matcher(absoluteURL);

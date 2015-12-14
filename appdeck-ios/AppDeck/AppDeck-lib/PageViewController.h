@@ -73,6 +73,5 @@
 @property (strong, nonatomic)     AppDeckAdViewController   *bannerAd;
 @property (strong, nonatomic)     NSString                  *tagAd;
 
--(NSString *)executeJS:(NSString *)js;
 
 @end

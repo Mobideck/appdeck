@@ -9,5 +9,16 @@
 <!--     android:layout_width="match_parent" -->
 <!--     android:layout_height="match_parent" -->
 <!--     android:background="@color/purple_dark" /> -->
+<!--
+    <View
+        android:id="@+id/circualView"
+        android:layout_gravity="center"
+        android:layout_width="60dip"
+        android:layout_height="64dip"
+        android:background="@color/com_facebook_blue">
+
+
+    </View>-->
+
 
 </FrameLayout>

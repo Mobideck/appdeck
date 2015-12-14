@@ -2,13 +2,12 @@ package com.mobideck.appdeck;
 
 import java.io.File;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-import SevenZip.ArchiveExtractCallback;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -40,7 +39,9 @@ public class AppDeck {
     public static String appdeck_inject_js = "if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript'; scr.async = true; scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck.js'; scr.async = true; document.getElementsByTagName('head')[0].appendChild(scr); var result = true;} else { var result = false; }";
     //public static String appdeck_inject_js_inline = "javascript:" + appdeck_inject_js;
 
-    public static String error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;network error/&gt;</div>";
+    public static String error_html;
+
+//	public static String error_html_new = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>svg{bottom: 0; height: 150px; left: 0; margin: auto; position: absolute; top: 0; right: 0; width: 150px;}</style></head><body> <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" id=\"Layer_1\" x=\"0px\" y=\"0px\" width=\"512px\" height=\"441.078px\" viewBox=\"0 0 512 441.078\" enable-background=\"new 0 0 512 441.078\" xml:space=\"preserve\"><path d=\"M512,122.174c-9.88-7.479-108.315-87.975-255.994-87.975c-33.099,0-63.561,4.177-91.272,10.557l227.182,226.966L512,122.174 z M64.107,0l-28.04,28.4l45.196,45.195C34.199,94.902,5.166,118.324,0,122.281l255.785,318.69l0.221,0.106l0.22-0.214 l85.773-106.898l72.919,72.919l28.029-28.051L64.107,0z\" fill=\"#CD5C5C\"/></svg></body></style>";
 
 	public boolean noCache = false;
 	
@@ -82,9 +83,13 @@ public class AppDeck {
         return instance;
     }
 
+	public String userAgent;
+
     AppDeck(Context context, String app_conf_url)
     {
     	instance = this;
+
+		AppDeck.error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;"+context.getString(R.string.network_error)+"/&gt;</div></body></html>";
 
     	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB)
     		isLowSystem = true;
@@ -139,10 +144,12 @@ public class AppDeck {
     	imageLoaderDefaultOptions = getDisplayImageOptionsBuilder().build();    	
     	
     	ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(context);
-    	
+
+
+
     	builder.defaultDisplayImageOptions(imageLoaderDefaultOptions)
-    	.discCache(new UnlimitedDiscCache(new File(cache.getCachePath()),  new AppDeckCacheFileNameGenerator()))
-    	//.discCache(new TotalSizeLimitedDiscCache(new File(cache.getCachePath()), new AppDeckCacheFileNameGenerator(), 1024 * 1024 * 100)) // default    	
+    	.discCache(new UnlimitedDiskCache(new File(cache.getCachePath())))
+    	//.discCache(new TotalSizeLimitedDiscCache(new File(cache.getCachePath()), new AppDeckCacheFileNameGenerator(), 1024 * 1024 * 100)) // default
     	.imageDownloader(new AppDeckBaseImageDownloader(context))
     	.writeDebugLogs();
     	

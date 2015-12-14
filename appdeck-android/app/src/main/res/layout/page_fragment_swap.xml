@@ -10,8 +10,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background_holo_dark">
+    android:orientation="vertical">
 
 
 
@@ -23,8 +22,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/swipe"
-    android:visibility="invisible">
+    android:id="@+id/swipe">
 
 <!--    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -57,12 +55,14 @@
     
 </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleSmall"
+    <!--<ProgressBar
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/preLoadingIndicator"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:background="@color/AppDeckColorAccent" />-->
 
     <!-- <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
@@ -72,21 +72,13 @@
 
     </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
      -->
+    <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+        android:id="@+id/preLoadingIndicator"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:background="@color/AppDeckColorApp"
 
-<!--    <com.mopub.mobileads.MoPubView
-        android:id="@+id/bannerAdview"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|center"
-        />-->
-
-<!--    <com.google.android.gms.ads.AdView
-        android:id="@+id/bannerAdview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER">
-    </com.google.android.gms.ads.AdView>-->
+        />
 
 </FrameLayout>

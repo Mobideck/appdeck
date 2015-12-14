@@ -17,4 +17,5 @@ framework module FBAudienceNetwork {
     link framework "Security"
     link framework "StoreKit"
     link framework "UIKit"
+    link framework "WebKit"
 }

@@ -302,17 +302,17 @@
     if (self.view.bounds.size.width > self.view.bounds.size.height)
         screensize = CGSizeMake(screensize.height, screensize.width);
     
-#ifdef DEBUG_OUTPUT
+//#ifdef DEBUG_OUTPUT
     NSLog(@"app: %f~%f", screensize.width, screensize.height);
     NSLog(@"view: %fx%f - %f~%f", self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height);
     NSLog(@"scrollview: %fx%f - %f~%f", scrollView.frame.origin.x, scrollView.frame.origin.y, scrollView.frame.size.width, scrollView.frame.size.height);
-#endif
+//#endif
     
     [self checkButton];
     
     CGRect frame = self.view.bounds;
-    frame.origin.y = - (screensize.height - self.view.bounds.size.height);
-    frame.size.height = screensize.height;
+/*    frame.origin.y = - (screensize.height - self.view.bounds.size.height);
+    frame.size.height = screensize.height;*/
     
     //self.view.frame = frame;
 

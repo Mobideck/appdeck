@@ -36,7 +36,7 @@ typedef enum AdManagerEvent: int {
 @class EmbedResources;
 @class RemoteAppCache;
 @class MenuViewController;
-@class ECSlidingViewController;
+@class CustomECSlidingViewController;
 @class LoaderChildViewController;
 @class LoaderConfiguration;
 @class MobclixFullScreenAdViewController;
@@ -99,7 +99,7 @@ typedef enum AdManagerEvent: int {
 @property (assign, nonatomic) float width;
 @property (assign, nonatomic) float height;
 
-@property (strong, nonatomic) ECSlidingViewController *slidingViewController;
+@property (strong, nonatomic) CustomECSlidingViewController *slidingViewController;
 
 @property (strong, nonatomic) NSDictionary *launchOptions;
 
@@ -113,7 +113,11 @@ typedef enum AdManagerEvent: int {
 
 @property (assign, nonatomic) BOOL appRunInBackground;
 
+@property (assign, nonatomic) BOOL appDidLaunch;
+
 @property (strong, nonatomic)     AppDeckAdViewController   *interstitialAd;
+
+@property (strong, nonatomic)     id                        menuTransition;
 
 /*
 #if OS_OBJECT_USE_OBJC
@@ -144,9 +148,13 @@ typedef enum AdManagerEvent: int {
 
 -(LoaderChildViewController *)getChildViewControllerFromURL:(NSString *)pageUrlString type:(NSString *)type;
 
+-(void)topViewCenterMoved:(float)percentMoved;
+
 -(void)setFullScreen:(BOOL)fullScreen animation:(UIStatusBarAnimation)animation;
 
 -(void)loadConf;
+
+-(void)executeJS:(NSString *)js;
 
 -(BOOL)apiCall:(AppDeckApiCall *)call;
 

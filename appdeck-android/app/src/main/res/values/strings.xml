@@ -4,6 +4,8 @@
     <string name="action_settings">Settings</string>
     <string name="loading_video">Loading video…</string>
 
+    <string name="network_error">network error</string>
+
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
 

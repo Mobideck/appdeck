@@ -1,6 +1,9 @@
 package com.mobideck.appdeck;
 
 import com.crashlytics.android.Crashlytics;
+
+import hotchemi.android.rate.AppRate;
+import hotchemi.android.rate.OnClickButtonListener;
 import io.fabric.sdk.android.Fabric;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,7 +26,11 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.http.Header;
+import cz.msebera.android.httpclient.Header;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.littleshoot.proxy.ChainedProxy;
 import org.littleshoot.proxy.ChainedProxyAdapter;
 import org.littleshoot.proxy.ChainedProxyManager;
@@ -31,6 +38,8 @@ import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
@@ -42,6 +51,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,7 +64,6 @@ import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -65,10 +75,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -79,15 +92,12 @@ import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.gc.materialdesign.views.ProgressBarDeterminate;
+import com.gc.materialdesign.views.ProgressBarIndeterminate;
+import com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-/*import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubInterstitial;*/
-import com.mopub.common.MoPub;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -99,24 +109,10 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
-/*
-import com.widespace.AdInfo.AdType;
-import com.widespace.AdSpace;
-import com.widespace.adspace.PrefetchStatus;
-import com.widespace.exception.ExceptionTypes;
-import com.widespace.interfaces.AdErrorEventListener;
-import com.widespace.interfaces.AdEventListener;
-*/
 import io.netty.handler.codec.http.HttpRequest;
 
-public class Loader extends ActionBarActivity /*implements MoPubInterstitial.InterstitialAdListener*/ {
+public class Loader extends AppCompatActivity {
 
-/*
-	// widespace
-    private static final String SPLASH_SID = "92a487d3-3bc5-4bbe-bdb0-efe6bffe64f3";
-    private AdSpace adSpaceSplash;
-	private AdSpace adSpacePanorama;
-*/
 	public final static String TAG = "LOADER";
 	public final static String JSON_URL = "com.mobideck.appdeck.JSON_URL";
 	
@@ -136,8 +132,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
     private String alternativeBootstrapURL = null;
 
-    //private MoPubInterstitial mInterstitial = null;
-
     public AppDeckAdManager adManager;
 
 	protected AppDeck appDeck;
@@ -155,17 +149,14 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     public View nonVideoLayout;
     public ViewGroup videoLayout;
 
-	//private jProxy jp;
 	private HttpProxyServerBootstrap proxyServerBootstrap;
 
-    //SmoothProgressBar mProgressBar;
-    //ProgressBarIndeterminateDeterminate mProgressBar;
-    ProgressBar mProgressBar;
+    ProgressBarDeterminate mProgressBarDeterminate;
+    ProgressBarIndeterminate mProgressBarIndeterminate;
 
     Toolbar mToolbar;
 
     private boolean historyInjected = false;
-    //public ArrayList<String> historyUrls = new ArrayList<String>();
     public List<String> historyUrls = new ArrayList<String>();
 
     public boolean willShowActivity = false;
@@ -178,28 +169,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 	@SuppressWarnings("unused")
 	private GoogleCloudMessagingHelper gcmHelper;
     private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
-	/*
-	private int mProgress = 100;
-	private int mTargetProgress = 0;
-	
-    Handler mHandler = new Handler();
-    Runnable mProgressRunner = new Runnable() {
-        @Override
-        public void run() {
-                    	
-        	if (mProgress < mTargetProgress)
-        		mProgress += 5;
-        	
-            //Normalize our progress along the progress bar's scale
-            int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * mProgress;
-            //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
-            setSupportProgress(progress);
-            //setSupportSecondaryProgress((Window.PROGRESS_END - Window.PROGRESS_START) / 100 * 75);
-            if (mProgress < 100) {
-                mHandler.postDelayed(mProgressRunner, 100);
-            }
-        }
-    };	*/
     
     protected void onCreatePass(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -223,8 +192,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
                 ) {
             TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
-            //Fabric.with(app, crashlytics, new TwitterCore(authConfig), new MoPub());
-            Fabric.with(app, crashlytics, new TwitterCore(authConfig));
+            Fabric.with(app, crashlytics, new Twitter(authConfig));
             mTwitterAuthClient = new TwitterAuthClient();
         } else {
             Fabric.with(app, crashlytics);
@@ -257,7 +225,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
             e.printStackTrace();
         }
 
-
     	this.proxyHost = "127.0.0.1";
     	
     	boolean isAvailable = false;
@@ -272,7 +239,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         Log.i(TAG, "filter registered at @" + this.proxyPort);
 
-        enableProxy();
+        //enableProxy();
 
     	CacheFiltersSource filtersSource = new CacheFiltersSource();
 
@@ -319,11 +286,33 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
 
-        mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+        mProgressBarDeterminate = (ProgressBarDeterminate)findViewById(R.id.progressBarDeterminate);
+        mProgressBarDeterminate.setMin(0);
+        mProgressBarDeterminate.setMax(100);
+        mProgressBarIndeterminate = (ProgressBarIndeterminate)findViewById(R.id.progressBarIndeterminate);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {};
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                if (leftMenuWebView != null && drawerView == mDrawerLeftMenu)
+                    leftMenuWebView.ctl.sendJsEvent("disappear", "null");
+                if (rightMenuWebView != null && drawerView == mDrawerRightMenu)
+                    rightMenuWebView.ctl.sendJsEvent("disappear", "null");
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                if (leftMenuWebView != null && drawerView == mDrawerLeftMenu)
+                    leftMenuWebView.ctl.sendJsEvent("appear", "null");
+                if (rightMenuWebView != null && drawerView == mDrawerRightMenu)
+                    rightMenuWebView.ctl.sendJsEvent("appear", "null");
+            }
+        };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
@@ -371,6 +360,10 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         // configure action bar
         appDeck.actionBarHeight = getActionBarHeight();
+
+        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        upArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
+        mDrawerToggle.setHomeAsUpIndicator(upArrow);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
@@ -423,16 +416,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 }
             }
         });
-		
-		initUI();
 
         adManager = new AppDeckAdManager(this);
         adManager.showAds(AppDeckAdManager.EVENT_START);
-/*        mInterstitial = new MoPubInterstitial(this, adManager.mopubInterstitialId);
-        mInterstitial.setInterstitialAdListener(this);
-
-        if (adManager.shouldShowInterstitial())
-            mInterstitial.load();*/
 
 		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
         appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
@@ -445,18 +431,25 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 		else if (savedInstanceState == null)
 		{
 			loadRootPage(appDeck.config.bootstrapUrl.toString());
-            //loadRootPage("http://www.universfreebox.com.dev.dck.io/");
 		}
 
+        AppRate.with(this)
+                .setInstallDays(10) // default 10, 0 means install day.
+                .setLaunchTimes(10) // default 10
+                .setRemindInterval(1) // default 1
+                .setShowLaterButton(true) // default true
+                //.setDebug(true) // default false
+                .setOnClickButtonListener(new OnClickButtonListener() { // callback listener.
+                    @Override
+                    public void onClickButton(int which) {
+                        Log.d(Loader.class.getName()+" AppRater Click", Integer.toString(which));
+                    }
+                })
+                .monitor();
 
+        // Show a dialog if meets conditions
+        AppRate.showRateDialogIfMeetsConditions(this);
 
-
-        /*
-		// widespace
-		
-        // Let's listen to some events and run Splash Ad
-		initWideSpaceAds();		
-*/
     }
 
     @Override
@@ -465,113 +458,16 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (mDrawerToggle != null)
             mDrawerToggle.syncState();
     }
-/*
-	// widespace
-    private void initWideSpaceAds() {
-    	
-    	// Splash
 
-        // Please use Auto Update and Auto Start false for the splash ad;
-    	adSpaceSplash = new AdSpace(this, SPLASH_SID, false, false);
-    	
-    	adSpaceSplash.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
-        
-    	adSpaceSplash.setAdEventListener(new AdEventListener() {
+    public FrameLayout getBannerAdViewContainer()
+    {
+        return (FrameLayout)findViewById(R.id.bannerContainer);
+    }
+    public FrameLayout getInterstitialAdViewContainer()
+    {
+        return (FrameLayout)findViewById(R.id.app_container);
+    }
 
-			@Override
-			public void onAdClosed(AdSpace adSpace, AdType adType) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdClosing(AdSpace adSpace, AdType adType) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdLoaded(AdSpace adSpace, AdType adType) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdLoading(AdSpace adSpace) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onNoAdRecieved(AdSpace adSpace) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onPrefetchAd(AdSpace adSpace, PrefetchStatus prefetchStatus) {
-				// TODO Auto-generated method stub
-				adSpace.runAd();
-				
-			}
-
-			@Override
-			public void onAdDismissed(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdDismissing(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdPresented(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onAdPresenting(AdSpace arg0, boolean arg1, AdType arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-    });
-        
-    	adSpaceSplash.setAdErrorEventListener(adErrorListener);
-        
-    	// panorama
-
-    	//adSpacePanorama = (AdSpace) findViewById(R.id.adPanorama);
-    	//adSpacePanorama.setAdErrorEventListener(adErrorListener);
-
-    	
-        //adSpace.setAdEventListener(adEventListener);
-        //adSpace.setAdErrorEventListener(adErrorListener);
-        //adSpace.setAdAnimationEventListener(adAnimationListener);
-        //adSpace.setAdMediaEventListener(adMediaEventListener);
-        // It is better to pre-fetch the ad and then on the onPrefetchAd event
-        // call the runAd method of the adSpace. Please explore the advanced
-        // demo to see the varieties of implementations of Splash Ad.
-        // For this basic demo we are going to use runAd method.
-        //adSpace.runAd();
-    }	
-    
-    // Please implement this event listener while you are in development mode,
-    // so that you get notification if there is any errors.
-    private AdErrorEventListener adErrorListener = new AdErrorEventListener() {
-
-        @Override
-        public void onFailedWithError(Object sender, ExceptionTypes type, String message,
-                Exception exeception) {
-            Log.d(TAG, "onFailedWithError : error message # " + message);
-        }
-    };
-*/
 	boolean isForeground = true;
     @Override
     protected void onResume()
@@ -588,7 +484,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
-        enableProxy();
+        //enableProxy();
+        if (adManager != null)
+            adManager.onActivityResume();
     }
 
     @Override
@@ -606,9 +504,11 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         }
     	if (appDeck.noCache)
     		Utils.killApp(true);
-        disableProxy();
+        //disableProxy();
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
+        if (adManager != null)
+            adManager.onActivityPause();
     }
 
     @Override
@@ -616,7 +516,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     {
     	outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");    	
     	super.onSaveInstanceState(outState);
-
         SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
 
         // only keep maxHistoryUrlsSize URLS
@@ -629,6 +528,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         //in.add(String.valueOf(hs.size() + 1));
         prefs.edit().putStringSet("historyUrls", in).commit(); // brevity
 
+        if (adManager != null)
+            adManager.onActivitySaveInstanceState(outState);
+
         Log.i(TAG, "onSaveInstanceState");
     }
     
@@ -636,90 +538,18 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
       super.onRestoreInstanceState(savedInstanceState);
+      if (adManager != null)
+         adManager.onActivityRestoreInstanceState(savedInstanceState);
       Log.i(TAG, "onRestoreInstanceState");
     }
     
     @Override
     protected void onDestroy()
     {
-/*        if (mInterstitial != null)
-            mInterstitial.destroy();*/
     	super.onDestroy();
         isForeground = false;
         SmartWebViewFactory.onActivityDestroy(this);
     }    
-    /*
-    public void forceFullRedraw()
-    {
-		FrameLayout frameLayout = (FrameLayout)findViewById (R.id.loader_container);
-		if (frameLayout != null)
-		{
-			frameLayout.invalidate();
-			frameLayout.refreshDrawableState();
-			this.getWindow().getDecorView().invalidate();
-		}    	
-    }*/
-    
-    @SuppressWarnings("deprecation")
-	public void initUI()
-    {
-    	/*
-    	// enable hardware layer type
-    	slidingMenu.forceLayerType(View.LAYER_TYPE_HARDWARE);
-   	
-    	// for smartphone
-    	Display display = getWindowManager().getDefaultDisplay();
-    	float width = (float)display.getWidth();
-    	float height = (float)display.getHeight();
-    	float screen_width = (width > height ? height : width);
-    	float virtual_menu_width = appDeck.config.leftMenuWidth;
-    	if (virtual_menu_width > 280)
-    		virtual_menu_width = 280;
-    	if (virtual_menu_width < 0)
-    		virtual_menu_width = 0;
-    	float menu_width = 0;
-    	if (appDeck.isTablet)
-    	{
-    		float base_width = getResources().getDimension(R.dimen.slidingmenu_base_width);    		
-    		menu_width = virtual_menu_width * base_width / 280;
-    	} else {
-    		menu_width = screen_width * virtual_menu_width / (appDeck.isTablet ? 768 : 320);
-    	}
-    	
-    	//float density = getResources().getDisplayMetrics().density;
-    	//float width = density *  menu_width;
-    	Log.d("Loader", "virtual menu: " + appDeck.config.leftMenuWidth);
-    	Log.d("Loader", "screen_width: " + screen_width);
-    	Log.d("Loader", "menu width: " + menu_width);
-    	
-    	//slidingMenu.setSideNavigationWidth((int)menu_width);
-    	
-    	// test set in pixel directly
-    	float density = getResources().getDisplayMetrics().density;
-    	slidingMenu.setSideNavigationWidth((int)(appDeck.config.leftMenuWidth * density));
-    	//slidingMenu.setSideNavigationWidth(280);
-    	*/
-    	//slidingMenu.setBehindWidth((int)menu_width);
-
-    	//forceFullRedraw();
-    }
-
-    // arrow
-    public void setArrowEnabled(boolean enabled)
-    {
-        if (enabled) {
-
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            mDrawerToggle.syncState();
-
-            /*getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mDrawerToggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-        } else {
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-        }
-    }
 
     // Sliding Menu API
     
@@ -840,8 +670,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
        	//mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // icon on the left of logo
-        getSupportActionBar().setDisplayShowHomeEnabled(false); // make icon + logo + title clickable
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false); // icon on the left of logo
+        //getSupportActionBar().setDisplayShowHomeEnabled(false); // make icon + logo + title clickable
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false); // show icon on the left of logo
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
+        getSupportActionBar().setHomeButtonEnabled(true); // ???
+
 
 
     }
@@ -864,13 +699,58 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         else
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);*/
     }
-    
+
+    boolean menuArrowIsShown = false;
+    public void setMenuArrow(boolean show)
+    {
+        if (menuArrowIsShown == show)
+            return;
+        menuArrowIsShown = show;
+        float start = (show ? 0 : 1);
+        float end = (show ? 1 : 0);
+        ValueAnimator anim = ValueAnimator.ofFloat(start, end);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float slideOffset = (Float) valueAnimator.getAnimatedValue();
+                mDrawerToggle.onDrawerSlide(mDrawerLayout, slideOffset);
+            }
+        });
+        anim.setInterpolator(new DecelerateInterpolator());
+        // You can change this duration to more closely match that of the default animation.
+        anim.setDuration(500);
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (menuArrowIsShown == false)
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (menuArrowIsShown)
+                    mDrawerToggle.setDrawerIndicatorEnabled(false);
+                else
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        anim.start();
+    }
     
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-        initUI();
     }
     
     ArrayList<WeakReference<AppDeckFragment>> fragList = new ArrayList<WeakReference<AppDeckFragment>>();
@@ -942,34 +822,41 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     
     public void progressStart()
     {
-        setSupportProgress(0);
+        mProgressBarDeterminate.setVisibility(View.GONE);
+        mProgressBarIndeterminate.setVisibility(View.VISIBLE);
+        /*setSupportProgress(0);
         setSupportProgressBarVisibility(true);
         setSupportProgressBarIndeterminateVisibility(true);
-    	setSupportProgressBarIndeterminate(true);
-    	//mProgress = 100;
+    	setSupportProgressBarIndeterminate(true);*/
     }
     
     public void progressSet(int percent)
     {
+        mProgressBarDeterminate.setVisibility(View.VISIBLE);
+        mProgressBarIndeterminate.setVisibility(View.GONE);
+        mProgressBarDeterminate.setProgress(percent);
+/*
+
         if (percent < 25)
             return;
     	setSupportProgressBarIndeterminate(false);
-        //Normalize our progress along the progress bar's scale
-        int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * percent;
-        //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
-        setSupportProgress(percent);
+        //int progress = (Window.PROGRESS_END - Window.PROGRESS_START) / 100 * percent;
+        setSupportProgress(percent);*/
     }
     
     public void progressStop()
     {
+        mProgressBarDeterminate.setVisibility(View.GONE);
+        mProgressBarIndeterminate.setVisibility(View.GONE);
+        mProgressBarDeterminate.setProgress(0);
+        /*
         setSupportProgressBarVisibility(false);
         setSupportProgressBarIndeterminateVisibility(false);
     	setSupportProgressBarIndeterminate(false);
     	
         int progress = (Window.PROGRESS_END - Window.PROGRESS_START);
-        //setSupportProgressBarIndeterminate(true);// ProgressBarIndeterminate
         progress = 100;
-        setSupportProgress(progress);
+        setSupportProgress(progress);*/
         
     }
     
@@ -1028,6 +915,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		return;
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
     	pushFragment(fragment);
+        setMenuArrow(false);
         adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     }
 
@@ -1062,8 +950,21 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
             String host = uri.getHost();
             if (host != null && isSameDomain(host) == false)
             {
-                Intent i = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(i);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                // enable custom tab for chrome
+                String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
+                Bundle extras = new Bundle();
+                extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null/*sessionICustomTabsCallback.asBinder() Set to null for no session */);
+
+                String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
+                //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
+                //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
+                extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorApp);
+
+                intent.putExtras(extras);
+
+                startActivity(intent);
                 return -1;
             }
         }
@@ -1084,6 +985,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
         fragment.event = AppDeckAdManager.EVENT_PUSH;
         adManager.showAds(AppDeckAdManager.EVENT_PUSH);
+        setMenuArrow(true);
     	return pushFragment(fragment);
 
     }
@@ -1154,6 +1056,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     
     public int pushFragment(AppDeckFragment fragment)
     {
+        disableMenuItem();
         setSupportProgressBarVisibility(false);
 
     	FragmentManager fragmentManager = getSupportFragmentManager();
@@ -1175,10 +1078,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     		//fragmentTransaction.hide(oldFragment);
     		//fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
     		//fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    	}    	
-    	
-    	
-    	fragmentTransaction.add(R.id.loader_container, fragment, "AppDeckFragment");
+    	}
+
+        fragmentTransaction.add(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.replace(R.id.loader_container, fragment, "AppDeckFragment");
     	//fragmentTransaction.addToBackStack("AppDeckFragment");
 
@@ -1193,9 +1095,6 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	fragmentTransaction.commitAllowingStateLoss();
     	
         layoutSubViews();
-
-        //mDrawerToggle.setDrawerIndicatorEnabled(true);
-        //setArrowEnabled(oldFragment != null);
 
     	return 0;
     }
@@ -1247,6 +1146,13 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     	}
         //previous.event = AppDeckAdManager.EVENT_POP;
         adManager.showAds(AppDeckAdManager.EVENT_POP);
+
+        // check if we pop to root
+        previous = getPreviousAppDeckFragment(previous);
+        if (previous == null) {
+            setMenuArrow(false);
+        }
+
     	return true;
     }
 
@@ -1269,23 +1175,10 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
 
     public void layoutSubViews()
     {
-        /*
-    }
-        // widespace
-        if (adSpaceSplash != null)
-        {
-            adSpaceSplash.bringToFront();
-            adSpaceSplash.requestLayout();
-        }
-        if (adSpacePanorama != null)
-        {
-            adSpacePanorama.bringToFront();
-            adSpacePanorama.requestLayout();
-        }
-        */
-        if (mProgressBar != null)
-            mProgressBar.bringToFront();
-
+        if (mProgressBarDeterminate != null)
+            mProgressBarDeterminate.bringToFront();
+        if (mProgressBarIndeterminate != null)
+            mProgressBarIndeterminate.bringToFront();
     }
     
     public void reload()
@@ -1299,7 +1192,19 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         if (rightMenuWebView != null)
         	rightMenuWebView.ctl.reload();
     }
-    
+
+    public void evaluateJavascript(String js)
+    {
+        if (leftMenuWebView != null)
+            leftMenuWebView.ctl.evaluateJavascript(js, null);
+        if (rightMenuWebView != null)
+            rightMenuWebView.ctl.evaluateJavascript(js, null);
+        for(WeakReference<AppDeckFragment> ref : fragList) {
+            AppDeckFragment f = ref.get();
+            f.evaluateJavascript(js);
+        }
+    }
+
     public Boolean apiCall(AppDeckApiCall call)
 	{
         if (call.command.equalsIgnoreCase("ready")) {
@@ -1579,32 +1484,30 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                         public void onSuccess(LoginResult loginResult) {
                             // App code
                             Log.d(TAG, "facebook login ok");
-                            HashMap<String, String> result = new HashMap<String, String>() {
-                                {
-                                    put("year", "2005");
-                                    put("month", "10");
-                                    put("day", "today");
-                                }
-                            };
-                            //call.setResult(result);
-                            //call.sendPostponeResult(true);
-                            //mycall.sendCallbackWithResult("success", result);
-                            mycall.setResult(result);
-                            mycall.sendPostponeResult(true);
+
+                            JSONObject result = new JSONObject();
+                            try {
+                                result.put("appID", loginResult.getAccessToken().getApplicationId());
+                                result.put("token", loginResult.getAccessToken().getToken());
+                                result.put("userID", loginResult.getAccessToken().getUserId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            mycall.sendCallbackWithResult("success", result);
                         }
 
                         @Override
                         public void onCancel() {
                             // App code
                             Log.d(TAG, "facebook login cancel");
-                            mycall.sendPostponeResult(false);
+                            mycall.sendCallBackWithError("cancel");
                         }
 
                         @Override
                         public void onError(FacebookException exception) {
                             // App code
                             Log.d(TAG, "facebook login error");
-                            mycall.sendPostponeResult(false);
+                            mycall.sendCallBackWithError(exception.getMessage());
                         }
                     });
             call.postponeResult();
@@ -1624,7 +1527,9 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 return true;
             }
 
-            call.postponeResult();
+            //call.postponeResult();
+            call.setResultJSON("true");
+
             willShowActivity = true;
 
             final AppDeckApiCall mycall = call;
@@ -1634,25 +1539,23 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
                 public void success(final Result<TwitterSession> twitterSessionResult) {
                     // Success
                     Log.d(TAG, "Twitter login ok");
-                    HashMap<String, String> result = new HashMap<String, String>() {
-                        {
-                            put("userName", twitterSessionResult.data.getUserName());
-                            put("authToken", twitterSessionResult.data.getAuthToken().token);
-                            put("authTokenSecret", twitterSessionResult.data.getAuthToken().secret);
-                            put("userID", twitterSessionResult.data.getUserId() + "");
-                        }
-                    };
-                    //call.setResult(result);
-                    //call.sendPostponeResult(true);
-                    mycall.setResult(result);
-                    mycall.sendPostponeResult(true);
-                    //mycall.sendCallbackWithResult("success", result);
+
+                    JSONObject result = new JSONObject();
+                    try {
+                        result.put("userName", twitterSessionResult.data.getUserName());
+                        result.put("authToken", twitterSessionResult.data.getAuthToken().token);
+                        result.put("authTokenSecret", twitterSessionResult.data.getAuthToken().secret);
+                        result.put("userID", twitterSessionResult.data.getUserId() + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    mycall.sendCallbackWithResult("success", result);
                 }
 
                 @Override
                 public void failure(TwitterException e) {
                     Log.d(TAG, "twitter login failed");
-                    mycall.sendPostponeResult(false);
+                    mycall.sendCallBackWithError(e.getMessage());
                     e.printStackTrace();
                 }
             });
@@ -1766,33 +1669,79 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
        return actionBarHeight;
     }
 
-    
-    public void setMenuItems(PageMenuItem[] menuItems)
+    public void disableMenuItem()
     {
-    	if (menuItems != null)
-    		for (int i = 0; i < menuItems.length; i++) {
-    			PageMenuItem item = menuItems[i];
+        if (menuItems != null)
+            for (int i = 0; i < menuItems.length; i++) {
+                PageMenuItem item = menuItems[i];
+                item.cancel();
+            }
+    }
+    
+    public void setMenuItems(PageMenuItem[] newMenuItems)
+    {/*
+        // does new Menu is compatible with old menu ? (meaning we only remove or add things)
+        if (newMenuItems != null && menuItems != null && menu != null && newMenuItems.length > 0 && menuItems.length > 0) {
+            int newIdx = newMenuItems.length - 1;
+            int oldIdx = menuItems.length - 1;
+            PageMenuItem newItem = newMenuItems[newIdx];
+            PageMenuItem oldItem = menuItems[oldIdx];
+            if (newItem.icon.equalsIgnoreCase(oldItem.icon)) {
+                while (newIdx >= 0 && oldIdx >= 0) {
+                    newItem = newMenuItems[newIdx];
+                    oldItem = menuItems[oldIdx];
+
+                    if (!newItem.icon.equalsIgnoreCase(oldItem.icon))
+                        return;
+
+                    oldItem.title = newItem.title;
+                    oldItem.content = newItem.content;
+                    oldItem.badge = newItem.badge;
+                    oldItem.type = newItem.type;
+                    oldItem.badgeDrawable.setCount(oldItem.badge);
+                    Log.d("setMenuItems", newItem.icon);
+
+                    newIdx--;
+                    oldIdx--;
+                }
+                return;
+            }
+        }*/
+
+        // hide previous menu
+    	if (this.menuItems != null)
+    		for (int i = 0; i < this.menuItems.length; i++) {
+    			PageMenuItem item = this.menuItems[i];
     			item.cancel();
     		}
-    	this.menuItems = menuItems;
+    	this.menuItems = newMenuItems;
     	supportInvalidateOptionsMenu();
     }
 
     //ShareActionProvider mShareActionProvider;
 
+    private Menu menu = null;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
+        this.menu = menu;
+
     	if (menuItems == null)
     		return true;
-    	
-		for (int i = 0; i < menuItems.length; i++) {
+
+        if (menuItems.length == 0)
+            return true;
+
+        for (int i = 0; i < menuItems.length; i++) {
 			PageMenuItem item = menuItems[i];
-			
-			item.setMenuItem(menu.add("button"), this, menu);
-			
-			//item.setMenuItem(menu.add(0, i, 0, null));
+
+            MenuItem menuItem = menu.add("button");
+
+			item.setMenuItem(menuItem, this, menu);
+
 		}
+
 
 /*
         // Get the provider and hold onto it to set/change the share intent.
@@ -1810,28 +1759,39 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        mDrawerToggle.onOptionsItemSelected(item);
+        // topbar button
+        if (menuItems != null) {
+            for (int i = 0; i < menuItems.length; i++) {
+                PageMenuItem pageMenuItem = menuItems[i];
+                if (pageMenuItem.menuItem == item) {
+                    pageMenuItem.fire();
+                    return true;
+                }
+            }
+        }
 
-    	int idx = item.getItemId();
+        int idx = item.getItemId();
+
+        if (idx == android.R.id.home) {
+            if (isMenuOpen() == false) {
+                if (menuArrowIsShown) {
+                    // try to pop a fragment if possible
+                    if (popFragment()) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        if (mDrawerToggle.onOptionsItemSelected(item))
+            return true;
 
     	if (idx == android.R.id.home)
     	{
    			toggleMenu();
    			return true;	
     	}
-    	
-    	if (menuItems == null)
-    		return false;    	
 
-		for (int i = 0; i < menuItems.length; i++)
-		{
-			PageMenuItem pageMenuItem = menuItems[i];
-			if (pageMenuItem.menuItem == item)
-			{
-				pageMenuItem.fire();
-	    		return true;				
-			}
-		}
 		return super.onOptionsItemSelected(item);
     }    
 	
@@ -2207,76 +2167,47 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
     @Override
     public void setSupportProgressBarVisibility(boolean visibility)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        if (visibility)
-            mProgressBar.setVisibility(View.VISIBLE);
-        else
-            mProgressBar.setVisibility(View.GONE);
+        if (visibility) {
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            mProgressBarDeterminate.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            mProgressBarDeterminate.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void setSupportProgressBarIndeterminateVisibility(boolean visibility)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        //setSupportProgressBarVisibility(visibility);
-        //mProgressBar.setIndeterminate(visibility);
+        if (visibility) {
+            mProgressBarIndeterminate.setVisibility(View.VISIBLE);
+            mProgressBarDeterminate.setVisibility(View.GONE);
+        } else {
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            mProgressBarDeterminate.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void setSupportProgressBarIndeterminate(boolean indeterminate)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        mProgressBar.setIndeterminate(indeterminate);
-
-        //mProgressBar.setProgress();
+        mProgressBarDeterminate.setProgress(0);
     }
 
     @Override
     public void setSupportProgress(int progress)
     {
-        if (mProgressBar == null)
+        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        //mProgressBar.setIndeterminate(false);
-        mProgressBar.setProgress(progress);
+        mProgressBarDeterminate.setProgress(progress);
     }
-
-    /*
-    // Mopub
-
-    // InterstitialAdListener methods
-    @Override
-    public void onInterstitialLoaded(MoPubInterstitial interstitial) {
-        if (interstitial.isReady()) {
-            mInterstitial.show();
-        } else {
-            // Other code
-        }
-    }
-
-    @Override
-    public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
-        Log.d(TAG, "InterstitialFailed");
-    }
-
-    @Override
-    public void onInterstitialShown(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialShown");
-    }
-
-    @Override
-    public void onInterstitialClicked(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialClicked");
-    }
-
-    @Override
-    public void onInterstitialDismissed(MoPubInterstitial interstitial) {
-        Log.d(TAG, "onInterstitialDismissed");
-    }*/
-
-
+/*
     void enableProxy()
     {
         System.setProperty("http.proxyHost", this.proxyHost);
@@ -2284,7 +2215,7 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
         //System.setProperty("https.proxyHost", this.proxyHost);
         //System.setProperty("https.proxyPort", this.proxyPort + "");
         try {
-            //WebkitProxy3.setProxy(null, proxyHost, proxyPort, Application.class.getCanonicalName());
+            //WebkitProxy3.setProxy(this, new WebView(), proxyHost, proxyPort, Application.class.getCanonicalName());
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -2304,5 +2235,5 @@ public class Loader extends ActionBarActivity /*implements MoPubInterstitial.Int
             //System.setProperty("https.proxyHost", "");
             //System.setProperty("https.proxyPort", "");
         }
-    }
+    }*/
 }

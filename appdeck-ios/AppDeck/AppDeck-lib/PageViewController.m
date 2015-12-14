@@ -287,6 +287,7 @@
     // embed cache ?
     if ([self.loader.appDeck.cache requestIsInEmbedCache:[NSURLRequest requestWithURL:self.url]] == YES)
     {
+        self.loader.appDidLaunch = NO;
         shouldReloadInBackground = NO;
         shouldAnimatedBackgroundReload = NO;
         animated = NO;
@@ -311,7 +312,7 @@
         }];
     }
     // cache ?
-    else if ([self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
+    else if (self.loader.appDidLaunch == NO && [self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
     {
         cachePolicy = NSURLRequestReturnCacheDataElseLoad;
         if ([date compare:[NSDate dateWithTimeIntervalSinceNow:-self.screenConfiguration.ttl]] == NSOrderedAscending)
@@ -342,6 +343,7 @@
     }
     else
     {
+        self.loader.appDidLaunch = NO;
         [self.loader.log info:@"Load from network: %@", self.url.relativePath];
         NSLog(@"Load from network: %@", self.url.relativePath);
         self.loader.appIsBusy = YES;
@@ -601,13 +603,6 @@
 
 -(void)checkReloadContent:(id)origin
 {
-    if (shouldForceReloadInBackground == YES)
-    {
-        NSLog(@"checkReloadContent: forced");
-        shouldForceReloadInBackground = NO;
-        [self reLoadContent];
-        return;
-    }
     if (self.loader.appRunInBackground == YES)
     {
         NSLog(@"checkReloadContent: don't refresh as application is in background");
@@ -648,6 +643,17 @@
         return;
     }
 
+    if (shouldForceReloadInBackground == YES)
+    {
+        shouldForceReloadInBackground = NO;
+//        NSString *input = [[NSProcessInfo processInfo] globallyUniqueString];
+        NSString *ping = [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"app.healthCheck('ping')"];
+        if ([ping isEqualToString:@"ok:ping"] == NO) {
+            NSLog(@"checkReloadContent: forced, we try to ping page but it reply '%@' instead of pong", ping);
+            [self reLoadContent];
+            return;
+        }
+    }
     NSLog(@"checkReloadContent: don't Refresh as last update: %f seconds ago. Screen TTL: %ld seconds", time, self.screenConfiguration.ttl);
 }
 
@@ -774,7 +780,23 @@
 
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
-
+    if ([call.command isEqualToString:@"postmessage"])
+    {
+        NSString *js = [NSString stringWithFormat:@"try {app.receiveMessage(%@.param);} catch (e) {}", call.inputJSON];
+        [self.loader executeJS:js];
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"disable_pulltorefresh"])
+    {
+        [self disablePullToRefresh:contentCtl.webView];
+        return YES;
+    }
+    if ([call.command isEqualToString:@"enable_pulltorefresh"])
+    {
+        [self enablePullToRefresh:contentCtl.webView];
+        return YES;
+    }
     if ([call.command isEqualToString:@"nativead"])
     {
         NSString *divId = [NSString stringWithFormat:@"%@", [call.param objectForKey:@"id"]];

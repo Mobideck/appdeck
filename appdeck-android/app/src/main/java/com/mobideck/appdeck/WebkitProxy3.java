@@ -8,7 +8,7 @@ import android.os.Build;
 import android.util.Log;
 import android.webkit.WebView;
 
-import org.apache.http.HttpHost;
+import cz.msebera.android.httpclient.HttpHost;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -27,8 +27,6 @@ public class WebkitProxy3 {
     public static String LOG_TAG = "WebkitProxy3";
 
     public static boolean setProxy(WebView webview, String host, int port, String applicationClassName) {
-        if (true)
-            return true;
         // 3.2 (HC) or lower
         if (Build.VERSION.SDK_INT <= 13) {
             return setProxyUpToHC(webview, host, port);

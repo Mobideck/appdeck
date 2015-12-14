@@ -69,24 +69,40 @@ public class AppDeckApiCall {
 	
 	public void sendCallBackWithError(String error)
 	{
-        String[] params = new String[1];
-        params[0] = error;
-        sendCallbackWithResult("error", params);
+		JSONArray result = new JSONArray();
+		result.put(error);
+        sendCallbackWithResult("error", result);
 	}
-
+/*
     public void sendCallbackWithResult(String type, Object resultObj)
     {
-        Object[] params = new String[1];
+//		JSONArray result = new JSONArray();
+//		result.put(resultObj);
+//		resultJSON = result.toString();
+        Object[] params = new Object[1];
         params[0] = resultObj;
         sendCallbackWithResult(type, params);
-    }
+    }*/
 
-	public void sendCallbackWithResult(String type, Object[] results)
+	public void sendCallbackWithResult(String type, String result) {
+		JSONArray results = new JSONArray();
+		results.put(result);
+		sendCallbackWithResult(type, results);
+	}
+
+	public void sendCallbackWithResult(String type, JSONObject result) {
+		JSONArray results = new JSONArray();
+		results.put(result);
+		sendCallbackWithResult(type, results);
+	}
+
+
+	public void sendCallbackWithResult(String type, JSONArray results)
 	{
-        JSONArray results_json = new JSONArray();
+/*        JSONArray results_json = new JSONArray();
         for (int k = 0; k < results.length; k++)
-            results_json.put(results[k]);
-        String detail = "{\"type\": \""+type+"\", \"params\": "+results_json.toString()+"}";
+            results_json.put(results[k]);*/
+        String detail = "{\"type\": \""+type+"\", \"params\": "+results.toString()+"}";
         String js = "var evt = document.createEvent('Event');evt.initEvent('"+this.eventID+"',true,true); evt.detail = "+detail+"; document.dispatchEvent(evt);";
         this.smartWebView.evaluateJavascript(js, new ValueCallback<String>() {
                     @Override

@@ -58,6 +58,7 @@
     content = [[ManagedUIWebViewController alloc] initWithNibName:nil bundle:nil];
     content.delegate = self;
     [container addSubview:content.view];
+    [self addChildViewController:content];
     
 //    content.view.frame = self.view.frame;
     content.webView.scrollView.showsHorizontalScrollIndicator = NO;
@@ -168,6 +169,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSString *)executeJS:(NSString *)js
+{
+    return [content executeJS:js];
+}
+
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
     if ([call.command isEqualToString:@"load"])
@@ -189,40 +195,7 @@
     
     if (page.screenConfiguration.isPopUp == NO)
     {
-            [self.slidingViewController resetTopView];
-        
-/*        [self.loader.slidingViewController anchorTopViewTo:ECRight animations:nil onComplete:^{
-            //        CGRect frame = self.slidingViewController.topViewController.view.frame;
-            //        self.slidingViewController.topViewController = newTopViewController;
-            //        self.slidingViewController.topViewController.view.frame = frame;
-            //        [self.loader loadRootPage:request.URL.absoluteString];
-
-        }];*/
-        
-        
-/*        [self.loader.slidingViewController resetTopViewWithAnimations:^() {
-            
-            
-        }
-                                                           onComplete:^{*/
-            //        CGRect frame = self.slidingViewController.topViewController.view.frame;
-            //        self.slidingViewController.topViewController = newTopViewController;
-            //        self.slidingViewController.topViewController.view.frame = frame;
-            //        [self.loader loadRootPage:request.URL.absoluteString];
-        
-        
             //[self.slidingViewController resetTopView];
-
-        
-        //}];
-        /*
-        [self.loader.slidingViewController anchorTopViewOffScreenTo:ECRight animations:nil onComplete:^{
-            //        CGRect frame = self.slidingViewController.topViewController.view.frame;
-            //        self.slidingViewController.topViewController = newTopViewController;
-            //        self.slidingViewController.topViewController.view.frame = frame;
-            //        [self.loader loadRootPage:request.URL.absoluteString];
-            [self.slidingViewController resetTopView];
-        }];*/
     }
         
     return NO;    
@@ -258,9 +231,9 @@
 */
 #pragma mark - Rotate
 
--(void)viewWillLayoutSubviews
+-(void)viewDidLayoutSubviews
 {
-    [super viewWillLayoutSubviews];
+    [super viewDidLayoutSubviews];
 #ifdef DEBUG_OUTPUT
     NSLog(@"menu frame: %f - %f",  self.view.bounds.size.width, self.view.bounds.size.height);
 #endif

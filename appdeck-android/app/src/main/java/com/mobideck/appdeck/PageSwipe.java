@@ -32,8 +32,7 @@ public class PageSwipe extends AppDeckFragment {
 	public static final String TAG = "PageSwipe";
 	public static final String ARG_OBJECT = "object";
 	
-	 View adview;
-	 FrameLayout layout;
+	FrameLayout layout;
 	 
 	AppDeck appDeck;
 	
@@ -50,7 +49,9 @@ public class PageSwipe extends AppDeckFragment {
     ViewPagerFixed pager;
 	
 	public boolean ready = false;
-	
+
+	public View circularView;
+
 	public static PageSwipe newInstance(String absoluteURL)
 	{
 		PageSwipe pageSwipe = new PageSwipe();
@@ -97,24 +98,33 @@ public class PageSwipe extends AppDeckFragment {
     	adapter = new PageSwipeAdapter(getChildFragmentManager(), this);
     	pager.setAdapter(adapter);
 
-        pager.setOnPageChangeListener(new OnPageChangeListener() {
-			
+        pager.addOnPageChangeListener(new OnPageChangeListener() {
+
 			@Override
 			public void onPageSelected(int position) {
 				currentPageIdx = position;
 			}
-			
+
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+				if (position == 0 && previousPage != null)
+				{
+					previousPage.setIsOnScreen(true);
+				}
+				if (position == 1 && nextPage != null)
+				{
+					nextPage.setIsOnScreen(true);
+				}
 			}
-			
+
 			@Override
-			public void onPageScrollStateChanged(int state) {				
-	            // scroll just end, we check if we should update page
-	            if (state == ViewPager.SCROLL_STATE_IDLE) {
-	                // if only one page ... there is nothing to do
-	                if (adapter.getCount() <= 1)
-	                	return;
+			public void onPageScrollStateChanged(int state) {
+				// scroll just end, we check if we should update page
+				if (state == ViewPager.SCROLL_STATE_IDLE) {
+					// if only one page ... there is nothing to do
+					if (adapter.getCount() <= 1)
+						return;
 					int position = currentPageIdx;
 					Log.i("PageSwipe", "position " + position);
 					if (position == 0 && previousPage == null)
@@ -122,28 +132,25 @@ public class PageSwipe extends AppDeckFragment {
 					//if (position == 1)
 					//	return;
 					currentPage.setIsMain(false);
-					if (position == 1 && previousPage == null && nextPage != null)
-					{
+					if (position == 1 && previousPage == null && nextPage != null) {
 						previousPage = currentPage;
 						currentPage = nextPage;
 						nextPage = null;
 					}
-					if (position == 0)
-					{
+					if (position == 0) {
 						nextPage = currentPage;
 						currentPage = previousPage;
 						previousPage = null;
 					}
-					if (position == 2)
-					{
+					if (position == 2) {
 						previousPage = currentPage;
 						currentPage = nextPage;
-						nextPage = null;						
+						nextPage = null;
 					}
 					currentPage.setIsMain(true);
 					initPreviousNext();
 					adapter.notifyDataSetChanged();
-	            }
+				}
 			}
 		});    	
     	
@@ -161,72 +168,10 @@ public class PageSwipe extends AppDeckFragment {
 		webviewParams.gravity = Gravity.TOP | Gravity.CENTER; 
 		//webviewParams.weight = 1;	        
         layout.addView(pager, webviewParams);
-        
-		Activity activity = getActivity();
-		if (activity != null)
-		{				
 
-			/*
-			//adParams.addRule(LinearLayout.  ALIGN_PARENT_BOTTOM);
-			//adParams.addRule(LinearLayout.ALIGN_PARENT_CENTER);
-			adview = new MobclixMMABannerXLAdView(activity);
-			//adview .setVisibility(View.GONE);
-			adview.addMobclixAdViewListener(new MobclixAdViewListener() {
+		//circularView = layout.findViewById(R.id.circualView);
+		//layout.bringChildToFront(circularView);
 
-				@Override
-				public String keywords() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-
-				@Override
-				public void onAdClick(MobclixAdView arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onCustomAdTouchThrough(MobclixAdView arg0,
-						String arg1) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void onFailedLoad(MobclixAdView arg0, int arg1) {
-					// TODO Auto-generated method stub
-					adview = null;
-				}
-
-				@Override
-				public boolean onOpenAllocationLoad(MobclixAdView arg0, int arg1) {
-					// TODO Auto-generated method stub
-					return false;
-				}
-
-				@Override
-				public void onSuccessfulLoad(MobclixAdView arg0) {
-					// TODO Auto-generated method stub
-					//adview .setVisibility(View.VISIBLE);
-					LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-					//LinearLayout.LayoutParams adParams = new LinearLayout.LayoutParams(320, 50);
-					adParams.gravity = Gravity.BOTTOM | Gravity.CENTER;
-					adParams.weight = 0;
-					layout.addView(adview, adParams);
-				}
-
-				@Override
-				public String query() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				
-			});
-			
-			*/
-			//return adview;
-		}        
-        
     	return layout;
     }
     
@@ -302,18 +247,15 @@ public class PageSwipe extends AppDeckFragment {
     	super.onSaveInstanceState(outState);
     	Log.i(TAG, "onSaveInstanceState");
     }
-    
-    //public void onViewStateRestored (Bundle savedInstanceState)    
-    
-    /*
+
+/*
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState)
     {
       super.onRestoreInstanceState(savedInstanceState);
       Log.i(TAG, "onRestoreInstanceState");
-    }
-    */    
-    
+    }*/
+
 	@Override
 	public void onHiddenChanged(boolean hidden)
 	{
@@ -379,7 +321,6 @@ public class PageSwipe extends AppDeckFragment {
     	boolean shouldUpdate = false;    	
     	if (previousPage == null && currentPage.previousPageUrl != null && currentPage.previousPageUrl.isEmpty() == false)
     	{
-    		//previousPage = new PageFragment(currentPage.previousPageUrl);
     		previousPage = PageFragmentSwap.newInstance(currentPage.previousPageUrl);
 			previousPage.loader = this.loader;
     		previousPage.pageSwipe = this;
@@ -387,7 +328,6 @@ public class PageSwipe extends AppDeckFragment {
     	}
     	if (nextPage == null && currentPage.nextPageUrl != null && currentPage.nextPageUrl.isEmpty() == false)
     	{
-    		//nextPage = new PageFragment(currentPage.nextPageUrl);
     		nextPage = PageFragmentSwap.newInstance(currentPage.nextPageUrl);
 			nextPage.loader = this.loader;
     		nextPage.pageSwipe = this;
@@ -401,16 +341,6 @@ public class PageSwipe extends AppDeckFragment {
     	if (origin != currentPage)
     		return;
     	boolean shouldUpdate = false;
-/*    	if (previousPage != null && previousPage.currentPageUrl.equalsIgnoreCase(currentPage.previousPageUrl) == false && currentPage.previousPageUrl.isEmpty() == false)
-    	{
-    		previousPage = null;
-    		shouldUpdate = true;
-    	}
-    	if (nextPage != null && nextPage.currentPageUrl.equalsIgnoreCase(currentPage.nextPageUrl) == false && currentPage.nextPageUrl.isEmpty() == false)
-    	{
-    		nextPage = null;
-    		shouldUpdate = true;
-    	}*/
     	shouldUpdate = shouldUpdate || initPreviousNext();
     	if (shouldUpdate)
     	{
@@ -507,18 +437,7 @@ public class PageSwipe extends AppDeckFragment {
         
 		@Override
 		public int getCount() {
-			// if there is a previous page, we must disable sliding menu to be able to slide to it
-			
-			//if (currentPage.slidingEnabled == false)
-			
-			/*if (currentPage.slidingEnabled == false)
-				appDeck.loader.slidingMenu.setSlidingEnabled(false);
-			else if (previousPage == null && nextPage == null)
-    			appDeck.loader.slidingMenu.setSlidingEnabled(true);
-    		else
-    			appDeck.loader.slidingMenu.setSlidingEnabled(false);*/
             int count = (pageSwipe.currentPage != null ? 1 : 0)  + (pageSwipe.previousPage != null ? 1 : 0) + (pageSwipe.nextPage != null ? 1 : 0);
-            
             return count;
 		}
 
@@ -535,8 +454,7 @@ public class PageSwipe extends AppDeckFragment {
 			
 		}*/
 		
-	    public int getFragmentPosition (AppDeckFragment fragment) {        	
-
+	    public int getFragmentPosition (AppDeckFragment fragment) {
 	    	int position = 0;
         	
         	if (fragment == previousPage)
@@ -553,15 +471,11 @@ public class PageSwipe extends AppDeckFragment {
 
 		
 		@Override
-	    public int getItemPosition (Object object) {        	
-			
+	    public int getItemPosition (Object object) {
 			AppDeckFragment fragment = (AppDeckFragment)object;
 	    	int position = getFragmentPosition(fragment);
 	    	if (position == -1)
 	    		return POSITION_NONE;
-/*	    	//if (position == fragment.oldPosition)
-	    	//	return POSITION_UNCHANGED;
-	    	fragment.oldPosition = position;*/
 	    	return position;
 	    }
 				
@@ -589,6 +503,16 @@ public class PageSwipe extends AppDeckFragment {
             nextPage = (PageFragmentSwap)fm.getFragment(bundle, "nextPage");
 	    }	*/	
     }
-    
+
+	public String evaluateJavascript(String js)
+	{
+		if (previousPage != null)
+			previousPage.evaluateJavascript(js);
+		if (currentPage != null)
+			currentPage.evaluateJavascript(js);
+		if (nextPage != null)
+			nextPage.evaluateJavascript(js);
+		return "";
+	}
 }
 

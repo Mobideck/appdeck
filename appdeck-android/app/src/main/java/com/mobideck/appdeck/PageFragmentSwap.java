@@ -5,13 +5,8 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
+import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.mobideck.appdeck.CacheManager.CacheResult;
 
 //import com.mopub.mobileads.MoPubErrorCode;
@@ -29,18 +24,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.webkit.CookieSyncManager;
+import android.webkit.ValueCallback;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PageFragmentSwap extends AppDeckFragment {
 	
@@ -48,9 +43,6 @@ public class PageFragmentSwap extends AppDeckFragment {
 	
 	public PageSwipe pageSwipe;
 	
-	//private SmartWebViewCrossWalk pageWebView;
-	//private SmartWebViewCrossWalk pageWebViewAlt;
-
     private SmartWebView pageWebView;
     private SmartWebView pageWebViewAlt;
 
@@ -61,27 +53,18 @@ public class PageFragmentSwap extends AppDeckFragment {
 	private SwipeRefreshLayout swipeViewAlt;
 	
 	private long lastUrlLoad = 0;
-	
-	private FrameLayout wv_container;
 
-    private ProgressBar preLoadingIndicator;
+    private ProgressBarCircularIndeterminate preLoadingIndicator;
     private boolean isPreLoading = true;
-
-	//private MoPubView bannerAdView;
-    //MoPubBannerAdListener bannerAdViewListener;
-
-	//private AdView bannerAdView;
-    //private AdRequest bannerAdRequest;
-
-    //View adview;
-
-    private TaskScheduler adTimer;
 
 	public URI uri;
 	
 	private boolean shouldAutoReloadInbackground;
 
-    private HashMap<String, NativeAd> nativeAds = null;
+    private HashMap<String, AppDeckAdNative> nativeAds = null;
+
+	// loadPage not called
+	private boolean shouldCallLoadPage = false;
 
 	public static PageFragmentSwap newInstance(String absoluteURL)
 	{
@@ -115,7 +98,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
     	super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
+
         rootView = (FrameLayout)inflater.inflate(R.layout.page_fragment_swap, container, false);
         rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
@@ -125,22 +108,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 		}
         rootView.setLayoutTransition(lt);
 
-        //if (appDeck.config.app_background_color != null)
-        //    rootView.setBackground(appDeck.config.app_background_color.getDrawable());
+        preLoadingIndicator = (ProgressBarCircularIndeterminate)rootView.findViewById(R.id.preLoadingIndicator);
 
-        preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
-
-		//pageWebView = new SmartWebView(this);
-		pageWebView = SmartWebViewFactory.createSmartWebView(this);// new SmartWebViewCrossWalk(this);
-
-    	//pageWebViewAlt = new SmartWebView(this);
-    	pageWebViewAlt = SmartWebViewFactory.createSmartWebView(this);//new SmartWebViewCrossWalk(this);
+		pageWebView = SmartWebViewFactory.createSmartWebView(this);
+    	pageWebViewAlt = SmartWebViewFactory.createSmartWebView(this);
     			
-		mAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
+		mAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 				
         swipeView = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe);
-        //swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -151,22 +126,24 @@ public class PageFragmentSwap extends AppDeckFragment {
             }
         });
         swipeView.addView(pageWebView.view);
+        swipeView.setColorSchemeResources(R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg1, R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg2);
         
         swipeViewAlt = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeAlt);
-        //swipeViewAlt.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeViewAlt.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeViewAlt.setRefreshing(true);
-                swipeView.setRefreshing(true);
-                reloadInBackground();
-            }
-        });
+			@Override
+			public void onRefresh() {
+				swipeViewAlt.setRefreshing(true);
+				swipeView.setRefreshing(true);
+				reloadInBackground();
+			}
+		});
         swipeViewAlt.addView(pageWebViewAlt.view);
         swipeViewAlt.setVisibility(View.GONE);
+        swipeViewAlt.setColorSchemeResources(R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg1, R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg2);
         
         rootView.bringChildToFront(swipeView);
-        		
+        rootView.bringChildToFront(preLoadingIndicator);
+
         if (savedInstanceState != null)
         {
         	Log.i(TAG, "onCreateView with State");
@@ -181,125 +158,38 @@ public class PageFragmentSwap extends AppDeckFragment {
     		this.loader.setMenuItems(menuItems);
         	pageWebView.ctl.smartWebViewRestoreState(savedInstanceState);
         } else {
-        	loadPage(currentPageUrl);
-        	//pageWebView.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
-        	//pageWebViewAlt.load("blank", "<!DOCTYPE html><html><head><title></title></head><body></body></html>");
+			if (isMain)
+	        	loadPage(currentPageUrl);
+			else
+				shouldCallLoadPage = true;
         }
 
         mHandler = new Handler();
         mHandler.postDelayed(myTask, 150);
 
-        /*// MoPub
-        bannerAdViewListener = new MoPubBannerAdListener();
-        bannerAdView = (MoPubView)rootView.findViewById(R.id.bannerAdview);
-        bannerAdView.setAdUnitId(this.loader.adManager.mopubBannerId);
-        bannerAdView.setBannerAdListener(bannerAdViewListener);
-        bannerAdView.loadAd();*/
-
-        /*if (bannerAdView != null)
-            setBannerAdView(bannerAdView);*/
-
-        adTimer = new TaskScheduler();
-        adTimer.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                if (isMain == true && bannerAdView == null) {
-                    bannerAdView = loader.adManager.getBannerAd();
-                    if (bannerAdView != null)
-                        setBannerAdView(bannerAdView);
-                }
-            }
-        }, 1000);
-
         return rootView;
     }
 
+	public void setIsOnScreen(boolean isOnScreen) {
+		if (isOnScreen) {
+			if (shouldCallLoadPage)
+				loadPage(currentPageUrl);
+		} else {
+		}
+	}
 
     public void setIsMain(boolean isMain)
     {
         super.setIsMain(isMain);
         if (isMain) {
-            /*if (bannerAdView == null && loader != null) {
-                AdView adView = loader.adManager.getBannerAd();
-                if (adView != null) {
-                    this.bannerAdView = adView;
-                    if (rootView != null)
-                        setBannerAdView(this.bannerAdView);
-                }
-            }*/
+			if (shouldCallLoadPage)
+				loadPage(currentPageUrl);
+            else if (pageWebView != null)
+                pageWebView.ctl.sendJsEvent("appear", "null");
+        } else {
+            if (pageWebView != null)
+                pageWebView.ctl.sendJsEvent("disappear", "null");
         }
-    }
-
-    public void setBannerAdView(AdView adView)
-    {
-        bannerAdView.setAdListener(new AdListener() {
-
-            public static final String TAG = "PageFragmentSwapAds";
-
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                Log.d(TAG, "onAdLoaded");
-                if (bannerAdView != null)
-                    rootView.bringChildToFront(bannerAdView);
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-
-                if (errorCode == AdRequest.ERROR_CODE_INTERNAL_ERROR)
-                    Log.e(TAG, "onAdFailedToLoad: Internal Error");
-                else if (errorCode == AdRequest.ERROR_CODE_INVALID_REQUEST)
-                    Log.e(TAG, "onAdFailedToLoad: Invalid Request");
-                else if (errorCode == AdRequest.ERROR_CODE_NETWORK_ERROR)
-                    Log.e(TAG, "onAdFailedToLoad: Network Error");
-                else if (errorCode == AdRequest.ERROR_CODE_NO_FILL)
-                    Log.e(TAG, "onAdFailedToLoad: No Fill");
-                else
-                    Log.e(TAG, "onAdFailedToLoad: Unknow Error: " + errorCode);
-
-                if (bannerAdView != null) {
-                    rootView.removeView(bannerAdView);
-                    bannerAdView.destroy();
-                    bannerAdView = null;
-                }
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-                Log.d(TAG, "onAdOpened");
-                loader.willShowActivity = true;
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d(TAG, "onAdLeftApplication");
-                /*if (bannerAdView != null) {
-                    rootView.removeView(bannerAdView);
-                    bannerAdView.destroy();
-                    bannerAdView = null;
-                }*/
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when when the user is about to return
-                // to the app after tapping on an ad.
-                Log.d(TAG, "onAdClosed");
-
-            }
-        });
-
-
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER | Gravity.BOTTOM;
-        rootView.addView(bannerAdView, layoutParams);
-
-        rootView.bringChildToFront(bannerAdView);
     }
 
     private Handler mHandler;
@@ -331,9 +221,6 @@ public class PageFragmentSwap extends AppDeckFragment {
 		pageWebView.ctl.resume();
 		pageWebViewAlt.ctl.resume();
 
-        if (bannerAdView != null)
-            bannerAdView.resume();
-
     	long now = System.currentTimeMillis();
     	if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0)
     	{
@@ -353,18 +240,15 @@ public class PageFragmentSwap extends AppDeckFragment {
     @Override
     public void onPause() {
 		wasPaused = true;
-    	CookieSyncManager.getInstance().sync();
+        CookieSyncManager.getInstance().sync();
     	pageWebView.ctl.pause();
     	pageWebViewAlt.ctl.pause();
-    	if (bannerAdView != null)
-            bannerAdView.pause();
         super.onPause();
     };
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-    	super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     	if (pageWebView != null)
     		pageWebView.ctl.smartWebViewSaveState(outState);
     }
@@ -373,25 +257,12 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void onDestroyView()
     {
     	super.onDestroyView();
-        /*
-    	if (pageWebView != null)
-    		pageWebView.ctl.clean();
-    	if (pageWebViewAlt != null)
-    		pageWebViewAlt.ctl.clean();
-    		*/
         SmartWebViewFactory.recycleSmartWebView(pageWebView);
         SmartWebViewFactory.recycleSmartWebView(pageWebViewAlt);
         swipeView.removeAllViews();
         swipeViewAlt.removeAllViews();
         pageWebView = null;
         pageWebViewAlt = null;
-        if (bannerAdView != null) {
-            rootView.removeView(bannerAdView);
-            loader.adManager.recycleBannerAd(bannerAdView);
-            bannerAdView = null;
-        }
-        if (adTimer != null)
-            adTimer.removeCallbacksAndMessages(null);
     }
     
     @Override
@@ -428,8 +299,8 @@ public class PageFragmentSwap extends AppDeckFragment {
 			if (pageWebView != null && pageWebView.ctl != null)
 				pageWebView.ctl.loadUrl(absoluteURL);
 			return;
-		}
-		if (absoluteURL.startsWith("appdeckapi:refresh"))
+        }
+        if (absoluteURL.startsWith("appdeckapi:refresh"))
 		{
 			reloadInBackground();
 			return;
@@ -445,7 +316,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     }
     
 	public void loadPage(String absoluteUrl)
-	{		
+	{
+		shouldCallLoadPage = false;
 		currentPageUrl = absoluteUrl;
 		try {
 			uri = new URI(currentPageUrl);
@@ -473,8 +345,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 			
 			if (screenConfiguration.ttl > ((now - cacheResult.lastModified) / 1000))
 			{
-				Log.v(TAG, "Cache HIT SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified)/1000);				
-				//pageWebView.setForceCache(true);
+				Log.v(TAG, "Cache HIT SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified)/1000);
 				loadFromCache = true;
 			} else {
 				Log.v(TAG, "Cache HIT DEPRECATED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + "diff: " + (now - cacheResult.lastModified)/1000);
@@ -499,10 +370,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 		} else {
 			pageWebView.ctl.setForceCache(false);
 		}
-		
+
 		pageWebView.ctl.loadUrl(absoluteUrl);
 		lastUrlLoad = System.currentTimeMillis();
-		loader.invalidateOptionsMenu();
 	}
     public void progressStart(View origin)
     {
@@ -512,24 +382,27 @@ public class PageFragmentSwap extends AppDeckFragment {
     void hidePreloading()
     {
         preLoadingIndicator.setVisibility(View.GONE);
-        swipeView.setVisibility(View.VISIBLE);
-        swipeViewAlt.setVisibility(View.VISIBLE);
+        //swipeView.setVisibility(View.VISIBLE);
+        //swipeViewAlt.setVisibility(View.VISIBLE);
         isPreLoading = false;
     }
 
     public void progressSet(View origin, int percent)
     {
-        if (percent > 25 && isPreLoading /*&& loader.getPreviousAppDeckFragment(this.pageSwipe) == null*/)
+        if (percent > 25 && isPreLoading)
         {
             hidePreloading();
         }
-    	super.progressSet(origin, percent);
+        //progressStop(origin);
+        super.progressSet(origin, percent);
 
     }
     
     public void progressStop(View origin)
     {
     	super.progressStop(origin);
+
+        hidePreloading();
 
     	swipeView.setRefreshing(false);
     	swipeViewAlt.setRefreshing(false);
@@ -538,22 +411,23 @@ public class PageFragmentSwap extends AppDeckFragment {
 			Log.i(TAG, "+++ Reload In Background +++");
 			shouldAutoReloadInbackground = false;
 			reloadInBackground();
-		}/* else if (origin == pageWebView.view && this.event == AppDeckAdManager.EVENT_PUSH)
-            loader.adManager.showAds(AppDeckAdManager.EVENT_PUSH);*/
+		}
 
 		if (origin == pageWebViewAlt.view)
 			swapWebView();
-
-        if (bannerAdView != null)
-            rootView.bringChildToFront(bannerAdView);
-
 
     }
     
     public void progressFailed(View origin)
     {
     	super.progressFailed(origin);
-    	
+
+        hidePreloading();
+        swipeView.setRefreshing(false);
+        swipeViewAlt.setRefreshing(false);
+
+
+
 /*    	if (origin == pageWebView && pageWebViewReady == false)
     	{
     		pageWebViewReady = true;
@@ -571,21 +445,32 @@ public class PageFragmentSwap extends AppDeckFragment {
     	
     	if (origin == pageWebView.view)
     	{
-    		//pageWebView.load(uri.toString(), "Check Your Network ...");
-    		//Toast.makeText(origin.getContext(), "Check your network", Toast.LENGTH_LONG).show();    		
-    		pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
-    		
+            CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);
+
+            if (cacheResult.isInCache) {
+                swipeViewAlt.setVisibility(View.VISIBLE);
+                rootView.bringChildToFront(swipeViewAlt);
+                rootView.bringChildToFront(preLoadingIndicator);
+                pageWebViewAlt.ctl.setForceCache(true);
+                pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+            } else {
+                //pageWebView.ctl.stopLoading();
+                //pageWebView.view.setVisibility(View.INVISIBLE);
+                swipeViewAlt.setVisibility(View.VISIBLE);
+                rootView.bringChildToFront(swipeViewAlt);
+                rootView.bringChildToFront(preLoadingIndicator);
+                pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+                //pageWebViewAlt.ctl.loadDataWithBaseURL("file:///android_asset/", AppDeck.error_html, "text/html", "UTF-8", null);
+                //pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
+            }
     	}
-    	if (origin == pageWebViewAlt.view)
+    	else if (origin == pageWebViewAlt.view)
     	{
     		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
 			pageWebViewAlt.ctl.stopLoading();
     		//setVisibility(View.INVISIBLE);
     		reloadInProgress = false;
     	}
-
-        if (bannerAdView != null)
-            rootView.bringChildToFront(bannerAdView);
 
     }
 	
@@ -606,11 +491,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	pageWebViewAlt.ctl.setForceCache(false);
     	
     	rootView.bringChildToFront(swipeView);
-        //if (adview != null)
-    	//	rootView.bringChildToFront(adview);
-
-        if (bannerAdView != null)
-            rootView.bringChildToFront(bannerAdView);
+        rootView.bringChildToFront(preLoadingIndicator);
 
 //    	swipeViewAlt.setVisibility(View.VISIBLE);
     	
@@ -651,12 +532,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	swipeViewAlt.setAlpha(0f);
     	swipeViewAlt.setVisibility(View.VISIBLE);
     	rootView.bringChildToFront(swipeViewAlt);
-    	//if (adview != null)
-    	//	rootView.bringChildToFront(adview);
+        rootView.bringChildToFront(preLoadingIndicator);
 
-        if (bannerAdView != null)
-		    rootView.bringChildToFront(bannerAdView);
-    	
     	final Runnable r = new Runnable()
     	{
     	    public void run() 
@@ -693,12 +570,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	            	    	swipeViewAlt = tmp;
     	            	    	
     	            	    	rootView.bringChildToFront(swipeView);
-    	            	    	//if (adview != null)
-    	            	    	//	rootView.bringChildToFront(adview);
+                                rootView.bringChildToFront(preLoadingIndicator);
 
-                                if (bannerAdView != null)
-								    rootView.bringChildToFront(bannerAdView);
-    	            	    	    	            	    	
     	            	    	swapInProgress = false;
     	            	    	reloadInProgress = false;    	            	   
     	                    }
@@ -715,8 +588,17 @@ public class PageFragmentSwap extends AppDeckFragment {
     {
         return pageWebView.ctl.resolve(relativeUrl);
     }
-    
-	public boolean apiCall(final AppDeckApiCall call)
+
+    public String evaluateJavascript(String js)
+    {
+        if (pageWebView != null)
+            pageWebView.ctl.evaluateJavascript(js, null);
+        if (pageWebViewAlt != null)
+            pageWebViewAlt.ctl.evaluateJavascript(js, null);
+        return "";
+    }
+
+    public boolean apiCall(final AppDeckApiCall call)
 	{
         /*
         if (call.command.equalsIgnoreCase("share"))
@@ -766,20 +648,47 @@ public class PageFragmentSwap extends AppDeckFragment {
 			return true;
 		}
 
+        if (call.command.equalsIgnoreCase("postmessage"))
+        {
+            Log.i("API", uri.getPath()+" **POST MESSAGE**");
+
+            String js = "try {app.receiveMessage("+call.inputJSON+".param);} catch (e) {}";
+            this.loader.evaluateJavascript(js);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("disable_pulltorefresh"))
+        {
+            Log.i("API", uri.getPath()+" **DISABLE PULLTOREFRESH**");
+            this.swipeView.setEnabled(false);
+            this.swipeViewAlt.setEnabled(false);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("enable_pulltorefresh"))
+        {
+            Log.i("API", uri.getPath()+" **ENABLE PULLTOREFRESH**");
+            this.swipeView.setEnabled(true);
+            this.swipeViewAlt.setEnabled(true);
+            return true;
+        }
+
+
         if (call.command.equalsIgnoreCase("nativead"))
         {
             Log.i("API", uri.getPath()+" **NATIVE AD**");
 
             String divId = call.param.getString("id");
             if (nativeAds == null)
-                nativeAds = new HashMap<String, NativeAd>();
-            NativeAd nativeAd = nativeAds.get(divId);
+                nativeAds = new HashMap<String, AppDeckAdNative>();
+            AppDeckAdNative nativeAd = nativeAds.get(divId);
             if (nativeAd == null)
             {
                 nativeAd = loader.adManager.getNativeAd();//new NativeAd(loader);
                 nativeAds.put(divId, nativeAd);
             }
-            nativeAd.addApiCall(call);
+            if (nativeAd != null)
+                nativeAd.addApiCall(call);
             return true;
         }
 
@@ -788,7 +697,7 @@ public class PageFragmentSwap extends AppDeckFragment {
             Log.i("API", uri.getPath()+" **NATIVE AD CLICK**");
 
             String divId = call.param.getString("id");
-            NativeAd nativeAd = nativeAds.get(divId);
+            AppDeckAdNative nativeAd = nativeAds.get(divId);
             if (nativeAd != null)
             {
                 nativeAd.click(call);
@@ -967,15 +876,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 		                final int dayOfMonth) {
 		        	
 		        	Log.d("Date", "selected");
-		        	 HashMap<String,String> result = new HashMap<String, String>() {
-		        	     {
-		        	      put("year", String.valueOf(year));
-		        	      put("month", String.valueOf(monthOfYear + 1));
-		        	      put("day", String.valueOf(dayOfMonth));
-		        	     }
-		        	 };
-					//call.setResult(result);
-					//call.sendPostponeResult(true);
+					JSONObject result = new JSONObject();
+					try {
+						result.put("year", String.valueOf(year));
+						result.put("month", String.valueOf(monthOfYear + 1));
+						result.put("day", String.valueOf(dayOfMonth));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
                     call.sendCallbackWithResult("success", result);
 		        }
 		    };			

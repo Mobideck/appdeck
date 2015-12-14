@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action">Partager</string>
+    <string name="action_settings">Configuration</string>
+    <string name="cancel">Annuler</string>
+    <string name="close">Fermer</string>
+    <string name="config">Configurer</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_ok">Ok</string>
+    <string name="info">Info</string>
+    <string name="loading_video">Chargement de la vidéo…</string>
+    <string name="menu">Menu</string>
+    <string name="network_error">erreur réseau</string>
+    <string name="next">Suivant</string>
+    <string name="previous">Précédent</string>
+    <string name="refresh">Rafraichir</string>
+    <string name="search">Chercher</string>
+    <string name="user">Utilisateur</string>
+</resources>

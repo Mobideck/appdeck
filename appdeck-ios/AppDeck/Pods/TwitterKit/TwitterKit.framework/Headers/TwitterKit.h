@@ -30,8 +30,11 @@
 
 #import "Twitter.h"
 #import "TWTRAPIClient.h"
+#import "TWTRCardConfiguration.h"
+#import "TWTRComposerViewController.h"
 #import "TWTRCollectionTimelineDataSource.h"
 #import "TWTRComposer.h"
+#import "TWTRComposerTheme.h"
 #import "TWTRListTimelineDataSource.h"
 #import "TWTRLogInButton.h"
 #import "TWTROAuthSigning.h"

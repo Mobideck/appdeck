@@ -146,6 +146,17 @@
 
 #pragma mark - API
 
+-(void)executeJS:(NSString *)js
+{
+    if (self.previous)
+        [self.previous executeJS:js];
+    if (self.current)
+        [self.current executeJS:js];
+    if (self.next)
+        [self.next executeJS:js];
+}
+
+
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
     call.container = self;

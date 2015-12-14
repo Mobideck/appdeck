@@ -204,7 +204,7 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     self.webView.scrollView.showsVerticalScrollIndicator = YES;
     [self.webView.scrollView setDelaysContentTouches:NO];
     self.webView.scalesPageToFit = YES;
-    self.webView.mediaPlaybackRequiresUserAction = NO;
+    self.webView.mediaPlaybackRequiresUserAction = YES;
     
     if (appDeck.iosVersion >= 6.0)
     {
@@ -1162,13 +1162,13 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 
 #pragma mark - Rotate
 
--(void)viewWillLayoutSubviews
+-(void)viewDidLayoutSubviews
 {
-    [super viewWillLayoutSubviews];
+    [super viewDidLayoutSubviews];
 #ifdef DEBUG_OUTPUT
-    NSLog(@"ManagedWebViewFrame: %f - %f", self.view.frame.size.width, self.view.frame.size.height);
-    NSLog(@"ManagedWebViewBounds: %f - %f", self.view.bounds.size.width, self.view.bounds.size.height);
-#endif    
+    NSLog(@"%@: ManagedWebViewFrame: %f - %f", self.currentRequest.URL.relativePath, self.view.frame.size.width, self.view.frame.size.height);
+    NSLog(@"%@: ManagedWebViewBounds: %f - %f", self.currentRequest.URL.relativePath, self.view.bounds.size.width, self.view.bounds.size.height);
+#endif
     
     self.webView.frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height);
     

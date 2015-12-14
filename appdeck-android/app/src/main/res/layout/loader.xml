@@ -3,7 +3,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    android:id="@+id/app_container"
+    >
     <!-- View that will be hidden when video goes fullscreen -->
     <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v4.widget.DrawerLayout
+            <com.mobideck.appdeck.DrawerLayoutFixed
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/drawer_layout"
                 android:layout_width="match_parent"
@@ -38,12 +39,7 @@
                     android:id="@+id/loader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:animateLayoutChanges="true"
                     >
-<!--
-                    xmlns:widespace="http://schemas.android.com/apk/res/com.mobideck.appdeck"
-                    >
--->
                     <FrameLayout
                         android:id="@+id/loader_container"
                         android:layout_width="match_parent"
@@ -54,61 +50,29 @@
                         android:paddingRight="0dp"
                         android:paddingBottom="0dp">
                     </FrameLayout>
-<!--
-                     <com.widespace.AdSpace
-                        android:id="@+id/adTakeOver"
+
+                    <com.gc.materialdesign.views.ProgressBarIndeterminate
+                        android:id="@+id/progressBarIndeterminate"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
-                        widespace:autostart="true"
-                        widespace:autoupdate="true"
-                    />
+                        android:background="@color/AppDeckColorApp"
+                        android:visibility="gone"/>
 
-                    <com.widespace.AdSpace
-                        android:id="@+id/adPanorama"
+                    <com.gc.materialdesign.views.ProgressBarDeterminate
+                        android:id="@+id/progressBarDeterminate"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        widespace:sid="255c7215-97ee-443d-84f2-2869aeda316e"
-                        widespace:autostart="true"
-                        widespace:autoupdate="true"
-                        />-->
+                        android:background="@color/AppDeckColorApp"
+                        android:visibility="gone" />
 
-                    <!--<fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-                        android:id="@+id/progressBar"
-                        android:layout_width="match_parent"
+                    <FrameLayout
+                        android:id="@+id/bannerContainer"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/AppDeckProgressBar"
-                        android:indeterminate="true" />-->
+                        android:layout_gravity="bottom|center_horizontal"
+                    >
 
-                    <!--  -->
-
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-                        android:max="100"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:layout_marginTop="-6dp" />
-                    <!--
-                        android:layout_height="8dp"
-                        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
-                        android:minHeight="8dp"
-                        android:maxHeight="8dp"
-                        android:progress="50"
-
-                        android:padding="0dp"
-                        android:layout_margin="0dp"
-
-                        />-->
-
-        <!--            <com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate
-                        android:id="@+id/progressBar"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#1E88E5" />-->
-
+                    </FrameLayout>
 
                 </FrameLayout>
                 <!-- The navigation drawer -->
@@ -127,7 +91,7 @@
                     android:dividerHeight="0dp"
                     android:background="#111" />
 
-            </android.support.v4.widget.DrawerLayout>
+            </com.mobideck.appdeck.DrawerLayoutFixed>
 
         </FrameLayout>
 
@@ -135,20 +99,9 @@
 
     <!-- View where the video will be shown when video goes fullscreen -->
     <RelativeLayout
-    android:id="@+id/videoLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <!-- View that will be shown while the fullscreen video loads. For example you could include
-    a "Loading..." message. However, in this particular example this view is actually defined in
-    view_loading_video.xml and inflated programmatically in ExampleActivity.java. The reason for
-    this is to keep the main layout (this file) cleaner. -->
-    <!-- <View
-        android:id="@+id/videoLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="invisible" /> -->
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
     </RelativeLayout>
 </FrameLayout>

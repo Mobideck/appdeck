@@ -7,7 +7,7 @@
 //
 
 #import "LoaderViewController.h"
-#import "ECSlidingViewController/ECSlidingViewController.h"
+#import "CustomECSlidingViewController.h"
 #import "MenuViewController.h"
 #import "LoaderChildViewController.h"
 #import "RemoteAppCache.h"
@@ -47,6 +47,8 @@
 #import "NSDictionary+query.h"
 #import "RE2Regexp.h"
 
+#import "MEZoomAnimationController.h"
+
 @interface LoaderViewController ()
 
 @end
@@ -72,6 +74,8 @@
 /*    if (HACK_PUB_FULLSCREEN)
         [self setFullScreen:YES animation:NO];*/
 
+    self.appDidLaunch = YES;
+    
     [NSThread setThreadPriority:1.0];
     
     [self setupBackgroundMonitoring];
@@ -100,10 +104,7 @@
 
     backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
     backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth  | UIViewAutoresizingFlexibleHeight;
-    //backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
-    //backgroundImageView.autoresizesSubviews = YES;
     backgroundImageView.image = [UIImage imageNamed:launchImageName];
-    
     [self.view addSubview:backgroundImageView];
 
     overlay = [[UIView alloc] initWithFrame:self.view.bounds];
@@ -342,6 +343,7 @@
 -(void)loadAppConf:(NSDictionary *)result
 {
     [self clean];
+
     //self.appDeck.cache.alwaysCache = NO;
     @try {
         // store conf
@@ -349,6 +351,8 @@
         self.conf = [[LoaderConfiguration alloc] init];
         [self.conf loadWithURL:self.jsonUrl result:result loader:self];
 
+        [self.appDeck configureApp];
+        
         // debug
         if (self.conf.enable_debug)
             self.appDeck.enable_debug = YES;
@@ -597,9 +601,20 @@
     centerController = [[UIViewController alloc] init];
     centerController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
     centerController.view.backgroundColor = self.view.backgroundColor;
+
+    /*
+    self.closeMenuGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenuGesture:)];
+    self.closeMenuGestureRecognizer.numberOfTapsRequired = 1;
+    self.closeMenuGestureRecognizer.delegate = self;
+    self.closeMenuGestureRecognizer.enabled = YES;
+    [centerController.view addGestureRecognizer:self.closeMenuGestureRecognizer];
+    */
     
     // create navigation controller
     navController = [self createNavigationController];
+    
+
+    
     
     /*
     navController = [[CRNavigationController alloc] init];//initWithRootViewController:centerController];
@@ -654,39 +669,53 @@
     [centerController.view addSubview:navController.view];
         //navController.view.backgroundColor = self.view.backgroundColor;
     //
-    self.slidingViewController = [[ECSlidingViewController alloc] init];
-    __weak LoaderViewController *self_ = self;
-    self.slidingViewController.topViewCenterMoved = ^(float x){
-        [self_ topViewCenterMoved:x];
-    };
+    self.slidingViewController = [[CustomECSlidingViewController alloc] init];
+    self.slidingViewController.loader = self;
+    self.slidingViewController.underLeftViewController = leftController;
+    self.slidingViewController.underRightViewController = rightController;
+    self.slidingViewController.topViewController = centerController;
+    self.slidingViewController.view.backgroundColor = [UIColor blackColor];
+    self.slidingViewController.topViewAnchoredGesture = /*ECSlidingViewControllerAnchoredGesturePanning |*/
+                                                        ECSlidingViewControllerAnchoredGestureTapping;
+    
+/*    MEZoomAnimationController *zoom = [[MEZoomAnimationController alloc] init];
+    self.menuTransition = zoom;
+    self.slidingViewController.delegate = zoom;*/
+
+    /*
+    //TODO: restore
+    __weak __typeof__(self) weakSelf = self;
+    self.slidingViewController.topViewCenterMoved = ^(float x) {
+        if (weakSelf == nil)
+            return;
+        __typeof__(self) strongSelf = weakSelf;
+        [strongSelf topViewCenterMoved:x];
+    };*/
     [self registerECSlidingViewControllerNotification];
     self.slidingViewController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
-    //    self.slidingViewController.anchorLeftPeekAmount = 40.0;
-    //    self.slidingViewController.anchorRightPeekAmount = 40.0;
     self.slidingViewController.anchorRightRevealAmount = (self.conf.leftMenuWidth > 280 ? 280 : self.conf.leftMenuWidth);
     self.slidingViewController.anchorLeftRevealAmount = (self.conf.rightMenuWidth > 280 ? 280 : self.conf.rightMenuWidth);
 
-    self.slidingViewController.shouldAddPanGestureRecognizerToTopViewSnapshot = YES;
+    self.slidingViewController.underLeftViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
+    
+    self.slidingViewController.underRightViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
+    
+/*    self.slidingViewController.shouldAddPanGestureRecognizerToTopViewSnapshot = YES;
     self.slidingViewController.shouldAllowPanningPastAnchor = NO;
     if (self.appDeck.iosVersion >= 6.0)
         self.slidingViewController.shouldAllowUserInteractionsWhenAnchored = NO;
     else
         self.slidingViewController.shouldAllowUserInteractionsWhenAnchored = YES;
-    //self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
-    //self.slidingViewController.underRightWidthLayout = ECFixedRevealWidth;
-
-    //self.slidingViewController.underLeftWidthLayout = ECFullWidth;
-    //self.slidingViewController.underRightWidthLayout = ECFullWidth;
     self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
-    self.slidingViewController.underRightWidthLayout = ECFixedRevealWidth;
+    self.slidingViewController.underRightWidthLayout = ECFixedRevealWidth;*/
 
 
     //    [self.slidingViewController setAnchorRightRevealAmount:280.0f];
     
-    self.slidingViewController.underLeftViewController = leftController;
-    self.slidingViewController.underRightViewController = rightController;
-    self.slidingViewController.topViewController = centerController;
-   
+//    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
+//    self.slidingViewController.panGesture.delegate = self;
+    
+
     UIGestureRecognizer *panGesture = [self.slidingViewController panGesture];
     panGesture.delegate = self;
     [self.slidingViewController.view addGestureRecognizer:panGesture];
@@ -823,10 +852,11 @@
 
 #pragma mark - ECSlidingViewController Notification
 
--(void)topViewCenterMoved:(float)xPos
+-(void)topViewCenterMoved:(float)percentMoved
 {
     if (self.appDeck.iosVersion >= 7.0)
     {
+        /*
         CGFloat offsetX = (xPos - self.view.bounds.size.width/2);
         CGFloat alpha = 0;
         if (offsetX > 0)
@@ -835,7 +865,9 @@
             alpha = -offsetX / self.slidingViewController.anchorLeftRevealAmount;
         //NSLog(@"topViewCenterMoved: offset: %f - alpha: %f", offsetX, alpha);
         
-        fakeStatusBar.alpha = alpha;
+        fakeStatusBar.alpha = alpha;*/
+        
+        fakeStatusBar.alpha = percentMoved;
 
     }
 }
@@ -903,20 +935,6 @@
 
 -(void)registerECSlidingViewControllerNotification
 {
-/*    NSString *const ECSlidingViewUnderRightWillAppear    = @"ECSlidingViewUnderRightWillAppear";
-    NSString *const ECSlidingViewUnderLeftWillAppear     = @"ECSlidingViewUnderLeftWillAppear";
-    NSString *const ECSlidingViewUnderLeftWillDisappear  = @"ECSlidingViewUnderLeftWillDisappear";
-    NSString *const ECSlidingViewUnderRightWillDisappear = @"ECSlidingViewUnderRightWillDisappear";
-    NSString *const ECSlidingViewTopDidAnchorLeft        = @"ECSlidingViewTopDidAnchorLeft";
-    NSString *const ECSlidingViewTopDidAnchorRight       = @"ECSlidingViewTopDidAnchorRight";
-    NSString *const ECSlidingViewTopWillReset            = @"ECSlidingViewTopWillReset";
-    NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidReset";*/
-    
-/*    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
-                                                 name: ECSlidingViewUnderRightWillAppear object:self.slidingViewController];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
-                                                 name: ECSlidingViewUnderLeftWillAppear object:self.slidingViewController];*/
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
                                                  name: ECSlidingViewUnderLeftWillDisappear object:self.slidingViewController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
@@ -926,13 +944,6 @@
                                                  name: ECSlidingViewTopDidAnchorLeft object:self.slidingViewController];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
                                                  name: ECSlidingViewTopDidAnchorRight object:self.slidingViewController];
-/*    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
-                                                 name: ECSlidingViewTopWillReset object:self.slidingViewController];*/
-/*    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(ECSlidingViewControllerNotification:)
-                                                 name: ECSlidingViewTopDidReset object:self.slidingViewController];*/
-    
-    
-    
 }
 
 // When the movie is done, release the controller.
@@ -940,28 +951,32 @@
 {
     BOOL shouldHideFakeStatusBar = NO;
 
-//    NSLog(@"ECSlidingViewControllerNotification: %@ left: %d right: %d", aNotification.name);
+    NSLog(@"ECSlidingViewControllerNotification: %@", aNotification.name);
 
     if ([aNotification.name isEqualToString:ECSlidingViewTopDidAnchorRight])
     {
         self.leftMenuOpen = YES;
         [leftController isMain:YES];
+        //centerController.view.userInteractionEnabled = NO;
     }
     else if ([aNotification.name isEqualToString:ECSlidingViewTopDidAnchorLeft])
     {
         self.rightMenuOpen = YES;
         [rightController isMain:YES];
+        //centerController.view.userInteractionEnabled = NO;
     }
     else if ([aNotification.name isEqualToString:ECSlidingViewUnderLeftWillDisappear])
     {
         self.leftMenuOpen = NO;
         [leftController isMain:NO];
+        //centerController.view.userInteractionEnabled = YES;
         return;
     }
     else if ([aNotification.name isEqualToString:ECSlidingViewUnderRightWillDisappear])
     {
         self.rightMenuOpen = NO;
         [rightController isMain:NO];
+        //centerController.view.userInteractionEnabled = YES;
         return;
     }
     
@@ -972,18 +987,10 @@
 
     if (self.appDeck.iosVersion >= 7.0)
     {
-        
-        /*if ([aNotification.name isEqualToString:ECSlidingViewUnderLeftWillDisappear] ||
-            [aNotification.name isEqualToString:ECSlidingViewUnderRightWillDisappear] ||
-            [aNotification.name isEqualToString:ECSlidingViewTopDidReset])
-            shouldHideFakeStatusBar = YES;*/
-
-        if (self.slidingViewController.underLeftShowing || self.slidingViewController.underRightShowing)
+        if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredLeft || self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredRight)
             shouldHideFakeStatusBar = NO;
         else
             shouldHideFakeStatusBar = YES;
-        
-        //CGFloat alpha = fakeStatusBar.alpha;
         
         if ((shouldHideFakeStatusBar == YES && fakeStatusBar.alpha != 0.0) ||
             (shouldHideFakeStatusBar == NO && fakeStatusBar.alpha != 1.0))
@@ -1012,7 +1019,25 @@
 -(void)toggleMenu:(id)origin
 {
     //[self showStatusBarNotice:@"2:41 PM"];
-    [self.slidingViewController anchorTopViewTo:ECRight];
+    
+    ECSlidingViewControllerTopViewPosition position = self.slidingViewController.currentTopViewPosition;
+    
+    if (/*self.leftMenuOpen == NO && self.rightMenuOpen == NO*/self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered) {
+        [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
+            /*self.leftMenuOpen = YES;
+            [leftController isMain:YES];
+            self.rightMenuOpen = NO;
+            [leftController isMain:NO];*/
+        }];
+
+    } else {
+        [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+            /*self.leftMenuOpen = NO;
+            [leftController isMain:NO];
+            self.rightMenuOpen = NO;
+            [leftController isMain:NO];*/
+        }];
+    }
 }
 
 -(void)closePopUp:(id)origin
@@ -1165,11 +1190,6 @@
     
     navController.isAnimating = YES;
     
-    //LoaderChildViewController    *old_page = ((SwipeViewController *)navController.topViewController).current;
-    
-    // check if there is a loading in progress
-    
-    
     // if there is a popup, cancel current popup first
     if (popUp != nil)
     {
@@ -1188,19 +1208,11 @@
     // page already loaded ?
     BOOL animated = NO;
     
-    /*if (popup != LoaderPopUpNo && (page.screenConfiguration.isPopUp == YES || popup == LoaderPopUpYes))
-    {
-        self.forceStatusBarHidden = YES;
-    }*/
-    
     SwipeViewController *container = [[SwipeViewController alloc] initWithNibName:nil bundle:nil];
     container.current = page;
-    //page.swipeContainer = container;
     
     if (page.screenConfiguration.title != nil)
         container.title = page.screenConfiguration.title;
-/*    else
-        container.title = self.conf.title;*/
     
     if (page.screenConfiguration.logo && ![page.screenConfiguration.logo isEqualToString:@""])
     {
@@ -1208,14 +1220,11 @@
     }
     else if (self.conf.logo)
     {
-        UIImageView *logoImage = [[UIImageView alloc] initWithImage:self.conf.logo.image];//[UIImageView imageViewFromURL:[NSURL URLWithString:self.conf.logoUrl relativeToURL:self.url] height:44];
-
-        //NSLog(@"view: %fx%f - image %fx%f", logoImage.frame.size.width, logoImage.frame.size.height, self.conf.logo.image.size.width, self.conf.logo.image.size.height);
+        UIImageView *logoImage = [[UIImageView alloc] initWithImage:self.conf.logo.image];
+        
         logoImage.contentMode = UIViewContentModeScaleAspectFit;
         logoImage.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         container.navigationItem.titleView = logoImage;
-        //[container.navigationItem.titleView.superview setNeedsDisplay];
-        //[container.navigationItem.titleView.superview layoutSubviews];
     }
     
     if (glLog && NO)
@@ -1228,9 +1237,6 @@
     
     if (popup != LoaderPopUpNo && (page.screenConfiguration.isPopUp == YES || popup == LoaderPopUpYes))
     {
-/*        if (popUp)
-            [self closePopUp:page];*/
-        
         page.isPopUp = YES;
         
         void (^popupcompletion)(void) = ^{
@@ -1240,8 +1246,6 @@
             popUp.view.frame = [UIApplication sharedApplication].keyWindow.frame;
             
             UIBarButtonItem* closeButton = [self barButtonItemWithImage:self.conf.icon_close.image andAction:@selector(closePopUp:)];
-            
-            //UIBarButtonItem* closeButton = [[UIBarButtonItem alloc] initWithTitle:@"close" style:UIBarButtonItemStylePlain target:self action:@selector(closePopUp:)];
             popUp.topViewController.navigationItem.leftBarButtonItem = closeButton;
             
             [navController presentViewController:popUp animated:YES completion:^{
@@ -1253,12 +1257,15 @@
                 [UIView animateWithDuration:0.33 animations:^{
                     [self setNeedsStatusBarAppearanceUpdate];
                 }];
-            
-            //if (self.appDeck.iosVersion >= 7.0)
-            //    [self setNeedsStatusBarAppearanceUpdate];
-        };        
+        };
         
-        [self.slidingViewController resetTopView];
+/*        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
+            [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+                self.leftMenuOpen = NO;
+                [leftController isMain:NO];
+                self.rightMenuOpen = NO;
+                [leftController isMain:NO];
+            }];*/
         
         if (popUp != nil)
         {
@@ -1269,111 +1276,86 @@
             popupcompletion();
         }
         self.forceStatusBarHidden = NO;
+        
+        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
+        {
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
+                /*self.leftMenuOpen = NO;
+                [leftController isMain:NO];
+                self.rightMenuOpen = NO;
+                [leftController isMain:NO];*/
+            }];
+        }
         return page;
     }
     
     if (root)
     {
-        NSArray *ctls = [NSArray arrayWithObject:container];
-//        NSArray *ctls = [NSArray arrayWithObject:page];
-        [navController setViewControllers:ctls];
+
         
-        if (leftController)
+        ECSlidingViewControllerTopViewPosition position = self.slidingViewController.currentTopViewPosition;
+        
+        if (position != ECSlidingViewControllerTopViewPositionCentered)
         {
-/*
-            //            UIButton *button = [UIButton buttonFromURL:[NSURL URLWithString:self.conf.url_icon_menu relativeToURL:self.url] height:44];
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-            button.contentMode = UIViewContentModeScaleAspectFit;
-            //button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
+                NSArray *ctls = [NSArray arrayWithObject:container];
+                [navController setViewControllers:ctls];
+                
+                if (leftController)
+                {
+                    navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
+                    
+                }
+                [navController setNavigationBarHidden:NO animated:NO];
+                
+                if ([page isKindOfClass:[PageViewController class]])
+                    [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
+                //animated = NO;
+            }];
+        } else {
+            NSArray *ctls = [NSArray arrayWithObject:container];
+            [navController setViewControllers:ctls];
             
-//            [button setBackgroundImage:self.conf.icon_menu.image forState:UIControlStateNormal];
-            [button setImage:self.conf.icon_menu.image forState:UIControlStateNormal];
+            if (leftController)
+            {
+                navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
+                
+            }
+            [navController setNavigationBarHidden:NO animated:NO];
             
-            [button setFrame:CGRectMake(0, 0, self.conf.icon_menu.image.size.width, self.conf.icon_menu.image.size.height)];
-            [button setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
-            
-            [button addTarget:self action:@selector(toggleMenu:) forControlEvents:UIControlEventTouchUpInside];
-            navController.topViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];*/
-            
-            navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
-
+            if ([page isKindOfClass:[PageViewController class]])
+                [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
+            //animated = NO;
         }
-        [navController setNavigationBarHidden:NO animated:NO];
-        
-        
-        //[page playPopUpAdVideo];
-        if ([page isKindOfClass:[PageViewController class]])
-            [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
-     /*
-        UINavigationController *newNavController = [[UINavigationController alloc] init];//initWithRootViewController:centerController];
-        newNavController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
-        newNavController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-        newNavController.delegate = self;
-
-        NSArray *ctls = [NSArray arrayWithObject:container];
-        [newNavController setViewControllers:ctls];
-        
-        if (leftController)
-        {
-//            UIButton *button = [UIButton buttonFromURL:[NSURL URLWithString:self.conf.url_icon_menu relativeToURL:self.url] height:44];
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-            [button setBackgroundImage:self.conf.icon_menu.image forState:UIControlStateNormal];
-            [button setFrame:CGRectMake(0, 0, self.conf.icon_menu.image.size.width, self.conf.icon_menu.image.size.height)];
-
-            [button addTarget:self action:@selector(toggleMenu:) forControlEvents:UIControlEventTouchUpInside];
-            newNavController.topViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-        }
-        [newNavController setNavigationBarHidden:NO animated:NO];
-
-        [centerController.view addSubview:newNavController.view];
-        [centerController addChildViewController:newNavController];
-        
-        [centerController transitionFromViewController:navController toViewController:newNavController duration:1.0 options:UIViewAnimationOptionCurveEaseIn|UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            
-        } completion:^(BOOL finished) {
-            [navController.view removeFromSuperview];
-            [navController removeFromParentViewController];
-            navController = newNavController;
-            //[centerController.view addSubview:navController.view];
-            //[centerController addChildViewController:navController];
-        }];
-        */
-        animated = NO;
     } else {
         BOOL same = NO;
-/*        if ([old_page.url.host isEqualToString:page.url.host])
-        {
-            if ([old_page.url.path isEqualToString:page.url.path])
-                same = YES;
-        }*/
+
         if (same == YES)
         {
             NSMutableArray *viewControllers = [navController.viewControllers mutableCopy];
             [viewControllers removeLastObject];
             [viewControllers addObject:page];
-            [navController setViewControllers:viewControllers animated:YES];
+            [navController setViewControllers:viewControllers animated:NO];
         } else {
             [navController pushViewController:container animated:YES];
-            //[page playAdVideo];
             if ([page isKindOfClass:[PageViewController class]])
                 [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventPush];
         }
+        
+/*        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
+        {
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
+                self.leftMenuOpen = NO;
+                [leftController isMain:NO];
+                self.rightMenuOpen = NO;
+                [leftController isMain:NO];
+            }];
+        }*/
     }
    
 
     if (animated)
     {
-        /*
-        [UIView transitionFromView:old_page.view
-                            toView:page.view
-                          duration:0.125
-                           options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionTransitionCrossDissolve
-         | UIViewAnimationOptionAllowUserInteraction
-                        completion:^(BOOL finished){
-
-                        }];*/
         page.view.alpha = 0;
         [UIView animateWithDuration:0.5
                          animations:^{
@@ -1389,7 +1371,7 @@
 }
 
 -(LoaderChildViewController *)loadRootPage:(NSString *)pageUrlString
-{
+{   
     return [self loadPage:pageUrlString root:YES popup:LoaderPopUpDefault];
 }
 
@@ -1397,6 +1379,22 @@
 {
     return [self loadPage:pageUrlString root:NO popup:LoaderPopUpDefault];
 }
+
+-(void)executeJS:(NSString *)js
+{
+    [leftController executeJS:js];
+    [rightController executeJS:js];
+    
+    for (UIViewController *ctl in navController.viewControllers)
+    {
+        if ([[ctl class] isSubclassOfClass:[SwipeViewController class]])
+        {
+            SwipeViewController *swipe = (SwipeViewController *)ctl;
+            [swipe executeJS:js];
+        }
+    }
+}
+
 
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
@@ -1412,7 +1410,7 @@
     {
         [self loadPage:[NSString stringWithFormat:@"%@",call.param] root:YES popup:LoaderPopUpNo];
         if (self.leftMenuOpen || self.rightMenuOpen)
-            [self.slidingViewController resetTopView];
+            [self.slidingViewController resetTopViewAnimated:YES];
         return YES;
     }
 
@@ -1424,7 +1422,7 @@
         if (rightController)
             [rightController reload];
         if (self.leftMenuOpen || self.rightMenuOpen)
-            [self.slidingViewController resetTopView];
+            [self.slidingViewController resetTopViewAnimated:YES];
         return YES;
     }
     
@@ -1433,7 +1431,7 @@
     {
         [self loadPage:[NSString stringWithFormat:@"%@",call.param] root:NO popup:LoaderPopUpDefault];
         if (self.leftMenuOpen || self.rightMenuOpen)
-            [self.slidingViewController resetTopView];
+            [self.slidingViewController resetTopViewAnimated:YES];
         return YES;
     }
 
@@ -1442,7 +1440,7 @@
         if (navController.childViewControllers.count > 1)
             [navController popViewControllerAnimated:YES];
         if (self.leftMenuOpen || self.rightMenuOpen)
-            [self.slidingViewController resetTopView];
+            [self.slidingViewController resetTopViewAnimated:YES];
         return YES;
     }
 
@@ -1452,7 +1450,7 @@
         NSArray *viewControllers = [NSArray arrayWithObject:navController.viewControllers.firstObject];
         [navController setViewControllers:viewControllers animated:YES];
         if (self.leftMenuOpen || self.rightMenuOpen)
-            [self.slidingViewController resetTopView];
+            [self.slidingViewController resetTopViewAnimated:YES];
         return YES;
     }
 
@@ -1476,40 +1474,56 @@
         
         if ([command isEqualToString:@"open"])
         {
-            /*if ([position isEqualToString:@"left"] && self.rightMenuOpen)
-                [self.slidingViewController anchorTopViewTo:ECRight];
-            else*/ if ([position isEqualToString:@"left"])
-                [self.slidingViewController anchorTopViewTo:ECRight];
-            else if ([position isEqualToString:@"right"] && self.leftMenuOpen)
+            if ([position isEqualToString:@"left"])
             {
-/*                [UIView beginAnimations:nil context:NULL];
-                [UIView setAnimationDuration:1.0];
-//                [UIView setAnimationTransition:<#(UIViewAnimationTransition)#> forView:<#(UIView *)#> cache:<#(BOOL)#>
-                [UIView setAnimationTransition:UIViewAnimationCurveLinear forView:self.slidingViewController.view cache:YES];
-                [UIView commitAnimations];*/
-                
+                [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
+                    self.leftMenuOpen = YES;
+                    [leftController isMain:YES];
+                    self.rightMenuOpen = NO;
+                    [leftController isMain:NO];
+                }];
+            }
+            /*else if ([position isEqualToString:@"right"] && self.leftMenuOpen)
+            {
                 __block LoaderViewController *me = self;
                 [UIView transitionWithView:self.view duration:0.25
                                    options:UIViewAnimationOptionCurveLinear
                                 animations:^{
-                                    [me.slidingViewController resetTopViewWithAnimations:^{
-                                        
-                                    } onComplete:^{
+                                    [me.slidingViewController resetTopViewAnimated:YES onComplete:^{
                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                            [me.slidingViewController anchorTopViewTo:ECLeft];
+                                            [me.slidingViewController anchorTopViewToLeftAnimated:YES];
                                         });
                                     }];
                                 }
                                 completion:NULL];
                 
 
-            }
+            }*/
             else if ([position isEqualToString:@"right"])
-                [self.slidingViewController anchorTopViewTo:ECLeft];
+            {
+                [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{
+                    self.leftMenuOpen = NO;
+                    [leftController isMain:NO];
+                    self.rightMenuOpen = YES;
+                    [leftController isMain:YES];
+                }];
+            }
             else if ([position isEqualToString:@"main"])
-                [self.slidingViewController resetTopView];
+            {
+                [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+                    self.leftMenuOpen = NO;
+                    [leftController isMain:NO];
+                    self.rightMenuOpen = NO;
+                    [leftController isMain:NO];
+                }];
+            }
         } else if ([command isEqualToString:@"close"]) {
-            [self.slidingViewController resetTopView];
+            [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+                self.leftMenuOpen = NO;
+                [leftController isMain:NO];
+                self.rightMenuOpen = NO;
+                [leftController isMain:NO];
+            }];
         }
         
         //[self loadPage:[NSString stringWithFormat:@"%@",call.param] root:NO forcePopup:YES];
