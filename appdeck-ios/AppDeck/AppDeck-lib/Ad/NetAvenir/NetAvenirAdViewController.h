@@ -15,5 +15,6 @@
 - (id)initWithAdRation:(AdRation *)adRation engine:(NetAvenirAdEngine *)adEngine config:(NSDictionary *)config;
 
 @property (nonatomic, strong)   NetAvenirAdEngine *adEngine;
+@property (strong, nonatomic) NSString *zid;
 
 @end

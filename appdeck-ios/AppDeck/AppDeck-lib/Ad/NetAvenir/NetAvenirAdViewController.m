@@ -21,6 +21,7 @@
     if (self) {
         // Custom initialization
         placement = nil;
+        self.zid = [NSString stringWithFormat:@"%@", [config objectForKey:@"zid"]];
         self.state = AppDeckAdStateEmpty;
     }
     return self;
@@ -54,7 +55,7 @@
         self.width = 320;
         self.height = 480;
     }
-    placement = [[NAAdPlacement alloc] initWithPlacementIdentifier:self.adEngine.zid];
+    placement = [[NAAdPlacement alloc] initWithPlacementIdentifier:self.zid];
     [placement setDelegate:self];
     self.state = AppDeckAdStateReady;
 }

@@ -23,7 +23,6 @@
     self = [super initWithAdManager:adManager andConfiguration:config];
     if (self) {
         // Custom initialization
-        self.zid = [NSString stringWithFormat:@"%@", [config objectForKey:@"zid"]];
     }
     return self;
 }
