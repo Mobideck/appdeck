@@ -213,7 +213,12 @@ public class PageSwipe extends AppDeckFragment {
     
     @Override
     public void onPause() {
-    	// TODO Auto-generated method stub
+    	if (previousPage != null)
+			previousPage.onPause();
+		if (nextPage != null)
+			nextPage.onPause();
+		if (currentPage != null)
+			currentPage.onPause();
     	super.onPause();
         /*final ObjectAnimator invisToVis = ObjectAnimator.ofFloat(getView(), "rotationY",
                 -90f, 0f);
@@ -228,8 +233,13 @@ public class PageSwipe extends AppDeckFragment {
     
     @Override
     public void onResume() {
-    	// TODO Auto-generated method stub
     	super.onResume();
+		if (previousPage != null)
+			previousPage.onResume();
+		if (nextPage != null)
+			nextPage.onResume();
+		if (currentPage != null)
+			currentPage.onResume();
     	//if (adview != null)
     	//	adview.resume();
     }
