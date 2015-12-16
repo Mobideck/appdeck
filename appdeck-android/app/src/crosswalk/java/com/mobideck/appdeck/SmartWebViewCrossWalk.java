@@ -653,7 +653,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
             //((EditText)v.findViewById(R.id.prompt_input_field)).setText(defaultValue);
 
             new AlertDialog.Builder(root.loader)
-                .setTitle("javaScript dialog")
+                //.setTitle("javaScript dialog")
                 .setView(v)
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
