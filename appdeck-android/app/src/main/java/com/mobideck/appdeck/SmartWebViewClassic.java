@@ -595,7 +595,7 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
         {
         	
             new AlertDialog.Builder(root.loader)
-                .setTitle("javaScript dialog")
+                //.setTitle("javaScript dialog")
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok,
                         new AlertDialog.OnClickListener() 
@@ -615,7 +615,7 @@ public class SmartWebViewClassic extends WebView implements SmartWebViewInterfac
         public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) 
         {
             new AlertDialog.Builder(root.loader)
-                .setTitle("javaScript dialog")
+                //.setTitle("javaScript dialog")
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, 
                         new DialogInterface.OnClickListener() 
