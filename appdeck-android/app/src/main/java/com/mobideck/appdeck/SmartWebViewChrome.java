@@ -35,6 +35,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -65,6 +66,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import android.annotation.TargetApi;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.json.JSONObject;
 
@@ -581,8 +585,26 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public boolean onJsAlert(WebView view, String url, String message, final JsResult result)
         {
             if (root != null) {
+
+                new MaterialDialog.Builder(getContext())
+                        .content(message)
+                        .positiveText(android.R.string.ok)
+                        .cancelListener(new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+                                result.confirm();
+                            }
+                        })
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                result.confirm();
+                            }
+                        })
+                        .show();
+/*
                 new AlertDialog.Builder(root.loader)
-                        .setTitle("javaScript dialog")
+                        //.setTitle("javaScript dialog")
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok,
                                 new AlertDialog.OnClickListener()
@@ -594,7 +616,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                                 })
                         .setCancelable(false)
                         .create()
-                        .show();
+                        .show();*/
             }
             return true;
         };
@@ -604,7 +626,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         {
             if (root != null) {
                 new AlertDialog.Builder(root.loader)
-                        .setTitle("javaScript dialog")
+                        //.setTitle("javaScript dialog")
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok,
                                 new DialogInterface.OnClickListener() {
@@ -910,8 +932,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         saveState(outState);
         return true;
     }
-
-
+    
     public boolean apiCall(final AppDeckApiCall call)
     {
         if (call.command.equalsIgnoreCase("disable_catch_link"))
