@@ -648,15 +648,6 @@ public class PageFragmentSwap extends AppDeckFragment {
 			return true;
 		}
 
-        if (call.command.equalsIgnoreCase("postmessage"))
-        {
-            Log.i("API", uri.getPath()+" **POST MESSAGE**");
-
-            String js = "try {app.receiveMessage("+call.inputJSON+".param);} catch (e) {}";
-            this.loader.evaluateJavascript(js);
-            return true;
-        }
-
         if (call.command.equalsIgnoreCase("disable_pulltorefresh"))
         {
             Log.i("API", uri.getPath()+" **DISABLE PULLTOREFRESH**");

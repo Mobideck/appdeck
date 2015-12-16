@@ -1563,6 +1563,15 @@ public class Loader extends AppCompatActivity {
 
         }
 
+        if (call.command.equalsIgnoreCase("postmessage"))
+        {
+            Log.i("API", " **POST MESSAGE**");
+
+            String js = "try {app.receiveMessage("+call.inputJSON+".param);} catch (e) {}";
+            evaluateJavascript(js);
+            return true;
+        }
+
 		Log.i("API ERROR", call.command);
 		return false;
 	}
@@ -1604,8 +1613,20 @@ public class Loader extends AppCompatActivity {
                     loadRootPage(appDeck.config.bootstrapUrl.toString());
                     return;
                 }
-        
-        finish();      
+
+        /*new AlertDialog.Builder(this)
+                .setTitle("Really Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Loader.super.onBackPressed();
+                    }
+                }).create().show();*/
+
+        // this will go back one time too many, we finish manually
+        //Loader.super.onBackPressed();
+        finish();
 
     }
 
