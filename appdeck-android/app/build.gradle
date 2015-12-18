@@ -134,9 +134,9 @@ dependencies {
 
     //compile 'com.google.android.gms:play-services:8.1.0'
 
-    compile 'com.google.android.gms:play-services-analytics:8.3.0'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
     //compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
@@ -159,7 +159,7 @@ dependencies {
         transitive = true;
     }
 
-    compile('com.twitter.sdk.android:twitter:1.8.0@aar') {
+    compile('com.twitter.sdk.android:twitter:1.11.0@aar') {
         transitive = true
         exclude module: 'gson';
     }
@@ -168,7 +168,7 @@ dependencies {
         transitive = true
     }
 
-    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     //compile files('libs/AudienceNetwork.jar')
 
     compile 'com.github.hotchemi:android-rate:0.5.5'
@@ -182,6 +182,15 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 
     compile 'com.jakewharton.timber:timber:4.1.0'
+
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.2@aar') {
+        transitive = true
+    }
+
+    compile('com.github.afollestad.material-dialogs:commons:0.8.5.2@aar') {
+        transitive = true
+    }
+
 
 }
 
