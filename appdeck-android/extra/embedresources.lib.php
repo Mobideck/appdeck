@@ -420,6 +420,7 @@ function buildAppDeckAndroidRes()
   {
     $xml = str_replace('##'.$k.'##', $v, $xml);
   }
-  if (file_get_contents($project_path.'/app/src/main/res/values/appdeck.xml') != $xml)
+  $xml_path = $project_path.'/app/src/main/res/values/appdeck.xml';
+  if (!file_exists($xml_path) || file_get_contents($project_path.'/app/src/main/res/values/appdeck.xml') != $xml)
     file_put_contents($project_path.'/app/src/main/res/values/appdeck.xml', $xml);
 }
