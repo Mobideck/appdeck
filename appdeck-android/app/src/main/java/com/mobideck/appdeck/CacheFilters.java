@@ -278,6 +278,10 @@ public class CacheFilters implements HttpFilters {
        			}
     		}
 
+			// set app id and user id
+			request.headers().set("AppDeck-App-Key", appDeck.config.app_api_key);
+			request.headers().set("AppDeck-User-ID", appDeck.uid);
+
    			Log.i(TAG, " DOWNLOAD " + absoluteURL);
 
     	}
