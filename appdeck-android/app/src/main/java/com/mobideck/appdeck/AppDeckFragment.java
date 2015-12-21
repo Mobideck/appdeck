@@ -4,9 +4,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -154,21 +158,34 @@ public class AppDeckFragment extends Fragment {
 		{
 			Utils.downloadImage(actionBarLogoUrl, appDeck.actionBarHeight, new SimpleImageLoadingListener() {
 				@Override
-				public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				public void onLoadingComplete(String imageUri, View view, final Bitmap loadedImage) {
 					if (loader == null || imageUri == null || loadedImage == null)
 						return;
-					BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
-					draw.setAntiAlias(true);
-					AppCompatActivity sa = (AppCompatActivity)AppDeckFragment.this.getActivity();
-					if (sa == null)
-						return;
-					ActionBar ac = sa.getSupportActionBar();
-					if (ac == null)
-						return;
-					ac.setDisplayShowTitleEnabled(false);
-					ac.setDisplayUseLogoEnabled(true);
-					ac.setIcon(draw);
-					Log.i(TAG, "logo have been set in action bar");
+					// run appdeck init in his own thread
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							final BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
+							Handler mainHandler = new Handler(getActivity().getMainLooper());
+							Runnable myRunnable = new Runnable() {
+								@Override
+								public void run() {
+									AppCompatActivity sa = (AppCompatActivity)AppDeckFragment.this.getActivity();
+									if (sa == null)
+										return;
+									ActionBar ac = sa.getSupportActionBar();
+									if (ac == null)
+										return;
+									ac.setDisplayShowTitleEnabled(false);
+									ac.setDisplayUseLogoEnabled(true);
+									ac.setIcon(draw);
+									Log.i(TAG, "logo have been set in action bar");
+								}
+							};
+							mainHandler.post(myRunnable);
+
+						}
+					}, "appdeckInit").start();
 				}
 
 				@Override
@@ -189,6 +206,7 @@ public class AppDeckFragment extends Fragment {
 		} else {
 			AppCompatActivity aba = (AppCompatActivity)AppDeckFragment.this.getActivity();
 			aba.getSupportActionBar().setTitle(actionBarTitle);
+			aba.getSupportActionBar().setDisplayShowTitleEnabled(false);
 		}
 	}
 
