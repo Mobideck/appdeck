@@ -180,8 +180,9 @@ public class AppDeck {
     {
     	DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
     	builder.cacheInMemory(!noCache && !isLowSystem);
-    	builder.cacheOnDisc(!noCache);
-		builder.imageScaleType(ImageScaleType.EXACTLY);
+    	builder.cacheOnDisk(!noCache);
+		//builder.imageScaleType(ImageScaleType.EXACTLY);
+		builder.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2);
 
     	if (isLowSystem)
     	{
