@@ -34,7 +34,7 @@ import org.littleshoot.proxy.HttpFilters;
 import org.littleshoot.proxy.MitmManager;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.UnknownTransportProtocolError;
-import org.slf4j.spi.LocationAwareLogger;
+//import org.slf4j.spi.LocationAwareLogger;
 
 import javax.net.ssl.SSLSession;
 import java.net.ConnectException;
@@ -397,7 +397,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
     @Override
     protected void exceptionCaught(Throwable cause) {
         String message = "Caught exception on proxy -> web connection";
-        int logLevel = LocationAwareLogger.WARN_INT;
+        /*int logLevel = LocationAwareLogger.WARN_INT;
         if (cause != null) {
             String causeMessage = cause.getMessage();
             if (cause instanceof ConnectException) {
@@ -415,7 +415,7 @@ public class ProxyToServerConnection extends ProxyConnection<HttpResponse> {
         if (!is(DISCONNECTED)) {
             LOG.log(logLevel, "Disconnecting open connection");
             disconnect();
-        }
+        }*/
         // This can happen if we couldn't make the initial connection due
         // to something like an unresolved address, for example, or a timeout.
         // There will not have been be any requests written on an unopened

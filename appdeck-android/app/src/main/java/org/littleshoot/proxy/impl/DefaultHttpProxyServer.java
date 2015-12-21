@@ -56,8 +56,8 @@ import org.littleshoot.proxy.ProxyAuthenticator;
 import org.littleshoot.proxy.SslEngineSource;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.UnknownTransportProtocolError;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -87,8 +87,8 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
      */
     private static final long TRAFFIC_SHAPING_CHECK_INTERVAL_MS = 250L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(DefaultHttpProxyServer.class);
+/*    private static final Logger LOG = LoggerFactory
+            .getLogger(DefaultHttpProxyServer.class);*/
 
     /**
      * Our {@link ServerGroup}. Multiple proxy servers can share the same
@@ -149,7 +149,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                 is = new FileInputStream(propsFile);
                 props.load(is);
             } catch (final IOException e) {
-                LOG.warn("Could not load props file?", e);
+                //LOG.warn("Could not load props file?", e);
             } finally {
                 IOUtils.closeQuietly(is);
             }
@@ -331,7 +331,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
     }
 
     private HttpProxyServer start() {
-        LOG.info("Starting proxy at address: " + this.requestedAddress);
+        //LOG.info("Starting proxy at address: " + this.requestedAddress);
 
         synchronized (serverGroup) {
             if (!serverGroup.stopped) {
@@ -362,7 +362,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
         };
         switch (transportProtocol) {
         case TCP:
-            LOG.info("Proxy listening with TCP transport");
+            //LOG.info("Proxy listening with TCP transport");
             serverBootstrap.channelFactory(new ChannelFactory<ServerChannel>() {
                 @Override
                 public ServerChannel newChannel() {
@@ -371,7 +371,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
             });
             break;
         case UDT:
-            LOG.info("Proxy listening with UDT transport");
+            //LOG.info("Proxy listening with UDT transport");
             serverBootstrap.channelFactory(NioUdtProvider.BYTE_ACCEPTOR)
                     .option(ChannelOption.SO_BACKLOG, 10)
                     .option(ChannelOption.SO_REUSEADDR, true);
@@ -397,7 +397,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
         }
 
         this.boundAddress = ((InetSocketAddress) future.channel().localAddress());
-        LOG.info("Proxy started at address: " + this.boundAddress);
+        //LOG.info("Proxy started at address: " + this.boundAddress);
     }
 
     /**
@@ -547,13 +547,13 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
         }
 
         synchronized private void stop() {
-            LOG.info("Shutting down proxy");
+            //LOG.info("Shutting down proxy");
             if (stopped) {
-                LOG.info("Already stopped");
+                //LOG.info("Already stopped");
                 return;
             }
 
-            LOG.info("Closing all channels...");
+            //LOG.info("Closing all channels...");
 
             final ChannelGroupFuture future = allChannels.close();
             future.awaitUninterruptibly(10 * 1000);
@@ -563,15 +563,15 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                 while (iter.hasNext()) {
                     final ChannelFuture cf = iter.next();
                     if (!cf.isSuccess()) {
-                        LOG.info(
+                        /*LOG.info(
                                 "Unable to close channel.  Cause of failure for {} is {}",
                                 cf.channel(),
-                                cf.cause());
+                                cf.cause());*/
                     }
                 }
             }
 
-            LOG.info("Shutting down event loops");
+            //LOG.info("Shutting down event loops");
             List<EventLoopGroup> allEventLoopGroups = new ArrayList<EventLoopGroup>();
             allEventLoopGroups.addAll(clientToProxyBossPools.values());
             allEventLoopGroups.addAll(clientToProxyWorkerPools.values());
@@ -584,13 +584,13 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                 try {
                     group.awaitTermination(60, TimeUnit.SECONDS);
                 } catch (InterruptedException ie) {
-                    LOG.warn("Interrupted while shutting down event loop");
+                    //LOG.warn("Interrupted while shutting down event loop");
                 }
             }
 
             stopped = true;
 
-            LOG.info("Done shutting down proxy");
+            //LOG.info("Done shutting down proxy");
         }
 
         private class CategorizedThreadFactory implements ThreadFactory {
@@ -747,7 +747,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                 ChainedProxyManager chainProxyManager) {
             this.chainProxyManager = chainProxyManager;
             if (this.mitmManager != null) {
-                LOG.warn("Enabled proxy chaining with man in the middle.  These are mutually exclusive - man in the middle will be disabled.");
+                //LOG.warn("Enabled proxy chaining with man in the middle.  These are mutually exclusive - man in the middle will be disabled.");
                 this.mitmManager = null;
             }
             return this;
@@ -758,7 +758,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                 MitmManager mitmManager) {
             this.mitmManager = mitmManager;
             if (this.chainProxyManager != null) {
-                LOG.warn("Enabled man in the middle along with proxy chaining.  These are mutually exclusive - proxy chaining will be disabled.");
+                //LOG.warn("Enabled man in the middle along with proxy chaining.  These are mutually exclusive - proxy chaining will be disabled.");
                 this.chainProxyManager = null;
             }
             return this;
@@ -862,7 +862,7 @@ public class DefaultHttpProxyServer implements HttpProxyServer {
                         return new InetSocketAddress(
                                 NetworkUtils.getLocalHost(), port);
                     } catch (final UnknownHostException e) {
-                        LOG.error("Could not get local host?", e);
+                        //LOG.error("Could not get local host?", e);
                         return new InetSocketAddress(port);
                     }
                 }

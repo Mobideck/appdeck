@@ -9,16 +9,16 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Network utilities methods.
  */
 public class NetworkUtils {
 
-    private static final Logger LOG =
-            LoggerFactory.getLogger(NetworkUtils.class);
+/*    private static final Logger LOG =
+            LoggerFactory.getLogger(NetworkUtils.class);*/
 
     /**
      * Many Linux systems typically return 127.0.0.1 as the localhost address
@@ -63,7 +63,7 @@ public class NetworkUtils {
             final InetAddress address = sock.getLocalAddress();
             return address;
         } catch (final SocketException e) {
-            LOG.info("Exception getting address", e);
+            //LOG.info("Exception getting address", e);
             return InetAddress.getLocalHost();
         } finally {
             if (sock != null) {

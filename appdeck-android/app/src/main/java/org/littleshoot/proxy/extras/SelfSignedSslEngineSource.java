@@ -20,8 +20,8 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.IOUtils;
 import org.littleshoot.proxy.SslEngineSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Basic {@link SslEngineSource} for testing. The {@link SSLContext} uses
@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
  * file doesn't yet exist.
  */
 public class SelfSignedSslEngineSource implements SslEngineSource {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(SelfSignedSslEngineSource.class);
+//    private static final Logger LOG = LoggerFactory
+//            .getLogger(SelfSignedSslEngineSource.class);
 
     private static final String ALIAS = "littleproxy";
     private static final String PASSWORD = "Be Your Own Lantern";
@@ -77,7 +77,7 @@ public class SelfSignedSslEngineSource implements SslEngineSource {
 
     private void initializeKeyStore() {
         if (keyStoreFile.isFile()) {
-            LOG.info("Not deleting keystore");
+            //LOG.info("Not deleting keystore");
             return;
         }
 
@@ -156,17 +156,17 @@ public class SelfSignedSslEngineSource implements SslEngineSource {
     }
 
     private String nativeCall(final String... commands) {
-        LOG.info("Running '{}'", Arrays.asList(commands));
+        //LOG.info("Running '{}'", Arrays.asList(commands));
         final ProcessBuilder pb = new ProcessBuilder(commands);
         try {
             final Process process = pb.start();
             final InputStream is = process.getInputStream();
             final String data = IOUtils.toString(is);
-            LOG.info("Completed native call: '{}'\nResponse: '" + data + "'",
-                    Arrays.asList(commands));
+            //LOG.info("Completed native call: '{}'\nResponse: '" + data + "'",
+//                    Arrays.asList(commands));
             return data;
         } catch (final IOException e) {
-            LOG.error("Error running commands: " + Arrays.asList(commands), e);
+            //LOG.error("Error running commands: " + Arrays.asList(commands), e);
             return "";
         }
     }

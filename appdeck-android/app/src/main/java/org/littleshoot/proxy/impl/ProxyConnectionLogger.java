@@ -2,10 +2,10 @@ package org.littleshoot.proxy.impl;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
+/*import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
-import org.slf4j.spi.LocationAwareLogger;
+import org.slf4j.spi.LocationAwareLogger;*/
 
 /**
  * <p>
@@ -23,13 +23,13 @@ import org.slf4j.spi.LocationAwareLogger;
  */
 class ProxyConnectionLogger {
     private final ProxyConnection connection;
-    private final LogDispatch dispatch;
-    private final Logger logger;
+    //private final LogDispatch dispatch;
+    //private final Logger logger;
     private final String fqcn = this.getClass().getCanonicalName();
 
     public ProxyConnectionLogger(ProxyConnection connection) {
         this.connection = connection;
-        final Logger lg = LoggerFactory.getLogger(connection
+        /*final Logger lg = LoggerFactory.getLogger(connection
                 .getClass());
         if (lg instanceof LocationAwareLogger) {
             dispatch = new LocationAwareLogggerDispatch((LocationAwareLogger) lg);
@@ -37,75 +37,75 @@ class ProxyConnectionLogger {
         else {
             dispatch = new LoggerDispatch();
         }
-        logger = lg;
+        logger = lg;*/
     }
 
     protected void error(String message, Object... params) {
-        if (logger.isErrorEnabled()) {
+        /*if (logger.isErrorEnabled()) {
             dispatch.doLog(LocationAwareLogger.ERROR_INT, message, params, null);
-        }
+        }*/
     }
 
     protected void error(String message, Throwable t) {
-        if (logger.isErrorEnabled()) {
+        /*if (logger.isErrorEnabled()) {
             dispatch.doLog(LocationAwareLogger.ERROR_INT, message, null, t);
-        }
+        }*/
     }
 
     protected void warn(String message, Object... params) {
-        if (logger.isWarnEnabled()) {
+        /*if (logger.isWarnEnabled()) {
             dispatch.doLog(LocationAwareLogger.WARN_INT, message, params, null);
-        }
+        }*/
     }
 
     protected void warn(String message, Throwable t) {
-        if (logger.isWarnEnabled()) {
+        /*if (logger.isWarnEnabled()) {
             dispatch.doLog(LocationAwareLogger.WARN_INT, message, null, t);
-        }
+        }*/
     }
 
     protected void info(String message, Object... params) {
-        if (logger.isInfoEnabled()) {
+        /*if (logger.isInfoEnabled()) {
             dispatch.doLog(LocationAwareLogger.INFO_INT, message, params, null);
-        }
+        }*/
     }
 
     protected void info(String message, Throwable t) {
-        if (logger.isInfoEnabled()) {
+        /*if (logger.isInfoEnabled()) {
             dispatch.doLog(LocationAwareLogger.INFO_INT, message, null, t);
-        }
+        }*/
     }
 
     protected void debug(String message, Object... params) {
-        if (logger.isDebugEnabled()) {
+        /*if (logger.isDebugEnabled()) {
             dispatch.doLog(LocationAwareLogger.DEBUG_INT, message, params, null);
-        }
+        }*/
     }
 
     protected void debug(String message, Throwable t) {
-        if (logger.isDebugEnabled()) {
+        /*if (logger.isDebugEnabled()) {
             dispatch.doLog(LocationAwareLogger.DEBUG_INT, message, null, t);
-        }
+        }*/
     }
 
     protected void log(int level, String message, Object... params) {
-        if (level != LocationAwareLogger.DEBUG_INT || logger.isDebugEnabled()) {
+        /*if (level != LocationAwareLogger.DEBUG_INT || logger.isDebugEnabled()) {
             dispatch.doLog(level, message, params, null);
-        }
+        }*/
     }
 
     protected void log(int level, String message, Throwable t) {
-        if (level != LocationAwareLogger.DEBUG_INT || logger.isDebugEnabled()) {
+        /*if (level != LocationAwareLogger.DEBUG_INT || logger.isDebugEnabled()) {
             dispatch.doLog(level, message, null, t);
-        }
+        }*/
     }
 
     private interface LogDispatch {
-        void doLog(int level, String message, Object[] params, Throwable t);
+        //void doLog(int level, String message, Object[] params, Throwable t);
     }
 
     private String fullMessage(String message) {
-        String stateMessage = connection.getCurrentState().toString();
+        /*String stateMessage = connection.getCurrentState().toString();
         if (connection.isTunneling()) {
             stateMessage += " {tunneling}";
         }
@@ -113,7 +113,8 @@ class ProxyConnectionLogger {
         if (connection.channel != null) {
             messagePrefix = messagePrefix + " " + connection.channel;
         }
-        return messagePrefix + ": " + message;
+        return messagePrefix + ": " + message;*/
+        return null;
     }
 
     /**
@@ -121,9 +122,9 @@ class ProxyConnectionLogger {
      * the SLF4J LoggerFactory.
      */
     private class LoggerDispatch implements LogDispatch {
-        @Override
+        //@Override
         public void doLog(int level, String message, Object[] params, Throwable t) {
-            String formattedMessage = fullMessage(message);
+            /*String formattedMessage = fullMessage(message);
 
             final Object[] paramsWithThrowable;
 
@@ -156,7 +157,7 @@ class ProxyConnectionLogger {
             default:
                 logger.error(formattedMessage, paramsWithThrowable);
                 break;
-            }
+            }*/
         }
     }
 
@@ -165,20 +166,20 @@ class ProxyConnectionLogger {
      */
     private class LocationAwareLogggerDispatch implements LogDispatch {
 
-        private LocationAwareLogger log;
+        //private LocationAwareLogger log;
 
-        public LocationAwareLogggerDispatch(LocationAwareLogger log) {
-            this.log = log;
-        }
+        /*public LocationAwareLogggerDispatch(LocationAwareLogger log) {
+            //this.log = log;
+        }*/
 
-        @Override
+        //@Override
         public void doLog(int level, String message, Object[] params, Throwable t) {
-            String formattedMessage = fullMessage(message);
+            /*String formattedMessage = fullMessage(message);
             if (params != null && params.length > 0) {
                 formattedMessage = MessageFormatter.arrayFormat(formattedMessage,
                         params).getMessage();
             }
-            log.log(null, fqcn, level, formattedMessage, null, t);
+            log.log(null, fqcn, level, formattedMessage, null, t);*/
         }
     }
 }
