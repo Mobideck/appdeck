@@ -110,7 +110,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             boolean shouldEnableDebug = false;
-            if (AppDeck.getInstance().isAppdeckTestApp)
+            if (AppDeck.isAppdeckTestApp(loader))
                 shouldEnableDebug = true;
             if (0 != (loader.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
                 shouldEnableDebug = true;
@@ -123,8 +123,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         {
             WebView.enableSlowWholeDocumentDraw();
         }
-
-        loader.appDeck.userAgent = new WebView(loader).getSettings().getUserAgentString();
     }
 
     public void setRootAppDeckFragment(AppDeckFragment root)
@@ -247,7 +245,11 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     private void configureWebView()
     {
         WebSettings webSettings = getSettings();
+
         userAgent = webSettings.getUserAgentString() + " AppDeck AppDeck-Android "+appDeck.packageName+"/"+appDeck.config.app_version;
+        if (appDeck.userAgent == null)
+            appDeck.userAgent = userAgent;
+
         webSettings.setUserAgentString(userAgent);
 
         webSettings.setJavaScriptEnabled(true);
@@ -324,17 +326,20 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         //root.loader.enableProxy();
     }
 
-    public void setForceCache(boolean forceCache)
+    public void setCacheMode(int cacheMode)
     {
-        shouldLoadFromCache = forceCache;
-
-        if (shouldLoadFromCache == false)
-        {
+        if (cacheMode == SmartWebViewInterface.LOAD_DEFAULT) {
             getSettings().setUserAgentString(userAgent);
             getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        } else {
+            shouldLoadFromCache = false;
+        } else if (cacheMode == SmartWebViewInterface.LOAD_NO_CACHE) {
+            getSettings().setUserAgentString(userAgent);
+            getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+            shouldLoadFromCache = false;
+        } else if (cacheMode == SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK) {
             getSettings().setUserAgentString(userAgent+" FORCE_CACHE");
             getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            shouldLoadFromCache = true;
         }
     }
 	
@@ -932,7 +937,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         saveState(outState);
         return true;
     }
-    
+
     public boolean apiCall(final AppDeckApiCall call)
     {
         if (call.command.equalsIgnoreCase("disable_catch_link"))

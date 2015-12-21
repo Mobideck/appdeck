@@ -10,6 +10,10 @@ import android.webkit.ValueCallback;
  */
 public interface SmartWebViewInterface {
 
+    public static int LOAD_DEFAULT = 0;
+    public static int LOAD_CACHE_ELSE_NETWORK = 1;
+    public static int LOAD_NO_CACHE = 2;
+
     public String getUrl();
 
     public void setTouchDisabled(boolean touchDisabled);
@@ -31,7 +35,7 @@ public interface SmartWebViewInterface {
 
     public void reload();
     public void stopLoading();
-    public void setForceCache(boolean forceCache);
+    public void setCacheMode(int mode);
 
     public void destroy();
 

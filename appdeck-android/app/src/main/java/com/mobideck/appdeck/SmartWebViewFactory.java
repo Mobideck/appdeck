@@ -31,7 +31,7 @@ public class SmartWebViewFactory {
         //this.url = url;
         //this.position = position;
 
-        smartWebView.ctl.setForceCache(true);
+        smartWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
 
         if (url != null)
             smartWebView.ctl.loadUrl(url);
