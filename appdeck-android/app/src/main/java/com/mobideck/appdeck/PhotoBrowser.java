@@ -174,7 +174,7 @@ public class PhotoBrowser extends AppDeckFragment {
 
     	super.onStart();
     	
-    	loader.disableMenu();
+    	//loader.disableMenu();
     	loadURLConfiguration(null);
     	
     	//getActivity().invalidateOptionsMenu();
@@ -185,7 +185,7 @@ public class PhotoBrowser extends AppDeckFragment {
     public void onPause() {
     	super.onPause();
     	
-    	loader.enableMenu();
+    	//loader.enableMenu();
     	
     	loader.getSupportActionBar().show();
     }
