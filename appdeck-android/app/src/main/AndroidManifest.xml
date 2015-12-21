@@ -42,14 +42,11 @@
 
     <application
         tools:replace="android:icon,android:theme"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:hardwareAccelerated="true"
-        android:largeHeap="true"
         android:name="com.mobideck.appdeck.AppDeckApplication"
         android:theme="@style/Theme.MyAppDeckTheme" >
-        <!--android:theme="@style/AppTheme" >-->
 
         <!-- AppDeck Test App -->
         <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
@@ -113,6 +110,9 @@
 
         <!-- Dev Test -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
+
+        <!-- Ginjfo -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1622h34412ab3c04f08e74e473a53b0dbd795"></meta-data>-->
 
         <meta-data android:name="noCache" android:value="false" />
 
