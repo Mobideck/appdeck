@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
@@ -342,7 +343,7 @@ public class Utils {
 	/**
 	 * Checks if the device is a tablet or a phone
 	 * 
-	 * @param activityContext
+	 * @param context
 	 *            The Activity Context.
 	 * @return Returns true if the device is a Tablet
 	 */
@@ -446,7 +447,8 @@ public class Utils {
 
 	    return randomNum;
 	}
-	
+
+	/*
 	public static boolean filePutContents(String fileName, String content)
 	{
 	    try {
@@ -460,8 +462,8 @@ public class Utils {
 			e.printStackTrace();
 			return false;
 		}
-	}
-	
+	}*/
+
 	public static boolean filePutContents(String fileName, byte[] content)
 	{
 	    try {
@@ -469,41 +471,42 @@ public class Utils {
 			IOUtils.write(content, new FileOutputStream(outputFile));
 	    	return true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
-	}	
-	
-	public static String readFile(String pathname) throws IOException {
-
-	    File file = new File(pathname);
-	    StringBuilder fileContents = new StringBuilder((int)file.length());
-	    Scanner scanner = new Scanner(file);
-	    String lineSeparator = System.getProperty("line.separator");
-
-	    try {
-	        while(scanner.hasNextLine()) {        
-	            fileContents.append(scanner.nextLine() + lineSeparator);
-	        }
-	        return fileContents.toString();
-	    } finally {
-	        scanner.close();
-	    }
 	}
-	
-	public static String fileGetContents(String fileName)
-	{
-	    try {
-	    	String content = Utils.readFile(fileName);
-	    	return content;
+
+	public static void filePutContents(String filePath, final String fileContents) {
+		try {
+            FileOutputStream stream = new FileOutputStream(filePath);
+            try {
+                stream.write(fileContents.getBytes());
+            } finally {
+                stream.close();
+            }
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+            e.printStackTrace();
 		}
 	}
-	
+
+    public static String fileGetContents(String filePath) {
+        try {
+            File file = new File(filePath);
+            int length = (int) file.length();
+            byte[] bytes = new byte[length];
+            FileInputStream in = new FileInputStream(file);
+            try {
+                in.read(bytes);
+            } finally {
+                in.close();
+            }
+            return new String(bytes);
+        } catch (IOException e) {
+            //Logger.logError(TAG, e);
+        }
+        return null;
+    }
+
 	public static String streamGetContent(InputStream is)
 	{
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
@@ -584,8 +587,9 @@ public class Utils {
     public static int getProxyPort(Proxy proxy)
     {
         SocketAddress sa = proxy.address();
+		if (sa == null)
+			return 0;
         InetSocketAddress isa = (InetSocketAddress) sa;
-
         return isa.getPort();
     }
 }
