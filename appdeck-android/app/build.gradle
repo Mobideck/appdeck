@@ -129,8 +129,8 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    //compile 'com.android.support:recyclerview-v7:23.1.1'
+    //compile 'com.android.support:design:23.1.1'
 
     //compile 'com.google.android.gms:play-services:8.1.0'
 
@@ -152,7 +152,7 @@ dependencies {
     }*/
     //crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
 
-    compile 'org.slf4j:slf4j-android:1.7.10'
+    //compile 'org.slf4j:slf4j-android:1.7.10'
 
 
     compile('com.crashlytics.sdk.android:crashlytics:2.2.4@aar') {
@@ -171,26 +171,28 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     //compile files('libs/AudienceNetwork.jar')
 
-    compile 'com.github.hotchemi:android-rate:0.5.5'
+    compile 'com.github.hotchemi:android-rate:0.5.6'
 
     compile 'com.widespace:widespace-sdk-4.6.1@aar'
 
     //compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    compile 'com.github.vajro:MaterialDesignLibrary:1.6'
+    //compile 'com.github.vajro:MaterialDesignLibrary:1.6'
 
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    //compile 'com.nineoldandroids:library:2.4.0'
 
-    compile 'com.jakewharton.timber:timber:4.1.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //compile 'com.jakewharton.timber:timber:4.1.0'
 
     compile('com.github.afollestad.material-dialogs:core:0.8.5.2@aar') {
         transitive = true
     }
 
-    compile('com.github.afollestad.material-dialogs:commons:0.8.5.2@aar') {
+    /*compile('com.github.afollestad.material-dialogs:commons:0.8.5.2@aar') {
         transitive = true
-    }
+    }*/
 
+    compile 'com.google.code.gson:gson:2.5'
 
 }
 
