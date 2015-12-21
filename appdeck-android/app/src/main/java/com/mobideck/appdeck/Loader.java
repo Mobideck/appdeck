@@ -303,10 +303,9 @@ public class Loader extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        getSupportActionBar().setTitle("");
-
-        //mToolbar.setTitle(""); // avoid blinking between title and logo
+        //
 
         /*
         mProgressBarDeterminate = (ProgressBarDeterminate)findViewById(R.id.progressBarDeterminate);
@@ -1073,7 +1072,8 @@ public class Loader extends AppCompatActivity {
     	}*/
 
         fragment.event = AppDeckAdManager.EVENT_PUSH;
-        adManager.showAds(AppDeckAdManager.EVENT_PUSH);
+        if (adManager != null)
+            adManager.showAds(AppDeckAdManager.EVENT_PUSH);
         setMenuArrow(true);
     	return pushFragment(fragment);
 
