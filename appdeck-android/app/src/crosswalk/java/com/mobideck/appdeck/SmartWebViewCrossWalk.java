@@ -226,6 +226,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		userAgent = getWebViewUserAgent(this);
 //		userAgent = userAgent + " AppDeck "+appDeck.packageName+"/"+appDeck.config.app_version;
 		userAgent = userAgent + " AppDeck"+(appDeck.isTablet? "-tablet" : "-phone" )+" "+appDeck.packageName+"/"+appDeck.config.app_version;
+		if (appDeck.userAgent == null)
+			appDeck.userAgent = userAgent;
 		setWebViewUserAgent(this, userAgent);
 
         System.setProperty("http.proxyHost", root.loader.proxyHost);
@@ -333,19 +335,46 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    }*/
 	    return false;
 	}	
-	
-	public void setForceCache(boolean forceCache)
+
+	@Overrride
+	public void setCacheMode(int cacheMode)
 	{
-		shouldLoadFromCache = forceCache;
-		
-		if (shouldLoadFromCache == false)
-		{
+		if (cacheMode == SmartWebViewInterface.LOAD_DEFAULT) {
+			getSettings().setUserAgentString(userAgent);
+			getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+			shouldLoadFromCache = false;
+		} else if (cacheMode == SmartWebViewInterface.LOAD_NO_CACHE) {
 			setWebViewUserAgent(this, userAgent);
-			//getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-		} else {
+			getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+			shouldLoadFromCache = false;
+		} else if (cacheMode == SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK) {
 			setWebViewUserAgent(this, userAgent+" FORCE_CACHE");
-			//getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-		}		
+			getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+			shouldLoadFromCache = true;
+		}
+
+		// tell xWalk to force cache
+		Method ___getBridge;
+		try {
+			___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
+			___getBridge.setAccessible(true);
+			XWalkViewBridge xWalkViewBridge = null;
+			xWalkViewBridge = (XWalkViewBridge)___getBridge.invoke(mainWebView);
+			xWalkSettings = xWalkViewBridge.getSettings();
+			xWalkSettings.setAppCacheEnabled(shouldLoadFromCache);
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			//e1.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
 	}
 	
 	private void checkLoading()

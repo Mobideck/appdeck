@@ -111,7 +111,7 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     }
 
     @Override
-    public void setForceCache(boolean forceCache) {
+    public void setCacheMode(int cacheMode) {
 
     }
 
