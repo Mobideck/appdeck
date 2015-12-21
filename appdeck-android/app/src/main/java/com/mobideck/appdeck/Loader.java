@@ -405,6 +405,42 @@ public class Loader extends AppCompatActivity {
         if (appDeck.config.title != null)
             getSupportActionBar().setTitle(appDeck.config.title);
 
+        if (appDeck.config.leftMenuUrl != null) {
+            mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
+            if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                mDrawerLeftMenu.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
+            mDrawerLeftMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.leftMenuWidth, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
+                    params.width = (int) (width);
+                    mDrawerLeftMenu.setLayoutParams(params);
+                }
+            });
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.left_drawer));
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+        }
+        if (appDeck.config.rightMenuUrl != null) {
+            mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
+            if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                mDrawerRightMenu.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
+            mDrawerRightMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.rightMenuWidth, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
+                    params.width = (int) (width);
+                    mDrawerRightMenu.setLayoutParams(params);
+                }
+            });
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.right_drawer));
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+        }
 
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -492,10 +528,9 @@ public class Loader extends AppCompatActivity {
 
         if (appDeck.config.leftMenuUrl != null) {
             leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
-
             if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                 leftMenuWebView.view.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
-            mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
+            //mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
             mDrawerLeftMenu.post(new Runnable() {
                 @Override
                 public void run() {
@@ -507,16 +542,15 @@ public class Loader extends AppCompatActivity {
                     mDrawerLeftMenu.addView(leftMenuWebView.view);
                 }
             });
-
-        } else {
+        }/* else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
-        }
+        }*/
 
         if (appDeck.config.rightMenuUrl != null) {
             rightMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.rightMenuUrl.toString(), SmartWebViewFactory.POSITION_RIGHT);
             if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                 rightMenuWebView.view.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
-            mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
+            //mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
             mDrawerRightMenu.post(new Runnable() {
                 @Override
                 public void run() {
@@ -528,9 +562,9 @@ public class Loader extends AppCompatActivity {
                     mDrawerRightMenu.addView(rightMenuWebView.view);
                 }
             });
-        } else {
+        }/* else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
-        }
+        }*/
     }
 
     @Override
