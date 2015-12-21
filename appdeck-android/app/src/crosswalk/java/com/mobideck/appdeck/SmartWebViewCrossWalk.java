@@ -48,6 +48,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.widget.TextView;
 import org.xwalk.core.XWalkPreferences;
 
@@ -61,7 +62,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             boolean shouldEnableDebug = false;
-            if (AppDeck.getInstance().isAppdeckTestApp)
+            if (AppDeck.getInstance().isAppdeckTestApp(loader))
                 shouldEnableDebug = true;
             if (0 != (loader.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
                 shouldEnableDebug = true;
@@ -206,9 +207,32 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        e.printStackTrace();
 	    }
 	    return "";
-	}	
-	
-	
+	}
+
+	private void setAppCacheEnabled(boolean enabled) {
+		// tell xWalk to force cache
+		Method ___getBridge;
+		try {
+			___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
+			___getBridge.setAccessible(true);
+			XWalkViewBridge xWalkViewBridge = null;
+			xWalkViewBridge = (XWalkViewBridge)___getBridge.invoke(this);
+			XWalkSettings xWalkSettings = xWalkViewBridge.getSettings();
+			xWalkSettings.setAppCacheEnabled(enabled);
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			//e1.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+	}
 	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
@@ -336,47 +360,25 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    return false;
 	}	
 
-	@Overrride
+	@Override
 	public void setCacheMode(int cacheMode)
 	{
 		if (cacheMode == SmartWebViewInterface.LOAD_DEFAULT) {
-			getSettings().setUserAgentString(userAgent);
-			getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+			setWebViewUserAgent(this, userAgent);
+			//getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 			shouldLoadFromCache = false;
 		} else if (cacheMode == SmartWebViewInterface.LOAD_NO_CACHE) {
 			setWebViewUserAgent(this, userAgent);
-			getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+			//getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 			shouldLoadFromCache = false;
 		} else if (cacheMode == SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK) {
 			setWebViewUserAgent(this, userAgent+" FORCE_CACHE");
-			getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+			//getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 			shouldLoadFromCache = true;
 		}
-
-		// tell xWalk to force cache
-		Method ___getBridge;
-		try {
-			___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
-			___getBridge.setAccessible(true);
-			XWalkViewBridge xWalkViewBridge = null;
-			xWalkViewBridge = (XWalkViewBridge)___getBridge.invoke(mainWebView);
-			xWalkSettings = xWalkViewBridge.getSettings();
-			xWalkSettings.setAppCacheEnabled(shouldLoadFromCache);
-		} catch (NoSuchMethodException e1) {
-			// TODO Auto-generated catch block
-			//e1.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
+		setAppCacheEnabled(shouldLoadFromCache);
 	}
-	
+
 	private void checkLoading()
 	{
         String jsTestIfOK = "(document.body.innerHTML.indexOf('Bad Gateway') == 0 || document.body.innerHTML.indexOf('Gateway Timeout') == 0 || document.body.innerHTML.length == 0 ? 'ko' : document.body.innerHTML)";
