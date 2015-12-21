@@ -26,8 +26,8 @@ public class WebBrowser extends AppDeckFragment {
    	//WebBrowserWebView webView;
     private SmartWebView webView;
 
-    private ProgressBar preLoadingIndicator;
-    private boolean isPreLoading = true;
+    //private ProgressBar preLoadingIndicator;
+    //private boolean isPreLoading = true;
 
 	public static WebBrowser newInstance(String absoluteURL)
 	{
@@ -79,14 +79,14 @@ public class WebBrowser extends AppDeckFragment {
     	rootView = (FrameLayout)inflater.inflate(R.layout.web_browser_layout, container, false);
         //rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-        preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
+        //preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
 
         //if (appDeck.config.app_background_color != null)
         //    rootView.setBackground(appDeck.config.app_background_color.getDrawable());
 
         webView = SmartWebViewFactory.createSmartWebView(this);
 
-        webView.view.setVisibility(View.GONE);
+        //webView.view.setVisibility(View.GONE);
 
 		rootView.addView(webView.view, new ViewGroup.LayoutParams(
 		        ViewGroup.LayoutParams.MATCH_PARENT,
@@ -183,12 +183,12 @@ public class WebBrowser extends AppDeckFragment {
     
     public void progressSet(View origin, int percent)
     {
-        if (percent > 50 && isPreLoading)
+        /*if (percent > 50 && isPreLoading)
         {
             preLoadingIndicator.setVisibility(View.GONE);
             webView.view.setVisibility(View.VISIBLE);
             isPreLoading = false;
-        }
+        }*/
 
     	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
        	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
