@@ -42,6 +42,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.util.LruCache;
 import android.webkit.WebResourceResponse;
@@ -303,7 +304,7 @@ public class CacheManager {
 		DeleteRecursive(dir, false);
 	}
 
-    public void checkBeacon(Loader loader)
+    public void checkBeacon(final Loader loader)
     {
         String embed_beacon = "embed";
         AssetManager manager = appDeck.assetManager;
@@ -322,10 +323,19 @@ public class CacheManager {
         }
 
         if (!embed_beacon.equalsIgnoreCase(last_beacon)) {
-            Log.i(TAG, "Check Beacon failed: "+embed_beacon+" != "+last_beacon+" : we clear cache");
+            Log.i(TAG, "Check Beacon failed: ["+embed_beacon+"] != ["+last_beacon+"] : we clear cache");
             clear();
-            SmartWebViewFactory.clearAllCache(loader);
-        }
+			Handler mainHandler = new Handler(loader.getMainLooper());
+			Runnable myRunnable = new Runnable() {
+				@Override
+				public void run() {
+					SmartWebViewFactory.clearAllCache(loader);
+				}
+			};
+			mainHandler.post(myRunnable);
+        } else {
+			Log.v(TAG, "Check Beacon success: ["+embed_beacon+"] != ["+last_beacon+"] : we keep cache");
+		}
 
         Utils.filePutContents(last_beacon_path, embed_beacon);
     }

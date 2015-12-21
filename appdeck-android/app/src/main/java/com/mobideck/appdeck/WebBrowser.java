@@ -77,7 +77,7 @@ public class WebBrowser extends AppDeckFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
     	rootView = (FrameLayout)inflater.inflate(R.layout.web_browser_layout, container, false);
-        rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         preLoadingIndicator = (ProgressBar)rootView.findViewById(R.id.preLoadingIndicator);
 

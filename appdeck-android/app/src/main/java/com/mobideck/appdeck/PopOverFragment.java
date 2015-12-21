@@ -33,7 +33,7 @@ public class PopOverFragment extends AppDeckFragment {
     FrameLayout bgLayout;
     FrameLayout containerLayout;
     
-    private SmartWebViewClassic webView;
+    private SmartWebView webView;
     
     private View bgView;
     
@@ -111,9 +111,9 @@ public class PopOverFragment extends AppDeckFragment {
     	int margin = (int)(10 * density);
     	webViewLayoutParams.setMargins(margin, margin, margin, margin);
     	//webView.setLayoutParams(webViewLayoutParams);
-    	webView = new SmartWebViewClassic(this);
-    	containerLayout.addView(webView, webViewLayoutParams);
-    	webView.loadUrl(url);    	
+    	webView =  SmartWebViewFactory.createSmartWebView(this);
+    	containerLayout.addView(webView.view, webViewLayoutParams);
+    	webView.ctl.loadUrl(url);
     	
     	/*RoundRectShape rs = new RoundRectShape(new float[] { 10, 10, 10, 10, 10, 10, 10, 10 }, null, null);
     	ShapeDrawable sd = new CustomShapeDrawable(rs, Color.RED, Color.WHITE, 20);
@@ -156,14 +156,14 @@ public class PopOverFragment extends AppDeckFragment {
     public void onResume() {
     	super.onResume();
     	CookieSyncManager.getInstance().stopSync();
-    	webView.resume();
+    	//webView.ctl.o
     };
     
     @Override
     public void onPause() {
     	super.onPause();
     	CookieSyncManager.getInstance().sync();
-    	webView.pause();
+    	//webView.pause();
     };    
     
 }

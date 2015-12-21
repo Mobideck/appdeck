@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+//import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.mobideck.appdeck.CacheManager.CacheResult;
 
 //import com.mopub.mobileads.MoPubErrorCode;
@@ -28,10 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
-import android.webkit.ValueCallback;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -54,12 +52,12 @@ public class PageFragmentSwap extends AppDeckFragment {
 	
 	private long lastUrlLoad = 0;
 
-    private ProgressBarCircularIndeterminate preLoadingIndicator;
+    //private ProgressBarCircularIndeterminate preLoadingIndicator;
     private boolean isPreLoading = true;
 
 	public URI uri;
 	
-	private boolean shouldAutoReloadInbackground;
+	private boolean shouldReloadFromBackgrounfOnError = false;
 
     private HashMap<String, AppDeckAdNative> nativeAds = null;
 
@@ -68,6 +66,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 
 	public static PageFragmentSwap newInstance(String absoluteURL)
 	{
+		//android.os.Debug.startMethodTracing("page");
 		PageFragmentSwap fragment = new PageFragmentSwap();
 
 		Bundle args = new Bundle();
@@ -100,7 +99,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	super.onCreateView(inflater, container, savedInstanceState);
 
         rootView = (FrameLayout)inflater.inflate(R.layout.page_fragment_swap, container, false);
-        rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //rootView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         LayoutTransition lt = new LayoutTransition();
 		if (Build.VERSION.SDK_INT >= 16) {
@@ -108,7 +107,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		}
         rootView.setLayoutTransition(lt);
 
-        preLoadingIndicator = (ProgressBarCircularIndeterminate)rootView.findViewById(R.id.preLoadingIndicator);
+        //preLoadingIndicator = (ProgressBarCircularIndeterminate)rootView.findViewById(R.id.preLoadingIndicator);
 
 		pageWebView = SmartWebViewFactory.createSmartWebView(this);
     	pageWebViewAlt = SmartWebViewFactory.createSmartWebView(this);
@@ -142,7 +141,7 @@ public class PageFragmentSwap extends AppDeckFragment {
         swipeViewAlt.setColorSchemeResources(R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg1, R.color.AppDeckColorApp, R.color.AppDeckColorTopBarBg2);
         
         rootView.bringChildToFront(swipeView);
-        rootView.bringChildToFront(preLoadingIndicator);
+        //rootView.bringChildToFront(preLoadingIndicator);
 
         if (savedInstanceState != null)
         {
@@ -332,45 +331,40 @@ public class PageFragmentSwap extends AppDeckFragment {
 		Log.v(TAG, "SCREEN: "+screenConfiguration.title+" TTL: "+screenConfiguration.ttl);
 				
 		progressStart(pageWebView.view);
-		
-		// does page is in cache ?
-		CacheManager.CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);		
-		
-		boolean loadFromCache = false;
-		boolean reloadInBackground = false;
-		
-		if (cacheResult.isInCache)
+
+		//boolean loadFromCache = false;
+		//boolean reloadInBackground = false;
+
+		/*// if app just launch AND data in cache AND up to date
+		if (loader.justLaunch) {
+			Log.v("CACHE", "App just launch we skip cacheCache MISS SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " page IS NOT IN CACHE");
+		} else {
+			// does page is in cache ?*/
+		if (screenConfiguration.ttl == -1)
 		{
-			long now = System.currentTimeMillis();					
-			
-			if (screenConfiguration.ttl > ((now - cacheResult.lastModified) / 1000))
-			{
-				Log.v(TAG, "Cache HIT SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified)/1000);
-				loadFromCache = true;
+			Log.v("CACHE", "Cache DISABLED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl);
+			pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_NO_CACHE);
+		} else {
+			CacheManager.CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);
+			if (cacheResult.isInCache) {
+				long now = System.currentTimeMillis();
+				long ttl = screenConfiguration.ttl;
+				if (loader.justLaunch)
+					ttl = ttl / 10;
+				if (ttl > ((now - cacheResult.lastModified) / 1000)) {
+					Log.v(TAG, "Cache HIT SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000);
+					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
+				} else {
+					Log.v(TAG, "Cache HIT DEPRECATED SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000);
+					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
+					shouldReloadFromBackgrounfOnError = true;
+				}
 			} else {
-				Log.v(TAG, "Cache HIT DEPRECATED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+cacheResult.lastModified + " now: " + now + "diff: " + (now - cacheResult.lastModified)/1000);
-				loadFromCache = true;
-				reloadInBackground = true;
+				Log.v("CACHE", "Cache MISS SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + " page IS NOT IN CACHE");
+				pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
+				shouldReloadFromBackgrounfOnError = true;
 			}
-		} else {
-			Log.v("CACHE", "Cache MISS SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " page IS NOT IN CACHE");
 		}
-
-        if (screenConfiguration.ttl == -1)
-        {
-            loadFromCache = false;
-            reloadInBackground = false;
-        }
-
-		if (loadFromCache)
-		{
-			pageWebView.ctl.setForceCache(true);
-			if (reloadInBackground)
-				shouldAutoReloadInbackground = true;
-		} else {
-			pageWebView.ctl.setForceCache(false);
-		}
-
 		pageWebView.ctl.loadUrl(absoluteUrl);
 		lastUrlLoad = System.currentTimeMillis();
 	}
@@ -381,7 +375,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 
     void hidePreloading()
     {
-        preLoadingIndicator.setVisibility(View.GONE);
+        //preLoadingIndicator.setVisibility(View.GONE);
         //swipeView.setVisibility(View.VISIBLE);
         //swipeViewAlt.setVisibility(View.VISIBLE);
         isPreLoading = false;
@@ -406,16 +400,16 @@ public class PageFragmentSwap extends AppDeckFragment {
 
     	swipeView.setRefreshing(false);
     	swipeViewAlt.setRefreshing(false);
-		if (origin == pageWebView.view && shouldAutoReloadInbackground == true)
+		/*if (origin == pageWebView.view && shouldAutoReloadInbackground == true)
 		{
 			Log.i(TAG, "+++ Reload In Background +++");
 			shouldAutoReloadInbackground = false;
 			reloadInBackground();
-		}
+		}*/
 
 		if (origin == pageWebViewAlt.view)
 			swapWebView();
-
+		//android.os.Debug.stopMethodTracing();
     }
     
     public void progressFailed(View origin)
@@ -442,7 +436,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     			loadPage(currentPageUrl);    		
     		return;
     	}*/
-    	
+
     	if (origin == pageWebView.view)
     	{
             CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);
@@ -450,15 +444,16 @@ public class PageFragmentSwap extends AppDeckFragment {
             if (cacheResult.isInCache) {
                 swipeViewAlt.setVisibility(View.VISIBLE);
                 rootView.bringChildToFront(swipeViewAlt);
-                rootView.bringChildToFront(preLoadingIndicator);
-                pageWebViewAlt.ctl.setForceCache(true);
-                pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+                //rootView.bringChildToFront(preLoadingIndicator);
+                pageWebViewAlt.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
+				pageWebViewAlt.ctl.loadUrl(currentPageUrl);
+                //pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
             } else {
                 //pageWebView.ctl.stopLoading();
                 //pageWebView.view.setVisibility(View.INVISIBLE);
                 swipeViewAlt.setVisibility(View.VISIBLE);
                 rootView.bringChildToFront(swipeViewAlt);
-                rootView.bringChildToFront(preLoadingIndicator);
+                //rootView.bringChildToFront(preLoadingIndicator);
                 pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
                 //pageWebViewAlt.ctl.loadDataWithBaseURL("file:///android_asset/", AppDeck.error_html, "text/html", "UTF-8", null);
                 //pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
@@ -488,10 +483,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 
     	pageWebView.ctl.stopLoading();
     	pageWebViewAlt.ctl.stopLoading();
-    	pageWebViewAlt.ctl.setForceCache(false);
+    	pageWebViewAlt.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
     	
     	rootView.bringChildToFront(swipeView);
-        rootView.bringChildToFront(preLoadingIndicator);
+        //rootView.bringChildToFront(preLoadingIndicator);
 
 //    	swipeViewAlt.setVisibility(View.VISIBLE);
     	
@@ -532,7 +527,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	swipeViewAlt.setAlpha(0f);
     	swipeViewAlt.setVisibility(View.VISIBLE);
     	rootView.bringChildToFront(swipeViewAlt);
-        rootView.bringChildToFront(preLoadingIndicator);
+        //rootView.bringChildToFront(preLoadingIndicator);
 
     	final Runnable r = new Runnable()
     	{
@@ -570,7 +565,7 @@ public class PageFragmentSwap extends AppDeckFragment {
     	            	    	swipeViewAlt = tmp;
     	            	    	
     	            	    	rootView.bringChildToFront(swipeView);
-                                rootView.bringChildToFront(preLoadingIndicator);
+                                //rootView.bringChildToFront(preLoadingIndicator);
 
     	            	    	swapInProgress = false;
     	            	    	reloadInProgress = false;    	            	   
@@ -921,13 +916,13 @@ public class PageFragmentSwap extends AppDeckFragment {
 
         if (call.command.equalsIgnoreCase("loadingshow") || call.command.equalsIgnoreCase("loadingset"))
         {
-            preLoadingIndicator.setVisibility(View.VISIBLE);
-            preLoadingIndicator.bringToFront();
+            /*preLoadingIndicator.setVisibility(View.VISIBLE);
+            preLoadingIndicator.bringToFront();*/
             return true;
         }
         if (call.command.equalsIgnoreCase("loadinghide"))
         {
-            preLoadingIndicator.setVisibility(View.GONE);
+            //preLoadingIndicator.setVisibility(View.GONE);
             return true;
         }
 		return super.apiCall(call);

@@ -28,7 +28,7 @@ import android.webkit.CookieSyncManager;
 
 public class AppDeck {
 
-    public boolean isAppdeckTestApp = false;
+    //public boolean isAppdeckTestApp = false;
     public boolean isDebugBuild = false;
 
 
@@ -94,8 +94,8 @@ public class AppDeck {
     	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB)
     		isLowSystem = true;
 
-        if (context.getPackageName().equalsIgnoreCase("com.mobideck.appdeck"))
-            isAppdeckTestApp = true;
+        //if (context.getPackageName().equalsIgnoreCase("com.mobideck.appdeck"))
+        //    isAppdeckTestApp = true;
 
         if (0 != (context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE))
             isDebugBuild = true;
@@ -169,21 +169,20 @@ public class AppDeck {
     	if (config.ga != null)
     		ga.addTracker(config.ga);
     	ga.addTracker(GA.globalTracker);    	
-    	
-        if (config.prefetch_url != null && !isLowSystem)
-        {
-        	//ArchiveExtractCallback.extractDir = this.cacheDir;
-        	remote = new RemoteAppCache(config.prefetch_url.toString(), config.prefetch_ttl);
-        	remote.downloadAppCache();
-        }    	
+
     }
+
+	static boolean isAppdeckTestApp(Context context) {
+		return context.getPackageName().equalsIgnoreCase("com.mobideck.appdeck");
+	}
 
     public DisplayImageOptions.Builder getDisplayImageOptionsBuilder()
     {
     	DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder();
     	builder.cacheInMemory(!noCache && !isLowSystem);
     	builder.cacheOnDisc(!noCache);
-    	
+		builder.imageScaleType(ImageScaleType.EXACTLY);
+
     	if (isLowSystem)
     	{
     		builder.delayBeforeLoading(100);
