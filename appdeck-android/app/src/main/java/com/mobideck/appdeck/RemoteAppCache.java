@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
 
 import android.util.Log;
 
@@ -26,11 +28,54 @@ public class RemoteAppCache {
 		this.ttl = ttl;
 		outputPath = AppDeck.getInstance().cacheDir + "/httpcache/";
 	}
-	
-	public void downloadAppCache()
+
+	public void downloadAppCache() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				downloadAppCacheThreaded();
+			}
+		}, "remoteAppCache").start();
+	}
+
+
+	private void downloadAppCacheThreaded()
 	{
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get(url, new BinaryHttpResponseHandler(new String[] { ".*" /*"application/x-7z-compressed"*/}) {
+		SyncHttpClient client = new SyncHttpClient();
+
+		// create outputPath if needed
+		File folder = new File(outputPath);
+		boolean success = true;
+		if(!folder.exists()){
+			success = folder.mkdirs();
+			if (!success){
+				Log.d(TAG,"Folder not created.");
+			}
+			else{
+				Log.d(TAG,"Folder created!");
+			}
+		}
+		final String archivePath = outputPath + "archive.7z";
+		File archive = new File(archivePath);
+		client.get(url, new FileAsyncHttpResponseHandler(archive, false) {
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+				Log.d(TAG, "failed to download remoteCache");
+			}
+
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, File file) {
+				String[] args = {"x", archivePath, outputPath};
+				try {
+					J7zip.main(args);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+/*
+		client.get(url, new BinaryHttpResponseHandler(new String[] { ".*"}) {
 
 		     @Override
 			 public void onSuccess(int statusCode, Header[] headers, byte[] data) {
@@ -81,7 +126,7 @@ public class RemoteAppCache {
 				Log.d(TAG, "Failed to download: " + url);
 			}
 		     
-		 });	
+		 });	*/
 	}
     
 }

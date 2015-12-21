@@ -92,10 +92,10 @@ import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+/*import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.gc.materialdesign.views.ProgressBarDeterminate;
 import com.gc.materialdesign.views.ProgressBarIndeterminate;
-import com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate;
+import com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate;*/
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -151,8 +151,8 @@ public class Loader extends AppCompatActivity {
 
 	private HttpProxyServerBootstrap proxyServerBootstrap;
 
-    ProgressBarDeterminate mProgressBarDeterminate;
-    ProgressBarIndeterminate mProgressBarIndeterminate;
+    /*ProgressBarDeterminate mProgressBarDeterminate;
+    ProgressBarIndeterminate mProgressBarIndeterminate;*/
 
     Toolbar mToolbar;
 
@@ -160,6 +160,9 @@ public class Loader extends AppCompatActivity {
     public List<String> historyUrls = new ArrayList<String>();
 
     public boolean willShowActivity = false;
+
+
+    Crashlytics crashlytics;
 
     CallbackManager callbackManager;
     TwitterAuthClient mTwitterAuthClient;
@@ -176,32 +179,12 @@ public class Loader extends AppCompatActivity {
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
-
         //Debug.startMethodTracing("calc");
 		AppDeckApplication app = (AppDeckApplication) getApplication();
 
-
-		Intent intent = getIntent();
-        String app_json_url = intent.getStringExtra(JSON_URL);
-        appDeck = new AppDeck(getBaseContext(), app_json_url);
-
-
-
-        Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
-        if (appDeck.config.twitter_consumer_key != null && appDeck.config.twitter_consumer_secret != null &&
-                appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
-                ) {
-            TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
-            Fabric.with(app, crashlytics, new Twitter(authConfig));
-            mTwitterAuthClient = new TwitterAuthClient();
-        } else {
-            Fabric.with(app, crashlytics);
-        }
+        crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
 
         Log.d(TAG, "Use AppDeck version "+AppDeck.version);
-
-        String action = intent.getAction();
-        Uri data = intent.getData();
 
         if (app.isInitialLoading == false)
         {
@@ -211,71 +194,106 @@ public class Loader extends AppCompatActivity {
 
     	super.onCreate(savedInstanceState);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
 
-        // original proxy host/port
-        Proxy proxyConf = null;
-        try {
-            URI uri = URI.create("http://www.appdeck.mobi");
-            Proxy currentProxy = Utils.getProxySelectorConfiguration(uri);
-            originalProxyHost = Utils.getProxyHost(currentProxy);
-            originalProxyPort = Utils.getProxyPort(currentProxy);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // run appdeck init in his own thread
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = getIntent();
+                String app_json_url = intent.getStringExtra(JSON_URL);
+                appDeck = new AppDeck(getBaseContext(), app_json_url);
 
-    	this.proxyHost = "127.0.0.1";
-    	
-    	boolean isAvailable = false;
-    	this.proxyPort = 8081; // default port
-    	do
-    	{
-    		isAvailable = Utils.isPortAvailable(this.proxyPort);
-    		if (isAvailable == false)
-    			this.proxyPort = Utils.randInt(10000, 60000);	
-    	}
-    	while (isAvailable == false);
-
-        Log.i(TAG, "filter registered at @" + this.proxyPort);
-
-        //enableProxy();
-
-    	CacheFiltersSource filtersSource = new CacheFiltersSource();
-
-        appDeck.cache.checkBeacon(this);
-
-        proxyServerBootstrap = DefaultHttpProxyServer
-                .bootstrap()
-                .withPort(this.proxyPort)
-                .withAllowLocalOnly(true)
-                .withTransportProtocol(TransportProtocol.TCP)
-                .withFiltersSource(filtersSource);
-
-        if (originalProxyHost != null && originalProxyPort != -1)
-        {
-            proxyServerBootstrap.withChainProxyManager(new ChainedProxyManager() {
-                @Override
-                public void lookupChainedProxies(HttpRequest httpRequest, Queue<ChainedProxy> chainedProxies) {
-
-                    chainedProxies.add(new ChainedProxyAdapter() {
-                        @Override
-                        public InetSocketAddress getChainedProxyAddress() {
-                            try {
-                                return new InetSocketAddress(InetAddress.getByName(Loader.this.originalProxyHost), Loader.this.originalProxyPort);
-                            } catch (UnknownHostException uhe) {
-                                throw new RuntimeException(
-                                        "Unable to resolve "+Loader.this.originalProxyHost+"?!");
-                            }
-                        }
-
-                    });
-
+                Handler mainHandler = new Handler(getMainLooper());
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        mAppDeckReady = true;
+                        preLoadLoading();
+                    }
                 };
-            });
-        }
+                mainHandler.post(myRunnable);
 
-        proxyServerBootstrap.start();
+                appDeck.cache.checkBeacon(Loader.this);
+            }
+        }, "appdeckInit").start();
+
+        // run proxy in his own thread
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // original proxy host/port
+                Proxy proxyConf = null;
+                try {
+                    URI uri = URI.create("http://www.appdeck.mobi");
+                    Proxy currentProxy = Utils.getProxySelectorConfiguration(uri);
+                    if (currentProxy != null) {
+                        originalProxyHost = Utils.getProxyHost(currentProxy);
+                        originalProxyPort = Utils.getProxyPort(currentProxy);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                proxyHost = "127.0.0.1";
+
+                boolean isAvailable = false;
+                proxyPort = 8081; // default port
+                do
+                {
+                    isAvailable = Utils.isPortAvailable(proxyPort);
+                    if (isAvailable == false)
+                        proxyPort = Utils.randInt(10000, 60000);
+                }
+                while (isAvailable == false);
+
+                Log.i(TAG, "filter registered at @" + proxyPort);
+
+                CacheFiltersSource filtersSource = new CacheFiltersSource();
+
+                proxyServerBootstrap = DefaultHttpProxyServer
+                        .bootstrap()
+                        .withPort(proxyPort)
+                        .withAllowLocalOnly(true)
+                        .withTransportProtocol(TransportProtocol.TCP)
+                        .withFiltersSource(filtersSource);
+
+                if (originalProxyHost != null && originalProxyPort != -1)
+                {
+                    proxyServerBootstrap.withChainProxyManager(new ChainedProxyManager() {
+                        @Override
+                        public void lookupChainedProxies(HttpRequest httpRequest, Queue<ChainedProxy> chainedProxies) {
+
+                            chainedProxies.add(new ChainedProxyAdapter() {
+                                @Override
+                                public InetSocketAddress getChainedProxyAddress() {
+                                    try {
+                                        return new InetSocketAddress(InetAddress.getByName(Loader.this.originalProxyHost), Loader.this.originalProxyPort);
+                                    } catch (UnknownHostException uhe) {
+                                        throw new RuntimeException(
+                                                "Unable to resolve "+Loader.this.originalProxyHost+"?!");
+                                    }
+                                }
+
+                            });
+
+                        };
+                    });
+                }
+                proxyServerBootstrap.start();
+
+                Handler mainHandler = new Handler(getMainLooper());
+                Runnable myRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        mProxyReady = true;
+                        loadLoading();
+                    }
+                };
+                mainHandler.post(myRunnable);
+
+            }
+        }, "proxy").start();
+
 
         setContentView(R.layout.loader);
 
@@ -286,10 +304,16 @@ public class Loader extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(mToolbar);
 
+        getSupportActionBar().setTitle("");
+
+        //mToolbar.setTitle(""); // avoid blinking between title and logo
+
+        /*
         mProgressBarDeterminate = (ProgressBarDeterminate)findViewById(R.id.progressBarDeterminate);
+        mProgressBarDeterminate.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         mProgressBarDeterminate.setMin(0);
         mProgressBarDeterminate.setMax(100);
-        mProgressBarIndeterminate = (ProgressBarIndeterminate)findViewById(R.id.progressBarIndeterminate);
+        mProgressBarIndeterminate = (ProgressBarIndeterminate)findViewById(R.id.progressBarIndeterminate);*/
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -315,51 +339,17 @@ public class Loader extends AppCompatActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-
-        if (appDeck.config.leftMenuUrl != null) {
-            leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
-
-        	if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        		leftMenuWebView.view.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
-        	mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
-            mDrawerLeftMenu.post(new Runnable() {
-                @Override
-                public void run() {
-                    Resources resources = getResources();
-                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.leftMenuWidth, resources.getDisplayMetrics());
-                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
-                    params.width = (int) (width);
-                    mDrawerLeftMenu.setLayoutParams(params);
-                    mDrawerLeftMenu.addView(leftMenuWebView.view);
-                }
-            });
-
-        } else {
+        //if (appDeck.config.leftMenuUrl != null) {
+        //} else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
-        }
+        //}
         
-        if (appDeck.config.rightMenuUrl != null) {
-            rightMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.rightMenuUrl.toString(), SmartWebViewFactory.POSITION_RIGHT);
-        	if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        		rightMenuWebView.view.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
-        	mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
-            mDrawerRightMenu.post(new Runnable() {
-                @Override
-                public void run() {
-                    Resources resources = getResources();
-                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.rightMenuWidth, resources.getDisplayMetrics());
-                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
-                    params.width = (int) (width);
-                    mDrawerRightMenu.setLayoutParams(params);
-                    mDrawerRightMenu.addView(rightMenuWebView.view);
-                }
-            });
-        } else {
+        //if (appDeck.config.rightMenuUrl != null) {
+        //} else {
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
-        }
+        //}
 
         // configure action bar
-        appDeck.actionBarHeight = getActionBarHeight();
 
         final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         upArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
@@ -378,61 +368,107 @@ public class Loader extends AppCompatActivity {
         else
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);*/
         }
-		if (appDeck.config.topbar_color != null)
-			getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
 
-		if (appDeck.config.title != null)
-			getSupportActionBar().setTitle(appDeck.config.title);
-		
 		setSupportProgressBarVisibility(false);
 		setSupportProgressBarIndeterminate(false);
-
-
-        /*if (appDeck.config.topbar_color != null)
-            mProgressBar.setSmoothProgressDrawableBackgroundDrawable(appDeck.config.topbar_color.getDrawable());*/
-
-        /*mProgressBar.setIndeterminateDrawable(new SmoothProgressDrawable.Builder(this)
-                .color(0xff0000)
-                .interpolator(new DecelerateInterpolator())
-                .sectionsCount(4)
-                .separatorLength(8)         //You should use Resources#getDimensionPixelSize
-                .strokeWidth(8f)            //You should use Resources#getDimension
-                .speed(2f)                 //2 times faster
-                .progressiveStartSpeed(2)
-                .progressiveStopSpeed(3.4f)
-                .reversed(false)
-                .mirrorMode(false)
-                .progressiveStart(true)
-                //.progressiveStopEndedListener(mListener) //called when the stop animation is over
-                .build());*/
-
 
 		getSupportFragmentManager().addOnBackStackChangedListener(new OnBackStackChangedListener() {
             public void onBackStackChanged() {
                 AppDeckFragment fragment = getCurrentAppDeckFragment();
 
                 if (fragment != null) {
-                    fragment.setIsMain(true);
+                    if (mUIReady && mAppDeckReady && mProxyReady )
+                        fragment.setIsMain(true);
                 }
             }
         });
 
-        adManager = new AppDeckAdManager(this);
-        adManager.showAds(AppDeckAdManager.EVENT_START);
+        mUIReady = true;
+        preLoadLoading();
+    }
 
-		gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
-        appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
+    private boolean mUIReady = false;
+    private boolean mAppDeckReady = false;
+    private boolean mProxyReady = false;
 
+    public boolean justLaunch = true;
+
+    private void preLoadLoading() {
+
+        if (mUIReady == false || mAppDeckReady == false /*|| mProxyReady == false*/)
+            return;
+
+        appDeck.actionBarHeight = getActionBarHeight();
+
+        if (appDeck.config.topbar_color != null)
+            getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
+
+        if (appDeck.config.title != null)
+            getSupportActionBar().setTitle(appDeck.config.title);
+
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
         if (data != null)
         {
             alternativeBootstrapURL = data.toString();
             loadRootPage(alternativeBootstrapURL);
         }
-		else if (savedInstanceState == null)
-		{
-			loadRootPage(appDeck.config.bootstrapUrl.toString());
-		}
+        //else if (savedInstanceState == null)
+        //{
+            loadRootPage(appDeck.config.bootstrapUrl.toString());
+        //}
+        //android.os.Debug.stopMethodTracing();
+        loadLoading();
+    }
 
+    private void loadLoading() {
+        if (mUIReady == false || mAppDeckReady == false || mProxyReady == false)
+            return;
+        AppDeckFragment fragment = getCurrentAppDeckFragment();
+        if (fragment != null) {
+            if (fragment.isMain == false)
+                fragment.setIsMain(true);
+        }
+    }
+
+    boolean mPostLoadLoadingCalled = false;
+
+    private void postLoadLoading() {
+
+        if (mPostLoadLoadingCalled)
+            return;
+        mPostLoadLoadingCalled = true;
+
+        //android.os.Debug.stopMethodTracing();
+
+        AppDeckApplication app = (AppDeckApplication) getApplication();
+        if (appDeck.config.twitter_consumer_key != null && appDeck.config.twitter_consumer_secret != null &&
+                appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
+                ) {
+            TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
+            Fabric.with(app, crashlytics, new Twitter(authConfig));
+            mTwitterAuthClient = new TwitterAuthClient();
+        } else {
+            Fabric.with(app, crashlytics);
+        }
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+
+        adManager = new AppDeckAdManager(this);
+        adManager.showAds(AppDeckAdManager.EVENT_START);
+
+        gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
+        appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
+        appDeckBroadcastReceiver.loaderActivity = this;
+        IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
+        filter.setPriority(1);
+        registerReceiver(appDeckBroadcastReceiver, filter);
+
+        // Show a dialog if meets conditions
         AppRate.with(this)
                 .setInstallDays(10) // default 10, 0 means install day.
                 .setLaunchTimes(10) // default 10
@@ -446,10 +482,56 @@ public class Loader extends AppCompatActivity {
                     }
                 })
                 .monitor();
-
-        // Show a dialog if meets conditions
         AppRate.showRateDialogIfMeetsConditions(this);
 
+        if (appDeck.config.prefetch_url != null && !appDeck.isLowSystem)
+        {
+            //ArchiveExtractCallback.extractDir = this.cacheDir;
+            appDeck.remote = new RemoteAppCache(appDeck.config.prefetch_url.toString(), appDeck.config.prefetch_ttl);
+            appDeck.remote.downloadAppCache();
+        }
+
+        if (appDeck.config.leftMenuUrl != null) {
+            leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);
+
+            if (appDeck.config.leftmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                leftMenuWebView.view.setBackground(appDeck.config.leftmenu_background_color.getDrawable());
+            mDrawerLeftMenu = (FrameLayout) findViewById(R.id.left_drawer);
+            mDrawerLeftMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.leftMenuWidth, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
+                    params.width = (int) (width);
+                    mDrawerLeftMenu.setLayoutParams(params);
+                    mDrawerLeftMenu.addView(leftMenuWebView.view);
+                }
+            });
+
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+        }
+
+        if (appDeck.config.rightMenuUrl != null) {
+            rightMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.rightMenuUrl.toString(), SmartWebViewFactory.POSITION_RIGHT);
+            if (appDeck.config.rightmenu_background_color != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                rightMenuWebView.view.setBackground(appDeck.config.rightmenu_background_color.getDrawable());
+            mDrawerRightMenu = (FrameLayout) findViewById(R.id.right_drawer);
+            mDrawerRightMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, appDeck.config.rightMenuWidth, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
+                    params.width = (int) (width);
+                    mDrawerRightMenu.setLayoutParams(params);
+                    mDrawerRightMenu.addView(rightMenuWebView.view);
+                }
+            });
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+        }
     }
 
     @Override
@@ -479,11 +561,13 @@ public class Loader extends AppCompatActivity {
         willShowActivity = false; // always set it to false
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
-        appDeckBroadcastReceiver.loaderActivity = this;
-        registerReceiver(appDeckBroadcastReceiver, filter);
-
+        if (appDeckBroadcastReceiver != null) {
+            appDeckBroadcastReceiver.loaderActivity = this;
+            registerReceiver(appDeckBroadcastReceiver, filter);
+        }
         // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
+        if (mPostLoadLoadingCalled)
+            AppEventsLogger.activateApp(this);
         //enableProxy();
         if (adManager != null)
             adManager.onActivityResume();
@@ -822,8 +906,8 @@ public class Loader extends AppCompatActivity {
     
     public void progressStart()
     {
-        mProgressBarDeterminate.setVisibility(View.GONE);
-        mProgressBarIndeterminate.setVisibility(View.VISIBLE);
+        /*mProgressBarDeterminate.setVisibility(View.GONE);
+        mProgressBarIndeterminate.setVisibility(View.VISIBLE);*/
         /*setSupportProgress(0);
         setSupportProgressBarVisibility(true);
         setSupportProgressBarIndeterminateVisibility(true);
@@ -832,9 +916,11 @@ public class Loader extends AppCompatActivity {
     
     public void progressSet(int percent)
     {
+
+        /*
         mProgressBarDeterminate.setVisibility(View.VISIBLE);
         mProgressBarIndeterminate.setVisibility(View.GONE);
-        mProgressBarDeterminate.setProgress(percent);
+        mProgressBarDeterminate.setProgress(percent);*/
 /*
 
         if (percent < 25)
@@ -846,9 +932,12 @@ public class Loader extends AppCompatActivity {
     
     public void progressStop()
     {
-        mProgressBarDeterminate.setVisibility(View.GONE);
+        if (mPostLoadLoadingCalled == false)
+            postLoadLoading();
+
+        /*mProgressBarDeterminate.setVisibility(View.GONE);
         mProgressBarIndeterminate.setVisibility(View.GONE);
-        mProgressBarDeterminate.setProgress(0);
+        mProgressBarDeterminate.setProgress(0);*/
         /*
         setSupportProgressBarVisibility(false);
         setSupportProgressBarIndeterminateVisibility(false);
@@ -916,7 +1005,7 @@ public class Loader extends AppCompatActivity {
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
     	pushFragment(fragment);
         setMenuArrow(false);
-        adManager.showAds(AppDeckAdManager.EVENT_ROOT);
+        //adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     }
 
     public boolean isSameDomain(String domain)
@@ -1175,10 +1264,10 @@ public class Loader extends AppCompatActivity {
 
     public void layoutSubViews()
     {
-        if (mProgressBarDeterminate != null)
+        /*if (mProgressBarDeterminate != null)
             mProgressBarDeterminate.bringToFront();
         if (mProgressBarIndeterminate != null)
-            mProgressBarIndeterminate.bringToFront();
+            mProgressBarIndeterminate.bringToFront();*/
     }
     
     public void reload()
@@ -2188,6 +2277,7 @@ public class Loader extends AppCompatActivity {
     @Override
     public void setSupportProgressBarVisibility(boolean visibility)
     {
+        /*
         if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
         if (visibility) {
@@ -2196,13 +2286,13 @@ public class Loader extends AppCompatActivity {
         } else {
             mProgressBarIndeterminate.setVisibility(View.GONE);
             mProgressBarDeterminate.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     @Override
     public void setSupportProgressBarIndeterminateVisibility(boolean visibility)
     {
-        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
+        /*if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
         if (visibility) {
             mProgressBarIndeterminate.setVisibility(View.VISIBLE);
@@ -2210,23 +2300,23 @@ public class Loader extends AppCompatActivity {
         } else {
             mProgressBarIndeterminate.setVisibility(View.GONE);
             mProgressBarDeterminate.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     @Override
     public void setSupportProgressBarIndeterminate(boolean indeterminate)
     {
-        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
+        /*if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        mProgressBarDeterminate.setProgress(0);
+        mProgressBarDeterminate.setProgress(0);*/
     }
 
     @Override
     public void setSupportProgress(int progress)
     {
-        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
+/*        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
             return;
-        mProgressBarDeterminate.setProgress(progress);
+        mProgressBarDeterminate.setProgress(progress);*/
     }
 /*
     void enableProxy()

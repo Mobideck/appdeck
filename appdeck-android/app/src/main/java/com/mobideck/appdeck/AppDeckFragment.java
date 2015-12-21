@@ -158,6 +158,7 @@ public class AppDeckFragment extends Fragment {
 					if (loader == null || imageUri == null || loadedImage == null)
 						return;
 					BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
+					draw.setAntiAlias(true);
 					AppCompatActivity sa = (AppCompatActivity)AppDeckFragment.this.getActivity();
 					if (sa == null)
 						return;

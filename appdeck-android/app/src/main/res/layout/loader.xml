@@ -11,7 +11,6 @@
         android:id="@+id/loader_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_30"
         android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
@@ -19,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:minHeight="?attr/actionBarSize"
-            android:elevation="4dp"
-            />
+            android:elevation="4dp" >
+        </android.support.v7.widget.Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -50,27 +49,37 @@
                         android:paddingRight="0dp"
                         android:paddingBottom="0dp">
                     </FrameLayout>
+                    <!--
+                                        <com.gc.materialdesign.views.ProgressBarIndeterminate
+                                            android:id="@+id/progressBarIndeterminate"
+                                            android:layout_width="fill_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/AppDeckColorApp"
+                                            android:visibility="gone"/>
 
-                    <com.gc.materialdesign.views.ProgressBarIndeterminate
-                        android:id="@+id/progressBarIndeterminate"
-                        android:layout_width="fill_parent"
+                                        <com.gc.materialdesign.views.ProgressBarDeterminate
+                                            android:id="@+id/progressBarDeterminate"
+                                            android:layout_width="fill_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/AppDeckColorApp"
+                                            android:visibility="gone" />-->
+                    <!--<ProgressBar
+                        android:layerType="hardware"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/AppDeckColorApp"
-                        android:visibility="gone"/>
-
-                    <com.gc.materialdesign.views.ProgressBarDeterminate
-                        android:id="@+id/progressBarDeterminate"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/AppDeckColorApp"
-                        android:visibility="gone" />
+                        android:layout_marginBottom="-8dp"
+                        android:layout_marginTop="-6dp"
+                        android:layout_alignParentTop="true"
+                        android:indeterminate="true"
+                        style="?android:attr/android:progressBarStyleHorizontal" />-->
 
                     <FrameLayout
                         android:id="@+id/bannerContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|center_horizontal"
-                    >
+                        android:layout_centerHorizontal="true"
+                        >
 
                     </FrameLayout>
 
