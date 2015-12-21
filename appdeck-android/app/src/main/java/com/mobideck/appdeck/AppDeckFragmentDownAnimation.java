@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Point;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.Display;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -23,8 +24,11 @@ public class AppDeckFragmentDownAnimation {
 
     public void start()
     {
-        View fromView = from.getView();
-        View toView = to.getView();
+        final View fromView = from.getView();
+        final View toView = to.getView();
+
+        fromView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        toView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         if (fromView == null)
             return;
@@ -46,14 +50,18 @@ public class AppDeckFragmentDownAnimation {
             }
 
             @Override
-            public void onAnimationEnd(Animator animation)
-            {
+            public void onAnimationEnd(Animator animation) {
+                fromView.setLayerType(View.LAYER_TYPE_NONE, null);
+                toView.setLayerType(View.LAYER_TYPE_NONE, null);
+
                 to.loader.getSupportFragmentManager().beginTransaction().remove(from).commitAllowingStateLoss();
                 to.setIsMain(true);
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                fromView.setLayerType(View.LAYER_TYPE_NONE, null);
+                toView.setLayerType(View.LAYER_TYPE_NONE, null);
 
                 to.loader.getSupportFragmentManager().beginTransaction().remove(from).commitAllowingStateLoss();
                 to.setIsMain(true);
@@ -80,7 +88,8 @@ public class AppDeckFragmentDownAnimation {
                 //ObjectAnimator.ofFloat(fromView, "scaleY", 1.0f, 1.2f),
                 //ObjectAnimator.ofFloat(fromView, "alpha", 1.0f, 0.0f)
         );
-        set.setInterpolator(new DecelerateInterpolator());
+        //set.setInterpolator(new DecelerateInterpolator());
+        set.setInterpolator(new LinearOutSlowInInterpolator());
         set.setDuration(350).start();
     }
 

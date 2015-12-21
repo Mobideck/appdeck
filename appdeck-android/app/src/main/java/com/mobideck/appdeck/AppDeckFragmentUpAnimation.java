@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Point;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.Display;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -26,15 +27,18 @@ public class AppDeckFragmentUpAnimation {
     //@SuppressWarnings("deprecation")
     public void start()
     {
-        View fromView = from.getView();
-        View toView = to.getView();
+        final View fromView = from.getView();
+        final View toView = to.getView();
+
+        fromView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        toView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         if (fromView == null)
             return;
         if (toView == null)
             return;
         AnimatorSet set = new AnimatorSet();
-        ValueAnimator.setFrameDelay(24);
+        //ValueAnimator.setFrameDelay(24);
         //set.setInterpolator(new LinearInterpolator());
 
         set.addListener(new Animator.AnimatorListener() {
@@ -52,14 +56,16 @@ public class AppDeckFragmentUpAnimation {
             }
 
             @Override
-            public void onAnimationEnd(Animator animation)
-            {
+            public void onAnimationEnd(Animator animation) {
+                fromView.setLayerType(View.LAYER_TYPE_NONE, null);
+                toView.setLayerType(View.LAYER_TYPE_NONE, null);
                 from.loader.getSupportFragmentManager().beginTransaction().hide(from).commitAllowingStateLoss();
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                fromView.setLayerType(View.LAYER_TYPE_NONE, null);
+                toView.setLayerType(View.LAYER_TYPE_NONE, null);
                 from.loader.getSupportFragmentManager().beginTransaction().hide(from).commitAllowingStateLoss();
             }
         });
@@ -92,7 +98,8 @@ public class AppDeckFragmentUpAnimation {
 
         );
         //set.setInterpolator(new AccelerateDecelerateInterpolator());
-        set.setInterpolator(new DecelerateInterpolator());
+        //set.setInterpolator(new DecelerateInterpolator());
+        set.setInterpolator(new FastOutSlowInInterpolator());
         //set.setInterpolator(new BounceInterpolator());
         //set.setInterpolator(new BounceInterpolator());
         set.setDuration(350).start();
