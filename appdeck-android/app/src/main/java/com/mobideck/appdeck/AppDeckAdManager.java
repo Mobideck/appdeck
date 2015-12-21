@@ -583,8 +583,10 @@ public class AppDeckAdManager {
             Log.e(TAG, "onBannerAdFetched: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         bannerAdNetwork = network;
         bannerAdNetwork.setupBannerViewInLoader(adView);
-        mBannerHandler.removeCallbacks(mBannerRunnable);
-        mBannerHandler.postDelayed(mBannerRunnable, bannerAdNetwork.getTimeBetweenBannerRefresh() * 1000);
+        if (mBannerHandler != null) {
+            mBannerHandler.removeCallbacks(mBannerRunnable);
+            mBannerHandler.postDelayed(mBannerRunnable, bannerAdNetwork.getTimeBetweenBannerRefresh() * 1000);
+        }
     }
 
     public void onBannerAdFailed(AppDeckAdNetwork network, View adView)
