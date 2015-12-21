@@ -3,16 +3,20 @@ package com.mobideck.appdeck;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.ConsoleMessage;
+import android.webkit.JsResult;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 import com.mopub.mobileads.AdViewController;
 import com.mopub.mobileads.CustomEventBanner;
 import com.mopub.mobileads.CustomEventInterstitial;
@@ -66,10 +70,10 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
 
     /* Interstitial Ads */
     //private MraidController mInterstitialMraidController;
-    private AsyncHttpClient mInterstitialHttpClient;
     private CustomEventInterstitial.CustomEventInterstitialListener mInterstitialEventListener;
     private View mInterstitialAdView;
     private String mInterstitialHTMLData;
+    private RequestHandle mInterstitialRequestHandle;
 
     public boolean supportInterstitial() {
         if (aditicInterstitialId == null || aditicInterstitialId.isEmpty())
@@ -78,12 +82,9 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
     }
 
     public void fetchInterstitialAd() {
-        mInterstitialHttpClient = new AsyncHttpClient();
-        String ua = manager.loader.appDeck.userAgent;
-        mInterstitialHttpClient.setUserAgent(ua);
         String url = getAdUrl("interstitial", aditicInterstitialId);
         Log.d(TAG, "InterstitialAdUrl:" + url);
-        mInterstitialHttpClient.get(url, new AsyncHttpResponseHandler() {
+        mInterstitialRequestHandle = manager.httpClient.post(url, new AsyncHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 Log.e(TAG, "Error: " + statusCode);
@@ -156,6 +157,10 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
     }
 
     public void destroyInterstitial() {
+        if (mInterstitialRequestHandle != null) {
+            mInterstitialRequestHandle.cancel(true);
+            mInterstitialRequestHandle = null;
+        }
 /*        if (mInterstitialAdView != null) {
             manager.loader.getInterstitialAdViewContainer().removeView(mInterstitialAdView);
             mInterstitialAdView = null;
@@ -173,7 +178,8 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
     /* Banner Ads */
 
     private MraidController mBannerMraidController;
-    private AsyncHttpClient bannerHttpClient;
+    private RequestHandle mBannerRequestHandle;
+    private LinearLayout mBannerContainer;
 
     public boolean supportBanner() {
         if (aditicBannerId == null || aditicBannerId.isEmpty())
@@ -182,12 +188,9 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
     }
 
     public void fetchBannerAd() {
-        bannerHttpClient = new AsyncHttpClient();
-        String ua = manager.loader.appDeck.userAgent;
-        bannerHttpClient.setUserAgent(ua);
         String url = getAdUrl("banner", aditicBannerId);
         Log.d(TAG, "adUrl:"+url);
-        bannerHttpClient.get(url, new AsyncHttpResponseHandler() {
+        mBannerRequestHandle = manager.httpClient.post(url, new AsyncHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
@@ -228,7 +231,11 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
                 int scaledHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, manager.loader.getResources().getDisplayMetrics());
                 FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)new FrameLayout.LayoutParams(scaledWidth, scaledHeight, Gravity.CENTER);
                 container.setLayoutParams(lp);
-                manager.onBannerAdFetched(AppDeckAdNetworkAditic.this, view);
+
+                mBannerContainer = (LinearLayout)LayoutInflater.from(manager.loader).inflate(R.layout.ad_api_banner, null);
+                FrameLayout layout = (FrameLayout)mBannerContainer.findViewById(R.id.apiBanner);
+                layout.addView(view);
+                manager.onBannerAdFetched(AppDeckAdNetworkAditic.this, mBannerContainer);
             }
 
             @Override
@@ -253,17 +260,33 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
                 manager.onBannerAdClosed(AppDeckAdNetworkAditic.this, null);
             }
         });
+
+        mBannerMraidController.setDebugListener(new MraidWebViewDebugListener() {
+            @Override
+            public boolean onJsAlert(@NonNull String message, @NonNull JsResult result) {
+                return false;
+            }
+
+            @Override
+            public boolean onConsoleMessage(@NonNull ConsoleMessage consoleMessage) {
+                return false;
+            }
+        });
+
+
+
         mBannerMraidController.loadContent(htmlData);
     }
 
     public void destroyBannerAd() {
-        if (bannerHttpClient != null) {
-            bannerHttpClient.cancelAllRequests(true);
+        if (mBannerRequestHandle != null) {
+            mBannerRequestHandle.cancel(true);
+            mBannerRequestHandle = null;
         }
-        bannerHttpClient = null;
-        if (mBannerMraidController != null)
+        if (mBannerMraidController != null) {
             mBannerMraidController.destroy();
-        mBannerMraidController = null;
+            mBannerMraidController = null;
+        }
     }
 
     /* Utils */
