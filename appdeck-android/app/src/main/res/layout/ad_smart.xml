@@ -3,11 +3,13 @@
     android:id="@+id/smartAdFrameContent"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal|bottom">
 
     <com.smartadserver.android.library.SASBannerView
         android:id="@+id/smartBanner"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"/>
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal|bottom" />
 
 </LinearLayout>
