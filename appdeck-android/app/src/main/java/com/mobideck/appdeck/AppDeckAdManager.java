@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -54,8 +55,10 @@ public class AppDeckAdManager {
     static final int EVENT_WAKEUP = 5;
 
     public boolean enableInterstitial = true;
+    public long timeBeforeFirstInterstitialEver = 3600;
     public long timeBeforeFirstInterstitial = 0;
     public long timeBetweenInterstitial = 3600;
+    public long timeBetweenInterstitialPolling = 60;
 
     public boolean enableRectangle = true;
     public long timeBeforeFirstRectangle = 60;
@@ -63,13 +66,14 @@ public class AppDeckAdManager {
 
     public boolean enableBanner = true;
     public long timeBeforeFirstBanner = 0;
-    public long timeBetweenBanner = 0;
+    //public long timeBetweenBanner = 0;
     public long timeBetweenBannerRefresh = 30;
 
+    private long lastSeenInterstitialEver = 0;
     private long lastSeenInterstitial = 0;
     private long appLaunch;
 
-    private AsyncHttpClient httpClient;
+    public AsyncHttpClient httpClient;
 
     HashMap<String, AppDeckAdNetwork> networksByName;
 
@@ -130,7 +134,11 @@ public class AppDeckAdManager {
         Log.i(TAG, url);
 
         httpClient = new AsyncHttpClient();
-        httpClient.get(url, new AsyncHttpResponseHandler() {
+        if (loader.originalProxyHost != null) {
+            httpClient.setProxy(loader.originalProxyHost, loader.originalProxyPort);
+        }
+        httpClient.setUserAgent(loader.appDeck.userAgent);
+        httpClient.post(url, new AsyncHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
@@ -162,12 +170,14 @@ public class AppDeckAdManager {
     private void loadAdContext() {
         final SharedPreferences prefs = getAdPreferences(loader);
         lastSeenInterstitial = prefs.getLong("lastSeenInterstitial", 0);
+        lastSeenInterstitialEver = prefs.getLong("lastSeenInterstitialEver."+BuildConfig.VERSION_CODE, 0);
     }
 
     private void saveAdContext() {
         final SharedPreferences prefs = getAdPreferences(loader);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("lastSeenInterstitial", lastSeenInterstitial);
+        editor.putLong("lastSeenInterstitialEver."+BuildConfig.VERSION_CODE, lastSeenInterstitialEver);
         editor.apply();
     }
 
@@ -318,15 +328,17 @@ public class AppDeckAdManager {
 
             // read ads configuration
             enableInterstitial = conf.optBoolean("enableInterstitial", true);
+            timeBeforeFirstInterstitialEver = conf.optLong("timeBeforeFirstInterstitialEver", timeBeforeFirstInterstitialEver);
             timeBeforeFirstInterstitial = conf.optLong("timeBeforeFirstInterstitial", timeBeforeFirstInterstitial);
             timeBetweenInterstitial = conf.optLong("timeBetweenInterstitial", timeBetweenInterstitial);
+            timeBetweenInterstitialPolling = conf.optLong("timeBetweenInterstitialPolling", timeBetweenInterstitialPolling);
             enableRectangle = conf.optBoolean("enableRectangle", true);
             timeBeforeFirstRectangle = conf.optLong("timeBeforeFirstRectangle", timeBeforeFirstRectangle);
             timeBetweenRectangle = conf.optLong("timeBetweenRectangle", timeBetweenRectangle);
             enableBanner = conf.optBoolean("enableBanner", true);
             timeBeforeFirstBanner = conf.optLong("timeBeforeFirstBanner", timeBeforeFirstBanner);
-            timeBetweenBanner = conf.optLong("timeBetweenBanner", timeBetweenBanner);
-            timeBetweenBannerRefresh = conf.optLong("timeBetweenBanner", timeBetweenBannerRefresh);
+            //timeBetweenBanner = conf.optLong("timeBetweenBanner", timeBetweenBanner);
+            timeBetweenBannerRefresh = conf.optLong("timeBetweenBannerRefresh", timeBetweenBannerRefresh);
 
             // read networks configuration
             JSONObject networksConf = conf.optJSONObject("networks");
@@ -391,15 +403,7 @@ public class AppDeckAdManager {
 
         loadAdContext();
 
-        if (enableInterstitial) {
-            mInterstitialHandler = new Handler();
-            mInterstitialHandler.postDelayed(mInterstitialRunnable, timeBeforeFirstInterstitial * 1000);
-        }
-
-        if (enableBanner) {
-            mBannerHandler = new Handler();
-            mBannerHandler.postDelayed(mBannerRunnable, timeBeforeFirstBanner * 1000);
-        }
+        startAdHandlers();
 
         startNativeAd(0);
 
@@ -411,15 +415,13 @@ public class AppDeckAdManager {
     private Runnable mBannerRunnable = new Runnable() {
         @Override
         public void run() {
-
-            if (bannerAdNetwork != null) {
+            /*if (bannerAdNetwork != null) {
                 bannerAdNetwork.removeBannerViewInLoader();
                 bannerAdNetwork.destroyBannerAd();
                 bannerAdNetwork = null;
-            }
-
+            }*/
             startBannerAd(0);
-            mBannerHandler.postDelayed(this, (timeBetweenBanner + timeBetweenBannerRefresh) * 1000);
+            mBannerHandler.postDelayed(this, timeBetweenBannerRefresh * 1000 * 2); // fail safe: this timer should be cancel when banner is show
         }
     };
 
@@ -434,12 +436,39 @@ public class AppDeckAdManager {
             }
 
             startInterstitialAd(0);
-            mInterstitialHandler.postDelayed(this, timeBetweenInterstitial * 1000);
+            mInterstitialHandler.postDelayed(this, timeBetweenInterstitialPolling * 1000);
         }
     };
 
+    private void startAdHandlers() {
+        if (enableInterstitial) {
+            mInterstitialHandler = new Handler();
+            mInterstitialHandler.postDelayed(mInterstitialRunnable, timeBeforeFirstInterstitial * 1000);
+        }
+
+        if (enableBanner) {
+            mBannerHandler = new Handler();
+            mBannerHandler.postDelayed(mBannerRunnable, timeBeforeFirstBanner * 1000);
+        }
+    }
+
+    private void stopAdHandlers() {
+        if (mBannerHandler != null) {
+            mBannerHandler.removeCallbacksAndMessages(null);
+            mBannerHandler = null;
+        }
+        if (mInterstitialHandler != null) {
+            mInterstitialHandler.removeCallbacksAndMessages(null);
+            mInterstitialHandler = null;
+        }
+    }
+
     void startInterstitialAd(int idx)
     {
+        if (isScreenVisible() == false)
+            return;
+        if (canShowInterstitial() == false)
+            return;
         if (interstitialAdNetwork != null) {
             interstitialAdNetwork.destroyInterstitial();
             interstitialAdNetwork = null;
@@ -458,18 +487,22 @@ public class AppDeckAdManager {
     }
 
     void startBannerAd(int idx) {
+        if (isScreenVisible() == false)
+            return;
+        for (; idx < networks.size(); idx++) {
+            AppDeckAdNetwork adNetwork = networks.get(idx);
+            if (adNetwork.supportBanner() && adNetwork != bannerAdNetwork) {
+                //bannerAdNetwork = adNetwork;
+                adNetwork.fetchBannerAd();
+                return;
+            }
+        }
+        // no banner found, we retry with current one
         if (bannerAdNetwork != null) {
             bannerAdNetwork.removeBannerViewInLoader();
             bannerAdNetwork.destroyBannerAd();
+            bannerAdNetwork.fetchBannerAd();
             bannerAdNetwork = null;
-        }
-        for (; idx < networks.size(); idx++) {
-            AppDeckAdNetwork adNetwork = networks.get(idx);
-            if (adNetwork.supportBanner()) {
-                bannerAdNetwork = adNetwork;
-                bannerAdNetwork.fetchBannerAd();
-                return;
-            }
         }
     }
 
@@ -537,10 +570,21 @@ public class AppDeckAdManager {
 
     public void onBannerAdFetched(AppDeckAdNetwork network, View adView)
     {
+        // cleanup if needed
+        if (bannerAdNetwork != null) {
+            Log.d(TAG, "onBannerAdFetched: "+(network != null ? network.getName(): "(null)")+": Should remove previous one: "+bannerAdNetwork.getName());
+            bannerAdNetwork.removeBannerViewInLoader();
+            bannerAdNetwork.destroyBannerAd();
+            bannerAdNetwork = null;
+        } else {
+            Log.d(TAG, "onBannerAdFetched: "+(network != null ? network.getName(): "(null)"));
+        }
         if (Looper.myLooper() != Looper.getMainLooper())
             Log.e(TAG, "onBannerAdFetched: "+(network != null ? network.getName(): "(null)")+": Should be called on main thread");
         bannerAdNetwork = network;
-        network.setupBannerViewInLoader(adView);
+        bannerAdNetwork.setupBannerViewInLoader(adView);
+        mBannerHandler.removeCallbacks(mBannerRunnable);
+        mBannerHandler.postDelayed(mBannerRunnable, bannerAdNetwork.getTimeBetweenBannerRefresh() * 1000);
     }
 
     public void onBannerAdFailed(AppDeckAdNetwork network, View adView)
@@ -572,7 +616,35 @@ public class AppDeckAdManager {
     private boolean showInterstitial(int event) {
         if (event != EVENT_PUSH)
             return false;
+        if (canShowInterstitial() == false)
+            return false;
+        if (interstitialAdNetwork != null) {
+            Log.v(TAG, "Show interstitial from netowork "+interstitialAdNetwork.getName());
+            // hide banner for a refresh time
+            if (bannerAdNetwork != null) {
+                bannerAdNetwork.removeBannerViewInLoader();
+                bannerAdNetwork.destroyBannerAd();
+                bannerAdNetwork = null;
+                mBannerHandler.removeCallbacks(mBannerRunnable);
+                mBannerHandler.postDelayed(mBannerRunnable, timeBetweenBannerRefresh * 1000);
+            }
+            boolean res = interstitialAdNetwork.showInterstitial();
+            lastSeenInterstitial = System.currentTimeMillis()/1000;
+            lastSeenInterstitialEver = lastSeenInterstitial;
+            saveAdContext();
+            return res;
+        } else {
+            Log.v(TAG, "No interstitial as interstitial is not loaded yet");
+        }
+        return false;
+    }
+
+    private boolean canShowInterstitial() {
         long currentTime = System.currentTimeMillis()/1000;
+        if (lastSeenInterstitialEver == 0 && appLaunch + timeBeforeFirstInterstitialEver > currentTime) {
+            Log.v(TAG, "No interstitial as we need to wait "+timeBeforeFirstInterstitialEver+" before first interstitial ever");
+            return false;
+        }
         if (lastSeenInterstitial == 0 && appLaunch + timeBeforeFirstInterstitial > currentTime) {
             Log.v(TAG, "No interstitial as we need to wait "+timeBeforeFirstInterstitial+" before first interstitial");
             return false;
@@ -581,16 +653,7 @@ public class AppDeckAdManager {
             Log.v(TAG, "No interstitial as we need to wait "+timeBeforeFirstInterstitial+" between two interstitials");
             return false;
         }
-        if (interstitialAdNetwork != null) {
-            Log.v(TAG, "Show interstitial from netowork "+interstitialAdNetwork.getName());
-            boolean res = interstitialAdNetwork.showInterstitial();
-            lastSeenInterstitial = currentTime;
-            saveAdContext();
-            return res;
-        } else {
-            Log.v(TAG, "No interstitial as interstitial is not loaded yet");
-        }
-        return false;
+        return true;
     }
 
     /* Native Ad */
@@ -612,6 +675,8 @@ public class AppDeckAdManager {
             AppDeckAdNetwork adNetwork = networks.get(idx);
             adNetwork.onActivityResume();
         }
+        if (ready)
+            startAdHandlers();
     }
 
     public void onActivityPause()
@@ -622,6 +687,7 @@ public class AppDeckAdManager {
             AppDeckAdNetwork adNetwork = networks.get(idx);
             adNetwork.onActivityPause();
         }
+        stopAdHandlers();
     }
 
     public void onActivitySaveInstanceState(Bundle outState) {
@@ -653,6 +719,12 @@ public class AppDeckAdManager {
         if ("google_sdk".equals(Build.PRODUCT) || "sdk".equals(Build.PRODUCT) || "sdk_x86".equals(Build.PRODUCT) || "vbox86p".equals(Build.PRODUCT))
             return true;
         return false;
+    }
+
+    public boolean isScreenVisible() {
+        PowerManager powerManager = (PowerManager)loader.getSystemService(Context.POWER_SERVICE);
+        boolean result = Build.VERSION.SDK_INT>= Build.VERSION_CODES.KITKAT_WATCH&&powerManager.isInteractive()|| Build.VERSION.SDK_INT< Build.VERSION_CODES.KITKAT_WATCH&&powerManager.isScreenOn();
+        return result;
     }
 
 }

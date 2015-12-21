@@ -23,10 +23,14 @@ public class AppDeckAdNetwork {
     AppDeckAdManager manager;
     JSONObject conf;
 
+    private long timeBetweenBannerRefresh = 0;
+
     public AppDeckAdNetwork(AppDeckAdManager manager, JSONObject conf)
     {
         this.manager = manager;
         this.conf = conf;
+
+        timeBetweenBannerRefresh = conf.optLong("timeBetweenBannerRefresh", manager.timeBetweenBannerRefresh);
     }
 
 
@@ -100,7 +104,15 @@ public class AppDeckAdNetwork {
     public void fetchNativeAd() {}
     public AppDeckAdNative getNativeAd() { return null; }
 
-    public String getName() { return TAG; }
+    public String getName() { return getClass().getSimpleName(); }
+
+    /* config api */
+
+    public long getTimeBetweenBannerRefresh() {
+        if (timeBetweenBannerRefresh == 0)
+            return manager.timeBetweenBannerRefresh;
+        return timeBetweenBannerRefresh;
+    }
 
     /* Activity Api */
 
