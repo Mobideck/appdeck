@@ -395,20 +395,20 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 Log.i(TAG, "shouldInterceptRequest:"+request.getMethod()+" "+request.getUrl()+request.getRequestHeaders().toString());
             }
 
-            if (true)
-                return null;
-
             String absoluteUrl = request.getUrl().toString();
 
             if (absoluteUrl.startsWith("about:") || absoluteUrl.startsWith("data:"))
                 return null;
 
             if (absoluteUrl.equalsIgnoreCase("http://appdeck/error")) {
-                WebResourceResponse response = new WebResourceResponse(null, null, 200, "OK", null, new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
+                WebResourceResponse response = new WebResourceResponse ("text/html", "UTF-8", new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
+                //WebResourceResponse response = new WebResourceResponse(null, null, 200, "OK", null, new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
                 return response;
             }
 
+            return super.shouldInterceptRequest(view, request);
 
+/*
             // handle If-None-Match header
             String IfNoneMatch = request.getRequestHeaders().get("If-None-Match");
             if (IfNoneMatch != null && IfNoneMatch.startsWith("appdeckcache")) {
@@ -480,23 +480,9 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 }
                 Log.e(TAG, "shouldInterceptRequest: Stream of cached response "+absoluteUrl+" is NULL");
             }
-
-            return super.shouldInterceptRequest(view, request);
-        }
-
-        /*
-        @Override
-        public WebResourceResponse shouldInterceptRequest(final WebView view, String absoluteURL) {
-
-            if (absoluteURL.indexOf("data:") == 0)
-                return null;
-
-            if (absoluteURL.indexOf("_appdeck_is_form") != -1)
-                return null;
-
-            return null;
-        }
 */
+
+        }
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -540,11 +526,17 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         }
 
         @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+        }
+
+        @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             Log.d(TAG, "Error:" + errorCode + ":" + description);
 
             if (failingUrl.equalsIgnoreCase(url)) {
                 pageHasFinishLoadingWithError = true;
+                setVisibility(View.INVISIBLE);
                 return;
             }
 
