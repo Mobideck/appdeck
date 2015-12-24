@@ -155,7 +155,7 @@ public class AppDeckFragment extends Fragment {
 			actionBarLogoUrl = appDeck.config.logoUrl.toString();
 		if (screenConfiguration!= null && screenConfiguration.logo != null)
 			actionBarLogoUrl = screenConfiguration.logo;
-		if (actionBarLogoUrl != null)
+		if (false && actionBarLogoUrl != null)
 		{
 			Utils.downloadImage(actionBarLogoUrl, appDeck.actionBarHeight, new SimpleImageLoadingListener() {
 				@Override
@@ -167,7 +167,7 @@ public class AppDeckFragment extends Fragment {
 						@Override
 						public void run() {
 							final BitmapDrawable draw = new BitmapDrawable(loader.getResources(), loadedImage);
-							Handler mainHandler = new Handler(getActivity().getMainLooper());
+							Handler mainHandler = new Handler(loader.getMainLooper());
 							Runnable myRunnable = new Runnable() {
 								@Override
 								public void run() {
@@ -180,7 +180,7 @@ public class AppDeckFragment extends Fragment {
 										return;
                                     actionBar.setTitle(null);
                                     actionBar.setIcon(draw);
-                                    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
+                                    actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP|ActionBar.DISPLAY_SHOW_HOME);
 									Log.i(TAG, "logo have been set in action bar");
 								}
 							};
@@ -211,7 +211,7 @@ public class AppDeckFragment extends Fragment {
                 return;
             actionBar.setIcon(null);
             actionBar.setTitle(actionBarTitle);
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP|ActionBar.DISPLAY_SHOW_TITLE);
 		}
 	}
 

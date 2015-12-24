@@ -67,7 +67,7 @@ public class AppDeckFragmentPushAnimation {
 			}
 		});        
         
-    	Display display = from.getActivity().getWindowManager().getDefaultDisplay();
+    	Display display = from.loader.getWindowManager().getDefaultDisplay();
 
         Point size = new Point();
         display.getSize(size);

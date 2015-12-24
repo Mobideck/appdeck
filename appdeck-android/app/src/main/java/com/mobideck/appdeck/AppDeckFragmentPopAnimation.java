@@ -66,7 +66,7 @@ public class AppDeckFragmentPopAnimation {
 		});
         //set.setInterpolator(new AccelerateDecelerateInterpolator());
         
-       	Display display = from.getActivity().getWindowManager().getDefaultDisplay();
+       	Display display = from.loader.getWindowManager().getDefaultDisplay();
     	//float width = (float)display.getWidth();
     	//float height = (float)display.getHeight();
 
