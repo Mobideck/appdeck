@@ -1061,12 +1061,23 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      * Miscellaneous
      **************************************************************************/
 
+    // Android webview does not detect error on HTTP Error but on connection error ... so we need to close connection to force error
+    private void appdeck_savage_kill()
+    {
+        DefaultFullHttpResponse response = responseFor(new HttpVersion("error", false),
+                new HttpResponseStatus(0, ""), "error");
+        response.headers().set(HttpHeaders.Names.CONNECTION, "close");
+        write(response);
+
+    }
+
     /**
      * Tells the client that something went wrong trying to proxy its request.
      * 
      * @param request
      */
     private void writeBadGateway(HttpRequest request) {
+        /*
         String body = "Bad Gateway: " + request.getUri();
         body = AppDeck.error_html;
         DefaultFullHttpResponse response = responseFor(HttpVersion.HTTP_1_1,
@@ -1074,18 +1085,24 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
         response.headers().set(HttpHeaders.Names.CONNECTION, "close");
         write(response);
         disconnect();
+        */
+        appdeck_savage_kill();
+        disconnect();
     }
 
     /**
      * Tells the client that the connection to the server timed out.
      */
     private void writeGatewayTimeout() {
+        /*
         String body = "Gateway Timeout";
         body = AppDeck.error_html;
         DefaultFullHttpResponse response = responseFor(HttpVersion.HTTP_1_1,
                 HttpResponseStatus.GATEWAY_TIMEOUT, body);
         response.headers().set(HttpHeaders.Names.CONNECTION, "close");
         write(response);
+        */
+        appdeck_savage_kill();
     }
 
     /**
