@@ -89,7 +89,11 @@ public class AppDeck {
     {
     	instance = this;
 
-		AppDeck.error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;"+context.getString(R.string.network_error)+"/&gt;</div></body></html>";
+		AppDeck.error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><meta http-equiv=\"cache-control\" content=\"max-age=0\" />\n" +
+				"<meta http-equiv=\"cache-control\" content=\"no-cache\" />\n" +
+				"<meta http-equiv=\"expires\" content=\"0\" />\n" +
+				"<meta http-equiv=\"expires\" content=\"Tue, 01 Jan 1980 1:00:00 GMT\" />\n" +
+				"<meta http-equiv=\"pragma\" content=\"no-cache\" /><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;"+context.getString(R.string.network_error)+"/&gt;</div></body></html>";
 
     	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB)
     		isLowSystem = true;
