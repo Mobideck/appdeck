@@ -126,11 +126,21 @@ public class ArchiveExtractCallback implements IArchiveExtractCallback // , ICry
         SevenZipEntry item = _archiveHandler.getEntry(index);
         _filePath = item.getName();
 
+        boolean isMeta = false;
+
+        if (_filePath.endsWith(".meta")) {
+            isMeta = true;
+            _filePath = _filePath.substring(0, _filePath.length() - 5);
+        }
+
         // updated to use AppDeck cache naming convention
         if (_filePath.length() > 48)
         {
             _filePath = _filePath.substring(0, 48) + '_' + Utils.md5(_filePath);
         }
+
+        if (isMeta)
+            _filePath = _filePath + ".meta";
 
         // Updated to create the extracted file under the parent_dir directory [GAB, OpenLogic 2013-10-28]
         File file = new File(parent_dir, _filePath);
