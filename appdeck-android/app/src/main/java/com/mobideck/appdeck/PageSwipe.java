@@ -90,7 +90,7 @@ public class PageSwipe extends AppDeckFragment {
     	
         // Inflate the layout for this fragment
     	//pager = new CustomViewPager(getActivity());
-    	pager = new ViewPagerFixed(getActivity());
+    	pager = new ViewPagerFixed(loader);
         //pager.setBackground(appDeck.config.app_background_color.getDrawable());
         //pager.setLayerType(View.LAYER_TYPE_HARDWARE, null);
     	pager.setOffscreenPageLimit(2);
