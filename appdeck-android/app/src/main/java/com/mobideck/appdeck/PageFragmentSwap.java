@@ -349,8 +349,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 			if (cacheResult.isInCache) {
 				long now = System.currentTimeMillis();
 				long ttl = screenConfiguration.ttl;
-				if (loader.justLaunch)
-					ttl = ttl / 10;
+				if (loader.justLaunch) {
+                    ttl = ttl / 10;
+                    loader.justLaunch = false;
+                }
 				if (ttl > ((now - cacheResult.lastModified) / 1000)) {
 					Log.v(TAG, "Cache HIT SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000);
 					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
@@ -461,9 +463,13 @@ public class PageFragmentSwap extends AppDeckFragment {
     	}
     	else if (origin == pageWebViewAlt.view)
     	{
-    		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
+			swipeViewAlt.setVisibility(View.VISIBLE);
+			rootView.bringChildToFront(swipeViewAlt);
+			pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+
+/*    		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
 			pageWebViewAlt.ctl.stopLoading();
-    		//setVisibility(View.INVISIBLE);
+    		//setVisibility(View.INVISIBLE);*/
     		reloadInProgress = false;
     	}
 
