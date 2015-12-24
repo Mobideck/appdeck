@@ -595,7 +595,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			pageHasFinishLoading = true;
 
 			if (root != null && pageHasFinishLoadingWithError == true) {
-				root.progressFailed(view);
+				//root.progressFailed(view);
 				pageHasFinishLoadingWithError = false;
 				return;
 			}
@@ -612,7 +612,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 
         }
-        
+
         @Override
         public void onReceivedLoadError(XWalkView view, int errorCode, String description, String failingUrl)
         {
