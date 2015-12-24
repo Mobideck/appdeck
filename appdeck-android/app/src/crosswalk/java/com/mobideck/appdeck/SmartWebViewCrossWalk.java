@@ -1,5 +1,6 @@
 package com.mobideck.appdeck;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -254,6 +255,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			appDeck.userAgent = userAgent;
 		setWebViewUserAgent(this, userAgent);
 
+        if (root == null || root.loader == null || root.loader.proxyHost == null || root.loader.proxyPort == 0)
+            return;
+
         System.setProperty("http.proxyHost", root.loader.proxyHost);
         System.setProperty("http.proxyPort", root.loader.proxyPort + "");
         System.setProperty("https.proxyHost", root.loader.proxyHost);
@@ -479,6 +483,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (url.indexOf("_appdeck_is_form=1") != -1)
 	    		return false;
 
+            if (url.equalsIgnoreCase("http://appdeck/error")) {
+                return false;
+            }
+
 			//if (pageHasFinishLoading == false)
 			//	return false;
 
@@ -508,6 +516,11 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    
 	    @Override
 	    public WebResourceResponse shouldInterceptLoadRequest(XWalkView view, String absoluteURL) {
+
+			if (absoluteURL.equalsIgnoreCase("http://appdeck/error")) {
+				WebResourceResponse response = new WebResourceResponse ("text/html", "UTF-8", new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
+				return response;
+			}
 
 	    	if (absoluteURL.indexOf("data:") == 0)
 	    		return null;
