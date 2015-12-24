@@ -155,7 +155,7 @@ public class AppDeckFragment extends Fragment {
 			actionBarLogoUrl = appDeck.config.logoUrl.toString();
 		if (screenConfiguration!= null && screenConfiguration.logo != null)
 			actionBarLogoUrl = screenConfiguration.logo;
-		if (false && actionBarLogoUrl != null)
+		if (actionBarLogoUrl != null)
 		{
 			Utils.downloadImage(actionBarLogoUrl, appDeck.actionBarHeight, new SimpleImageLoadingListener() {
 				@Override
