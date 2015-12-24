@@ -142,17 +142,18 @@ public class AppDeckFragment extends Fragment {
 
 	private void refreshConfiguration()
 	{
-		if (screenConfiguration == null)
-			return;
+        appDeck = AppDeck.getInstance(); // bug sometime singleton is gone !?
+        if (appDeck == null)
+            return;
 		// configure action bar
 		String actionBarTitle = appDeck.config.title;
-		if (screenConfiguration.title != null)
+		if (screenConfiguration!= null && screenConfiguration.title != null)
 			actionBarTitle = screenConfiguration.title;
 
 		String actionBarLogoUrl = null;
 		if (appDeck.config.logoUrl != null)
 			actionBarLogoUrl = appDeck.config.logoUrl.toString();
-		if (screenConfiguration.logo != null)
+		if (screenConfiguration!= null && screenConfiguration.logo != null)
 			actionBarLogoUrl = screenConfiguration.logo;
 		if (actionBarLogoUrl != null)
 		{
@@ -170,15 +171,16 @@ public class AppDeckFragment extends Fragment {
 							Runnable myRunnable = new Runnable() {
 								@Override
 								public void run() {
-									AppCompatActivity sa = (AppCompatActivity)AppDeckFragment.this.getActivity();
+									/*AppCompatActivity sa = (AppCompatActivity)AppDeckFragment.this.getActivity();
 									if (sa == null)
 										return;
-									ActionBar ac = sa.getSupportActionBar();
-									if (ac == null)
+									ActionBar ac = sa.getSupportActionBar();*/
+                                    ActionBar actionBar = loader.getSupportActionBar();
+									if (actionBar == null)
 										return;
-									ac.setDisplayShowTitleEnabled(false);
-									ac.setDisplayUseLogoEnabled(true);
-									ac.setIcon(draw);
+                                    actionBar.setTitle(null);
+                                    actionBar.setIcon(draw);
+                                    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME);
 									Log.i(TAG, "logo have been set in action bar");
 								}
 							};
@@ -204,9 +206,12 @@ public class AppDeckFragment extends Fragment {
 				}
 			}, loader);
 		} else {
-			AppCompatActivity aba = (AppCompatActivity)AppDeckFragment.this.getActivity();
-			aba.getSupportActionBar().setTitle(actionBarTitle);
-			aba.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            ActionBar actionBar = loader.getSupportActionBar();
+            if (actionBar == null)
+                return;
+            actionBar.setIcon(null);
+            actionBar.setTitle(actionBarTitle);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		}
 	}
 
