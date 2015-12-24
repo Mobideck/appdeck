@@ -98,9 +98,8 @@ easy_embed("logo");
 easy_embed("leftmenu.url");
 easy_embed("rightmenu.url");
 
-
-appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_1.10.js", false, true);
-appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_dev.js", false, true);
+appdeck_add_ressource("http://ads.mopub.com/favicon.ico", '');
+appdeck_add_ressource("http://ads.mopub.com/mraid.js", '');
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck.js", false, true);
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/fastclick.js", false, true);
 
