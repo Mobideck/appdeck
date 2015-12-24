@@ -97,7 +97,7 @@ public class ScreenConfiguration {
 			for (int i = 0; i < notUrlsNode.length(); i++) {
 				String regexp = notUrlsNode.getString(i).trim();
                 if (regexp.isEmpty()) {
-                    urlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
+					notUrlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
                     continue;
                 }
 				try {
