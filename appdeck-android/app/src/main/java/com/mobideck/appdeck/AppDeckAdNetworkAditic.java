@@ -207,9 +207,18 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
 
                     JSONObject adConf = (JSONObject) new JSONTokener(response).nextValue();
 
-                    String html = adConf.getString("code");
+                    String html = adConf.optString("code", null);// getString("code");
+                    int width = adConf.optInt("width", 320);
+                    int height = adConf.optInt("height", 50);
 
-                    loadBannerAd(html, 320, 50);
+                    //if (html == null)
+                    //    html = INPUT_HTML_DATA;
+
+                    if (html == null) {
+                        manager.onBannerAdFailed(AppDeckAdNetworkAditic.this, null);
+                    }
+
+                    loadBannerAd(html, width, height);
 
                 } catch (Exception e) {
                     Log.e(TAG, e.toString());
@@ -226,6 +235,14 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
         mBannerMraidController.setMraidListener(new MraidController.MraidListener() {
             @Override
             public void onLoaded(View view) {
+                FrameLayout container = new FrameLayout(manager.loader);
+                int scaledWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, manager.loader.getResources().getDisplayMetrics());
+                int scaledHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, manager.loader.getResources().getDisplayMetrics());
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(scaledWidth, scaledHeight, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
+                container.setLayoutParams(lp);
+                container.addView(view, lp);
+                manager.onBannerAdFetched(AppDeckAdNetworkAditic.this, container);
+                /*
                 FrameLayout container = (FrameLayout)view;
                 int scaledWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, manager.loader.getResources().getDisplayMetrics());
                 int scaledHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, manager.loader.getResources().getDisplayMetrics());
@@ -235,7 +252,7 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
                 mBannerContainer = (LinearLayout)LayoutInflater.from(manager.loader).inflate(R.layout.ad_api_banner, null);
                 FrameLayout layout = (FrameLayout)mBannerContainer.findViewById(R.id.apiBanner);
                 layout.addView(view);
-                manager.onBannerAdFetched(AppDeckAdNetworkAditic.this, mBannerContainer);
+                manager.onBannerAdFetched(AppDeckAdNetworkAditic.this, mBannerContainer);*/
             }
 
             @Override
