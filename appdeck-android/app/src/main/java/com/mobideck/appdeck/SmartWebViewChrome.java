@@ -3,19 +3,11 @@ package com.mobideck.appdeck;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
 
-import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,52 +17,36 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Picture;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
-import android.webkit.WebSettings.RenderPriority;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 import android.annotation.TargetApi;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import org.json.JSONObject;
 
 import name.cpr.VideoEnabledWebChromeClient;
 import name.cpr.VideoEnabledWebView;
@@ -101,7 +77,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     public boolean shouldLoadFromCache = false;
 
-    public boolean catchLink = true;
+    public boolean disableCatchLink = false;
 
     private SmartWebChromeChromeClient webViewChromeChromeClient;
 
@@ -379,8 +355,9 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             if (url.indexOf("_appdeck_is_form=1") != -1)
                 return false;
 
-            if (catchLink == false)
+            if (disableCatchLink == true)
                 return false;
+
             if (root.shouldOverrideUrlLoading(url)) {
                 root.loadUrl(url);
                 return true;
@@ -937,7 +914,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             Log.i("API", uri.getPath()+" **DISABLE CATCH LINK**");
 
             boolean value = call.input.getBoolean("param");
-            ((SmartWebViewChrome)call.smartWebView).catchLink = value;
+            ((SmartWebViewChrome)call.smartWebView).disableCatchLink = value;
 
             return true;
         }
@@ -960,6 +937,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     public boolean canGoBack()
     {
+/*        if (disableCatchLink == true)
+            return false;*/
         return webViewChromeChromeClient.onBackPressed();
     }
 
@@ -1019,6 +998,5 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     {
         clearCache(true);
     }
-
 
 }
