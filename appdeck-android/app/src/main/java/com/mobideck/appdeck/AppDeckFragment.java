@@ -242,7 +242,8 @@ public class AppDeckFragment extends Fragment {
 										return;
                                     actionBar.setTitle(null);
                                     actionBar.setIcon(draw);
-                                    actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP|ActionBar.DISPLAY_SHOW_HOME);
+									actionBar.setDisplayShowHomeEnabled(true); // show logo
+									actionBar.setDisplayShowTitleEnabled(false); // hide String title
 									Log.i(TAG, "logo have been set in action bar");
 								}
 							};
@@ -276,7 +277,10 @@ public class AppDeckFragment extends Fragment {
                 return;
             actionBar.setIcon(null);
             actionBar.setTitle(actionBarTitle);
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP|ActionBar.DISPLAY_SHOW_TITLE);
+            //actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP|ActionBar.DISPLAY_SHOW_TITLE);
+			actionBar.setDisplayShowHomeEnabled(false); // show logo
+			actionBar.setDisplayShowTitleEnabled(true); // hide String title
+
 		}
 	}
 
