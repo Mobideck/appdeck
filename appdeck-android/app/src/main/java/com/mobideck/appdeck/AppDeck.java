@@ -63,6 +63,7 @@ public class AppDeck {
 	Boolean appShouldRestart = false;
 	
 	public int actionBarHeight;
+	public int actionBarWidth;
 	
 	public File cacheDir;
 	
@@ -152,7 +153,7 @@ public class AppDeck {
 
 
     	builder.defaultDisplayImageOptions(imageLoaderDefaultOptions)
-    	.discCache(new UnlimitedDiskCache(new File(cache.getCachePath())))
+    	.diskCache(new UnlimitedDiskCache(new File(cache.getCachePath())))
     	//.discCache(new TotalSizeLimitedDiscCache(new File(cache.getCachePath()), new AppDeckCacheFileNameGenerator(), 1024 * 1024 * 100)) // default
     	.imageDownloader(new AppDeckBaseImageDownloader(context))
     	.writeDebugLogs();
