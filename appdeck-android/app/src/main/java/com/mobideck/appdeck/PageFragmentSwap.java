@@ -217,8 +217,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 		if (wasPaused == false) {
 			return;
 		}
-		pageWebView.ctl.resume();
-		pageWebViewAlt.ctl.resume();
+		if (pageWebView != null && pageWebView.ctl != null)
+			pageWebView.ctl.resume();
+		if (pageWebViewAlt != null && pageWebViewAlt.ctl != null)
+			pageWebViewAlt.ctl.resume();
 
     	long now = System.currentTimeMillis();
     	if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0)
@@ -240,8 +242,10 @@ public class PageFragmentSwap extends AppDeckFragment {
     public void onPause() {
 		wasPaused = true;
         CookieSyncManager.getInstance().sync();
-    	pageWebView.ctl.pause();
-    	pageWebViewAlt.ctl.pause();
+    	if (pageWebView != null && pageWebView.ctl != null)
+			pageWebView.ctl.pause();
+		if (pageWebViewAlt != null && pageWebViewAlt.ctl != null)
+			pageWebViewAlt.ctl.pause();
         super.onPause();
     };
 
