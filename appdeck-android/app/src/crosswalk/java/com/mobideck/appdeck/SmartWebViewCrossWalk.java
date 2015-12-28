@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.json.JSONObject;
+import org.xwalk.core.XWalkCookieManager;
 import org.xwalk.core.XWalkJavascriptResult;
 import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
@@ -41,6 +42,9 @@ import android.os.Parcelable;
 //import android.util.ArrayMap;
 //import android.support.v4.util.ArrayMap;
 import java.util.HashMap;
+
+import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -51,6 +55,10 @@ import android.webkit.ValueCallback;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import org.xwalk.core.XWalkPreferences;
 
 
@@ -97,7 +105,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	
 	public boolean shouldLoadFromCache = false;
 	
-    public boolean disableCatchLink = true;
+    public boolean disableCatchLink = false;
 
 	public SmartWebViewCrossWalk(AppDeckFragment root) {
 		super(root.loader, root.loader);
@@ -690,38 +698,72 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 				Boolean res = apiCall(call); //root.apiCall(call);
 				call.sendResult(res);
 				return true;
-			}        	
-            final LayoutInflater factory = LayoutInflater.from(root.loader);
-            final View v = factory.inflate(R.layout.javascript_prompt_dialog, null);
-            ((TextView)v.findViewById(R.id.prompt_message_text)).setText(message);
-            //((EditText)v.findViewById(R.id.prompt_input_field)).setText(defaultValue);
+			}
 
-            new AlertDialog.Builder(root.loader)
-                //.setTitle("javaScript dialog")
-                .setView(v)
-                .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                //String value = ((EditText)v.findViewById(R.id.prompt_input_field)).getText()
-                                //        .toString();
-                                //result.confirmWithResult(value);
-                            	result.confirm();
-                            }
-                        })
-                .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                result.confirm();
-                            }
-                        })
-                .setOnCancelListener(
-                        new DialogInterface.OnCancelListener() {
-                            public void onCancel(DialogInterface dialog) {
-                                result.confirm();
-                            }
-                        })
-                .show();
-            
+			if (type == JavascriptMessageType.JAVASCRIPT_ALERT) {
+				new MaterialDialog.Builder(root.loader)
+						.content(message)
+						.positiveText(android.R.string.ok)
+						//.negativeText(android.R.string.cancel)
+						.cancelable(false)
+						.onPositive(new MaterialDialog.SingleButtonCallback() {
+							@Override
+							public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+								result.confirm();
+							}
+						})
+						.show();
+			} else if (type == JavascriptMessageType.JAVASCRIPT_PROMPT) {
+				new MaterialDialog.Builder(root.loader)
+						//.title(R.string.input)
+						.content(message)
+						.cancelable(false)
+						.inputType(InputType.TYPE_CLASS_TEXT)
+						.input(defaultValue, defaultValue, new MaterialDialog.InputCallback() {
+							@Override
+							public void onInput(MaterialDialog dialog, CharSequence input) {
+								result.confirmWithResult(input.toString());
+							}
+						}).show();
+		} else if (type == JavascriptMessageType.JAVASCRIPT_CONFIRM) {
+			new MaterialDialog.Builder(root.loader)
+					.content(message)
+					.positiveText(android.R.string.ok)
+					.negativeText(android.R.string.cancel)
+					.cancelable(false)
+					.onPositive(new MaterialDialog.SingleButtonCallback() {
+						@Override
+						public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+							result.confirm();
+						}
+					})
+					.onNegative(new MaterialDialog.SingleButtonCallback() {
+						@Override
+						public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+							result.cancel();
+						}
+					})
+					.show();
+		} else {
+			new MaterialDialog.Builder(root.loader)
+					.content(message)
+					.positiveText(android.R.string.ok)
+					.negativeText(android.R.string.cancel)
+					.cancelable(false)
+					.onPositive(new MaterialDialog.SingleButtonCallback() {
+						@Override
+						public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+							result.confirm();
+						}
+					})
+					.onNegative(new MaterialDialog.SingleButtonCallback() {
+						@Override
+						public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+							result.cancel();
+						}
+					})
+					.show();
+		}
             return true;
 
 		}
@@ -909,4 +951,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		clearCache(true);
 	}
 
+	public void clearCookies() {
+		XWalkCookieManager cookieManager = new XWalkCookieManager();
+		cookieManager.removeAllCookie();
+		cookieManager.flushCookieStore();
+	}
 }
