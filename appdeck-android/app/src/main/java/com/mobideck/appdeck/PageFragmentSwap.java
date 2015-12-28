@@ -344,9 +344,12 @@ public class PageFragmentSwap extends AppDeckFragment {
 			Log.v("CACHE", "App just launch we skip cacheCache MISS SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " page IS NOT IN CACHE");
 		} else {
 			// does page is in cache ?*/
+
+		String toast = "none";
+
 		if (screenConfiguration.ttl == -1)
 		{
-			Log.v("CACHE", "Cache DISABLED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl);
+			toast = "Cache DISABLED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl;
 			pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_NO_CACHE);
 		} else {
 			CacheManager.CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);
@@ -358,19 +361,21 @@ public class PageFragmentSwap extends AppDeckFragment {
                     loader.justLaunch = false;
                 }
 				if (ttl > ((now - cacheResult.lastModified) / 1000)) {
-					Log.v(TAG, "Cache HIT SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000);
+					toast = "Cache HIT SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000;
 					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
 				} else {
-					Log.v(TAG, "Cache HIT DEPRECATED SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000);
+					toast = "Cache MISS (DEPRECATED) SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000;
 					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
 					shouldReloadFromBackgrounfOnError = true;
 				}
 			} else {
-				Log.v("CACHE", "Cache MISS SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + " page IS NOT IN CACHE");
+				toast = "Cache MISS SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + " page IS NOT IN CACHE";
 				pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
 				shouldReloadFromBackgrounfOnError = true;
 			}
 		}
+		if (appDeck.isDebugBuild)
+			Toast.makeText(loader, toast, Toast.LENGTH_SHORT).show();
 		pageWebView.ctl.loadUrl(absoluteUrl);
 		lastUrlLoad = System.currentTimeMillis();
 	}
