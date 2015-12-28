@@ -16,12 +16,10 @@ public class AppDeckBaseImageDownloader extends BaseImageDownloader {
 
 	@Override
 	public InputStream getStream(String imageUri, Object extra) throws IOException {
-
 		// try from resources first
 		CacheManagerCachedResponse cachedResponse = AppDeck.getInstance().cache.getEmbedResponse(imageUri);
 		if (cachedResponse != null)
 			return cachedResponse.getStream();
-		
 		return super.getStream(imageUri, extra);
 	}
 }
