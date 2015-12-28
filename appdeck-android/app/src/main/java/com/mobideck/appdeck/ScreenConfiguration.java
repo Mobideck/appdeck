@@ -26,6 +26,7 @@ public class ScreenConfiguration {
 	public static ScreenConfiguration defaultConfiguration()
 	{
 		ScreenConfiguration config = new ScreenConfiguration();
+		config.title = "None (default config)";
 		config.ttl = 600;
 		return config;
 	}
@@ -133,6 +134,10 @@ public class ScreenConfiguration {
 		try {
 			URI uri = new URI(absoluteURL);
 			String path = uri.getPath();
+			String query = uri.getQuery();
+			if (query != null) {
+				path = path + "?" + query;
+			}
 			if (path != null)
 			{
 				for (int i = 0; i < urlRegexp.length; i++) {
