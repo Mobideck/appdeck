@@ -2,11 +2,13 @@ package com.mobideck.appdeck;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 //import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mobideck.appdeck.CacheManager.CacheResult;
 
 //import com.mopub.mobileads.MoPubErrorCode;
@@ -815,46 +817,31 @@ public class PageFragmentSwap extends AppDeckFragment {
 			String title = call.param.getString("title");
 			AppDeckJsonArray values = call.param.getArray("values");
         	CharSequence[] items = new CharSequence[values.length()];
+			String[] t = new String[values.length()];
         	for (int i = 0; i < values.length(); i++) {
 				items[i] = values.getString(i);
+				t[i] = values.getString(i);
 			}
 
-        	AlertDialog.Builder builder = new AlertDialog.Builder(loader);
-        	if (title != null && !title.isEmpty())
-        		builder.setTitle(title);
+			new MaterialDialog.Builder(getContext())
+					.title(title)
+					.items(t)
+					.cancelable(false)
+					.itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+						@Override
+						public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+							if (text != null)
+								call.sendCallbackWithResult("success", text.toString());
+							else
+								call.sendCallBackWithError("cancel");
+							call.sendPostponeResult(true);
+							return true;
+						}
+					})
+					.positiveText(android.R.string.ok)
+					.show();
 
-            builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    //call.setResult("Z");
-                    //call.sendPostponeResult(true);
-                    call.sendCallbackWithResult("error", "cancel");
-                }
-            })
-            .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //call.sendPostponeResult(false);
-                        call.sendCallbackWithResult("error", "cancel");
-                    }
-                });
-
-        	builder.setOnCancelListener(
-                    new DialogInterface.OnCancelListener() {
-                        public void onCancel(DialogInterface dialog) {
-                            call.sendCallbackWithResult("error", "cancel");
-                        }
-                    });
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
-            	builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-					
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					call.sendPostponeResult(false);
-				}
-			});
-        	builder.setItems(items, new customDialogOnClickListener(call, items));
-        	AlertDialog alert = builder.create();        	
-        	//The above line didn't show the dialog i added this line:
-        	alert.show();
+			call.postponeResult();
 
             return true;
 		}
