@@ -35,17 +35,26 @@ import org.apache.commons.io.IOUtils;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -58,6 +67,14 @@ import android.webkit.WebView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+/*
+import jp.co.cyberagent.android.gpuimage.GPUImage;
+import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
+import jp.co.cyberagent.android.gpuimage.GPUImageRenderer;
+import jp.co.cyberagent.android.gpuimage.GPUImageSobelEdgeDetection;
+import jp.co.cyberagent.android.gpuimage.GPUImageView;
+import jp.co.cyberagent.android.gpuimage.PixelBuffer;
+import jp.co.cyberagent.android.gpuimage.Rotation;*/
 
 public class Utils {
 
@@ -90,35 +107,120 @@ public class Utils {
     }
  
     
-    public static void downloadImage(String url, int maxHeight, SimpleImageLoadingListener listener, Context context)
+    public static void downloadImage(String url, final int maxWidth, final int maxHeight, SimpleImageLoadingListener listener, final Context context)
     {
     	AppDeck appDeck = AppDeck.getInstance();
-    	
-    	final int height = maxHeight;
     	DisplayImageOptions options = appDeck.getDisplayImageOptionsBuilder()
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
         .preProcessor(new BitmapProcessor() {
 			
 			@Override
-			public Bitmap process(Bitmap in) {
-				// TODO Auto-generated method stub
-            	int width = in.getWidth() * height / in.getHeight();
-            	if (width > 0 && height > 0)
-            		return Bitmap.createScaledBitmap(in, width, height, true);
-            	return in;
+			public Bitmap process(Bitmap unscaledBitmap) {
+
+				int width = unscaledBitmap.getWidth() * maxHeight / unscaledBitmap.getHeight();
+
+				if (width <= 0 || maxHeight <= 0)
+					return unscaledBitmap;
+
+/*				if (Utils.supportsOpenGLES2(context)) {
+					//GPUImageFilter filter = new GPUImageSobelEdgeDetection();
+					GPUImageFilter filter = new GPUImageFilter();
+					GPUImageRenderer gpuImageRenderer = new GPUImageRenderer(filter);
+					//gpuImageRenderer.setImageBitmap(unscaledBitmap, false);
+					gpuImageRenderer.setRotation(Rotation.NORMAL, gpuImageRenderer.isFlippedHorizontally(), gpuImageRenderer.isFlippedVertically());
+					gpuImageRenderer.setScaleType(GPUImage.ScaleType.CENTER_INSIDE);
+					PixelBuffer buffer = new PixelBuffer(width, maxHeight);
+					buffer.setRenderer(gpuImageRenderer);
+					gpuImageRenderer.setImageBitmap(unscaledBitmap, false);
+					Bitmap result = buffer.getBitmap();
+					filter.destroy();
+					gpuImageRenderer.deleteImage();
+					buffer.destroy();
+
+					unscaledBitmap.recycle();
+
+					return result;
+				}*/
+
+				/*
+				GPUImage GPUImage = new GPUImage(context);
+				GPUImage.setFilter(new GPUImageSobelEdgeDetection());
+				/*GPUImageView view = new GPUImageView(context);
+				view.getLayoutParams().width = width;
+				view.getLayoutParams().height = maxHeight;*/
+				//GPUImage.setImage(unscaledBitmap);
+				//GPUImage.saveToPictures("GPUImage", "ImageWithFilter.jpg", null);
+
+				/*return GPUImage.getBitmapWithFilterApplied();*/
+
+                /*try {
+                    int width = unscaledBitmap.getWidth() * maxHeight / unscaledBitmap.getHeight();
+                    MagickImage[] images = new MagickImage[1];
+                    images[0] = MagickBitmap.fromBitmap(unscaledBitmap);
+                    final MagickImage img = new MagickImage(images);
+                    MagickImage sampledImg = img.scaleImage(width, maxHeight);
+                    Bitmap newBitmap = MagickBitmap.ToBitmap(sampledImg);
+                    unscaledBitmap.recycle();
+                    images[0].destroyImages();
+                    img.destroyImages();
+                    sampledImg.destroyImages();
+                    return newBitmap;
+                } catch (MagickException e) {
+                    e.printStackTrace();
+                }*/
+                //return null;
+            	 {
+					Rect srcRect = new Rect(0, 0, unscaledBitmap.getWidth(), unscaledBitmap.getHeight());
+					Rect dstRect = new Rect(0, 0, width, maxHeight);
+
+                    //Matrix matrix = new Matrix();
+                    //matrix.postScale(width, maxHeight);
+                    //Bitmap scaledBitmap = Bitmap.createBitmap(unscaledBitmap, 0, 0, width, maxHeight, matrix, true);
+
+                    //Bitmap scaledBitmap = Bitmap.createScaledBitmap(unscaledBitmap, width, maxHeight, false);
+
+                    //return resizedBitmap;
+
+					Bitmap scaledBitmap = Bitmap.createBitmap(width, maxHeight, Bitmap.Config.ARGB_8888);
+					Canvas canvas = new Canvas(scaledBitmap);
+					canvas.drawBitmap(unscaledBitmap, srcRect, dstRect, new Paint(Paint.FILTER_BITMAP_FLAG|Paint.ANTI_ALIAS_FLAG));
+					unscaledBitmap.recycle();
+					return scaledBitmap;
+					//return Bitmap.createScaledBitmap(in, width, height, true);
+				}
+
+            	//return unscaledBitmap;
 			}
 		})
         .build();
         // Load image, decode it to Bitmap and return Bitmap to callback
         //appDeck.imageLoader.loadImage(url, options, listener);
-        ImageSize targetSize = new ImageSize(0, 0);
-        ImageView fakeImage = new ImageView(context);
-        fakeImage.setLayoutParams(new LayoutParams(targetSize.getWidth(), targetSize.getHeight()));
-        fakeImage.setScaleType(ScaleType.CENTER_CROP);
-        appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});
+        ImageSize targetSize = new ImageSize(maxWidth, maxHeight);
+        //ImageView fakeImage = new ImageView(context);
+        //fakeImage.setLayoutParams(new LayoutParams(targetSize.getWidth(), targetSize.getHeight()));
+        //fakeImage.setScaleType(ScaleType.CENTER_CROP);
+		appDeck.imageLoader.loadImage(url, targetSize, options, listener);
+		//appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});
     }
-    
+
+	public static boolean supportsOpenGLES2(final Context context) {
+		final ActivityManager activityManager = (ActivityManager)
+				context.getSystemService(Context.ACTIVITY_SERVICE);
+		final ConfigurationInfo configurationInfo =
+				activityManager.getDeviceConfigurationInfo();
+		return configurationInfo.reqGlEsVersion >= 0x20000;
+	}
+
     public static void downloadIcon(String url, final int maxHeight, SimpleImageLoadingListener listener, Context context)
     {
+        if (true) {
+            Utils.downloadImage(url, maxHeight, maxHeight, listener, context);
+            return;
+        }
+/*
     	AppDeck appDeck = AppDeck.getInstance();
     	
     	DisplayImageOptions options = appDeck.getDisplayImageOptionsBuilder()
@@ -143,7 +245,7 @@ public class Utils {
         ImageView fakeImage = new ImageView(context);
         fakeImage.setLayoutParams(new LayoutParams(targetSize.getWidth(), targetSize.getHeight()));
         //fakeImage.setScaleType(ScaleType.CENTER_CROP);
-        appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});        
+        appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});        */
 
     }    
 
@@ -224,27 +326,28 @@ public class Utils {
     	return null;
     }
     */
-	public static String getUid(Context context){
-		TelephonyManager telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		String deviceId = telManager.getDeviceId();
-		if(deviceId==null){
-			deviceId = telManager.getSimSerialNumber();
-			if(deviceId==null){
-				deviceId = telManager.getSubscriberId();
-			}else{
-				SharedPreferences preferences = context.getSharedPreferences("AppDeck", Context.MODE_PRIVATE);	
-				long uid = preferences.getLong("uid", 0);
-				if(uid==0){
-					uid = System.currentTimeMillis();
-					Editor editor = preferences.edit();
-					editor.putLong("uid", uid);
-					editor.apply();
-				}
-				deviceId = String.valueOf(uid);
-			}
-		}
-		return deviceId;
-	}	    
+	public static String getUid(Context context) {
+        String deviceId = null;
+        TelephonyManager telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (telManager != null)
+            deviceId = telManager.getDeviceId();
+        if (telManager != null && deviceId == null)
+            deviceId = telManager.getSimSerialNumber();
+        if (telManager != null && deviceId == null)
+            deviceId = telManager.getSubscriberId();
+        if (deviceId == null) {
+            SharedPreferences preferences = context.getSharedPreferences("AppDeck", Context.MODE_PRIVATE);
+            long uid = preferences.getLong("uid", 0);
+            if (uid == 0) {
+                uid = System.currentTimeMillis();
+                Editor editor = preferences.edit();
+                editor.putLong("uid", uid);
+                editor.apply();
+            }
+            deviceId = String.valueOf(uid);
+        }
+        return deviceId;
+    }
     
 	public static String getApplicationName(Context context) {
 	    int stringId = context.getApplicationInfo().labelRes;
@@ -592,4 +695,19 @@ public class Utils {
         InetSocketAddress isa = (InetSocketAddress) sa;
         return isa.getPort();
     }
+/*
+	public static ImageView getLogoView(Toolbar toolbar) {
+		try {
+			Class<?> toolbarClass = Toolbar.class;
+			Field logoViewField = toolbarClass.getDeclaredField("mLogoView");
+			logoViewField.setAccessible(true);
+			ImageView logoView = (ImageView) logoViewField.get(toolbar);
+
+			return logoView;
+		}
+		catch (NoSuchFieldException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}*/
 }
