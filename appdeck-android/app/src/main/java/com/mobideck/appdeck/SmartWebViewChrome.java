@@ -10,7 +10,6 @@ import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,12 +23,14 @@ import android.os.Environment;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -559,38 +560,17 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public boolean onJsAlert(WebView view, String url, String message, final JsResult result)
         {
             if (root != null) {
-
                 new MaterialDialog.Builder(getContext())
                         .content(message)
                         .positiveText(android.R.string.ok)
-                        .cancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                result.confirm();
-                            }
-                        })
+                        .cancelable(false)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                                result.confirm();
+                            result.confirm();
                             }
                         })
                         .show();
-/*
-                new AlertDialog.Builder(root.loader)
-                        //.setTitle("javaScript dialog")
-                        .setMessage(message)
-                        .setPositiveButton(android.R.string.ok,
-                                new AlertDialog.OnClickListener()
-                                {
-                                    public void onClick(DialogInterface dialog, int which)
-                                    {
-                                        result.confirm();
-                                    }
-                                })
-                        .setCancelable(false)
-                        .create()
-                        .show();*/
             }
             return true;
         };
@@ -599,22 +579,23 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         public boolean onJsConfirm(WebView view, String url, String message, final JsResult result)
         {
             if (root != null) {
-                new AlertDialog.Builder(root.loader)
-                        //.setTitle("javaScript dialog")
-                        .setMessage(message)
-                        .setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        result.confirm();
-                                    }
-                                })
-                        .setNegativeButton(android.R.string.cancel,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        result.cancel();
-                                    }
-                                })
-                        .create()
+                new MaterialDialog.Builder(root.loader)
+                        .content(message)
+                        .positiveText(android.R.string.ok)
+                        .negativeText(android.R.string.cancel)
+                        .cancelable(false)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                result.confirm();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                result.cancel();
+                            }
+                        })
                         .show();
             }
             return true;
@@ -668,30 +649,17 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             ((TextView)v.findViewById(R.id.prompt_message_text)).setText(message);
             ((EditText)v.findViewById(R.id.prompt_input_field)).setText(defaultValue);
 
-            new AlertDialog.Builder(root.loader)
-                .setTitle("javaScript dialog")
-                .setView(v)
-                .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                String value = ((EditText)v.findViewById(R.id.prompt_input_field)).getText()
-                                        .toString();
-                                result.confirm(value);
-                            }
-                        })
-                .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                result.cancel();
-                            }
-                        })
-                .setOnCancelListener(
-                        new DialogInterface.OnCancelListener() {
-                            public void onCancel(DialogInterface dialog) {
-                                result.cancel();
-                            }
-                        })
-                .show();
+            new MaterialDialog.Builder(root.loader)
+                    //.title(R.string.input)
+                    .content(message)
+                    .cancelable(false)
+                    .inputType(InputType.TYPE_CLASS_TEXT)
+                    .input(defaultValue, defaultValue, new MaterialDialog.InputCallback() {
+                        @Override
+                        public void onInput(MaterialDialog dialog, CharSequence input) {
+                            result.confirm(input.toString());
+                        }
+                    }).show();
             return true;
         };
 
@@ -997,6 +965,25 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     public void clearAllCache()
     {
         clearCache(true);
+    }
+
+    public void clearCookies()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            Log.d(TAG, "Using ClearCookies code for API >=" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else
+        {
+            Log.d(TAG, "Using ClearCookies code for API <" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(root.loader);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
     }
 
 }
