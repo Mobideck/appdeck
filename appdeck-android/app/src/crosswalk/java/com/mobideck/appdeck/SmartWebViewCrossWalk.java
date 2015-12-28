@@ -60,7 +60,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
     public static void setPreferences(Loader loader)
     {
         XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if (true)
         {
             boolean shouldEnableDebug = false;
             if (AppDeck.getInstance().isAppdeckTestApp(loader))
@@ -97,7 +97,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	
 	public boolean shouldLoadFromCache = false;
 	
-    public boolean catchLink = true;
+    public boolean disableCatchLink = true;
 
 	public SmartWebViewCrossWalk(AppDeckFragment root) {
 		super(root.loader, root.loader);
@@ -499,7 +499,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	
 	    	  Log.i(TAG, "shouldOverrideUrlLoading (not firstLoad) :"+url);
 	    	  
-	    	if (catchLink == false)
+	    	if (disableCatchLink == true)
 	    		return false;
 
             if (root != null) {
@@ -793,7 +793,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			Log.i("API", uri.getPath()+" **DISABLE CATCH LINK**");
 			
 			boolean value = call.input.getBoolean("param");
-			((SmartWebViewCrossWalk)call.smartWebView).catchLink = value;
+			((SmartWebViewCrossWalk)call.smartWebView).disableCatchLink = value;
 			
 			return true;
 		}
@@ -908,4 +908,5 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	{
 		clearCache(true);
 	}
+
 }
