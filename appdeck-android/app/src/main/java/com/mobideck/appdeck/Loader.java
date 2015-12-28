@@ -51,6 +51,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -68,14 +69,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -161,6 +165,7 @@ public class Loader extends AppCompatActivity {
 
     public boolean willShowActivity = false;
 
+    public String actionBarContent = null;
 
     Crashlytics crashlytics;
 
@@ -176,7 +181,7 @@ public class Loader extends AppCompatActivity {
     protected void onCreatePass(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     }
-    
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         //Debug.startMethodTracing("calc");
@@ -398,6 +403,10 @@ public class Loader extends AppCompatActivity {
             return;
 
         appDeck.actionBarHeight = getActionBarHeight();
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        appDeck.actionBarWidth = size.x;
 
         if (appDeck.config.topbar_color != null)
             getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
@@ -601,7 +610,7 @@ public class Loader extends AppCompatActivity {
         // Logs 'install' and 'app activate' App Events.
         if (mPostLoadLoadingCalled)
             AppEventsLogger.activateApp(this);
-        //enableProxy();
+        enableProxy();
         if (adManager != null)
             adManager.onActivityResume();
     }
@@ -621,7 +630,7 @@ public class Loader extends AppCompatActivity {
         }
     	if (appDeck.noCache)
     		Utils.killApp(true);
-        //disableProxy();
+        disableProxy();
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
         if (adManager != null)
@@ -1810,7 +1819,7 @@ public class Loader extends AppCompatActivity {
           if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
        }
-       
+
        return actionBarHeight;
     }
 
@@ -2353,33 +2362,23 @@ public class Loader extends AppCompatActivity {
             return;
         mProgressBarDeterminate.setProgress(progress);*/
     }
-/*
+
     void enableProxy()
     {
-        System.setProperty("http.proxyHost", this.proxyHost);
-        System.setProperty("http.proxyPort", this.proxyPort + "");
-        //System.setProperty("https.proxyHost", this.proxyHost);
-        //System.setProperty("https.proxyPort", this.proxyPort + "");
-        try {
-            //WebkitProxy3.setProxy(this, new WebView(), proxyHost, proxyPort, Application.class.getCanonicalName());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (this.proxyHost != null) {
+            System.setProperty("http.proxyHost", this.proxyHost);
+            System.setProperty("http.proxyPort", this.proxyPort + "");
         }
     }
 
     void disableProxy()
     {
         if (this.originalProxyHost != null) {
-            System.setProperty("http.proxyHost", this.proxyHost);
-            System.setProperty("http.proxyPort", this.proxyPort + "");
-            //System.setProperty("https.proxyHost", this.proxyHost);
-            //System.setProperty("https.proxyPort", this.proxyPort + "");
+            System.setProperty("http.proxyHost", this.originalProxyHost);
+            System.setProperty("http.proxyPort", this.originalProxyPort + "");
         } else {
             System.setProperty("http.proxyHost", "");
             System.setProperty("http.proxyPort", "");
-            //System.setProperty("https.proxyHost", "");
-            //System.setProperty("https.proxyPort", "");
         }
-    }*/
+    }
 }
