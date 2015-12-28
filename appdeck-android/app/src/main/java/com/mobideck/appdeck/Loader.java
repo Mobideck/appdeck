@@ -1,5 +1,7 @@
 package com.mobideck.appdeck;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.crashlytics.android.Crashlytics;
 
 import hotchemi.android.rate.AppRate;
@@ -53,12 +55,14 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -161,6 +165,8 @@ public class Loader extends AppCompatActivity {
     ProgressBarIndeterminate mProgressBarIndeterminate;*/
 
     Toolbar mToolbar;
+    Drawable mUpArrow;
+    Drawable mClose;
 
     private boolean historyInjected = false;
     public List<String> historyUrls = new ArrayList<String>();
@@ -357,9 +363,9 @@ public class Loader extends AppCompatActivity {
 
         // configure action bar
 
-        final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        upArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
-        mDrawerToggle.setHomeAsUpIndicator(upArrow);
+        mUpArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mUpArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
+        mDrawerToggle.setHomeAsUpIndicator(mUpArrow);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
         getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
@@ -409,6 +415,13 @@ public class Loader extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         appDeck.actionBarWidth = size.x;
+
+        Utils.downloadIcon(appDeck.config.icon_close.toString(), appDeck.actionBarHeight, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                mClose = new BitmapDrawable(loadedImage);
+            }
+        }, this);
 
         if (appDeck.config.topbar_color != null)
             getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
@@ -1645,7 +1658,10 @@ public class Loader extends AppCompatActivity {
                             mycall.sendCallBackWithError(exception.getMessage());
                         }
                     });
-            call.postponeResult();
+            //call.postponeResult();
+
+            call.setResult(Boolean.valueOf(true));
+
             willShowActivity = true;
             LoginManager.getInstance().logInWithReadPermissions(this, permissions);
 
@@ -1694,6 +1710,9 @@ public class Loader extends AppCompatActivity {
                     e.printStackTrace();
                 }
             });
+
+            //call.setResult(Boolean.valueOf(true));
+
             return true;
 
         }
@@ -1713,21 +1732,7 @@ public class Loader extends AppCompatActivity {
 
             evaluateJavascript("document.cookie.split(\";\").forEach(function(c) { document.cookie = c.replace(/^ +/, \"\").replace(/=.*/, \"=;expires=\" + new Date().toUTCString() + \";path=/\"); });");
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                Log.d(TAG, "Using ClearCookies code for API >=" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
-                CookieManager.getInstance().removeAllCookies(null);
-                CookieManager.getInstance().flush();
-            } else
-            {
-                Log.d(TAG, "Using ClearCookies code for API <" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
-                CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(this);
-                cookieSyncMngr.startSync();
-                CookieManager cookieManager=CookieManager.getInstance();
-                cookieManager.removeAllCookie();
-                cookieManager.removeSessionCookie();
-                cookieSyncMngr.stopSync();
-                cookieSyncMngr.sync();
-            }
+            call.smartWebView.clearCookies();
 
             return true;
         }
@@ -2312,27 +2317,26 @@ public class Loader extends AppCompatActivity {
             if (pushDialogInProgress)
                 return;
             pushDialogInProgress = true;
-            new AlertDialog.Builder(Loader.this)
-            //.setTitle("javaScript dialog")
-            .setMessage(title)
-            .setPositiveButton(android.R.string.ok, 
-                    new DialogInterface.OnClickListener() 
-                    {
-                        public void onClick(DialogInterface dialog, int which) 
-                        {
-                        	loadPage(url);
-                        }
-                    })
-            .setNegativeButton(android.R.string.cancel, 
-                    new DialogInterface.OnClickListener() 
-                    {
-                        public void onClick(DialogInterface dialog, int which) 
-                        {
+
+            new MaterialDialog.Builder(Loader.this)
+                    .content(title)
+                    .positiveText(android.R.string.ok)
+                    .negativeText(android.R.string.cancel)
+                    .cancelable(false)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                            loadPage(url);
                             pushDialogInProgress = false;
                         }
                     })
-            .create()
-            .show();      		
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                            pushDialogInProgress = false;
+                        }
+                    })
+                    .show();
     	}
     }
     
