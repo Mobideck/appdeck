@@ -63,6 +63,9 @@ public interface SmartWebViewInterface {
 
     public void clearAllCache();
 
+    public void clearCookies();
+
+
     // Webview API
     public void smartWebViewGoBack();
     public void smartWebViewGoForward();
