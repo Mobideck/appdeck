@@ -277,9 +277,19 @@ public class CacheFilters implements HttpFilters {
        			}
     		}
 
-			// set app id and user id
-			request.headers().set("AppDeck-App-Key", appDeck.config.app_api_key);
-			request.headers().set("AppDeck-User-ID", appDeck.uid);
+			if (appDeck == null || appDeck.config == null) {
+				Log.e(TAG, "appdeck config not ready");
+			} else {
+				// set app id and user id
+				if (appDeck.config.app_api_key != null)
+					request.headers().set("AppDeck-App-Key", appDeck.config.app_api_key);
+				else
+					Log.e(TAG, "app api key is null");
+				if (appDeck.uid != null)
+					request.headers().set("AppDeck-User-ID", appDeck.uid);
+				else
+					Log.e(TAG, "app uid is null");
+			}
 
    			Log.i(TAG, " DOWNLOAD " + absoluteURL);
 
