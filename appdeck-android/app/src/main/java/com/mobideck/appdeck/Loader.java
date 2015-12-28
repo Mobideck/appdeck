@@ -84,6 +84,8 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
@@ -1704,6 +1706,34 @@ public class Loader extends AppCompatActivity {
             evaluateJavascript(js);
             return true;
         }
+
+        if (call.command.equalsIgnoreCase("clearcookies"))
+        {
+            Log.i("API", " **CLEAR COOKIES**");
+
+            evaluateJavascript("document.cookie.split(\";\").forEach(function(c) { document.cookie = c.replace(/^ +/, \"\").replace(/=.*/, \"=;expires=\" + new Date().toUTCString() + \";path=/\"); });");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                Log.d(TAG, "Using ClearCookies code for API >=" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+                CookieManager.getInstance().removeAllCookies(null);
+                CookieManager.getInstance().flush();
+            } else
+            {
+                Log.d(TAG, "Using ClearCookies code for API <" + String.valueOf(Build.VERSION_CODES.LOLLIPOP_MR1));
+                CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(this);
+                cookieSyncMngr.startSync();
+                CookieManager cookieManager=CookieManager.getInstance();
+                cookieManager.removeAllCookie();
+                cookieManager.removeSessionCookie();
+                cookieSyncMngr.stopSync();
+                cookieSyncMngr.sync();
+            }
+
+            return true;
+        }
+
+        /*Please call CookieSyncManager.getInstance().sync() immediately after CookieManager.getInstance().removeAllCookie() call.*/
+
 
 		Log.i("API ERROR", call.command);
 		return false;
