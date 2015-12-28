@@ -95,6 +95,12 @@ public class AppDeckFragment extends Fragment {
         this.loader = (Loader)activity;
         if (isPopUp) {
             this.loader.disableMenu();
+
+/*			if (loader.mClose != null) {
+				loader.mDrawerToggle.setHomeAsUpIndicator(loader.mClose);
+				loader.getSupportActionBar().setDisplayHomeAsUpEnabled(false); // show icon on the left of logo
+			}*/
+
             //this.loader.enableFullScreen();
         }
 
