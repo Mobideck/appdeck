@@ -310,6 +310,12 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
       // clean headers
       unset($headers['Set-Cookie']);
       unset($headers['set-cookie']);
+      unset($headers['Content-Length']);
+      // only keep content type
+      if (isset($headers['Content-Type']))
+        $headers = array('Content-Type' => $headers['Content-Type']);
+      else
+        $headers = array('Content-Type' => 'application/octet-stream');
       $res = file_put_contents($output_file_path_meta, json_encode($headers));
       if ($res == false)
         appdeck_warning("failed to write resource meta {$url} in {$output_file_path_meta}");
