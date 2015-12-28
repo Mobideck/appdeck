@@ -138,17 +138,29 @@ public class AppDeckJsonNode
 		try {
             for (int k = 0; k < names.length; k++) {
                 if (root.has(names[k])) {
+                    int valueInt = root.optInt(names[k], -1);
+                    if (valueInt == 0)
+                        return false;
+                    if (valueInt == 1)
+                        return true;
+                    String valueString = root.optString(names[k], null);
+                    if (valueString != null) {
+                        if (valueString.equalsIgnoreCase("1") || valueString.equalsIgnoreCase("true"))
+                            return true;
+                        if (valueString.equalsIgnoreCase("0") || valueString.equalsIgnoreCase("false"))
+                            return false;
+                    }
                     return root.getBoolean(names[k]);
                 }
             }
 		} catch (Exception e) {
-            for (int k = 0; k < names.length; k++) {
+            /*for (int k = 0; k < names.length; k++) {
                 if (root.has(names[k])) {
                     String val = getString(names[k]);
                     if (val.equalsIgnoreCase("1"))
                         return true;
                 }
-            }
+            }*/
 		}
         return false;
 	}
