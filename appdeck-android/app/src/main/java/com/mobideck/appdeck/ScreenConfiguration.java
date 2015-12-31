@@ -21,19 +21,43 @@ public class ScreenConfiguration {
 	public Pattern notUrlRegexp[];
 	
 	public int ttl;
-	
+
+	public boolean isDefault = false;
 	
 	public static ScreenConfiguration defaultConfiguration()
 	{
 		ScreenConfiguration config = new ScreenConfiguration();
 		config.title = "None (default config)";
 		config.ttl = 600;
+		config.isDefault = true;
 		return config;
 	}
 	
 	private ScreenConfiguration()
 	{
 		
+	}
+
+	public String getDescription() {
+		String r = 	"Title: "+ title + "\n" +
+					"logo: "+ logo + "\n" +
+					"type: "+ type + "\n" +
+					"isPopUp: "+ isPopUp + "\n" +
+					"enableShare: "+ enableShare + "\n" +
+					"urlRegexp: ";
+		for (int i = 0; i < urlRegexp.length; i++) {
+			Pattern regexp = urlRegexp[i];
+			r = r + " '" + regexp.toString() + "'";
+		}
+
+		r = r + "\nnotUrlRegexp: ";
+
+		for (int i = 0; i < notUrlRegexp.length; i++) {
+			Pattern regexp = notUrlRegexp[i];
+			r = r + " '" + notUrlRegexp.toString() + "'";
+		}
+
+		return r;
 	}
 	
 	public PageMenuItem[] getDefaultPageMenuItems(URI baseUrl, AppDeckFragment fragment)
