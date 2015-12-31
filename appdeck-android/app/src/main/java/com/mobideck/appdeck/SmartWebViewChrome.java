@@ -223,9 +223,11 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     {
         WebSettings webSettings = getSettings();
 
-        userAgent = webSettings.getUserAgentString() + " AppDeck AppDeck-Android "+appDeck.packageName+"/"+appDeck.config.app_version;
-        if (appDeck.userAgent == null)
-            appDeck.userAgent = userAgent;
+        if (appDeck != null && appDeck.config != null) {
+            userAgent = webSettings.getUserAgentString() + " AppDeck AppDeck-Android " + appDeck.packageName + "/" + appDeck.config.app_version;
+            if (appDeck.userAgent == null)
+                appDeck.userAgent = userAgent;
+        }
 
         webSettings.setUserAgentString(userAgent);
 
@@ -291,7 +293,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
         WebView.setWebContentsDebuggingEnabled(true);
 */
-        if (appDeck.noCache)
+        if (appDeck != null && appDeck.noCache)
         {
             webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
             webSettings.setAppCacheEnabled(false);
