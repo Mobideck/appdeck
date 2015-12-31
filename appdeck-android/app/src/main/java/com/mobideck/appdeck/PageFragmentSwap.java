@@ -21,9 +21,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -347,12 +349,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 		} else {
 			// does page is in cache ?*/
 
-		String toast = "none";
+		String toast;
+		int toast_color;
 
 		if (screenConfiguration.ttl == -1)
 		{
-			toast = "Cache DISABLED SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl;
+			toast = "Cache DISABLED ttl: "+screenConfiguration.ttl +" sec";
 			pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_NO_CACHE);
+			toast_color = Utils.dangerColor();
 		} else {
 			CacheManager.CacheResult cacheResult = appDeck.cache.isInCache(currentPageUrl);
 			if (cacheResult.isInCache) {
@@ -363,21 +367,42 @@ public class PageFragmentSwap extends AppDeckFragment {
                     loader.justLaunch = false;
                 }
 				if (ttl > ((now - cacheResult.lastModified) / 1000)) {
-					toast = "Cache HIT SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000;
+					toast = "Cache HIT ttl: " + screenConfiguration.ttl + " sec " + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " age: " + (now - cacheResult.lastModified) / 1000 + " sec ";
 					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
+					toast_color = Utils.successColor();
 				} else {
-					toast = "Cache MISS (DEPRECATED) SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " cache time: " + cacheResult.lastModified + " now: " + now + " diff: " + (now - cacheResult.lastModified) / 1000;
+					toast = "Cache MISS (DEPRECATED) ttl: " + screenConfiguration.ttl + " sec " + (loader.justLaunch ? "(app just start, shorten to:" + ttl + ")" : "") + " age: " + (now - cacheResult.lastModified) / 1000 + " sec ";
 					pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
 					shouldReloadFromBackgrounfOnError = true;
+					toast_color = Utils.infoBlueColor();
 				}
 			} else {
-				toast = "Cache MISS SCREEN:[" + screenConfiguration.title + "] ttl: " + screenConfiguration.ttl + " page IS NOT IN CACHE";
+				toast = "Cache MISS (NOT IN CACHE) ttl: " + screenConfiguration.ttl + " sec ";
 				pageWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_DEFAULT);
 				shouldReloadFromBackgrounfOnError = true;
+				toast_color = Utils.warningColor();
 			}
 		}
-		if (appDeck.isDebugBuild)
-			Toast.makeText(loader, toast, Toast.LENGTH_SHORT).show();
+		if (screenConfiguration.isDefault)
+			toast_color = Utils.antiqueWhiteColor();
+		if (appDeck.isDebugBuild) {
+			Snackbar
+					.make(rootView, toast, Snackbar.LENGTH_LONG)
+					.setAction(screenConfiguration.title, new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							new MaterialDialog.Builder(loader)
+									.content("Url: " + currentPageUrl + "\n\n" + screenConfiguration.getDescription())
+									.positiveText(android.R.string.ok)
+									.show();
+						}
+					})
+					.setActionTextColor(toast_color)
+					.show(); // Don’t forget to show!
+			//Toast.makeText(loader, toast, Toast.LENGTH_SHORT).show();
+		} else {
+			Log.i(TAG, screenConfiguration.title + ": "+ toast);
+		}
 		pageWebView.ctl.loadUrl(absoluteUrl);
 		lastUrlLoad = System.currentTimeMillis();
 	}
