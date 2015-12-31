@@ -329,13 +329,17 @@ public class Utils {
     */
 	public static String getUid(Context context) {
         String deviceId = null;
-        TelephonyManager telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        if (telManager != null)
-            deviceId = telManager.getDeviceId();
-        if (telManager != null && deviceId == null)
-            deviceId = telManager.getSimSerialNumber();
-        if (telManager != null && deviceId == null)
-            deviceId = telManager.getSubscriberId();
+		try {
+			TelephonyManager telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+			if (telManager != null)
+				deviceId = telManager.getDeviceId();
+			if (telManager != null && deviceId == null)
+				deviceId = telManager.getSimSerialNumber();
+			if (telManager != null && deviceId == null)
+				deviceId = telManager.getSubscriberId();
+		} catch (Exception e) {
+			
+		}
         if (deviceId == null) {
             SharedPreferences preferences = context.getSharedPreferences("AppDeck", Context.MODE_PRIVATE);
             long uid = preferences.getLong("uid", 0);
