@@ -48,6 +48,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -710,4 +711,29 @@ public class Utils {
 		}
 		return null;
 	}*/
+
+	// Predefined Colors
+	// System Colors
+	public static int infoBlueColor() {
+		return Color.rgb(47, 112, 225);
+	}
+
+	public static int successColor() {
+		return Color.rgb(83, 215, 106);
+	}
+
+	public static int warningColor() {
+		return Color.rgb(221, 170, 59);
+	}
+
+	public static int dangerColor() {
+		return Color.rgb(229, 0, 15);
+	}
+
+	public static int antiqueWhiteColor() {
+		return Color.rgb(250, 235, 215);
+	}
+
+
+
 }
