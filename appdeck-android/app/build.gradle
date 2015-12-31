@@ -37,7 +37,7 @@ android {
         applicationId "com.mobideck.appdeck"
 
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 67
         versionName "1.6.7"
 
