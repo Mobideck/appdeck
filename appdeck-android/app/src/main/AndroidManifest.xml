@@ -114,6 +114,12 @@
         <!-- Ginjfo -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1622h34412ab3c04f08e74e473a53b0dbd795"></meta-data>-->
 
+        <!-- Tatoo -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1571h24994efd99e8f6dacac48a298ac319f7"></meta-data>-->
+
+        <!-- Krewe -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1818hf63940ad7859260deba357b98fe1b3ef"></meta-data>-->
+
         <meta-data android:name="noCache" android:value="false" />
 
         <receiver
@@ -126,6 +132,12 @@
         </receiver>
         <service android:name=".GcmIntentService" />
 
+        <!-- Branch.io receiver -->
+        <!--<receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>-->
 
         <activity
             android:name=".Loader"
@@ -148,6 +160,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
+
+            <!-- Branch.io intent filter -->
+            <!--
+            <intent-filter>
+                <data android:scheme="branchio" android:host="open" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>-->
 
         </activity>
 
@@ -235,6 +256,10 @@
             android:name="com.ironsource.mobilcore.InterstitialVideoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:keepScreenOn="true" />
+
+
+        <!-- Branch.io -->
+        <!--<meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_adjV9Pb01wO0C4KJEQ2GifcoCEfz7Ad2" />-->
 
     </application>
 
