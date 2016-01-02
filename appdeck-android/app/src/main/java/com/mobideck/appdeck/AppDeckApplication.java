@@ -20,13 +20,30 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 
 import dalvik.system.DexClassLoader;
+//import io.branch.referral.Branch;
 import io.fabric.sdk.android.Fabric;
 
 public class AppDeckApplication extends android.support.multidex.MultiDexApplication {
 	
 	public boolean isInitialLoading;
 
-    @Override
+	private static AppDeck appDeck;
+
+	private static Context context;
+
+	public static Context getAppContext() {
+		return AppDeckApplication.context;
+	}
+
+	public static AppDeck getAppDeck() {
+		return AppDeckApplication.appDeck;
+	}
+
+	public void setupAppDeck(AppDeck appDeck) {
+		AppDeckApplication.appDeck = appDeck;
+	}
+
+	@Override
     public void attachBaseContext(Context base) {
         MultiDex.install(base);
         super.attachBaseContext(base);
@@ -35,6 +52,8 @@ public class AppDeckApplication extends android.support.multidex.MultiDexApplica
 	@Override
 	public void onCreate()
 	{
+		AppDeckApplication.context = getApplicationContext();
+		//Branch.getAutoInstance(this);
 		//android.os.Debug.startMethodTracing("start");
 /*	     if (true) {
 	         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()

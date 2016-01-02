@@ -31,7 +31,6 @@ public class AppDeck {
     //public boolean isAppdeckTestApp = false;
     public boolean isDebugBuild = false;
 
-
 	public static String TAG = "AppDeck";
 
 	public static String version = "1.6.0";
@@ -57,7 +56,10 @@ public class AppDeck {
 	public String packageName;
 	
 	public GA ga;
-	
+
+	public String proxyHost;
+	public int proxyPort;
+
 	public boolean isTablet = false;
 
 	Boolean appShouldRestart = false;
@@ -75,20 +77,21 @@ public class AppDeck {
 	
 	public java.net.CookieManager cookieMamager;
 	
-	private static AppDeck instance;
+	//private static AppDeck instance;
 
 	public RemoteAppCache remote = null;
 
 	public static AppDeck getInstance()
 	{
-        return instance;
+        return AppDeckApplication.getAppDeck();
     }
 
 	public String userAgent;
 
-    AppDeck(Context context, String app_conf_url)
+    AppDeck(AppDeckApplication appDeckApp, String app_conf_url)
     {
-    	instance = this;
+		Context context = appDeckApp.getApplicationContext();
+		appDeckApp.setupAppDeck(this);
 
 		AppDeck.error_html = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><meta http-equiv=\"cache-control\" content=\"max-age=0\" />\n" +
 				"<meta http-equiv=\"cache-control\" content=\"no-cache\" />\n" +
