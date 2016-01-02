@@ -153,7 +153,7 @@ public class CacheManager {
 		}
 		asset_path = "httpcache/" + asset_path + ".png";
 		try {
-			InputStream stream = manager.open(asset_path);
+			InputStream stream = manager.open(asset_path, AssetManager.ACCESS_STREAMING);
 			return stream;
 		} catch (IOException e) {
 			//e.printStackTrace();
