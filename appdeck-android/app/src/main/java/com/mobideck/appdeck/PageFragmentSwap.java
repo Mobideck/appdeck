@@ -387,8 +387,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 			toast_color = Utils.antiqueWhiteColor();
 		if (appDeck.isDebugBuild) {
 			Snackbar
-					.make(rootView, toast, Snackbar.LENGTH_LONG)
-					.setAction(screenConfiguration.title, new View.OnClickListener() {
+					.make(loader.findViewById(android.R.id.content)
+					, toast, Snackbar.LENGTH_LONG)
+					.setAction((screenConfiguration.title == null || screenConfiguration.title.isEmpty() ? "(no title)" : screenConfiguration.title), new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							new MaterialDialog.Builder(loader)
@@ -400,6 +401,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 					.setActionTextColor(toast_color)
 					.show(); // Don’t forget to show!
 			//Toast.makeText(loader, toast, Toast.LENGTH_SHORT).show();
+			DebugLog.info(screenConfiguration.title, toast);
 		} else {
 			Log.i(TAG, screenConfiguration.title + ": "+ toast);
 		}
