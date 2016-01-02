@@ -19,8 +19,8 @@
 # crashlytics
 -keep class com.crashlytics.** { *; }
 -keep class com.crashlytics.android.**
--keepattributes SourceFile,LineNumberTable *Annotation*
--keep public class * extends java.lang.Exception
+#-keepattributes SourceFile,LineNumberTable *Annotation*
+#-keep public class * extends java.lang.Exception
 
 # netty
 # Get rid of warnings about unreachable but unused classes referred to by Netty
