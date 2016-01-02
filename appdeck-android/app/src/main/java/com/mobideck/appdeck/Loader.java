@@ -6,6 +6,12 @@ import com.crashlytics.android.Crashlytics;
 
 import hotchemi.android.rate.AppRate;
 import hotchemi.android.rate.OnClickButtonListener;
+/*import io.branch.indexing.BranchUniversalObject;
+import io.branch.referral.Branch;
+import io.branch.referral.BranchError;
+import io.branch.referral.SharingHelper;
+import io.branch.referral.util.LinkProperties;
+import io.branch.referral.util.ShareSheetStyle;*/
 import io.fabric.sdk.android.Fabric;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -92,6 +98,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -214,7 +221,7 @@ public class Loader extends AppCompatActivity {
             public void run() {
                 Intent intent = getIntent();
                 String app_json_url = intent.getStringExtra(JSON_URL);
-                appDeck = new AppDeck(getBaseContext(), app_json_url);
+                appDeck = new AppDeck((AppDeckApplication)getApplication(), app_json_url);
 
                 Handler mainHandler = new Handler(getMainLooper());
                 Runnable myRunnable = new Runnable() {
@@ -416,12 +423,19 @@ public class Loader extends AppCompatActivity {
         display.getSize(size);
         appDeck.actionBarWidth = size.x;
 
-        Utils.downloadIcon(appDeck.config.icon_close.toString(), appDeck.actionBarHeight, new SimpleImageLoadingListener() {
+        FrameLayout debugLog = (FrameLayout)findViewById(R.id.debugLog);
+        Button debugLogButton = (Button) findViewById(R.id.closeDebug);
+        if (appDeck.isDebugBuild) {
+            new DebugLog(debugLog, debugLogButton);
+        } else {
+
+        }
+/*        Utils.downloadIcon(appDeck.config.icon_close.toString(), appDeck.actionBarHeight, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 mClose = new BitmapDrawable(loadedImage);
             }
-        }, this);
+        }, this);*/
 
         if (appDeck.config.topbar_color != null)
             getSupportActionBar().setBackgroundDrawable(appDeck.config.topbar_color.getDrawable());
@@ -485,6 +499,9 @@ public class Loader extends AppCompatActivity {
     private void loadLoading() {
         if (mUIReady == false || mAppDeckReady == false || mProxyReady == false)
             return;
+        appDeck.proxyHost = proxyHost;
+        appDeck.proxyPort = proxyPort;
+
         AppDeckFragment fragment = getCurrentAppDeckFragment();
         if (fragment != null) {
             if (fragment.isMain == false)
@@ -607,12 +624,60 @@ public class Loader extends AppCompatActivity {
         return (FrameLayout)findViewById(R.id.app_container);
     }
 
+    /*
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Branch branch = Branch.getInstance();
+
+        branch.initSession(new Branch.BranchReferralInitListener(){
+            @Override
+            public void onInitFinished(JSONObject referringParams, BranchError error) {
+                if (error == null) {
+                    // params are the deep linked params associated with the link that the user clicked -> was re-directed to this app
+                    // params will be empty if no data found
+                    // ... insert custom logic here ...
+                    String url = referringParams.optString("url", null);
+                    String title = referringParams.optString("title", null);
+                    String imageUrl = referringParams.optString("imageUrl", null);
+                    handlePushNotification(url, title, imageUrl);
+                } else {
+                    Log.i("MyApp", error.getMessage());
+                }
+            }
+        }, this.getIntent().getData(), this);
+    }*/
+
 	boolean isForeground = true;
+
+    /*
     @Override
     protected void onResume()
     {
     	super.onResume();
     	isForeground = true;
+        if (willShowActivity == false)
+            SmartWebViewFactory.onActivityResume(this);
+        willShowActivity = false; // always set it to false
+        IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
+        filter.setPriority(1);
+        if (appDeckBroadcastReceiver != null) {
+            appDeckBroadcastReceiver.loaderActivity = this;
+            registerReceiver(appDeckBroadcastReceiver, filter);
+        }
+        // Logs 'install' and 'app activate' App Events.
+        if (mPostLoadLoadingCalled)
+            AppEventsLogger.activateApp(this);
+        enableProxy();
+        if (adManager != null)
+            adManager.onActivityResume();
+    }*/
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        isForeground = true;
         if (willShowActivity == false)
             SmartWebViewFactory.onActivityResume(this);
         willShowActivity = false; // always set it to false
@@ -1738,9 +1803,36 @@ public class Loader extends AppCompatActivity {
         }
 
         /*Please call CookieSyncManager.getInstance().sync() immediately after CookieManager.getInstance().removeAllCookie() call.*/
+        if (call.command.equalsIgnoreCase("debug"))
+        {
+            String msg = call.input.getString("param");
+            Log.i("API", "**DEBUG** "+msg);
+            DebugLog.debug("JS", msg);
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("info"))
+        {
+            String msg = call.input.getString("param");
+            Log.i("API", "**INFO** "+msg);
+            DebugLog.info("JS", msg);
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("warning"))
+        {
+            String msg = call.input.getString("param");
+            Log.i("API", "**WARNING** "+msg);
+            DebugLog.warning("JS", msg);
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("error"))
+        {
+            String msg = call.input.getString("param");
+            Log.i("API", "**ERROR** "+msg);
+            DebugLog.error("JS", msg);
+            return true;
+        }
 
-
-		Log.i("API ERROR", call.command);
+        Log.i("API ERROR", call.command);
 		return false;
 	}
 	
@@ -1986,6 +2078,68 @@ public class Loader extends AppCompatActivity {
 	
 	public void share(String title, String url, String imageURL)
 	{
+        String identifier = (url != null ? url : imageURL);
+        if (identifier != null)
+            identifier = title;
+        /*
+        BranchUniversalObject branchUniversalObject = new BranchUniversalObject();
+        if (identifier != null)
+            branchUniversalObject.setCanonicalIdentifier(identifier);
+        if (title != null)
+            branchUniversalObject.setTitle(title);
+        if (imageURL != null)
+            branchUniversalObject.setContentImageUrl(imageURL);
+
+        branchUniversalObject.setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC);
+        if (title != null)
+            branchUniversalObject.addContentMetadata("title", title);
+        if (url != null)
+            branchUniversalObject.addContentMetadata("url", url);
+
+        LinkProperties linkProperties = new LinkProperties()
+                .setChannel("facebook")
+                .setFeature("sharing")
+                .addControlParameter("$desktop_url", url);
+                //.addControlParameter("$ios_url", "http://example.com/ios");
+
+        ShareSheetStyle shareSheetStyle = new ShareSheetStyle(this, title, url)
+                .setCopyUrlStyle(getResources().getDrawable(android.R.drawable.ic_menu_send), "Copy", "Added to clipboard")
+                .setMoreOptionStyle(getResources().getDrawable(android.R.drawable.ic_menu_search), "Show more")
+                .addPreferredSharingOption(SharingHelper.SHARE_WITH.FACEBOOK)
+                .addPreferredSharingOption(SharingHelper.SHARE_WITH.TWITTER)
+                .addPreferredSharingOption(SharingHelper.SHARE_WITH.EMAIL)
+                .addPreferredSharingOption(SharingHelper.SHARE_WITH.MESSAGE);
+
+        branchUniversalObject.showShareSheet(this,
+                linkProperties,
+                shareSheetStyle,
+                new Branch.BranchLinkShareListener() {
+                    @Override
+                    public void onShareLinkDialogLaunched() {
+                    }
+                    @Override
+                    public void onShareLinkDialogDismissed() {
+                    }
+                    @Override
+                    public void onLinkShareResponse(String sharedLink, String sharedChannel, BranchError error) {
+                    }
+                    @Override
+                    public void onChannelSelected(String channelName) {
+                    }
+                });*/
+        /*
+        branchUniversalObject.generateShortUrl(this, linkProperties, new Branch.BranchLinkCreateListener() {
+            @Override
+            public void onLinkCreate(String url, BranchError error) {
+                if (error == null) {
+                    Log.i("MyApp", "got my Branch link to share: " + url);
+                }
+            }
+        });*/
+/*
+        if (true)
+            return;*/
+
 
         android.support.v7.widget.ShareActionProvider shareProvider = null;
 
@@ -2218,6 +2372,8 @@ public class Loader extends AppCompatActivity {
     	super.onNewIntent(intent);
 
         SmartWebViewFactory.onActivityNewIntent(this, intent);
+
+        //this.setIntent(intent);
 
     	isForeground = true;
     	Bundle extras = intent.getExtras();
