@@ -16,6 +16,45 @@
 #   public *;
 #}
 
+# crashlytics
+-keep class com.crashlytics.** { *; }
+-keep class com.crashlytics.android.**
+-keepattributes SourceFile,LineNumberTable *Annotation*
+-keep public class * extends java.lang.Exception
+
+# netty
+# Get rid of warnings about unreachable but unused classes referred to by Netty
+-dontwarn org.jboss.**
+-dontwarn org.xbill.**
+-dontwarn org.apache.log4j.**
+-dontwarn org.apache.commons.logging.**
+-dontwarn sun.**
+-dontwarn com.sun.**
+-dontwarn javassist.**
+-dontwarn gnu.io.**
+-dontwarn com.barchart.**
+-dontwarn com.jcraft.**
+-dontwarn com.google.protobuf.**
+-dontwarn org.eclipse.**
+-dontwarn org.apache.tomcat.**
+-dontwarn org.bouncycastle.**
+-dontwarn java.nio.**
+-dontwarn java.net.**
+-dontwarn javax.net.**
+-dontwarn android.app.Notification
+# Needed by commons logging
+-keep class org.apache.commons.logging.* {*;}
+#Some Factory that seemed to be pruned
+-keep class java.util.concurrent.atomic.AtomicReferenceFieldUpdater {*;}
+-keep class java.util.concurrent.atomic.AtomicReferenceFieldUpdaterImpl{*;}
+#Some important internal fields that where removed
+-keep class org.jboss.netty.channel.DefaultChannelPipeline{volatile <fields>;}
+#A Factory which has a static factory implementation selector which is pruned
+-keep class org.jboss.netty.util.internal.QueueFactory{static <fields>;}
+#Some fields whose names need to be maintained because they are accessed using inflection
+-keepclassmembernames class org.jboss.netty.util.internal.**{*;}
+
+# android support
 -keep class !android.support.v7.internal.view.menu.*MenuBuilder*, android.support.v7.** { *; }
 -keep interface android.support.v7.** { *; }
 
@@ -37,17 +76,13 @@
 -keep class * extends java.util.ListResourceBundle {
     protected Object[][] getContents();
 }
-
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
     public static final *** NULL;
 }
-
 -keepnames @com.google.android.gms.common.annotation.KeepName class *
-
 -keepclassmembernames class * {
     @com.google.android.gms.common.annotation.KeepName *;
 }
-
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
@@ -58,13 +93,12 @@
 }
 -dontwarn com.google.android.gms.**
 
-
-#If you are using the InMobi SDK, add the following:
+# If you are using the InMobi SDK, add the following:
 # Preserve InMobi Ads classes
 -keep class com.inmobi.** { *;
 }
 -dontwarn com.inmobi.**
-#If you are using the Millennial Media SDK, add the following:
+# If you are using the Millennial Media SDK, add the following:
 # Preserve Millennial Ads classes
 -keep class com.millennialmedia.** { *;
 }
@@ -85,7 +119,7 @@
 # Mobile Core
 -keep class com.ironsource.mobilcore.**{ *; }
 
-#Twitter
+# Twitter
 -dontwarn com.squareup.okhttp.**
 -dontwarn com.google.appengine.api.urlfetch.**
 -dontwarn rx.**
@@ -98,3 +132,34 @@
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;
 }
+
+# facebook
+-dontwarn org.apache.http.**
+
+# smaato
+-dontwarn com.unity3d.player.**
+-keep public class com.smaato.soma.internal.connector.OrmmaBridge {
+    public *;
+}
+-keepattributes *Annotation*
+
+# crosswalk
+-dontwarn android.view.*
+-dontwarn android.webkit.*
+-dontwarn android.app.assist.*
+
+# remove log
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
+
+# bug in proguard
+# http://sourceforge.net/p/proguard/bugs/573/
+# java -jar /Applications/Android/sdk/tools/proguard/lib/proguard.jar
+# ProGuard, version 4.7
+-optimizations !class/unboxing/enum
