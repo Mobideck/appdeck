@@ -198,7 +198,7 @@ public class CacheFilters implements HttpFilters {
     		if (absoluteURL.startsWith("http://") == false && absoluteURL.startsWith("https://") == false)
     		{
 	    		if (absoluteURL.endsWith(":443"))
-	    			absoluteURL = "https://" + absoluteURL;
+	    			absoluteURL = "https://" + absoluteURL.substring(0, absoluteURL.length() - 4);
 	    		else
 	    			absoluteURL = "http://" + absoluteURL;
     		}
@@ -225,6 +225,8 @@ public class CacheFilters implements HttpFilters {
                 disableCache = true;
 			}
 
+			boolean isCacheMiss = false;
+
     		// request should be cached ?
             if (disableCache == false && (forceCache || forceReadFromCache))
     		{
@@ -247,10 +249,11 @@ public class CacheFilters implements HttpFilters {
            			if (response != null)
            			{	    			
     	    			Log.i(TAG, "CACHE HIT: "+absoluteURL);//+" Size:"+(data.length/1024)+"Kb");
+						DebugLog.info("CACHE HIT", absoluteURL);
     		    		return response;
            			}
-        		}        		
-    			Log.i(TAG, " CACHE MISS " + absoluteURL);
+        		}
+				isCacheMiss = true;
     		}
     		    		
     		// embed file ?
@@ -273,6 +276,7 @@ public class CacheFilters implements HttpFilters {
        			if (response != null)
        			{	    			
 	    			Log.i(TAG, "EMBED: "+absoluteURL);//+" Size:"+(data.length/1024)+"Kb");
+					DebugLog.info("EMBED", absoluteURL);
 		    		return response;
        			}
     		}
@@ -291,7 +295,13 @@ public class CacheFilters implements HttpFilters {
 					Log.e(TAG, "app uid is null");
 			}
 
-   			Log.i(TAG, " DOWNLOAD " + absoluteURL);
+			if (isCacheMiss) {
+				Log.i(TAG, " CACHE MISS " + absoluteURL);
+				DebugLog.info("CACHE MISS", absoluteURL);
+			} else {
+				Log.i(TAG, " DOWNLOAD " + absoluteURL);
+				DebugLog.warning("DOWNLOAD", absoluteURL);
+			}
 
     	}
 		} catch (Exception e) {
@@ -359,6 +369,7 @@ public class CacheFilters implements HttpFilters {
 		if (forceCache == true && httpObject instanceof HttpResponse)
 		{
 			Log.i(TAG, "< CACHE MISS SEND: " + absoluteURL);
+			DebugLog.info("CACHE MISS", absoluteURL);
 			HttpResponse response = (HttpResponse)httpObject;
 			return forceCache(response);
 		}			
