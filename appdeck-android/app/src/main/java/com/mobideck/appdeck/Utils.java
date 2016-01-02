@@ -1,19 +1,11 @@
 package com.mobideck.appdeck;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
@@ -27,11 +19,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import org.apache.commons.io.IOUtils;
 
-//import org.apache.commons.io.IOUtils;
+import com.mortennobel.imagescaling.ResampleOp;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -47,35 +38,19 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-/*
-import jp.co.cyberagent.android.gpuimage.GPUImage;
-import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
-import jp.co.cyberagent.android.gpuimage.GPUImageRenderer;
-import jp.co.cyberagent.android.gpuimage.GPUImageSobelEdgeDetection;
-import jp.co.cyberagent.android.gpuimage.GPUImageView;
-import jp.co.cyberagent.android.gpuimage.PixelBuffer;
-import jp.co.cyberagent.android.gpuimage.Rotation;*/
 
 public class Utils {
 
@@ -106,8 +81,7 @@ public class Utils {
     public static boolean hasExternalCacheDir() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     }
- 
-    
+
     public static void downloadImage(String url, final int maxWidth, final int maxHeight, SimpleImageLoadingListener listener, final Context context)
     {
     	AppDeck appDeck = AppDeck.getInstance();
@@ -115,16 +89,22 @@ public class Utils {
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
-				.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
-        .preProcessor(new BitmapProcessor() {
+				.imageScaleType(ImageScaleType.NONE_SAFE)
+                .preProcessor(new BitmapProcessor() {
 			
 			@Override
 			public Bitmap process(Bitmap unscaledBitmap) {
 
 				int width = unscaledBitmap.getWidth() * maxHeight / unscaledBitmap.getHeight();
 
-				if (width <= 0 || maxHeight <= 0)
+				if (width <= 3 || maxHeight <= 3)
 					return unscaledBitmap;
+
+				ResampleOp resampleOp = new ResampleOp(width, maxHeight);
+				Bitmap myscaledBitmap = Bitmap.createBitmap(width, maxHeight, Bitmap.Config.ARGB_8888);
+				myscaledBitmap = resampleOp.filter(unscaledBitmap, myscaledBitmap);
+				unscaledBitmap.recycle();
+				return myscaledBitmap;
 
 /*				if (Utils.supportsOpenGLES2(context)) {
 					//GPUImageFilter filter = new GPUImageSobelEdgeDetection();
@@ -172,6 +152,7 @@ public class Utils {
                 } catch (MagickException e) {
                     e.printStackTrace();
                 }*/
+				/*
                 //return null;
             	 {
 					Rect srcRect = new Rect(0, 0, unscaledBitmap.getWidth(), unscaledBitmap.getHeight());
@@ -191,7 +172,7 @@ public class Utils {
 					unscaledBitmap.recycle();
 					return scaledBitmap;
 					//return Bitmap.createScaledBitmap(in, width, height, true);
-				}
+				}*/
 
             	//return unscaledBitmap;
 			}
@@ -338,7 +319,7 @@ public class Utils {
 			if (telManager != null && deviceId == null)
 				deviceId = telManager.getSubscriberId();
 		} catch (Exception e) {
-			
+
 		}
         if (deviceId == null) {
             SharedPreferences preferences = context.getSharedPreferences("AppDeck", Context.MODE_PRIVATE);
