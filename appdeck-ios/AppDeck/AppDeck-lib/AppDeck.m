@@ -22,7 +22,6 @@
 #import "CustomWebViewFactory.h"
 #import "LoaderURLProtocol.h"
 #import "LogViewController.h"
-#import "JSONKit.h"
 #import "WebViewHistory.h"
 //#import "TestFlight.h"
 #import "MMPickerView/CustomMMPickerView.h"
