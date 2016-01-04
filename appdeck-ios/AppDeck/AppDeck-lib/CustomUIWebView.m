@@ -9,7 +9,6 @@
 #import "CustomUIWebView.h"
 #import "AppDeck.h"
 #import "AppDeckApiCall.h"
-#import "JSONKit.h"
 
 @implementation UIWebView (withProgress)
 

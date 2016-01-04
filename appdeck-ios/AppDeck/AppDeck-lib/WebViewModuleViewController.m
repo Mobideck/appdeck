@@ -8,7 +8,6 @@
 
 #import "WebViewModuleViewController.h"
 #import "UIView+align.h"
-#import "JSONKit.h"
 #import "QuartzCore/QuartzCore.h"
 #import "AppDeck.h"
 #import "LoaderViewController.h"
@@ -74,8 +73,8 @@
     NSData *inputJSONData = [inputJSON dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *tmpinput = nil;
     @try {
-        //tmpinput = [NSJSONSerialization JSONObjectWithData:inputJSONData options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:&error];
-        tmpinput = [inputJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+        tmpinput = [NSJSONSerialization JSONObjectWithData:inputJSONData options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:&error];
+        //tmpinput = [inputJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
     }
     @catch (NSException *exception) {
         NSLog(@"JSAPI: Exception while reading JSon: %@: %@", exception, inputJSON);

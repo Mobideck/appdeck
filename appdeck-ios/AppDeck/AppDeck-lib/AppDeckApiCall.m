@@ -8,7 +8,7 @@
 
 #import "AppDeckApiCall.h"
 #import "NSError+errorWithFormat.h"
-#import "JSONKit.h"
+//#import "JSONKit.h"
 #import "IOSVersion.h"
 #import "AppDeck.h"
 
@@ -90,8 +90,8 @@
         NSData *inputJSONData = [_inputJSON dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *tmpinput = nil;
         @try {
-            //tmpinput = [NSJSONSerialization JSONObjectWithData:inputJSONData options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:&error];
-            tmpinput = [inputJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+            tmpinput = [NSJSONSerialization JSONObjectWithData:inputJSONData options:NSJSONReadingMutableContainers|NSJSONReadingMutableLeaves|NSJSONReadingAllowFragments error:&error];
+            //tmpinput = [inputJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
         }
         @catch (NSException *exception) {
             NSLog(@"JSAPI: Exception while reading JSon: %@: %@", exception, _inputJSON);
@@ -129,8 +129,8 @@
     NSError *error;
     NSData *resultJSONData = nil;
     @try {
-        //resultJSONData = [NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingPrettyPrinted error:&error];
-        resultJSONData = [@[result] JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
+        resultJSONData = [NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingPrettyPrinted error:&error];
+        //resultJSONData = [result JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
     }
     @catch (NSException *exception) {
         NSLog(@"JSAPI: Exception while writing JSon: %@: %@", exception, result);

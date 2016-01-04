@@ -16,7 +16,6 @@
 #import "JSonHTTPApi.h"
 #import "AppDeckAdUsage.h"
 #import "AdActionHelper.h"
-#import "JSONKit.h"
 #import "AdRequest.h"
 #import "AdPlacement.h"
 #import "AdRation.h"

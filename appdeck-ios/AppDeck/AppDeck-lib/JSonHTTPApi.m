@@ -8,7 +8,6 @@
 
 #import "JSonHTTPApi.h"
 #import "NSString+URLEncoding.h"
-#import "JSONKit.h"
 
 @implementation JSonHTTPApi
 
@@ -134,9 +133,8 @@
 //    NSLog(@"Succeeded! Received %lud bytes of data: %@",(unsigned long)[receivedData length], [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
     NSError *error;
 
-	NSMutableDictionary *result = [receivedData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
-    
-//	NSMutableDictionary *result = [NSJSONSerialization JSONObjectWithData:[string dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+	//NSMutableDictionary *result = [receivedData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+    NSMutableDictionary *result = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableContainers error:&error];
     self.callback(result, error);
 }
 
