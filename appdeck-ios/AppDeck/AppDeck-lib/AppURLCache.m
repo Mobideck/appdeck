@@ -20,8 +20,6 @@
 
 #import "ManagedUIWebViewController.h"
 
-#import "JSONKit.h"
-
 #include <sys/stat.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -364,7 +362,8 @@ static unsigned char gifData[] = {
         NSData *metaData = [NSData dataWithContentsOfFile:[file stringByAppendingString:@".meta"]];
         
         NSError *error = NULL;
-        NSMutableDictionary *headersTMP = [metaData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+        //NSMutableDictionary *headersTMP = [metaData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+        NSMutableDictionary *headersTMP = [NSJSONSerialization JSONObjectWithData:metaData options:NSJSONReadingMutableContainers error:&error];
         
         NSMutableDictionary *headers = [[NSMutableDictionary alloc] initWithCapacity:[headersTMP count]];
         
@@ -625,7 +624,7 @@ static unsigned char gifData[] = {
 {
     BOOL fromWebView = [[request.allHTTPHeaderFields objectForKey:@"User-Agent"] rangeOfString:@"Mozilla"].location != NSNotFound;
     
-    //NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
+    NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
 
     // adblock
     if (fromWebView && NO)

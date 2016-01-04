@@ -8,7 +8,6 @@
 
 #import "AdRequest.h"
 #import "AdPlacement.h"
-#import "JSONKit.h"
 
 #import "LoaderViewController.h"
 #import "OpenUDID.h"

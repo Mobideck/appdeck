@@ -43,7 +43,6 @@
 #import "AdManager.h"
 #import "LoaderNavigationController.h"
 #import "AppDeckUserProfile.h"
-#import "JSONKit.h"
 #import "NSDictionary+query.h"
 #import "RE2Regexp.h"
 
@@ -2061,7 +2060,8 @@
             return;
         }
         NSError *error = nil;
-        NSMutableDictionary *result = [cacheResponse.data objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+        //NSMutableDictionary *result = [cacheResponse.data objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+        NSMutableDictionary *result = [NSJSONSerialization JSONObjectWithData:cacheResponse.data options:NSJSONReadingMutableContainers error:&error];
         if (error != nil || result == nil)
         {
             completionHandler(UIBackgroundFetchResultNoData);

@@ -10,7 +10,6 @@
 #import "NSError+errorWithFormat.h"
 #import "ManagedUIWebViewController.h"
 #import "LoaderChildViewController.h"
-#import "JSONKit.h"
 #import "NSString+UIColor.h"
 
 @implementation FPPopoverController (JSon)
