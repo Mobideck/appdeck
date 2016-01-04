@@ -76,7 +76,6 @@
 		A916D2ED1A1E03E7005FE1AE /* ImagePreload.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC021A1E03DC005FE1AE /* ImagePreload.m */; };
 		A916D2EF1A1E03E7005FE1AE /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC081A1E03DC005FE1AE /* JRSwizzle.m */; };
 		A916D2F11A1E03E7005FE1AE /* JSonHTTPApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC0D1A1E03DC005FE1AE /* JSonHTTPApi.m */; };
-		A916D2F21A1E03E7005FE1AE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC0F1A1E03DC005FE1AE /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A916D2F31A1E03E7005FE1AE /* KeyboardStateListener.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC111A1E03DC005FE1AE /* KeyboardStateListener.m */; };
 		A916D3571A1E03E7005FE1AE /* LoaderChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC991A1E03DD005FE1AE /* LoaderChildViewController.m */; };
 		A916D3581A1E03E7005FE1AE /* LoaderConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CC9B1A1E03DD005FE1AE /* LoaderConfiguration.m */; };
@@ -635,8 +634,6 @@
 		A916CC081A1E03DC005FE1AE /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRSwizzle.m; path = "AppDeck-lib/JRSwizzle.m"; sourceTree = "<group>"; };
 		A916CC0C1A1E03DC005FE1AE /* JSonHTTPApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSonHTTPApi.h; path = "AppDeck-lib/JSonHTTPApi.h"; sourceTree = "<group>"; };
 		A916CC0D1A1E03DC005FE1AE /* JSonHTTPApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSonHTTPApi.m; path = "AppDeck-lib/JSonHTTPApi.m"; sourceTree = "<group>"; };
-		A916CC0E1A1E03DC005FE1AE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = "AppDeck-lib/JSONKit.h"; sourceTree = "<group>"; };
-		A916CC0F1A1E03DC005FE1AE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = "AppDeck-lib/JSONKit.m"; sourceTree = "<group>"; };
 		A916CC101A1E03DC005FE1AE /* KeyboardStateListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardStateListener.h; path = "AppDeck-lib/KeyboardStateListener.h"; sourceTree = "<group>"; };
 		A916CC111A1E03DC005FE1AE /* KeyboardStateListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyboardStateListener.m; path = "AppDeck-lib/KeyboardStateListener.m"; sourceTree = "<group>"; };
 		A916CC981A1E03DD005FE1AE /* LoaderChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoaderChildViewController.h; path = "AppDeck-lib/LoaderChildViewController.h"; sourceTree = "<group>"; };
@@ -2214,8 +2211,6 @@
 			isa = PBXGroup;
 			children = (
 				A916D4971A1E0DA8005FE1AE /* Add-ins */,
-				A916CC0E1A1E03DC005FE1AE /* JSONKit.h */,
-				A916CC0F1A1E03DC005FE1AE /* JSONKit.m */,
 				A916CD7E1A1E03E1005FE1AE /* RIButtonItem.h */,
 				A916CD7F1A1E03E1005FE1AE /* RIButtonItem.m */,
 				A916CD821A1E03E1005FE1AE /* RSTimingFunction.h */,
@@ -3697,7 +3692,6 @@
 				A916D3DB1A1E03E7005FE1AE /* SDWebImageCompat.m in Sources */,
 				A9ADF1C21BC53EBC0026305E /* UIWebView+MPAdditions.m in Sources */,
 				A9BA70F41BC524D0005A212E /* onepass.cc in Sources */,
-				A916D2F21A1E03E7005FE1AE /* JSONKit.m in Sources */,
 				A9BA70FE1BC524D0005A212E /* stringpiece.cc in Sources */,
 				A916D3B01A1E03E7005FE1AE /* MRMessageInterceptor.m in Sources */,
 				A916D2ED1A1E03E7005FE1AE /* ImagePreload.m in Sources */,
