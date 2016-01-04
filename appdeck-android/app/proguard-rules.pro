@@ -87,23 +87,6 @@
     public static final ** CREATOR;
 }
 
-#If you are using the Google Mobile Ads SDK, add the following:
-# Preserve GMS ads classes
--keep class com.google.android.gms.** { *;
-}
--dontwarn com.google.android.gms.**
-
-# If you are using the InMobi SDK, add the following:
-# Preserve InMobi Ads classes
--keep class com.inmobi.** { *;
-}
--dontwarn com.inmobi.**
-# If you are using the Millennial Media SDK, add the following:
-# Preserve Millennial Ads classes
--keep class com.millennialmedia.** { *;
-}
--dontwarn com.millennialmedia.**
-
 # SmartAdServer
 -keepclassmembers class com.smartadserver.android.library.** {
 @android.webkit.JavascriptInterface <methods>;
@@ -158,8 +141,19 @@
     public static int e(...);
 }
 
+# remove slf4j
+-assumenosideeffects class * implements org.slf4j.Logger {
+    public *** trace(...);
+    public *** debug(...);
+    public *** info(...);
+    public *** warn(...);
+    public *** error(...);
+}
+
 # bug in proguard
 # http://sourceforge.net/p/proguard/bugs/573/
 # java -jar /Applications/Android/sdk/tools/proguard/lib/proguard.jar
 # ProGuard, version 4.7
 -optimizations !class/unboxing/enum
+
+-dontwarn com.nuance.**
