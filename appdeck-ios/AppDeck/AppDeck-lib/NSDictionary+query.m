@@ -13,16 +13,40 @@
 -(id)query:(NSString *)query
 {
     NSArray *chunks = [query componentsSeparatedByString:@"."];
-    NSDictionary *target = self;
+    id target = self;
     for (NSString *chunk in chunks)
     {
-        NSDictionary *new_target = [target objectForKey:chunk];
-
+        id new_target = [target objectForKey:chunk];
+        
+        // ios ?
+        {
+            id new_new_target = [target objectForKey:[chunk stringByAppendingString:@"_ios"]];
+            if (new_new_target != nil)
+                new_target = new_new_target;
+        }
+        
+        // tablet ?
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            NSDictionary *new_target_tablet = [target objectForKey:[chunk stringByAppendingString:@"_tablet"]];
-            if (new_target_tablet)
-                new_target = new_target_tablet;
+            id new_new_target = [target objectForKey:[chunk stringByAppendingString:@"_tablet"]];
+            if (new_new_target != nil)
+                new_target = new_new_target;
+        } else {
+            id new_new_target = [target objectForKey:[chunk stringByAppendingString:@"_phone"]];
+            if (new_new_target != nil)
+                new_target = new_new_target;
+        }
+        
+        // tablet + ios?
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            id new_new_target = [target objectForKey:[chunk stringByAppendingString:@"_tablet_ios"]];
+            if (new_new_target != nil)
+                new_target = new_new_target;
+        } else {
+            id new_new_target = [target objectForKey:[chunk stringByAppendingString:@"_phone_ios"]];
+            if (new_new_target != nil)
+                new_target = new_new_target;
         }
 
         target = new_target;
