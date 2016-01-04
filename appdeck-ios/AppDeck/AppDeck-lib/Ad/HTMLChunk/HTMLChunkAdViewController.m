@@ -66,9 +66,9 @@
     close = [[UIImageView alloc] initWithImage:self.adManager.loader.conf.icon_close.image];
     close.frame = CGRectMake(0, 0, 16, 16);
     if (self.adManager.loader.conf.icon_theme == IconThemeDark)
-        close.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-    else
         close.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    else
+        close.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5];
     close.layer.cornerRadius = close.frame.size.width / 2;
     close.clipsToBounds = YES;
     [self.view addSubview:close];
