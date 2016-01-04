@@ -73,6 +73,30 @@
                         android:indeterminate="true"
                         style="?android:attr/android:progressBarStyleHorizontal" />-->
 
+                    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                        android:id="@+id/progressBarIndeterminate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        app:mpb_progressStyle="horizontal"
+                        android:layout_marginBottom="-8dp"
+                        android:layout_marginTop="-6dp"
+                        android:layout_alignParentTop="true"
+                        android:alpha="0"
+                        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+                    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                        android:id="@+id/progressBarDeterminate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="false"
+                        app:mpb_progressStyle="horizontal"
+                        android:layout_marginBottom="-8dp"
+                        android:layout_marginTop="-6dp"
+                        android:layout_alignParentTop="true"
+                        android:alpha="0"
+                        android:visibility="gone"
+                        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+
                     <FrameLayout
                         android:id="@+id/bannerContainer"
                         android:layout_width="wrap_content"
