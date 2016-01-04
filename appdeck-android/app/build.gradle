@@ -31,7 +31,7 @@ android {
     compileSdkVersion 23
 
     // http://tools.android.com/release
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.mobideck.appdeck"
@@ -90,25 +90,30 @@ android {
     }
 
     dexOptions {
-        //incremental true
-        jumboMode true
+        //jumboMode true
         javaMaxHeapSize "4g"
+
+        // smaller build time
+        incremental true
+        preDexLibraries true
     }
 
     buildTypes {
         debug {
             ext.enableCrashlytics = false
 
-            // enable to validate proguard
             /*
+            // enable to validate proguard
             minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'*/
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
+            */
         }
         release {
             minifyEnabled true
+            shrinkResources true
             zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
         }
     }
 
@@ -147,7 +152,8 @@ dependencies {
     }
 
     // https://fabric.io/kits/android/twitterkit
-    compile('com.twitter.sdk.android:twitter:1.11.0@aar') {
+    // https://twittersdk.artifactoryonline.com/twittersdk/public/com/twitter/sdk/android/twitter-core/
+    compile('com.twitter.sdk.android:twitter-core:1.6.2') {
         transitive = true
         exclude module: 'gson';
     }
