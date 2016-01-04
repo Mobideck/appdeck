@@ -199,6 +199,8 @@ dependencies {
 
     //compile 'io.branch.sdk.android:library:1.+'
 
+    // millenial media
+    compile 'com.millennialmedia:mm-ad-sdk@aar'
 
 }
 
