@@ -47,6 +47,7 @@ import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -100,7 +101,6 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -119,7 +119,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.facebook.FacebookSdk;
-import com.twitter.sdk.android.Twitter;
+//import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -127,6 +127,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import io.netty.handler.codec.http.HttpRequest;
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class Loader extends AppCompatActivity {
 
@@ -167,6 +168,9 @@ public class Loader extends AppCompatActivity {
     public ViewGroup videoLayout;
 
 	private HttpProxyServerBootstrap proxyServerBootstrap;
+
+    MaterialProgressBar mProgressBarDeterminate;
+    MaterialProgressBar mProgressBarIndeterminate;
 
     /*ProgressBarDeterminate mProgressBarDeterminate;
     ProgressBarIndeterminate mProgressBarIndeterminate;*/
@@ -326,6 +330,12 @@ public class Loader extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //
+
+        mProgressBarDeterminate = (MaterialProgressBar) findViewById(R.id.progressBarDeterminate);
+        mProgressBarIndeterminate = (MaterialProgressBar) findViewById(R.id.progressBarIndeterminate);
+        //mProgressBar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        //mProgressBar.setMi
+        mProgressBarDeterminate.setMax(100);
 
         /*
         mProgressBarDeterminate = (ProgressBarDeterminate)findViewById(R.id.progressBarDeterminate);
@@ -524,7 +534,7 @@ public class Loader extends AppCompatActivity {
                 appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
                 ) {
             TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
-            Fabric.with(app, crashlytics, new Twitter(authConfig));
+            Fabric.with(app, crashlytics, new TwitterCore(authConfig));
             mTwitterAuthClient = new TwitterAuthClient();
         } else {
             Fabric.with(app, crashlytics);
@@ -1028,6 +1038,15 @@ public class Loader extends AppCompatActivity {
     
     public void progressStart()
     {
+        //mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBarIndeterminate.setVisibility(View.VISIBLE);
+        mProgressBarIndeterminate.setAlpha(0f);
+        mProgressBarIndeterminate.animate().alpha(1f).start();
+        mProgressBarDeterminate.setProgress(0);
+        mProgressBarDeterminate.setVisibility(View.GONE);
+
+        mProgressBarIsHiding = false;
+
         /*mProgressBarDeterminate.setVisibility(View.GONE);
         mProgressBarIndeterminate.setVisibility(View.VISIBLE);*/
         /*setSupportProgress(0);
@@ -1035,13 +1054,42 @@ public class Loader extends AppCompatActivity {
         setSupportProgressBarIndeterminateVisibility(true);
     	setSupportProgressBarIndeterminate(true);*/
     }
-    
+
+    boolean mProgressBarIsHiding = false;
+
     public void progressSet(int percent)
     {
+        if (percent < 50)
+            return;
 
-        /*
+        if (mProgressBarIsHiding)
+            return;
+
+        mProgressBarIsHiding = true;
+        mProgressBarIndeterminate.animate().alpha(0f).start();
+
+/*        if (percent > 75) {
+            mProgressBarIsHiding = true;
+            mProgressBarDeterminate.setProgress(100);
+            mProgressBarDeterminate.animate().alpha(0f)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mProgressBarDeterminate.setProgress(0);
+                            mProgressBarDeterminate.setVisibility(View.GONE);
+                        }
+                    })
+                    .start();
+            mProgressBarIndeterminate.setVisibility(View.GONE);
+            return;
+        }*/
+//        mProgressBar.setVisibility(View.VISIBLE);
+        //mProgressBar.setIndeterminate(false);
+        //mProgressBar.setProgress(percent);
+/*
         mProgressBarDeterminate.setVisibility(View.VISIBLE);
         mProgressBarIndeterminate.setVisibility(View.GONE);
+        mProgressBarDeterminate.setAlpha(1f);
         mProgressBarDeterminate.setProgress(percent);*/
 /*
 
@@ -1057,9 +1105,22 @@ public class Loader extends AppCompatActivity {
         if (mPostLoadLoadingCalled == false)
             postLoadLoading();
 
-        /*mProgressBarDeterminate.setVisibility(View.GONE);
+//        mProgressBar.setVisibility(View.GONE);
+//        mProgressBar.setProgress(100);
+//        mProgressBar.animate().alpha(0f).start();
+/*
+        mProgressBarDeterminate.setProgress(100);
+        mProgressBarDeterminate.animate().alpha(0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mProgressBarDeterminate.setProgress(0);
+                        mProgressBarDeterminate.setVisibility(View.GONE);
+                    }
+                })
+                .start();*/
         mProgressBarIndeterminate.setVisibility(View.GONE);
-        mProgressBarDeterminate.setProgress(0);*/
+
         /*
         setSupportProgressBarVisibility(false);
         setSupportProgressBarIndeterminateVisibility(false);
@@ -1388,10 +1449,10 @@ public class Loader extends AppCompatActivity {
 
     public void layoutSubViews()
     {
-        /*if (mProgressBarDeterminate != null)
+        if (mProgressBarDeterminate != null)
             mProgressBarDeterminate.bringToFront();
         if (mProgressBarIndeterminate != null)
-            mProgressBarIndeterminate.bringToFront();*/
+            mProgressBarIndeterminate.bringToFront();
     }
     
     public void reload()
@@ -2505,52 +2566,6 @@ public class Loader extends AppCompatActivity {
  		   getSupportActionBar().show();
  	   else
  		   getSupportActionBar().hide();
-    }
-
-    // Progress Bar
-    @Override
-    public void setSupportProgressBarVisibility(boolean visibility)
-    {
-        /*
-        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
-            return;
-        if (visibility) {
-            mProgressBarIndeterminate.setVisibility(View.GONE);
-            mProgressBarDeterminate.setVisibility(View.VISIBLE);
-        } else {
-            mProgressBarIndeterminate.setVisibility(View.GONE);
-            mProgressBarDeterminate.setVisibility(View.GONE);
-        }*/
-    }
-
-    @Override
-    public void setSupportProgressBarIndeterminateVisibility(boolean visibility)
-    {
-        /*if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
-            return;
-        if (visibility) {
-            mProgressBarIndeterminate.setVisibility(View.VISIBLE);
-            mProgressBarDeterminate.setVisibility(View.GONE);
-        } else {
-            mProgressBarIndeterminate.setVisibility(View.GONE);
-            mProgressBarDeterminate.setVisibility(View.GONE);
-        }*/
-    }
-
-    @Override
-    public void setSupportProgressBarIndeterminate(boolean indeterminate)
-    {
-        /*if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
-            return;
-        mProgressBarDeterminate.setProgress(0);*/
-    }
-
-    @Override
-    public void setSupportProgress(int progress)
-    {
-/*        if (mProgressBarIndeterminate == null || mProgressBarDeterminate == null)
-            return;
-        mProgressBarDeterminate.setProgress(progress);*/
     }
 
     void enableProxy()
