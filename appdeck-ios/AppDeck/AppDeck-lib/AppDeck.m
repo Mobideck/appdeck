@@ -119,19 +119,19 @@
     firstWebView = [[UIWebView alloc] init];
     // set User-Agent for tablet
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.userAgent = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" AppDeck-tablet"];
+        self.userAgent = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" AppDeck-ios AppDeck-tablet"];
     else
-        self.userAgent = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" AppDeck-phone"];
+        self.userAgent = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" AppDeck-ios AppDeck-phone"];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.userAgentWebView = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" WebView AppDeck-tablet"];
+        self.userAgentWebView = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" WebView AppDeck-ios AppDeck-tablet"];
     else
-        self.userAgentWebView = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" WebView AppDeck-phone"];
+        self.userAgentWebView = [[firstWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"] stringByAppendingString:@" WebView AppDeck-ios AppDeck-phone"];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.userAgentChunk = @" WebView AppDeck-tablet";
+        self.userAgentChunk = @" WebView AppDeck-ios AppDeck-tablet";
     else
-        self.userAgentChunk = @" WebView AppDeck-phone";
+        self.userAgentChunk = @" WebView AppDeck-ios AppDeck-phone";
     
     
     
@@ -360,10 +360,41 @@
         __block AppDeck *me = self;
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSDictionary *options = @{MMbackgroundColor: [UIColor whiteColor],
-                                          MMtextColor: [UIColor blackColor],
-                                          MMtoolbarColor: [UIColor darkGrayColor],
-                                          MMbuttonColor: [UIColor darkGrayColor],
+                UIColor *myMMbackgroundColor = [UIColor whiteColor];
+                UIColor *myMMtextColor = [UIColor blackColor];
+                UIColor *myMMtoolbarColor = [UIColor darkGrayColor];
+                UIColor *myMMbuttonColor = [UIColor darkGrayColor];
+                if (me.loader.conf.icon_theme == IconThemeDark)
+                {
+                    myMMbuttonColor = [UIColor whiteColor];
+                }
+                if (me.loader.conf.app_color)
+                {
+                    myMMtoolbarColor = me.loader.conf.app_color;
+                }
+                if (me.loader.conf.app_topbar_color1)
+                {
+                    myMMtoolbarColor = me.loader.conf.app_topbar_color1;
+                }
+                if (me.loader.conf.app_topbar_text_color)
+                {
+                    myMMbuttonColor = me.loader.conf.app_topbar_text_color;
+                }
+
+                /*if (me.loader.conf.topbar_color1 && me.loader.conf.topbar_color2)
+                {
+                    CALayer * bgGradientLayer = [me.loader gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[me.loader.conf.topbar_color1 CGColor], (id)[me.loader.conf.topbar_color2 CGColor] ]];
+                    UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
+                    [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
+                    UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
+                    UIGraphicsEndImageContext();
+                    [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
+                }*/
+                
+                NSDictionary *options = @{MMbackgroundColor: myMMbackgroundColor,
+                                          MMtextColor: myMMtextColor,
+                                          MMtoolbarColor: myMMtoolbarColor,
+                                          MMbuttonColor: myMMbuttonColor,
                                           MMshowsSelectionIndicator: [NSNumber numberWithBool:(me.iosVersion < 7.0)]};
         [CustomMMPickerView showPickerViewInView:me.loader.view
                                withStrings:values
@@ -536,8 +567,6 @@
         }];
         return YES;
     }
-
-    
     
     return NO;
 }
