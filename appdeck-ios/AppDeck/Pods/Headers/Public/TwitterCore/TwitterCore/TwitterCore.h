@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TwitterCore.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TwitterCore.h

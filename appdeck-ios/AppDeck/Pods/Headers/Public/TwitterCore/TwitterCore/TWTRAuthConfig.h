@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TWTRAuthConfig.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TWTRAuthConfig.h

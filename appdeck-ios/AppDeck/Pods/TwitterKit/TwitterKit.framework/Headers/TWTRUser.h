@@ -62,6 +62,11 @@
  */
 @property (nonatomic, copy, readonly) NSString *formattedScreenName;
 
+/**
+ * Returns the URL for deeplinking to the the user's profile.
+ */
+@property (nonatomic, copy, readonly) NSURL *profileURL;
+
 # pragma mark - Init
 
 /**

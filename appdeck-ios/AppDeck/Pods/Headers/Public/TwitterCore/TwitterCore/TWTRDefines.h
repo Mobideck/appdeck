@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TWTRDefines.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TWTRDefines.h

@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TWTRSessionStore.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TWTRSessionStore.h

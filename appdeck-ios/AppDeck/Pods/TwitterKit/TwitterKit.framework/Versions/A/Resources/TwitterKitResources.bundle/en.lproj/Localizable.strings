@@ -51,8 +51,10 @@
 
 /* Accessibility Labels */
 
-/* Text spoken out with VoiceOver when a tweet has an image showing */
-"tw__single_image" = "One image attached";
+/* Text spoken out with VoiceOver when a tweet has an image thumbnail showing */
+"tw__single_image" = "Image Attachment";
+/* Text spoken out with VoiceOver when a tweet has a video thumbnail showing */
+"tw__video_thumbnail" = "Video Attachment";
 /* Text spoken out with VoiceOver for selecting the profile image on a regular tweet view */
 "tw__tweet_profile_accessibility" = "Profile";
 /* Text spoken out with VoiceOver for selecting the attached image on a regular tweet view */
@@ -71,12 +73,14 @@
 "tw__card_compose_close_button" = "Close";
 /* Text spoken out as VoiceOver hint for the close button in the card composer top bar */
 "tw__card_compose_close_hint" = "Double-tap to dismiss the composer.";
-/* VoiceOver label for Favorite button */
-"tw__tweet_favorite_button" = "Favorite";
-/* VoiceOver value for Favorite button on Tweet that has been favorited */
-"tw__tweet_favorited_state" = "Favorited";
-/* VoiceOver value for Favorite button on Tweet that has not yet been favorited */
-"tw__tweet_not_favorited_state" = "Not Favorited";
+/* VoiceOver label for Done button on image viewer */
+"tw__image_viewer_done_button" = "Done";
+/* VoiceOver label for Like button */
+"tw__tweet_like_button" = "Like";
+/* VoiceOver value for Like button on Tweet that has been liked */
+"tw__tweet_liked_state" = "Liked";
+/* VoiceOver value for Like button on Tweet that has not yet been liked */
+"tw__tweet_not_liked_state" = "Not Liked";
 
 /* Test String (just for unit tests) */
 "tw__test_string" = "Test";

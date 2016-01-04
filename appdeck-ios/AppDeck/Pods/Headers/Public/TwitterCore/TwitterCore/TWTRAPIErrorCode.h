@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TWTRAPIErrorCode.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TWTRAPIErrorCode.h

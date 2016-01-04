@@ -12,5 +12,8 @@ target 'AppDeck' do
   pod 'FBAudienceNetwork'
   pod 'ECSlidingViewController', :git => 'https://github.com/mdekermadec/ECSlidingViewController.git'
   #  pod 'ECSlidingViewController', '~> 2.0.3'
+  pod 'SVProgressHUD'
+  #  pod 'ARSPopover'
+
 end
 

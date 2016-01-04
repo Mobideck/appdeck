@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TWTRConstants.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TWTRConstants.h

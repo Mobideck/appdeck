@@ -13,6 +13,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
+ * A notification which is posted when a user logs out of Twitter.
+ * The notification will contain a user dictionary which contains
+ * the user id which is being logged out. Note, this notification may
+ * be posted as a result of starting the Twitter object.
+ */
+extern NSString * const TWTRUserDidLogOutNotification;
+extern NSString * const TWTRLoggedOutUserIDKey;
+
+/**
  *  The central class of the Twitter Kit.
  *  @note This class can only be used from the main thread.
  */

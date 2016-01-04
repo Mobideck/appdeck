@@ -4,6 +4,8 @@ framework module TwitterKit {
     export *
     module * { export * }
 
+    link framework "MediaPlayer"
+
     header "TWTRAPIClient.h"
     header "TWTRCardConfiguration.h"
     header "TWTRCollectionTimelineDataSource.h"

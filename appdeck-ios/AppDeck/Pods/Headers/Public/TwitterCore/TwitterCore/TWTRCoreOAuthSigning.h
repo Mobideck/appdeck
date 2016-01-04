@@ -1,1 +1,1 @@
-../../../../TwitterCore/TwitterCore.framework/Headers/TWTRCoreOAuthSigning.h
+../../../../TwitterCore/iOS/TwitterCore.framework/Headers/TWTRCoreOAuthSigning.h
