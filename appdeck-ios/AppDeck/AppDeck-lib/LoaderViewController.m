@@ -324,9 +324,11 @@
         if (self.slidingViewController.underLeftShowing || self.slidingViewController.underRightShowing)
             return UIStatusBarStyleLightContent;
     }*/
-    if (self.conf.icon_theme == IconThemeDark)
+    if (self.conf.icon_theme == IconThemeLight)
+        return UIStatusBarStyleDefault;
+    else
         return UIStatusBarStyleLightContent;
-    return UIStatusBarStyleDefault;
+
     //return UIStatusBarStyleLightContent;
 }
 
@@ -407,24 +409,24 @@
             [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
         }
     }
-    if (self.conf.app_color1)
+    if (self.conf.app_topbar_color1)
     {
         //[[UINavigationBar appearance] setTintColor:self.conf.app_color1];
-        [[UITabBar appearance] setTintColor:self.conf.app_color1];
-        [[UIToolbar appearance] setTintColor:self.conf.app_color1];
+        [[UITabBar appearance] setTintColor:self.conf.app_topbar_color1];
+        [[UIToolbar appearance] setTintColor:self.conf.app_topbar_color1];
     }
-    if (self.conf.topbar_color1 && self.conf.topbar_color2)
+    if (self.conf.app_topbar_color1 && self.conf.app_topbar_color2)
     {
         if (self.appDeck.iosVersion < 7.0)
         {
-            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 44) colors:@[ (id)[self.conf.topbar_color1 CGColor], (id)[self.conf.topbar_color2 CGColor] ]];
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 44) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
         } else {
-            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.topbar_color1 CGColor], (id)[self.conf.topbar_color2 CGColor] ]];
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -439,15 +441,15 @@
     } else {
         self.view.backgroundColor = [UIColor clearColor];
     }
-    if (self.conf.control_color)
+    if (self.conf.app_color)
     {
-        [[UIToolbar appearance] setTintColor:self.conf.control_color];
-        [[UITabBar appearance] setTintColor:self.conf.control_color];
-    }
-    if (self.conf.button_color)
-    {
-        [[UIBarButtonItem appearance] setTintColor:self.conf.button_color];
-        [[UISegmentedControl appearance] setTintColor:self.conf.button_color];
+        [[UIToolbar appearance] setTintColor:self.conf.app_color];
+        [[UITabBar appearance] setTintColor:self.conf.app_color];
+//    }
+//    if (self.conf.button_color)
+//    {
+        [[UIBarButtonItem appearance] setTintColor:self.conf.app_color];
+        [[UISegmentedControl appearance] setTintColor:self.conf.app_color];
     }
     
 //    bootstrapUrl = [[NSURL URLWithString:bootstrapUrl relativeToURL:self.url] absoluteString];
@@ -506,7 +508,7 @@
     {
         navCtl.navigationBar.translucent = NO;
         //[navCtl.navigationBar setBarTintColor:[self.conf.topbar_color1 colorWithAlphaComponent:0.6]];
-        [navCtl.navigationBar setBarTintColor:self.conf.topbar_color1];
+        [navCtl.navigationBar setBarTintColor:self.conf.app_topbar_color1];
         navCtl.navigationBar.tintColor = (self.conf.icon_theme == IconThemeDark ? [UIColor whiteColor] : [UIColor blackColor]);
     }
     
@@ -1476,37 +1478,49 @@
         {
             if ([position isEqualToString:@"left"])
             {
-                [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
-                    self.leftMenuOpen = YES;
-                    [leftController isMain:YES];
-                    self.rightMenuOpen = NO;
-                    [leftController isMain:NO];
-                }];
+                if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredLeft)
+                {
+                    [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+                        [NSTimer scheduledTimerWithTimeInterval:0.1 target:[NSBlockOperation blockOperationWithBlock:^{
+                            [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
+                                self.leftMenuOpen = YES;
+                                [leftController isMain:YES];
+                                self.rightMenuOpen = NO;
+                                [leftController isMain:NO];
+                            }];
+                        }] selector:@selector(main) userInfo:nil repeats:NO];
+                    }];
+                } else {
+                    [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
+                        self.leftMenuOpen = YES;
+                        [leftController isMain:YES];
+                        self.rightMenuOpen = NO;
+                        [leftController isMain:NO];
+                    }];
+                }
             }
-            /*else if ([position isEqualToString:@"right"] && self.leftMenuOpen)
-            {
-                __block LoaderViewController *me = self;
-                [UIView transitionWithView:self.view duration:0.25
-                                   options:UIViewAnimationOptionCurveLinear
-                                animations:^{
-                                    [me.slidingViewController resetTopViewAnimated:YES onComplete:^{
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            [me.slidingViewController anchorTopViewToLeftAnimated:YES];
-                                        });
-                                    }];
-                                }
-                                completion:NULL];
-                
-
-            }*/
             else if ([position isEqualToString:@"right"])
             {
-                [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{
-                    self.leftMenuOpen = NO;
-                    [leftController isMain:NO];
-                    self.rightMenuOpen = YES;
-                    [leftController isMain:YES];
-                }];
+                if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredRight)
+                {
+                    [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
+                        [NSTimer scheduledTimerWithTimeInterval:0.1 target:[NSBlockOperation blockOperationWithBlock:^{
+                            [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{
+                                self.leftMenuOpen = NO;
+                                [leftController isMain:NO];
+                                self.rightMenuOpen = YES;
+                                [leftController isMain:YES];
+                            }];
+                        }] selector:@selector(main) userInfo:nil repeats:NO];
+                    }];
+                } else {
+                    [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{
+                        self.leftMenuOpen = NO;
+                        [leftController isMain:NO];
+                        self.rightMenuOpen = YES;
+                        [leftController isMain:YES];
+                    }];
+                }
             }
             else if ([position isEqualToString:@"main"])
             {
