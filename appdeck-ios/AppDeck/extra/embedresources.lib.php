@@ -351,29 +351,31 @@ function embed_url($embed_url)
       appdeck_add_ressource(trim($line));
 }
 
-function easy_embed_rec($names, $base_info, $default_url = false)
+function easy_embed_rec($names, $base_info)
 {
   global $base_url;
 
-  $url = $default_url;
-
   $name = array_shift($names);
-
-  foreach (array($name, $name.'_tablet') as $field)
+  $count = 0;
+  foreach (array($name, $name.'_tablet', $name.'_phone', $name.'_tablet_ios', $name.'_phone_ios', $name.'_tablet_android', $name.'_phone_android', $name.'_ios', $name.'_android') as $field)
   {
     if (count($names) == 0)
     {
-      if (isset($base_info->$field))
+      if (isset($base_info->$field)) {
         $url = resolve_url($base_info->$field, $base_url);
-      if ($url !== false/* && $field == $name*/)
         appdeck_add_ressource($url);
+        $count++;
+      }     
     }
     else
     {
-      if (isset($base_info->$field))
-        easy_embed_rec($names, $base_info->$field, $default_url);
+      if (isset($base_info->$field)) {
+        easy_embed_rec($names, $base_info->$field);
+        $count++;
+      }
     }
   }
+  return $count;
 }
 
 
@@ -381,10 +383,12 @@ function easy_embed($name, $default_url = false)
 {
   global $info;
 
-  $url = $default_url;
-
   $names = explode('.', $name);
 
-  easy_embed_rec($names, $info, $default_url);
+  $count = easy_embed_rec($names, $info);
+  if ($count == 0 && $default_url)
+    appdeck_add_ressource($default_url);
 }
+
+
 
