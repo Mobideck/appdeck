@@ -3311,9 +3311,9 @@
 				A91DFA0C16CE8D1400512CA0 /* Sources */,
 				A91DFA0D16CE8D1400512CA0 /* Frameworks */,
 				A91DFA0E16CE8D1400512CA0 /* Resources */,
-				A90B3B52182786AF0039A48A /* ShellScript */,
+				A90B3B52182786AF0039A48A /* AppDeck embed ressources */,
 				838952192FE62D935153D7C9 /* Copy Pods Resources */,
-				A9BA712A1BC52642005A212E /* ShellScript */,
+				A9BA712A1BC52642005A212E /* Fabric.io */,
 				353FABB9DAB047964E732FBC /* Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -3466,26 +3466,28 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppDeck/Pods-AppDeck-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A90B3B52182786AF0039A48A /* ShellScript */ = {
+		A90B3B52182786AF0039A48A /* AppDeck embed ressources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "AppDeck embed ressources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = extra/embedresources_iphone.php;
 		};
-		A9BA712A1BC52642005A212E /* ShellScript */ = {
+		A9BA712A1BC52642005A212E /* Fabric.io */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = Fabric.io;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
