@@ -43,8 +43,15 @@ typedef enum {
 @property (assign, nonatomic) CGFloat rightMenuWidth;
 //@property (assign, nonatomic) CGFloat rightMenuReveal;
 
-@property (strong, nonatomic) UIColor *app_color1;
-@property (strong, nonatomic) UIColor *app_color2;
+@property (strong, nonatomic) UIColor *app_color;
+
+//@property (strong, nonatomic) UIColor *app_color1;
+//@property (strong, nonatomic) UIColor *app_color2;
+@property (strong, nonatomic) UIColor *app_topbar_color1;
+@property (strong, nonatomic) UIColor *app_topbar_color2;
+
+@property (strong, nonatomic) UIColor *app_topbar_text_color;
+
 @property (strong, nonatomic) UIColor *app_background_color1;
 @property (strong, nonatomic) UIColor *app_background_color2;
 @property (strong, nonatomic) UIColor *leftmenu_background_color1;
@@ -52,8 +59,8 @@ typedef enum {
 @property (strong, nonatomic) UIColor *rightmenu_background_color1;
 @property (strong, nonatomic) UIColor *rightmenu_background_color2;
 
-@property (strong, nonatomic) UIColor *control_color;
-@property (strong, nonatomic) UIColor *button_color;
+//@property (strong, nonatomic) UIColor *control_color;
+//@property (strong, nonatomic) UIColor *button_color;
 
 @property (strong, nonatomic) NSString *title;
 
@@ -74,8 +81,6 @@ typedef enum {
 
 //@property (strong, nonatomic) UIView *statusBarInfo;
 
-@property (strong, nonatomic) UIColor *topbar_color1;
-@property (strong, nonatomic) UIColor *topbar_color2;
 
 @property (strong, nonatomic) NSURL *prefetch_url;
 

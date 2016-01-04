@@ -95,16 +95,20 @@
         self.rightMenuWidth = 280;
 
     self.title = [result query:@"title"];
+
+    self.app_color = [[result query:@"app_color"] toUIColor];
+    [self readColor:[result query:@"app_topbar_color"] intoColor1:&_app_topbar_color1 intoColor2:&_app_topbar_color2];
+    self.app_topbar_text_color = [[result query:@"app_topbar_text_color"] toUIColor];
     
-    [self readColor:[result query:@"app_color"] intoColor1:&_app_color1 intoColor2:&_app_color2];
+//    [self readColor:[result query:@"app_color"] intoColor1:&_app_color1 intoColor2:&_app_color2];
     [self readColor:[result query:@"app_background_color"] intoColor1:&_app_background_color1 intoColor2:&_app_background_color2];
     [self readColor:[result query:@"leftmenu_background_color"] intoColor1:&_leftmenu_background_color1 intoColor2:&_leftmenu_background_color2];
     [self readColor:[result query:@"rightmenu_background_color"] intoColor1:&_rightmenu_background_color1 intoColor2:&_rightmenu_background_color2];
     
-    self.control_color = [[result query:@"control_color"] toUIColor];
-    self.button_color = [[result query:@"button_color"] toUIColor];
+//    self.control_color = [[result query:@"control_color"] toUIColor];
+//    self.button_color = [[result query:@"button_color"] toUIColor];
     
-    [self readColor:[result query:@"app_topbar_color"] intoColor1:&_topbar_color1 intoColor2:&_topbar_color2];
+
     
     AppDeck *app = [AppDeck sharedInstance];
     
