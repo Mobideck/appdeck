@@ -25,7 +25,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
+//import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -712,7 +712,7 @@ public class PageFragmentSwap extends AppDeckFragment {
             if (nativeAds == null)
                 nativeAds = new HashMap<String, AppDeckAdNative>();
             AppDeckAdNative nativeAd = nativeAds.get(divId);
-            if (nativeAd == null)
+            if (nativeAd == null && loader.adManager != null)
             {
                 nativeAd = loader.adManager.getNativeAd();//new NativeAd(loader);
                 nativeAds.put(divId, nativeAd);
