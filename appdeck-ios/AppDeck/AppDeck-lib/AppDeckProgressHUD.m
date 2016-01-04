@@ -12,12 +12,14 @@
 #import "MRProgress/src/MRProgress.h"
 #import "MRProgress/src/Components/MRProgressOverlayView.h"
 #import "AppDeck.h"
+#import "SVProgressHUD.h"
 
 static char AppDeckProgressHUDKey;
 
 @interface AppDeckProgressHUD ()
 {
     MBProgressHUD *mbProgressHUD;
+//    SVProgressHUD * svpProgressHUD;
     MRProgressOverlayView *mrProgress;
 }
 
@@ -72,8 +74,10 @@ static char AppDeckProgressHUDKey;
         return;
     self.graceTimer = nil;
     self.showStarted = [NSDate date];
-    if (NO && [[AppDeck sharedInstance] iosVersion] >= 7.0)
+    if ([[AppDeck sharedInstance] iosVersion] >= 7.0)
     {
+        [SVProgressHUD show];
+        /*
         if (mrProgress == nil)
         {
             mrProgress = [MRProgressOverlayView new];
@@ -81,7 +85,7 @@ static char AppDeckProgressHUDKey;
             //[mrProgress createBlurView];
             [self.viewController.view addSubview:mrProgress];
         }
-        [mrProgress show:YES];
+        [mrProgress show:YES];*/
         
     }
     else
@@ -126,10 +130,11 @@ static char AppDeckProgressHUDKey;
 		}
 	}
     
-    if (NO && [[AppDeck sharedInstance] iosVersion] >= 7.0)
+    if ([[AppDeck sharedInstance] iosVersion] >= 7.0)
     {
-        [mrProgress dismiss:YES];
-        mrProgress = nil;
+        [SVProgressHUD dismiss];
+//        [mrProgress dismiss:YES];
+//        mrProgress = nil;
     }
     else
     {
