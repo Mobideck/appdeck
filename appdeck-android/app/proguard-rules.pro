@@ -126,6 +126,9 @@
 }
 -keepattributes *Annotation*
 
+# smart ad server
+-dontwarn com.millennialmedia.**
+
 # crosswalk
 -dontwarn android.view.*
 -dontwarn android.webkit.*
