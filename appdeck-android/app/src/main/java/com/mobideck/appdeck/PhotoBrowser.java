@@ -80,6 +80,8 @@ public class PhotoBrowser extends AppDeckFragment {
 		args.putStringArray("url", url);
 		args.putStringArray("thumbnail", thumbnail);
 		args.putStringArray("caption", caption);
+
+		args.putString("parentUrl", root.currentPageUrl);
 		
 		fragment.setArguments(args);
 
@@ -111,7 +113,9 @@ public class PhotoBrowser extends AppDeckFragment {
     	url = args.getStringArray("url");
     	thumbnail = args.getStringArray("thumbnail");
     	caption = args.getStringArray("caption");
-    	
+
+		currentPageUrl = args.getString("parentUrl", null);
+
         //setHasOptionsMenu(true);
     	self = this;
     	//shouldRenderActionBar = true;
@@ -175,7 +179,7 @@ public class PhotoBrowser extends AppDeckFragment {
     	super.onStart();
     	
     	//loader.disableMenu();
-    	loadURLConfiguration(null);
+    	loadURLConfiguration(currentPageUrl);
     	
     	//getActivity().invalidateOptionsMenu();
     	
