@@ -215,7 +215,7 @@ public class Loader extends AppCompatActivity {
             SmartWebViewFactory.setPreferences(this);
             app.isInitialLoading = true;
         }
-
+        //setTheme(R.style.Theme_MyAppDeckTheme);
     	super.onCreate(savedInstanceState);
 
 
@@ -1586,7 +1586,7 @@ public class Loader extends AppCompatActivity {
 				photoBrowser.loader = this;
 				photoBrowser.appDeck = appDeck;
 				photoBrowser.currentPageUrl = "photo://browser";
-				photoBrowser.screenConfiguration = ScreenConfiguration.defaultConfiguration();				
+				//photoBrowser.screenConfiguration = ScreenConfiguration.defaultConfiguration();
 				pushFragment(photoBrowser);
 			}
 			
