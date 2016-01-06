@@ -1419,7 +1419,8 @@ public class Loader extends AppCompatActivity {
     		anim.start();
     	}
         //previous.event = AppDeckAdManager.EVENT_POP;
-        adManager.showAds(AppDeckAdManager.EVENT_POP);
+        if (adManager != null)
+            adManager.showAds(AppDeckAdManager.EVENT_POP);
 
         // check if we pop to root
         previous = getPreviousAppDeckFragment(previous);
@@ -1443,7 +1444,8 @@ public class Loader extends AppCompatActivity {
     	
     	/*prepareRootPage();
     	pushFragment(root);*/
-        adManager.showAds(AppDeckAdManager.EVENT_ROOT);
+        if (adManager != null)
+            adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     	return true;
     }
 
