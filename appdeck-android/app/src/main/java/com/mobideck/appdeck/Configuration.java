@@ -234,7 +234,7 @@ public class Configuration {
 		}
 
 		// prefetch url
-		prefetch_url = readURI(root, "prefetch_url", String.format("http://prefetch.appdeck.mobi/%s%s.7z", app_api_key, (appDeck.isTablet ? "_tablet" : "")));
+		prefetch_url = readURI(root, "prefetch_url", String.format("http://prefetch.appdeck.mobi/%s_android_%s.7z", app_api_key, (appDeck.isTablet ? "_tablet" : "_phone")));
 		prefetch_ttl = root.getInt("prefetch_ttl");
 		if (prefetch_ttl == 0)
 			prefetch_ttl = 600;
