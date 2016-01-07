@@ -94,7 +94,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     	super.onCreate(savedInstanceState);
 		this.appDeck = this.loader.appDeck;
     	currentPageUrl = getArguments().getString("absoluteURL");
-    	this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);
+    	if (this.appDeck != null)
+			this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);
 	}
 	
     @Override
