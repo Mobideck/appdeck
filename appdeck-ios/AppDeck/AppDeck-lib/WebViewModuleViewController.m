@@ -77,19 +77,19 @@
         //tmpinput = [inputJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
     }
     @catch (NSException *exception) {
-        NSLog(@"JSAPI: Exception while reading JSon: %@: %@", exception, inputJSON);
+        NSLog(@"MODULEAPI: Exception while reading JSon: %@: %@", exception, inputJSON);
         return NO;
     }
     
     if (error != nil)
     {
-        NSLog(@"JSAPI: Error while reading JSon: %@: %@", error, inputJSON);
+        NSLog(@"MODULEAPI: Error while reading JSon: %@: %@", error, inputJSON);
         return NO;
     }
     
     if ([[tmpinput class] isSubclassOfClass:[NSDictionary class]] == NO)
     {
-        NSLog(@"JSAPI: invalid input format: not an object: %@", inputJSON);
+        NSLog(@"MODULEAPI: invalid input format: not an object: %@", inputJSON);
         return NO;
     }
     
@@ -106,7 +106,7 @@
     
     if (top == nil || left == nil || width == nil || height == nil || totalWidth == nil || totalHeight == nil)
     {
-        NSLog(@"JSAPI: pos MUST have top/left/width/height/totalWidth/totalHeight entries: %@", inputJSON);
+        NSLog(@"MODULEAPI: pos MUST have top/left/width/height/totalWidth/totalHeight entries: %@", inputJSON);
         return NO;
     }
     
