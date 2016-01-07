@@ -215,7 +215,7 @@
     self.udfa = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
     self.openUDID = [OpenUDID value];
     NSString *domain     = @"com.mobideck.appdeck";
-    NSString *key        = @"JSAPI: Event: Exception while writing JSon: %@: %@";
+    NSString *key        = @"Profile: Event: Exception while writing JSon: %@: %@";
 
     if (self.secureUDID == nil)
     {

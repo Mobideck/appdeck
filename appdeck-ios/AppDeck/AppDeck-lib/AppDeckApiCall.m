@@ -94,19 +94,19 @@
             //tmpinput = [inputJSONData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
         }
         @catch (NSException *exception) {
-            NSLog(@"JSAPI: Exception while reading JSon: %@: %@", exception, _inputJSON);
+            NSLog(@"JSAPI: input: Exception while reading JSon: %@: %@", exception, _inputJSON);
             return nil;
         }
         
         if (error != nil)
         {
-            NSLog(@"JSAPI: Error while reading JSon: %@: %@", error, _inputJSON);
+            NSLog(@"JSAPI: input: Error while reading JSon: %@: %@", error, _inputJSON);
             return nil;
         }
         
         if ([[tmpinput class] isSubclassOfClass:[NSDictionary class]] == NO)
         {
-            NSLog(@"JSAPI: invalid input format: not an object: %@", _inputJSON);
+            NSLog(@"JSAPI: input: invalid input format: not an object: %@", _inputJSON);
             return nil;
         }
         
@@ -129,18 +129,19 @@
     NSError *error;
     NSData *resultJSONData = nil;
     @try {
-        resultJSONData = [NSJSONSerialization dataWithJSONObject:result options:NSJSONWritingPrettyPrinted error:&error];
+        NSDictionary *container = @{@"value": result};
+        resultJSONData = [NSJSONSerialization dataWithJSONObject:container options:NSJSONWritingPrettyPrinted error:&error];
         //resultJSONData = [result JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
     }
     @catch (NSException *exception) {
-        NSLog(@"JSAPI: Exception while writing JSon: %@: %@", exception, result);
+        NSLog(@"JSAPI: setResult: Exception while writing JSon: %@: %@", exception, result);
     }
     if (error != nil)
     {
-        NSLog(@"JSAPI: Error while writing JSon: %@: %@", error, result);
+        NSLog(@"JSAPI: setResult: Error while writing JSon: %@: %@", error, result);
     }
     _result = result;
-    _resultJSON = [[NSString alloc] initWithData:resultJSONData encoding:NSUTF8StringEncoding];
+    _resultJSON = [NSString stringWithFormat:@"%@.value", [[NSString alloc] initWithData:resultJSONData encoding:NSUTF8StringEncoding]];
 }
 
 -(NSString *)eventID

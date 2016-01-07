@@ -62,16 +62,17 @@
     NSError *error;
     NSData *resultJSONData = nil;
     @try {
+//         if ([NSJSONSerialization isValidJSONObject:postDataObject])
         resultJSONData = [NSJSONSerialization dataWithJSONObject:adParams options:NSJSONWritingPrettyPrinted error:&error];
         //resultJSONData = [adParams JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
     }
     @catch (NSException *exception) {
-        NSLog(@"JSAPI: Exception while writing JSon: %@: %@", exception, adContext);
+        NSLog(@"ADAPI: Exception while writing JSon: %@: %@", exception, adContext);
         return;
     }
     if (error != nil)
     {
-        NSLog(@"JSAPI: Error while writing JSon: %@: %@", error, adContext);
+        NSLog(@"ADAPI: Error while writing JSon: %@: %@", error, adContext);
         return;
     }
     
