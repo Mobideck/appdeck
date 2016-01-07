@@ -2127,8 +2127,8 @@ public class Loader extends AppCompatActivity {
             }
         }
 
-        if (mDrawerToggle.onOptionsItemSelected(item))
-            return true;
+        //if (mDrawerToggle.onOptionsItemSelected(item))
+        //    return true;
 
     	if (idx == android.R.id.home)
     	{
