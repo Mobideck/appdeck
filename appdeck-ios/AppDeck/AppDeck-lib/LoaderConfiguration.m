@@ -183,12 +183,12 @@
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
 //            self.prefetch_url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@.appdeckcdn.com/%@_tablet.7z", self.app_api_key, self.app_api_key]];
-            self.prefetch_url = [NSURL URLWithString:[NSString stringWithFormat:@"http://prefetch.appdeck.mobi/%@_tablet.7z", self.app_api_key]];
+            self.prefetch_url = [NSURL URLWithString:[NSString stringWithFormat:@"http://prefetch.appdeck.mobi/%@_ios_tablet.7z", self.app_api_key]];
         }
         else
         {
 //            self.prefetch_url = [NSURL URLWithString: [NSString stringWithFormat:@"http://%@.appdeckcdn.com/%@.7z", self.app_api_key, self.app_api_key]];
-            self.prefetch_url = [NSURL URLWithString: [NSString stringWithFormat:@"http://prefetch.appdeck.mobi/%@.7z", self.app_api_key]];
+            self.prefetch_url = [NSURL URLWithString: [NSString stringWithFormat:@"http://prefetch.appdeck.mobi/%@_ios_phone.7z", self.app_api_key]];
         }
     }
     
