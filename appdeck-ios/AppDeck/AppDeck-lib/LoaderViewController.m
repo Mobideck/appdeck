@@ -45,7 +45,7 @@
 #import "AppDeckUserProfile.h"
 #import "NSDictionary+query.h"
 #import "RE2Regexp.h"
-
+#import "UIColor+blur.h"
 #import "MEZoomAnimationController.h"
 
 @interface LoaderViewController ()
@@ -200,7 +200,7 @@
     return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAll;
 }
@@ -425,6 +425,7 @@
             UIGraphicsEndImageContext();
             [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
         } else {
+//            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.app_topbar_color1.blur CGColor], (id)[self.conf.app_topbar_color2.blur CGColor] ]];
             CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
@@ -501,14 +502,76 @@
     LoaderNavigationController *navCtl = [[LoaderNavigationController alloc] initWithNibName:nil bundle:nil];
     //    popUp = [[UINavigationController alloc] init];
     navCtl.view.frame = self.view.bounds;
-    navCtl.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    //navCtl.navigationBar.barStyle = UIBarStyleBlackOpaque;
     //navCtl.view.backgroundColor = [UIColor whiteColor];
-    if (self.appDeck.iosVersion >= 7.0)
+
+//    [navCtl.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : self.conf.app_topbar_text_color}];
+
+    [navCtl.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : self.conf.app_topbar_text_color}];
+    navCtl.navigationBar.tintColor = self.conf.app_topbar_text_color;
+
+    
+    if (NO && self.appDeck.iosVersion >= 8.0 && self.conf.app_color != nil)
     {
-        navCtl.navigationBar.translucent = NO;
+        navCtl.navigationBar.translucent = YES;
+        // Add blur view
+        CGRect bounds = navCtl.navigationBar.bounds;
+        //if (statusBarInfo.hidden == NO)
+        //{
+        bounds.origin.y -= 20;
+        bounds.size.height += 20;
+        //}
+        if (YES)
+        {
+            UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+            visualEffectView.userInteractionEnabled = false;
+            visualEffectView.frame = bounds;
+            visualEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            [navCtl.navigationBar addSubview:visualEffectView];
+            navCtl.navigationBar.backgroundColor = [UIColor clearColor];
+            [navCtl.navigationBar sendSubviewToBack:visualEffectView];
+        }
+        else
+        {
+            UIColor *blur_app_color = [self.conf.app_color blur];
+            //[[UIToolbar appearance] setTintColor:blur_app_color];
+            //[[UITabBar appearance] setTintColor:blur_app_color];
+            //[[UINavigationBar appearance] setTintColor:blur_app_color];
+            navCtl.navigationBar.tintColor = blur_app_color;
+            
+            UIBlurEffect * effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+            UIVisualEffectView * viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
+            viewWithBlurredBackground.userInteractionEnabled = false;
+            viewWithBlurredBackground.frame = bounds;
+            
+            UIVisualEffectView * viewInducingVibrancy = [[UIVisualEffectView alloc] initWithEffect:effect]; // must be the same effect as the blur view
+            viewInducingVibrancy.userInteractionEnabled = false;
+            [viewWithBlurredBackground.contentView addSubview:viewInducingVibrancy];
+
+            UIView *vibrantStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, bounds.size.width, 20)];
+            vibrantStatusBar.userInteractionEnabled = false;
+            vibrantStatusBar.backgroundColor = blur_app_color;//[blur_app_color colorWithAlphaComponent:0.5];//[UIColor ] [UIColor colorWithWhite:1.0f alpha:0.5f];//self.conf.app_color;
+            // Set the text and the position of your label
+            [viewInducingVibrancy.contentView addSubview:vibrantStatusBar];
+            
+            [navCtl.navigationBar addSubview:viewWithBlurredBackground];
+            [navCtl.navigationBar addSubview:vibrantStatusBar];
+            navCtl.navigationBar.backgroundColor = [UIColor clearColor];
+            [navCtl.navigationBar sendSubviewToBack:vibrantStatusBar];
+            [navCtl.navigationBar sendSubviewToBack:viewWithBlurredBackground];
+
+            
+            
+        }
+        
+    }
+    else if (self.appDeck.iosVersion >= 7.0)
+    {
+        if (NO)
+            navCtl.navigationBar.translucent = YES;
         //[navCtl.navigationBar setBarTintColor:[self.conf.topbar_color1 colorWithAlphaComponent:0.6]];
-        [navCtl.navigationBar setBarTintColor:self.conf.app_topbar_color1];
-        navCtl.navigationBar.tintColor = (self.conf.icon_theme == IconThemeDark ? [UIColor whiteColor] : [UIColor blackColor]);
+        //navCtl.navigationBar.tintColor = (self.conf.icon_theme == IconThemeDark ? [UIColor whiteColor] : [UIColor blackColor]);
+        //[navCtl.navigationBar setBarTintColor:self.conf.app_topbar_color1];
     }
     
     /*
@@ -771,6 +834,8 @@
             fakeStatusBar.backgroundColor = [UIColor blackColor];
         else
             fakeStatusBar.backgroundColor = [UIColor whiteColor];
+        //if (self.conf.app_color)
+        //    fakeStatusBar.backgroundColor = self.conf.app_color;
         fakeStatusBar.alpha = 0.0;
         [self.view addSubview:fakeStatusBar];
     }
@@ -1046,7 +1111,7 @@
     //[self showStatusBarNotice:@"2:41 PM"];
     UINavigationController *p = popUp;
     popUp = nil;
-    [navController dismissViewControllerAnimated:YES completion:^{ p.viewControllers = nil; }];
+    [navController dismissViewControllerAnimated:YES completion:^{ p.viewControllers = @[]; }];
 }
 /*
 -(void)closePopUp:(id)origin andShow:(LoaderChildViewController *)newPage
@@ -1568,7 +1633,7 @@
         }
         
         browser.loader = self;
-        browser.screenConfiguration = [ScreenConfiguration defaultConfigurationWitehLoader:self];
+        browser.screenConfiguration = call.child.screenConfiguration;// [ScreenConfiguration defaultConfigurationWitehLoader:self];//[ScreenConfiguration defaultConfigurationWitehLoader:self];
         browser.title = browser.screenConfiguration.title;
 
         [self loadChild:browser root:NO popup:LoaderPopUpDefault];
