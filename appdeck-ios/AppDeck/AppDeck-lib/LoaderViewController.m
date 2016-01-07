@@ -1084,24 +1084,13 @@
 
 -(void)toggleMenu:(id)origin
 {
-    //[self showStatusBarNotice:@"2:41 PM"];
-    
-    ECSlidingViewControllerTopViewPosition position = self.slidingViewController.currentTopViewPosition;
-    
-    if (/*self.leftMenuOpen == NO && self.rightMenuOpen == NO*/self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered) {
-        [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
-            /*self.leftMenuOpen = YES;
-            [leftController isMain:YES];
-            self.rightMenuOpen = NO;
-            [leftController isMain:NO];*/
-        }];
-
+    if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered) {
+        if (leftController != nil)
+            [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{ }];
+        else if (rightController != nil)
+            [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{ }];
     } else {
         [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
-            /*self.leftMenuOpen = NO;
-            [leftController isMain:NO];
-            self.rightMenuOpen = NO;
-            [leftController isMain:NO];*/
         }];
     }
 }
@@ -1367,7 +1356,7 @@
                 NSArray *ctls = [NSArray arrayWithObject:container];
                 [navController setViewControllers:ctls];
                 
-                if (leftController)
+                if (leftController || rightController)
                 {
                     navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
                     
@@ -1382,7 +1371,7 @@
             NSArray *ctls = [NSArray arrayWithObject:container];
             [navController setViewControllers:ctls];
             
-            if (leftController)
+            if (leftController || rightController)
             {
                 navController.topViewController.navigationItem.leftBarButtonItem = [self barButtonItemWithImage:self.conf.icon_menu.image andAction:@selector(toggleMenu:)];
                 
