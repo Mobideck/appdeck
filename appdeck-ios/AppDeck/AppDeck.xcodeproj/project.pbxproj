@@ -242,6 +242,7 @@
 		A95B95271803FDCC00106EF7 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95231803FDCC00106EF7 /* Icon-76@2x.png */; };
 		A95B952A1803FF6400106EF7 /* Icon-Small-40.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95281803FF6400106EF7 /* Icon-Small-40.png */; };
 		A95B952B1803FF6400106EF7 /* Icon-Small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95B95291803FF6400106EF7 /* Icon-Small-40@2x.png */; };
+		A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D313C1C3BFFE1007D0C63 /* UIColor+blur.m */; };
 		A96BD5501BB2D01600F6F658 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96BD54F1BB2D01600F6F658 /* Launch Screen.storyboard */; };
 		A99A58F3172FCB95007D2106 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A99A58F1172FCB95007D2106 /* app.cpp */; };
 		A99EF6DA1C09E11200DAC126 /* CustomECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99EF6D91C09E11200DAC126 /* CustomECSlidingViewController.m */; };
@@ -940,6 +941,8 @@
 		A95B95231803FDCC00106EF7 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = SOURCE_ROOT; };
 		A95B95281803FF6400106EF7 /* Icon-Small-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40.png"; sourceTree = SOURCE_ROOT; };
 		A95B95291803FF6400106EF7 /* Icon-Small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-40@2x.png"; sourceTree = SOURCE_ROOT; };
+		A95D313B1C3BFFE1007D0C63 /* UIColor+blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+blur.h"; path = "AppDeck-lib/UIColor+blur.h"; sourceTree = "<group>"; };
+		A95D313C1C3BFFE1007D0C63 /* UIColor+blur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+blur.m"; path = "AppDeck-lib/UIColor+blur.m"; sourceTree = "<group>"; };
 		A96BD54F1BB2D01600F6F658 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A99A58F1172FCB95007D2106 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app.cpp; sourceTree = "<group>"; };
 		A99EF6D81C09E11200DAC126 /* CustomECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomECSlidingViewController.h; sourceTree = "<group>"; };
@@ -2332,6 +2335,8 @@
 				A916CDF81A1E03E5005FE1AE /* NSError+errorWithFormat.h */,
 				A916CDF91A1E03E5005FE1AE /* NSError+errorWithFormat.m */,
 				A916CDFA1A1E03E5005FE1AE /* NSFileManager+Tar.h */,
+				A95D313B1C3BFFE1007D0C63 /* UIColor+blur.h */,
+				A95D313C1C3BFFE1007D0C63 /* UIColor+blur.m */,
 			);
 			name = "Add-ins";
 			sourceTree = "<group>";
@@ -3750,6 +3755,7 @@
 				A9ADF1FA1BC53EBC0026305E /* MPRewardedVideoAdapter.m in Sources */,
 				A916D3631A1E03E7005FE1AE /* Alloc.c in Sources */,
 				A9BA711B1BC524D0005A212E /* tostring.cc in Sources */,
+				A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */,
 				A9ADF1D71BC53EBC0026305E /* UIView+MPNativeAd.m in Sources */,
 				A9ADF1851BC53EBC0026305E /* MPBannerAdManager.m in Sources */,
 				A9ADF1871BC53EBC0026305E /* MPBaseBannerAdapter.m in Sources */,
