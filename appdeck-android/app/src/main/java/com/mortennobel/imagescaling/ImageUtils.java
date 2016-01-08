@@ -111,7 +111,10 @@ public class ImageUtils {
 			ints2bytes(temp, array, 2, 1, 0);  // rgb -->  bgr
 			break;*/
 			default:
-				img.getPixels(temp, 0, img.getWidth(), 0, y, img.getWidth(), 1);
+				// Android Bitmap are NOT thread safe and lead to artifact
+				synchronized (img) {
+					img.getPixels(temp, 0, img.getWidth(), 0, y, img.getWidth(), 1);
+				}
 				//img.getRGB(x, y, w, h, temp, 0, w);
 				ints2bytes(temp, array, 2, 1, 0, 3);  // argb -->  abgr
 				break;
@@ -152,7 +155,10 @@ public class ImageUtils {
 			} else if (pixels.length < w * h) {
 				throw new IllegalArgumentException("pixels array must have a length" + " >= w*h");
 			}
-			img.setPixels (pixels, 0, w, x, y, w, h);
+			// Android Bitmap are NOT thread safe and lead to artifact
+			synchronized (img) {
+				img.setPixels(pixels, 0, w, x, y, w, h);
+			}
 		/*
 			if (imageType == BufferedImage.TYPE_INT_ARGB ||
 					imageType == BufferedImage.TYPE_INT_RGB ||

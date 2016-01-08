@@ -102,7 +102,7 @@ public class Utils {
 
                 if (width <= 3 || maxHeight <= 3)
                     return unscaledBitmap;
-                
+
                 if (unscaledBitmap.getConfig() != Bitmap.Config.ARGB_8888) {
                     Log.e(TAG, "force bitmap config from: "+ unscaledBitmap.getConfig() + " to " + Bitmap.Config.ARGB_8888);
                     Bitmap fixedBitmap = unscaledBitmap.copy(Bitmap.Config.ARGB_8888, true);
