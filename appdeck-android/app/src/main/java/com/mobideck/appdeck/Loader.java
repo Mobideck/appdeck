@@ -419,6 +419,7 @@ public class Loader extends AppCompatActivity {
     private boolean mUIReady = false;
     private boolean mAppDeckReady = false;
     private boolean mProxyReady = false;
+    private boolean mShouldResendIntent = false;
 
     public boolean justLaunch = true;
 
@@ -516,6 +517,11 @@ public class Loader extends AppCompatActivity {
         if (fragment != null) {
             if (fragment.isMain == false)
                 fragment.setIsMain(true);
+        }
+
+        if (mShouldResendIntent) {
+            mShouldResendIntent = false;
+            onNewIntent(getIntent());
         }
     }
 
@@ -2433,10 +2439,14 @@ public class Loader extends AppCompatActivity {
     protected void onNewIntent(Intent intent)
     {
     	super.onNewIntent(intent);
+        this.setIntent(intent); // update Activity Intent
 
         SmartWebViewFactory.onActivityNewIntent(this, intent);
 
-        //this.setIntent(intent);
+        if (mUIReady == false || mAppDeckReady == false || mProxyReady == false) {
+            mShouldResendIntent = true;
+            return;
+        }
 
     	isForeground = true;
     	Bundle extras = intent.getExtras();
@@ -2475,16 +2485,6 @@ public class Loader extends AppCompatActivity {
             }
             return;
     	}
-    	
-/*
-    	// popup url
-    	url = extras.getString(POP_UP_URL);
-    	if (url != null && !url.isEmpty())
-    	{
-    		showPopUp(null, url);
-    		return;
-    	}*/
-    	
     }
 
     @Override
