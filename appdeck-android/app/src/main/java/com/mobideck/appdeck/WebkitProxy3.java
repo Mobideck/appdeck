@@ -225,10 +225,11 @@ public class WebkitProxy3 {
             for (Object receiverMap : receivers.values()) {
                 for (Object rec : ((ArrayMap) receiverMap).keySet()) {
                     Class clazz = rec.getClass();
-                    if (clazz.getName().contains("ProxyChangeListener")) {
+                    if (clazz != null && clazz.getName() != null && clazz.getName().contains("ProxyChangeListener")) {
                         Method onReceiveMethod = clazz.getDeclaredMethod("onReceive", Context.class, Intent.class);
+                        if (onReceiveMethod == null)
+                            continue;
                         Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
-
                         onReceiveMethod.invoke(rec, appContext, intent);
                     }
                 }
