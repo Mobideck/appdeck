@@ -145,13 +145,13 @@
 }
 
 # remove slf4j
--assumenosideeffects class * implements org.slf4j.Logger {
-    public *** trace(...);
-    public *** debug(...);
-    public *** info(...);
-    public *** warn(...);
-    public *** error(...);
-}
+#-assumenosideeffects class * implements org.slf4j.Logger {
+#    public *** trace(...);
+#    public *** debug(...);
+#    public *** info(...);
+#    public *** warn(...);
+#    public *** error(...);
+#}
 
 # bug in proguard
 # http://sourceforge.net/p/proguard/bugs/573/
@@ -160,3 +160,8 @@
 -optimizations !class/unboxing/enum
 
 -dontwarn com.nuance.**
+
+# we want fabric crash report with line number
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+-printmapping out.map
