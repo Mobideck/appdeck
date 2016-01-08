@@ -28,13 +28,14 @@ public class AppDeckFragmentPushAnimation {
 		final View fromView = from.getView();
 		final View toView = to.getView();
 
-		fromView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-		toView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-
 		if (fromView == null)
 			return;
 		if (toView == null)
-			return;		
+			return;
+
+		fromView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+		toView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
         AnimatorSet set = new AnimatorSet();
         //ValueAnimator.setFrameDelay(24);
         //set.setInterpolator(new LinearInterpolator());
