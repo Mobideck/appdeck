@@ -38,7 +38,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ConfigurationInfo;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
@@ -89,16 +92,33 @@ public class Utils {
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
-				.imageScaleType(ImageScaleType.NONE_SAFE)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
                 .preProcessor(new BitmapProcessor() {
 			
 			@Override
 			public Bitmap process(Bitmap unscaledBitmap) {
 
-				int width = unscaledBitmap.getWidth() * maxHeight / unscaledBitmap.getHeight();
+                int width = unscaledBitmap.getWidth() * maxHeight / unscaledBitmap.getHeight();
 
-				if (width <= 3 || maxHeight <= 3)
-					return unscaledBitmap;
+                if (width <= 3 || maxHeight <= 3)
+                    return unscaledBitmap;
+
+				int bitmapWidth = unscaledBitmap.getWidth();
+				int bitmapHeight = unscaledBitmap.getHeight();
+
+                // if image is WAY too big, scale it with default android alo first
+                if (bitmapWidth > width * 4 || bitmapHeight > maxHeight * 4)
+                {
+                    Rect srcRect = new Rect(0, 0, unscaledBitmap.getWidth(), unscaledBitmap.getHeight());
+                    Rect dstRect = new Rect(0, 0, width * 4, maxHeight * 4);
+
+                    Bitmap scaledBitmap = Bitmap.createBitmap(width * 4, maxHeight * 4, Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(scaledBitmap);
+                    canvas.drawBitmap(unscaledBitmap, srcRect, dstRect, new Paint(Paint.FILTER_BITMAP_FLAG|Paint.ANTI_ALIAS_FLAG));
+                    unscaledBitmap.recycle();
+
+                    unscaledBitmap = scaledBitmap;
+                }
 
 				ResampleOp resampleOp = new ResampleOp(width, maxHeight);
 				Bitmap myscaledBitmap = Bitmap.createBitmap(width, maxHeight, Bitmap.Config.ARGB_8888);
@@ -557,6 +577,8 @@ public class Utils {
 	{
 	    try {
 			File outputFile = new File(fileName);
+            if (!outputFile.exists())
+                outputFile.createNewFile();
 			IOUtils.write(content, new FileOutputStream(outputFile));
 	    	return true;
 		} catch (IOException e) {
