@@ -200,6 +200,10 @@ public class AppDeckAdManager {
     }
 
     public void scenario(final Context context, final JSONObject config) {
+
+        if (config == null)
+            return;
+
         new Thread(new Runnable() {
             public void run() {
 
@@ -421,7 +425,8 @@ public class AppDeckAdManager {
                 bannerAdNetwork = null;
             }*/
             startBannerAd(0);
-            mBannerHandler.postDelayed(this, timeBetweenBannerRefresh * 1000 * 2); // fail safe: this timer should be cancel when banner is show
+            if (mBannerHandler != null)
+                mBannerHandler.postDelayed(this, timeBetweenBannerRefresh * 1000 * 2); // fail safe: this timer should be cancel when banner is show
         }
     };
 
@@ -436,7 +441,8 @@ public class AppDeckAdManager {
             }
 
             startInterstitialAd(0);
-            mInterstitialHandler.postDelayed(this, timeBetweenInterstitialPolling * 1000);
+            if (mInterstitialHandler != null)
+                mInterstitialHandler.postDelayed(this, timeBetweenInterstitialPolling * 1000);
         }
     };
 
