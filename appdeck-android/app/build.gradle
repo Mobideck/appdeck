@@ -94,8 +94,8 @@ android {
         javaMaxHeapSize "4g"
 
         // smaller build time
-        incremental true
-        preDexLibraries true
+        incremental false // make rebuild failed at launch with You need to use a Theme.AppCompat theme (or descendant) with this activity.
+        preDexLibraries false// make rebuild failed at launch with You need to use a Theme.AppCompat theme (or descendant) with this activity.
     }
 
     buildTypes {
