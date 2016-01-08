@@ -92,7 +92,7 @@ public class Utils {
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.ARGB_8888)
-				.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+				.imageScaleType(ImageScaleType.NONE_SAFE)
                 .preProcessor(new BitmapProcessor() {
 			
 			@Override
@@ -102,13 +102,21 @@ public class Utils {
 
                 if (width <= 3 || maxHeight <= 3)
                     return unscaledBitmap;
-
+                
+                if (unscaledBitmap.getConfig() != Bitmap.Config.ARGB_8888) {
+                    Log.e(TAG, "force bitmap config from: "+ unscaledBitmap.getConfig() + " to " + Bitmap.Config.ARGB_8888);
+                    Bitmap fixedBitmap = unscaledBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                    unscaledBitmap.recycle();
+                    unscaledBitmap = fixedBitmap;
+                }
+                // force density
+                //unscaledBitmap.setDensity(Bitmap.DENSITY_NONE);
+/*
 				int bitmapWidth = unscaledBitmap.getWidth();
 				int bitmapHeight = unscaledBitmap.getHeight();
 
-                // if image is WAY too big, scale it with default android alo first
-                if (bitmapWidth > width * 4 || bitmapHeight > maxHeight * 4)
-                {
+                // if image is WAY too big, scale it with default android algo first
+                if (bitmapWidth > width * 4 || bitmapHeight > maxHeight * 4) {
                     Rect srcRect = new Rect(0, 0, unscaledBitmap.getWidth(), unscaledBitmap.getHeight());
                     Rect dstRect = new Rect(0, 0, width * 4, maxHeight * 4);
 
@@ -119,11 +127,15 @@ public class Utils {
 
                     unscaledBitmap = scaledBitmap;
                 }
-
+*/
 				ResampleOp resampleOp = new ResampleOp(width, maxHeight);
+                //resampleOp.setNumberOfThreads(1);
 				Bitmap myscaledBitmap = Bitmap.createBitmap(width, maxHeight, Bitmap.Config.ARGB_8888);
 				myscaledBitmap = resampleOp.filter(unscaledBitmap, myscaledBitmap);
 				unscaledBitmap.recycle();
+
+                //myscaledBitmap.prepareToDraw();
+
 				return myscaledBitmap;
 
 /*				if (Utils.supportsOpenGLES2(context)) {
