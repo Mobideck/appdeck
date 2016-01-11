@@ -48,6 +48,8 @@
 #import "UIColor+blur.h"
 #import "MEZoomAnimationController.h"
 
+@import SafariServices;
+
 @interface LoaderViewController ()
 
 @end
@@ -1178,6 +1180,12 @@
             screenConfiguration = [ScreenConfiguration defaultConfigurationWitehLoader:self];
             screenConfiguration.isPopUp = YES;
             type = @"browser";
+            // on iOS9 we use safari browser
+            if (self.appDeck.iosVersion >= 9.0)
+            {
+                [self launchExternalBrowser:pageUrl];
+                return nil;
+            }
         }
     }
     
@@ -1212,6 +1220,8 @@
 -(LoaderChildViewController *)loadPage:(NSString *)pageUrlString root:(BOOL)root popup:(LoaderPopUp)popup
 {
     LoaderChildViewController    *page = [self getChildViewControllerFromURL:pageUrlString type:nil];
+    if (page == nil)
+        return nil;
     return [self loadChild:page root:root popup:popup];
 }
 
@@ -1433,6 +1443,13 @@
 -(LoaderChildViewController *)loadPage:(NSString *)pageUrlString
 {
     return [self loadPage:pageUrlString root:NO popup:LoaderPopUpDefault];
+}
+
+-(void)launchExternalBrowser:(NSURL *)pageURL
+{
+    SFSafariViewController *ctl = [[SFSafariViewController alloc] initWithURL:pageURL];
+    ctl.view.tintColor = self.conf.app_color;
+    [self presentViewController:ctl animated:YES completion:nil];
 }
 
 -(void)executeJS:(NSString *)js
