@@ -15,8 +15,6 @@
 #import "LoaderViewController.h"
 #import "AppDeckAnalytics.h"
 
-//#import <Crashlytics/Crashlytics.h>
-
 @implementation RemoteAppCache
 
 -(id)initWithURL:(NSURL *)_url andTTL:(float)_seconds

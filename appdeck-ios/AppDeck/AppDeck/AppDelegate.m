@@ -9,16 +9,12 @@
 
 #import <QuartzCore/CALayer.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-//#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    //[Crashlytics startWithAPIKey:@"06661b993731d02660ac43897854ae842acf59be"];
     
     // load app
     NSString *conf_url = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"AppDeckJSONURL"];

@@ -7,7 +7,6 @@
 //
 
 #import "LZMAExtractor.h"
-//#import <Crashlytics/Crashlytics.h>
 
 int do7z_extract_entry(char *archivePath, char *archiveCachePath, char *entryName, char *entryPath, int fullPaths);
 
