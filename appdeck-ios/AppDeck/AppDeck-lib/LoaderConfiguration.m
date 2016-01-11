@@ -287,6 +287,11 @@
         self.icon_search = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_search" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios7/icons/search_dark.png"] relativeToURL:self.baseUrl] height:44];
         self.icon_user = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"icon_user" defaultValue:@"http://appdata.static.appdeck.mobi/res/ios7/icons/user_dark.png"] relativeToURL:self.baseUrl] height:44];
     }
+    
+    // validate colors
+    if (self.app_topbar_text_color == nil)
+        self.app_topbar_text_color = (self.icon_theme == IconThemeDark ? [UIColor whiteColor] : [UIColor whiteColor]);
+    
     self.image_network_error_url = [result query:@"image_network_error" defaultValue:@"http://appdata.static.appdeck.mobi/default/images/network_error.png"];
     [self readColor:[result query:@"image_network_error_background_color"] intoColor1:&_image_network_error_background_color1 intoColor2:&_image_network_error_background_color2];
     
