@@ -36,6 +36,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <TwitterKit/TwitterKit.h>
 #import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 
 @implementation AppDeck
@@ -579,9 +580,9 @@
             self.loader.conf.twitter_consumer_key.length > 0 && self.loader.conf.twitter_consumer_secret.length > 0)
         {
             [[Twitter sharedInstance] startWithConsumerKey:self.loader.conf.twitter_consumer_key consumerSecret:self.loader.conf.twitter_consumer_secret];
-            [Fabric with:@[[Twitter sharedInstance]]];
+            [Fabric with:@[[Crashlytics class], [Twitter sharedInstance]]];
         } else {
-            [Fabric with:@[[Twitter sharedInstance]]];
+            [Fabric with:@[[Crashlytics class], [Twitter sharedInstance]]];
         }
     }
     shouldConfigureApp = NO;
