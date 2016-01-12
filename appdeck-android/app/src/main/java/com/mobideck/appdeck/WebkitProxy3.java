@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Proxy;
 import android.os.Build;
+import android.os.Parcelable;
 import android.util.Log;
 import android.webkit.WebView;
 
@@ -230,6 +231,29 @@ public class WebkitProxy3 {
                         if (onReceiveMethod == null)
                             continue;
                         Intent intent = new Intent(Proxy.PROXY_CHANGE_ACTION);
+
+                        try {
+                            /*********** optional, may be need in future *************/
+                            String CLASS_NAME;
+                            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                                CLASS_NAME = "android.net.ProxyProperties";
+                            } else {
+                                CLASS_NAME = "android.net.ProxyInfo";
+                            }
+                            Class cls = Class.forName(CLASS_NAME);
+                            Constructor constructor = cls.getConstructor(String.class, Integer.TYPE, String.class);
+                            constructor.setAccessible(true);
+                            Object proxyProperties = constructor.newInstance(host, port, null);
+                            intent.putExtra("proxy", (Parcelable) proxyProperties);
+                            /*********** optional, may be need in future *************/
+                        } catch (Exception e) {
+                            StringWriter sw = new StringWriter();
+                            e.printStackTrace(new PrintWriter(sw));
+                            String exceptionAsString = sw.toString();
+                            Log.v(LOG_TAG, e.getMessage());
+                            Log.v(LOG_TAG, exceptionAsString);
+                        }
+
                         onReceiveMethod.invoke(rec, appContext, intent);
                     }
                 }
