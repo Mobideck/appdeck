@@ -633,6 +633,8 @@ public class Utils {
 	public static String streamGetContent(InputStream is)
 	{
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        if (s == null)
+            return "";
 	    return s.hasNext() ? s.next() : "";
 	}
 	
