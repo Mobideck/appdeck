@@ -51,16 +51,24 @@ public class AppDeckFragmentPopAnimation {
 			
 			@Override
 			public void onAnimationEnd(Animator animation) {
+				if (fromView == null || toView == null)
+					return;
 				fromView.setLayerType(View.LAYER_TYPE_NONE, null);
 				toView.setLayerType(View.LAYER_TYPE_NONE, null);
+				if (to == null || to.loader == null)
+					return;
 				to.loader.getSupportFragmentManager().beginTransaction().remove(from).commitAllowingStateLoss();
 				to.setIsMain(true);
 			}
 			
 			@Override
 			public void onAnimationCancel(Animator animation) {
+				if (fromView == null || toView == null)
+					return;
 				fromView.setLayerType(View.LAYER_TYPE_NONE, null);
 				toView.setLayerType(View.LAYER_TYPE_NONE, null);
+				if (to == null || to.loader == null)
+					return;
 				to.loader.getSupportFragmentManager().beginTransaction().remove(from).commitAllowingStateLoss();
 				to.setIsMain(true);
 			}

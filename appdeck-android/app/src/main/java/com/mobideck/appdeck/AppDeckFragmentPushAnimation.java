@@ -55,15 +55,23 @@ public class AppDeckFragmentPushAnimation {
 			
 			@Override
 			public void onAnimationEnd(Animator animation) {
+				if (fromView == null || toView == null)
+					return;
 				fromView.setLayerType(View.LAYER_TYPE_NONE, null);
 				toView.setLayerType(View.LAYER_TYPE_NONE, null);
+				if (from == null || from.loader == null)
+					return;
 				from.loader.getSupportFragmentManager().beginTransaction().hide(from).commitAllowingStateLoss();
 			}
 			
 			@Override
 			public void onAnimationCancel(Animator animation) {
+				if (fromView == null || toView == null)
+					return;
 				fromView.setLayerType(View.LAYER_TYPE_NONE, null);
 				toView.setLayerType(View.LAYER_TYPE_NONE, null);
+				if (from == null || from.loader == null)
+					return;
 				from.loader.getSupportFragmentManager().beginTransaction().hide(from).commitAllowingStateLoss();
 			}
 		});        
