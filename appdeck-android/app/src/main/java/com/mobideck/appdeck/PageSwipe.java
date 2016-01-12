@@ -270,6 +270,8 @@ public class PageSwipe extends AppDeckFragment {
 	@Override
 	public void onHiddenChanged(boolean hidden)
 	{
+		if (getActivity() == null)
+			return;
     	FragmentManager fragmentManager = getChildFragmentManager();
     	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     	if (hidden)
