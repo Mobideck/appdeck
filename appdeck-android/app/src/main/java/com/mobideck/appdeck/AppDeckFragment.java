@@ -292,10 +292,10 @@ public class AppDeckFragment extends Fragment {
 
 	public void loadURLConfiguration(String absoluteURL)
 	{
-		if (appDeck == null)
-			return;
-		if (screenConfiguration == null)
+		if (appDeck != null && screenConfiguration == null)
 			screenConfiguration = appDeck.config.getConfiguration(absoluteURL);
+		if (screenConfiguration == null)
+			screenConfiguration = ScreenConfiguration.defaultConfiguration();
 
 		refreshConfiguration();
 	}
