@@ -216,6 +216,7 @@ public class AppDeckAdNetworkAditic extends AppDeckAdNetwork {
 
                     if (html == null) {
                         manager.onBannerAdFailed(AppDeckAdNetworkAditic.this, null);
+                        return;
                     }
 
                     loadBannerAd(html, width, height);
