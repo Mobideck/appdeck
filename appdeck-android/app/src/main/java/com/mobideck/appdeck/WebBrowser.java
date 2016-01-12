@@ -52,7 +52,8 @@ public class WebBrowser extends AppDeckFragment {
     	this.appDeck = this.loader.appDeck;
     	Bundle args = getArguments();
     	url = args.getString("url");
-        this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);
+		if (this.appDeck != null)
+	        this.screenConfiguration = this.appDeck.config.getConfiguration(currentPageUrl);
     	
 		menuItemPrevious = new PageMenuItem(loader.getResources().getString(R.string.previous), "!previous", "previous", "webbrowser:previous", null, null, this);
 		menuItemNext = new PageMenuItem(loader.getResources().getString(R.string.next), "!next", "next", "webbrowser:next", null, null, this);
@@ -170,7 +171,8 @@ public class WebBrowser extends AppDeckFragment {
     public void progressStart(View origin)
     {
        	menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel};       	
-       	loader.setMenuItems(menuItems);
+       	if (loader != null)
+			loader.setMenuItems(menuItems);
     	
     	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
        	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
@@ -202,7 +204,8 @@ public class WebBrowser extends AppDeckFragment {
     public void progressStop(View origin)
     {
        	menuItems = new PageMenuItem[] {menuItemPrevious, menuItemNext, menuItemShare, menuItemCancel, menuItemRefresh};
-       	loader.setMenuItems(menuItems);
+		if (loader != null)
+			loader.setMenuItems(menuItems);
 
     	menuItemPrevious.setAvailable(webView.ctl.smartWebViewCanGoBack());
        	menuItemNext.setAvailable(webView.ctl.smartWebViewCanGoForward());
