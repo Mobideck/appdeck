@@ -171,7 +171,7 @@
 # Note: there were 3 classes trying to access enclosing classes using reflection. You should consider keeping the inner classes attributes (using '-keepattributes InnerClasses'). (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
 -keepattributes InnerClasses
 # Note: there were 2 classes trying to access enclosing methods using reflection. You should consider keeping the enclosing method attributes (using '-keepattributes InnerClasses,EnclosingMethod'). (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
--keepattributes InnerClasses,EnclosingMethod'
+-keepattributes InnerClasses,EnclosingMethod
 # Note: there were 50 unresolved dynamic references to classes or interfaces. You should check if you need to specify additional program jars. (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclass)
 
 # Note: there were 1 class casts of dynamically created class instances. You might consider explicitly keeping the mentioned classes and/or their implementations (using '-keep'). (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclasscast)
