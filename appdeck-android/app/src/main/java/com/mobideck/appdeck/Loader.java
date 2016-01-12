@@ -724,7 +724,7 @@ public class Loader extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-    	if (appDeck.noCache)
+    	if (appDeck!= null && appDeck.noCache)
     		Utils.killApp(true);
         disableProxy();
         // Logs 'app deactivate' App Event.
