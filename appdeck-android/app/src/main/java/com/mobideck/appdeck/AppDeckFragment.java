@@ -292,6 +292,8 @@ public class AppDeckFragment extends Fragment {
 
 	public void loadURLConfiguration(String absoluteURL)
 	{
+		if (appDeck == null)
+			return;
 		if (screenConfiguration == null)
 			screenConfiguration = appDeck.config.getConfiguration(absoluteURL);
 
