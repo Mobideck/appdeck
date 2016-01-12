@@ -159,7 +159,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     			e.printStackTrace();
     		}    		
     		loadURLConfiguration(currentPageUrl);
-    		menuItems = screenConfiguration.getDefaultPageMenuItems(uri, this);
+    		if (screenConfiguration != null)
+				menuItems = screenConfiguration.getDefaultPageMenuItems(uri, this);
     		this.loader.setMenuItems(menuItems);
         	pageWebView.ctl.smartWebViewRestoreState(savedInstanceState);
         } else {
