@@ -19,8 +19,11 @@
 # crashlytics
 -keep class com.crashlytics.** { *; }
 -keep class com.crashlytics.android.**
-#-keepattributes SourceFile,LineNumberTable *Annotation*
-#-keep public class * extends java.lang.Exception
+# we want fabric crash report with line number
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+-printmapping out.map
+-keep public class * extends java.lang.Exception
 
 # netty
 # Get rid of warnings about unreachable but unused classes referred to by Netty
@@ -161,7 +164,16 @@
 
 -dontwarn com.nuance.**
 
-# we want fabric crash report with line number
--renamesourcefileattribute SourceFile
--keepattributes SourceFile,LineNumberTable
--printmapping out.map
+# there were 16 classes trying to access annotations using reflection. You should consider keeping the annotation attributes (using '-keepattributes *Annotation*'). (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+-keepattributes *Annotation*
+# there were 27 classes trying to access generic signatures using reflection. You should consider keeping the signature attributes (using '-keepattributes Signature'). (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+-keepattributes Signature
+# Note: there were 3 classes trying to access enclosing classes using reflection. You should consider keeping the inner classes attributes (using '-keepattributes InnerClasses'). (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+-keepattributes InnerClasses
+# Note: there were 2 classes trying to access enclosing methods using reflection. You should consider keeping the enclosing method attributes (using '-keepattributes InnerClasses,EnclosingMethod'). (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+-keepattributes InnerClasses,EnclosingMethod'
+# Note: there were 50 unresolved dynamic references to classes or interfaces. You should check if you need to specify additional program jars. (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclass)
+
+# Note: there were 1 class casts of dynamically created class instances. You might consider explicitly keeping the mentioned classes and/or their implementations (using '-keep'). (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclasscast)
+
+# Note: there were 72 accesses to class members by means of introspection. You should consider explicitly keeping the mentioned class members (using '-keep' or '-keepclassmembers'). (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclassmember)
