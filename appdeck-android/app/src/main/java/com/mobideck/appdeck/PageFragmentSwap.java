@@ -336,8 +336,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 		}
 		
 		loadURLConfiguration(absoluteUrl);
-		
-		menuItems = screenConfiguration.getDefaultPageMenuItems(uri, this);			
+
+		if (screenConfiguration != null)
+			menuItems = screenConfiguration.getDefaultPageMenuItems(uri, this);
 		
 		Log.v(TAG, "SCREEN: "+screenConfiguration.title+" TTL: "+screenConfiguration.ttl);
 				
@@ -521,6 +522,8 @@ public class PageFragmentSwap extends AppDeckFragment {
     {    	
     	if (reloadInProgress)
     		return;
+		if (pageWebView == null || pageWebView.ctl == null || pageWebViewAlt == null || pageWebViewAlt.ctl == null)
+			return;
 /*    	if (appDeck.isLowSystem)
     	{
     		loadPage(currentPageUrl);
