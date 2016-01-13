@@ -54,6 +54,8 @@ public class AppDeckFragment extends Fragment {
 
     public boolean isPopUp = false;
 
+	public boolean forceReload = false;
+
 //	public View bannerAdView = null;
 
 	public AppDeckFragment()
@@ -400,7 +402,7 @@ public class AppDeckFragment extends Fragment {
 		
 	}    
 	
-	public void reload()
+	public void reload(boolean forceReload)
 	{
 		
 	}
