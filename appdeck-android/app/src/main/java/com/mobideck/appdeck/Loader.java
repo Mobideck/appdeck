@@ -1471,10 +1471,10 @@ public class Loader extends AppCompatActivity {
         	Log.d(TAG, "reload:"+f.currentPageUrl);
             f.reload(forceReload);
         }
-        if (leftMenuWebView != null)
+/*        if (leftMenuWebView != null)
         	leftMenuWebView.ctl.reload();
         if (rightMenuWebView != null)
-        	rightMenuWebView.ctl.reload();
+        	rightMenuWebView.ctl.reload();*/
     }
 
     public void evaluateJavascript(String js)
