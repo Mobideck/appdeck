@@ -190,7 +190,10 @@ public class PageFragmentSwap extends AppDeckFragment {
         if (isMain) {
 			if (shouldCallLoadPage)
 				loadPage(currentPageUrl);
-            else if (pageWebView != null)
+			else if (forceReload) {
+				this.forceReload = false;
+				reloadInBackground();
+			} else if (pageWebView != null)
                 pageWebView.ctl.sendJsEvent("appear", "null");
         } else {
             if (pageWebView != null)
@@ -230,7 +233,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 			pageWebViewAlt.ctl.resume();
 
     	long now = System.currentTimeMillis();
-    	if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0)
+		if (forceReload) {
+			forceReload = false;
+			reloadInBackground();
+		} else if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0)
     	{
 			if (screenConfiguration.ttl > ((now - lastUrlLoad) / 1000))
 			{
@@ -549,10 +555,13 @@ public class PageFragmentSwap extends AppDeckFragment {
     }
     
 	@Override
-	public void reload()
+	public void reload(boolean forceReload)
 	{
-		super.reload();
-		reloadInBackground();		
+		super.reload(forceReload);
+		if (forceReload)
+			reloadInBackground();
+		else
+			this.forceReload = true;
 	}    
 	
     private int mAnimationDuration;

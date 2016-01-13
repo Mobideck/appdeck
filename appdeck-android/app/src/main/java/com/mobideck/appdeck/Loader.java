@@ -1463,11 +1463,13 @@ public class Loader extends AppCompatActivity {
             mProgressBarIndeterminate.bringToFront();
     }
     
-    public void reload()
+    public void reload(boolean forceReload)
     {
+        this.appDeck.cache.clear();
         for(WeakReference<AppDeckFragment> ref : fragList) {
         	AppDeckFragment f = ref.get();
-        	f.reload();
+        	Log.d(TAG, "reload:"+f.currentPageUrl);
+            f.reload(forceReload);
         }
         if (leftMenuWebView != null)
         	leftMenuWebView.ctl.reload();
@@ -1639,7 +1641,8 @@ public class Loader extends AppCompatActivity {
 
 		if (call.command.equalsIgnoreCase("reload"))
 		{
-			reload();
+			reload(false);
+            call.appDeckFragment.reload(true);
 			return true;
 		}
 		

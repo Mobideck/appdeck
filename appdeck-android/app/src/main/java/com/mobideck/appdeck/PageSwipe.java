@@ -311,17 +311,16 @@ public class PageSwipe extends AppDeckFragment {
 
     
 	@Override
-	public void reload()
+	public void reload(boolean forceReload)
 	{
-		super.reload();
+		super.reload(forceReload);
 		if (previousPage != null)
-			previousPage.reload();
+			previousPage.reload(forceReload);
 		if (currentPage != null)
-			currentPage.reload();
+			currentPage.reload(forceReload);
 		if (nextPage != null)
-			nextPage.reload();			
+			nextPage.reload(forceReload);
 	}
-    
     
     public boolean initPreviousNext()
     {
