@@ -1260,7 +1260,7 @@
     {
         __block LoaderChildViewController *p = page;
         [navController dismissViewControllerAnimated:YES completion:^{
-        
+            navController.isAnimating = NO;
             popUp = nil;
             [self loadChild:p root:root popup:popup];
     }];
