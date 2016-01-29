@@ -20,15 +20,15 @@
     NSMutableArray  *cacheRegex;
     
     RE2Regexp *cdnregexp;
-//    RE2Regexp *adblockregexp;
-    NSMutableArray *adblockwhitelist;
-    NSMutableArray *adblockblacklist;
     
     NSCachedURLResponse *emptyResponse;
 }
 
 @property (assign, nonatomic) BOOL alwaysCache;
 @property (assign, nonatomic) BOOL enableAdBlock;
+
+-(NSString *)getCachePathForEmbedResource:(NSURLRequest *)request;
+-(NSString *)getCachePathForRequest:(NSURLRequest *)request;
 
 -(void)addCacheRegularExpressionFromString:(NSString *)regexString;
 -(void)addAdBlockWhiteListCacheRegularExpressionFromString:(NSString *)regexString;
@@ -40,6 +40,8 @@
 
 -(BOOL)requestIsInEmbedCache:(NSURLRequest *)request;
 
+-(BOOL)shouldCacheRequest:(NSURLRequest *)request;
+
 -(BOOL)shouldStoreRequest:(NSURLRequest *)request;
 
 -(NSCachedURLResponse *)getCacheResponseForRequest:(NSURLRequest *)request;
@@ -49,5 +51,10 @@
 -(void)storeToDiskCacheResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request;
 
 -(void)cleanall;
+
+-(BOOL)isValidResponse:(NSURLResponse *)response;
+-(BOOL)shouldStoreResponse:(NSURLResponse *)response;
+
+-(BOOL)shouldServeRequestFromCache:(NSURLRequest *)request;
 
 @end

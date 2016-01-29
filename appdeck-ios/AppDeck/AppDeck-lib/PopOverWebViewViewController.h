@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "LoaderChildViewController.h"
-#import "ManagedUIWebViewController.h"
+#import "ManagedWebView.h"
 #import "FPPopover/FPPopoverController.h"
 
-@interface PopOverWebViewViewController : UIViewController <ManagedUIWebViewDelegate, FPPopoverControllerDelegate, AppDeckApiCallDelegate>
+@interface PopOverWebViewViewController : UIViewController <ManagedWebViewDelegate, FPPopoverControllerDelegate, AppDeckApiCallDelegate>
 {
-    ManagedUIWebViewController *ctl;
+    ManagedWebView *ctl;
 }
 
 @property (nonatomic, strong) UIColor   *backgroundColor;

@@ -44,9 +44,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-/*    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [center addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];*/
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -54,26 +51,7 @@
     [super viewDidAppear:animated];
     
     self.loader.appIsBusy = NO;
-    
-/*    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [center removeObserver:self name:UIKeyboardDidHideNotification object:nil];*/
-    
-/*    self.bannerAd = nil;
-    self.rectangleAd = nil;
-    self.interstitialAd = nil;*/
 }
-
-/*
--(void)keyboardDidShow:(NSNotification*)aNotification
-{
-    [self viewWillLayoutSubviews];
-}
-
--(void)keyboardDidHide:(NSNotification*)aNotification
-{
-    [self viewWillLayoutSubviews];
-}*/
 
 - (void)viewDidLoad
 {
@@ -85,16 +63,6 @@
     lastScrollToBottomEventTime = -1;
     lastScrollToBottomEventContentHeight = -1;
     scrollToBottomEventTimeInterval = 0.5;
-    
-    
-//    self.rectangleAd = [[RectangleAdViewController alloc] init];
-    //[self addChildViewController:rectangleAd];
-    //[self.view addSubview:rectangleAd.view];
-    
-    //self.bannerAd = [[BannerAdViewController alloc] init];
-    
-//    self.interstitialAd = [[InterstitialAdViewController alloc] init];
-    
 /*
     // video ad test
     NSURL *videoURL = [[NSBundle mainBundle] URLForResource: @"destiny" withExtension:@"m4v"];
@@ -163,6 +131,10 @@
 
 -(void)dealloc
 {
+    if (contentCtl)
+        contentCtl.delegate = nil;
+    if (refreshCtl)
+        refreshCtl.delegate = nil;
     if (self.parentViewController != nil)
         [self removeFromParentViewController];
 }
@@ -175,10 +147,10 @@
 
     if (isMain == YES)
     {
-        if (self.loader.appDeck.iosVersion >= 6.0)
-            contentCtl.webView.suppressesIncrementalRendering = NO;
+//        if (self.loader.appDeck.iosVersion >= 6.0)
+//            contentCtl.webView.suppressesIncrementalRendering = NO;
         [contentCtl addURLInOtherHistory:self.url.absoluteString];
-        contentCtl.webView.scrollView.scrollsToTop = YES;
+        contentCtl.scrollView.scrollsToTop = YES;
 
         if (shouldReloadInBackground == YES && loadingInprogress == NO)
             if (self.isMain)
@@ -206,9 +178,9 @@
     }
     else
     {
-        if (self.loader.appDeck.iosVersion >= 6.0)
-            contentCtl.webView.suppressesIncrementalRendering = YES;
-        contentCtl.webView.scrollView.scrollsToTop = NO;
+//        if (self.loader.appDeck.iosVersion >= 6.0)
+//            contentCtl.webView.suppressesIncrementalRendering = YES;
+        contentCtl.scrollView.scrollsToTop = NO;
         
          self.bannerAd = nil;
          self.rectangleAd = nil;
@@ -239,17 +211,15 @@
 
 #pragma mark - Loading Step
 
--(void)setupManagedWebView:(ManagedUIWebViewController *)managedWebView
+-(void)setupManagedWebView:(ManagedWebView *)managedWebView
 {
     [managedWebView setChromeless:YES];
    
-    managedWebView.webView.scrollView.contentInset = [self getPageContentInset];
-    managedWebView.webView.scrollView.scrollIndicatorInsets = [self getPageContentInset];//[self getDefaultContentInset];
+    managedWebView.scrollView.contentInset = [self getPageContentInset];
+    managedWebView.scrollView.scrollIndicatorInsets = [self getPageContentInset];//[self getDefaultContentInset];
     managedWebView.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     managedWebView.webView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [managedWebView setBackgroundColor1:self.loader.conf.app_background_color1 color2:self.loader.conf.app_background_color2];
-    
-    managedWebView.webView.dataDetectorTypes = UIDataDetectorTypeNone;//UIDataDetectorTypeLink;//UIDataDetectorTypeAll ^ UIDataDetectorTypePhoneNumber;
 }
 
 -(void)initialLoad
@@ -267,21 +237,18 @@
     }
     
     // load
-    contentCtl = [[ManagedUIWebViewController alloc] initWithNibName:nil bundle:nil];
+    contentCtl = [ManagedWebView createManagedWebView];
     contentCtl.delegate = self;    
     [self.view addSubview:contentCtl.view];
     [self setupManagedWebView:contentCtl];
-    [self enablePullToRefresh:contentCtl.webView];
+    [self enablePullToRefresh:contentCtl];
 
     NSURLRequestCachePolicy cachePolicy = NSURLRequestUseProtocolCachePolicy;
     BOOL animated = YES;
     loadingInprogress = YES;
     shouldReloadInBackground = NO;
     shouldAnimatedBackgroundReload = NO;
-    lastUpdate = [NSDate date];
-
-
-    
+    lastUpdate = [NSDate date];   
     
     NSDate *date = nil;
     // embed cache ?
@@ -378,8 +345,8 @@
     if (error != nil)
     {
         //[self.loader showStatusBarError:error.localizedDescription];
-        [contentCtl.webView stopLoading];
-        [contentCtl.webView loadHTMLString:@"" baseURL:nil];
+//        [contentCtl.webView stopLoading];
+//        [contentCtl.webView loadHTMLString:@"" baseURL:nil];
         
         errorView = [[UIView alloc] initWithFrame:self.view.bounds];
         errorView.backgroundColor = [UIColor colorWithGradientHeight:self.view.bounds.size.height
@@ -390,7 +357,7 @@
         errorImageView.frame = self.view.bounds;
         
         [errorView addSubview:errorImageView];
-        [contentCtl.webView.scrollView addSubview:errorView];
+        [contentCtl.scrollView addSubview:errorView];
         
         [self.loader.log error:@"load %@ failed: %@", self.url, error.localizedDescription];
         return;
@@ -418,10 +385,10 @@
     
     shouldReloadInBackground = NO;
     self.loader.appIsBusy = YES;
-    refreshCtl = [[ManagedUIWebViewController alloc] initWithNibName:nil bundle:nil];
+    refreshCtl = [ManagedWebView createManagedWebView];
     [self.view insertSubview:refreshCtl.view belowSubview:contentCtl.view];
-    if (self.loader.appDeck.iosVersion >= 6.0)
-        refreshCtl.webView.suppressesIncrementalRendering = YES;
+//    if (self.loader.appDeck.iosVersion >= 6.0)
+//        refreshCtl.webView.suppressesIncrementalRendering = YES;
     
     refreshCtl.view.hidden = YES;
     [self setupManagedWebView:refreshCtl];
@@ -480,6 +447,11 @@
     {
         def.top += _rectangleAd.height;
     }
+    // add navigationbar
+    if (NO)
+    {
+        def.top += 64;
+    }
     return def;
 }
 
@@ -495,7 +467,7 @@
         //[self.loader showStatusBarError:@"La mise à jour a échoué"];
         [refreshCtl clean];
         refreshCtl = nil;
-        [self restoreCleanPullToRefreshState:contentCtl.webView];
+        [self restoreCleanPullToRefreshState:contentCtl];
         return;
     }
 
@@ -510,8 +482,8 @@
             return;
         
         pullTorefreshLoading.alpha = 0.0;
-        [contentCtl.webView.scrollView setContentInset:[self getPageContentInset]];
-        [contentCtl.webView.scrollView setScrollIndicatorInsets:[self getPageContentInset]];
+        [contentCtl.scrollView setContentInset:[self getPageContentInset]];
+        [contentCtl.scrollView setScrollIndicatorInsets:[self getPageContentInset]];
         
     } completion:^(BOOL finished) {
 
@@ -520,29 +492,32 @@
         
         refreshCtl.view.hidden = NO;
         
-        UIEdgeInsets contentInset = contentCtl.webView.scrollView.contentInset;
-        CGPoint contentOffset = contentCtl.webView.scrollView.contentOffset;
+        UIEdgeInsets contentInset = contentCtl.scrollView.contentInset;
+        CGPoint contentOffset = contentCtl.scrollView.contentOffset;
         
         if (seamless)
         {
-            refreshCtl.webView.scrollView.scrollsToTop = contentCtl.webView.scrollView.scrollsToTop;
+            refreshCtl.scrollView.scrollsToTop = contentCtl.scrollView.scrollsToTop;
             
-            NSString *scrollTop = [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"$(window).scrollTop();"];
-            [refreshCtl.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$(window).scrollTop(%@);", scrollTop]];
+/*            [contentCtl evaluateJavaScript:@"$(window).scrollTop();" completionHandler:^(id scrollTop, NSError *error) {
+                [refreshCtl evaluateJavaScript:[NSString stringWithFormat:@"$(window).scrollTop(%@);", scrollTop] completionHandler:^(id result, NSError *error) {
+
+                }];
+            }];*/
             
-            [refreshCtl.webView.scrollView setContentInset:contentInset];
-            [refreshCtl.webView.scrollView setContentOffset:contentOffset];
-            [refreshCtl.webView.scrollView setScrollIndicatorInsets:[self getPageContentInset]];
+//            NSString *scrollTop = [contentCtl stringByEvaluatingJavaScriptFromString:@"$(window).scrollTop();"];
+//            [refreshCtl stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$(window).scrollTop(%@);", scrollTop]];
+            
+            [refreshCtl.scrollView setContentInset:contentInset];
+            [refreshCtl.scrollView setContentOffset:contentOffset];
+            [refreshCtl.scrollView setScrollIndicatorInsets:[self getPageContentInset]];
         }
-        
-        if (self.loader.appDeck.iosVersion >= 6.0)
-            refreshCtl.webView.suppressesIncrementalRendering = NO;
         
         // put rectangle ad in parent view
         
         if (_rectangleAd)
         {
-            if ([_rectangleAd.view isDescendantOfView:contentCtl.webView.scrollView])
+            if ([_rectangleAd.view isDescendantOfView:contentCtl.scrollView])
             {
                 [_rectangleAd removeFromParentViewController];
                 [_rectangleAd.view removeFromSuperview];
@@ -567,8 +542,8 @@
                                 [_rectangleAd.view removeFromSuperview];
                             }
                             
-                            [self disablePullToRefresh:contentCtl.webView];
-                            [self enablePullToRefresh:refreshCtl.webView];
+                            [self disablePullToRefresh:contentCtl];
+                            [self enablePullToRefresh:refreshCtl];
                             
                             [contentCtl clean];
                             contentCtl = refreshCtl;
@@ -580,7 +555,7 @@
                             [contentCtl executeJS:@"app.refreshUI();"];
                             //                        [self initButton];
                             // anime all next sub load
-                            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressEstimateChanged:) name:@"WebProgressEstimateChangedNotification" object:contentCtl.coreWebView];
+                            //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressEstimateChanged:) name:@"WebProgressEstimateChangedNotification" object:contentCtl.coreWebView];
                             [self viewWillLayoutSubviews];
                         }];
     
@@ -631,7 +606,7 @@
     if (lastUpdateInterval > self.screenConfiguration.ttl * 60)
     {
         NSLog(@"checkReloadContent: last reload long time ago: %f seconds ago > %ld * 10, we auto scroll to top then reload", lastUpdateInterval, self.screenConfiguration.ttl * 10);
-        [contentCtl.webView.scrollView setContentOffset:CGPointZero animated:YES];
+        [contentCtl.scrollView setContentOffset:CGPointZero animated:YES];
         [self reLoadContent];
         return;
     }
@@ -647,12 +622,14 @@
     {
         shouldForceReloadInBackground = NO;
 //        NSString *input = [[NSProcessInfo processInfo] globallyUniqueString];
-        NSString *ping = [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"app.healthCheck('ping')"];
-        if ([ping isEqualToString:@"ok:ping"] == NO) {
-            NSLog(@"checkReloadContent: forced, we try to ping page but it reply '%@' instead of pong", ping);
-            [self reLoadContent];
-            return;
-        }
+        
+        [contentCtl evaluateJavaScript:@"app.healthCheck('ping')" completionHandler:^(id ping, NSError *error) {
+            if (![ping isKindOfClass:[NSString class]] || [ping isEqualToString:@"ok:ping"] == NO) {
+                NSLog(@"checkReloadContent: forced, we try to ping page but it reply '%@' instead of 'ok:ping'", ping);
+                [self reLoadContent];
+                return;
+            }
+        }];
     }
     NSLog(@"checkReloadContent: don't Refresh as last update: %f seconds ago. Screen TTL: %ld seconds", time, self.screenConfiguration.ttl);
 }
@@ -696,27 +673,23 @@
         return;
     if (self.nextUrl == nil)
     {
-        NSString *next_url = [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"var meta = document.getElementById('meta-next-page'); if (meta) meta.content"];
-        if (next_url != nil && [next_url isEqualToString:@""] == NO) {
-//#ifdef DEBUG_OUTPUT
-            NSLog(@"next page: %@", next_url);
-//#endif
-            self.nextUrl = [NSURL URLWithString:next_url relativeToURL:self.url];
-            [self.swipeContainer insertNextChildView];
-        }
+        [contentCtl evaluateJavaScript:@"var meta = document.getElementById('meta-next-page'); if (meta) meta.content" completionHandler:^(id next_url, NSError *error) {
+            if (next_url != nil && [next_url isKindOfClass:[NSString class]] && [next_url isEqualToString:@""] == NO) {
+                NSLog(@"next page: %@", next_url);
+                self.nextUrl = [NSURL URLWithString:next_url relativeToURL:self.url];
+                [self.swipeContainer insertNextChildView];
+            }
+        }];
     }
-    
     if (self.previousUrl == nil)
     {
-        NSString *prev_url = [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"var meta = document.getElementById('meta-previous-page'); if (meta) meta.content"];
-        if (prev_url != nil && [prev_url isEqualToString:@""] == NO) {
-//#ifdef DEBUG_OUTPUT
-            NSLog(@"previous page: %@", prev_url);
-//#endif
-
-            self.previousUrl = [NSURL URLWithString:prev_url relativeToURL:self.url];
-            [self.swipeContainer insertPreviousChildView];
-        }
+        [contentCtl evaluateJavaScript:@"var meta = document.getElementById('meta-previous-page'); if (meta) meta.content" completionHandler:^(id prev_url, NSError *error) {
+            if (prev_url != nil && [prev_url isKindOfClass:[NSString class]] && [prev_url isEqualToString:@""] == NO) {
+                NSLog(@"previous page: %@", prev_url);
+                self.previousUrl = [NSURL URLWithString:prev_url relativeToURL:self.url];
+                [self.swipeContainer insertPreviousChildView];
+            }
+        }];
     }
 }
 
@@ -789,12 +762,12 @@
     
     if ([call.command isEqualToString:@"disable_pulltorefresh"])
     {
-        [self disablePullToRefresh:contentCtl.webView];
+        [self disablePullToRefresh:contentCtl];
         return YES;
     }
     if ([call.command isEqualToString:@"enable_pulltorefresh"])
     {
-        [self enablePullToRefresh:contentCtl.webView];
+        [self enablePullToRefresh:contentCtl];
         return YES;
     }
     if ([call.command isEqualToString:@"nativead"])
@@ -921,12 +894,12 @@
         [contentCtl executeJS:url];
         return;
     }
-    if ([url hasPrefix:@"javascriptlog:"])
+/*    if ([url hasPrefix:@"javascriptlog:"])
     {
         url = [url substringFromIndex:14];
         [self.loader.log info:[contentCtl executeJS:url]];
         return;
-    }
+    }*/
 
     // load page
     [contentCtl loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url relativeToURL:self.url]] progess:nil completed:nil];
@@ -935,40 +908,13 @@
 -(NSString *)executeJS:(NSString *)js
 {
     if (contentCtl)
-        return [contentCtl executeJS:js];
+        [contentCtl executeJS:js];
     return @"";
 }
 
-
-/*
--(BOOL)call:(NSString *)command origin:(UIView *)origin
-{
-    if ([super call:command origin:origin])
-        return YES;
-    
-    // javascript ?
-    if ([command hasPrefix:@"javascript:"])
-    {
-        command = [command substringFromIndex:11];
-        [contentCtl executeJS:command];
-        return YES;
-    }
-    if ([command hasPrefix:@"javascriptlog:"])
-    {
-        command = [command substringFromIndex:14];
-        [self.loader.log info:[contentCtl executeJS:command]];
-        return YES;
-    }
-    
-    // load page
-    [contentCtl loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:command relativeToURL:self.url]] progess:nil completed:nil];
-    
-    return YES;
-}
-*/
 #pragma mark - CustomUIWebView
 
-- (NSString *)webView:(UIWebView *)webView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame
+- (NSString *)managedWebView:(ManagedWebView *)managedWebView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame
 {
     if ([prompt isEqualToString:@"event:ready"])
     {
@@ -988,7 +934,7 @@
     return @"";
 }
 
-- (BOOL)managedUIWebViewController:(ManagedUIWebViewController *)managedUIWebViewController shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 {
     if ([request.HTTPMethod isEqualToString:@"POST"])
     {
@@ -1019,30 +965,37 @@
         [self loadInBackgroungRequest:request animated:YES seamless:NO];
         return NO;
     }
-    if (self.isPopUp)
-    {
-        [self.loader closePopUp:nil];
-        if (self.parent != nil)
-            [self.parent load:request.URL.absoluteString];
-        else
-            [self.loader loadRootPage:request.URL.absoluteString];
-        return NO;
-    }
-    if ([request.URL.host isEqualToString:self.url.host])
-    {
-        [self.loader loadPage:request.URL.absoluteString];
-        return NO;
-    }
-    if (self.loader.conf.enable_mobilize)
-        [self.loader loadPage:[request.URL.absoluteString stringByReplacingOccurrencesOfString:@"http://" withString:@"mobilize://"]];
-    else
-        [self.loader loadPage:request.URL.absoluteString];
+
+    __block NSString *absoluteURL = request.URL.absoluteString;
+    NSString *javascript = [NSString stringWithFormat:@"app.client.rewriteURL('%@')", absoluteURL];
+    [contentCtl evaluateJavaScript:javascript completionHandler:^(id newAbsoluteURL, NSError *error) {
+        if (newAbsoluteURL != nil && ([newAbsoluteURL hasPrefix:@"http://"] || [newAbsoluteURL hasPrefix:@"https://"]))
+            absoluteURL = newAbsoluteURL;
+        NSURL *newURL = [NSURL URLWithString:absoluteURL];
+        
+        if (self.isPopUp)
+        {
+            [self.loader closePopUp:nil];
+            if (self.parent != nil)
+                [self.parent load:absoluteURL];
+            else
+                [self.loader loadRootPage:absoluteURL];
+            return;
+        }
+        if ([newURL.host isEqualToString:self.url.host])
+        {
+            [self.loader loadPage:absoluteURL];
+            return;
+        }
+        [self.loader loadPage:absoluteURL];
+    }];
+
     return NO;
 }
 
 #pragma mark - UIScrollViewDelegate
 
--(void)restoreCleanPullToRefreshState:(UIWebView *)webView
+-(void)restoreCleanPullToRefreshState:(ManagedWebView *)webView
 {
     if ([pullTorefreshArrow isDescendantOfView:webView.scrollView])
     {
@@ -1067,7 +1020,7 @@
                      }];
 }
 
--(void)disablePullToRefresh:(UIWebView *)webView
+-(void)disablePullToRefresh:(ManagedWebView *)webView
 {
     if ([pullTorefreshArrow isDescendantOfView:webView.scrollView])
         [pullTorefreshArrow removeFromSuperview];
@@ -1099,7 +1052,7 @@
     pullTorefreshLoading.frame = pullTorefreshArrow.frame;
 }
 
-- (void)enablePullToRefresh:(UIWebView *)webView
+- (void)enablePullToRefresh:(ManagedWebView *)webView
 {
     if (pullTorefreshArrow == nil || pullTorefreshLoading == nil)
     {
@@ -1121,9 +1074,9 @@
     
     if (_rectangleAd)
     {
-        if (webView == contentCtl.webView)
+        if (webView == contentCtl)
             [self configureRectangleAdViewForManagedWebView:contentCtl adjustInset:NO];
-        else if (webView == refreshCtl.webView)
+        else if (webView == refreshCtl)
             [self configureRectangleAdViewForManagedWebView:refreshCtl adjustInset:NO];
     }
 
@@ -1285,13 +1238,13 @@
 
 - (void)scrollViewWillBegin:(UIScrollView *)scrollView
 {
-    [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"if (typeof(fastclick) != 'undefined' && typeof(fastclick.trackingDisabled) != 'undefined') fastclick.trackingDisabled = true;"];
+    [contentCtl executeJS:@"if (typeof(fastclick) != 'undefined' && typeof(fastclick.trackingDisabled) != 'undefined') fastclick.trackingDisabled = true;"];
     //[contentCtl.webView stringByEvaluatingJavaScriptFromString:@"if (typeof(fastclick) != 'undefined' && typeof(fastclick.globalDisable) != 'undefined') fastclick.globalDisable = true;"];
 }
 
 - (void)scrollViewDidEnd:(UIScrollView *)scrollView
 {
-    [contentCtl.webView stringByEvaluatingJavaScriptFromString:@"if (typeof(fastclick) != 'undefined' && typeof(fastclick.trackingDisabled) != 'undefined') fastclick.trackingDisabled = false;"];
+    [contentCtl executeJS:@"if (typeof(fastclick) != 'undefined' && typeof(fastclick.trackingDisabled) != 'undefined') fastclick.trackingDisabled = false;"];
     //[contentCtl.webView stringByEvaluatingJavaScriptFromString:@"if (typeof(fastclick) != 'undefined' && typeof(fastclick.globalDisable) != 'undefined') fastclick.globalDisable = false;"];
 }
 
@@ -1410,7 +1363,7 @@
             //old.view.alpha = 0.0;
             //old.view.frame = CGRectZero;
             UIEdgeInsets defaultInsets = [self getDefaultContentInset];
-            contentCtl.webView.scrollView.contentInset = defaultInsets;
+            contentCtl.scrollView.contentInset = defaultInsets;
             //[self adjustRectangleAdView];
         } completion:^(BOOL finished) {
 /*            if (old.state == AppDeckAdStateAppear)
@@ -1428,7 +1381,7 @@
     
     if (_rectangleAd == nil)
     {
-        contentCtl.webView.scrollView.contentInset = [self getPageContentInset];
+        contentCtl.scrollView.contentInset = [self getPageContentInset];
         [self viewWillLayoutSubviews];
         self.adRequest = nil;
         return;
@@ -1437,7 +1390,7 @@
     if (contentCtl)
     {
         [contentCtl addChildViewController:_rectangleAd];
-        [contentCtl.webView.scrollView addSubview:_rectangleAd.view];
+        [contentCtl.scrollView addSubview:_rectangleAd.view];
         [self configureRectangleAdViewForManagedWebView:contentCtl adjustInset:YES];
     } else {
         [self addChildViewController:_rectangleAd];
@@ -1537,10 +1490,10 @@
 
 #pragma mark - Rectangle Ad View
 
--(void)configureRectangleAdViewForManagedWebView:(ManagedUIWebViewController *)ctl adjustInset:(BOOL)adjustInset
+-(void)configureRectangleAdViewForManagedWebView:(ManagedWebView *)ctl adjustInset:(BOOL)adjustInset
 {
     [ctl addChildViewController:_rectangleAd];
-    [ctl.webView.scrollView addSubview:_rectangleAd.view];
+    [ctl.scrollView addSubview:_rectangleAd.view];
 //    [ctl.view bringSubviewToFront:ctl.webView];
     
     if (adjustInset)
@@ -1553,12 +1506,12 @@
                              
 
                              
-                             ctl.webView.scrollView.contentInset = [self getPageContentInset];
-                             CGPoint offset = ctl.webView.scrollView.contentOffset;
-                             if (-offset.y < ctl.webView.scrollView.contentInset.top)
+                             ctl.scrollView.contentInset = [self getPageContentInset];
+                             CGPoint offset = ctl.scrollView.contentOffset;
+                             if (-offset.y < ctl.scrollView.contentInset.top)
                              {
-                                 offset.y = -ctl.webView.scrollView.contentInset.top;
-                                 ctl.webView.scrollView.contentOffset = offset;
+                                 offset.y = -ctl.scrollView.contentInset.top;
+                                 ctl.scrollView.contentOffset = offset;
                              }
                              [self adjustRectangleAdView];
                          }
@@ -1588,17 +1541,17 @@
 //        contentCtl.webView.scrollView.contentInset = defaultInsets;
         _rectangleAd.view.hidden = YES;
         
-        [contentCtl.webView.scrollView setContentInset:defaultInsets];
-        [contentCtl.webView.scrollView setScrollIndicatorInsets:defaultInsets];
+        [contentCtl.scrollView setContentInset:defaultInsets];
+        [contentCtl.scrollView setScrollIndicatorInsets:defaultInsets];
         
         [self.view bringSubviewToFront:contentCtl.view];
     }
-    else if ([_rectangleAd.view isDescendantOfView:contentCtl.webView.scrollView])
+    else if ([_rectangleAd.view isDescendantOfView:contentCtl.scrollView])
     {
         _rectangleAd.view.hidden = NO;
-        contentCtl.webView.scrollView.contentInset = [self getPageContentInset];
+        contentCtl.scrollView.contentInset = [self getPageContentInset];
         
-        float position = (pageInsets.top - defaultInsets.top) + contentCtl.webView.scrollView.contentOffset.y + defaultInsets.top;
+        float position = (pageInsets.top - defaultInsets.top) + contentCtl.scrollView.contentOffset.y + defaultInsets.top;
         
         // ios7 topbar adjust if needed
         //frame.origin.y += defaultInsets.top;
@@ -1670,9 +1623,9 @@
             CGSize keyboardSize = self.loader.appDeck.keyboardStateListener.keyboardSize;
             frame.size.height -= keyboardSize.height;
             
-            CGPoint contentOffset = contentCtl.webView.scrollView.contentOffset;
+            CGPoint contentOffset = contentCtl.scrollView.contentOffset;
             contentOffset.y += keyboardSize.height;
-            [contentCtl.webView.scrollView setContentOffset:contentOffset animated:YES];
+            [contentCtl.scrollView setContentOffset:contentOffset animated:YES];
         }
         
         keyboardWasVisible = YES;
@@ -1703,16 +1656,16 @@
     {
         UIEdgeInsets defaultInsets = [self getPageContentInset];
         UIEdgeInsets pageInsets = [self getPageContentInset];
-        contentCtl.webView.scrollView.contentInset = defaultInsets;
-        contentCtl.webView.scrollView.scrollIndicatorInsets = defaultInsets;
-        refreshCtl.webView.scrollView.contentInset = pageInsets;
-        refreshCtl.webView.scrollView.scrollIndicatorInsets = defaultInsets;
+        contentCtl.scrollView.contentInset = defaultInsets;
+        contentCtl.scrollView.scrollIndicatorInsets = defaultInsets;
+        refreshCtl.scrollView.contentInset = pageInsets;
+        refreshCtl.scrollView.scrollIndicatorInsets = defaultInsets;
 
         if (wasLandscape)
         {
-            CGPoint contentOffset = contentCtl.webView.scrollView.contentOffset;
+            CGPoint contentOffset = contentCtl.scrollView.contentOffset;
             contentOffset.y -= 12;
-            contentCtl.webView.scrollView.contentOffset = contentOffset;
+            contentCtl.scrollView.contentOffset = contentOffset;
         }
 
         wasLandscape = isLandscape;

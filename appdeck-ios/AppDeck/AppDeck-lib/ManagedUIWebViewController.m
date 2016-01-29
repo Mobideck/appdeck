@@ -19,106 +19,15 @@
 #import "LoaderViewController.h"
 
 #import "iCarousel.h"
-#import "iCarouselWebViewModuleViewController.h"
-#import "WebViewModuleViewController.h"
 
 @interface ManagedUIWebViewController ()
 
 @end
 
-/*
-
-#ifdef DEBUG
-const char code[] = "<script type=\"text/javascript\" src=\"http://appdata.static.appdeck.mobi/js/fastclick.js\"></script><script type=\"text/javascript\" src=\"http://appdata.static.appdeck.mobi/js/appdeck_dev.js\"></script>\r\n ";
-const long sizeofcode = sizeof(code);
-const char codeblank[] = "<script src=\"http://testapp.appdeck.mobi/blank.js\"></script>";
-const long sizeofcodeblank = sizeof(codeblank);
-#else
-const char code[] = "<script type=\"text/javascript\" src=\"http://appdata.static.appdeck.mobi/js/fastclick.js\"></script><script type=\"text/javascript\" src=\"http://appdata.static.appdeck.mobi/js/appdeck_1.10.js\"></script>\r\n ";
-const long sizeofcode = sizeof(code);
-const char codeblank[] = "<script src=\"http://appdata.static.appdeck.mobi/blank.js\"></script>";
-const long sizeofcodeblank = sizeof(codeblank);
-#endif
-
- */
-
 const char appdeck_inject_js[] = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://appdata.static.appdeck.mobi/js/appdeck.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";
 const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 
 @implementation ManagedUIWebViewController
-/*
-+(BOOL)shouldInjectAppDeckJSInResponse:(NSURLResponse *)response
-{
-    if ([response isKindOfClass:[NSHTTPURLResponse class]] == NO)
-        return NO;
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSDictionary *headers = httpResponse.allHeaderFields;
-    NSString *content_type = [headers objectForKey:@"Content-Type"];
-    //NSLog(@"Content-Type: %@ (%d) - %@", content_type, [content_type rangeOfString:@"html"].location, headers);
-    if (content_type == nil)
-        return NO;
-    content_type = [content_type lowercaseString];
-    
-    if (content_type != nil && [content_type rangeOfString:@"html"].location != NSNotFound)
-        return YES;
-    return NO;
-}
-
-+(BOOL)shouldInjectAppDeckJSInData:(NSData *)data
-{
-    char *buf = (char *)[data bytes];    
-    long length = [data length];
-    if (length > 128)
-        length = 128;
-    for (long k = 0; k < length; k++)
-    {
-        if ((buf[k] == '<' || buf[k] == '<') &&
-            (buf[k + 1] == 'h' || buf[k + 1] == 'H') &&
-            (buf[k + 2] == 'e' || buf[k + 2] == 'E') &&
-            (buf[k + 3] == 'a' || buf[k + 3] == 'A') &&
-            (buf[k + 4] == 'd' || buf[k + 4] == 'D'))
-        {
-            for (long i = k + 4; i < length; i++)
-            {
-                if (buf[i] == '>')
-                {
-                    return YES;
-                }
-            }
-        }
-    }
-    return NO;
-}
-
-+(NSData *)dataWithInjectedAppDeckJS:(NSData *)data
-{
-    char *buf = (char *)[data bytes];
-    long length = [data length];
-    long sizeofcode = sizeof(code) - 1;
-    for (long k = 0; k < length; k++)
-    {
-        if ((buf[k] == 'h' || buf[k] == 'H') &&
-            (buf[k + 1] == 'e' || buf[k + 1] == 'E') &&
-            (buf[k + 2] == 'a' || buf[k + 2] == 'A') &&
-            (buf[k + 3] == 'd' || buf[k + 3] == 'D'))
-        {
-            for (long i = k + 4; i < length; i++)
-            {
-                if (buf[i] == '>')
-                {
-                    i++;
-                    void *mem = malloc(length + sizeofcode);
-                    memcpy(mem, buf, i);
-                    memcpy(mem + i, code, sizeofcode);
-                    memcpy(mem + i + sizeofcode, buf + i, length - i);
-                    data = [NSData dataWithBytesNoCopy:mem length:length + sizeofcode];
-                    return data;
-                }
-            }
-        }
-    }
-    return nil;
-}*/
 
 +(NSMutableArray *)sharedInstanceList
 {
@@ -164,40 +73,16 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
         document.getElementsByTagName('HEAD').item(0).appendChild( oScript);\
         app.load();\
     });";
-
-/*    appdeckapijs = @"var appdeckapi = function(command, param) { return JSON.parse(window.prompt('appdeckapi:' + command, JSON.stringify(param))) };\
-    var appdecklistener = function() {\
-        if (document.getElementById('appdeck_loader') != null)\
-            return;\
-        var oScript= document.createElement('script');\
-        oScript.id = 'appdeck_loader';\
-        oScript.type = 'text/javascript';\
-        oScript.src = 'appdeck.js';\
-        document.getElementsByTagName('HEAD').item(0).appendChild( oScript);\
-        window.removeEventListener(appdecklistener);\
-    };\
-    document.addEventListener('DOMContentLoaded', appdecklistener);";*/
     
     appdeckapijs = @"";
     
-    //appdeckapijs = @"var appdeckapi = function(command, param) { return JSON.parse(window.prompt('appdeckapi:' + command, JSON.stringify({param: param}))).param };";
-    
     NSLog(@"%@",appdeckapijs);
-    /*document.addEventListener('DOMContentLoaded', function() {
-        var oHead = document.getElementsByTagName('HEAD').item(0);
-        var oScript= document.createElement("script");
-        oScript.type = "text/javascript";
-        oScript.src="other.js";
-        oHead.appendChild( oScript);
-        console.log("document DOMContentLoaded");
-        app.load();
-    });*/
-    //    self.view.clipsToBounds = YES;
     
     backgroundQueue = dispatch_queue_create("com.mobideck.page.bgqueue", NULL);    
-    //self.webView = (CustomUIWebView *)[[UIWebView alloc] init];
+
     AppDeck *appDeck = [AppDeck sharedInstance];
     self.webView = [appDeck.customWebViewFactory getReusableWebView];
+    [self.view addSubview:self.webView];    
     self.webView.delegate = self;
     self.webView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
     self.webView.scrollView.showsHorizontalScrollIndicator = YES;
@@ -206,55 +91,21 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     self.webView.scalesPageToFit = YES;
     self.webView.mediaPlaybackRequiresUserAction = YES;
     
+    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;//UIDataDetectorTypeLink;//UIDataDetectorTypeAll ^ UIDataDetectorTypePhoneNumber;
+    
     if (appDeck.iosVersion >= 6.0)
     {
         self.webView.keyboardDisplayRequiresUserAction = NO;
-    }   
-    
-    topView = [[UIView alloc] initWithFrame:CGRectMake(0, -self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height)];
-    
-    [self.webView.scrollView addSubview:topView];
-    
-/*    self.webView.backgroundColor = appDeck.loader.conf.app_background_color1;
-    self.webView.scrollView.backgroundColor = appDeck.loader.conf.app_background_color1;
-    self.view.backgroundColor = appDeck.loader.conf.app_background_color1;
-    topView.backgroundColor = appDeck.loader.conf.app_background_color1;
-    self.view.opaque = ![appDeck.loader.conf.app_background_color1 isEqual:[UIColor clearColor]];
-    self.webView.opaque = ![appDeck.loader.conf.app_background_color1 isEqual:[UIColor clearColor]];*/
+    }
 
     self.webView.backgroundColor = [UIColor clearColor];
     self.webView.scrollView.backgroundColor = [UIColor clearColor];
     self.view.backgroundColor = [UIColor clearColor];
-    topView.backgroundColor = [UIColor clearColor];
+
     self.view.opaque = NO;
     self.webView.opaque = NO;
     
-    
-    
-    //    bottomView.backgroundColor = [UIColor whiteColor];
 
-/*    topView.backgroundColor = [UIColor greenColor];
-    bottomView.backgroundColor = [UIColor redColor];*/
-    
-    
-    /*
-    // important for view orientation rotation
-    self.view.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    self.view.autoresizesSubviews = YES;
-    self.view.contentMode = UIViewContentModeScaleToFill;
-
-    self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    self.webView.autoresizesSubviews = YES;
-    self.webView.contentMode = UIViewContentModeScaleToFill;
-    
-    self.webView.scrollView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    self.webView.scrollView.autoresizesSubviews = YES;
-    self.webView.scrollView.contentMode = UIViewContentModeScaleToFill;
-    */
-    
-    [self.view addSubview:self.webView];
-    
-    //[self.coreWebView performSelector:NSSelectorFromString(@"_setWebGLEnabled:") withObject:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressMonitoring:) name:@"WebProgressEstimateChangedNotification" object:self.coreWebView];
 }
@@ -404,8 +255,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     if (self == nil || self.webView == nil || /*self.webView.delegate == nil || self.webView.scrollView.delegate == nil ||*/ dead == YES)
         return;
 //    [NSURLProtocol setProperty:nil forKey:@"ManagedUIWebViewController" inRequest:currentRequest];
-    if (self.currentRequest)
-        [NSURLProtocol removePropertyForKey:@"ManagedUIWebViewController" inRequest:self.currentRequest];
+//    if (self.currentRequest)
+//        [NSURLProtocol removePropertyForKey:@"ManagedUIWebViewController" inRequest:self.currentRequest];
     //currentRequest = nil;
     if (webViewTimer)
     {
@@ -485,88 +336,9 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 
 - (NSString *)webView:(UIWebView *)webView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame
 {
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(webView:runPrompt:defaultText:initiatedByFrame:)])
-        return [self.delegate webView:webView runPrompt:prompt defaultText:defaultText initiatedByFrame:frame];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(managedWebView:runPrompt:defaultText:initiatedByFrame:)])
+        return [self.delegate managedWebView:self runPrompt:prompt defaultText:defaultText initiatedByFrame:frame];
     return @"";
-}
-
-- (BOOL) apiCall:(AppDeckApiCall *)call
-{
-    call.managedWebView = self;
-    call.baseURL = self.currentRequest.URL;
-    
-    BOOL ret;
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(apiCall:)])
-        ret = [self.delegate apiCall:call];
-    else
-        ret = [[AppDeck sharedInstance].loader apiCall:call];
-    
-    if (ret)
-        return ret;
-
-    if ([call.command isEqualToString:@"disable_catch_link"])
-    {
-        NSString *value = [NSString stringWithFormat:@"%@", call.param];
-        
-        if ([value isEqualToString:@"1"] || [value isEqualToString:@"true"])
-            self.catch_link = NO;
-        else if ([value isEqualToString:@"0"] || [value isEqualToString:@"false"])
-            self.catch_link = YES;
-        if (glLog)
-             [glLog debug:@"catch link is %@", (self.catch_link ? @"enabled" : @"disabled")];
-        return YES;
-    }
-    
-    if ([call.command isEqualToString:@"webviewmobule"])
-    {
-        NSString *name = [call.param objectForKey:@"name"];
-        NSDictionary *options = [call.param objectForKey:@"options"];
-        
-        if ([name isEqualToString:@"carousel"])
-        {
-            //iCarouselExampleViewController *child = [[iCarouselExampleViewController alloc] init];
-            iCarouselWebViewModuleViewController *child = [[iCarouselWebViewModuleViewController alloc] initWithNibName:nil bundle:nil];
-            child.apicall = call;
-            child.name = name;
-            child.options = options;
-            
-            viewController = [[WebViewModuleViewController alloc] initWithNibName:nil bundle:nil ChildViewController:child apiCall:call];
-            //viewController.view.frame = CGRectMake(50, 50, 200, 300);
-            viewController.webview = self.webView;
-            
-            [modules addObject:viewController];
-            
-            [self addChildViewController:viewController];
-            [self.webView.scrollView addSubview:viewController.view];
-        }
-        return YES;
-    }
-/*    if ([call.command isEqualToString:@"DOMLoad"])
-    {
-        if (webViewTimer)
-        {
-            [webViewTimer invalidate];
-            //[self syncCache];
-            [self updateProgress:100];
-            [self completed:nil];
-            webViewTimer = nil;
-        }
-        return YES;
-    }*/
-    
-/*
-    if ([call.command isEqualToString:@"DOMContentLoaded"])
-    {
-            [webViewTimer invalidate];
-            //[self syncCache];
-            [self updateProgress:100];
-            [self completed:nil];
-            webViewTimer = nil;
-
-        return YES;
-    }*/
-    
-    return NO;
 }
 
 #pragma mark - UIWebView Delegate
@@ -727,7 +499,7 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
         return YES;
     }*/
     
-    int ret = [self.delegate managedUIWebViewController:self shouldStartLoadWithRequest:request navigationType:navigationType];
+    int ret = [self.delegate managedWebView:self shouldStartLoadWithRequest:request navigationType:navigationType];
     
     if (ret == YES)
         self.currentRequest = [request mutableCopy];
@@ -792,23 +564,6 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 
 #pragma mark - API
 
--(NSString *)executeJS:(NSString *)js
-{
-    return [self.webView stringByEvaluatingJavaScriptFromString:js];
-    /*NSString *escaped = [js stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    escaped = [js stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"];    
-    NSString *fulljs = [NSString stringWithFormat:@"try\
-    {\
-        eval(\"%@\");\
-    } catch(e) {\
-       console.error('JSError: '+e);\
-    };", escaped];
-    NSLog(@"executeJS: %@", fulljs);
-    NSString *ret = [self.webView stringByEvaluatingJavaScriptFromString:fulljs];
-    NSLog(@"returnJS: %@", ret);
-    return ret;*/
-}
-
 -(void)sendJSEvent:(NSString *)name withJsonData:(NSString *)dataJson
 {
     NSString *js;
@@ -824,41 +579,9 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     [self executeJS:js];
 }
 
--(void)setBackgroundColor1:(UIColor *)color1 color2:(UIColor *)color2
-{
-    if (color1 == nil)
-        color1 = [UIColor whiteColor];
-    
-    topView.backgroundColor = color1;
-    
-//    self.webView.backgroundColor = [UIColor colorWithGradientHeight:self.view.bounds.size.height startColor:color1 endColor:color2];
-    //self.webView.backgroundColor = [UIColor colorWithGradientHeight:self.webView.bounds.size.height startColor:topView.backgroundColor endColor:self.view.backgroundColor];
-    self.view.backgroundColor = color2;
-    
-    [self viewWillLayoutSubviews];
-}
 
--(void)disableMask
-{
-    if (mask)
-    {
-        [mask removeFromSuperview];
-        mask = nil;
-    }
-}
 
--(void)setMaskColor:(UIColor *)color opcacity:(CGFloat)opacity anim:(CGFloat)anim userInteractionEnabled:(BOOL)interaction
-{
-    mask = [[UIView alloc] initWithFrame:self.view.bounds];
-    [mask setBackgroundColor:[color colorWithAlphaComponent:opacity]];
-    mask.autoresizingMask = UIViewAutoresizingFlexibleWidth  | UIViewAutoresizingFlexibleHeight;
-    mask.userInteractionEnabled = !interaction;
-    [self.view addSubview:mask];
-    mask.alpha = 0;
-    [UIView animateWithDuration:anim animations:^(){
-        mask.alpha = 1.0;
-    }];
-}
+
 
 +(void)addURLInHistory:(NSString *)manual_url
 {
@@ -957,9 +680,9 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     }
 }
 
--(void)loadRequest:(NSURLRequest *)_request progess:(ManagedUIWebViewProgressCallBack)_progressCallback completed:(ManagedUIWebViewCompletedCallBack)_completedCallback
+-(void)loadRequest:(NSURLRequest *)_request progess:(ManagedWebViewProgressCallBack)_progressCallback completed:(ManagedWebViewCompletedCallBack)_completedCallback
 {
-    [self cleanModules];
+//    [self cleanModules];
     if (webViewTimer)
     {
         [webViewTimer invalidate];
@@ -979,8 +702,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     mutableRequest = [mutableRequest mutableCopy];
 //    [mutableRequest addValue:@"1" forHTTPHeaderField:@"AppDeck-WebView"];
     me = [@[self] mutableCopy];
-    if (self.enable_api)
-        [NSURLProtocol setProperty:me forKey:@"ManagedUIWebViewController" inRequest:mutableRequest];
+    //if (self.enable_api)
+    //    [NSURLProtocol setProperty:me forKey:@"ManagedUIWebViewController" inRequest:mutableRequest];
     NSURLRequest *request = mutableRequest;//[mutableRequest copy];
 
     [self.webView loadRequest:request];
@@ -989,9 +712,9 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     webViewTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkWebViewLoad:) userInfo:nil repeats:YES];
 }
 
--(void)loadHTMLString:(NSString *)html baseRequest:(NSURLRequest *)_request progess:(ManagedUIWebViewProgressCallBack)_progressCallback completed:(ManagedUIWebViewCompletedCallBack)_completedCallback
+-(void)loadHTMLString:(NSString *)html baseRequest:(NSURLRequest *)_request progess:(ManagedWebViewProgressCallBack)_progressCallback completed:(ManagedWebViewCompletedCallBack)_completedCallback
 {
-    [self cleanModules];
+//    [self cleanModules];
     if (webViewTimer)
     {
         [webViewTimer invalidate];
@@ -1010,8 +733,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     NSMutableURLRequest *mutableRequest = [_request mutableCopy];
     mutableRequest = [mutableRequest mutableCopy];
     me = [@[self] mutableCopy];
-    if (self.enable_api)
-        [NSURLProtocol setProperty:me forKey:@"ManagedUIWebViewController" inRequest:mutableRequest];
+    //if (self.enable_api)
+    //    [NSURLProtocol setProperty:me forKey:@"ManagedUIWebViewController" inRequest:mutableRequest];
     NSURLRequest *request = mutableRequest;//[mutableRequest copy];
 
     [self.webView loadHTMLString:html baseURL:request.URL];
@@ -1053,6 +776,7 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     webViewTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(checkWebViewLoad:) userInfo:nil repeats:YES];
 }*/
 
+/*
 -(void)cleanModules
 {
     for (WebViewModuleViewController *module in modules)
@@ -1061,15 +785,15 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
         [module removeFromParentViewController];
     }
     modules = [[NSMutableArray alloc] init];
-}
+}*/
 
 
 -(void)clean
 {
-    dead = YES;
+    [super clean];
     [webViewTimer invalidate];
     webViewTimer = nil;
-    [self cleanModules];
+//    [self cleanModules];
     NSMutableArray *sharedInstanceList = [ManagedUIWebViewController sharedInstanceList];
     [sharedInstanceList removeObject:self];
     //[self syncCache];
@@ -1083,11 +807,6 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     if (appDeck.iosVersion >= 6.0)
         self.webView.suppressesIncrementalRendering = NO;
     [self.webView loadHTMLString:@"" baseURL:nil];
-    [topView removeFromSuperview];
-//    [bottomView removeFromSuperview];
-    
-    topView = nil;
-//    bottomView = nil;
     
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -1096,10 +815,6 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 #pragma clang diagnostic pop
     
     [self.webView removeFromSuperview];
-    [self.view removeFromSuperview];
-    [self removeFromParentViewController];
-    progressCallback = nil;
-    completedCallback = nil;
 }
 
 -(id)JSonObjectByEvaluatingJavascriptFromString:(NSString *)js error:(NSError **)error
@@ -1116,6 +831,20 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     return result_call;
 }
 
+-(void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler
+{
+    NSString *result = [self.webView stringByEvaluatingJavaScriptFromString:javaScriptString];
+    if (completionHandler)
+        completionHandler(result, nil);
+}
+
+- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script
+{
+    if (script)
+        return [self.webView stringByEvaluatingJavaScriptFromString:script];
+    return nil;
+}
+
 -(void)postLoadSetup
 {
     if (self.enable_api)
@@ -1129,6 +858,10 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 //    [webView stringByEvaluatingJavaScriptFromString:@"$( document ).on( 'pagechange', function( event, data ){ setTimeout(\"prompt('event:pagechange')\",250); });"];
 }
 
+-(UIScrollView *)scrollView
+{
+    return self.webView.scrollView;
+}
 
 -(void)webView:(UIWebView *)webView shouldLoadUrl:(NSURL *)url withHTML:(NSString *)html
 {
@@ -1160,26 +893,34 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     
 }
 
-#pragma mark - Rotate
-
--(void)viewDidLayoutSubviews
+-(BOOL)canGoBack
 {
-    [super viewDidLayoutSubviews];
-#ifdef DEBUG_OUTPUT
-    NSLog(@"%@: ManagedWebViewFrame: %f - %f", self.currentRequest.URL.relativePath, self.view.frame.size.width, self.view.frame.size.height);
-    NSLog(@"%@: ManagedWebViewBounds: %f - %f", self.currentRequest.URL.relativePath, self.view.bounds.size.width, self.view.bounds.size.height);
-#endif
-    
-    self.webView.frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, self.view.bounds.size.height);
-    
-    topView.frame = CGRectMake(0, -self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-    
-/*    if (topView.frame.size.height != self.view.bounds.size.height)
-    {
-
-        //bottomView.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, self.view.bounds.size.height);
-        //self.webView.backgroundColor = [UIColor colorWithGradientHeight:self.webView.bounds.size.height startColor:topView.backgroundColor endColor:self.view.backgroundColor];
-    }*/
+    return [self.webView canGoBack];
 }
+-(BOOL)canGoForward
+{
+    return [self.webView canGoForward];
+}
+
+-(BOOL)isLoading
+{
+    return [self.webView isLoading];
+}
+
+-(void)goBack
+{
+    [self.webView goBack];
+}
+
+-(void)goForward
+{
+    [self.webView goForward];
+}
+
+-(void)stopLoading
+{
+    [self.webView stopLoading];
+}
+
 
 @end

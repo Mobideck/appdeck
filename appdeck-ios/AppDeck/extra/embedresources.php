@@ -62,10 +62,7 @@ if (isset($info->embed_url_tablet))
 if (isset($info->embed))
   foreach ($info->embed as $line)
     if (trim($line) != "")
-    {
-      $url = resolve_url(trim($line), $base_url);
-      appdeck_add_ressource($url);
-    }
+      appdeck_add_ressource(trim($line));
 
 // http://appdata.static.appdeck.mobi/res/ios/icons/action_dark.png
 // http://appdata.static.appdeck.mobi/res/ios/icons/action.png
@@ -95,19 +92,18 @@ easy_embed("icon_user", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/i
 
 easy_embed("image_loader", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/loader{$icon_theme}.png");
 easy_embed("image_pull_arrow", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/pull_arrow{$icon_theme}.png");
-
-//easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/network_error.png");
-
-easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/default/images/network_error.png");
-
+easy_embed("image_network_error", "http://appdata.static.appdeck.mobi/res/".EMBED_TYPE."/images/network_error{$icon_theme}.png");
 
 easy_embed("logo");
 easy_embed("leftmenu.url");
 easy_embed("rightmenu.url");
 
-appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_1.10.js", false, true);
-appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck_dev.js", false, true);
+appdeck_add_ressource("http://ads.mopub.com/favicon.ico", '');
+appdeck_add_ressource("http://ads.mopub.com/mraid.js", '');
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/appdeck.js", false, true);
 appdeck_add_ressource("http://appdata.static.appdeck.mobi/js/fastclick.js", false, true);
+
+if (EMBED_TYPE == 'android')
+  buildAppDeckAndroidRes();
 
 appdeck_ok("{$count_resource} resources embed in app");

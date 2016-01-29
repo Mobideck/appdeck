@@ -46,7 +46,7 @@
     }
     
     // init managed webview
-    contentCtl = [[ManagedUIWebViewController alloc] initWithNibName:nil bundle:nil];
+    contentCtl = [ManagedWebView createManagedWebView];
     contentCtl.delegate = self;
     [self.view addSubview:contentCtl.view];
     NSURLRequest *request = [NSURLRequest requestWithURL:self.adRation.adRequest.page.url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
@@ -98,7 +98,7 @@
 }
 
 #pragma mark - click
-- (BOOL)managedUIWebViewController:(ManagedUIWebViewController *)managedUIWebViewController shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+-(BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     [self.adManager handleActionURL:request.URL.absoluteString withTarget:nil];
     return NO;

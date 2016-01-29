@@ -10,7 +10,6 @@
 
 @interface CacheMonitoringURLProtocol : NSURLProtocol <NSURLConnectionDelegate>
 {
-    //ManagedUIWebViewController *ctl;
     NSUInteger expectedContentLength;
     NSUInteger receivedContentLength;
         

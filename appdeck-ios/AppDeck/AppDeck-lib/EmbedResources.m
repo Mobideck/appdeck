@@ -9,7 +9,6 @@
 #import "EmbedResources.h"
 #import "AppDeck.h"
 #import "AppURLCache.h"
-#import "ManagedUIWebViewController.h"
 
 @implementation EmbedResources
 
@@ -95,14 +94,6 @@
             NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
             if (data && response)
             {
-                /*
-                // inject appdeck js in data ?
-                if ([ManagedUIWebViewController shouldInjectAppDeckJSInResponse:response])
-                {
-                    NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:data];
-                    if (patched_data)
-                        data = patched_data;
-                }*/
                 NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
                 [appDeck.cache storeToDiskCacheResponse:cachedResponse forRequest:request];
             }

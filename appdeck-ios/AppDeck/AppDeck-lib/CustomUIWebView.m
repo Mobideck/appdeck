@@ -78,7 +78,6 @@
         {
             AppDeckApiCall *call = [[AppDeckApiCall alloc] init];
             call.app = [AppDeck sharedInstance];
-            call.webview = self;
             call.command = [prompt substringFromIndex:11];
             call.inputJSON = defaultText;
             id<AppDeckApiCallDelegate> apiDelegate = (id<AppDeckApiCallDelegate>)self.delegate;

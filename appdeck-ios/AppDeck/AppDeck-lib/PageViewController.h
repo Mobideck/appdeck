@@ -11,13 +11,13 @@
 #import "CustomUIWebView.h"
 #import "MBProgressHUD.h"
 #import "UIImageView+Animation.h"
-#import "ManagedUIWebViewController.h"
+#import "ManagedWebView.h"
 #import "LoaderChildViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "AppDeckAdViewController.h"
 #import "AdManager.h"
 
-@interface PageViewController : LoaderChildViewController <MBProgressHUDDelegate, UIScrollViewDelegate, ManagedUIWebViewDelegate>
+@interface PageViewController : LoaderChildViewController <MBProgressHUDDelegate, UIScrollViewDelegate, ManagedWebViewDelegate/*, AppDeckApiCallDelegate*/>
 {    
     BOOL    loadingInprogress;
     BOOL    shouldReloadInBackground;
@@ -34,8 +34,8 @@
     
     NSDate  *lastUpdate;
     
-    ManagedUIWebViewController *contentCtl;
-    ManagedUIWebViewController *refreshCtl;
+    ManagedWebView *contentCtl;
+    ManagedWebView *refreshCtl;
        
     BOOL    shouldReloadHistory;
     

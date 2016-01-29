@@ -9,7 +9,6 @@
 #import "PopOverWebViewViewController.h"
 
 #import "NSError+errorWithFormat.h"
-//#import "ManagedUIWebViewController.h"
 #import "LoaderChildViewController.h"
 #import "LoaderViewController.h"
 #import "LoaderConfiguration.h"
@@ -47,7 +46,7 @@
 
 -(void)loadWebView
 {
-    ctl = [[ManagedUIWebViewController alloc] init];
+    ctl = [ManagedWebView createManagedWebView];
     ctl.delegate = self;
     [self.view addSubview:ctl.view];
     
@@ -58,7 +57,7 @@
         [ctl setBackgroundColor1:self.backgroundColor color2:self.backgroundColor];
     else
         [ctl setBackgroundColor1:self.parent.loader.conf.app_background_color1 color2:self.parent.loader.conf.app_background_color2];
-    ctl.webView.scrollView.alwaysBounceVertical = NO;
+    ctl.scrollView.alwaysBounceVertical = NO;
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.url relativeToURL:self.parent.url]];
     [ctl loadRequest:request
              progess:^(float percent) {}
@@ -81,18 +80,8 @@
 
 #pragma mark - ManagedUIWebViewDelegate
 
-- (NSString *)webView:(UIWebView *)webView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame
+-(BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return @"";
-}
-
-- (BOOL)managedUIWebViewController:(ManagedUIWebViewController *)managedUIWebViewController shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-/*    if ([request.HTTPMethod isEqualToString:@"POST"])
-    {
-        self.parent load:<#(NSString *)#>
-    }
-  */  
     [self.parent load:request.URL.absoluteString];
     [self.popover dismissPopoverAnimated:YES];
     return NO;

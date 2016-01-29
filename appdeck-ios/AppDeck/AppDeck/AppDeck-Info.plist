@@ -7,7 +7,7 @@
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
-	<string>999h056edc07b49f95bb570e1af07b8eece8</string>
+	<string>1622h34412ab3c04f08e74e473a53b0dbd795#GinjFo</string>
 	<key>AppDeckApiKey - 12</key>
 	<string>1069hdaf84412b985ad99efa1037a6948c978#JVL</string>
 	<key>AppDeckApiKey - 13</key>
@@ -22,8 +22,14 @@
 	<string>1279hf8895674d261055a2a3818b41cbd4d03#Team AAA</string>
 	<key>AppDeckApiKey - 18</key>
 	<string>982h553006d57a69ecc3e5c73b36a48d9051#dev test</string>
+	<key>AppDeckApiKey - 19</key>
+	<string>1636h0be58fbb225db3e73dc31b25be80c4ec#GameWave</string>
 	<key>AppDeckApiKey - 2</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
+	<key>AppDeckApiKey - 20</key>
+	<string>1818hf63940ad7859260deba357b98fe1b3ef#Krewe</string>
+	<key>AppDeckApiKey - 21</key>
+	<string>1833h98708fb114b52085fe57a6e301611916#Fis Ski</string>
 	<key>AppDeckApiKey - 3</key>
 	<string>757h76c94e17ec542ce74d210eb3f949bf6f#Play3-Live 2.2</string>
 	<key>AppDeckApiKey - 4</key>
@@ -51,39 +57,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
-	<dict>
-		<key>CFBundlePrimaryIcon</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>Icon-Small-40</string>
-				<string>Icon-Small</string>
-				<string>Icon-60</string>
-				<string>Icon.png</string>
-				<string>Icon@2x.png</string>
-				<string>Icon-72.png</string>
-				<string>Icon-72@2x.png</string>
-			</array>
-		</dict>
-	</dict>
+	<dict/>
 	<key>CFBundleIcons~ipad</key>
-	<dict>
-		<key>CFBundlePrimaryIcon</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>Icon-Small-40</string>
-				<string>Icon-Small-50</string>
-				<string>Icon-Small</string>
-				<string>Icon-76</string>
-				<string>Icon-60</string>
-				<string>Icon.png</string>
-				<string>Icon@2x.png</string>
-				<string>Icon-72.png</string>
-				<string>Icon-72@2x.png</string>
-			</array>
-		</dict>
-	</dict>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -96,8 +72,42 @@
 	<string>1.38</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb1499573667033230</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>38</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>06661b993731d02660ac43897854ae842acf59be</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
+	<key>FacebookAppID</key>
+	<string>1499573667033230</string>
+	<key>FacebookDisplayName</key>
+	<string>Facebook</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -110,89 +120,8 @@
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
-	<key>UILaunchImages</key>
-	<array>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{320, 480}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-568h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{320, 568}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-Landscape</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Landscape</string>
-			<key>UILaunchImageSize</key>
-			<string>{768, 1024}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>7.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-Portrait</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{768, 1024}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-Landscape-736h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Landscape</string>
-			<key>UILaunchImageSize</key>
-			<string>{414, 736}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-Portrait-736h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{414, 736}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-Portrait-667h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Portrait</string>
-			<key>UILaunchImageSize</key>
-			<string>{375, 667}</string>
-		</dict>
-		<dict>
-			<key>UILaunchImageMinimumOSVersion</key>
-			<string>8.0</string>
-			<key>UILaunchImageName</key>
-			<string>Default-Landscape-667h</string>
-			<key>UILaunchImageOrientation</key>
-			<string>Landscape</string>
-			<key>UILaunchImageSize</key>
-			<string>{375, 667}</string>
-		</dict>
-	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
@@ -212,39 +141,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb1499573667033230</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>1499573667033230</string>
-	<key>FacebookDisplayName</key>
-	<string>Facebook</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>fbapi</string>
-		<string>fb-messenger-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
-	</array>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>06661b993731d02660ac43897854ae842acf59be</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Crashlytics</string>
-			</dict>
-		</array>
-	</dict>
 </dict>
 </plist>

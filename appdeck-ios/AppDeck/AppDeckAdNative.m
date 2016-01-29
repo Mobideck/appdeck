@@ -8,7 +8,7 @@
 
 #import "AppDeckAdNative.h"
 
-#import "ManagedUIWebViewController.h"
+#import "ManagedWebView.h"
 #import "LoaderViewController.h"
 #import "AppDeck.h"
 

@@ -52,12 +52,12 @@
 
     [self initActionButton];
     
-    self.content = [[ManagedUIWebViewController alloc] initWithNibName:nil bundle:nil];
+    self.content = [ManagedWebView createManagedWebView];
     //[content setChromeless:YES];
     [self.view addSubview:self.content.view];
     //self.content.webView.scalesPageToFit = YES;
     self.content.delegate = self;
-    self.content.webView.scrollView.delegate = self;
+    self.content.scrollView.delegate = self;
     [self.content setBackgroundColor1:self.loader.conf.app_background_color1 color2:self.loader.conf.app_background_color2];
 
     [self.swipeContainer child:self startProgressWithExpectedProgress:0.25 inTime:60];
@@ -76,7 +76,7 @@
         [self refreshActionButton];
         [self.swipeContainer child:self endProgressDuration:0.125];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressEstimateChanged:) name:@"WebProgressEstimateChangedNotification" object:self.content.coreWebView];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressEstimateChanged:) name:@"WebProgressEstimateChangedNotification" object:self.content.coreWebView];
     }];
     
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshActionButton) userInfo:nil repeats:YES];    
@@ -101,24 +101,22 @@
     [super childIsMain:isMain];
     if (isMain)
     {
-        self.content.webView.scrollView.scrollsToTop = YES;
+        self.content.scrollView.scrollsToTop = YES;
 //        [self.loader.globalTracker trackEventWithCategory:@"browser" withAction:@"MobclixFullScreenAdViewController" withLabel:@"failed" withValue:[NSNumber numberWithInt:1]];
     }
 }
 
-#pragma mark - ManagedUIWebViewControllerDelegate
+#pragma mark - ManagedWebViewDelegate
 
-- (NSString *)webView:(UIWebView *)webView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame
+
+- (NSString *)managedWebView:(ManagedWebView *)managedWebView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame
 {
     return @"";
 }
 
-- (BOOL)managedUIWebViewController:(ManagedUIWebViewController *)managedUIWebViewController shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+-(BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-
-//    [NSURLProtocol setProperty:managedUIWebViewController forKey:@"ManagedUIWebViewController" inRequest:request];    
-    
-    [managedUIWebViewController loadRequest:request progess:^(float progress) {
+    [managedWebView loadRequest:request progess:^(float progress) {
         
     } completed:^(NSError *error) {
         
@@ -131,9 +129,9 @@
 
 -(void)refreshActionButton
 {
-    [buttonPrevious setEnabled:[self.content.webView canGoBack]];
-    [buttonNext setEnabled:[self.content.webView canGoForward]];
-    [buttonCancel setEnabled:[self.content.webView isLoading]];
+    [buttonPrevious setEnabled:[self.content canGoBack]];
+    [buttonNext setEnabled:[self.content canGoForward]];
+    [buttonCancel setEnabled:[self.content isLoading]];
     //[buttonRefresh setEnabled:![content.webView isLoading]];
 }
 
@@ -171,29 +169,30 @@
 {
     if ([url hasPrefix:@"browser:back"])
     {
-        [self.content.webView goBack];
+        [self.content goBack];
     }
     else if ([url hasPrefix:@"browser:forward"])
     {
-        [self.content.webView goForward];
+        [self.content goForward];
     }
     else if ([url hasPrefix:@"browser:stop"])
     {
-        [self.content.webView stopLoading];
+        [self.content stopLoading];
     }
     else if ([url hasPrefix:@"browser:refresh"])
     {
-        NSString *webViewUrl = [self.content.webView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
-        [self.swipeContainer child:self startProgressWithExpectedProgress:0.25 inTime:60];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:webViewUrl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
-        [self.content loadRequest:request progess:^(float progress){
-            if (progress > 0)
-            {
-                [self.swipeContainer child:self updateProgressWithProgress:(progress / 100) duration:0.125];
-            }
-        } completed:^(NSError *error) {
-            [self.swipeContainer child:self endProgressDuration:0.125];
-        }];
+        [self.content evaluateJavaScript:@"window.location.href" completionHandler:^(id webViewUrl, NSError *error) {
+            [self.swipeContainer child:self startProgressWithExpectedProgress:0.25 inTime:60];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:webViewUrl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
+            [self.content loadRequest:request progess:^(float progress){
+                if (progress > 0)
+                {
+                    [self.swipeContainer child:self updateProgressWithProgress:(progress / 100) duration:0.125];
+                }
+            } completed:^(NSError *error) {
+                [self.swipeContainer child:self endProgressDuration:0.125];
+            }];
+        }];        
     }
     else if ([url hasPrefix:@"browser:share"])
     {
@@ -234,8 +233,8 @@
 {
     [super viewWillLayoutSubviews];
     
-    self.content.webView.scrollView.contentInset = [self getDefaultContentInset];
-    self.content.webView.scrollView.scrollIndicatorInsets = [self getDefaultContentInset];
+    self.content.scrollView.contentInset = [self getDefaultContentInset];
+    self.content.scrollView.scrollIndicatorInsets = [self getDefaultContentInset];
     
     self.content.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 }

@@ -17,7 +17,6 @@
 #import "ManagedUIWebViewURLProtocol.h"
 #import "CookieStorage.h"
 #import "WebViewHistory.h"
-#import "MobilizeUIWebViewURLProtocol.h"
 #import "CacheMonitoringURLProtocol.h"
 #import "CustomWebViewFactory.h"
 #import "LoaderURLProtocol.h"
@@ -38,6 +37,8 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+
+#import "CacheURLProtocol.h"
 
 @implementation AppDeck
 
@@ -143,15 +144,21 @@
     [WebViewHistory sharedInstance];
     
     self.customWebViewFactory = [[CustomWebViewFactory alloc] init];
+
+    self.cache = [[AppURLCache alloc] init];
     
-    [NSURLProtocol registerClass:[ManagedUIWebViewURLProtocol class]];
+    [NSURLProtocol registerClass:[CacheURLProtocol class]];
+    
+    //[NSURLCache setSharedURLCache:self.cache];
+    
+    //[NSURLProtocol registerClass:[ManagedUIWebViewURLProtocol class]];
 /*    [NSURLProtocol registerClass:[MobilizeUIWebViewURLProtocol class]];*/
-    [NSURLProtocol registerClass:[CacheMonitoringURLProtocol class]];
+    //[NSURLProtocol registerClass:[CacheMonitoringURLProtocol class]];
 
 //    [NSURLProtocol registerClass:[LoaderURLProtocol class]]; // load another
     
-    self.cache = [[AppURLCache alloc] init];
-    [NSURLCache setSharedURLCache:self.cache];
+
+    //[NSURLCache setSharedURLCache:self.cache];
     
     __block AppDeck *me = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
@@ -330,6 +337,9 @@
     {        
         NSString *name = [call.param objectForKey:@"name"];
         NSObject *value = [call.param objectForKey:@"value"];
+        
+//        if ([value isKindOfClass:[NSNull class]])
+//            value = @"";
         
         [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -580,9 +590,9 @@
             self.loader.conf.twitter_consumer_key.length > 0 && self.loader.conf.twitter_consumer_secret.length > 0)
         {
             [[Twitter sharedInstance] startWithConsumerKey:self.loader.conf.twitter_consumer_key consumerSecret:self.loader.conf.twitter_consumer_secret];
-            [Fabric with:@[[Crashlytics class], [Twitter sharedInstance]]];
+            [Fabric with:@[CrashlyticsKit, [Twitter sharedInstance]]];
         } else {
-            [Fabric with:@[[Crashlytics class], [Twitter sharedInstance]]];
+            [Fabric with:@[CrashlyticsKit, [Twitter sharedInstance]]];
         }
     }
     shouldConfigureApp = NO;

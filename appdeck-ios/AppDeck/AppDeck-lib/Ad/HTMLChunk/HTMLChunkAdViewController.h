@@ -9,15 +9,15 @@
 #import "../../AppDeckAdViewController.h"
 #import "../../JSonHTTPApi.h"
 #import "HTMLChunkAdEngine.h"
-#import "../../ManagedUIWebViewController.h"
+#import "../../ManagedWebView.h"
 
-@interface HTMLChunkAdViewController : AppDeckAdViewController <ManagedUIWebViewDelegate, AppDeckApiCallDelegate>
+@interface HTMLChunkAdViewController : AppDeckAdViewController <ManagedWebViewDelegate, AppDeckApiCallDelegate>
 {
     NSTimer *timer; // for interstitial
     
     UIImageView *close; // allow close of ad
     
-    ManagedUIWebViewController  *contentCtl;
+    ManagedWebView  *contentCtl;
 }
 @property (nonatomic, strong)   HTMLChunkAdEngine *adEngine;
 //@property (nonatomic, strong)   UIImageView *imageView;

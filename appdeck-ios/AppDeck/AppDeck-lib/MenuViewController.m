@@ -55,16 +55,16 @@
     [self.view addSubview:container];
     
     //NSLog(@"at load menu frame: %f - %f",  self.view.frame.size.width, self.view.frame.size.height);
-    content = [[ManagedUIWebViewController alloc] initWithNibName:nil bundle:nil];
+    content = [ManagedWebView createManagedWebView];
     content.delegate = self;
     [container addSubview:content.view];
     [self addChildViewController:content];
     
 //    content.view.frame = self.view.frame;
-    content.webView.scrollView.showsHorizontalScrollIndicator = NO;
-    content.webView.scrollView.showsVerticalScrollIndicator = NO;
-    content.webView.scrollView.alwaysBounceHorizontal = NO;
-    content.webView.scrollView.scrollsToTop = NO;
+    content.scrollView.showsHorizontalScrollIndicator = NO;
+    content.scrollView.showsVerticalScrollIndicator = NO;
+    content.scrollView.alwaysBounceHorizontal = NO;
+    content.scrollView.scrollsToTop = NO;
     [content setChromeless:YES];
     //content.webView.scalesPageToFit = YES;
     [content.webView setBackgroundColor:[UIColor clearColor]];
@@ -171,7 +171,8 @@
 
 -(NSString *)executeJS:(NSString *)js
 {
-    return [content executeJS:js];
+    [content executeJS:js];
+    return @"";
 }
 
 -(BOOL)apiCall:(AppDeckApiCall *)call
@@ -189,7 +190,7 @@
     return [self.loader apiCall:call];
 }
 
-- (BOOL)managedUIWebViewController:(ManagedUIWebViewController *)managedUIWebViewController shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+-(BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     LoaderChildViewController *page = [self.loader loadRootPage:request.URL.absoluteString];
     

@@ -8,7 +8,7 @@
 
 #import "FPPopoverController+JSon.h"
 #import "NSError+errorWithFormat.h"
-#import "ManagedUIWebViewController.h"
+#import "ManagedWebView.h"
 #import "LoaderChildViewController.h"
 #import "NSString+UIColor.h"
 
@@ -67,7 +67,7 @@
     id border = [infos objectForKey:@"border"];
     //id radius = [infos objectForKey:@"radius"];
 
-    ManagedUIWebViewController *ctl = [[ManagedUIWebViewController alloc] init];
+    ManagedWebView *ctl = [ManagedWebView createManagedWebView];
 //    ctl.title = title;
     FPPopoverController *popover = [[FPPopoverController alloc] initWithViewController:ctl];
     

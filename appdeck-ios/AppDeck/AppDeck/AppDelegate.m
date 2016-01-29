@@ -31,6 +31,7 @@
     NSString *app_json_url = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_json_url"];
     if (app_json_url)
         conf_url = app_json_url;
+
     self.appDeck = [AppDeck open:conf_url withLaunchingWithOptions:launchOptions];
     
     self.window.rootViewController = self.appDeck;

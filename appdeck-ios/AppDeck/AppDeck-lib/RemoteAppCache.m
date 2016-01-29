@@ -11,9 +11,9 @@
 #import "NSString+URLEncoding.h"
 #import "AppDeck.h"
 #import "AppURLCache.h"
-#import "ManagedUIWebViewController.h"
 #import "LoaderViewController.h"
 #import "AppDeckAnalytics.h"
+#import "LogViewController.h"
 
 @implementation RemoteAppCache
 
@@ -71,6 +71,8 @@ int main_unused_7z(int numargs, char *args[]);
 
 +(void)sync:(NSURL *)url nbCreate:(int *)lastFetchNbCreate nbUpdate:(int *)lastFetchNbUpdate
 {
+    AppDeck *appDeck = [AppDeck sharedInstance];
+    NSFileManager *fileManager = NSFileManager.defaultManager;
     NSURLResponse *cacheResponse;
     NSError *error;
     NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:url] returningResponse:&cacheResponse error:&error];
@@ -82,12 +84,62 @@ int main_unused_7z(int numargs, char *args[]);
     
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *cacheFile = [cachePath stringByAppendingPathComponent:@"cache.7z"];
-    [[NSFileManager defaultManager] removeItemAtPath:cacheFile error:nil];
+    [fileManager removeItemAtPath:cacheFile error:nil];
     [data writeToFile:cacheFile atomically:YES];
-    
+
     NSArray *contents = [LZMAExtractor extract7zArchive:cacheFile tmpDirName:@"7z"];
     
-    AppDeck *appDeck = [AppDeck sharedInstance];
+    for (NSString *entryPath in contents)
+    {
+        NSURL *fileURL = [NSURL fileURLWithPath:entryPath];
+        NSString *fileName = [fileURL.pathComponents lastObject];
+        BOOL isMeta = NO;
+        if ([fileName hasSuffix:@".meta"])
+        {
+            isMeta = YES;
+            fileName = [fileName substringToIndex:fileName.length-5];
+        }
+        NSString *rurlString = [NSString stringWithFormat:@"http://%@", [fileName urlDecodeUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSURL *rurl = [NSURL URLWithString:rurlString];
+        if (rurl == nil)
+            continue;
+        
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:rurl];
+        
+        if (isMeta == NO)
+        {
+            // make some stats
+            NSDate *date = nil;
+            if ([appDeck.cache requestIsInCache:request date:&date] == NO)
+                *lastFetchNbCreate = *lastFetchNbCreate + 1;
+            else
+                *lastFetchNbUpdate = *lastFetchNbUpdate + 1;
+        }
+        
+        NSString *targetPath = [appDeck.cache getCachePathForRequest:request];
+        
+        if (isMeta)
+            targetPath = [targetPath stringByAppendingString:@".meta"];
+        else
+            targetPath = [targetPath stringByAppendingString:@".body"];
+        
+        [fileManager removeItemAtPath:targetPath error:&error];
+        if ([fileManager moveItemAtPath:entryPath toPath:targetPath error:&error] == NO)
+            NSLog(@"RemoteAppCache: failed to move %@ to %@: %@", fileName, cachePath, error);
+
+        NSLog(@"RemoteAppCache: %@ => %@", rurlString, targetPath);
+        
+        if (glLog)
+            [glLog debug:@"New Cache Entry: %@", request.URL.relativePath];
+    }
+    
+    if (glLog)
+        [glLog debug:@"Content Synchronization: %d create - %d update", *lastFetchNbCreate, *lastFetchNbUpdate];
+    
+/*
+    
+
     
     for (NSString *entryPath in contents)
     {
@@ -115,16 +167,6 @@ int main_unused_7z(int numargs, char *args[]);
             NSString *MIMEType = @"text/html";
             NSString *textEncodingName = nil;
             
-            /*
-            // inject appdeck js in data ?
-            if ([ManagedUIWebViewController shouldInjectAppDeckJSInData:rdata])
-            {
-                //NSLog(@"patch remote %@", request);
-                NSData *patched_data = [ManagedUIWebViewController dataWithInjectedAppDeckJS:rdata];
-                if (patched_data)
-                    rdata = patched_data;
-            }*/
-            
             NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[request URL] MIMEType:MIMEType expectedContentLength:[rdata length] textEncodingName:textEncodingName];
             NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:rdata];
             
@@ -147,7 +189,7 @@ int main_unused_7z(int numargs, char *args[]);
 #endif
             
         }
-    }
+    }*/
 }
 
 @end

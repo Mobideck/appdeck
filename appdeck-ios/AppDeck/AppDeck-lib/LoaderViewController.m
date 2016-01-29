@@ -17,7 +17,6 @@
 #import "JSonHTTPApi.h"
 #import "NSDictionary+query.h"
 #import "PageViewController.h"
-#import "MobilizeViewController.h"
 #import "WebBrowserViewController.h"
 //#import <QuartzCore/QuartzCore.h>
 #import "AppURLCache.h"
@@ -72,54 +71,18 @@
 {
     [super viewDidLoad];
     
-/*    if (HACK_PUB_FULLSCREEN)
-        [self setFullScreen:YES animation:NO];*/
-
     self.appDidLaunch = YES;
-    
-    [NSThread setThreadPriority:1.0];
     
     [self setupBackgroundMonitoring];
     
-    // Determine which launch image file
-    NSString * launchImageName = @"Default.png";
-    CGRect frame = self.view.bounds;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        if (self.view.bounds.size.width < self.view.bounds.size.height) {//UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-            launchImageName = @"Default-Portrait.png";
-        } else {
-            launchImageName = @"Default-Landscape.png";
-        }
-        if (self.appDeck.iosVersion < 7.0)
-        {
-            frame.origin.y -= [[UIApplication sharedApplication] statusBarFrame].size.height;
-            frame.size.height += [[UIApplication sharedApplication] statusBarFrame].size.height;
-        }
-    } else {
-        if (self.appDeck.iosVersion < 7.0)
-        {
-            frame.origin.y -= [[UIApplication sharedApplication] statusBarFrame].size.height;
-            frame.size.height += [[UIApplication sharedApplication] statusBarFrame].size.height;
-        }
-    }
-
-    backgroundImageView = [[UIImageView alloc] initWithFrame:frame];
-    backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth  | UIViewAutoresizingFlexibleHeight;
-    backgroundImageView.image = [UIImage imageNamed:launchImageName];
-    [self.view addSubview:backgroundImageView];
-
     overlay = [[UIView alloc] initWithFrame:self.view.bounds];
     overlay.backgroundColor = [UIColor blackColor];
-    overlay.alpha = 0.5f;
+    overlay.alpha = 0.1f;
+    overlay.hidden = YES;
     [self.view addSubview:overlay];
     
     loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     loadingView.frame = CGRectMake(self.view.bounds.size.width / 2 - loadingView.bounds.size.width / 2, self.view.frame.size.height * 0.75, loadingView.frame.size.width, loadingView.frame.size.height);
-//    loadingView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    //    loadingView.frame = CGRectMake(0, 0, loadingView.frame.size.width, loadingView.frame.size.height);
-    
-
-    
     
     [loadingView startAnimating];
     [self.view addSubview:loadingView];
@@ -130,6 +93,10 @@
         [self.view addSubview:statusBarInfo];
     }
 
+    self.view.backgroundColor = [UIColor whiteColor];
+    //self.view.hidden = YES;
+    //self.view.opaque = NO;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -796,7 +763,7 @@
     [self addChildViewController:self.slidingViewController];
     [self.slidingViewController didMoveToParentViewController:self];
     [self.view addSubview:self.slidingViewController.view];
-    
+    /*
     self.slidingViewController.view.alpha = 0;
     [UIView animateWithDuration:0.5
                      animations:^{
@@ -805,7 +772,7 @@
                      completion:^(BOOL finished){
                          
                      }];
-    
+    */
     // create popup navigation controller
     //popUp = [self createNavigationController];
 /*    popUp = [[CRNavigationController alloc] init];//initWithRootViewController:centerController];
@@ -879,6 +846,7 @@
         [loadingView startAnimating];
     loadingView.hidden = hidden;
     overlay.hidden = hidden;
+    overlay.hidden = YES;
 }
 
 -(void)postLoadUI:(id)sender
@@ -1193,13 +1161,6 @@
     {
         page = [[LoaderChildViewController alloc] initWithNibName:nil bundle:nil URL:pageUrl content:nil header:nil footer:nil loader:self];
         page.view.backgroundColor = [UIColor redColor];        
-    }
-    else if ([pageUrl.scheme isEqualToString:@"mobilize"] || [screenConfiguration.type isEqualToString:@"mobilize"])
-    {
-        pageUrlString = [pageUrlString stringByReplacingOccurrencesOfString:@"mobilize://" withString:@"http://"];
-        pageUrl = [NSURL URLWithString: [[NSURL URLWithString:pageUrlString relativeToURL:self.conf.baseUrl] absoluteString]];
-        
-        page = [[MobilizeViewController alloc] initWithNibName:nil bundle:nil URL:pageUrl content:nil header:nil footer:nil loader:self];
     }
     else if ([type isEqualToString:@"browser"])
     {

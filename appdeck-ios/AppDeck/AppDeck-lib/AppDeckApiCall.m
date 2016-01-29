@@ -11,6 +11,7 @@
 //#import "JSONKit.h"
 #import "IOSVersion.h"
 #import "AppDeck.h"
+#import "ManagedWebView.h"
 
 @implementation AppDeckApiCall
 
@@ -49,14 +50,14 @@
     {
         js = [NSString stringWithFormat:@"document.dispatchEvent(new CustomEvent('%@', %@));", self.eventID, eventJson];
         //    NSString *js = [NSString stringWithFormat:@"var e = new CustomEvent('%@', %@); setTimeout(\"document.dispatchEvent(e)\", 0);", self.eventID, eventJson];
-        [self.webview stringByEvaluatingJavaScriptFromString:js];
+        [self.managedWebView executeJS:js];
     } else {
         js = [NSString stringWithFormat:@"var evt = document.createEvent('Event');evt.initEvent('%@',true,true); evt.detail = %@; document.dispatchEvent(evt);", self.eventID, eventJson];
         //    NSString *js = [NSString stringWithFormat:@"var e = new CustomEvent('%@', %@); setTimeout(\"document.dispatchEvent(e)\", 0);", self.eventID, eventJson];   
     }
 //    js = [NSString stringWithFormat:@"setTimeout(function(){%@}, 150);", js];
 //    [self.webview performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:js waitUntilDone:NO];
-    [self.webview stringByEvaluatingJavaScriptFromString:js];
+    [self.managedWebView executeJS:js];
 }
 
 -(void)sendCallBackWithError:(NSError *)error

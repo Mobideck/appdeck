@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ManagedUIWebViewController.h"
+#import "ManagedWebView.h"
 
 @class LoaderViewController;
 
@@ -16,13 +16,13 @@ typedef enum {
     MenuAlignRight
 } MenuAlign;
 
-@interface MenuViewController : UIViewController <ManagedUIWebViewDelegate, AppDeckApiCallDelegate>
+@interface MenuViewController : UIViewController <ManagedWebViewDelegate, AppDeckApiCallDelegate>
 {
 //    UIWebView *webView;
     
     UIView *fakeStatusBar;
     
-    ManagedUIWebViewController *content;
+    ManagedWebView *content;
     UIView                      *container;
     CGFloat                     width;
     MenuAlign                   align;

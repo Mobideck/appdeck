@@ -18,7 +18,7 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
-    if ([NSURLProtocol propertyForKey:@"CacheMonitoringURLProtocol" inRequest:request] == nil /*&& [NSURLProtocol propertyForKey:@"ManagedUIWebViewController" inRequest:request] != nil*/)
+    if ([NSURLProtocol propertyForKey:@"CacheMonitoringURLProtocol" inRequest:request] == nil)
     {
         //NSLog(@"CacheMonitoringURLProtocol: %@", request.URL.relativePath);
         return YES;

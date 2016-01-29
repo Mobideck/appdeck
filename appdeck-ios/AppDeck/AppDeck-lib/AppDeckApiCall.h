@@ -12,7 +12,7 @@
 @class LoaderViewController;
 @class SwipeViewController;
 @class LoaderChildViewController;
-@class ManagedUIWebViewController;
+@class ManagedWebView;
 
 @interface AppDeckApiCall : NSObject
 
@@ -29,9 +29,9 @@
 @property (strong, nonatomic) LoaderViewController *loader;
 @property (strong, nonatomic) SwipeViewController *container;
 @property (strong, nonatomic) LoaderChildViewController *child;
-@property (strong, nonatomic) ManagedUIWebViewController *managedWebView;
+@property (strong, nonatomic) ManagedWebView *managedWebView;
 @property (strong, nonatomic) UIView *origin;
-@property (strong, nonatomic) UIWebView *webview;
+//@property (strong, nonatomic) UIWebView *webview;
 @property (strong, nonatomic) NSURL *baseURL;
 @property (readonly, nonatomic) NSString *jsTarget;
 

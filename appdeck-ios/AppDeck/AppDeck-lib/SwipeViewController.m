@@ -12,7 +12,6 @@
 #import "UINavigationBar+Progress.h"
 #import "AppDeckApiCall.h"
 #import "AppDeckAnalytics.h"
-#import "TestUIScrollView.h"
 #import "RSTimingFunction.h"
 #import <QuartzCore/QuartzCore.h>
 #import "LoaderConfiguration.h"

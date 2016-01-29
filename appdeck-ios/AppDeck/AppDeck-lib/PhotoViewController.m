@@ -68,6 +68,7 @@ static const CGFloat labelPadding = 10;
 - (CGSize)sizeThatFits:(CGSize)size {
     CGFloat maxHeight = 9999;
     if (captionLabel.numberOfLines > 0) maxHeight = captionLabel.font.leading*captionLabel.numberOfLines;
+
     CGSize textSize = [captionLabel.text sizeWithFont:captionLabel.font
                               constrainedToSize:CGSizeMake(size.width - labelPadding*2, maxHeight)
                                   lineBreakMode:captionLabel.lineBreakMode];

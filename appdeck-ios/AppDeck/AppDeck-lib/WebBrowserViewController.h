@@ -7,11 +7,11 @@
 //
 
 #import "LoaderChildViewController.h"
-#import "ManagedUIWebViewController.h"
+#import "ManagedWebView.h"
 
 @class PageBarButton;
 
-@interface WebBrowserViewController : LoaderChildViewController <ManagedUIWebViewDelegate, UIScrollViewDelegate>
+@interface WebBrowserViewController : LoaderChildViewController <ManagedWebViewDelegate, UIScrollViewDelegate>
 {
     PageBarButton *buttonRefresh;
     PageBarButton *buttonCancel;
@@ -22,7 +22,7 @@
     NSTimer *timer;    
 }
 
-@property (nonatomic, strong)   ManagedUIWebViewController   *content;
+@property (nonatomic, strong)   ManagedWebView   *content;
 
 -(NSURLRequest *)getRequest;
 
