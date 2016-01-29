@@ -20,6 +20,7 @@ __attribute__ ((noinline)) void warnBlockingOperationOnMainThread() {
 }
 
 NSString *const BFTaskErrorDomain = @"bolts";
+NSInteger const kBFMultipleErrorsError = 80175001;
 NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
 
 @interface BFTask () {
@@ -28,9 +29,9 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     NSException *_exception;
 }
 
-@property (atomic, assign, readwrite, getter=isCancelled) BOOL cancelled;
-@property (atomic, assign, readwrite, getter=isFaulted) BOOL faulted;
-@property (atomic, assign, readwrite, getter=isCompleted) BOOL completed;
+@property (nonatomic, assign, readwrite, getter=isCancelled) BOOL cancelled;
+@property (nonatomic, assign, readwrite, getter=isFaulted) BOOL faulted;
+@property (nonatomic, assign, readwrite, getter=isCompleted) BOOL completed;
 
 @property (nonatomic, strong) NSObject *lock;
 @property (nonatomic, strong) NSCondition *condition;
@@ -107,7 +108,7 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     return [[self alloc] initCancelled];
 }
 
-+ (instancetype)taskForCompletionOfAllTasks:(NSArray *)tasks {
++ (instancetype)taskForCompletionOfAllTasks:(NSArray<BFTask *> *)tasks {
     __block int32_t total = (int32_t)tasks.count;
     if (total == 0) {
         return [self taskWithResult:nil];
@@ -165,7 +166,7 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     return tcs.task;
 }
 
-+ (instancetype)taskForCompletionOfAllTasksWithResults:(NSArray *)tasks {
++ (instancetype)taskForCompletionOfAllTasksWithResults:(NSArray<BFTask *> *)tasks {
     return [[self taskForCompletionOfAllTasks:tasks] continueWithSuccessBlock:^id(BFTask *task) {
         return [tasks valueForKey:@"result"];
     }];
@@ -198,8 +199,7 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     return tcs.task;
 }
 
-+ (instancetype)taskFromExecutor:(BFExecutor *)executor
-                       withBlock:(id (^)())block {
++ (instancetype)taskFromExecutor:(BFExecutor *)executor withBlock:(nullable id (^)())block {
     return [[self taskWithResult:nil] continueWithExecutor:executor withBlock:^id(BFTask *task) {
         return block();
     }];

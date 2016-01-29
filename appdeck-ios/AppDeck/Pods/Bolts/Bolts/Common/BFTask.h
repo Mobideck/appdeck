@@ -11,7 +11,6 @@
 #import <Foundation/Foundation.h>
 
 #import <Bolts/BFCancellationToken.h>
-#import <Bolts/BFDefines.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
  Error domain used if there was multiple errors on <BFTask taskForCompletionOfAllTasks:>.
  */
 extern NSString *const BFTaskErrorDomain;
+
+/*!
+ An error code used for <BFTask taskForCompletionOfAllTasks:>, if there were multiple errors.
+ */
+extern NSInteger const kBFMultipleErrorsError;
 
 /*!
  An exception that is thrown if there was multiple exceptions on <BFTask taskForCompletionOfAllTasks:>.
@@ -33,18 +37,18 @@ extern NSString *const BFTaskMultipleExceptionsException;
  inspect the state of the task, and to add continuations to
  be run once the task is complete.
  */
-@interface BFTask BF_GENERIC(__covariant BFGenericType) : NSObject
+@interface BFTask<__covariant ResultType> : NSObject
 
 /*!
  A block that can act as a continuation for a task.
  */
-typedef __nullable id(^BFContinuationBlock)(BFTask BF_GENERIC(BFGenericType) *task);
+typedef __nullable id(^BFContinuationBlock)(BFTask<ResultType> *task);
 
 /*!
  Creates a task that is already completed with the given result.
  @param result The result for the task.
  */
-+ (instancetype)taskWithResult:(nullable BFGenericType)result;
++ (instancetype)taskWithResult:(nullable ResultType)result;
 
 /*!
  Creates a task that is already completed with the given error.
@@ -68,7 +72,7 @@ typedef __nullable id(^BFContinuationBlock)(BFTask BF_GENERIC(BFGenericType) *ta
  all of the input tasks have completed.
  @param tasks An `NSArray` of the tasks to use as an input.
  */
-+ (instancetype)taskForCompletionOfAllTasks:(nullable NSArray *)tasks;
++ (instancetype)taskForCompletionOfAllTasks:(nullable NSArray<BFTask *> *)tasks;
 
 /*!
  Returns a task that will be completed once all of the input tasks have completed.
@@ -76,7 +80,7 @@ typedef __nullable id(^BFContinuationBlock)(BFTask BF_GENERIC(BFGenericType) *ta
  an `NSArray` of all task results in the order they were provided.
  @param tasks An `NSArray` of the tasks to use as an input.
  */
-+ (instancetype)taskForCompletionOfAllTasksWithResults:(nullable NSArray *)tasks;
++ (instancetype)taskForCompletionOfAllTasksWithResults:(nullable NSArray<BFTask *> *)tasks;
 
 /*!
  Returns a task that will be completed a certain amount of time in the future.
@@ -103,14 +107,14 @@ typedef __nullable id(^BFContinuationBlock)(BFTask BF_GENERIC(BFGenericType) *ta
  If block returns a BFTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-+ (instancetype)taskFromExecutor:(BFExecutor *)executor withBlock:(id (^)())block;
++ (instancetype)taskFromExecutor:(BFExecutor *)executor withBlock:(nullable id (^)())block;
 
 // Properties that will be set on the task once it is completed.
 
 /*!
  The result of a successful task.
  */
-@property (nullable, nonatomic, strong, readonly) BFGenericType result;
+@property (nullable, nonatomic, strong, readonly) ResultType result;
 
 /*!
  The error of a failed task.

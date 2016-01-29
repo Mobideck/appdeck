@@ -22,6 +22,8 @@
 #import "FBNativeAdView.h"
 #import "FBNativeAdsManager.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol FBNativeAdView;
 
 /*!
@@ -35,7 +37,7 @@ FB_CLASS_EXPORT
 
 /*!
  @property
- @abstract Maximum native ads that this scroll view will load. Defaults to 5. If changed after calling loadAds, all current ads will be discarded and loadAds must be called again.
+ @abstract Maximum native ads that this scroll view will load. Defaults to 10. If changed after calling loadAds, all current ads will be discarded and loadAds must be called again.
  */
 @property (nonatomic, assign, readonly) NSUInteger maximumNativeAdCount;
 
@@ -125,3 +127,5 @@ FB_CLASS_EXPORT
                                      withMaximum:(NSUInteger)maximumNativeAdCount NS_DESIGNATED_INITIALIZER;
 
 @end
+
+NS_ASSUME_NONNULL_END

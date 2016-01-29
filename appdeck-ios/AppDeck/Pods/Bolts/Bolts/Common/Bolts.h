@@ -12,7 +12,6 @@
 #import <Bolts/BFCancellationToken.h>
 #import <Bolts/BFCancellationTokenRegistration.h>
 #import <Bolts/BFCancellationTokenSource.h>
-#import <Bolts/BFDefines.h>
 #import <Bolts/BFExecutor.h>
 #import <Bolts/BFTask.h>
 #import <Bolts/BFTaskCompletionSource.h>
@@ -30,9 +29,6 @@
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
-
-/*! @abstract 80175001: There were multiple errors. */
-extern NSInteger const kBFMultipleErrorsError;
 
 @interface Bolts : NSObject
 
