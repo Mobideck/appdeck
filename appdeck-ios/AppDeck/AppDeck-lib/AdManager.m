@@ -275,10 +275,10 @@
 
 -(void)sendEvents:(NSTimer *)origin
 {
+    /*
     NSString *url = @"http://oxom-cloud.seb-dev-new.paris.office.netavenir.com/api/ads/event/track";
 
     
-    /*
      
 {
   "success": true,

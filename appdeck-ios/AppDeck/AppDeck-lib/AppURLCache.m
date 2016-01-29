@@ -18,8 +18,6 @@
 
 #import "LogViewController.h"
 
-#import "ManagedUIWebViewController.h"
-
 #include <sys/stat.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -44,7 +42,6 @@ static unsigned char gifData[] = {
     0x02, 0x44, 0x01, 0x00, 0x3b
 };
 
-
 @implementation AppURLCachedData
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -67,8 +64,6 @@ static unsigned char gifData[] = {
 
 @end
 
-//cat mercato.txt | grep DOWN | cut -d ' ' -f 6 | sort | uniq
-
 @implementation AppURLCache
 
 - (id)initWithMemoryCapacity:(NSUInteger)memoryCapacity diskCapacity:(NSUInteger)diskCapacity diskPath:(NSString *)path
@@ -77,7 +72,6 @@ static unsigned char gifData[] = {
     if (self)
     {
         backgroundQueue = dispatch_queue_create("com.mobideck.cache.bgqueue", NULL);
-//        memcache = [[NSMutableDictionary alloc] initWithCapacity:256];
         memcache = [[NSCache alloc] init];
         cacheRegex = [[NSMutableArray alloc] initWithCapacity:256];
         fileManager = [NSFileManager defaultManager];
@@ -86,18 +80,8 @@ static unsigned char gifData[] = {
         // init CDN host list
         cdnregexp = [[RE2Regexp alloc] initWithString:@"(.appdeckcdn.com|appdata.static.appdeck.mobi|static.appdeck.mobi|ajax.googleapis.com|cachedcommons.org|cdnjs.cloudflare.com|code.jquery.com|ajax.aspnetcdn.com|ajax.microsoft.com|ads.mobcdn.com|.akamai.net|.akamaiedge.net|.llnwd.net|edgecastcdn.net|.systemcdn.net|hwcdn.net|.panthercdn.com|.simplecdn.net|.instacontent.net|.footprint.net|.ay1.b.yahoo.com|.yimg.|.google.|googlesyndication.|youtube.|.googleusercontent.com|.internapcdn.net|.cloudfront.net|.netdna-cdn.com|.netdna-ssl.com|.netdna.com|.cotcdn.net|.cachefly.net|bo.lt|.cloudflare.com|.afxcdn.net|.lxdns.com|.att-dsa.net|.vo.msecnd.net|.voxcdn.net|.bluehatnetwork.com|.swiftcdn1.com|.cdngc.net|.fastly.net|.nocookie.net|.gslb.taobao.com|.gslb.tbcache.com|.mirror-image.net|.cubecdn.net|.yottaa.net|.r.cdn77.net|.incapdns.net|.bitgravity.com|.r.worldcdn.net|.r.worldssl.net|tbcdn.cn|.taobaocdn.com|.ngenix.net|.pagerain.net|.ccgslb.com|cdn.sfr.net|.azioncdn.net|.azioncdn.com|.azion.net|.cdncloud.net.au|cdn.viglink.com|.ytimg.com|.dmcdn.net|.googleapis.com|.googleusercontent.com|code.jquery.com|media.mobpartner.mobi|gstatic.com|ytimg.com|[0-9].gravatar.com|.wp.com|.bootstrapcdn.com|.msecnd.net)"];
 
-        /// empty response
-//        emptyResponse
-        
-/*        // adblock regexp
-        NSString *adblock64String = [NSString stringWithCString:adBlockbase64 encoding:NSUTF8StringEncoding];
-        NSData *adblock64Data = [[NSData alloc] initWithBase64EncodedString:adblock64String options:0];
-        NSString *adblockString = [[NSString alloc] initWithData:adblock64Data encoding:NSUTF8StringEncoding];
-        adblockregexp = [[RE2Regexp alloc] initWithString:adblockString];*/
-        
         // create cache directory if needed
         NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-//        cachePath = [cachePath stringByAppendingFormat:@"/%@/", [[NSBundle mainBundle] bundleIdentifier]];
         NSString *filePathAndDirectory = [cachePath stringByAppendingPathComponent:[[NSBundle mainBundle] bundleIdentifier]];
         NSError *error;
 
@@ -107,9 +91,7 @@ static unsigned char gifData[] = {
                                                              error:&error])
         {
             NSLog(@"Create directory error: %@", error);
-        }//        net.mobideck.appdeck.test
-//        NSLog(@"CachePath: %@", filePathAndDirectory);
-        
+        }
     }
     return self;
 }
@@ -130,6 +112,7 @@ static unsigned char gifData[] = {
     NSString *fullPath = [self getCachePathForRequest:request];
     NSError *error = nil;
     [fileManager removeItemAtPath:fullPath error:&error];
+    [fileManager removeItemAtPath:[fullPath stringByAppendingString:@".meta"] error:&error];
     [super removeCachedResponseForRequest:request];
 }
 
@@ -226,18 +209,6 @@ static unsigned char gifData[] = {
     [cacheRegex addObject:regex];    
 }
 
--(void)addAdBlockWhiteListCacheRegularExpressionFromString:(NSString *)regexString
-{
-    RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
-    [adblockwhitelist addObject:regex];
-}
-
--(void)addAdBlockBlackListCacheRegularExpressionFromString:(NSString *)regexString
-{
-    RE2Regexp *regex = [[RE2Regexp alloc] initWithString:regexString];
-    [adblockblacklist addObject:regex];
-}
-
 -(void)removeAllRegularExpression
 {
     [cacheRegex removeAllObjects];
@@ -309,90 +280,94 @@ static unsigned char gifData[] = {
     // This stores in the Caches directory, which can be deleted when space is low, but we only use it for offline access
     if (cachesPath == nil)
         cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-//    cachesPath = [cachesPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%x", [[[request URL] absoluteString] hash]]];
     NSString *fileName = [request.URL.absoluteString urlEncodeUsingEncoding:NSUTF8StringEncoding];
     if (fileName.length > 64)
         fileName = [NSString stringWithFormat:@"%@-%@", [fileName substringToIndex:64], [fileName MD5Hash]];
     return [cachesPath stringByAppendingPathComponent:fileName];
-    //NSLog(@"%@: %@", request.URL.absoluteString, cachesPath);
-
 }
 
 -(NSCachedURLResponse *)getCacheResponseForRequest:(NSURLRequest *)request
 {
-//    NSLog(@"getCacheResponseForRequest: %@", request.URL.absoluteString);
-//    NSLog(@"Headers: %@", request.allHTTPHeaderFields);
     if (memcache == nil || request == nil || request.URL == nil || request.URL.absoluteString == nil)
         return nil;
     // in memcache ?
     NSCachedURLResponse *cachedResponse = [memcache objectForKey:request.URL.absoluteString];
-    if (cachedResponse != nil)
+    if (cachedResponse != nil) {
+        NSLog(@"getCacheResponseForRequest: MemCache: %@", request.URL.absoluteString);
         return cachedResponse;
+    }
+    
+    NSString *bodyFilePath = nil;
+    NSString *headersFilePath = nil;
+    
     // in disk cache ?
     NSString *cacheFilePath = [self getCachePathForRequest:request];
-    AppURLCachedData *cachedData = [NSKeyedUnarchiver unarchiveObjectWithFile:cacheFilePath];
+
+    if ([fileManager fileExistsAtPath:[cacheFilePath stringByAppendingString:@".body"]])
+    {
+        bodyFilePath = [cacheFilePath stringByAppendingString:@".body"];
+        headersFilePath = [cacheFilePath stringByAppendingString:@".meta"];
+    }
+    
+    /*AppURLCachedData *cachedData = [NSKeyedUnarchiver unarchiveObjectWithFile:cacheFilePath];
     if (cachedData != nil)
     {
+        NSLog(@"getCacheResponseForRequest: DiskCache: %@", request.URL.absoluteString);
         NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:cachedData.response.MIMEType expectedContentLength:cachedData.data.length textEncodingName:cachedData.response.textEncodingName];
         
         cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:cachedData.data];
         return cachedResponse;
-/*
-        NSDictionary *headerFields = @{
-                                       @"ETag": @"\"appdeck-super-cache\"",
-                                       };
-        
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL
-                                                          statusCode:200
-                                                         HTTPVersion:@"HTTP/1.1"
-                                                        headerFields:];
-                                   
-//                                   :request.URL MIMEType:cachedData.response.MIMEType expectedContentLength:cachedData.data.length textEncodingName:cachedData.response.textEncodingName];
-        
-        cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:cachedData.data];
-        return cachedResponse;*/
-        
-    }
+    }*/
     // in resource cache ?
     NSString *file = [self getCachePathForEmbedResource:request];
-    if ([fileManager fileExistsAtPath:file])
+    if (bodyFilePath == nil && [fileManager fileExistsAtPath:file])
     {
-        NSData *bodyData = [NSData dataWithContentsOfFile:file];
+        bodyFilePath = file;
+        headersFilePath = [file stringByAppendingString:@".meta"];
+    }
+    
+    if (bodyFilePath != nil)
+    {
+        NSData *bodyData = [NSData dataWithContentsOfFile:bodyFilePath];
 
-        NSData *metaData = [NSData dataWithContentsOfFile:[file stringByAppendingString:@".meta"]];
+        NSData *metaData = [NSData dataWithContentsOfFile:headersFilePath];
         
         NSError *error = NULL;
-        //NSMutableDictionary *headersTMP = [metaData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
-        NSMutableDictionary *headersTMP = [NSJSONSerialization JSONObjectWithData:metaData options:NSJSONReadingMutableContainers error:&error];
         
+        NSMutableDictionary *headersTMP = [NSJSONSerialization JSONObjectWithData:metaData options:NSJSONReadingMutableContainers error:&error];
         NSMutableDictionary *headers = [[NSMutableDictionary alloc] initWithCapacity:[headersTMP count]];
         
-            [headersTMP enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-                if ([[obj class] isSubclassOfClass:[NSString class]])
-                    [headers setObject:obj forKey:key];
-                else if ([[obj class] isSubclassOfClass:[NSArray class]])
-                {
-                    NSArray *values = (NSArray *)obj;
-                    NSString *value = [values componentsJoinedByString:@", "];
-                    [headers setObject:value forKey:key];
-                } else
-                    NSLog(@"EmbedHeaders: failed to convert: %@ for key %@", obj, key);
-                
-            }];
-        if (headers == nil)
+        __block NSString *contentType = nil;
+        
+        [headersTMP enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            if ([[obj class] isSubclassOfClass:[NSString class]])
+                [headers setObject:obj forKey:key];
+            else if ([[obj class] isSubclassOfClass:[NSArray class]])
+            {
+                NSArray *values = (NSArray *)obj;
+                NSString *value = [values componentsJoinedByString:@", "];
+                [headers setObject:value forKey:key];
+                if ([[key lowercaseString] isEqualToString:@"content-type"])
+                    contentType = value;
+            } else
+                NSLog(@"EmbedHeaders: failed to convert: %@ for key %@", obj, key);
+            
+        }];
+        if (headers == nil || headers.count == 0 || contentType == nil)
         {
             NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:bodyData.length textEncodingName:nil];
             cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:bodyData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
+            NSLog(@"getCacheResponseForRequest: Embed with bad headers: %@", request.URL.absoluteString);
             return cachedResponse;
         }
 
-        //NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:headers];
-        
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"application/octet-stream" expectedContentLength:bodyData.length textEncodingName:nil];
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:contentType expectedContentLength:bodyData.length textEncodingName:nil];
         
         cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:bodyData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
+        NSLog(@"getCacheResponseForRequest: Embed: %@", request.URL.absoluteString);
+        return cachedResponse;
     }
-    return cachedResponse;
+    return nil;
 }
 
 -(void)storeToDiskCacheResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request
@@ -422,13 +397,9 @@ static unsigned char gifData[] = {
         if (file != nil)
             return;*/
     }
-//    dispatch_async(backgroundQueue, ^(void) {
     NSString *cachePath = [self getCachePathForRequest:request];
-    //NSLog(@"request: %@ URL: %@ response: %@ cachePath: %@", request, request.URL, response, cachePath);
     NSError *error;
     [NSFileManager.defaultManager removeItemAtPath:cachePath error:&error];
-/*    if (error != nil)
-        NSLog(@"failed to remove old disk cache for %@: %@", request, error);*/
     AppURLCachedData *cachedData = [[AppURLCachedData alloc] init];
     cachedData.response = cachedResponse.response;
     cachedData.data = cachedResponse.data;
@@ -437,9 +408,6 @@ static unsigned char gifData[] = {
     {
         NSLog(@"failed to write new disk cache file for %@: %@", request, cachePath);
     }
-//    else
-//        ;//NSLog(@"write new disk cache file for %@: %@", request, cachePath);
-    //    });
 }
 
 -(void)setCacheResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request
@@ -456,36 +424,14 @@ static unsigned char gifData[] = {
     if ([cdnregexp match:host.UTF8String])
         return YES;
     return NO;
-    /*
-    //cdn.viglink.com *.ytimg.com *.dmcdn.net
-    if (host == nil)
-        return NO;
-    
-    // appdeck CDN
-    if ([host isEqualToString:@"appdata.static.appdeck.mobi"] || [host isEqualToString:@"static.appdeck.mobi"])
-        return YES;
-    
-    // alway cache Data from famous CDN
-    if ([host isEqualToString:@"ajax.googleapis.com"] || [host isEqualToString:@"cachedcommons.org"] ||
-        [host isEqualToString:@"cdnjs.cloudflare.com"] || [host isEqualToString:@"code.jquery.com"] ||
-        [host isEqualToString:@"ajax.aspnetcdn.com"] || [host isEqualToString:@"ajax.microsoft.com"] ||
-        [host isEqualToString:@"ads.mobcdn.com"])
-        return YES;
-    
-    // CDN check by hostname
-    NSArray *cdn_list = @[@".akamai.net", @".akamaiedge.net", @".llnwd.net", @"edgecastcdn.net", @".systemcdn.net", @"hwcdn.net", @".panthercdn.com", @".simplecdn.net", @".instacontent.net", @".footprint.net", @".ay1.b.yahoo.com", @".yimg.", @".google.", @"googlesyndication.", @"youtube.", @".googleusercontent.com", @".internapcdn.net", @".cloudfront.net", @".netdna-cdn.com", @".netdna-ssl.com", @".netdna.com", @".cotcdn.net", @".cachefly.net", @"bo.lt", @".cloudflare.com", @".afxcdn.net", @".lxdns.com", @".att-dsa.net", @".vo.msecnd.net", @".voxcdn.net", @".bluehatnetwork.com", @".swiftcdn1.com", @".cdngc.net", @".fastly.net", @".nocookie.net", @".gslb.taobao.com", @".gslb.tbcache.com", @".mirror-image.net", @".cubecdn.net", @".yottaa.net", @".r.cdn77.net", @".incapdns.net", @".bitgravity.com", @".r.worldcdn.net", @".r.worldssl.net", @"tbcdn.cn", @".taobaocdn.com", @".ngenix.net", @".pagerain.net", @".ccgslb.com", @"cdn.sfr.net", @".azioncdn.net", @".azioncdn.com", @".azion.net", @".cdncloud.net.au"];
-    
-    for (NSString *cdn_domain in cdn_list)
-    {
-        NSRange range = [host rangeOfString:cdn_domain];
-        if (range.location != NSNotFound)
-            return YES;
-    }
-    
-    return NO;*/
 }
 
 -(BOOL)shouldStoreRequest:(NSURLRequest *)request
+{
+    return [self shouldCacheRequest:request];
+}
+
+-(BOOL)shouldCacheRequest:(NSURLRequest *)request
 {
     if (request.cachePolicy == NSURLRequestReloadIgnoringLocalAndRemoteCacheData ||
         request.cachePolicy == NSURLRequestReloadIgnoringLocalCacheData)
@@ -498,7 +444,7 @@ static unsigned char gifData[] = {
     // cache is only for GET request
     if ([[request HTTPMethod] isEqualToString:@"GET"] == NO)
         return NO;
-
+    
     // CDN ?
     if ([self hostIsCDN:request.URL.host])
         return YES;
@@ -510,7 +456,7 @@ static unsigned char gifData[] = {
     for (RE2Regexp *regex in cacheRegexTmp) {
         if ([regex match:absoluteURL])
             return YES;
-    }    
+    }
     
     AppDeck *appDeck = [AppDeck sharedInstance];
     if ([request.URL.host isEqualToString:appDeck.loader.conf.baseUrl.host])
@@ -523,11 +469,11 @@ static unsigned char gifData[] = {
     }
     
     /*
-    for (NSRegularExpression *regex in cacheRegex) {
-        if ([regex rangeOfFirstMatchInString:absoluteURL options:0 range:NSMakeRange(0, absoluteURL.length)].location != NSNotFound)
-            return YES;
-    }
-  */
+     for (NSRegularExpression *regex in cacheRegex) {
+     if ([regex rangeOfFirstMatchInString:absoluteURL options:0 range:NSMakeRange(0, absoluteURL.length)].location != NSNotFound)
+     return YES;
+     }
+     */
     if (self.alwaysCache == YES)
         return YES;
     
@@ -546,12 +492,12 @@ static unsigned char gifData[] = {
         return YES;
         
     return [self shouldStoreRequest:request];
+    
+    //return NO;
 }
 
--(BOOL)shouldStoreCachedResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request
+-(BOOL)isValidResponse:(NSURLResponse *)response
 {
-    // get HTTP response
-    NSURLResponse   *response = cachedResponse.response;
     if (![response isKindOfClass:[NSHTTPURLResponse class]])
         return NO;
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -560,17 +506,15 @@ static unsigned char gifData[] = {
     if ([httpResponse statusCode] != 200)
         return NO;
     
-    // empty response ?
-    if (cachedResponse.data.length == 0)
-        return NO;
+    return YES;
+}
 
-    // not already in meme cache
-    if ([memcache objectForKey:request.URL.absoluteString] == cachedResponse)
+-(BOOL)shouldStoreResponse:(NSURLResponse *)response
+{
+    if (![response isKindOfClass:[NSHTTPURLResponse class]])
         return NO;
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     
-    if ([self shouldStoreRequest:request])
-        return YES;
-
     // CDN check by Server header
     NSString *server_header = [httpResponse.allHeaderFields objectForKey:@"Server"];
     NSArray *cdn_list = @[@"cloudflare", @"NetDNA"];
@@ -581,6 +525,29 @@ static unsigned char gifData[] = {
             return YES;
     }
     
+    return YES;
+}
+
+
+-(BOOL)shouldStoreCachedResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request
+{
+    if ([self isValidResponse:cachedResponse.response] == NO)
+        return NO;
+    
+    // empty response ?
+    if (cachedResponse.data.length == 0)
+        return NO;
+
+    // not already in mem cache
+    if ([memcache objectForKey:request.URL.absoluteString] == cachedResponse)
+        return NO;
+    
+    if ([self shouldStoreRequest:request])
+        return YES;
+
+    if ([self shouldStoreResponse:cachedResponse.response])
+        return YES;
+   
     return NO;
 }
 
@@ -622,76 +589,16 @@ static unsigned char gifData[] = {
 
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request
 {
-    BOOL fromWebView = [[request.allHTTPHeaderFields objectForKey:@"User-Agent"] rangeOfString:@"Mozilla"].location != NSNotFound;
-    
     NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
-
-    // adblock
-    if (fromWebView && NO)
-    {
-        //self.enableAdBlock = YES;
-        BOOL shouldBlock = NO;
-        const char *absoluteURL = [request.URL.absoluteString UTF8String];
-
-        
-        if (self.enableAdBlock && [self requestShouldBeBlock:request])
-            shouldBlock = YES;
-
-        //if (self.enableAdBlock && [adblockregexp match:domain])
-        //    shouldBlock = YES;
-
-        
-        if (shouldBlock == YES)
-        {
-            for (RE2Regexp *regex in adblockwhitelist) {
-                if ([regex match:absoluteURL])
-                    shouldBlock = NO;
-            }
-        }
-        if (shouldBlock == NO)
-        {
-            for (RE2Regexp *regex in adblockblacklist) {
-                if ([regex match:absoluteURL])
-                    shouldBlock = NO;
-            }
-        }
-        if (shouldBlock == YES)
-        {
-            if (glLog)
-            {
-                NSString *log_url = ([glLog.host isEqualToString:request.URL.host] ? request.URL.relativePath : request.URL.absoluteString);
-                [glLog info:@"Block %@", log_url];
-            }
-            NSData *data = [[NSData alloc]  init];
-            NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:@"text/plain" expectedContentLength:0 textEncodingName:nil];
-            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
-            return cachedResponse;
-        }
-    }
-    
-//    if ([request.HTTPMethod isEqualToString:@"POST"])
-//      NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
-    
-    if (NO && [request.URL.host isEqualToString:@"fonts.googleapis.com"])
-    {
-        /*        NSString *url = [[request URL] absoluteString];
-         NSData *data = [NSData dataWithBytes:(const void *)gifData length:sizeof(gifData)];
-         NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[NSURL URLWithString:url] MIMEType:@"image/gif" expectedContentLength:data.length textEncodingName:nil];
-         NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
-         return cachedResponse;*/
-        
-        NSString *url = [[request URL] absoluteString];
-        NSData *data = [[NSData alloc] init];
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[NSURL URLWithString:url] MIMEType:@"text/plain" expectedContentLength:data.length textEncodingName:nil];
-        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
+    /*
+    NSCachedURLResponse *cachedResponse = [memcache objectForKey:request.URL.absoluteString];
+    if (cachedResponse != nil) {
+        NSLog(@"getCacheResponseForRequest: MemCache: %@", request.URL.absoluteString);
         return cachedResponse;
-    }
+    }*/
 
     
-    // ManagedURL should never be tested for cache
-    //if ([NSURLProtocol propertyForKey:@"ManagedUIWebViewController" inRequest:request] != nil || [NSURLProtocol propertyForKey:@"CacheMonitoringURLProtocol" inRequest:request] != nil)
-    //    return nil;
-        
+ /*
     NSCachedURLResponse *cachedResponse = nil;
     BOOL shouldServeRequestFromCache = [self shouldServeRequestFromCache:request];
     if (shouldServeRequestFromCache == YES)
@@ -703,65 +610,17 @@ static unsigned char gifData[] = {
                 [memcache setObject:cachedResponse forKey:request.URL.absoluteString];
             return cachedResponse;
         }
-    }
-    
-    if (glLog)
-    {
-/*        NSString *log_url = ([glLog.host isEqualToString:request.URL.host] ? request.URL.relativePath : request.URL.absoluteString);
-        if (shouldServeRequestFromCache)
-            [glLog debug:@"download and cache %@", log_url];
-        else
-            [glLog info:@"download %@", log_url];*/
-    }
-    
-    /*cachedResponse = [super cachedResponseForRequest:request];
-    if (cachedResponse)
-        return cachedResponse;*/
-
-    // Google Analytics patch: we do call in background in order to reply immediately
-    if ([request.URL.absoluteString hasPrefix:@"http://www.google-analytics.com/__utm.gif"])
-    {
-        __block NSURLRequest *bgRequest = [NSURLRequest requestWithURL:[request URL] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:60.0];
-        dispatch_async(backgroundQueue, ^(void) {
-            [NSURLConnection sendSynchronousRequest:bgRequest returningResponse:nil error:nil];
-        });
-        
-        NSString *url = @"http://www.google-analytics.com/__utm.gif";
-        NSData *data = [NSData dataWithBytes:(const void *)gifData length:sizeof(gifData)];
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[NSURL URLWithString:url] MIMEType:@"image/gif" expectedContentLength:data.length textEncodingName:nil];
-        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data];
-        if (cachedResponse && request)
-            [memcache setObject:cachedResponse forKey:request.URL.absoluteString];
-        return cachedResponse;
-    }
-
-    /*
-    if ([NSURLProtocol propertyForKey:@"CacheMonitoringURLProtocol" inRequest:request] != nil)
-        ;//NSLog(@"CacheMonitoringURLProtocol: DOWNLOAD: %@", [[request URL] absoluteString]);
-    else if ([NSURLProtocol propertyForKey:@"ManagedUIWebViewController" inRequest:request] != nil)
-        ;//NSLog(@"ManagedUIWebViewController: DOWNLOAD: %@", [[request URL] absoluteString]);
-    else if ([NSURLProtocol propertyForKey:@"disableCDN" inRequest:request] != nil)
-        ;//NSLog(@"disableCDN: DOWNLOAD: %@", [[request URL] absoluteString]);
-    else if ([request.URL.host hasSuffix:@".appdeck.mobi"] || [request.URL.host hasSuffix:@".widespace.com"])
-        ;
-    else
-    {
-        if (glLog)
-        {
-            NSString *log_url = ([glLog.host isEqualToString:request.URL.host] ? request.URL.relativePath : request.URL.absoluteString);
-            if (shouldServeRequestFromCache)
-                [glLog debug:@"DL [CACHE]%@", log_url];
-            else
-                [glLog info:@"DL %@", log_url];
-        }
-        NSLog(@"DOWNLOAD: %@", [[request URL] absoluteString]);
     }*/
     
-    return nil;
+    return [super cachedResponseForRequest:request];
 }
 
-- (void)storeCachedResponse:(NSCachedURLResponse *)myCachedResponse forRequest:(NSURLRequest *)myRequest
+- (void)storeCachedResponse:(NSCachedURLResponse *)cachedResponse forRequest:(NSURLRequest *)request
 {
+    [super storeCachedResponse:cachedResponse forRequest:request];
+    
+    //[memcache setObject:cachedResponse forKey:request.URL.absoluteString];
+    /*
     __block NSCachedURLResponse *cachedResponse = myCachedResponse;
     __block NSURLRequest *request = myRequest;
     __block AppURLCache *me = self;
@@ -780,7 +639,7 @@ static unsigned char gifData[] = {
             if ([request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"])
                 [me storeToDiskCacheResponse:cachedResponse forRequest:request];
         }
-    });
+    });*/
     //[super storeCachedResponse:cachedResponse forRequest:request];
 }
 
