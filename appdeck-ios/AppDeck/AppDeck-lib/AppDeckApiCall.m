@@ -128,21 +128,39 @@
 -(void)setResult:(id)result
 {
     NSError *error;
-    NSData *resultJSONData = nil;
-    @try {
-        NSDictionary *container = @{@"value": result};
-        resultJSONData = [NSJSONSerialization dataWithJSONObject:container options:NSJSONWritingPrettyPrinted error:&error];
-        //resultJSONData = [result JSONDataWithOptions:JKSerializeOptionPretty|JKSerializeOptionEscapeUnicode error:&error];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"JSAPI: setResult: Exception while writing JSon: %@: %@", exception, result);
-    }
-    if (error != nil)
+    NSString *resultJson = nil;
+    
+/*    if (result == nil || [[result class] isSubclassOfClass:[NSNull class]])
     {
-        NSLog(@"JSAPI: setResult: Error while writing JSon: %@: %@", error, result);
+        resultJson = @"null";
     }
+    else if ([[result class] isSubclassOfClass:[NSString class]])
+    {
+        resultJson = [NSString stringWithFormat:@"\"%@\"", [result stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]];
+    }
+    else if ([[result class] isSubclassOfClass:[NSNumber class]])
+    {
+        resultJson = [NSString stringWithFormat:@"%@", result];
+    }
+    else
+    {*/
+        @try {
+            NSData *resultJSONData = [NSJSONSerialization dataWithJSONObject:@[result] options:NSJSONWritingPrettyPrinted error:&error];
+            if (error != nil)
+            {
+                NSLog(@"JSAPI: setResult: Error while writing JSon: %@: %@", error, result);
+                resultJson = @"null";
+            }
+            resultJson = [[NSString alloc] initWithData:resultJSONData encoding:NSUTF8StringEncoding];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"JSAPI: setResult: Exception while writing JSon: %@: %@", exception, result);
+        }
+
+    //}
+    
     _result = result;
-    _resultJSON = [NSString stringWithFormat:@"%@.value", [[NSString alloc] initWithData:resultJSONData encoding:NSUTF8StringEncoding]];
+    _resultJSON = resultJson;
 }
 
 -(NSString *)eventID
