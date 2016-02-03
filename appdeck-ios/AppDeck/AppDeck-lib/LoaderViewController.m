@@ -121,7 +121,31 @@
         request = [[NSURLRequest alloc] initWithURL:self.jsonUrl cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:60];
     else
         request = [[NSURLRequest alloc] initWithURL:self.jsonUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
-
+    
+    NSMutableDictionary *result;
+    NSURLResponse * response = nil;
+    NSError *error = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (error == nil)
+    {
+        result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    }
+    
+    if (error != nil)
+    {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"App Conf Error"
+                                                          message:[NSString stringWithFormat:@"%@", error]
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+        [message show];
+        return;
+    }
+    
+    [self loadAppConf:result];
+    
+/*
     appJson = [JSonHTTPApi apiWithRequest:request callback:^(NSDictionary *result, NSError *error)
      {
          //NSLog(@"AppConf: %@ - %@", result, error);
@@ -137,7 +161,7 @@
              [message show];
          }
          [self loadAppConf:result];
-     }];    
+     }];    */
 }
 
 /*-(void)loadAppWithURL:(NSString *)base_url andConf:(NSString *)conf_url
