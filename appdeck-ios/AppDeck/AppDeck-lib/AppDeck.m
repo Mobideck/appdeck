@@ -338,11 +338,13 @@
         NSString *name = [call.param objectForKey:@"name"];
         NSObject *value = [call.param objectForKey:@"value"];
         
-//        if ([value isKindOfClass:[NSNull class]])
-//            value = @"";
-        
-        [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        if (![value isKindOfClass:[NSNull class]])
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:value forKey:name];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        } else {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:name];
+        }
         
         call.result = value;
 
