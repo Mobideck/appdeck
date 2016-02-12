@@ -423,6 +423,7 @@ static unsigned char gifData[] = {
 {
     if ([cdnregexp match:host.UTF8String])
         return YES;
+    NSLog(@"Host: %@ is not a CDN", host);
     return NO;
 }
 
@@ -589,7 +590,25 @@ static unsigned char gifData[] = {
 
 - (NSCachedURLResponse *)cachedResponseForRequest:(NSURLRequest *)request
 {
+    NSCachedURLResponse *cachedResponse = [memcache objectForKey:request.URL.absoluteString];
+    if (cachedResponse != nil) {
+        NSLog(@"getCacheResponseForRequest: MemCache: %@", request.URL.absoluteString);
+        return cachedResponse;
+    }
+    
+    if ([self requestIsInEmbedCache:request])
+    {
+        cachedResponse = [self getCacheResponseForRequest:request];
+        if (cachedResponse)
+        {
+            [memcache setObject:cachedResponse forKey:request.URL.absoluteString];
+            return cachedResponse;
+        }
+    }
+    
+    /*
     NSLog(@"request: method: %@ url: %@ - cache: %d", [request HTTPMethod], [[request URL] absoluteString], request.cachePolicy);
+     */
     /*
     NSCachedURLResponse *cachedResponse = [memcache objectForKey:request.URL.absoluteString];
     if (cachedResponse != nil) {

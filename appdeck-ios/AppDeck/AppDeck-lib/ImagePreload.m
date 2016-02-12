@@ -51,7 +51,7 @@
 
 -(UIImage *)image
 {
-    while (self.internal_image == nil)
+    while (_internal_image == nil)
     {
         usleep(0.0001);
     }

@@ -149,7 +149,7 @@
     
     [NSURLProtocol registerClass:[CacheURLProtocol class]];
     
-    //[NSURLCache setSharedURLCache:self.cache];
+    [NSURLCache setSharedURLCache:self.cache];
     
     //[NSURLProtocol registerClass:[ManagedUIWebViewURLProtocol class]];
 /*    [NSURLProtocol registerClass:[MobilizeUIWebViewURLProtocol class]];*/
@@ -217,6 +217,7 @@
     appDeck.loader.jsonUrl = [NSURL URLWithString:url];
 //    appDeck.loader.baseUrl = [NSURL URLWithString:@"/" relativeToURL:appDeck.loader.url];
     appDeck.loader.launchOptions = launchOptions;
+    [appDeck.loader loadConf];
     return appDeck.loader;
 }
 

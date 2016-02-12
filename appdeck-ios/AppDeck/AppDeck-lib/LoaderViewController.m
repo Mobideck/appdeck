@@ -81,11 +81,11 @@
     overlay.hidden = YES;
     [self.view addSubview:overlay];
     
-    loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    /*loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     loadingView.frame = CGRectMake(self.view.bounds.size.width / 2 - loadingView.bounds.size.width / 2, self.view.frame.size.height * 0.75, loadingView.frame.size.width, loadingView.frame.size.height);
     
     [loadingView startAnimating];
-    [self.view addSubview:loadingView];
+    [self.view addSubview:loadingView];*/
 
     {
         statusBarInfo = [[UIView alloc] initWithFrame:CGRectMake(0, -[[UIApplication sharedApplication] statusBarFrame].size.height, self.view.bounds.size.width, [[UIApplication sharedApplication] statusBarFrame].size.height)];
