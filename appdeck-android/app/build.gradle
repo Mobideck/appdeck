@@ -38,8 +38,8 @@ android {
 
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 69
-        versionName "1.6.9"
+        versionCode 70
+        versionName "1.7.0"
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -56,13 +56,13 @@ android {
 
     productFlavors {
         crosswalk {
-            flavorDimension "webview"
+            dimension "webview"
             // 15 by default, set 21 for faster build time
             minSdkVersion 15
             versionCode = 1
         }
         chromium {
-            flavorDimension "webview"
+            dimension "webview"
             // 19 by default, set 21 for faster build time
             minSdkVersion 19
             versionCode = 2
@@ -102,16 +102,16 @@ android {
         debug {
             ext.enableCrashlytics = false
 
-            /*
+
             // enable to validate proguard
-            minifyEnabled true
+            /*minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
-            */
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'*/
+
         }
         release {
             minifyEnabled true
-            shrinkResources true
+            shrinkResources false
             zipAlignEnabled true
             //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
@@ -119,6 +119,10 @@ android {
     }
 
     useLibrary 'org.apache.http.legacy'
+
+    /*aaptOptions {
+        noCompress 'icudtl.dat', 'natives_blob.bin', 'snapshot_blob.bin', 'chrome_100_percent.pak', 'resources.pak'
+    }*/
 }
 
 dependencies {
@@ -145,7 +149,7 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
 
     // https://download.01.org/crosswalk/releases/crosswalk/android/maven2/org/xwalk/xwalk_core_library/
-    crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:16.45.421.19'
 
     // https://fabric.io/kits/android/crashlytics
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
@@ -154,7 +158,7 @@ dependencies {
 
     // https://fabric.io/kits/android/twitterkit
     // https://twittersdk.artifactoryonline.com/twittersdk/public/com/twitter/sdk/android/twitter-core/
-    compile('com.twitter.sdk.android:twitter-core:1.6.2') {
+    compile('com.twitter.sdk.android:twitter-core:1.6.4') {
         transitive = true
         exclude module: 'gson';
     }
@@ -165,13 +169,13 @@ dependencies {
     }
 
     // https://developers.facebook.com/docs/android
-    compile 'com.facebook.android:facebook-android-sdk:4.8.2'
+    compile 'com.facebook.android:facebook-android-sdk:4.10.0'
 
     // https://github.com/hotchemi/Android-Rate
     compile 'com.github.hotchemi:android-rate:0.5.6'
 
     // http://developer.widespace.com/index.php/SDK_Getting_Started
-    compile 'com.widespace:widespace-sdk-4.6.1@aar'
+    compile 'com.widespace:widespace-sdk-4.7.1@aar'
     compile 'org.slf4j:slf4j-android:1.7.10' // widespace dependency
 
 
@@ -185,7 +189,7 @@ dependencies {
     //compile 'com.jakewharton.timber:timber:4.1.0'
 
     // https://github.com/afollestad/material-dialogs
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
         transitive = true
     }
 
@@ -194,7 +198,7 @@ dependencies {
     }*/
 
     // http://mvnrepository.com/artifact/com.google.code.gson/gson
-    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.google.code.gson:gson:2.6.1'
 
     //compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
 
