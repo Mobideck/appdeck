@@ -56,8 +56,8 @@ function ezcurl($url, &$error = null)
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HEADER, 1);
     curl_setopt($ch, CURLOPT_USERAGENT, 'AppDeck');
-    //curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:3128');
-    curl_setopt($ch, CURLOPT_ENCODING, 'identity');
+    //curl_setopt($ch, CURLOPT_PROXY, 'v2.appdeck.mobi:3128');
+    //curl_setopt($ch, CURLOPT_ENCODING, '');
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -87,7 +87,7 @@ function ezcurl($url, &$error = null)
           $pos = strpos($header, ': ');
           if ($pos === false)
             continue;
-          $header_name = substr($header, 0, $pos);
+          $header_name = strtolower(substr($header, 0, $pos));
           $header_value = substr($header, $pos + 2);
            // if header already exist, we create array
            if (isset($h[$header_name]))
@@ -99,6 +99,18 @@ function ezcurl($url, &$error = null)
              $h[$header_name] = $header_value;
            }
         }
+    // clean headers
+    unset($h['transfer-encoding']);
+    unset($h['set-cookie']);    
+    // extract gzip content
+    if (isset($h['content-encoding']) && $h['content-encoding'] == 'gzip')
+    {
+      unset($h['content-encoding']);
+      //file_put_contents('/tmp/gzip', $body);
+      $body_tmp = @gzdecode($body);
+      if ($body_tmp)
+        $body = $body_tmp;
+    }
     return array($h, $body);
 }
 
@@ -269,22 +281,17 @@ function resolve_url($url_str, $source_url_str)
 }
 
 $count_resource = 0;
-function appdeck_add_ressource($url, $data = false, $force = false, $headers = false)
+function appdeck_add_ressource($url, $data = false, $headers = false, $force = false)
 {
-  global $output_dir_path, $count_resource, $base_url;
+  global $output_dir_path, $count_resource;
 
   if (defined('FORCE_DOWNLOAD') && FORCE_DOWNLOAD === true)
     $force = true;
-  $url = resolve_url($url, $base_url);
-  print " - - add resource for {$url}\n";
+  //print " - - add resource for {$url}\n";
   $file_name = urlencode(str_replace('http://', '', $url));
-  //print " - - ORIGINAL FileName: {$file_name}\n";    
+  print " - - FileName: {$file_name}\n";
   if (strlen($file_name) > 48)
-  {
     $file_name = substr($file_name, 0, 48).'_'.md5($file_name);
-    //print " - - MD5 PATCH FileName: {$file_name}\n";  
-  }
-  print " - - FileName: {$file_name}\n";  
   $file_name_meta = EMBED_PREFIX.$file_name.'.meta'.EMBED_SUFFIX;
   $file_name = EMBED_PREFIX.$file_name.EMBED_SUFFIX;
   //$tmp_file_path = $tmp_dir_path."/".$file_name;
@@ -293,29 +300,22 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
   if (!file_exists($output_file_path) || $force == true)
     {
       if ($data === false)
-    	{
-    	  print " - - download {$url} into {$output_file_path}\n";
+      {
+        print " - - download {$url} into {$output_file_path}\n";
         list($headers, $data) = ezcurl($url, $error);
-    	  if ($data == false)
-    	    {
-    	      appdeck_warning("failed to download: {$url}: {$error}");
-    	      return;
-    	    }
-    	}
+        if ($data == false)
+          {
+            appdeck_warning("failed to download: {$url}: {$error}");
+            return;
+          }
+      }
       else
-    	  print " - - add resource for {$url} from data into {$output_file_path}\n";
+        print " - - add resource for {$url} from data into {$output_file_path}\n";
       $res = file_put_contents($output_file_path, $data);
       if ($res == false)
         appdeck_warning("failed to write resource {$url} in {$output_file_path}");
-      // clean headers
       unset($headers['Set-Cookie']);
-      unset($headers['set-cookie']);
-      unset($headers['Content-Length']);
-      // only keep content type
-      if (isset($headers['Content-Type']))
-        $headers = array('Content-Type' => $headers['Content-Type']);
-      else
-        $headers = array('Content-Type' => 'application/octet-stream');
+      unset($headers['set-cookie']);     
       $res = file_put_contents($output_file_path_meta, json_encode($headers));
       if ($res == false)
         appdeck_warning("failed to write resource meta {$url} in {$output_file_path_meta}");
@@ -343,7 +343,7 @@ function embed_url($embed_url)
     }
   $data = strip_c_comment($data);
   // we embed embed_url in application
-  appdeck_add_ressource($embed_url, $data, true, $headers);
+  appdeck_add_ressource($embed_url, $data, $headers, true);
   // we embed all url listed in this file
   $lines = explode("\n", $data);
   foreach ($lines as $line)
@@ -433,3 +433,4 @@ function buildAppDeckAndroidRes()
   if (!file_exists($xml_path) || file_get_contents($project_path.'/app/src/main/res/values/appdeck.xml') != $xml)
     file_put_contents($project_path.'/app/src/main/res/values/appdeck.xml', $xml);
 }
+

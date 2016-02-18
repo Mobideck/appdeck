@@ -134,7 +134,7 @@ public class AppDeckAdNetworkWideSpace extends AppDeckAdNetwork {
     public void destroyInterstitial() {
         if (mInterstitialAdSpace != null) {
             manager.loader.getInterstitialAdViewContainer().removeView(mInterstitialAdSpace);
-            mInterstitialAdSpace.destruct();
+            mInterstitialAdSpace.destroy();
         }
         mInterstitialAdSpace = null;
     }
@@ -224,7 +224,7 @@ public class AppDeckAdNetworkWideSpace extends AppDeckAdNetwork {
 
     public void destroyBannerAd() {
         if (mBannerAdSpace != null)
-            mBannerAdSpace.destruct();
+            mBannerAdSpace.destroy();
         mBannerAdSpace = null;
     }
 
