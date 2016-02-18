@@ -4,19 +4,17 @@
     package="com.mobideck.appdeck">
 
     <!--  permission for appdeck -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" /><!-- Internet Access -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- Check Internet Access -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- Read cached files -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!-- Write cached files -->
 
     <!--  permission for better advertisement -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!-- <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" /> -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/><!-- Get user ID -->
 
     <!--  permission for push -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /><!-- Receive Push message -->
     <permission android:name="com.mobideck.appdeck.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />--> <!--  to support device < 4.0.4 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.mobideck.appdeck.permission.C2D_MESSAGE" />
 
@@ -119,6 +117,12 @@
 
         <!-- Krewe -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1818hf63940ad7859260deba357b98fe1b3ef"></meta-data>-->
+
+        <!-- Fis-Ski -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1833h98708fb114b52085fe57a6e301611916"></meta-data>-->
+
+        <!-- Somfy -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1913h07f960c6a85e4e288e3c8fcf056e8fc2"></meta-data>-->
 
         <meta-data android:name="noCache" android:value="false" />
 

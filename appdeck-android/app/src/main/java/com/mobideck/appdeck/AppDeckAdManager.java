@@ -483,7 +483,7 @@ public class AppDeckAdManager {
         interstitialAdNetwork = null;
         for (; idx < networks.size(); idx++) {
             AppDeckAdNetwork adNetwork = networks.get(idx);
-            if (adNetwork.supportInterstitial()) {
+            if (adNetwork.interstitialEnabled() && adNetwork.supportInterstitial()) {
                 isFetchingInterstitialAd = true;
                 interstitialAdNetwork = adNetwork;
                 interstitialAdNetwork.fetchInterstitialAd();
@@ -497,7 +497,7 @@ public class AppDeckAdManager {
             return;
         for (; idx < networks.size(); idx++) {
             AppDeckAdNetwork adNetwork = networks.get(idx);
-            if (adNetwork.supportBanner() && adNetwork != bannerAdNetwork) {
+            if (adNetwork.bannerEnabled() && adNetwork.supportBanner() && adNetwork != bannerAdNetwork) {
                 //bannerAdNetwork = adNetwork;
                 adNetwork.fetchBannerAd();
                 return;

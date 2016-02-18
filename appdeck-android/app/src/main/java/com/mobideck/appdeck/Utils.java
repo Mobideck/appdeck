@@ -216,7 +216,8 @@ public class Utils {
         //ImageView fakeImage = new ImageView(context);
         //fakeImage.setLayoutParams(new LayoutParams(targetSize.getWidth(), targetSize.getHeight()));
         //fakeImage.setScaleType(ScaleType.CENTER_CROP);
-		appDeck.imageLoader.loadImage(url, targetSize, options, listener);
+		if (appDeck.imageLoader != null)
+			appDeck.imageLoader.loadImage(url, targetSize, options, listener);
 		//appDeck.imageLoader.displayImage(url, fakeImage, options, new Utils.FakeImageSimpleImageLoadingListener(fakeImage, listener) {});
     }
 

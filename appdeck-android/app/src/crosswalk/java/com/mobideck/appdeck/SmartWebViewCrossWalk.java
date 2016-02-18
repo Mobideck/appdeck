@@ -58,6 +58,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 
 import org.xwalk.core.XWalkPreferences;
 
@@ -485,7 +486,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	      }		
 			      
 	    @Override
-	    public boolean shouldOverrideUrlLoading(XWalkView view, String url) {
+	    public boolean shouldOverrideUrlLoading(XWalkView view, final String url) {
 
 	    	// this is a form ?
 	    	if (url.indexOf("_appdeck_is_form=1") != -1)
@@ -513,7 +514,26 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
             if (root != null) {
 
                 if (root.shouldOverrideUrlLoading(url)) {
-                    root.loadUrl(url);
+
+                    final Gson gson = new Gson();
+
+                    String javascript = "app.client.rewriteURL('" + gson.toJson(url) + "')";
+                    Log.d(TAG, javascript);
+                    view.evaluateJavascript(javascript, new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            String newURL = gson.fromJson(value, String.class);
+                            Log.d(TAG, "app.client.rewriteURL:"+value+":"+newURL);
+                            if (newURL != null && (newURL.indexOf("http://") == 0 || newURL.indexOf("https://") == 0))
+                                root.loadUrl(newURL);
+                            else {
+                                DebugLog.error("app.client.rewriteURL", "rewrite failed: "+url+" => "+value);
+                                root.loadUrl(url);
+                            }
+                        }
+                    });
+
+                    //root.loadUrl(url);
                     return true;
                 }
             }
@@ -772,6 +792,29 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		public boolean onCreateWindowRequested(XWalkView view, InitiateBy initiator, ValueCallback<XWalkView> callback) {
 			return super.onCreateWindowRequested(view, initiator, callback);
 		}
+
+		@Override
+		public boolean onConsoleMessage(XWalkView view,
+										java.lang.String message,
+										int lineNumber,
+										java.lang.String sourceId,
+										XWalkUIClient.ConsoleMessageType messageType) {
+
+			if (messageType == XWalkUIClient.ConsoleMessageType.DEBUG) {
+				DebugLog.debug("JavaScript:"+sourceId+":"+lineNumber, message);
+			} else if (messageType == XWalkUIClient.ConsoleMessageType.INFO) {
+				DebugLog.info("JavaScript:"+sourceId+":"+lineNumber, message);
+			} else if (messageType == XWalkUIClient.ConsoleMessageType.LOG) {
+				DebugLog.info("JavaScript:"+sourceId+":"+lineNumber, message);
+			} else if (messageType == XWalkUIClient.ConsoleMessageType.WARNING) {
+				DebugLog.warning("JavaScript:"+sourceId+":"+lineNumber, message);
+			} else if (messageType == XWalkUIClient.ConsoleMessageType.ERROR) {
+				DebugLog.error("JavaScript:"+sourceId+":"+lineNumber, message);
+			}
+
+			return false;
+		}
+
 
 		// TODO: import code from SmartWebView
 	}

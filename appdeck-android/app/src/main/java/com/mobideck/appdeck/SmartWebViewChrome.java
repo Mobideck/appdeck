@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.JsPromptResult;
@@ -48,6 +49,7 @@ import android.annotation.TargetApi;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 
 import name.cpr.VideoEnabledWebChromeClient;
 import name.cpr.VideoEnabledWebView;
@@ -167,7 +169,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     @Override
     public void loadUrl(String url)
     {
-        if (url.startsWith("javascript:") == false)
+        if (!url.startsWith("javascript:"))
         {
             CookieManager cookieManager = CookieManager.getInstance();
             if (cookieManager != null)
@@ -297,7 +299,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         {
             webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
             webSettings.setAppCacheEnabled(false);
-            webSettings.setAppCacheMaxSize(0);
         }
 
         WebkitProxy3.setProxy(this, root.loader.proxyHost, root.loader.proxyPort, Application.class.getCanonicalName());
@@ -340,29 +341,46 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             }
             Log.d("SmartWebView", "OnPageStarted (not firstLoad) :" + url);
         }
-
+/*
         //@Override
         public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
             root.loadUrl(url);
             return false;
-        }
+        }*/
 
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        public boolean shouldOverrideUrlLoading(WebView view, final String url) {
 
             // if there is a url loading before page finish it is a redirection
             //if (pageHasFinishLoading == false)
             //    return false;
 
             // this is a form ?
-            if (url.indexOf("_appdeck_is_form=1") != -1)
+            if (url.contains("_appdeck_is_form=1"))
                 return false;
 
-            if (disableCatchLink == true)
+            if (disableCatchLink)
                 return false;
 
             if (root.shouldOverrideUrlLoading(url)) {
-                root.loadUrl(url);
+
+                final Gson gson = new Gson();
+
+                String javascript = "app.client.rewriteURL('" + gson.toJson(url) + "')";
+                Log.d(TAG, javascript);
+                view.evaluateJavascript(javascript, new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        String newURL = gson.fromJson(value, String.class);
+                        Log.d(TAG, "app.client.rewriteURL:"+value+":"+newURL);
+                        if (newURL != null && (newURL.indexOf("http://") == 0 || newURL.indexOf("https://") == 0))
+                            root.loadUrl(newURL);
+                        else {
+                            DebugLog.error("app.client.rewriteURL", "rewrite failed: "+url+" => "+value);
+                            root.loadUrl(url);
+                        }
+                    }
+                });
                 return true;
             }
             return false;
@@ -381,9 +399,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 return null;
 
             if (absoluteUrl.equalsIgnoreCase("http://appdeck/error")) {
-                WebResourceResponse response = new WebResourceResponse ("text/html", "UTF-8", new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
+                return new WebResourceResponse ("text/html", "UTF-8", new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
                 //WebResourceResponse response = new WebResourceResponse(null, null, 200, "OK", null, new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
-                return response;
             }
 
             return super.shouldInterceptRequest(view, request);
@@ -717,6 +734,23 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             root.loader.startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
 
             return true;
+        }
+
+        public boolean onConsoleMessage (ConsoleMessage consoleMessage)
+        {
+            if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.TIP) {
+                DebugLog.verbose("JavaScript:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
+            } else if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.DEBUG) {
+                DebugLog.debug("JavaScript:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
+            } else if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.LOG) {
+                DebugLog.info("JavaScript:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
+            } else if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.WARNING) {
+                DebugLog.warning("JavaScript:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
+            } else if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
+                DebugLog.error("JavaScript:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
+            } else
+                DebugLog.error("JavaScript:unknowlevel:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
+            return false;
         }
 
     }

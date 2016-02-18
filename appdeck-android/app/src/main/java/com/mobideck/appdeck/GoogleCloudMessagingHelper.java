@@ -9,12 +9,15 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 
 import cz.msebera.android.httpclient.Header;
@@ -171,7 +174,7 @@ public class GoogleCloudMessagingHelper {
 	                // so it can use GCM/HTTP or CCS to send messages to your app.
 	                // The request to your server should be authenticated if your app
 	                // is using accounts.
-	                sendRegistrationIdToBackend();
+					sendRegistrationIdToBackend();
 
 	                // For this demo: we don't need to send it because the device
 	                // will send upstream messages to a server that echo back the
@@ -234,27 +237,36 @@ public class GoogleCloudMessagingHelper {
     		finalUrl.append("&lang=");
     		finalUrl.append(Locale.getDefault().getLanguage());
 
-    		String register_push_url = finalUrl.toString();
-    		Log.i(TAG, register_push_url);
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.get(register_push_url, new AsyncHttpResponseHandler() {
-			    @Override
-				public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-					try {
-						String response = responseBody == null?null:new String(responseBody, this.getCharset());
-			        	Log.i(TAG, response);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			    }
+    		final String register_push_url = finalUrl.toString();
+			//AsyncHttpClient client = new AsyncHttpClient();
 
+			new Thread(new Runnable() {
 				@Override
-				public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-					// called when response HTTP status is "4XX" (eg. 401, 403, 404)
-					Log.e(TAG, "Error: " + statusCode);
+				public void run() {
+					Log.i(TAG, register_push_url);
+
+					SyncHttpClient client = new SyncHttpClient();
+					client.get(register_push_url, new AsyncHttpResponseHandler() {
+						@Override
+						public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+							try {
+								String response = responseBody == null?null:new String(responseBody, this.getCharset());
+								Log.i(TAG, response);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+							// called when response HTTP status is "4XX" (eg. 401, 403, 404)
+							Log.e(TAG, "Error: " + statusCode);
+						}
+					});
+
 				}
-			});
+			}, "appdeckPushRegistration").start();
 
 	    }	
 

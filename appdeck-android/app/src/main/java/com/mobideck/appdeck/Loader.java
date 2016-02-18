@@ -1228,22 +1228,29 @@ public class Loader extends AppCompatActivity {
             String host = uri.getHost();
             if (host != null && isSameDomain(host) == false)
             {
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-                // enable custom tab for chrome
-                String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
-                Bundle extras = new Bundle();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null/*sessionICustomTabsCallback.asBinder() Set to null for no session */);
+                    // enable custom tab for chrome
+                    String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
+                    Bundle extras = new Bundle();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null/*sessionICustomTabsCallback.asBinder() Set to null for no session */);
+                    }
+                    String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
+                    //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
+                    //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
+                    extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorApp);
+
+                    intent.putExtras(extras);
+
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(this, "No application can handle this request."
+                            + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+
+                    e.printStackTrace();
                 }
-                String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
-                //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
-                //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
-                extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorApp);
-
-                intent.putExtras(extras);
-
-                startActivity(intent);
                 return -1;
             }
         }

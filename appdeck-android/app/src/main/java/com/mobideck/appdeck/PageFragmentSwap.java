@@ -248,8 +248,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		} else {
 			Log.v(TAG, "AutoRealod DISABLED :["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+lastUrlLoad + " now: " + now + "diff: " + (now - lastUrlLoad)/1000);
 		}
-    	
-    };
+    }
     
     @Override
     public void onPause() {

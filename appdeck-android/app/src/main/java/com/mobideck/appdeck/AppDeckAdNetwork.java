@@ -23,14 +23,20 @@ public class AppDeckAdNetwork {
     AppDeckAdManager manager;
     JSONObject conf;
 
-    private long timeBetweenBannerRefresh = 0;
+    private boolean enableInterstitial;
+    private boolean enableRectangle;
+    private boolean enableBanner;
+    private long timeBetweenBannerRefresh;
 
     public AppDeckAdNetwork(AppDeckAdManager manager, JSONObject conf)
     {
         this.manager = manager;
         this.conf = conf;
-
-        timeBetweenBannerRefresh = conf.optLong("timeBetweenBannerRefresh", manager.timeBetweenBannerRefresh);
+        // read ads configuration
+        enableInterstitial = conf.optBoolean("enableInterstitial", true);
+        enableRectangle = conf.optBoolean("enableRectangle", true);
+        enableBanner = conf.optBoolean("enableBanner", true);
+        timeBetweenBannerRefresh = conf.optLong("timeBetweenBannerRefresh", 0);
     }
 
 
@@ -112,6 +118,16 @@ public class AppDeckAdNetwork {
         if (timeBetweenBannerRefresh == 0)
             return manager.timeBetweenBannerRefresh;
         return timeBetweenBannerRefresh;
+    }
+
+    public boolean interstitialEnabled() {
+        return enableInterstitial;
+    }
+    public boolean rectangleEnabled() {
+        return enableRectangle;
+    }
+    public boolean bannerEnabled() {
+        return enableBanner;
     }
 
     /* Activity Api */
