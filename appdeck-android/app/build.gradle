@@ -120,7 +120,7 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
-    /*aaptOptions {
+/*    aaptOptions {
         noCompress 'icudtl.dat', 'natives_blob.bin', 'snapshot_blob.bin', 'chrome_100_percent.pak', 'resources.pak'
     }*/
 }
@@ -149,7 +149,9 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
 
     // https://download.01.org/crosswalk/releases/crosswalk/android/maven2/org/xwalk/xwalk_core_library/
-    crosswalkCompile 'org.xwalk:xwalk_core_library:16.45.421.19'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
+    // do not use version 16 as it is not compatible with genymotion
+    //crosswalkCompile 'org.xwalk:xwalk_core_library:16.45.421.19'
 
     // https://fabric.io/kits/android/crashlytics
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
