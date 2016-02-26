@@ -434,9 +434,9 @@ static unsigned char gifData[] = {
 
 -(BOOL)shouldCacheRequest:(NSURLRequest *)request
 {
-    if (request.cachePolicy == NSURLRequestReloadIgnoringLocalAndRemoteCacheData ||
+/*    if (request.cachePolicy == NSURLRequestReloadIgnoringLocalAndRemoteCacheData ||
         request.cachePolicy == NSURLRequestReloadIgnoringLocalCacheData)
-        return NO;
+        return NO;*/
     
     // check scheme
     if ([request.URL.scheme isEqualToString:@"http"] == NO && [request.URL.scheme isEqualToString:@"https"] == NO)
@@ -638,7 +638,8 @@ static unsigned char gifData[] = {
 {
     [super storeCachedResponse:cachedResponse forRequest:request];
     
-    //[memcache setObject:cachedResponse forKey:request.URL.absoluteString];
+    if ([self shouldCacheRequest:request])
+        [memcache setObject:cachedResponse forKey:request.URL.absoluteString];
     /*
     __block NSCachedURLResponse *cachedResponse = myCachedResponse;
     __block NSURLRequest *request = myRequest;
