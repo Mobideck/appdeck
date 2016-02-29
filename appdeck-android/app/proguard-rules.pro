@@ -141,8 +141,8 @@
 -dontwarn com.inmobi.**
 
 # MMedia
--keepclassmembers class com.millennialmedia** { public *;}
--keep class com.millennialmedia**
+-keepclassmembers class com.millennialmedia** { public *; }
+-keep class com.millennialmedia** { *; }
 
 # crosswalk
 -dontwarn android.view.*
