@@ -141,7 +141,7 @@
 -dontwarn com.inmobi.**
 
 # MMedia
--keep classmembers class com.millennialmedia** { public *;}
+-keepclassmembers class com.millennialmedia** { public *;}
 -keep class com.millennialmedia**
 
 # crosswalk
