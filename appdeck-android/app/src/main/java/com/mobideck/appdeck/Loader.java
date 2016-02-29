@@ -360,6 +360,7 @@ public class Loader extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                loadMenuWebviews();
                 if (leftMenuWebView != null && drawerView == mDrawerLeftMenu)
                     leftMenuWebView.ctl.sendJsEvent("appear", "null");
                 if (rightMenuWebView != null && drawerView == mDrawerRightMenu)
@@ -582,6 +583,17 @@ public class Loader extends AppCompatActivity {
             appDeck.remote = new RemoteAppCache(appDeck.config.prefetch_url.toString(), appDeck.config.prefetch_ttl);
             appDeck.remote.downloadAppCache();
         }
+
+        loadMenuWebviews();
+
+    }
+
+    private boolean mMenuLoaded = false;
+
+    private void loadMenuWebviews() {
+        if (mMenuLoaded)
+            return;
+        mMenuLoaded = true;
 
         if (appDeck.config.leftMenuUrl != null) {
             leftMenuWebView = SmartWebViewFactory.createMenuSmartWebView(this, appDeck.config.leftMenuUrl.toString(), SmartWebViewFactory.POSITION_LEFT);

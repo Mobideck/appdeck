@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.inmobi.ads"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_height="50dp">
+</LinearLayout>

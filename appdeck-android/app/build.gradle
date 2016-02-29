@@ -120,6 +120,7 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
+
 /*    aaptOptions {
         noCompress 'icudtl.dat', 'natives_blob.bin', 'snapshot_blob.bin', 'chrome_100_percent.pak', 'resources.pak'
     }*/
@@ -187,6 +188,7 @@ dependencies {
 
     // https://github.com/nostra13/Android-Universal-Image-Loader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 
     //compile 'com.jakewharton.timber:timber:4.1.0'
 

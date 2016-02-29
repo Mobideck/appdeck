@@ -1,5 +1,6 @@
 package com.mobideck.appdeck;
 
+import android.os.Build;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -45,6 +46,8 @@ public class AppDeckAdNetworkWideSpace extends AppDeckAdNetwork {
     private AdSpace mInterstitialAdSpace;
 
     public boolean supportInterstitial() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            return false;
         if (widespaceInterstitialSiteId == null || widespaceInterstitialSiteId.isEmpty())
             return false;
         return true;
@@ -145,6 +148,8 @@ public class AppDeckAdNetworkWideSpace extends AppDeckAdNetwork {
     private AdSpace mBannerAdSpace;
 
     public boolean supportBanner() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            return false;
         if (widespaceBannerSiteId == null || widespaceBannerSiteId.isEmpty())
             return false;
         return true;

@@ -374,10 +374,21 @@ public class AppDeckAdManager {
                         network = new AppDeckAdNetworkSmaato(AppDeckAdManager.this, netWorkConf);
                     else if (key.equalsIgnoreCase("mobilecore"))
                         network = new AppDeckAdNetworkMobileCore(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("aerserv"))
+                        network = new AppDeckAdNetworkAerServ(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("mng"))
+                        network = new AppDeckAdNetworkMng(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("inmobi"))
+                        network = new AppDeckAdNetworkInMobi(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("mmedia"))
+                        network = new AppDeckAdNetworkMMedia(AppDeckAdManager.this, netWorkConf);
+                    else if (key.equalsIgnoreCase("applovin"))
+                        network = new AppDeckAdNetworkAppLovin(AppDeckAdManager.this, netWorkConf);
                     else
                         Log.e(TAG, "Unsupported Ad Network:"+key);
                     if (network == null)
                         continue;
+                    Log.i(TAG, "AdNetwork: "+key);
                     networks.add(network);
                     networksByName.put(key.toLowerCase(), network);
                 }

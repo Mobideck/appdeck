@@ -132,6 +132,18 @@
 # smart ad server
 -dontwarn com.millennialmedia.**
 
+# aerserv
+-keep class com.aerserv.** { *; }
+-keepclassmembers class com.aerserv.** { *; }
+
+# InMobi
+-keep class com.inmobi.** { *; }
+-dontwarn com.inmobi.**
+
+# MMedia
+-keep classmembers class com.millennialmedia** { public *;}
+-keep class com.millennialmedia**
+
 # crosswalk
 -dontwarn android.view.*
 -dontwarn android.webkit.*

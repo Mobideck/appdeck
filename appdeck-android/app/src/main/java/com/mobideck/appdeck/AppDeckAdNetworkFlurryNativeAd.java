@@ -63,6 +63,16 @@ public class AppDeckAdNetworkFlurryNativeAd extends AppDeckAdNative {
                 Log.d(TAG, "onNativeAdError:" + flurryAdErrorType.toString() + ":" + i);
                 onNativeAdFailed();
             }
+
+            @Override
+            public void onExpanded(FlurryAdNative flurryAdNative) {
+
+            }
+
+            @Override
+            public void onCollapsed(FlurryAdNative flurryAdNative) {
+
+            }
         });
 
         mFlurryAdNative.fetchAd();
