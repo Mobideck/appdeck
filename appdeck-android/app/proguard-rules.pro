@@ -135,6 +135,7 @@
 # aerserv
 -keep class com.aerserv.** { *; }
 -keepclassmembers class com.aerserv.** { *; }
+-dontwarn com.aerserv.sdk.adapter.**
 
 # InMobi
 -keep class com.inmobi.** { *; }
