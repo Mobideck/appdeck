@@ -381,7 +381,7 @@ public class Loader extends AppCompatActivity {
 
         // configure action bar
 
-        mUpArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mUpArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
         mUpArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
         mDrawerToggle.setHomeAsUpIndicator(mUpArrow);
 
@@ -1286,7 +1286,6 @@ public class Loader extends AppCompatActivity {
             adManager.showAds(AppDeckAdManager.EVENT_PUSH);
         setMenuArrow(true);
     	return pushFragment(fragment);
-
     }
     
     public int replacePage(String absoluteURL)
@@ -2463,10 +2462,13 @@ public class Loader extends AppCompatActivity {
     	super.onNewIntent(intent);
         this.setIntent(intent); // update Activity Intent
 
+        Log.d(TAG, "onNewIntent");
+
         SmartWebViewFactory.onActivityNewIntent(this, intent);
 
         if (mUIReady == false || mAppDeckReady == false || mProxyReady == false) {
             mShouldResendIntent = true;
+            Log.d(TAG, "mShouldResendIntent");
             return;
         }
 

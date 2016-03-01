@@ -64,8 +64,12 @@ public class GcmIntentService extends IntentService {
     // a GCM message.
     private void sendNotification(String title, String url) {
 
+        Log.d(TAG, "sendNotification");
+
         if (title == null || url == null)
             return;
+
+        Log.d(TAG, "sendNotification title:"+title+" url:"+url);
 
     	mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -91,6 +95,8 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+
+
 
         try {
             AppDeck appDeck = AppDeck.getInstance();

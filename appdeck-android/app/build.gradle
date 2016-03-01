@@ -43,6 +43,8 @@ android {
 
         // Enabling multidex support.
         multiDexEnabled true
+
+        vectorDrawables.useSupportLibrary = true
     }
 
     lintOptions {
@@ -133,9 +135,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     // http://developer.android.com/tools/support-library/index.html
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:support-v4:23.2.0'
+    compile 'com.android.support:design:23.2.0'
 
     // https://developers.google.com/android/guides/setup
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
@@ -177,7 +179,7 @@ dependencies {
     // https://github.com/hotchemi/Android-Rate
     compile 'com.github.hotchemi:android-rate:0.5.6'
 
-    // http://developer.widespace.com/index.php/SDK_Getting_Started
+    // http://info.widespace.com/publishers/integrations/android-sdk-guidelines/
     compile 'com.widespace:widespace-sdk-4.7.1@aar'
     compile 'org.slf4j:slf4j-android:1.7.10' // widespace dependency
 
@@ -193,7 +195,7 @@ dependencies {
     //compile 'com.jakewharton.timber:timber:4.1.0'
 
     // https://github.com/afollestad/material-dialogs
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.6@aar') {
         transitive = true
     }
 
