@@ -45,6 +45,9 @@ android {
         multiDexEnabled true
 
         vectorDrawables.useSupportLibrary = true
+
+        // Stops the Gradle plugin’s automatic rasterization of vectors
+        generatedDensities = []
     }
 
     lintOptions {
@@ -126,6 +129,11 @@ android {
 /*    aaptOptions {
         noCompress 'icudtl.dat', 'natives_blob.bin', 'snapshot_blob.bin', 'chrome_100_percent.pak', 'resources.pak'
     }*/
+
+    // Flag to tell aapt to keep the attribute ids around
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
 }
 
 dependencies {
