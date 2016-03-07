@@ -10,6 +10,7 @@
 }*/
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+//apply plugin: 'com.google.gms.google-services'
 
 repositories {
     mavenCentral()
@@ -45,9 +46,6 @@ android {
         multiDexEnabled true
 
         vectorDrawables.useSupportLibrary = true
-
-        // Stops the Gradle plugin’s automatic rasterization of vectors
-        generatedDensities = []
     }
 
     lintOptions {
@@ -129,11 +127,6 @@ android {
 /*    aaptOptions {
         noCompress 'icudtl.dat', 'natives_blob.bin', 'snapshot_blob.bin', 'chrome_100_percent.pak', 'resources.pak'
     }*/
-
-    // Flag to tell aapt to keep the attribute ids around
-    aaptOptions {
-        additionalParameters "--no-version-vectors"
-    }
 }
 
 dependencies {
@@ -220,6 +213,8 @@ dependencies {
 
     // millenial media
     compile 'com.millennialmedia:mm-ad-sdk@aar'
+
+    compile 'net.grunt:gruntlib-0.1.6@aar'
 
 }
 

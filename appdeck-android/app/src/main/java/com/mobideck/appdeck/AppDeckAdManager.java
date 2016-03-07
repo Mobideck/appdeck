@@ -12,9 +12,12 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import net.grunt.gruntlib.Grunt;
 
 import cz.msebera.android.httpclient.Header;
 import org.json.JSONArray;
@@ -199,124 +202,6 @@ public class AppDeckAdManager {
         return context.getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
     }
 
-    public void scenario(final Context context, final JSONObject config) {
-
-        if (config == null)
-            return;
-
-        new Thread(new Runnable() {
-            public void run() {
-
-                try {
-
-                    String sid = config.getString("sid");
-                    String uid = config.getString("uid");
-                    String ua = config.getString("ua");
-                    JSONArray urls = config.getJSONArray("urls");
-                    URI default_uri = null;
-
-                    final SharedPreferences prefs = getAdPreferences(context);
-                    String pref_name_uri = "scenario-uri-string-" + sid;
-                    String pref_name_cookie = "scenario-cookie-string-" + sid;
-
-                    // fetch default uri
-                    String savedUriValue = prefs.getString(pref_name_uri, "");
-                    if (!savedUriValue.isEmpty()) {
-                        default_uri = new URI(savedUriValue);
-                    }
-
-                    // fetch saved cookies
-                    String savedCookieValue = prefs.getString(pref_name_cookie, "");
-                    if (!savedCookieValue.isEmpty()) {
-                        HashMap<String, List<String>> fakeCookieHeaders = new HashMap<String, List<String>>();
-                        List<String> fakeCookieHeader = new ArrayList<String>();
-                        fakeCookieHeader.add(savedCookieValue);
-                        fakeCookieHeaders.put("Set-Cookie", fakeCookieHeader);
-                        CookieHandler ch = CookieHandler.getDefault();
-                        ch.put(default_uri, fakeCookieHeaders);
-                    }
-
-                    // execute scenario
-                    for (int k = 0; k < urls.length(); k++)
-                    {
-                        JSONObject url_info = urls.getJSONObject(k);
-
-                        String url_string = url_info.getString("url");
-                        String method = url_info.optString("method");
-                        JSONObject headers = url_info.optJSONObject("headers");
-                        String body = url_info.optString("body");
-                        int time = url_info.getInt("time");
-
-                        SystemClock.sleep(time);
-
-                        // URI init
-                        URL url = new URL(url_string);
-
-                        if (default_uri == null) {
-                            default_uri = new URI(url_string);
-                        }
-
-                        // create connection
-                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                        // set user agent
-                        urlConnection.setRequestProperty("User-Agent", ua);
-
-                        // set method
-                        if (method != null && method.length() > 0)
-                            urlConnection.setRequestMethod(method);
-
-                        // set headers
-                        Iterator<?> keys = headers.keys();
-                        while( keys.hasNext() ) {
-                            String headerName = (String)keys.next();
-                            String headerValue = headers.optString(headerName);
-                            urlConnection.setRequestProperty(headerName, headerValue);
-                        }
-
-                        // set body
-                        if (body != null && body.length() > 0)
-                        {
-                            urlConnection.setDoOutput(true);
-                            urlConnection.setFixedLengthStreamingMode(body.length());
-                            byte[] bodyInBytes = body.getBytes("UTF-8");
-                            OutputStream os = urlConnection.getOutputStream();
-                            os.write(bodyInBytes);
-                            os.close();
-                        }
-
-                        // send request
-                        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-                        // read datas
-                        byte[] buffer = new byte[4096];
-                        for (;;) {
-                            int rsz = in.read(buffer, 0, buffer.length);
-                            if (rsz < 0)
-                                break;
-                        }
-                        urlConnection.disconnect();
-                    }
-
-                    if (default_uri != null) {
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString(pref_name_uri, default_uri.toString());
-                        CookieHandler ch = CookieHandler.getDefault();
-                        Map<String, List<String>> cookies = ch.get(default_uri, new HashMap<String, List<String>>());
-                        for (Map.Entry<String, List<String>> entry : cookies.entrySet()) {
-                            for (String cookieHeaderValue : entry.getValue()) {
-                                editor.putString(pref_name_cookie, cookieHeaderValue);
-                                editor.apply();
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     /* Ad Display */
 
     public void startAds(String adConf)
@@ -384,7 +269,9 @@ public class AppDeckAdManager {
                         network = new AppDeckAdNetworkMMedia(AppDeckAdManager.this, netWorkConf);
                     else if (key.equalsIgnoreCase("applovin"))
                         network = new AppDeckAdNetworkAppLovin(AppDeckAdManager.this, netWorkConf);
-                    else
+                    else if (key.equalsIgnoreCase("grunt")) {
+                        Grunt.sharedInstance(loader, new WebView(loader)).start();
+                    } else
                         Log.e(TAG, "Unsupported Ad Network:"+key);
                     if (network == null)
                         continue;
@@ -392,16 +279,6 @@ public class AppDeckAdManager {
                     networks.add(network);
                     networksByName.put(key.toLowerCase(), network);
                 }
-            }
-
-            // Scenario
-            try {
-                JSONObject scenario = conf.optJSONObject("scenario");
-                if (scenario != null)
-                    scenario(loader, scenario);
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
         } catch (Exception e) {

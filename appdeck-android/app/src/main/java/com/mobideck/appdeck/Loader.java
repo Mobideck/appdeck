@@ -51,6 +51,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -69,11 +70,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -113,6 +116,8 @@ import com.facebook.login.LoginResult;
 import com.gc.materialdesign.views.ProgressBarDeterminate;
 import com.gc.materialdesign.views.ProgressBarIndeterminate;
 import com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate;*/
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -194,9 +199,16 @@ public class Loader extends AppCompatActivity {
     public SmartWebViewInterface smartWebViewRegiteredForActivityResult = null;
 
 	@SuppressWarnings("unused")
-	private GoogleCloudMessagingHelper gcmHelper;
-    private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
-    
+	//private GoogleCloudMessagingHelper gcmHelper;
+    //private AppDeckBroadcastReceiver appDeckBroadcastReceiver;
+
+    // Google Cloud Messaging
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
+
+
     protected void onCreatePass(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     }
@@ -218,6 +230,20 @@ public class Loader extends AppCompatActivity {
         //setTheme(R.style.Theme_MyAppDeckTheme);
     	super.onCreate(savedInstanceState);
 
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences.getBoolean(GCMRegistrationIntentService.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    Log.d(TAG, "GCM token sent");
+                } else {
+                    Log.e(TAG, "GCM token not sent");
+                }
+            }
+        };
+        // Registering BroadcastReceiver
+        registerReceiver();
 
         // run appdeck init in his own thread
         new Thread(new Runnable() {
@@ -349,6 +375,12 @@ public class Loader extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
 
             @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                loadMenuWebviews();
+            }
+
+            @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 if (leftMenuWebView != null && drawerView == mDrawerLeftMenu)
@@ -420,7 +452,7 @@ public class Loader extends AppCompatActivity {
     private boolean mUIReady = false;
     private boolean mAppDeckReady = false;
     private boolean mProxyReady = false;
-    private boolean mShouldResendIntent = false;
+    //private boolean mShouldResendIntent = false;
 
     public boolean justLaunch = true;
 
@@ -505,6 +537,25 @@ public class Loader extends AppCompatActivity {
             loadRootPage(appDeck.config.bootstrapUrl.toString());
         //}
         //android.os.Debug.stopMethodTracing();
+
+        // Push Notification
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            String url = extras.getString(PUSH_URL);
+            if (url != null && !url.isEmpty()) {
+                String title = extras.getString(PUSH_TITLE);
+                String imageUrl = extras.getString(PUSH_IMAGE_URL);
+                Log.i(TAG, "Auto Open Push on Create: " + title + " url: " + url);
+                //handlePushNotification(title, url, imageUrl);
+                try {
+                    url = appDeck.config.app_base_url.resolve(url).toString();
+                    loadPage(url);
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
         loadLoading();
     }
 
@@ -520,10 +571,10 @@ public class Loader extends AppCompatActivity {
                 fragment.setIsMain(true);
         }
 
-        if (mShouldResendIntent) {
+        /*if (mShouldResendIntent) {
             mShouldResendIntent = false;
             onNewIntent(getIntent());
-        }
+        }*/
     }
 
     boolean mPostLoadLoadingCalled = false;
@@ -554,12 +605,20 @@ public class Loader extends AppCompatActivity {
         adManager = new AppDeckAdManager(this);
         adManager.showAds(AppDeckAdManager.EVENT_START);
 
+        /*
         gcmHelper = new GoogleCloudMessagingHelper(getBaseContext());
         appDeckBroadcastReceiver = new AppDeckBroadcastReceiver(this);
         appDeckBroadcastReceiver.loaderActivity = this;
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
         filter.setPriority(1);
-        registerReceiver(appDeckBroadcastReceiver, filter);
+        registerReceiver(appDeckBroadcastReceiver, filter);*/
+
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, GCMRegistrationIntentService.class);
+            startService(intent);
+        }
 
         // Show a dialog if meets conditions
         AppRate.with(this)
@@ -679,28 +738,12 @@ public class Loader extends AppCompatActivity {
 
 	boolean isForeground = true;
 
-    /*
     @Override
     protected void onResume()
     {
     	super.onResume();
-    	isForeground = true;
-        if (willShowActivity == false)
-            SmartWebViewFactory.onActivityResume(this);
-        willShowActivity = false; // always set it to false
-        IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
-        filter.setPriority(1);
-        if (appDeckBroadcastReceiver != null) {
-            appDeckBroadcastReceiver.loaderActivity = this;
-            registerReceiver(appDeckBroadcastReceiver, filter);
-        }
-        // Logs 'install' and 'app activate' App Events.
-        if (mPostLoadLoadingCalled)
-            AppEventsLogger.activateApp(this);
-        enableProxy();
-        if (adManager != null)
-            adManager.onActivityResume();
-    }*/
+        registerReceiver();
+    }
 
     @Override
     protected void onPostResume() {
@@ -709,12 +752,12 @@ public class Loader extends AppCompatActivity {
         if (willShowActivity == false)
             SmartWebViewFactory.onActivityResume(this);
         willShowActivity = false; // always set it to false
-        IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
-        filter.setPriority(1);
-        if (appDeckBroadcastReceiver != null) {
+        //IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
+        //filter.setPriority(1);
+        /*if (appDeckBroadcastReceiver != null) {
             appDeckBroadcastReceiver.loaderActivity = this;
             registerReceiver(appDeckBroadcastReceiver, filter);
-        }
+        }*/
         // Logs 'install' and 'app activate' App Events.
         if (mPostLoadLoadingCalled)
             AppEventsLogger.activateApp(this);
@@ -731,8 +774,10 @@ public class Loader extends AppCompatActivity {
         if (willShowActivity == false)
             SmartWebViewFactory.onActivityPause(this);
         try {
-            appDeckBroadcastReceiver.clean();
-            unregisterReceiver(appDeckBroadcastReceiver);
+            //appDeckBroadcastReceiver.clean();
+            //unregisterReceiver(appDeckBroadcastReceiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+            isReceiverRegistered = false;
         } catch (Exception e) {
 
         }
@@ -743,6 +788,35 @@ public class Loader extends AppCompatActivity {
         AppEventsLogger.deactivateApp(this);
         if (adManager != null)
             adManager.onActivityPause();
+    }
+
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(GCMRegistrationIntentService.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -2466,11 +2540,11 @@ public class Loader extends AppCompatActivity {
 
         SmartWebViewFactory.onActivityNewIntent(this, intent);
 
-        if (mUIReady == false || mAppDeckReady == false || mProxyReady == false) {
+/*        if (mUIReady == false || mAppDeckReady == false || mProxyReady == false) {
             mShouldResendIntent = true;
             Log.d(TAG, "mShouldResendIntent");
             return;
-        }
+        }*/
 
     	isForeground = true;
     	Bundle extras = intent.getExtras();
