@@ -80,7 +80,7 @@ public class GCMGcmListenerService extends GcmListenerService {
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(title))
+                //.setStyle(new NotificationCompat.BigTextStyle().bigText(title))
                 .setContentIntent(contentIntent);
 
         NotificationManager notificationManager =
