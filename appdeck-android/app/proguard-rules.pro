@@ -147,6 +147,9 @@
 }
 -keep class com.millennialmedia**
 
+# Grunt
+-keep class net.grunt.**
+
 # crosswalk
 -dontwarn android.view.*
 -dontwarn android.webkit.*
