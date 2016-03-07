@@ -236,8 +236,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 		if (forceReload) {
 			forceReload = false;
 			reloadInBackground();
-		} else if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0)
-    	{
+		} else if (screenConfiguration != null && screenConfiguration.ttl > 0 && lastUrlLoad != 0) {
 			if (screenConfiguration.ttl > ((now - lastUrlLoad) / 1000))
 			{
 				Log.v(TAG, "Should NOT AutoRealod SCREEN:["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+lastUrlLoad + " now: " + now + " diff: " + (now - lastUrlLoad)/1000);				
@@ -246,7 +245,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 				reloadInBackground();
 			}
 		} else {
-			Log.v(TAG, "AutoRealod DISABLED :["+screenConfiguration.title+"] ttl: "+screenConfiguration.ttl + " cache ttl: "+lastUrlLoad + " now: " + now + "diff: " + (now - lastUrlLoad)/1000);
+			Log.v(TAG, "AutoRealod DISABLED :["+(screenConfiguration != null ? screenConfiguration.title : "null")+"] ttl: "+(screenConfiguration != null ? screenConfiguration.ttl : "null") + " cache ttl: "+lastUrlLoad + " now: " + now + "diff: " + (now - lastUrlLoad)/1000);
 		}
     }
     
@@ -332,6 +331,9 @@ public class PageFragmentSwap extends AppDeckFragment {
     
 	public void loadPage(String absoluteUrl)
 	{
+		if (pageWebView == null)
+			return;
+
 		shouldCallLoadPage = false;
 		currentPageUrl = absoluteUrl;
 		try {

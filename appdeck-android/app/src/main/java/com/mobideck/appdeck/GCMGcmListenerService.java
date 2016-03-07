@@ -75,6 +75,7 @@ public class GCMGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_push)
+                .setColor(getResources().getColor(R.color.AppDeckColorApp))
                 .setContentTitle(Utils.getApplicationName(this))
                 .setContentText(title)
                 .setAutoCancel(true)

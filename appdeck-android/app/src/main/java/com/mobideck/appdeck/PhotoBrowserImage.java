@@ -106,6 +106,8 @@ public class PhotoBrowserImage extends Fragment {
 	
     void downloadAndDisplayThumbnail()
     {
+		if (appDeck == null)
+			return;
     	DisplayImageOptions displayOptions = new DisplayImageOptions.Builder()
         .cacheInMemory(!appDeck.noCache)
         .cacheOnDisc(!appDeck.noCache)
