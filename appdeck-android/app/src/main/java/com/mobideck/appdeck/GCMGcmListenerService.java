@@ -11,11 +11,13 @@ import android.media.RingtoneManager;
         import android.os.Bundle;
         import android.support.v4.app.NotificationCompat;
         import android.util.Log;
+import android.util.TypedValue;
 
-        import com.google.android.gms.gcm.GcmListenerService;
+import com.google.android.gms.gcm.GcmListenerService;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
+import com.mortennobel.imagescaling.ResampleOp;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -80,8 +82,21 @@ public class GCMGcmListenerService extends GcmListenerService {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     Bitmap image = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
-
-                    largeIcon[0] = Utils.cropToSquare(image);
+                    if (image != null) {
+                        Bitmap cropedImage = Utils.cropToSquare(image);
+                        if (cropedImage != null) {
+                            image.recycle();
+                            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, getResources().getDisplayMetrics());
+                            ResampleOp resampleOp = new ResampleOp(width, width);
+                            //resampleOp.setNumberOfThreads(1);
+                            Bitmap myscaledBitmap = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
+                            myscaledBitmap = resampleOp.filter(cropedImage, myscaledBitmap);
+                            cropedImage.recycle();
+                            if (myscaledBitmap != null) {
+                                largeIcon[0] = myscaledBitmap;
+                            }
+                        }
+                    }
                 }
 
                 @Override
