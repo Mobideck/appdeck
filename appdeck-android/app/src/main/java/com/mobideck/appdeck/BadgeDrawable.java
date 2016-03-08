@@ -54,6 +54,10 @@ public class BadgeDrawable extends Drawable {
         float centerX = width - radius - 1;
         float centerY = radius + 1;
 
+        // adjust for Android Support 23.2
+        centerX = width;
+        centerY = 0;
+
         // Draw badge circle.
         canvas.drawCircle(centerX, centerY, radius, mBadgePaint);
 
