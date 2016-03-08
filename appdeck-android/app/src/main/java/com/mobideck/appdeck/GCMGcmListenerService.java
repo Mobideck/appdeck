@@ -13,6 +13,11 @@ import android.media.RingtoneManager;
         import android.util.Log;
 
         import com.google.android.gms.gcm.GcmListenerService;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
+
+import cz.msebera.android.httpclient.Header;
 
 public class GCMGcmListenerService extends GcmListenerService {
 
@@ -65,7 +70,30 @@ public class GCMGcmListenerService extends GcmListenerService {
         String title = data.getString("title");
         String url = data.getString("action_url");
         String message = data.getString("title");
-        String imageUrl = "http://www.universfreebox.com/IMG/arton33964.jpg";//data.getString("image");
+        String imageUrl = data.getString("image_url");//"http://www.universfreebox.com/IMG/arton33964.jpg";//data.getString("image");
+
+        final Bitmap[] largeIcon = {null};
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            AsyncHttpClient httpClient = new SyncHttpClient();
+            httpClient.get(this, imageUrl, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Bitmap image = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
+
+                    largeIcon[0] = Utils.cropToSquare(image);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                }
+            });
+        }
+        if (largeIcon[0] == null) {
+            largeIcon[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        }
+
 
         Intent notificationIntent = new Intent(this, Loader.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -74,15 +102,12 @@ public class GCMGcmListenerService extends GcmListenerService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Bitmap notificationLargeIconBitmap = BitmapFactory.decodeResource(
-                getResources(),
-                R.mipmap.ic_launcher);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_push)
-                .setLargeIcon(notificationLargeIconBitmap)
-                .setColor(getResources().getColor(R.color.AppDeckColorApp))
+                .setLargeIcon(largeIcon[0])
+                //.setColor(getResources().getColor(R.color.AppDeckColorApp))
                 .setContentTitle(Utils.getApplicationName(this))
                 .setContentText(title)
                 .setTicker(title)
