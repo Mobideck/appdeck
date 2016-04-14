@@ -67,6 +67,10 @@
 -keep interface android.support.design.** { *; }
 -keep public class android.support.design.R$* { *; }
 
+# PhotoView
+-dontwarn uk.co.senab.photoview.**
+-keep class uk.co.senab.photoview.** { *;}
+
 # Flurry
 -keep class com.flurry.** { *; }
 -dontwarn com.flurry.**
