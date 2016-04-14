@@ -330,6 +330,9 @@ static unsigned char gifData[] = {
     {
         NSData *bodyData = [NSData dataWithContentsOfFile:bodyFilePath];
 
+        if (bodyData == nil)
+            return nil;
+        
         NSData *metaData = [NSData dataWithContentsOfFile:headersFilePath];
         
         NSError *error = NULL;

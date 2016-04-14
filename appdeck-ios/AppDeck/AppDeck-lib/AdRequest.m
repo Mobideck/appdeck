@@ -193,9 +193,13 @@
                         } forKey:@"application"];
     
     // appdeck
-    [params setObject:@{@"apikey": self.page.loader.conf.app_api_key,
-                        @"version": APPDECK_VERSION
-                        } forKey:@"appdeck"];
+    NSString *api_key = self.page.loader.conf.app_api_key;
+    if (api_key != nil)
+    {
+        [params setObject:@{@"apikey": self.page.loader.conf.app_api_key,
+                            @"version": APPDECK_VERSION
+                            } forKey:@"appdeck"];
+    }
     
     // device
     [params setObject:@{@"type": (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"tablet" : @"phone"),
