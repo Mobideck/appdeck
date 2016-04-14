@@ -135,9 +135,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     // http://developer.android.com/tools/support-library/index.html
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:support-v4:23.2.0'
-    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:design:23.3.0'
 
     // https://developers.google.com/android/guides/setup
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
@@ -155,6 +155,7 @@ dependencies {
     crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
     // do not use version 16 as it is not compatible with genymotion
     //crosswalkCompile 'org.xwalk:xwalk_core_library:16.45.421.19'
+    //crosswalkCompile 'org.xwalk:xwalk_core_library:17.46.448.10'
 
     // https://fabric.io/kits/android/crashlytics
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {

@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         // http://tools.android.com/release
-        classpath ('com.android.tools.build:gradle:2.1.0-alpha5') {
+        classpath ('com.android.tools.build:gradle:2.0.0') {
             exclude module: 'proguard-gradle'
         }
         // force last version of proguard

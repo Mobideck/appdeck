@@ -1259,7 +1259,44 @@ public class Loader extends AppCompatActivity {
 		}      	
     	return false;
     }
-    
+
+    public boolean loadExternalURL(String absoluteURL)
+    {
+        Uri uri = Uri.parse(absoluteURL);
+        if (uri != null)
+        {
+            String host = uri.getHost();
+            if (host != null && isSameDomain(host) == false)
+            {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+                    // enable custom tab for chrome
+                    String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
+                    Bundle extras = new Bundle();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null/*sessionICustomTabsCallback.asBinder() Set to null for no session */);
+                    }
+                    String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
+                    //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
+                    //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
+                    extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorApp);
+
+                    intent.putExtras(extras);
+
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(this, "No application can handle this request."
+                            + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
 	public int findUnusedId(int fID) {
 	    while( this.findViewById(android.R.id.content).findViewById(++fID) != null );
 	    return fID;
@@ -1274,9 +1311,11 @@ public class Loader extends AppCompatActivity {
     		createIntent(ROOT_PAGE_URL, absoluteURL);
     		return;
     	}
+        if (loadSpecialURL(absoluteURL))
+            return;
+        if (loadExternalURL(absoluteURL))
+            return;
     	prepareRootPage();
-    	if (loadSpecialURL(absoluteURL))
-    		return;
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
     	pushFragment(fragment);
         setMenuArrow(false);
@@ -1307,39 +1346,8 @@ public class Loader extends AppCompatActivity {
     {
     	if (loadSpecialURL(absoluteURL))
     		return -1;
-
-        Uri uri = Uri.parse(absoluteURL);
-        if (uri != null)
-        {
-            String host = uri.getHost();
-            if (host != null && isSameDomain(host) == false)
-            {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-
-                    // enable custom tab for chrome
-                    String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
-                    Bundle extras = new Bundle();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null/*sessionICustomTabsCallback.asBinder() Set to null for no session */);
-                    }
-                    String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
-                    //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorAccent);
-                    //intent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorPrimary);
-                    extras.putInt(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.AppDeckColorApp);
-
-                    intent.putExtras(extras);
-
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Toast.makeText(this, "No application can handle this request."
-                            + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
-
-                    e.printStackTrace();
-                }
-                return -1;
-            }
-        }
+        if (loadExternalURL(absoluteURL))
+            return -1;
 
     	if (isForeground == false)
     	{
