@@ -160,7 +160,10 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			uri = Uri.parse(url);
 			firstLoad = true;
 		}
-		super.load(url, null);
+		if (this.getIsWarmUp())
+			evaluateJavascript("window.location.href = '"+url+"'", null);
+		else
+			super.load(url, null);
 	}
 
 	public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl) {
@@ -999,4 +1002,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		cookieManager.removeAllCookie();
 		cookieManager.flushCookieStore();
 	}
+
+	private boolean isWarmUp = false;
+	public boolean getIsWarmUp() { return isWarmUp; }
+	public void setIsWarmUp(boolean value) {isWarmUp = value;}
 }

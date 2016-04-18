@@ -76,6 +76,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -413,7 +414,10 @@ public class Loader extends AppCompatActivity {
 
         // configure action bar
 
-        mUpArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
+        //mUpArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
+
+        mUpArrow = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp);
+
         mUpArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
         mDrawerToggle.setHomeAsUpIndicator(mUpArrow);
 

@@ -180,7 +180,10 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             uri = Uri.parse(url);
             firstLoad = true;
         }
-        super.loadUrl(url);
+        if (this.getIsWarmUp())
+            evaluateJavascript("window.location.href = '"+url+"'", null);
+        else
+            super.loadUrl(url);
     }
 
     public String resolve(String relativeURL)
@@ -1021,5 +1024,9 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             cookieSyncMngr.sync();
         }
     }
+
+    private boolean isWarmUp = false;
+    public boolean getIsWarmUp() { return isWarmUp; }
+    public void setIsWarmUp(boolean value) {isWarmUp = value;}
 
 }

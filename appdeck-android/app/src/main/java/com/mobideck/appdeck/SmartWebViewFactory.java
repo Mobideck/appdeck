@@ -68,8 +68,9 @@ public class SmartWebViewFactory {
         smartWebView.ctl.setRootAppDeckFragment(null);
         smartWebView.ctl.unloadPage();
         smartWebView.ctl.pause();
-        smartWebView.ctl.destroy();
-        //smartWebViews.add(smartWebView);
+        //smartWebView.ctl.destroy();
+        smartWebView.ctl.setIsWarmUp(true);
+        smartWebViews.add(smartWebView);
     }
 
     public static void setPreferences(Loader loader)

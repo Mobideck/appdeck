@@ -152,4 +152,8 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     public void clearCookies() { }
 
     public void sendJsEvent(String eventName, String eventDetailJSon) { }
+
+    private boolean isWarmUp = false;
+    public boolean getIsWarmUp() { return isWarmUp; }
+    public void setIsWarmUp(boolean value) {isWarmUp = value;}
 }

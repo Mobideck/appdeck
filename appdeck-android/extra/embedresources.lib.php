@@ -218,6 +218,11 @@ function appdeck_ok($msg)
   exit(0);
 }
 
+function format($str)
+{
+  return str_replace(array('|'), array('-'), $str);
+}
+
 function get_absolute_path($path)
  {
         $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
@@ -276,7 +281,7 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
   if (defined('FORCE_DOWNLOAD') && FORCE_DOWNLOAD === true)
     $force = true;
   $url = resolve_url($url, $base_url);
-  print " - - add resource for {$url}\n";
+  print " - - add resource for ".format($url)."\n";
   $file_name = urlencode(str_replace('http://', '', $url));
   //print " - - ORIGINAL FileName: {$file_name}\n";    
   if (strlen($file_name) > 48)
@@ -284,7 +289,7 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
     $file_name = substr($file_name, 0, 48).'_'.md5($file_name);
     //print " - - MD5 PATCH FileName: {$file_name}\n";  
   }
-  print " - - FileName: {$file_name}\n";  
+  print " - - FileName: ".format($file_name)."\n";
   $file_name_meta = EMBED_PREFIX.$file_name.'.meta'.EMBED_SUFFIX;
   $file_name = EMBED_PREFIX.$file_name.EMBED_SUFFIX;
   //$tmp_file_path = $tmp_dir_path."/".$file_name;
@@ -294,19 +299,19 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
     {
       if ($data === false)
       {
-        print " - - download {$url} into {$output_file_path}\n";
+        print " - - download ".format($url)." into {$output_file_path}\n";
         list($headers, $data) = ezcurl($url, $error);
         if ($data == false)
           {
-            appdeck_warning("failed to download: {$url}: {$error}");
+            appdeck_warning("failed to download: ".format($url).": {$error}");
             return;
           }
       }
       else
-        print " - - add resource for {$url} from data into {$output_file_path}\n";
+        print " - - add resource for ".format($url)." from data into {$output_file_path}\n";
       $res = file_put_contents($output_file_path, $data);
       if ($res == false)
-        appdeck_warning("failed to write resource {$url} in {$output_file_path}");
+        appdeck_warning("failed to write resource ".format($url)." in {$output_file_path}");
       // clean headers
       unset($headers['Set-Cookie']);
       unset($headers['set-cookie']);
@@ -318,10 +323,10 @@ function appdeck_add_ressource($url, $data = false, $force = false, $headers = f
         $headers = array('Content-Type' => 'application/octet-stream');
       $res = file_put_contents($output_file_path_meta, json_encode($headers));
       if ($res == false)
-        appdeck_warning("failed to write resource meta {$url} in {$output_file_path_meta}");
+        appdeck_warning("failed to write resource meta ".format($url)." in {$output_file_path_meta}");
     }
   else
-    print " - - resource {$url} already downloaded in {$output_file_path}\n";
+    print " - - resource ".format($url)." already downloaded in {$output_file_path}\n";
   $count_resource++;
 }
 
@@ -345,6 +350,7 @@ function embed_url($embed_url)
   // we embed embed_url in application
   appdeck_add_ressource($embed_url, $data, true, $headers);
   // we embed all url listed in this file
+  $datas = str_replace("\r", "", $datas);
   $lines = explode("\n", $data);
   foreach ($lines as $line)
     if (trim($line) != "")

@@ -81,5 +81,7 @@ public interface SmartWebViewInterface {
     public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data);
     public void onActivityNewIntent(Loader loader, Intent intent);
 
+    public boolean getIsWarmUp();
+    public void setIsWarmUp(boolean value);
 
 }
