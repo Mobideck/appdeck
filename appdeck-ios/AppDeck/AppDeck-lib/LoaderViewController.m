@@ -2195,7 +2195,12 @@
              if (version.intValue != self.conf.app_version)
              {
                  [self.appDeck.cache cleanall];
-                 [AppDeck reloadFrom:self.conf.jsonUrl.absoluteString];
+                 NSString *newConfUrl = self.conf.jsonUrl.absoluteString;
+                 if ([newConfUrl containsString:@"?"])
+                     newConfUrl = [NSString stringWithFormat:@"%@&_rnd=%u", newConfUrl, arc4random()];
+                 else
+                     newConfUrl = [NSString stringWithFormat:@"%@?_rnd=%u", newConfUrl, arc4random()];
+                 [AppDeck reloadFrom:newConfUrl];
              }
              else
                  [self enableAutoReloadConf:5.0];

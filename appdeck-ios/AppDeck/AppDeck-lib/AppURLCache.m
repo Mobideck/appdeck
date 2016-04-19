@@ -426,7 +426,7 @@ static unsigned char gifData[] = {
 {
     if ([cdnregexp match:host.UTF8String])
         return YES;
-    NSLog(@"Host: %@ is not a CDN", host);
+    //NSLog(@"Host: %@ is not a CDN", host);
     return NO;
 }
 
