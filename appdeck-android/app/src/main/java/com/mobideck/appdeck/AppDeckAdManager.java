@@ -521,8 +521,10 @@ public class AppDeckAdManager {
                 bannerAdNetwork.removeBannerViewInLoader();
                 bannerAdNetwork.destroyBannerAd();
                 bannerAdNetwork = null;
-                mBannerHandler.removeCallbacks(mBannerRunnable);
-                mBannerHandler.postDelayed(mBannerRunnable, timeBetweenBannerRefresh * 1000);
+                if (mBannerHandler != null) {
+                    mBannerHandler.removeCallbacks(mBannerRunnable);
+                    mBannerHandler.postDelayed(mBannerRunnable, timeBetweenBannerRefresh * 1000);
+                }
             }
             boolean res = interstitialAdNetwork.showInterstitial();
             lastSeenInterstitial = System.currentTimeMillis()/1000;

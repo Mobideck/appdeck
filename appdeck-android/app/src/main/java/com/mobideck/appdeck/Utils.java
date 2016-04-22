@@ -633,10 +633,12 @@ public class Utils {
 
 	public static String streamGetContent(InputStream is)
 	{
-		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-        if (s == null)
-            return "";
-	    return s.hasNext() ? s.next() : "";
+		try {
+			return IOUtils.toString(is, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	public static InputStream streamFromFilePath(String filePath)
