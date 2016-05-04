@@ -301,6 +301,7 @@ public class PageFragmentSwap extends AppDeckFragment {
         if (screenConfiguration.isRelated(absoluteURL))
         {
             //loader.replacePage(absoluteURL);
+			currentPageUrl = absoluteURL;
             return false;
         }
         return true;
