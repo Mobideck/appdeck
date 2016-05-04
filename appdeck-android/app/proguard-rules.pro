@@ -16,6 +16,8 @@
 #   public *;
 #}
 
+-dontobfuscate
+
 # crashlytics
 -keep class com.crashlytics.** { *; }
 -keep class com.crashlytics.android.**
@@ -182,7 +184,7 @@
 # http://sourceforge.net/p/proguard/bugs/573/
 # java -jar /Applications/Android/sdk/tools/proguard/lib/proguard.jar
 # ProGuard, version 4.7
--optimizations !class/unboxing/enum
+-optimizations !class/unboxing/enum,!code/allocation/variable
 
 -dontwarn com.nuance.**
 
