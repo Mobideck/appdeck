@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.mopub.nativeads.MoPubNative;
 import com.mopub.nativeads.NativeErrorCode;
-import com.mopub.nativeads.NativeResponse;
+//import com.mopub.nativeads.NativeResponse;
 import com.mopub.nativeads.RequestParameters;
 
 import java.util.EnumSet;
@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by mathieudekermadec on 12/11/15.
  */
 public class AppDeckAdNetworkMoPubNativeAd extends AppDeckAdNative {
-
+/*
     AppDeckAdNetworkMoPub mMopubNetwork;
 
     private MoPubNative mMoPubNativeAd;
@@ -86,5 +86,5 @@ public class AppDeckAdNetworkMoPubNativeAd extends AppDeckAdNative {
         mNativeResponse.handleClick(call.appDeckFragment.getView());
     }
 
-
+*/
 }

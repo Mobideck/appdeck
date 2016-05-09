@@ -10,10 +10,10 @@ import com.mopub.nativeads.MoPubAdRenderer;
 import com.mopub.nativeads.MoPubNative;
 import com.mopub.nativeads.MoPubNativeAdLoadedListener;
 import com.mopub.nativeads.MoPubNativeAdPositioning;
-import com.mopub.nativeads.MoPubNativeAdRenderer;
+//import com.mopub.nativeads.MoPubNativeAdRenderer;
 import com.mopub.nativeads.MoPubStreamAdPlacer;
 import com.mopub.nativeads.NativeErrorCode;
-import com.mopub.nativeads.NativeResponse;
+//import com.mopub.nativeads.NativeResponse;
 import com.mopub.nativeads.RequestParameters;
 import com.mopub.nativeads.ViewBinder;
 

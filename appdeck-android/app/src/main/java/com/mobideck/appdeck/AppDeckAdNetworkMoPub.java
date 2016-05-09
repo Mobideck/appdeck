@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubInterstitial;
 import com.mopub.mobileads.MoPubView;
-import com.mopub.nativeads.NativeResponse;
+//import com.mopub.nativeads.NativeResponse;
 
 import org.json.JSONObject;
 
@@ -166,7 +166,7 @@ public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork {
     }
 
 
-
+/*
     private NativeResponse mNativeResponse = null;
 
 
@@ -192,7 +192,7 @@ public class AppDeckAdNetworkMoPub extends AppDeckAdNetwork {
             return;
         mNativeAd = new AppDeckAdNetworkMoPubNativeAd(this);
     }
-
+*/
 
 
 }

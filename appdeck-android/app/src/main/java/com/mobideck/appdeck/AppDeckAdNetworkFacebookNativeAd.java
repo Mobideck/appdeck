@@ -9,7 +9,7 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.NativeAd;
 import com.mopub.nativeads.MoPubNative;
 import com.mopub.nativeads.NativeErrorCode;
-import com.mopub.nativeads.NativeResponse;
+//import com.mopub.nativeads.NativeResponse;
 import com.mopub.nativeads.RequestParameters;
 
 import java.util.EnumSet;
