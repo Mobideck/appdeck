@@ -3,10 +3,13 @@ package com.mobideck.appdeck;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -50,6 +53,8 @@ import android.annotation.TargetApi;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import name.cpr.VideoEnabledWebChromeClient;
 import name.cpr.VideoEnabledWebView;
@@ -406,7 +411,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 //WebResourceResponse response = new WebResourceResponse(null, null, 200, "OK", null, new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
             }
 
-            return super.shouldInterceptRequest(view, request);
+
 
 /*
             // handle If-None-Match header
@@ -416,10 +421,12 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                     WebResourceResponse response = new WebResourceResponse(null, null, 304, "Not Modified", null, new ByteArrayInputStream( "".getBytes() ));
                     return response;
                 }
-            }
+            }*/
 
             // present in embed ressources ?
             CacheManagerCachedResponse cachedResponse = appDeck.cache.getEmbedResponse(absoluteUrl);
+
+            /*
 
             // present in cache AND should be cache forever ?
             if (cachedResponse == null && appDeck.cache.shouldCache(absoluteUrl))
@@ -459,7 +466,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             if (cachedResponse == null && shouldLoadFromCache)
                 cachedResponse = appDeck.cache.getCachedResponse(absoluteUrl);
-
+            */
             // cached response
             if (cachedResponse != null)
             {
@@ -469,8 +476,9 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 int statusCode = 200;
                 String reasonPhrase = "OK";
                 Map<String, String> responseHeaders = new HashMap<String, String>();
-                responseHeaders.put("ETag", "appdeckcache"+System.currentTimeMillis());
+                //responseHeaders.put("ETag", "appdeckcache"+System.currentTimeMillis());
                 responseHeaders.put("Content-Type", mimeType);
+                responseHeaders.put("Cache-Control", "max-age=604800");
                 if (encoding != null)
                     responseHeaders.put("Content-Encoding", encoding);
                 InputStream stream = cachedResponse.getStream();
@@ -480,8 +488,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 }
                 Log.e(TAG, "shouldInterceptRequest: Stream of cached response "+absoluteUrl+" is NULL");
             }
-*/
 
+            return super.shouldInterceptRequest(view, request);
         }
 
         @Override

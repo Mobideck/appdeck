@@ -2685,6 +2685,8 @@ public class Loader extends AppCompatActivity {
         if (this.proxyHost != null) {
             System.setProperty("http.proxyHost", this.proxyHost);
             System.setProperty("http.proxyPort", this.proxyPort + "");
+            System.setProperty("https.proxyHost", this.proxyHost);
+            System.setProperty("https.proxyPort", this.proxyPort + "");
         }
     }
 
@@ -2693,9 +2695,14 @@ public class Loader extends AppCompatActivity {
         if (this.originalProxyHost != null) {
             System.setProperty("http.proxyHost", this.originalProxyHost);
             System.setProperty("http.proxyPort", this.originalProxyPort + "");
+            System.setProperty("https.proxyHost", this.originalProxyHost);
+            System.setProperty("https.proxyPort", this.originalProxyPort + "");
         } else {
             System.setProperty("http.proxyHost", "");
             System.setProperty("http.proxyPort", "");
+            System.setProperty("https.proxyHost", "");
+            System.setProperty("https.proxyPort", "");
+
         }
     }
 }
