@@ -153,6 +153,10 @@
 }
 -keep class com.millennialmedia**
 
+# Presage
+-dontwarn android.net.*
+-dontwarn android.provider.Browser
+
 # Grunt
 -keep class net.grunt.**
 
