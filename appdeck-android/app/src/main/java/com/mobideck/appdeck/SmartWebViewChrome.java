@@ -471,12 +471,23 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             if (cachedResponse != null)
             {
                 JSONObject headers = cachedResponse.getHeaders();
-                String mimeType = headers.optString("Content-Type", "application/octet-stream");
+                String mimeType = headers.optString("Content-Type", "application/octet-stream").toLowerCase();
                 String encoding = headers.optString("Content-Encoding", null);
                 int statusCode = 200;
                 String reasonPhrase = "OK";
                 Map<String, String> responseHeaders = new HashMap<String, String>();
                 //responseHeaders.put("ETag", "appdeckcache"+System.currentTimeMillis());
+                if (mimeType.contains("text/html"))
+                {
+                    encoding = "UTF-8";
+                    if (mimeType.contains("charset="))
+                        encoding = mimeType.substring(mimeType.lastIndexOf("charset=")+8);
+                    else if (mimeType.contains("iso-8859-1"))
+                        encoding = "ISO-8859-1";
+                    else if (mimeType.contains("windows-1251"))
+                        encoding = "Windows-1251";
+                    mimeType = "text/html";
+                }
                 responseHeaders.put("Content-Type", mimeType);
                 responseHeaders.put("Cache-Control", "max-age=604800");
                 if (encoding != null)
