@@ -31,7 +31,7 @@ android {
     compileSdkVersion 23
 
     // http://tools.android.com/release
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "com.mobideck.appdeck"
@@ -44,7 +44,7 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
 
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary = false
     }
 
     lintOptions {
