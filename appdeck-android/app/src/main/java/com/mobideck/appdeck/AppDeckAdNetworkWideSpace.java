@@ -46,7 +46,7 @@ public class AppDeckAdNetworkWideSpace extends AppDeckAdNetwork {
     private AdSpace mInterstitialAdSpace;
 
     public boolean supportInterstitial() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
             return false;
         if (widespaceInterstitialSiteId == null || widespaceInterstitialSiteId.isEmpty())
             return false;
@@ -148,7 +148,7 @@ public class AppDeckAdNetworkWideSpace extends AppDeckAdNetwork {
     private AdSpace mBannerAdSpace;
 
     public boolean supportBanner() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
             return false;
         if (widespaceBannerSiteId == null || widespaceBannerSiteId.isEmpty())
             return false;
