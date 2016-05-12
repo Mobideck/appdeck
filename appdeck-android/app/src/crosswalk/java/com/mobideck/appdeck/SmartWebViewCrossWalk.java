@@ -254,12 +254,12 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		setLayerType(View.LAYER_TYPE_HARDWARE, null);
 		
 		//XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
-						
+
 		CookieManager.getInstance().setAcceptCookie(true);
 		
 		setAnimationCacheEnabled(true);
 		setDrawingCacheEnabled(true);
-		
+
 		userAgent = getWebViewUserAgent(this);
 //		userAgent = userAgent + " AppDeck "+appDeck.packageName+"/"+appDeck.config.app_version;
 		userAgent = userAgent + " AppDeck"+(appDeck.isTablet? "-tablet" : "-phone" )+" "+appDeck.packageName+"/"+appDeck.config.app_version;
@@ -562,15 +562,13 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (appDeck.noCache)
 	    		return null;
 
-			if (true)
-				return null;
-
             // present in embed ressources ?
             CacheManagerCachedResponse cachedResponse = appDeck.cache.getEmbedResponse(absoluteURL);
 
-            // present in cache AND should be cache forever ?
+            /*// present in cache AND should be cache forever ?
             if (cachedResponse == null && appDeck.cache.shouldCache(absoluteURL))
                 cachedResponse = appDeck.cache.getCachedResponse(absoluteURL);
+                */
 
             // cached response + ask to cache forever header
             if (cachedResponse != null)
@@ -578,6 +576,19 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
                 JSONObject headers = cachedResponse.getHeaders();
                 String mimeType = headers.optString("Content-Type", "application/octet-stream");
                 String encoding = headers.optString("Content-Encoding", null);
+				if (mimeType.contains("text/html"))
+				{
+					encoding = "UTF-8";
+					if (mimeType.contains("charset="))
+						encoding = mimeType.substring(mimeType.lastIndexOf("charset=")+8);
+					else if (mimeType.contains("iso-8859-1"))
+						encoding = "ISO-8859-1";
+					else if (mimeType.contains("windows-1251"))
+						encoding = "Windows-1251";
+					mimeType = "text/html";
+				}
+				//responseHeaders.put("Content-Encoding", encoding);
+
                 InputStream stream = cachedResponse.getStream();
                 if (stream != null) {
                     WebResourceResponse response = new WebResourceResponse (mimeType, encoding, stream);
@@ -586,6 +597,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
                 Log.e(TAG, "shouldInterceptRequest: Stream of cached response "+absoluteURL+" is NULL");
                 cachedResponse = null;
             }
+
+			if (true)
+				return null;
 
             /*
 	    	// resource is in embed resources
