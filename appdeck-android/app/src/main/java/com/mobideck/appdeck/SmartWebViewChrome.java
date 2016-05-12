@@ -411,7 +411,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 //WebResourceResponse response = new WebResourceResponse(null, null, 200, "OK", null, new ByteArrayInputStream( AppDeck.error_html.getBytes() ));
             }
 
-
+            if (true)
+                return null;
 
 /*
             // handle If-None-Match header

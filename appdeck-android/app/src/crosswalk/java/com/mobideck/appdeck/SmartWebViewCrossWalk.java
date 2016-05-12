@@ -562,6 +562,9 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    	if (appDeck.noCache)
 	    		return null;
 
+			if (true)
+				return null;
+
             // present in embed ressources ?
             CacheManagerCachedResponse cachedResponse = appDeck.cache.getEmbedResponse(absoluteURL);
 
