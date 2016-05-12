@@ -106,6 +106,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -133,6 +134,7 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+
 import io.netty.handler.codec.http.HttpRequest;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
@@ -415,10 +417,8 @@ public class Loader extends AppCompatActivity {
 
         // configure action bar
 
-        //mUpArrow = getResources().getDrawable(R.drawable.ic_arrow_back_white_24dp);
-
-        //mUpArrow = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp);
-        mUpArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
+        mUpArrow = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp);
+        //mUpArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
 
         mUpArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
         mDrawerToggle.setHomeAsUpIndicator(mUpArrow);

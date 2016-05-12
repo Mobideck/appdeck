@@ -44,7 +44,6 @@ android {
         // Enabling multidex support.
         multiDexEnabled true
 
-        vectorDrawables.useSupportLibrary = false
     }
 
     lintOptions {
