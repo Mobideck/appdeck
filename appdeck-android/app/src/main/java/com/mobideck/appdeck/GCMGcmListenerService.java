@@ -134,7 +134,7 @@ public class GCMGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify((int)System.currentTimeMillis()/10000 /* ID of notification */, notificationBuilder.build());
 
         try {
             AppDeck appDeck = AppDeck.getInstance();
