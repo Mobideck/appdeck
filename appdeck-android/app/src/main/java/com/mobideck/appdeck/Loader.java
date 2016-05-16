@@ -1800,7 +1800,15 @@ public class Loader extends AppCompatActivity {
 			Log.i("API", "**PAGE POP ROOT**");
 			popRootFragment();
 			return true;
-		}		
+		}
+
+        if (call.command.equalsIgnoreCase("loadextern"))
+        {
+            Log.i("API", "**LOAD EXTERN**");
+            String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
+            this.loadExternalURL(absoluteURL);
+            return true;
+        }
 
 		if (call.command.equalsIgnoreCase("slidemenu"))
 		{
