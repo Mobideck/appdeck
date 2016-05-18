@@ -1266,13 +1266,13 @@ public class Loader extends AppCompatActivity {
     	return false;
     }
 
-    public boolean loadExternalURL(String absoluteURL)
+    public boolean loadExternalURL(String absoluteURL, boolean force)
     {
         Uri uri = Uri.parse(absoluteURL);
         if (uri != null)
         {
             String host = uri.getHost();
-            if (host != null && isSameDomain(host) == false)
+            if (force || (host != null && isSameDomain(host) == false))
             {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -1319,7 +1319,7 @@ public class Loader extends AppCompatActivity {
     	}
         if (loadSpecialURL(absoluteURL))
             return;
-        if (loadExternalURL(absoluteURL))
+        if (loadExternalURL(absoluteURL, false))
             return;
     	prepareRootPage();
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
@@ -1352,7 +1352,7 @@ public class Loader extends AppCompatActivity {
     {
     	if (loadSpecialURL(absoluteURL))
     		return -1;
-        if (loadExternalURL(absoluteURL))
+        if (loadExternalURL(absoluteURL, false))
             return -1;
 
     	if (isForeground == false)
@@ -1806,7 +1806,7 @@ public class Loader extends AppCompatActivity {
         {
             Log.i("API", "**LOAD EXTERN**");
             String absoluteURL = call.smartWebView.resolve(call.input.getString("param"));
-            this.loadExternalURL(absoluteURL);
+            this.loadExternalURL(absoluteURL, true);
             return true;
         }
 
