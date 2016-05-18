@@ -68,6 +68,8 @@ public class PageFragmentSwap extends AppDeckFragment {
 	// loadPage not called
 	private boolean shouldCallLoadPage = false;
 
+	MaterialDialog currentProgress = null;
+
 	public static PageFragmentSwap newInstance(String absoluteURL)
 	{
 		//android.os.Debug.startMethodTracing("page");
@@ -270,6 +272,10 @@ public class PageFragmentSwap extends AppDeckFragment {
     @Override
     public void onDestroyView()
     {
+		if (currentProgress != null) {
+			currentProgress.dismiss();
+			currentProgress = null;
+		}
     	super.onDestroyView();
         SmartWebViewFactory.recycleSmartWebView(pageWebView);
         SmartWebViewFactory.recycleSmartWebView(pageWebViewAlt);
@@ -962,6 +968,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 
         if (call.command.equalsIgnoreCase("loadingshow") || call.command.equalsIgnoreCase("loadingset"))
         {
+			currentProgress = new LightLoader(getContext());
+			/*
+			currentProgress = new MaterialDialog.Builder(getContext())
+					//.title(R.string.progress_dialog)
+					//.content(R.string.please_wait)
+					.progress(true, 0)
+					.autoDismiss(false)
+					.show();*/
             /*preLoadingIndicator.setVisibility(View.VISIBLE);
             preLoadingIndicator.bringToFront();*/
             return true;
@@ -969,6 +983,10 @@ public class PageFragmentSwap extends AppDeckFragment {
         if (call.command.equalsIgnoreCase("loadinghide"))
         {
             //preLoadingIndicator.setVisibility(View.GONE);
+			if (currentProgress != null) {
+				currentProgress.dismiss();
+				currentProgress = null;
+			}
             return true;
         }
 		return super.apiCall(call);
