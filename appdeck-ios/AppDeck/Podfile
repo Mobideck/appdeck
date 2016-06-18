@@ -15,5 +15,12 @@ target 'AppDeck' do
   pod 'SVProgressHUD'
   #  pod 'ARSPopover'
   pod 'SIAlertView'
+  
+  # begin appdeck-ios-plugins
+  
+  #pod 'appdeck-ios-iap', :path => '~/Documents/git/plugins/appdeck-ios-iap'
+  
+  # end appdeck-ios-plugins
+  
 end
 
