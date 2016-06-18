@@ -42,14 +42,13 @@
 
 -(void)fetch
 {
+#ifdef DEBUG
+    NSString *adConfUrl = @"http://xad.dev.appdeck.mobi/api/ads/template/get";
+#else
     NSString *adConfUrl = @"http://xad.appdeck.mobi/api/ads/template/get";
-    
-//    adConfUrl = @"http://oxom-cloud.seb-dev-new.paris.office.netavenir.com/api/ads/template/get";
-//    adConfUrl = @"http://test.cloud.oxom.com/api/ads/template/get";
-//    adConfUrl = @"http://dev.mobideck.net/test/oxomad.php";
-//    adConfUrl = @"http://xad.appdeck.mobi/api/ads/template/get";
-    
-    NSMutableDictionary *adContext = [self getContext];//[[NSMutableDictionary alloc] init];
+#endif
+
+    NSMutableDictionary *adContext = [self getContext];
     
     NSMutableDictionary *adParams = [[NSMutableDictionary alloc] init];
     [adParams setObject:adContext forKey:@"context"];
@@ -76,7 +75,9 @@
         return;
     }
     
-    //NSLog(@"JSON: %@",[[NSString alloc] initWithData:resultJSONData encoding:NSUTF8StringEncoding]);
+#ifdef DEBUG
+    NSLog(@"AdRequest: %@: %@", adConfUrl, [[NSString alloc] initWithData:resultJSONData encoding:NSUTF8StringEncoding]);
+#endif
     
     [request setHTTPMethod: @"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -89,7 +90,9 @@
             self.page.adRequest = nil;
             return;
         }
-        //NSLog(@"AdConf: %@ - %@", result, error);
+#ifdef DEBUG
+        NSLog(@"AdConf: %@ - %@", result, error);
+#endif
         [self loadConfiguration:result];
         [self start];
     }];
