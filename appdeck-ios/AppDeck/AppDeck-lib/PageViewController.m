@@ -27,6 +27,7 @@
 #import "LogViewController.h"
 
 #import "AppDeckAdNative.h"
+#import "KeyboardStateListener.h"
 
 @interface PageViewController ()
 
@@ -279,7 +280,7 @@
         }];
     }
     // cache ?
-    else if (self.loader.appDidLaunch == NO && [self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES)
+    else if (self.loader.appDidLaunch == NO && [self.loader.appDeck.cache requestIsInCache:[NSURLRequest requestWithURL:self.url] date:&date] == YES && self.screenConfiguration.ttl != -1)
     {
         cachePolicy = NSURLRequestReturnCacheDataElseLoad;
         if ([date compare:[NSDate dateWithTimeIntervalSinceNow:-self.screenConfiguration.ttl]] == NSOrderedAscending)
@@ -759,6 +760,8 @@
         [self.loader executeJS:js];
         return YES;
     }
+
+    
     
     if ([call.command isEqualToString:@"disable_pulltorefresh"])
     {
@@ -881,6 +884,17 @@
         [appdeckProgressHUD hide];
         return YES;
     }
+    /*
+    if ([call.command isEqualToString:@"cordovainit"])
+    {
+        [AppDeckCordovaViewController createWithPageViewController:self];
+        return YES;
+    }
+    if ([call.command isEqualToString:@"cordovainject"])
+    {
+        return YES;
+    }*/
+
     
     return [super apiCall:call];
 }
@@ -1702,6 +1716,11 @@
             _interstitialAd.view.hidden = YES;
     }*/
 
+}
+
+-(UIView *)webView
+{
+    return contentCtl.webView;
 }
 
 @end
