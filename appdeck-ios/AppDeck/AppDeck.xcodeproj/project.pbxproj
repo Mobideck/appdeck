@@ -237,6 +237,7 @@
 		A979298D1C58BD140079D49D /* CacheURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = A979298C1C58BD140079D49D /* CacheURLProtocol.m */; };
 		A97929921C5B7ADC0079D49D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A97929911C5B7ADC0079D49D /* Images.xcassets */; };
 		A99A58F3172FCB95007D2106 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A99A58F1172FCB95007D2106 /* app.cpp */; };
+		A99B48A11CF314F400261446 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99B48A01CF314F400261446 /* AssetsLibrary.framework */; };
 		A99EF6DA1C09E11200DAC126 /* CustomECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99EF6D91C09E11200DAC126 /* CustomECSlidingViewController.m */; };
 		A9A0B0B117326583003237E0 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = A9A0B0B017326583003237E0 /* iTunesArtwork */; };
 		A9A58D79182BEC9B00AAF541 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A58D78182BEC9B00AAF541 /* Social.framework */; };
@@ -432,6 +433,8 @@
 		A9CC036C1BA1DE1100C0F799 /* vg_mute_on.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CC03651BA1DE1100C0F799 /* vg_mute_on.png */; };
 		A9CC036D1BA1DE1100C0F799 /* vg_privacy.png in Resources */ = {isa = PBXBuildFile; fileRef = A9CC03661BA1DE1100C0F799 /* vg_privacy.png */; };
 		A9CC036E1BA1DE1100C0F799 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC03671BA1DE1100C0F799 /* VungleSDK.framework */; };
+		A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */; };
+		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
@@ -912,6 +915,7 @@
 		A979298C1C58BD140079D49D /* CacheURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CacheURLProtocol.m; path = "AppDeck-lib/CacheURLProtocol.m"; sourceTree = "<group>"; };
 		A97929911C5B7ADC0079D49D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A99A58F1172FCB95007D2106 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app.cpp; sourceTree = "<group>"; };
+		A99B48A01CF314F400261446 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A99EF6D81C09E11200DAC126 /* CustomECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomECSlidingViewController.h; sourceTree = "<group>"; };
 		A99EF6D91C09E11200DAC126 /* CustomECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomECSlidingViewController.m; sourceTree = "<group>"; };
 		A9A0B0B017326583003237E0 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = SOURCE_ROOT; };
@@ -1302,6 +1306,11 @@
 		A9CC03651BA1DE1100C0F799 /* vg_mute_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_mute_on.png; sourceTree = "<group>"; };
 		A9CC03661BA1DE1100C0F799 /* vg_privacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vg_privacy.png; sourceTree = "<group>"; };
 		A9CC03671BA1DE1100C0F799 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VungleSDK.framework; sourceTree = "<group>"; };
+		A9F3F9B61CF754800079225D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A9F3F9BA1CF82BE20079225D /* AppDeckPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckPlugin.h; path = "AppDeck-lib/AppDeckPlugin.h"; sourceTree = "<group>"; };
+		A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPlugin.m; path = "AppDeck-lib/AppDeckPlugin.m"; sourceTree = "<group>"; };
+		A9F3F9C01CF82C1C0079225D /* AppDeckPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckPluginManager.h; path = "AppDeck-lib/AppDeckPluginManager.h"; sourceTree = "<group>"; };
+		A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPluginManager.m; path = "AppDeck-lib/AppDeckPluginManager.m"; sourceTree = "<group>"; };
 		A9F643911708BF1F003D07B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1310,6 +1319,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A91DFAA916CFAE8C00512CA0 /* MobileCoreServices.framework in Frameworks */,
+				A91DFA1816CE8D1400512CA0 /* CoreGraphics.framework in Frameworks */,
+				A90B3B9218293E1B0039A48A /* CoreLocation.framework in Frameworks */,
+				A99B48A11CF314F400261446 /* AssetsLibrary.framework in Frameworks */,
 				A9BE1A601C6224DA002177EE /* PassKit.framework in Frameworks */,
 				A916BBCE1B8B717E000F8D47 /* libxml2.dylib in Frameworks */,
 				A916BBA61B8B5BDF000F8D47 /* GoogleMobileAds.framework in Frameworks */,
@@ -1328,7 +1341,6 @@
 				A90B3B9418293E350039A48A /* CoreTelephony.framework in Frameworks */,
 				A9CC035E1BA1DD5200C0F799 /* libFlurryAds_7.1.0.a in Frameworks */,
 				A900BB891BBC223F005D1ECF /* libSmartAdServer.a in Frameworks */,
-				A90B3B9218293E1B0039A48A /* CoreLocation.framework in Frameworks */,
 				A928F97B1B307178009F0FE8 /* WSLibrary.framework in Frameworks */,
 				A9ADBD5F18102B3400EE23C1 /* GLKit.framework in Frameworks */,
 				A9ADBD5D18102ADF00EE23C1 /* CoreText.framework in Frameworks */,
@@ -1354,7 +1366,6 @@
 				A925D52717003D3F000F6EEC /* AddressBookUI.framework in Frameworks */,
 				A925D52517003D3A000F6EEC /* AddressBook.framework in Frameworks */,
 				A925D51917003C27000F6EEC /* AdSupport.framework in Frameworks */,
-				A91DFAA916CFAE8C00512CA0 /* MobileCoreServices.framework in Frameworks */,
 				A916BBBC1B8B5D03000F8D47 /* MMAdSDK.framework in Frameworks */,
 				A91DFA7A16CE971700512CA0 /* CFNetwork.framework in Frameworks */,
 				A9CC035D1BA1DD5200C0F799 /* libFlurry_7.1.0.a in Frameworks */,
@@ -1364,7 +1375,6 @@
 				A913C7CF1BDA7A9E0054B590 /* libNetAvenirAds.a in Frameworks */,
 				A91DFA1416CE8D1400512CA0 /* UIKit.framework in Frameworks */,
 				A91DFA1616CE8D1400512CA0 /* Foundation.framework in Frameworks */,
-				A91DFA1816CE8D1400512CA0 /* CoreGraphics.framework in Frameworks */,
 				A9573C361AF9084E0086FCC2 /* libGreystripeSDK.a in Frameworks */,
 				47DE00EE2DF55B66BA29C4DB /* libPods-AppDeck.a in Frameworks */,
 			);
@@ -2019,6 +2029,7 @@
 		A916D48C1A1E0AC4005FE1AE /* AppDeck */ = {
 			isa = PBXGroup;
 			children = (
+				A9F3F9B81CF82BA30079225D /* Api */,
 				A916D4751A1E03FE005FE1AE /* Ad */,
 				A916D4961A1E0D05005FE1AE /* Utils */,
 				A916D4951A1E0C8B005FE1AE /* ManagedWebView */,
@@ -2308,6 +2319,8 @@
 		A91DFA1216CE8D1400512CA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9F3F9B61CF754800079225D /* StoreKit.framework */,
+				A99B48A01CF314F400261446 /* AssetsLibrary.framework */,
 				A9BE1A5F1C6224DA002177EE /* PassKit.framework */,
 				A916BBCD1B8B717E000F8D47 /* libxml2.dylib */,
 				A9573C4D1AF9104E0086FCC2 /* WebKit.framework */,
@@ -3198,6 +3211,17 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A9F3F9B81CF82BA30079225D /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				A9F3F9BA1CF82BE20079225D /* AppDeckPlugin.h */,
+				A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */,
+				A9F3F9C01CF82C1C0079225D /* AppDeckPluginManager.h */,
+				A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */,
+			);
+			name = Api;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3205,14 +3229,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A91DFA3616CE8D1400512CA0 /* Build configuration list for PBXNativeTarget "AppDeck" */;
 			buildPhases = (
-				237B7DBA50206EE6560EC73B /* Check Pods Manifest.lock */,
+				237B7DBA50206EE6560EC73B /* 📦 Check Pods Manifest.lock */,
 				A91DFA0C16CE8D1400512CA0 /* Sources */,
 				A91DFA0D16CE8D1400512CA0 /* Frameworks */,
 				A91DFA0E16CE8D1400512CA0 /* Resources */,
 				A90B3B52182786AF0039A48A /* AppDeck embed ressources */,
 				A9BA712A1BC52642005A212E /* Fabric.io */,
-				34BAC32683431AF25E89D663 /* Embed Pods Frameworks */,
-				41537ED395FB36B09FD69CC5 /* Copy Pods Resources */,
+				34BAC32683431AF25E89D663 /* 📦 Embed Pods Frameworks */,
+				41537ED395FB36B09FD69CC5 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3239,7 +3263,7 @@
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Maps.iOS = {
 								enabled = 0;
@@ -3311,14 +3335,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		237B7DBA50206EE6560EC73B /* Check Pods Manifest.lock */ = {
+		237B7DBA50206EE6560EC73B /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3326,14 +3350,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		34BAC32683431AF25E89D663 /* Embed Pods Frameworks */ = {
+		34BAC32683431AF25E89D663 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3341,14 +3365,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppDeck/Pods-AppDeck-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		41537ED395FB36B09FD69CC5 /* Copy Pods Resources */ = {
+		41537ED395FB36B09FD69CC5 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3497,6 +3521,7 @@
 				A9ADF19C1BC53EBC0026305E /* MPLogEvent.m in Sources */,
 				A916D2EB1A1E03E7005FE1AE /* iCarousel.m in Sources */,
 				A916D40C1A1E03E7005FE1AE /* NSData+Zlib.m in Sources */,
+				A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */,
 				A916D2F11A1E03E7005FE1AE /* JSonHTTPApi.m in Sources */,
 				A9ADF1CA1BC53EBC0026305E /* MPLogProvider.m in Sources */,
 				A9ADF1911BC53EBC0026305E /* MPAdServerCommunicator.m in Sources */,
@@ -3654,6 +3679,7 @@
 				A979298D1C58BD140079D49D /* CacheURLProtocol.m in Sources */,
 				A916D3A81A1E03E7005FE1AE /* MRBlurView.m in Sources */,
 				A916D3B81A1E03E7005FE1AE /* PageBarButton.m in Sources */,
+				A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */,
 				A916D3E41A1E03E7005FE1AE /* UIImage+WebP.m in Sources */,
 				A916D3B51A1E03E7005FE1AE /* NSString+UIColor.m in Sources */,
 				A916D2D91A1E03E7005FE1AE /* AppDeckAdViewController.m in Sources */,
@@ -3950,6 +3976,7 @@
 					"-ObjC",
 					"-all_load",
 					"$(inherited)",
+					"-force_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
