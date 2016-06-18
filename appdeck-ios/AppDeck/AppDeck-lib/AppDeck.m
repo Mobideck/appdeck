@@ -37,8 +37,11 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
+#import "AppDeckPluginManager.h"
 
 #import "CacheURLProtocol.h"
+
+#import "KeyboardStateListener.h"
 
 @implementation AppDeck
 
@@ -581,7 +584,7 @@
         return YES;
     }
     
-    return NO;
+    return [AppDeckPluginManager handleAPICall:call];
 }
 
 // call after json config is loaded
