@@ -35,6 +35,7 @@
 @property (strong, nonatomic) NSURL *baseURL;
 @property (readonly, nonatomic) NSString *jsTarget;
 
+-(void)sendCallBackWithErrorMessage:(NSString *)errorMessage;
 -(void)sendCallBackWithError:(NSError *)error;
 -(void)sendCallbackWithResult:(NSArray *)result;
 

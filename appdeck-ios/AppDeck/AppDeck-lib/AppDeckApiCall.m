@@ -60,6 +60,12 @@
     [self.managedWebView executeJS:js];
 }
 
+-(void)sendCallBackWithErrorMessage:(NSString *)errorMessage
+{
+    self.callBackSend = YES;
+    [self sendCallBackWithType:@"error" params:@[errorMessage]];
+}
+
 -(void)sendCallBackWithError:(NSError *)error
 {
     self.callBackSend = YES;
