@@ -1,14 +1,8 @@
 package com.mobideck.appdeck.plugin;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.util.Log;
-
-import com.android.vending.billing.IInAppBillingService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
