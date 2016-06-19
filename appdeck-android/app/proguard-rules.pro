@@ -19,7 +19,8 @@
 -dontobfuscate
 
 #appdeck plugin
--keep class * implements com.mobideck.appdeck.plugin
+-keep class * implements com.mobideck.appdeck.plugin.Plugin
+-dontnote com.mobideck.appdeck.plugin.*
 
 # crashlytics
 -keep class com.crashlytics.** { *; }
