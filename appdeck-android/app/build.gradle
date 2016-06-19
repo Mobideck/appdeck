@@ -136,7 +136,7 @@ dependencies {
     // http://developer.android.com/tools/support-library/index.html
     //compile 'com.android.support:appcompat-v7:23.3.0'
     //compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:design:23.4.0'
 
     // https://developers.google.com/android/guides/setup
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
@@ -224,8 +224,11 @@ dependencies {
     // aerserv: 2.33.0: https://support.aerserv.com/hc/en-us/articles/204159160-Android-SDK-Integration-Version-2-30
     // amazonAds: 5.7.1.1 https://developer.amazon.com/public/resources/development-tools/sdk
 
+    // begin appdeck plugin
 
+    compile 'com.github.mobideck:appdeck-android-iap:master-SNAPSHOT'
 
+    // end appdeck plugin
 }
 
 preBuild.doFirst {
