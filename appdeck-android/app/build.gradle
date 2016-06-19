@@ -224,7 +224,7 @@ dependencies {
     // aerserv: 2.33.0: https://support.aerserv.com/hc/en-us/articles/204159160-Android-SDK-Integration-Version-2-30
     // amazonAds: 5.7.1.1 https://developer.amazon.com/public/resources/development-tools/sdk
 
-    compile 'com.github.mobideck:appdeck-android-plugin:master-SNAPSHOT'
+    compile 'com.github.mobideck:appdeck-android-plugin:1.0.0'
 
     // begin appdeck plugin
 
