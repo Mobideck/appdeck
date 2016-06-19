@@ -455,7 +455,16 @@ public class Loader extends AppCompatActivity {
         });
 
         pluginManager = PluginManager.getSharedInstance();
+
+        // begin register plugins
+
+        pluginManager.registerPlugin(new com.mobideck.appdeck.iap.AppDeckPluginIAP());
+
+        // end register plugins
+
         pluginManager.onActivityCreate(this);
+
+
 
         mUIReady = true;
 
