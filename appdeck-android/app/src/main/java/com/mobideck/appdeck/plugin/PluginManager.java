@@ -37,7 +37,7 @@ public class PluginManager {
 
         // begin register plugins
 
-        registerPlugin(new com.mobideck.appdeck.iap.AppDeckPluginIAP());
+        //registerPlugin(new com.mobideck.appdeck.iap.AppDeckPluginIAP());
 
         // end register plugins
     }

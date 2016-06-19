@@ -226,7 +226,7 @@ dependencies {
 
     // begin appdeck plugin
 
-    compile 'com.github.mobideck:appdeck-android-iap:master-SNAPSHOT'
+    //compile 'com.github.mobideck:appdeck-android-iap:master-SNAPSHOT'
 
     // end appdeck plugin
 }
