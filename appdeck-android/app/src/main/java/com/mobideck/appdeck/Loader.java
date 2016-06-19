@@ -123,6 +123,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.mobideck.appdeck.plugin.PluginManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -199,6 +200,8 @@ public class Loader extends AppCompatActivity {
 
     CallbackManager callbackManager;
     TwitterAuthClient mTwitterAuthClient;
+
+    PluginManager pluginManager;
 
     public SmartWebViewInterface smartWebViewRegiteredForActivityResult = null;
 
@@ -451,7 +454,12 @@ public class Loader extends AppCompatActivity {
             }
         });
 
+        pluginManager = PluginManager.getSharedInstance();
+        pluginManager.onActivityCreate(this);
+
         mUIReady = true;
+
+
         preLoadLoading();
     }
 
@@ -749,6 +757,8 @@ public class Loader extends AppCompatActivity {
     {
     	super.onResume();
         registerReceiver();
+        if (pluginManager != null)
+            pluginManager.onActivityResume(this);
     }
 
     @Override
@@ -794,6 +804,8 @@ public class Loader extends AppCompatActivity {
         AppEventsLogger.deactivateApp(this);
         if (adManager != null)
             adManager.onActivityPause();
+        if (pluginManager != null)
+            pluginManager.onActivityPause(this);
     }
 
     private void registerReceiver(){
@@ -863,6 +875,8 @@ public class Loader extends AppCompatActivity {
     	super.onDestroy();
         isForeground = false;
         SmartWebViewFactory.onActivityDestroy(this);
+        if (pluginManager != null)
+            pluginManager.onActivityDestroy(this);
     }    
 
     // Sliding Menu API
@@ -2018,6 +2032,9 @@ public class Loader extends AppCompatActivity {
             return true;
         }
 
+        if (pluginManager.handleCall(call))
+            return true;
+
         Log.i("API ERROR", call.command);
 		return false;
 	}
@@ -2621,6 +2638,8 @@ public class Loader extends AppCompatActivity {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         if (mTwitterAuthClient != null)
             mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
+        if (pluginManager != null)
+            pluginManager.onActivityResult(this, requestCode, resultCode, data);
     }
 
 
