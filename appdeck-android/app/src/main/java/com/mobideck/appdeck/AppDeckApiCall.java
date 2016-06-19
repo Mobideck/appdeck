@@ -13,29 +13,31 @@ import org.json.JSONTokener;
 import android.view.View;
 import android.webkit.ValueCallback;
 
+import com.mobideck.appdeck.plugin.ApiCall;
+
 /*import android.util.Log;
 import android.webkit.JsPromptResult;
 import android.webkit.WebView;*/
 
-public class AppDeckApiCall {
+public class AppDeckApiCall extends ApiCall {
 
 	//public WebView webview;
 	public View webview;
 	//public SmartWebView smartWebView;
 	//public XSmartWebView smartWebView;
 	public SmartWebViewInterface smartWebView;
-	public String command;
-	public String eventID;
-	public String inputJSON;
-	public JSONObject inputObject;
-	public JSONObject paramObject;
+	//public String command;
+	//public String eventID;
+	//public String inputJSON;
+	//public JSONObject inputObject;
+	//public JSONObject paramObject;
 	public AppDeckJsonNode input;
 	public AppDeckJsonNode param;
 	
-	public String resultJSON;
+	//public String resultJSON;
 	//@property (strong, nonatomic) id result;
-	public Boolean success;
-	public Boolean callBackSend;
+	//public Boolean success;
+	//public Boolean callBackSend;
 	//public JsPromptResult result;
     public SmartWebViewResult result;
 	//public XWalkJavascriptResult result;
@@ -50,16 +52,18 @@ public class AppDeckApiCall {
 		this.command = command;
 		this.inputJSON = inputJSON;
 		this.result = result;
-		input = null;
+		//input = null;
 		try {
 			//JSONArray inputArray = (JSONArray) new JSONTokener(inputJSON).nextValue();
 			inputObject = (JSONObject) new JSONTokener(inputJSON).nextValue();
+			if (inputObject != null)
+				paramObject = inputObject.optJSONObject("param");
 			input = new AppDeckJsonNode(inputObject);
 			param = new AppDeckJsonNode(paramObject);
 			eventID = input.getString("eventid", "false");
-			Object obj = inputObject.opt("param");
+			/*Object obj = inputObject.opt("param");
 			if (obj instanceof JSONObject)
-				param = new AppDeckJsonNode((JSONObject)obj);
+				param = new AppDeckJsonNode((JSONObject)obj);*/
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
