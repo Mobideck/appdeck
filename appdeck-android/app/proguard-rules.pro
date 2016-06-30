@@ -20,8 +20,8 @@
 
 #appdeck plugin
 #-keep class * implements com.mobideck.appdeck.plugin.Plugin
--keep class com.mobideck.appdeck.* {*;}
--dontnote com.mobideck.appdeck.plugin.*
+-keep class com.mobideck.appdeck.** {*;}
+-keep class com.mobideck.appdeck.plugin.* {*;}
 
 # crashlytics
 -keep class com.crashlytics.** { *; }
