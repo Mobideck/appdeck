@@ -309,16 +309,6 @@ public class Loader extends AppCompatActivity {
 
                 Log.i(TAG, "filter registered at @" + proxyPort);
 
-                //Loader.this.originalProxyHost = "192.168.2.1";
-                //Loader.this.originalProxyPort = 8888;
-
-                //Loader.this.originalProxyHost = null;
-                //Loader.this.originalProxyPort = -1;
-
-
-                //proxyHost = "192.168.2.1";
-                //proxyPort = 8888;
-
                 CacheFiltersSource filtersSource = new CacheFiltersSource();
 
                 //try {
@@ -368,37 +358,6 @@ public class Loader extends AppCompatActivity {
                                     }*/
                                 });
                             }
-
-/*
-                                chainedProxies.add(new ChainedProxyAdapter() {
-                                    @Override
-                                    public InetSocketAddress getChainedProxyAddress() {
-                                        try {
-                                            return new InetSocketAddress(InetAddress.getByName("192.168.2.1"), 8888);
-                                        } catch (UnknownHostException e) {
-                                            e.printStackTrace();
-                                        }
-                                        return null;
-                                    }
-
-                                    @Override
-                                    public void filterRequest(HttpObject httpObject) {
-                                        if (httpObject instanceof HttpRequest) {
-                                            HttpRequest httpRequest = (HttpRequest) httpObject;
-
-                                            //if (this.headers != null) {
-                                            //    for (Map.Entry<String, String> header : this.headers.entrySet()) {
-                                            //        httpRequest.headers().add(header.getKey(), header.getValue());
-                                            //    }
-                                            //}
-
-                                            httpRequest.headers().remove("Via");
-                                        }
-                                    }
-                                });
-*/
-
-
                         }
                     });
                 }

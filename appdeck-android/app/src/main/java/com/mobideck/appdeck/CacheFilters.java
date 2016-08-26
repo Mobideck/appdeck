@@ -85,27 +85,7 @@ public class CacheFilters implements HttpFilters {
     public CacheFilters(HttpRequest originalRequest) {
         this(originalRequest, null);
     }
-/*
-    private HttpResponse setCache(HttpResponse response, String cacheName, int maxage)
-    {
-    	Date now = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(now);
-        cal.add(Calendar.SECOND, maxage);
-        Date expire = cal.getTime();    	
-        
-		response.headers().set("Pragma", "public");
-		response.headers().set("Cache-Control", "public, max-age="+maxage);
-		
-		response.headers().set("Date", DateUtils.formatDate(now));
-		response.headers().set("Last-modified", DateUtils.formatDate(now));
-		response.headers().set("ETag", "\""+ cacheName + "-appdeck-"+ Utils.randInt(0, 2000000) + "\"");
-		response.headers().set("Expires", DateUtils.formatDate(expire));
-		
-    	return response;
-    }
-    */
-    
+
     private HttpResponse forceCache(HttpResponse response)
     {
 //		response.headers().set("Pragma", "public");
