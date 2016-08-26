@@ -106,14 +106,15 @@ android {
             ext.enableCrashlytics = false
 
 
+            /*
             // enable to validate proguard
             minifyEnabled true
             shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'*/
 
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources false
             zipAlignEnabled true
             //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
