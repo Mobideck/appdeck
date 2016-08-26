@@ -257,6 +257,14 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         }
 
         webSettings.setDomStorageEnabled(true);
+
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+
+        if (Build.VERSION.SDK_INT >= 17) {
+            webSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
+
+
         //setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
 /*        CookieManager.getInstance().setAcceptCookie(true);
@@ -403,7 +411,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             String absoluteUrl = request.getUrl().toString();
 
-            if (absoluteUrl.startsWith("about:") || absoluteUrl.startsWith("data:"))
+            if (absoluteUrl.startsWith("about:") || absoluteUrl.startsWith("data:") || absoluteUrl.startsWith("blob:"))
                 return null;
 
             if (absoluteUrl.equalsIgnoreCase("http://appdeck/error")) {
