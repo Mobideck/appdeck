@@ -32,6 +32,9 @@
 -printmapping out.map
 -keep public class * extends java.lang.Exception
 
+#littleproxy
+-keep class org.littleshoot.proxy.** { *; }
+
 #retrofit2
 -dontwarn retrofit2.**
 
