@@ -52,6 +52,14 @@
 -dontwarn java.net.**
 -dontwarn javax.net.**
 -dontwarn android.app.Notification
+-dontwarn com.puppycrawl.**
+-dontwarn javax.annotation.**
+-dontwarn org.junit.**
+-dontwarn java.lang.management.**
+-dontwarn java.lang.invoke.**
+-dontwarn org.codehaus.**
+-dontwarn org.slf4j.**
+-dontwarn io.netty.build.checkstyle.NewlineCheck
 # Needed by commons logging
 -keep class org.apache.commons.logging.* {*;}
 #Some Factory that seemed to be pruned
