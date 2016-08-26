@@ -35,6 +35,7 @@
 # netty
 # Get rid of warnings about unreachable but unused classes referred to by Netty
 -dontwarn org.jboss.**
+-dontwarn io.netty.**
 -dontwarn org.xbill.**
 -dontwarn org.apache.log4j.**
 -dontwarn org.apache.commons.logging.**
