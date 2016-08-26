@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -45,6 +46,8 @@ import org.littleshoot.proxy.ChainedProxyManager;
 import org.littleshoot.proxy.HttpProxyServerBootstrap;
 import org.littleshoot.proxy.TransportProtocol;
 import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
+//import org.littleshoot.proxy.mitm.CertificateSniffingMitmManager;
+//import org.littleshoot.proxy.mitm.RootCertificateException;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -136,6 +139,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
+import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
@@ -305,35 +309,97 @@ public class Loader extends AppCompatActivity {
 
                 Log.i(TAG, "filter registered at @" + proxyPort);
 
+                //Loader.this.originalProxyHost = "192.168.2.1";
+                //Loader.this.originalProxyPort = 8888;
+
+                //Loader.this.originalProxyHost = null;
+                //Loader.this.originalProxyPort = -1;
+
+
+                //proxyHost = "192.168.2.1";
+                //proxyPort = 8888;
+
                 CacheFiltersSource filtersSource = new CacheFiltersSource();
 
-                proxyServerBootstrap = DefaultHttpProxyServer
-                        .bootstrap()
-                        .withPort(proxyPort)
-                        .withAllowLocalOnly(true)
-                        .withTransportProtocol(TransportProtocol.TCP)
-                        .withFiltersSource(filtersSource);
+                //try {
+                    proxyServerBootstrap = DefaultHttpProxyServer
+                            .bootstrap()
+                            .withPort(proxyPort)
+                            .withAllowLocalOnly(true)
+                            .withTransparent(true)
+                            //.withManInTheMiddle(new CertificateSniffingMitmManager())
+                            .withTransportProtocol(TransportProtocol.TCP)
+                            .withFiltersSource(filtersSource);
+                /*} catch (Exception e) {
+                    e.printStackTrace();
+                }*/
 
                 if (originalProxyHost != null && originalProxyPort != -1)
                 {
                     proxyServerBootstrap.withChainProxyManager(new ChainedProxyManager() {
                         @Override
                         public void lookupChainedProxies(HttpRequest httpRequest, Queue<ChainedProxy> chainedProxies) {
-
-                            chainedProxies.add(new ChainedProxyAdapter() {
-                                @Override
-                                public InetSocketAddress getChainedProxyAddress() {
-                                    try {
-                                        return new InetSocketAddress(InetAddress.getByName(Loader.this.originalProxyHost), Loader.this.originalProxyPort);
-                                    } catch (UnknownHostException uhe) {
-                                        throw new RuntimeException(
-                                                "Unable to resolve "+Loader.this.originalProxyHost+"?!");
+                            if (originalProxyHost != null && originalProxyPort != -1) {
+                                chainedProxies.add(new ChainedProxyAdapter() {
+                                    @Override
+                                    public InetSocketAddress getChainedProxyAddress() {
+                                        try {
+                                            Log.d(TAG, "Cascading Proxy: " + Loader.this.originalProxyHost + ":" + Loader.this.originalProxyPort);
+                                            return new InetSocketAddress(InetAddress.getByName(Loader.this.originalProxyHost), Loader.this.originalProxyPort);
+                                        } catch (UnknownHostException uhe) {
+                                            throw new RuntimeException(
+                                                    "Unable to resolve " + Loader.this.originalProxyHost + "?!");
+                                        }
                                     }
-                                }
+/*
+                                    @Override
+                                    public void filterRequest(HttpObject httpObject) {
+                                        if (httpObject instanceof HttpRequest) {
+                                            HttpRequest httpRequest = (HttpRequest) httpObject;
 
-                            });
+                                            //if (this.headers != null) {
+                                            //    for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                                            //        httpRequest.headers().add(header.getKey(), header.getValue());
+                                            //    }
+                                            //}
 
-                        };
+                                            //httpRequest.headers().remove("Via");
+                                        }
+                                    }*/
+                                });
+                            }
+
+/*
+                                chainedProxies.add(new ChainedProxyAdapter() {
+                                    @Override
+                                    public InetSocketAddress getChainedProxyAddress() {
+                                        try {
+                                            return new InetSocketAddress(InetAddress.getByName("192.168.2.1"), 8888);
+                                        } catch (UnknownHostException e) {
+                                            e.printStackTrace();
+                                        }
+                                        return null;
+                                    }
+
+                                    @Override
+                                    public void filterRequest(HttpObject httpObject) {
+                                        if (httpObject instanceof HttpRequest) {
+                                            HttpRequest httpRequest = (HttpRequest) httpObject;
+
+                                            //if (this.headers != null) {
+                                            //    for (Map.Entry<String, String> header : this.headers.entrySet()) {
+                                            //        httpRequest.headers().add(header.getKey(), header.getValue());
+                                            //    }
+                                            //}
+
+                                            httpRequest.headers().remove("Via");
+                                        }
+                                    }
+                                });
+*/
+
+
+                        }
                     });
                 }
                 proxyServerBootstrap.start();
