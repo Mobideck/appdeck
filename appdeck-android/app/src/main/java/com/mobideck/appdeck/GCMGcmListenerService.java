@@ -109,12 +109,13 @@ public class GCMGcmListenerService extends GcmListenerService {
             largeIcon[0] = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         }
 
+        int requestCode =  (int)System.currentTimeMillis()/1000;
 
         Intent notificationIntent = new Intent(this, Loader.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         notificationIntent.putExtra(Loader.PUSH_URL, url);
         notificationIntent.putExtra(Loader.PUSH_TITLE, title);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+        PendingIntent contentIntent = PendingIntent.getActivity(this, requestCode,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
@@ -134,7 +135,7 @@ public class GCMGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify((int)System.currentTimeMillis()/10000 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(requestCode /* ID of notification */, notificationBuilder.build());
 
         try {
             AppDeck appDeck = AppDeck.getInstance();
