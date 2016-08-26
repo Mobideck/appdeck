@@ -28,6 +28,7 @@ repositories {
 }
 
 android {
+
     compileSdkVersion 23
 
     // http://tools.android.com/release
@@ -105,6 +106,7 @@ android {
         debug {
             ext.enableCrashlytics = false
 
+
             // enable to validate proguard
             minifyEnabled true
             shrinkResources false
@@ -137,7 +139,8 @@ dependencies {
     // https://developer.android.com/topic/libraries/support-library/revisions.html
     //compile 'com.android.support:appcompat-v7:23.3.0'
     //compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:design:23.3.0'
+    //compile 'com.android.support:design:24.2.0'
 
     // https://developers.google.com/android/guides/setup
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
@@ -237,11 +240,11 @@ dependencies {
 
     // end appdeck plugin
 
-    compile group: 'org.littleshoot', name: 'littleproxy', version: '1.1.0'
+    //compile group: 'org.littleshoot', name: 'littleproxy', version: '1.1.0'
     //compile group: 'com.github.ganskef', name: 'littleproxy-mitm', version: '1.1.0'
 
 //    compile group: 'org.jamel.j7zip', name: 'j7zip', version: '0.0.1'
-/*
+
     // https://mvnrepository.com/artifact/com.google.guava/guava
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
     // https://mvnrepository.com/artifact/com.barchart.udt/barchart-udt-bundle
@@ -259,8 +262,14 @@ dependencies {
 // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'*/
+    //compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
 
+
+// https://mvnrepository.com/artifact/org.slf4j/slf4j-android
+    compile group: 'org.slf4j', name: 'slf4j-android', version: '1.7.21'
+
+// https://mvnrepository.com/artifact/log4j/log4j
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
 
 
 }
