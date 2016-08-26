@@ -32,6 +32,9 @@
 -printmapping out.map
 -keep public class * extends java.lang.Exception
 
+#retrofit2
+-dontwarn retrofit2.**
+
 # netty
 # Get rid of warnings about unreachable but unused classes referred to by Netty
 -dontwarn org.jboss.**
