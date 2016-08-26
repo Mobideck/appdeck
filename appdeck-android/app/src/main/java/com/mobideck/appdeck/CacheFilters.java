@@ -29,6 +29,7 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.LastHttpContent;
 
 import org.apache.commons.io.IOUtils;
 //import org.apache.commons.io.IOUtils;
@@ -187,13 +188,31 @@ public class CacheFilters implements HttpFilters {
     
     @Override
     public HttpResponse clientToProxyRequest(HttpObject httpObject) {
+/*
+        if (httpObject instanceof HttpRequest) {
+
+            HttpRequest httpRequest = (HttpRequest) httpObject;
+
+            Log.d(TAG, "clientToProxyRequest > "+httpRequest.getUri());
+
+            List<Map.Entry<String,String>> headers = httpRequest.headers().entries();
+
+            Log.i(TAG, "HEADERS SIZE: "+headers.size());
+            for (Map.Entry<String, String> entry : headers)
+            {
+                Log.i(TAG, entry.getKey() + ": " + entry.getValue());
+            }
+
+        }
+*/
 		try {
-    	if (httpObject instanceof DefaultHttpRequest)
+    	if (httpObject instanceof HttpRequest)
     	{
-    		DefaultHttpRequest request = (DefaultHttpRequest)httpObject;
+    		//DefaultHttpRequest request = (DefaultHttpRequest)httpObject;
+            HttpRequest request = (HttpRequest) httpObject;
     		
     		originalMethod = request.getMethod();
-    		
+
     		absoluteURL = request.getUri();
     		if (absoluteURL.startsWith("http://") == false && absoluteURL.startsWith("https://") == false)
     		{
@@ -202,7 +221,14 @@ public class CacheFilters implements HttpFilters {
 	    		else
 	    			absoluteURL = "http://" + absoluteURL;
     		}
-    		
+
+            if (absoluteURL.contains("dailymotion.com") && absoluteURL.contains("#"))
+            {
+                Log.w(TAG, "Dailymotion FIX: URL ["+absoluteURL+"] should not have a # in it, we remove it.");
+                absoluteURL = absoluteURL.substring(0, absoluteURL.indexOf("#"));
+                request.setUri(absoluteURL);
+            }
+
     		// sub request always have Referer header
     		isFirstRequest = request.headers().get("Referer") == null;
     		
@@ -217,7 +243,9 @@ public class CacheFilters implements HttpFilters {
     			ua = ua + " AppDeck"+(appDeck.isTablet? "-tablet" : "-phone" )+" "+appDeck.packageName+"/"+appDeck.config.app_version;
     			request.headers().set("User-Agent", ua);
     		}*/
-    		
+
+            request.headers().set("User-Agent", appDeck.userAgent);
+
     		forceCache = appDeck.cache.shouldCache(absoluteURL);
 
 			if (!originalMethod.toString().equalsIgnoreCase("GET"))
@@ -314,9 +342,24 @@ public class CacheFilters implements HttpFilters {
 
     @Override
     public HttpResponse proxyToServerRequest(HttpObject httpObject) {
-    	//Log.i(TAG, "proxyToServerRequest < " + absoluteURL);
 
-        return null;
+        /*
+        Log.i(TAG, "proxyToServerRequest < " + absoluteURL);
+
+		if (httpObject instanceof HttpRequest) {
+			HttpRequest httpRequest = (HttpRequest) httpObject;
+
+			List<Map.Entry<String,String>> headers = httpRequest.headers().entries();
+
+			Log.i(TAG, "HEADERS SIZE: "+headers.size());
+			for (Map.Entry<String, String> entry : headers)
+			{
+				Log.i(TAG, entry.getKey() + ": " + entry.getValue());
+			}
+
+		}*/
+
+		return null;
     }
     
     @Override
@@ -395,7 +438,7 @@ public class CacheFilters implements HttpFilters {
     	}
     	
     	// close output stream if needed
-    	if (httpObject instanceof DefaultLastHttpContent)
+    	if (httpObject instanceof LastHttpContent)
 		{
     		//Log.i(TAG, "< HttpResponse LAST CHUNK " + absoluteURL);
     		if (cacheStream != null)
@@ -414,7 +457,12 @@ public class CacheFilters implements HttpFilters {
     	return httpObject;
     }
 
-    @Override
+	@Override
+	public void serverToProxyResponseTimedOut() {
+
+	}
+
+	@Override
     public HttpObject proxyToClientResponse(HttpObject httpObject) {
     	
 		if (httpObject instanceof HttpResponse)
@@ -461,7 +509,12 @@ public class CacheFilters implements HttpFilters {
         return null;
     }
 
-    @Override
+	@Override
+	public void proxyToServerResolutionFailed(String hostAndPort) {
+
+	}
+
+	@Override
     public void proxyToServerResolutionSucceeded(String serverHostAndPort, InetSocketAddress resolvedRemoteAddress) {
 
     }
@@ -481,8 +534,13 @@ public class CacheFilters implements HttpFilters {
 
     }
 
-    @Override
+	@Override
+	public void proxyToServerConnectionSucceeded(ChannelHandlerContext serverCtx) {
+
+	}
+
+	/*@Override
     public void proxyToServerConnectionSucceeded() {
 
-    }
+    }*/
 }
