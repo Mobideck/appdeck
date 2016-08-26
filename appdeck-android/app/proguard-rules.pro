@@ -38,6 +38,8 @@
 #retrofit2
 -dontwarn retrofit2.**
 
+-dontwarn com.google.common.**
+
 # netty
 # Get rid of warnings about unreachable but unused classes referred to by Netty
 -dontwarn org.jboss.**
