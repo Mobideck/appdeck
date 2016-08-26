@@ -197,6 +197,9 @@
     public static int e(...);
 }
 
+-dontwarn org.chromium.base.multidex.**
+
+
 # remove slf4j
 #-assumenosideeffects class * implements org.slf4j.Logger {
 #    public *** trace(...);
