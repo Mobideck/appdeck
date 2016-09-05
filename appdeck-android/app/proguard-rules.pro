@@ -199,6 +199,34 @@
 
 -dontwarn org.chromium.base.multidex.**
 
+# Presage
+-keepattributes Signature
+-keep class sun.misc.Unsafe { *; }
+
+-keep class shared_presage.** { *; }
+-keep class io.presage.** { *; }
+-keepclassmembers class io.presage.** {
+ *;
+}
+
+-keepattributes *Annotation*
+-keepattributes JavascriptInterface
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+-dontwarn org.apache.commons.collections.BeanMap
+-dontwarn java.beans.**
+
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
 
 # remove slf4j
 #-assumenosideeffects class * implements org.slf4j.Logger {
