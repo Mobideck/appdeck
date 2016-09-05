@@ -15,4 +15,12 @@
     <color name="purple_middle">#8658ce</color>
     <color name="purple_dark">#6a3ab2</color>
 
+    <style name="Presage.Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
 </resources>
