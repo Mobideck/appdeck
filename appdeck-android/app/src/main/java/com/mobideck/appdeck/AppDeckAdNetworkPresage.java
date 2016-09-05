@@ -25,7 +25,7 @@ public class AppDeckAdNetworkPresage extends AppDeckAdNetwork {
         }
 
         Presage.getInstance().setContext(manager.loader);
-        Presage.getInstance().setKey(presageSdkKey);
+        //Presage.getInstance().setKey(presageSdkKey);
         Presage.getInstance().start();
 
         Log.i(TAG, "Read: presageSdkKey:" + presageSdkKey);
