@@ -182,8 +182,14 @@
 # Grunt
 -keep class net.grunt.**
 
-# crosswalk
--dontwarn android.view.*
+# XWalk
+-keep class org.xwalk.core.** { *; }
+-keep class org.crosswalk.engine.** { *; }
+-keep class org.chromium.** { *; }
+-keepattributes **
+-dontwarn android.view.**
+-dontwarn android.media.**
+-dontwarn org.chromium.**
 -dontwarn android.webkit.*
 -dontwarn android.app.assist.*
 
