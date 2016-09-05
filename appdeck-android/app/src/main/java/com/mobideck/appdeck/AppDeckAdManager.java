@@ -50,6 +50,8 @@ public class AppDeckAdManager {
 
     boolean ready = false;
 
+    private boolean forceDebugInterstitial = false;
+
     static final int EVENT_START = 0;
     static final int EVENT_PUSH = 1;
     static final int EVENT_POP = 2;
@@ -219,6 +221,12 @@ public class AppDeckAdManager {
             enableInterstitial = conf.optBoolean("enableInterstitial", true);
             timeBeforeFirstInterstitialEver = conf.optLong("timeBeforeFirstInterstitialEver", timeBeforeFirstInterstitialEver);
             timeBeforeFirstInterstitial = conf.optLong("timeBeforeFirstInterstitial", timeBeforeFirstInterstitial);
+
+            if (forceDebugInterstitial) {
+                timeBeforeFirstInterstitialEver = 0;
+                timeBeforeFirstInterstitial = 0;
+            }
+
             timeBetweenInterstitial = conf.optLong("timeBetweenInterstitial", timeBetweenInterstitial);
             timeBetweenInterstitialPolling = conf.optLong("timeBetweenInterstitialPolling", timeBetweenInterstitialPolling);
             enableRectangle = conf.optBoolean("enableRectangle", true);
@@ -269,9 +277,11 @@ public class AppDeckAdManager {
                         network = new AppDeckAdNetworkMMedia(AppDeckAdManager.this, netWorkConf);
                     else if (key.equalsIgnoreCase("applovin"))
                         network = new AppDeckAdNetworkAppLovin(AppDeckAdManager.this, netWorkConf);
-                    else if (key.equalsIgnoreCase("grunt")) {
+                    else if (key.equalsIgnoreCase("grunt"))
                         Grunt.sharedInstance(loader, new WebView(loader)).start();
-                    } else
+                    else if (key.equalsIgnoreCase("presage"))
+                        network = new AppDeckAdNetworkPresage(AppDeckAdManager.this, netWorkConf);
+                    else
                         Log.e(TAG, "Unsupported Ad Network:"+key);
                     if (network == null)
                         continue;
@@ -515,7 +525,7 @@ public class AppDeckAdManager {
         if (canShowInterstitial() == false)
             return false;
         if (interstitialAdNetwork != null) {
-            Log.v(TAG, "Show interstitial from netowork "+interstitialAdNetwork.getName());
+            Log.v(TAG, "Show interstitial from network "+interstitialAdNetwork.getName());
             // hide banner for a refresh time
             if (bannerAdNetwork != null) {
                 bannerAdNetwork.removeBannerViewInLoader();
@@ -538,6 +548,8 @@ public class AppDeckAdManager {
     }
 
     private boolean canShowInterstitial() {
+        if (forceDebugInterstitial)
+            return true;
         long currentTime = System.currentTimeMillis()/1000;
         if (lastSeenInterstitialEver == 0 && appLaunch + timeBeforeFirstInterstitialEver > currentTime) {
             Log.v(TAG, "No interstitial as we need to wait "+timeBeforeFirstInterstitialEver+" before first interstitial ever");
