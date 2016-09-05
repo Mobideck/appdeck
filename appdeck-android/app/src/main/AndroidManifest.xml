@@ -36,7 +36,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
     <!-- WideSapce minSdk 17 override -->
-    <uses-sdk android:minSdkVersion="15" tools:overrideLibrary="com.widespace, com.gc.materialdesign, com.millennialmedia" />
+    <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="com.widespace, com.gc.materialdesign, com.millennialmedia" />
 
     <application
         tools:replace="android:icon,android:theme"
@@ -123,6 +123,18 @@
 
         <!-- Somfy -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1913h07f960c6a85e4e288e3c8fcf056e8fc2"></meta-data>-->
+
+        <!-- Gamer Network -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1924h9126a001382240adb058f23f60fb93d2"></meta-data>-->
+
+        <!-- Freenews -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2110hf12a8cb06f755b12f947c710e43cd47c"></meta-data>-->
+
+        <!-- Memo Heures -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2247hadc45a049e11769f39f2719601b9f0a6"></meta-data>-->
+
+        <!-- Game Love -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2394h80b265540a1cb6e70ad4b6aadb4652b1"></meta-data>-->
 
         <meta-data android:name="noCache" android:value="false" />
 
@@ -227,6 +239,7 @@
                 <data android:scheme="https" android:host="testappv2.appdeck.mobi" android:pathPrefix="/" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
             </intent-filter>
 
             <!-- Branch.io intent filter -->
@@ -379,6 +392,27 @@
         <!-- AppLovin -->
         <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" />
         <activity android:name="com.applovin.adview.AppLovinConfirmationActivity" />
+
+        <!-- PRESAGE LIBRARY -->
+        <meta-data android:name="presage_key" android:value="presage_key"/>
+        <service android:name="io.presage.services.PresageServiceImp"/>
+        <activity android:name="io.presage.activities.PresageActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Presage.Theme.Transparent"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true" >
+            <intent-filter>
+                <action android:name="io.presage.intent.action.LAUNCH_WEBVIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="io.presage.receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="io.presage.receivers.BootReceiver.RESTART_SERVICE"/>
+            </intent-filter>
+        </receiver>
 
         <!-- Branch.io -->
         <!--<meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_adjV9Pb01wO0C4KJEQ2GifcoCEfz7Ad2" />-->
