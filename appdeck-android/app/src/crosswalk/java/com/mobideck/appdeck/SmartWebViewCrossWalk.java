@@ -187,7 +187,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	private void setWebViewUserAgent(XWalkView webView, String userAgent)
 	{
 		webView.setUserAgentString(userAgent);
-/*	    try
+	    /*try
 	    {
 	        Method ___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
 	        ___getBridge.setAccessible(true);
@@ -206,7 +206,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	private String getWebViewUserAgent(XWalkView webView)
 	{
 		return webView.getUserAgentString();
-/*	    try
+	    /*try
 	    {
 	        Method ___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
 	        ___getBridge.setAccessible(true);
@@ -227,7 +227,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	private void setAppCacheEnabled(boolean enabled) {
         // TODO: enable it: https://crosswalk-project.org/jira/browse/XWALK-7035?jql=text%20~%20%22setCacheMode%22
-		/*// tell xWalk to force cache
+		/*
+		// tell xWalk to force cache
 		Method ___getBridge;
 		try {
 			___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
