@@ -20,7 +20,11 @@
 @class LogViewController;
 @class KeyboardStateListener;
 
-@interface AppDeck : NSObject <AppDeckApiCallDelegate>
+@protocol MFMailComposeViewControllerDelegate;
+@protocol MFMessageComposeViewControllerDelegate;
+@protocol SFSafariViewControllerDelegate;
+
+@interface AppDeck : NSObject <AppDeckApiCallDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, SFSafariViewControllerDelegate>
 {
     UIWebView *firstWebView;
     BOOL shouldConfigureApp;

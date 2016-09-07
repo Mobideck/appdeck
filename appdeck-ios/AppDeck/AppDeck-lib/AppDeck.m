@@ -43,6 +43,9 @@
 
 #import "KeyboardStateListener.h"
 
+@import MessageUI;
+@import SafariServices;
+
 @implementation AppDeck
 
 +(AppDeck *)sharedInstance
@@ -584,6 +587,60 @@
         return YES;
     }
     
+    if ([call.command isEqualToString:@"sendsms"])
+    {
+        NSString *address = [call.param objectForKey:@"address"];
+        NSString *body = [call.param objectForKey:@"body"];
+        
+        MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+        if([MFMessageComposeViewController canSendText])
+        {
+            controller.body = body;
+            controller.recipients = [NSArray arrayWithObjects:address, nil];
+            controller.messageComposeDelegate = self;
+            [self.loader presentViewController:controller animated:YES completion:nil];
+        }
+        
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"sendemail"])
+    {
+        NSString *to = [call.param objectForKey:@"to"];
+        NSString *subject = [call.param objectForKey:@"subject"];
+        NSString *message = [call.param objectForKey:@"message"];
+        
+        MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+        mc.mailComposeDelegate = self;
+        [mc setSubject:subject];
+        [mc setMessageBody:message isHTML:NO];
+        [mc setToRecipients:@[to]];
+        
+        // Present mail view controller on screen
+        [self.loader presentViewController:mc animated:YES completion:nil];
+
+        
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"openlink"])
+    {
+        NSString *url = [call.param objectForKey:@"url"];
+        
+        if (self.iosVersion >= 9.0)
+        {
+            SFSafariViewController *ctl = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+            ctl.view.tintColor = self.loader.conf.app_color;
+            ctl.delegate = self;
+            [self.loader presentViewController:ctl animated:YES completion:nil];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        }
+        return YES;
+    }
+    
+    
+    
     return [AppDeckPluginManager handleAPICall:call];
 }
 
@@ -602,6 +659,58 @@
         }
     }
     shouldConfigureApp = NO;
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result
+{
+    switch (result)
+    {
+        case MessageComposeResultCancelled:
+            NSLog(@"SMS cancelled");
+            break;
+        case MessageComposeResultSent:
+            NSLog(@"SMS sent");
+            break;
+        case MessageComposeResultFailed:
+            NSLog(@"SMS sent failure");
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self.loader dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self.loader dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)safariViewControllerDidFinish:(SFSafariViewController *)controller
+{
+    // Close Safari browser
+    [self.loader dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
