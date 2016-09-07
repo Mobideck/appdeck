@@ -1434,6 +1434,7 @@
 {
     SFSafariViewController *ctl = [[SFSafariViewController alloc] initWithURL:pageURL];
     ctl.view.tintColor = self.conf.app_color;
+    ctl.delegate = self.appDeck;
     [self presentViewController:ctl animated:YES completion:nil];
 }
 
