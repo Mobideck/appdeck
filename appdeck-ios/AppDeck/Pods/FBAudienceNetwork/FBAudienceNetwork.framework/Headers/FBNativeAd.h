@@ -40,7 +40,7 @@ typedef NS_OPTIONS(NSInteger, FBNativeAdsCachePolicy) {
  The FBNativeAd represents ad metadata to allow you to construct custom ad views.
  See the NativeAdSample in the sample apps section of the Audience Network framework.
  */
-FB_CLASS_EXPORT
+FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 @interface FBNativeAd : NSObject
 
 /*!
@@ -169,6 +169,8 @@ FB_CLASS_EXPORT
  rendering is done as part of the loadAd callback, it is guarantee to be consistent
  */
 @property (nonatomic, getter=isAdValid, readonly) BOOL adValid;
+
+@property (nonatomic, copy, readonly, nullable, getter=getAdNetwork) NSString *adNetwork;
 
 @end
 
@@ -312,7 +314,7 @@ FB_CLASS_EXPORT FB_DEPRECATED
  @property
  @abstract The current rating from an FBNativeAd. When set, updates the view.
  */
-@property (nonatomic) struct FBAdStarRating rating FB_DEPRECATED;
+@property (nonatomic, assign) struct FBAdStarRating rating FB_DEPRECATED;
 
 /*!
  @property

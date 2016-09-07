@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  @abstract
  FBAdChoicesView offers a simple way to display a sponsored or AdChoices icon.
  */
-FB_CLASS_EXPORT
+FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 @interface FBAdChoicesView : UIView
 
 /*!
@@ -57,7 +57,7 @@ FB_CLASS_EXPORT
  @property
  @abstract The native ad that provides AdChoices info, such as the image url, and click url. Setting this updates the nativeAd.
  */
-@property (nonatomic, weak, readwrite) FBNativeAd *nativeAd;
+@property (nonatomic, weak, readwrite, nullable) FBNativeAd *nativeAd;
 
 /*
  @property

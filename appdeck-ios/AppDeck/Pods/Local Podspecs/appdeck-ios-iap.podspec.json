@@ -18,5 +18,13 @@
   "platforms": {
     "ios": "7.0"
   },
-  "source_files": "appdeck-ios-iap/Classes/**/*"
+  "source_files": "appdeck-ios-iap/Classes/**/*",
+  "dependencies": {
+    "RMStore": [
+      "~> 0.7"
+    ],
+    "IAPHelper": [
+
+    ]
+  }
 }
