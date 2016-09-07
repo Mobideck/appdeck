@@ -74,6 +74,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -132,6 +133,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.facebook.FacebookSdk;
 //import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.IntentUtils;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
@@ -2063,6 +2065,65 @@ public class Loader extends AppCompatActivity {
             String msg = call.input.getString("param");
             Log.i("API", "**ERROR** "+msg);
             DebugLog.error("JS", msg);
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("sendsms"))
+        {
+            String to = call.param.getString("address");
+            String message = call.param.getString("body");
+            Log.i("API", "**SENDSMS** "+to+": "+message);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this);
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + to));
+                intent.putExtra("sms_body", message);
+                if (defaultSmsPackageName != null) {
+                    intent.setPackage(defaultSmsPackageName);
+                }
+                startActivity(intent);
+            } else {
+                Uri smsUri = Uri.parse("tel:" + to);
+                Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
+                intent.putExtra("address", to);
+                intent.putExtra("sms_body", message);
+                intent.setType("vnd.android-dir/mms-sms");
+                startActivity(intent);
+            }
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("sendemail"))
+        {
+            String to = call.param.getString("to");
+            String subject = call.param.getString("subject");
+            String message = call.param.getString("message");
+            Log.i("API", "**SENDEMAIL** "+to+": "+subject+": "+message);
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("message/rfc822");
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            intent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(intent);
+
+            return true;
+        }
+        if (call.command.equalsIgnoreCase("openlink"))
+        {
+            String url = call.param.getString("url");
+
+            Log.i("API", "**OPENLINK** "+url);
+
+            if (!url.contains("://")) {
+                url = "http://" + url;
+            }
+
+            /*Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);*/
+
+            this.loadExternalURL(url, true);
+
             return true;
         }
 
