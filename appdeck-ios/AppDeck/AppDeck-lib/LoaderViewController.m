@@ -1495,7 +1495,14 @@
 
     if ([call.command isEqualToString:@"pagepop"])
     {
-        if (navController.childViewControllers.count > 1)
+        if (popUp)
+        {
+            [navController dismissViewControllerAnimated:YES completion:^{
+                navController.isAnimating = NO;
+                popUp = nil;
+            }];
+        }
+        else if (navController.childViewControllers.count > 1)
             [navController popViewControllerAnimated:YES];
         if (self.leftMenuOpen || self.rightMenuOpen)
             [self.slidingViewController resetTopViewAnimated:YES];
