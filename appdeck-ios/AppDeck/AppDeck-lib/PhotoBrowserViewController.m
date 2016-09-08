@@ -349,6 +349,17 @@
 
     if (rotating)
         self.index = save_index;
+    
+    if (self.photos.count <= 1)
+    {
+        buttonNext.hidden = YES;
+        buttonPrevious.hidden = YES;
+    }
+    else
+    {
+        buttonNext.hidden = NO;
+        buttonPrevious.hidden = NO;
+    }
 }
 
 #pragma mark - load photos
@@ -402,9 +413,8 @@
         [browser addPhoto:[PhotoViewController photoViewWithUrl:[NSURL URLWithString:url relativeToURL:baseUrl]
                                                      thumbnail:[NSURL URLWithString:thumbnail relativeToURL:baseUrl]
                                                        caption:caption]];
-
     }
-    
+        
     browser.bgColor = [[config objectForKey:@"bgcolor"] toUIColor];
     if (browser.bgColor == nil)
         browser.bgColor = [UIColor blackColor];
@@ -413,7 +423,11 @@
         alpha = 0.8;
     browser.bgColor = [browser.bgColor colorWithAlphaComponent:alpha];
     
-    browser.startingIndex = [[config objectForKey:@"startIndex"] intValue];
+    NSInteger startIndex = [[config objectForKey:@"startIndex"] intValue];
+    if (startIndex < 0 || startIndex >= [images count])
+        startIndex = 0;
+    
+    browser.startingIndex = startIndex;
     
     return browser;
 }
