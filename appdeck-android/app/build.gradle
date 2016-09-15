@@ -36,7 +36,7 @@ android {
     defaultConfig {
         applicationId "com.mobideck.appdeck"
 
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 24
         versionCode 71
         versionName "1.7.1"
@@ -63,7 +63,7 @@ android {
         crosswalk {
             dimension "webview"
             // 15 by default, set 21 for faster build time
-            minSdkVersion 16
+            minSdkVersion 15
             versionCode = 1
         }
         chromium {
@@ -155,14 +155,13 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
 
     // https://download.01.org/crosswalk/releases/crosswalk/android/maven2/org/xwalk/xwalk_core_library/
-    //crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
+    crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
     //crosswalkCompile 'org.xwalk:xwalk_core_library:16.45.421.19' // not compatible with genymotion
     //crosswalkCompile 'org.xwalk:xwalk_core_library:17.46.448.10' // not compatible with genymotion
     //crosswalkCompile 'org.xwalk:xwalk_core_library:18.48.477.13' // XWalkSettings not found
-    crosswalkCompile 'org.xwalk:xwalk_core_library:20.50.533.12' // A tester
+    //crosswalkCompile 'org.xwalk:xwalk_core_library:20.50.533.12' // A tester
 
-
-            // https://fabric.io/kits/android/crashlytics/install
+    // https://fabric.io/kits/android/crashlytics/install
     compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
         transitive = true;
     }
@@ -272,6 +271,8 @@ dependencies {
 // https://mvnrepository.com/artifact/log4j/log4j
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
 
+    // https://github.com/d-tarasov/android-intents
+//    compile 'com.dmitriy-tarasov:android-intents:1.1.0'
 
 }
 
