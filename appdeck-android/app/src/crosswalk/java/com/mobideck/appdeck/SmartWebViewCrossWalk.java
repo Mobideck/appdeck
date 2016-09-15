@@ -20,10 +20,10 @@ import org.xwalk.core.XWalkCookieManager;
 import org.xwalk.core.XWalkJavascriptResult;
 import org.xwalk.core.XWalkNavigationHistory;
 import org.xwalk.core.XWalkResourceClient;
-import org.xwalk.core.XWalkSettings;
+//import org.xwalk.core.XWalkSettings;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
-//import org.xwalk.core.internal.XWalkSettings;
+import org.xwalk.core.internal.XWalkSettings;
 import org.xwalk.core.internal.XWalkViewBridge;
 
 import android.annotation.SuppressLint;
@@ -186,8 +186,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	private void setWebViewUserAgent(XWalkView webView, String userAgent)
 	{
-		webView.setUserAgentString(userAgent);
-	    /*try
+		//webView.setUserAgentString(userAgent);
+	    try
 	    {
 	        Method ___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
 	        ___getBridge.setAccessible(true);
@@ -200,13 +200,13 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    {
 	        // Could not set user agent
 	        e.printStackTrace();
-	    }*/
+	    }
 	}
 
 	private String getWebViewUserAgent(XWalkView webView)
 	{
-		return webView.getUserAgentString();
-	    /*try
+		//return webView.getUserAgentString();
+	    try
 	    {
 	        Method ___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
 	        ___getBridge.setAccessible(true);
@@ -222,12 +222,11 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        // Could not set user agent
 	        e.printStackTrace();
 	    }
-	    return "";*/
+	    return "";
 	}
 
 	private void setAppCacheEnabled(boolean enabled) {
         // TODO: enable it: https://crosswalk-project.org/jira/browse/XWALK-7035?jql=text%20~%20%22setCacheMode%22
-		/*
 		// tell xWalk to force cache
 		Method ___getBridge;
 		try {
@@ -249,7 +248,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-		}*/
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
