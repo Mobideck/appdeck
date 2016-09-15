@@ -62,8 +62,8 @@ public class AppDeckAdNetworkAppLovin extends AppDeckAdNetwork {
 
     public boolean supportInterstitial() {
         if (appLovinSdkKey != null && !appLovinSdkKey.isEmpty() && appLovinInterstitialId != null && !appLovinInterstitialId.isEmpty())
-            return false;
-        return true;
+            return true;
+        return false;
     }
     public void fetchInterstitialAd() {
 
