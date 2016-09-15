@@ -37,7 +37,7 @@ public class AppDeckAdNetworkPresage extends AppDeckAdNetwork {
     private IADHandler mInterstitial;
 
     public boolean supportInterstitial() {
-        if (presageSdkKey == null || presageSdkKey .isEmpty())
+        if (presageSdkKey == null || presageSdkKey.isEmpty())
             return false;
         return true;
     }
