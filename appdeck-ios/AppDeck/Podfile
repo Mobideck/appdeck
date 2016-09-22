@@ -20,7 +20,7 @@ target 'AppDeck' do
   
   #pod 'appdeck-ios-iap', :git => 'https://github.com/Mobideck/appdeck-ios-iap.git'
   
-  pod 'appdeck-ios-iap', :path => '~/Documents/git/plugins/appdeck-ios-iap'
+  #pod 'appdeck-ios-iap', :path => '~/Documents/git/plugins/appdeck-ios-iap'
   
   # end appdeck-ios-plugins
   
