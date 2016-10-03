@@ -23,8 +23,8 @@ import org.xwalk.core.XWalkResourceClient;
 //import org.xwalk.core.XWalkSettings;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
-import org.xwalk.core.internal.XWalkSettings;
-import org.xwalk.core.internal.XWalkViewBridge;
+//import org.xwalk.core.internal.XWalkSettings;
+//import org.xwalk.core.internal.XWalkViewBridge;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -186,8 +186,8 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 
 	private void setWebViewUserAgent(XWalkView webView, String userAgent)
 	{
-		//webView.setUserAgentString(userAgent);
-	    try
+		webView.setUserAgentString(userAgent);
+	    /*try
 	    {
 	        Method ___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
 	        ___getBridge.setAccessible(true);
@@ -200,13 +200,13 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	    {
 	        // Could not set user agent
 	        e.printStackTrace();
-	    }
+	    }*/
 	}
 
 	private String getWebViewUserAgent(XWalkView webView)
 	{
-		//return webView.getUserAgentString();
-	    try
+		return webView.getUserAgentString();
+	    /*try
 	    {
 	        Method ___getBridge = XWalkView.class.getDeclaredMethod("getBridge");
 	        ___getBridge.setAccessible(true);
@@ -222,11 +222,12 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	        // Could not set user agent
 	        e.printStackTrace();
 	    }
-	    return "";
+	    return "";*/
 	}
-
+/*
 	private void setAppCacheEnabled(boolean enabled) {
-        // TODO: enable it: https://crosswalk-project.org/jira/browse/XWALK-7035?jql=text%20~%20%22setCacheMode%22
+		/*
+		// TODO: enable it: https://crosswalk-project.org/jira/browse/XWALK-7035?jql=text%20~%20%22setCacheMode%22
 		// tell xWalk to force cache
 		Method ___getBridge;
 		try {
@@ -249,7 +250,7 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
-	}
+	}*/
 	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
@@ -385,18 +386,18 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
 	{
 		if (cacheMode == SmartWebViewInterface.LOAD_DEFAULT) {
 			setWebViewUserAgent(this, userAgent);
-			//getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+			getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 			shouldLoadFromCache = false;
 		} else if (cacheMode == SmartWebViewInterface.LOAD_NO_CACHE) {
 			setWebViewUserAgent(this, userAgent);
-			//getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+			getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 			shouldLoadFromCache = false;
 		} else if (cacheMode == SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK) {
 			setWebViewUserAgent(this, userAgent+" FORCE_CACHE");
-			//getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+			getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 			shouldLoadFromCache = true;
 		}
-		setAppCacheEnabled(shouldLoadFromCache);
+		//setAppCacheEnabled(shouldLoadFromCache);
 	}
 
 	private void checkLoading()
@@ -944,8 +945,41 @@ public class SmartWebViewCrossWalk extends XWalkView  implements SmartWebViewInt
     	return super.canScrollVertically(direction);
     }
 
+	int page_height = -1;
+	long lastScrollToBottomEventTime = -1;
+	int lastScrollToBottomEventContentHeight = -1;
+	private int scrollToBottomEventTimeInterval = 500;
 
-    public boolean smartWebViewRestoreState(Bundle savedInstanceState)
+	@Override
+	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+		super.onScrollChanged(l, t, oldl, oldt);
+		int content_height = (int)(getContentHeight()/* * getScale()*/);
+		int content_height_limit = content_height - page_height - page_height / 2;
+		if (true)
+		{
+			if (t > content_height_limit && content_height_limit > 0)
+			{
+				long scrollToBottomEventTime = System.currentTimeMillis();
+				long scrollEventTimeDiff = scrollToBottomEventTime - lastScrollToBottomEventTime;
+
+				if (scrollEventTimeDiff > scrollToBottomEventTimeInterval && lastScrollToBottomEventContentHeight != content_height)
+				{
+					lastScrollToBottomEventTime = scrollToBottomEventTime;
+					lastScrollToBottomEventContentHeight = content_height;
+					sendJsEvent("scrollToBottom", "null");
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void onSizeChanged (int w, int h, int ow, int oh)
+	{
+		super.onSizeChanged(w, h, ow, oh);
+		page_height = h;
+	}
+
+	public boolean smartWebViewRestoreState(Bundle savedInstanceState)
     {
         return restoreState(savedInstanceState);
     }

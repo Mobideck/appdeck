@@ -36,7 +36,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />-->
 
     <!-- WideSapce minSdk 17 override -->
-    <uses-sdk android:minSdkVersion="15" tools:overrideLibrary="com.widespace, com.gc.materialdesign, com.millennialmedia" />
+    <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="com.widespace, com.gc.materialdesign, com.millennialmedia" />
 
     <application
         tools:replace="android:icon,android:theme"
@@ -135,6 +135,10 @@
 
         <!-- Game Love -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2394h80b265540a1cb6e70ad4b6aadb4652b1"></meta-data>-->
+
+        <!-- Zebulon -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1882h9fcb3c7b1f3831cf00853cf085e1e1d3"></meta-data>-->
+
 
         <meta-data android:name="noCache" android:value="false" />
 
