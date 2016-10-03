@@ -164,12 +164,20 @@ public class ScreenConfiguration {
 			}
 			if (path != null)
 			{
+				if (notUrlRegexp != null) {
+					for (int i = 0; i < notUrlRegexp.length; i++) {
+						Pattern regexp = notUrlRegexp[i];
+						Matcher m = regexp.matcher(path);
+						if (m.find())
+							return false;
+					}
+				}
 				for (int i = 0; i < urlRegexp.length; i++) {
 					Pattern regexp = urlRegexp[i];
 					Matcher m = regexp.matcher(path);
 					if (m.find())
 						return true;
-				}				
+				}
 			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
