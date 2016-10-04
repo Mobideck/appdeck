@@ -62,7 +62,9 @@ public class CacheFilters implements HttpFilters {
     //protected OutputStream metaStream = null;
     protected boolean skipCacheStream = false;
     
-    
+
+	protected boolean isError = false;
+
     /**
      * Date format pattern used to parse HTTP date headers in RFC 1123 format.
      */
@@ -404,11 +406,16 @@ public class CacheFilters implements HttpFilters {
 
 	@Override
 	public void serverToProxyResponseTimedOut() {
-
+		isError = true;
 	}
 
 	@Override
     public HttpObject proxyToClientResponse(HttpObject httpObject) {
+
+		if (isError)
+		{
+			return null;
+		}
 
 		if (httpObject instanceof HttpResponse)
 		{
@@ -456,7 +463,7 @@ public class CacheFilters implements HttpFilters {
 
 	@Override
 	public void proxyToServerResolutionFailed(String hostAndPort) {
-
+		isError = true;
 	}
 
 	@Override
@@ -476,7 +483,7 @@ public class CacheFilters implements HttpFilters {
 
     @Override
     public void proxyToServerConnectionFailed() {
-
+		isError = true;
     }
 
 	@Override
