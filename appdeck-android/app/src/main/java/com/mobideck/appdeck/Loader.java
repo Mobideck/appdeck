@@ -76,6 +76,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -111,6 +112,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -1358,6 +1360,8 @@ public class Loader extends AppCompatActivity {
 	    return fID;
 	}    
 
+    int rootTransactionCommit = 0;
+
     public void loadRootPage(String absoluteURL)
     {
     	fragList = new ArrayList<WeakReference<AppDeckFragment>>();
@@ -1373,7 +1377,7 @@ public class Loader extends AppCompatActivity {
             return;
     	prepareRootPage();
 		AppDeckFragment fragment = initPageFragment(absoluteURL);
-    	pushFragment(fragment);
+        rootTransactionCommit = pushFragment(fragment);
         setMenuArrow(false);
         //adManager.showAds(AppDeckAdManager.EVENT_ROOT);
     }
@@ -1528,11 +1532,11 @@ public class Loader extends AppCompatActivity {
     	//fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out);
     	//Animations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
     	    	
-    	fragmentTransaction.commitAllowingStateLoss();
+    	int ret = fragmentTransaction.commitAllowingStateLoss();
     	
         layoutSubViews();
 
-    	return 0;
+    	return ret;
     }
 
     public boolean pushFragmentAnimation(AppDeckFragment fragment)
@@ -1595,20 +1599,56 @@ public class Loader extends AppCompatActivity {
 
     public boolean popRootFragment()
     {
-    	//AppDeckFragment root = getRootAppDeckFragment();
+        AppDeckFragment current = getCurrentAppDeckFragment();
+        AppDeckFragment previous = getRootAppDeckFragment();
 
-    	FragmentManager fragmentManager = getSupportFragmentManager();
-    	
-    	fragmentManager.popBackStack();
-    	
-    	//todo: a faire
-    	//fragmentManager.popBackStack(root, FragmentManager.POP_BACK_STACK_INCLUSIVE); 
-    	
-    	/*prepareRootPage();
-    	pushFragment(root);*/
+        if (current == null || previous == null)
+            return false;
+
+        if (current == previous)
+            return false;
+
+        if (rootTransactionCommit == 0)
+        {
+            loadRootPage(appDeck.config.bootstrapUrl.toString());
+            return true;
+        }
+
+        setSupportProgressBarVisibility(false);
+
+        // remove other fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        for(WeakReference<AppDeckFragment> ref : fragList) {
+            AppDeckFragment f = ref.get();
+            if (f != current && f != previous) {
+                fragmentTransaction.remove(f);
+            }
+        }
+        fragmentTransaction.commitAllowingStateLoss();
+
+        if (current.isPopUp)
+        {
+            AppDeckFragmentDownAnimation anim = new AppDeckFragmentDownAnimation(current, previous);
+            anim.start();
+        } else if (current.enablePopAnimation)
+        {
+            AppDeckFragmentPopAnimation anim = new AppDeckFragmentPopAnimation(current, previous);
+            anim.start();
+        }
+
+        // reset fragment list
+        ArrayList<WeakReference<AppDeckFragment>> fragList = new ArrayList<WeakReference<AppDeckFragment>>();
+        fragList.add(new WeakReference(current));
+
+        // make sure user see content
+        closeMenu();
+        setMenuArrow(false);
+
         if (adManager != null)
             adManager.showAds(AppDeckAdManager.EVENT_ROOT);
-    	return true;
+
+        return true;
     }
 
     public void layoutSubViews()
@@ -2125,6 +2165,46 @@ public class Loader extends AppCompatActivity {
             this.loadExternalURL(url, true);
 
             return true;
+        }
+
+        if (call.command.equalsIgnoreCase("snackbar")) {
+            Log.i("API", "** SNACKBAR **");
+
+            String message = call.param.getString("message");
+            String action = call.param.getString("action");
+
+            if (action == null || action.isEmpty())
+                action = getString(android.R.string.ok);
+
+            call.setResultJSON("true");
+
+            final AppDeckApiCall mycall = call;
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.loader), message, Snackbar.LENGTH_LONG)
+                    .setAction(action, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mycall.sendCallbackWithResult("success", new JSONObject());
+                        }
+                    })
+                    .setCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            mycall.sendCallBackWithError("dissmissed");
+                        }
+                    });
+/*
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);*/
+            snackbar.show();
+
+            return true;
+
         }
 
         if (pluginManager.handleCall(call))
