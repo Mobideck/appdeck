@@ -40,6 +40,7 @@ import android.webkit.JsResult;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -553,6 +554,8 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
         }
 
+
+
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
 
@@ -566,6 +569,17 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             //Toast.makeText(getContext(), "" + request.getUrl().toString() + ": (" + url + ") " + errorResponse.getReasonPhrase(), Toast.LENGTH_LONG).show();
 
+        }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            Log.d(TAG, "WebView Error:" + error.getErrorCode() + ":" + error.getDescription());
+
+            if (request.getUrl().toString().equalsIgnoreCase(url)) {
+                pageHasFinishLoadingWithError = true;
+                setVisibility(View.INVISIBLE);
+                return;
+            }
         }
 
         @Override
@@ -794,6 +808,14 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
             return false;
         }
 
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            Log.e(TAG, title);
+            CharSequence pnotfound = "The page cannot be found";
+            if (title.contains(pnotfound)) {
+
+            }
+        }
     }
 
     /**
