@@ -555,12 +555,22 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-            super.onReceivedHttpError(view, request, errorResponse);
+
+            Log.d(TAG, "HTTP Error:" + errorResponse.getStatusCode() + ":" + errorResponse.getReasonPhrase());
+
+            if (request.getUrl().toString().equalsIgnoreCase(url)) {
+                pageHasFinishLoadingWithError = true;
+                setVisibility(View.INVISIBLE);
+                return;
+            }
+
+            //Toast.makeText(getContext(), "" + request.getUrl().toString() + ": (" + url + ") " + errorResponse.getReasonPhrase(), Toast.LENGTH_LONG).show();
+
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Log.d(TAG, "Error:" + errorCode + ":" + description);
+            Log.d(TAG, "WebView Error:" + errorCode + ":" + description);
 
             if (failingUrl.equalsIgnoreCase(url)) {
                 pageHasFinishLoadingWithError = true;
@@ -568,7 +578,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 return;
             }
 
-            Toast.makeText(getContext(), "" + failingUrl + ": (" + url + ") " + description, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "" + failingUrl + ": (" + url + ") " + description, Toast.LENGTH_LONG).show();
 
             /*
 
