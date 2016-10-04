@@ -1,5 +1,7 @@
 package com.mobideck.appdeck;
 
+import android.util.Log;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
@@ -9,6 +11,8 @@ import java.util.regex.PatternSyntaxException;
 import com.mobideck.appdeck.R;
 
 public class ScreenConfiguration {
+
+	public static String TAG = "ScreenConfiguration";
 
 	public String title;
 	public String logo;
@@ -86,8 +90,12 @@ public class ScreenConfiguration {
 	{
 		title = readString(node, "title");
 		logo =  readString(node, "logo");
-		if (logo != null)
-			logo = baseUrl.resolve(logo).toString(); 
+		try {
+			if (logo != null)
+				logo = baseUrl.resolve(logo).toString();
+		} catch (Exception e) {
+			Log.e(TAG, "Screen "+title+" logo is disabled as logo '"+logo+"' is invalid: "+e.getMessage());
+		}
 		type = readString(node, "type");
 		isPopUp = node.getBoolean("popup");
 		enableShare = node.getBoolean("enable_share");
