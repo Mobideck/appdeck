@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -21,6 +23,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -304,6 +307,25 @@ public class PageFragmentSwap extends AppDeckFragment {
             //pageWebView.ctl.loadUrl(absoluteURL);
             return false;
         }
+		/*if (absoluteURL.startsWith("sms:"))
+		{
+			String tmp = absoluteURL;
+			tmp = tmp.replace(";", "?");
+			if (tmp.contains("?") == false)
+				tmp = tmp.replaceFirst("&", "?");
+			tmp = tmp.replace("sms:", "");
+			String to = tmp;
+			if (tmp.contains("?"))
+				to = to.substring(0, to.indexOf("?"));
+			String message = "";
+			if (tmp.contains("body"))
+				message = tmp.substring(tmp.indexOf("body") + 4);
+
+			Log.d("SMS", "to: "+to);
+			Log.d("SMS", "message: "+message);
+
+			return false;
+		}*/
         if (screenConfiguration.isRelated(absoluteURL))
         {
             //loader.replacePage(absoluteURL);
@@ -519,13 +541,14 @@ public class PageFragmentSwap extends AppDeckFragment {
     	}
     	else if (origin == pageWebViewAlt.view)
     	{
-			swipeViewAlt.setVisibility(View.VISIBLE);
+			/*swipeViewAlt.setVisibility(View.VISIBLE);
 			rootView.bringChildToFront(swipeViewAlt);
-			pageWebViewAlt.ctl.loadUrl("http://appdeck/error");
+			pageWebViewAlt.ctl.loadUrl("http://appdeck/error");*/
 
-/*    		Toast.makeText(origin.getContext(), "Network Error", Toast.LENGTH_LONG).show();
+			Snackbar.make(loader.findViewById(R.id.loader), "Network Error", Snackbar.LENGTH_LONG).show();
+
 			pageWebViewAlt.ctl.stopLoading();
-    		//setVisibility(View.INVISIBLE);*/
+    		//setVisibility(View.INVISIBLE);
     		reloadInProgress = false;
     	}
 
