@@ -46,9 +46,25 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
  @method
 
  @abstract
+ Returns test mode on/off.
+ */
++ (BOOL)isTestMode;
+
+/*!
+ @method
+
+ @abstract
+ Returns the hashid of the device to use test mode on.
+ */
++ (NSString *)testDeviceHash;
+
+/*!
+ @method
+
+ @abstract
  Adds a test device.
 
- @param deviceHash The id of the device to use test mode, can be obtained from debug log
+ @param deviceHash The id of the device to use test mode, can be obtained from debug log or testDeviceHash
 
  @discussion
  Copy the current device Id from debug log and add it as a test device to get test ads. Apps
@@ -62,7 +78,7 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
  @abstract
  Add a collection of test devices. See `+addTestDevices:` for details.
 
- @param devicesHash The array of the device id to use test mode, can be obtained from debug log
+ @param devicesHash The array of the device id to use test mode, can be obtained from debug log or testDeviceHash
  */
 + (void)addTestDevices:(FB_NSArrayOf(NSString *)*)devicesHash;
 
@@ -73,6 +89,16 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
  Clear all the added test devices
  */
 + (void)clearTestDevices;
+
+/*!
+ @method
+
+ @abstract
+ Clears the added test device
+
+ @param deviceHash The id of the device using test mode, can be obtained from debug log or testDeviceHash
+ */
++ (void)clearTestDevice:(NSString *)deviceHash;
 
 /*!
  @method

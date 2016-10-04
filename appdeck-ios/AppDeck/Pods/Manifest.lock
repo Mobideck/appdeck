@@ -1,28 +1,21 @@
 PODS:
-  - appdeck-ios-iap (0.1.0):
-    - IAPHelper
-    - RMStore (~> 0.7)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Crashlytics (3.8.0):
+  - Crashlytics (3.8.2):
     - Fabric (~> 1.6.3)
   - ECSlidingViewController (2.0.3)
-  - Fabric (1.6.8)
-  - FBAudienceNetwork (4.15.0)
-  - FBSDKCoreKit (4.15.0):
+  - Fabric (1.6.9)
+  - FBAudienceNetwork (4.16.0)
+  - FBSDKCoreKit (4.16.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.15.0):
+  - FBSDKLoginKit (4.16.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.15.0):
+  - FBSDKShareKit (4.16.0):
     - FBSDKCoreKit
-  - IAPHelper (1.0.9)
-  - RMStore (0.7.1):
-    - RMStore/Core (= 0.7.1)
-  - RMStore/Core (0.7.1)
   - SIAlertView (1.3)
   - SVProgressHUD (2.0.3)
   - TwitterCore (1.15.3):
@@ -31,7 +24,6 @@ PODS:
     - TwitterCore (= 1.15.3)
 
 DEPENDENCIES:
-  - appdeck-ios-iap (from `~/Documents/git/plugins/appdeck-ios-iap`)
   - Crashlytics
   - ECSlidingViewController (from `https://github.com/mdekermadec/ECSlidingViewController.git`)
   - Fabric
@@ -45,8 +37,6 @@ DEPENDENCIES:
   - TwitterKit
 
 EXTERNAL SOURCES:
-  appdeck-ios-iap:
-    :path: "~/Documents/git/plugins/appdeck-ios-iap"
   ECSlidingViewController:
     :git: https://github.com/mdekermadec/ECSlidingViewController.git
 
@@ -56,22 +46,19 @@ CHECKOUT OPTIONS:
     :git: https://github.com/mdekermadec/ECSlidingViewController.git
 
 SPEC CHECKSUMS:
-  appdeck-ios-iap: 8a75521bb35f8332fdcbebae7fcd59f94845688a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Crashlytics: 8601d9c74a4c4d28f3e7f408bf4c0e490c70e8b4
+  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
-  Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
-  FBAudienceNetwork: 9ec54f1058e08ac8f5326358302795a43efbcfe2
-  FBSDKCoreKit: 6680cbd33a4243d80700f182d0af36b3fa7f3118
-  FBSDKLoginKit: 96d9b70b5784490f02ab86119e542a1f182017a8
-  FBSDKShareKit: 06ef20cb2f16828ca4b20055333313dd445de362
-  IAPHelper: e994287a6ab3cf6169efb4a09f7207d4dc413acf
-  RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
+  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
+  FBAudienceNetwork: 687570172e7207945c5bfc37afef25cc01bf2514
+  FBSDKCoreKit: 7a6baaed4a2b2a244ba253346713bdbc74df135b
+  FBSDKLoginKit: 9a514a55a7d05190f64d4ef09502737588b5b561
+  FBSDKShareKit: e81505de17fc0624cbaa87b83cccc9f2a786e6cb
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
   TwitterKit: 43600f2d2848c227739efea5b2939585e69339c3
 
-PODFILE CHECKSUM: c81c355f349508b49ac9d2e891f6012ec0c765b8
+PODFILE CHECKSUM: 6d788c49e0d3d83a69a47dbff5f11e3c8d55f990
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1

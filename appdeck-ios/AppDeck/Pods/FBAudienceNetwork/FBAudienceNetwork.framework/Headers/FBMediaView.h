@@ -60,6 +60,9 @@ FB_CLASS_EXPORT
  */
 @property (nonatomic, assign, getter=isAutoplayEnabled) BOOL autoplayEnabled;
 
+// Setting autoplayEnabled in the SDK is deprecated. Migrate to using server-side control when available.
+- (void)setAutoplayEnabled:(BOOL)autoplayEnabled FB_DEPRECATED;
+
 @end
 
 /*!

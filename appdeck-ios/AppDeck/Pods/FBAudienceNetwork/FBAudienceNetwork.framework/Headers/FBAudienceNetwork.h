@@ -24,6 +24,7 @@
 #import <FBAudienceNetwork/FBAdDefines.h>
 #import <FBAudienceNetwork/FBAdSettings.h>
 #import <FBAudienceNetwork/FBAdView.h>
+#import <FBAudienceNetwork/FBInstreamAdView.h>
 #import <FBAudienceNetwork/FBInterstitialAd.h>
 #import <FBAudienceNetwork/FBMediaView.h>
 #import <FBAudienceNetwork/FBNativeAd.h>
@@ -35,4 +36,4 @@
 #import <FBAudienceNetwork/FBNativeAdView.h>
 #import <FBAudienceNetwork/FBNativeAdsManager.h>
 
-#define FB_AD_SDK_VERSION @"4.15.0"
+#define FB_AD_SDK_VERSION @"4.16.0"
