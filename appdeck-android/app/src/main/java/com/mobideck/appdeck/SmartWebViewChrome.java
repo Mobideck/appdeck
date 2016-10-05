@@ -807,15 +807,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 DebugLog.error("JavaScript:unknowlevel:"+consoleMessage.sourceId()+":"+consoleMessage.lineNumber(), consoleMessage.message());
             return false;
         }
-
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            Log.e(TAG, title);
-            CharSequence pnotfound = "The page cannot be found";
-            if (title.contains(pnotfound)) {
-
-            }
-        }
     }
 
     /**
