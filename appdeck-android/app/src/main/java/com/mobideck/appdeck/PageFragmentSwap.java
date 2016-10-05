@@ -548,6 +548,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 			Snackbar.make(loader.findViewById(R.id.loader), "Network Error", Snackbar.LENGTH_LONG).show();
 
 			pageWebViewAlt.ctl.stopLoading();
+
     		//setVisibility(View.INVISIBLE);
     		reloadInProgress = false;
     	}
