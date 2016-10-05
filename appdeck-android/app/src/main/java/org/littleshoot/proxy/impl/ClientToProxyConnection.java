@@ -1,5 +1,7 @@
 package org.littleshoot.proxy.impl;
 
+import com.mobideck.appdeck.CacheFilters;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -1190,6 +1192,14 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      * Miscellaneous
      **************************************************************************/
 
+    private void appdeck_savage_kill()
+    {
+        DefaultFullHttpResponse response = responseFor(new HttpVersion("error", false),
+                new HttpResponseStatus(0, ""), "error");
+        response.headers().set(HttpHeaders.Names.CONNECTION, "close");
+        write(response);
+    }
+
     /**
      * Tells the client that something went wrong trying to proxy its request. If the Bad Gateway is a response to
      * an HTTP HEAD request, the response will contain no body, but the Content-Length header will be set to the
@@ -1199,6 +1209,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      * @return true if the connection will be kept open, or false if it will be disconnected
      */
     private boolean writeBadGateway(HttpRequest httpRequest) {
+        /*
         String body = "Bad Gateway: " + httpRequest.getUri();
         DefaultFullHttpResponse response = responseFor(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_GATEWAY, body);
 
@@ -1208,6 +1219,10 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
         }
 
         return respondWithShortCircuitResponse(response);
+        */
+        appdeck_savage_kill();
+        disconnect();
+        return false;
     }
 
     /**
@@ -1238,7 +1253,7 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
      * @return true if the connection will be kept open, or false if it will be disconnected
      */
     private boolean writeGatewayTimeout(HttpRequest httpRequest) {
-        String body = "Gateway Timeout";
+/*        String body = "Gateway Timeout";
         DefaultFullHttpResponse response = responseFor(HttpVersion.HTTP_1_1,
                 HttpResponseStatus.GATEWAY_TIMEOUT, body);
 
@@ -1247,7 +1262,10 @@ public class ClientToProxyConnection extends ProxyConnection<HttpRequest> {
             response.content().clear();
         }
 
-        return respondWithShortCircuitResponse(response);
+        return respondWithShortCircuitResponse(response);*/
+        appdeck_savage_kill();
+        disconnect();
+        return false;
     }
 
     /**
