@@ -36,7 +36,7 @@ import android.util.Log;
 public class CacheFilters implements HttpFilters {
 
 	public final String TAG = "CacheFilters";
-	
+
 	protected AppDeck appDeck;
 	
 	protected String absoluteURL;
@@ -412,10 +412,19 @@ public class CacheFilters implements HttpFilters {
 	@Override
     public HttpObject proxyToClientResponse(HttpObject httpObject) {
 
-		if (isError)
+		/*if (isError)
 		{
-			return null;
-		}
+			byte[] data = htmlError.getBytes();
+			ByteBuf buf = Unpooled.wrappedBuffer(data);
+			DefaultFullHttpResponse response = new DefaultFullHttpResponse(
+					HttpVersion.HTTP_1_1,
+					HttpResponseStatus.NOT_FOUND,
+					buf);
+			response.headers().set("Content-Type", "text/html");
+			response.headers().set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+			return response;
+//			return null;
+		}*/
 
 		if (httpObject instanceof HttpResponse)
 		{
