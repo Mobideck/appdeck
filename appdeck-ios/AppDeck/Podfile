@@ -16,6 +16,8 @@ target 'AppDeck' do
   #  pod 'ARSPopover'
   pod 'SIAlertView'
   
+  pod 'SSSnackbar'
+  
   # begin appdeck-ios-plugins
   
   #pod 'appdeck-ios-iap', :git => 'https://github.com/Mobideck/appdeck-ios-iap.git'

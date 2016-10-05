@@ -36,8 +36,6 @@
 		A916CEB51A1E03E6005FE1AE /* HTMLChunkAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916C40E1A1E03D5005FE1AE /* HTMLChunkAdViewController.m */; };
 		A916D2871A1E03E7005FE1AE /* SmartAdServerAdEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CB471A1E03D8005FE1AE /* SmartAdServerAdEngine.m */; };
 		A916D2881A1E03E7005FE1AE /* SmartAdServerAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CB491A1E03D8005FE1AE /* SmartAdServerAdViewController.m */; };
-		A916D2891A1E03E7005FE1AE /* SwelenAdEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CB4C1A1E03D8005FE1AE /* SwelenAdEngine.m */; };
-		A916D28C1A1E03E7005FE1AE /* SwelenAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CB531A1E03D8005FE1AE /* SwelenAdViewController.m */; };
 		A916D2C91A1E03E7005FE1AE /* WideSpaceAdEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBAA1A1E03D8005FE1AE /* WideSpaceAdEngine.m */; };
 		A916D2CA1A1E03E7005FE1AE /* WideSpaceAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBAC1A1E03D8005FE1AE /* WideSpaceAdViewController.m */; };
 		A916D2CB1A1E03E7005FE1AE /* AdActionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A916CBAE1A1E03D9005FE1AE /* AdActionHelper.m */; };
@@ -209,8 +207,6 @@
 		A928FB9C1B3072FF009F0FE8 /* MoPubInterstitialAdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A928FB991B3072FF009F0FE8 /* MoPubInterstitialAdViewController.m */; };
 		A928FBA01B307431009F0FE8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A928FB9E1B307431009F0FE8 /* .gitignore */; };
 		A928FBA11B307431009F0FE8 /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A928FB9F1B307431009F0FE8 /* AdColony.framework */; };
-		A928FBAA1B30753E009F0FE8 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = A928FBA61B30753E009F0FE8 /* ReadMe.txt */; };
-		A928FBAB1B30753E009F0FE8 /* libswAdLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A928FBA81B30753E009F0FE8 /* libswAdLib.a */; };
 		A93047C4176C8E7A0094CD57 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A93047C3176C8E7A0094CD57 /* libz.dylib */; };
 		A93FED0E1A94D46100F94B66 /* AdBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FED0D1A94D46100F94B66 /* AdBlock.m */; };
 		A9416AC81BAC47DE001F9FF8 /* AppDeckAdNative.m in Sources */ = {isa = PBXBuildFile; fileRef = A9416AC71BAC47DE001F9FF8 /* AppDeckAdNative.m */; };
@@ -226,8 +222,6 @@
 		A9587FF11B68FE1F0037FD53 /* FlurryMPConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FE71B68FE1F0037FD53 /* FlurryMPConfig.m */; };
 		A9587FF21B68FE1F0037FD53 /* FlurryNativeAdAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FE91B68FE1F0037FD53 /* FlurryNativeAdAdapter.m */; };
 		A9587FF31B68FE1F0037FD53 /* FlurryNativeCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FEB1B68FE1F0037FD53 /* FlurryNativeCustomEvent.m */; };
-		A9587FF91B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FF61B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m */; };
-		A9587FFA1B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FF81B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m */; };
 		A9587FFE1B6A13740037FD53 /* AdBuddiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9587FFD1B6A13740037FD53 /* AdBuddiz.framework */; };
 		A95880011B6A15300037FD53 /* AdBuddizLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A95880001B6A15300037FD53 /* AdBuddizLoader.m */; };
 		A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D313C1C3BFFE1007D0C63 /* UIColor+blur.m */; };
@@ -523,10 +517,6 @@
 		A916CB471A1E03D8005FE1AE /* SmartAdServerAdEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmartAdServerAdEngine.m; sourceTree = "<group>"; };
 		A916CB481A1E03D8005FE1AE /* SmartAdServerAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmartAdServerAdViewController.h; sourceTree = "<group>"; };
 		A916CB491A1E03D8005FE1AE /* SmartAdServerAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmartAdServerAdViewController.m; sourceTree = "<group>"; };
-		A916CB4B1A1E03D8005FE1AE /* SwelenAdEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwelenAdEngine.h; sourceTree = "<group>"; };
-		A916CB4C1A1E03D8005FE1AE /* SwelenAdEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwelenAdEngine.m; sourceTree = "<group>"; };
-		A916CB521A1E03D8005FE1AE /* SwelenAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwelenAdViewController.h; sourceTree = "<group>"; };
-		A916CB531A1E03D8005FE1AE /* SwelenAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwelenAdViewController.m; sourceTree = "<group>"; };
 		A916CBA91A1E03D8005FE1AE /* WideSpaceAdEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WideSpaceAdEngine.h; sourceTree = "<group>"; };
 		A916CBAA1A1E03D8005FE1AE /* WideSpaceAdEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WideSpaceAdEngine.m; sourceTree = "<group>"; };
 		A916CBAB1A1E03D8005FE1AE /* WideSpaceAdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WideSpaceAdViewController.h; sourceTree = "<group>"; };
@@ -863,9 +853,6 @@
 		A928FB991B3072FF009F0FE8 /* MoPubInterstitialAdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoPubInterstitialAdViewController.m; path = MoPub/MoPubInterstitialAdViewController.m; sourceTree = "<group>"; };
 		A928FB9E1B307431009F0FE8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A928FB9F1B307431009F0FE8 /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdColony.framework; sourceTree = "<group>"; };
-		A928FBA61B30753E009F0FE8 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
-		A928FBA81B30753E009F0FE8 /* libswAdLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswAdLib.a; sourceTree = "<group>"; };
-		A928FBA91B30753E009F0FE8 /* swAdAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swAdAPI.h; sourceTree = "<group>"; };
 		A92A67931A9385F6008A607E /* AdBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdBlock.h; sourceTree = "<group>"; };
 		A93047C3176C8E7A0094CD57 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A93FED0D1A94D46100F94B66 /* AdBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdBlock.m; sourceTree = "<group>"; };
@@ -897,10 +884,6 @@
 		A9587FE91B68FE1F0037FD53 /* FlurryNativeAdAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryNativeAdAdapter.m; path = Flurry/FlurryNativeAdAdapter.m; sourceTree = "<group>"; };
 		A9587FEA1B68FE1F0037FD53 /* FlurryNativeCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlurryNativeCustomEvent.h; path = Flurry/FlurryNativeCustomEvent.h; sourceTree = "<group>"; };
 		A9587FEB1B68FE1F0037FD53 /* FlurryNativeCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FlurryNativeCustomEvent.m; path = Flurry/FlurryNativeCustomEvent.m; sourceTree = "<group>"; };
-		A9587FF51B6A0D0E0037FD53 /* SwelenBannerCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwelenBannerCustomEvent.h; sourceTree = "<group>"; };
-		A9587FF61B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwelenBannerCustomEvent.m; sourceTree = "<group>"; };
-		A9587FF71B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwelenInterstitialCustomEvent.h; sourceTree = "<group>"; };
-		A9587FF81B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwelenInterstitialCustomEvent.m; sourceTree = "<group>"; };
 		A9587FFD1B6A13740037FD53 /* AdBuddiz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AdBuddiz.framework; sourceTree = "<group>"; };
 		A9587FFF1B6A15300037FD53 /* AdBuddizLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdBuddizLoader.h; path = AdBuddiz/AdBuddizLoader.h; sourceTree = "<group>"; };
 		A95880001B6A15300037FD53 /* AdBuddizLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdBuddizLoader.m; path = AdBuddiz/AdBuddizLoader.m; sourceTree = "<group>"; };
@@ -1334,7 +1317,6 @@
 				A948B4C4186B080B00F61664 /* libsqlite3.dylib in Frameworks */,
 				A95154001861B6EE00B2C396 /* Accelerate.framework in Frameworks */,
 				A9A58F17182D602900AAF541 /* iAd.framework in Frameworks */,
-				A928FBAB1B30753E009F0FE8 /* libswAdLib.a in Frameworks */,
 				A9A58D79182BEC9B00AAF541 /* Social.framework in Frameworks */,
 				A90B3B9818293E600039A48A /* Security.framework in Frameworks */,
 				A916BBCC1B8B5D8F000F8D47 /* libInMobi-4.5.3.a in Frameworks */,
@@ -1605,8 +1587,6 @@
 				A916C40F1A1E03D5005FE1AE /* InMobi */,
 				A916C4CF1A1E03D5005FE1AE /* MMedia */,
 				A916CAA61A1E03D8005FE1AE /* SmartAdServer */,
-				A916CB4A1A1E03D8005FE1AE /* Swelen */,
-				A9587FF41B6A0D0E0037FD53 /* Swelen-Mopub */,
 				A916CB591A1E03D8005FE1AE /* Vungle */,
 				A916CB631A1E03D8005FE1AE /* WideSpace */,
 			);
@@ -1691,18 +1671,6 @@
 				A916CB491A1E03D8005FE1AE /* SmartAdServerAdViewController.m */,
 			);
 			path = SmartAdServer;
-			sourceTree = "<group>";
-		};
-		A916CB4A1A1E03D8005FE1AE /* Swelen */ = {
-			isa = PBXGroup;
-			children = (
-				A928FBA51B30753E009F0FE8 /* SwelenAds-50000e */,
-				A916CB4B1A1E03D8005FE1AE /* SwelenAdEngine.h */,
-				A916CB4C1A1E03D8005FE1AE /* SwelenAdEngine.m */,
-				A916CB521A1E03D8005FE1AE /* SwelenAdViewController.h */,
-				A916CB531A1E03D8005FE1AE /* SwelenAdViewController.m */,
-			);
-			path = Swelen;
 			sourceTree = "<group>";
 		};
 		A916CB591A1E03D8005FE1AE /* Vungle */ = {
@@ -2422,24 +2390,6 @@
 			path = "AdColony-iOS-SDK-2.5.1";
 			sourceTree = "<group>";
 		};
-		A928FBA51B30753E009F0FE8 /* SwelenAds-50000e */ = {
-			isa = PBXGroup;
-			children = (
-				A928FBA61B30753E009F0FE8 /* ReadMe.txt */,
-				A928FBA71B30753E009F0FE8 /* SwelenSDK */,
-			);
-			path = "SwelenAds-50000e";
-			sourceTree = "<group>";
-		};
-		A928FBA71B30753E009F0FE8 /* SwelenSDK */ = {
-			isa = PBXGroup;
-			children = (
-				A928FBA81B30753E009F0FE8 /* libswAdLib.a */,
-				A928FBA91B30753E009F0FE8 /* swAdAPI.h */,
-			);
-			path = SwelenSDK;
-			sourceTree = "<group>";
-		};
 		A9573C291AF9084E0086FCC2 /* conversant-ios-sdk-4.4.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2481,17 +2431,6 @@
 				A9587FEB1B68FE1F0037FD53 /* FlurryNativeCustomEvent.m */,
 			);
 			name = Flurry;
-			sourceTree = "<group>";
-		};
-		A9587FF41B6A0D0E0037FD53 /* Swelen-Mopub */ = {
-			isa = PBXGroup;
-			children = (
-				A9587FF51B6A0D0E0037FD53 /* SwelenBannerCustomEvent.h */,
-				A9587FF61B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m */,
-				A9587FF71B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.h */,
-				A9587FF81B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m */,
-			);
-			path = "Swelen-Mopub";
 			sourceTree = "<group>";
 		};
 		A9587FFB1B6A13690037FD53 /* AdBuddiz */ = {
@@ -3253,7 +3192,7 @@
 		A91DFA0816CE8D1400512CA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Mathieu De Kermadec";
 				TargetAttributes = {
 					A91DFA0F16CE8D1400512CA0 = {
@@ -3312,7 +3251,6 @@
 				A9ADF1F51BC53EBC0026305E /* MPCloseButtonX@3x.png in Resources */,
 				A9CC036D1BA1DE1100C0F799 /* vg_privacy.png in Resources */,
 				A9ADF1F91BC53EBC0026305E /* MRAID.bundle in Resources */,
-				A928FBAA1B30753E009F0FE8 /* ReadMe.txt in Resources */,
 				A9CC036A1BA1DE1100C0F799 /* vg_cta.png in Resources */,
 				A9ADF1F61BC53EBC0026305E /* MPDAAIcon.png in Resources */,
 				A9CC03681BA1DE1100C0F799 /* __vungle.db in Resources */,
@@ -3452,7 +3390,6 @@
 				A916D3E51A1E03E7005FE1AE /* UIImageView+HighlightedWebCache.m in Sources */,
 				A9ADF1D11BC53EBC0026305E /* MPAdConversionTracker.m in Sources */,
 				A916D2E11A1E03E7005FE1AE /* CRNavigationController.m in Sources */,
-				A916D28C1A1E03E7005FE1AE /* SwelenAdViewController.m in Sources */,
 				A916D3651A1E03E7005FE1AE /* Delta.c in Sources */,
 				A9ADF1FC1BC53EBC0026305E /* MPRewardedVideo.m in Sources */,
 				A916D3F71A1E03E7005FE1AE /* UINavigationBar+Progress.m in Sources */,
@@ -3583,7 +3520,6 @@
 				A9ADF1961BC53EBC0026305E /* MPFacebookKeywordProvider.m in Sources */,
 				A916D2E01A1E03E7005FE1AE /* CRNavigationBar.m in Sources */,
 				A9ADF1D41BC53EBC0026305E /* MPConstants.m in Sources */,
-				A9587FFA1B6A0D0E0037FD53 /* SwelenInterstitialCustomEvent.m in Sources */,
 				A9ADF19A1BC53EBC0026305E /* MPURLActionInfo.m in Sources */,
 				A916D3691A1E03E7005FE1AE /* Ppmd7.c in Sources */,
 				A9BA71201BC524D0005A212E /* hash.cc in Sources */,
@@ -3618,7 +3554,6 @@
 				A9587FC71B68FE010037FD53 /* AppDeckAnalytics.m in Sources */,
 				A916D2E51A1E03E7005FE1AE /* EmbedResources.m in Sources */,
 				A9ADF1D91BC53EBC0026305E /* MPDiskLRUCache.m in Sources */,
-				A916D2891A1E03E7005FE1AE /* SwelenAdEngine.m in Sources */,
 				A9ADF1D81BC53EBC0026305E /* MPAdPlacerInvocation.m in Sources */,
 				A9ADF1D51BC53EBC0026305E /* MPInterstitialAdController.m in Sources */,
 				A9ADF1AB1BC53EBC0026305E /* MPLegacyInterstitialCustomEventAdapter.m in Sources */,
@@ -3649,7 +3584,6 @@
 				A9BA71221BC524D0005A212E /* random.cc in Sources */,
 				A9ADF1B41BC53EBC0026305E /* MRCalendarManager.m in Sources */,
 				A9ADF1E61BC53EBC0026305E /* MPNativeAd.m in Sources */,
-				A9587FF91B6A0D0E0037FD53 /* SwelenBannerCustomEvent.m in Sources */,
 				A916D3621A1E03E7005FE1AE /* 7zStream.c in Sources */,
 				A916D2DF1A1E03E7005FE1AE /* CookieStorage.m in Sources */,
 				A916D36E1A1E03E7005FE1AE /* 7zMain.c in Sources */,
@@ -3788,24 +3722,34 @@
 		A91DFA3416CE8D1400512CA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3819,16 +3763,26 @@
 		A91DFA3516CE8D1400512CA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;

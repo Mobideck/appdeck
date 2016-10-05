@@ -82,12 +82,14 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "FBSDKCoreKit/FacebookSDKStrings.bundle"
   install_resource "SIAlertView/SIAlertView/SIAlertView.bundle"
+  install_resource "$PODS_CONFIGURATION_BUILD_DIR/SSSnackbar/SSSnackbar.bundle"
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
   install_resource "TwitterKit/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "FBSDKCoreKit/FacebookSDKStrings.bundle"
   install_resource "SIAlertView/SIAlertView/SIAlertView.bundle"
+  install_resource "$PODS_CONFIGURATION_BUILD_DIR/SSSnackbar/SSSnackbar.bundle"
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
   install_resource "TwitterKit/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle"
 fi
