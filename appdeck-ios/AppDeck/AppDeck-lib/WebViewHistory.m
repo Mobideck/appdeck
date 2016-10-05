@@ -35,9 +35,12 @@
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         //obj = (MyWebHistory *)[NSClassFromString(@"WebHistory") performSelector:NSSelectorFromString(@"optionalSharedHistory")];
 #pragma clang diagnostic pop
+       
+        typedef MyWebHistory * (*send_type)(Class, SEL);
+        send_type func = (send_type)objc_msgSend;
+        obj = func(NSClassFromString(@"WebHistory"), NSSelectorFromString(@"optionalSharedHistory"));
         
-        obj = (MyWebHistory *)objc_msgSend(NSClassFromString(@"WebHistory"), NSSelectorFromString(@"optionalSharedHistory"));
-
+        //obj = (MyWebHistory *)objc_msgSend(NSClassFromString(@"WebHistory"), NSSelectorFromString(@"optionalSharedHistory"));
         
         //NSLog(@"History Obj: %@", [[obj class] description]);
         if ([[[obj class] description] isEqualToString:@"WebHistory"] == NO)
