@@ -309,7 +309,6 @@
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
 
         <provider android:authorities="com.facebook.app.FacebookContentProvider1635878233340418"
