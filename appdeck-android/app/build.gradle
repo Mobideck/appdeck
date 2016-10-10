@@ -39,7 +39,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 71
-        versionName "1.7.1"
+        versionName "1.7.5"
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -51,6 +51,7 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE.txt'
         exclude '.readme'
         exclude 'META-INF/BCKEY.DSA'
@@ -140,12 +141,12 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:23.3.0'
     //compile 'com.android.support:support-v4:23.3.0'
     //compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:design:24.2.1'
 
     // https://developers.google.com/android/guides/setup
-    compile 'com.google.android.gms:play-services-analytics:9.4.0'
-    compile 'com.google.android.gms:play-services-gcm:9.4.0'
-    compile 'com.google.android.gms:play-services-ads:9.4.0'
+    compile 'com.google.android.gms:play-services-analytics:9.6.1'
+    compile 'com.google.android.gms:play-services-gcm:9.6.1'
+    compile 'com.google.android.gms:play-services-ads:9.6.1'
     //compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 
     // https://github.com/chrisbanes/PhotoView
@@ -163,26 +164,26 @@ dependencies {
     crosswalkCompile 'org.xwalk:xwalk_core_library:21.51.546.6' // A tester
 
     // https://fabric.io/kits/android/crashlytics/install
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
 
     // https://fabric.io/kits/android/twitterkit/install
     // https://twittersdk.artifactoryonline.com/twittersdk/public/com/twitter/sdk/android/twitter-core/
-    compile('com.twitter.sdk.android:twitter-core:2.0.0') {
+    compile('com.twitter.sdk.android:twitter-core:2.1.0') {
         transitive = true
         exclude module: 'gson';
     }
 
-    // https://fabric.io/kits/android/mopub
+    // https://fabric.io/kits/android/mopub/install
     /*compile('com.mopub:mopub-sdk:4.5.1@aar') {
         transitive = true
     }*/
-    compile('com.mopub:mopub-sdk:4.8.0@aar') {
+    compile('com.mopub:mopub-sdk:4.9.0@aar') {
         transitive = true
     }
     // https://developers.facebook.com/docs/android
-    compile 'com.facebook.android:facebook-android-sdk:4.12.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.16.0'
 
     // https://github.com/hotchemi/Android-Rate
     compile 'com.github.hotchemi:android-rate:1.0.1'
@@ -203,9 +204,7 @@ dependencies {
     //compile 'com.jakewharton.timber:timber:4.1.0'
 
     // https://github.com/afollestad/material-dialogs
-    compile('com.github.afollestad.material-dialogs:core:0.9.0.1@aar') {
-        transitive = true
-    }
+    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
 
     /*compile('com.github.afollestad.material-dialogs:commons:0.8.5.3@aar') {
         transitive = true
@@ -221,7 +220,7 @@ dependencies {
     // millenial media
     compile 'com.millennialmedia:mm-ad-sdk@aar'
 
-    compile 'net.grunt:gruntlib-0.1.7@aar'
+    compile 'net.grunt:gruntlib-0.1.8@aar'
 
     // https://github.com/google/guava#latest-release
     //compile 'com.google.guava:guava:19.0'
