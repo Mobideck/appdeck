@@ -563,7 +563,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             if (request.getUrl().toString().equalsIgnoreCase(url)) {
                 pageHasFinishLoadingWithError = true;
-                setVisibility(View.INVISIBLE);
+                //setVisibility(View.INVISIBLE);
                 return;
             }
 
@@ -577,7 +577,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             if (request.getUrl().toString().equalsIgnoreCase(url)) {
                 pageHasFinishLoadingWithError = true;
-                setVisibility(View.INVISIBLE);
+                //setVisibility(View.INVISIBLE);
                 return;
             }
         }
@@ -588,7 +588,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
             if (failingUrl.equalsIgnoreCase(url)) {
                 pageHasFinishLoadingWithError = true;
-                setVisibility(View.INVISIBLE);
+                //setVisibility(View.INVISIBLE);
                 return;
             }
 
