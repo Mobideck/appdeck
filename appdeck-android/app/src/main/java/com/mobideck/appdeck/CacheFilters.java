@@ -223,7 +223,7 @@ public class CacheFilters implements HttpFilters {
            			HttpResponse response = createCachedHTTPResponse(cachedResponse);
            			if (response != null)
            			{	    			
-    	    			Log.i(TAG, "CACHE HIT: "+absoluteURL);//+" Size:"+(data.length/1024)+"Kb");
+    	    			//Log.i(TAG, "CACHE HIT: "+absoluteURL);//+" Size:"+(data.length/1024)+"Kb");
 						DebugLog.info("CACHE HIT", absoluteURL);
     		    		return response;
            			}
@@ -271,10 +271,10 @@ public class CacheFilters implements HttpFilters {
 			}
 
 			if (isCacheMiss) {
-				Log.i(TAG, " CACHE MISS " + absoluteURL);
+				//Log.i(TAG, " CACHE MISS " + absoluteURL);
 				DebugLog.info("CACHE MISS", absoluteURL);
 			} else {
-				Log.i(TAG, " DOWNLOAD " + absoluteURL);
+				//Log.i(TAG, " DOWNLOAD " + absoluteURL);
 				DebugLog.warning("DOWNLOAD", absoluteURL);
 			}
 
