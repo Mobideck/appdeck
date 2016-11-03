@@ -417,7 +417,7 @@
 		A9BA71251BC524D0005A212E /* strutil.cc in Sources */ = {isa = PBXBuildFile; fileRef = A9BA70E11BC524D0005A212E /* strutil.cc */; };
 		A9BA71271BC524D0005A212E /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = A9BA70E41BC524D0005A212E /* thread.cc */; };
 		A9BA71291BC524D0005A212E /* valgrind.cc in Sources */ = {isa = PBXBuildFile; fileRef = A9BA70E91BC524D0005A212E /* valgrind.cc */; };
-		A9BE1A601C6224DA002177EE /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BE1A5F1C6224DA002177EE /* PassKit.framework */; };
+		A9BE1A601C6224DA002177EE /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BE1A5F1C6224DA002177EE /* PassKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A9CC035D1BA1DD5200C0F799 /* libFlurry_7.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC03491BA1DD5200C0F799 /* libFlurry_7.1.0.a */; };
 		A9CC035E1BA1DD5200C0F799 /* libFlurryAds_7.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9CC03561BA1DD5200C0F799 /* libFlurryAds_7.1.0.a */; };
 		A9CC03681BA1DE1100C0F799 /* __vungle.db in Resources */ = {isa = PBXBuildFile; fileRef = A9CC03611BA1DE1100C0F799 /* __vungle.db */; };
@@ -1302,11 +1302,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9BE1A601C6224DA002177EE /* PassKit.framework in Frameworks */,
 				A91DFAA916CFAE8C00512CA0 /* MobileCoreServices.framework in Frameworks */,
 				A91DFA1816CE8D1400512CA0 /* CoreGraphics.framework in Frameworks */,
 				A90B3B9218293E1B0039A48A /* CoreLocation.framework in Frameworks */,
 				A99B48A11CF314F400261446 /* AssetsLibrary.framework in Frameworks */,
-				A9BE1A601C6224DA002177EE /* PassKit.framework in Frameworks */,
 				A916BBCE1B8B717E000F8D47 /* libxml2.dylib in Frameworks */,
 				A916BBA61B8B5BDF000F8D47 /* GoogleMobileAds.framework in Frameworks */,
 				A913C7D01BDA7A9F0054B590 /* libical.a in Frameworks */,
@@ -3804,7 +3804,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3855,7 +3854,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
-				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3870,7 +3868,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3919,7 +3916,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
-				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
