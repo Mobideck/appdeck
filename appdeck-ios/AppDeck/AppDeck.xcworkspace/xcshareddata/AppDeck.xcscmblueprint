@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2F9A0932AABF95BA43E01E59FCE260271260F36E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "3A37794F83F201681F9765A965F6DA0376D2358F" : 0,
+    "2F9A0932AABF95BA43E01E59FCE260271260F36E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3E6FC480-C272-4259-A34D-05FDBC7C910D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "3A37794F83F201681F9765A965F6DA0376D2358F" : "plugins\/appdeck-ios-iap\/",
+    "2F9A0932AABF95BA43E01E59FCE260271260F36E" : "appdeck\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "AppDeck",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "appdeck-ios\/AppDeck\/AppDeck.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Mobideck\/appdeck.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2F9A0932AABF95BA43E01E59FCE260271260F36E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Mobideck\/appdeck-ios-iap.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3A37794F83F201681F9765A965F6DA0376D2358F"
+    }
+  ]
+}
