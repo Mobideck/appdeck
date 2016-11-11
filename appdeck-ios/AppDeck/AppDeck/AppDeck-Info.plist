@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Advertisement would like to use your camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Advertisement would like to use your microphone.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Advertisement would like to use bluetooth.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Advertisement would like to store a photo.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Advertisement would like to create a calendar event.</string>
 	<key>AppDeckApiKey</key>
 	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
 	<key>AppDeckApiKey - 10</key>
@@ -30,6 +40,12 @@
 	<string>1818hf63940ad7859260deba357b98fe1b3ef#Krewe</string>
 	<key>AppDeckApiKey - 21</key>
 	<string>1833h98708fb114b52085fe57a6e301611916#Fis Ski</string>
+	<key>AppDeckApiKey - 22</key>
+	<string>2322h042e548c3ddb65f1d97c72eb9ea66247#LaGauchematuer</string>
+	<key>AppDeckApiKey - 23</key>
+	<string>2207hecedafac70454b2fb07a80867e2ca258#Canin plus</string>
+	<key>AppDeckApiKey - 24</key>
+	<string>2404h964e5f3635b95b86edc3336cced1d5e5#Copilot</string>
 	<key>AppDeckApiKey - 3</key>
 	<string>757h76c94e17ec542ce74d210eb3f949bf6f#Play3-Live 2.2</string>
 	<key>AppDeckApiKey - 4</key>
@@ -48,6 +64,8 @@
 	<string>979hf2a89dc17ae78bd6e3ff60a65f301724#actuanimaux</string>
 	<key>AppDeckApiKey - 9</key>
 	<string>959hc85fdc336418aade8d2d86f6af4a5fa9#SNIIM</string>
+	<key>AppDeckApiKey - 9 - 2</key>
+	<string>2247hadc45a049e11769f39f2719601b9f0a6#Memo Heures</string>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
