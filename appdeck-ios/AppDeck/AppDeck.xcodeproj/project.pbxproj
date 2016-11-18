@@ -467,6 +467,7 @@
 		A90B3B9318293E350039A48A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A90B3B9518293E4A0039A48A /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		A90B3B9718293E600039A48A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A911DD881DDF7064002FE0DB /* AppDeck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppDeck.entitlements; sourceTree = "<group>"; };
 		A913C7BA1BDA7A9E0054B590 /* NetAvenirAdEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetAvenirAdEngine.h; path = NetAvenir/NetAvenirAdEngine.h; sourceTree = "<group>"; };
 		A913C7BB1BDA7A9E0054B590 /* NetAvenirAdEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetAvenirAdEngine.m; path = NetAvenir/NetAvenirAdEngine.m; sourceTree = "<group>"; };
 		A913C7BD1BDA7A9E0054B590 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
@@ -2335,6 +2336,7 @@
 		A91DFA1916CE8D1400512CA0 /* AppDeck */ = {
 			isa = PBXGroup;
 			children = (
+				A911DD881DDF7064002FE0DB /* AppDeck.entitlements */,
 				A91DFA1A16CE8D1400512CA0 /* Supporting Files */,
 				A91DFA1B16CE8D1400512CA0 /* AppDeck-Info.plist */,
 				A91DFA1C16CE8D1400512CA0 /* InfoPlist.strings */,
@@ -3801,6 +3803,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = AppDeck/AppDeck.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = AppDeck/AppDeck.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3864,6 +3869,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = AppDeck/AppDeck.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
