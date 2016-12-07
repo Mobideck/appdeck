@@ -290,10 +290,13 @@ static unsigned char gifData[] = {
 {
     if (memcache == nil || request == nil || request.URL == nil || request.URL.absoluteString == nil)
         return nil;
+    
+    NSString *absoluteURL = request.URL.absoluteString;
+    
     // in memcache ?
-    NSCachedURLResponse *cachedResponse = [memcache objectForKey:request.URL.absoluteString];
+    NSCachedURLResponse *cachedResponse = [memcache objectForKey:absoluteURL];
     if (cachedResponse != nil) {
-        NSLog(@"getCacheResponseForRequest: MemCache: %@", request.URL.absoluteString);
+        NSLog(@"getCacheResponseForRequest: MemCache: %@", absoluteURL);
         return cachedResponse;
     }
     
@@ -344,7 +347,11 @@ static unsigned char gifData[] = {
         
         [headersTMP enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             if ([[obj class] isSubclassOfClass:[NSString class]])
+            {
                 [headers setObject:obj forKey:key];
+                if ([[key lowercaseString] isEqualToString:@"content-type"])
+                    contentType = obj;
+            }
             else if ([[obj class] isSubclassOfClass:[NSArray class]])
             {
                 NSArray *values = (NSArray *)obj;
@@ -367,7 +374,7 @@ static unsigned char gifData[] = {
         NSURLResponse *response = [[NSURLResponse alloc] initWithURL:request.URL MIMEType:contentType expectedContentLength:bodyData.length textEncodingName:nil];
         
         cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:bodyData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
-        NSLog(@"getCacheResponseForRequest: Embed: %@", request.URL.absoluteString);
+        NSLog(@"getCacheResponseForRequest: Embed: %@", absoluteURL);
         return cachedResponse;
     }
     return nil;
