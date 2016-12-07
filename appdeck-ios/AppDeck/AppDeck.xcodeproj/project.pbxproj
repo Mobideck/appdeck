@@ -3287,7 +3287,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		34BAC32683431AF25E89D663 /* [CP] Embed Pods Frameworks */ = {
@@ -3848,11 +3848,7 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10/Vendor/libYuMeSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				"OTHER_LDFLAGS[arch=*]" = (
-					"-ObjC",
-					"-all_load",
-					"$(inherited)",
-				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC -all_load $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3910,11 +3906,7 @@
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10/Vendor/libYuMeSDK",
 				);
-				"OTHER_LDFLAGS[arch=*]" = (
-					"-ObjC",
-					"-all_load",
-					"$(inherited)",
-				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC -all_load $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
 				TARGETED_DEVICE_FAMILY = "1,2";
