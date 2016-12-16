@@ -2207,6 +2207,15 @@ public class Loader extends AppCompatActivity {
 
         }
 
+        if (call.command.startsWith("getuserid"))
+        {
+            Log.i("API", "** GET USER ID **");
+
+            call.setResult(AppDeck.getInstance().uid);
+
+            return true;
+        }
+
         if (pluginManager.handleCall(call))
             return true;
 
