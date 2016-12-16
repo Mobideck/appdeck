@@ -639,7 +639,12 @@
         return YES;
     }
     
-    
+    if ([call.command isEqualToString:@"getuserid"])
+    {
+        call.result = [CacheMonitoringURLProtocol getUserId];
+        
+        return YES;
+    }
     
     return [AppDeckPluginManager handleAPICall:call];
 }
