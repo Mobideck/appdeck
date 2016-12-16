@@ -22,4 +22,6 @@
 @property (nonatomic, readwrite, strong) NSMutableData *data;
 @property (nonatomic, readwrite, strong) NSURLResponse *response;
 
++(NSString *)getUserId;
+
 @end
