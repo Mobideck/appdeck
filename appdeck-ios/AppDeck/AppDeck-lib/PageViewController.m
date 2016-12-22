@@ -87,6 +87,8 @@
 
     if (self.screenConfiguration.ttl > 0)
         timer = [NSTimer scheduledTimerWithTimeInterval:self.screenConfiguration.ttl target:self selector:@selector(checkReloadContent:) userInfo:nil repeats:YES];
+    else
+        timer = [NSTimer scheduledTimerWithTimeInterval:600 target:self selector:@selector(checkReloadContent:) userInfo:nil repeats:YES];
     
     //register for iphone application events
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -589,12 +591,6 @@
         NSLog(@"checkReloadContent: don't refresh this page as screen.ttl == 0");
         return;
     }
-    if (self.screenConfiguration.ttl == -1)
-    {
-        NSLog(@"checkReloadContent: Refresh this page as screen.ttl = -1");
-        [self reLoadContent];
-        return;
-    }
     if (lastUpdate == nil)
     {
         NSLog(@"checkReloadContent: don't refresh this page as last update is unknow");
@@ -604,6 +600,19 @@
 
     // if reload from long time ago we move page to top
     NSTimeInterval lastUpdateInterval = [[NSDate date] timeIntervalSinceDate:lastUpdate];
+
+    if (self.screenConfiguration.ttl == -1)
+    {
+        if (lastUpdateInterval > 600 * 60)
+        {
+            NSLog(@"checkReloadContent: Refresh this page as screen.ttl = -1 and last reload : %f seconds ago > %d * 10", lastUpdateInterval, 600 * 10);
+            [self reLoadContent];
+        } else {
+            NSLog(@"checkReloadContent: don't refresh this page as screen.ttl = -1 and last reload : %f seconds ago > %d * 10", lastUpdateInterval, 600 * 10);
+        }
+        return;
+    }
+    
     if (lastUpdateInterval > self.screenConfiguration.ttl * 60)
     {
         NSLog(@"checkReloadContent: last reload long time ago: %f seconds ago > %ld * 10, we auto scroll to top then reload", lastUpdateInterval, self.screenConfiguration.ttl * 10);
