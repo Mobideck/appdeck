@@ -1,0 +1,1780 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>UICollectionView(MPCollectionViewAdPlacer) Category Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">UICollectionView(MPCollectionViewAdPlacer) Category Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/mp_adPlacer">&nbsp;&nbsp;&nbsp;&nbsp;- mp_adPlacer</option>
+	
+	<option value="//api/name/mp_cellForItemAtIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_cellForItemAtIndexPath:</option>
+	
+	<option value="//api/name/mp_dataSource">&nbsp;&nbsp;&nbsp;&nbsp;- mp_dataSource</option>
+	
+	<option value="//api/name/mp_delegate">&nbsp;&nbsp;&nbsp;&nbsp;- mp_delegate</option>
+	
+	<option value="//api/name/mp_deleteItemsAtIndexPaths:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_deleteItemsAtIndexPaths:</option>
+	
+	<option value="//api/name/mp_deleteSections:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_deleteSections:</option>
+	
+	<option value="//api/name/mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:</option>
+	
+	<option value="//api/name/mp_deselectItemAtIndexPath:animated:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_deselectItemAtIndexPath:animated:</option>
+	
+	<option value="//api/name/mp_indexPathForCell:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathForCell:</option>
+	
+	<option value="//api/name/mp_indexPathForItemAtPoint:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathForItemAtPoint:</option>
+	
+	<option value="//api/name/mp_indexPathsForSelectedItems">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathsForSelectedItems</option>
+	
+	<option value="//api/name/mp_indexPathsForVisibleItems">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathsForVisibleItems</option>
+	
+	<option value="//api/name/mp_insertItemsAtIndexPaths:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_insertItemsAtIndexPaths:</option>
+	
+	<option value="//api/name/mp_insertSections:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_insertSections:</option>
+	
+	<option value="//api/name/mp_layoutAttributesForItemAtIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_layoutAttributesForItemAtIndexPath:</option>
+	
+	<option value="//api/name/mp_moveItemAtIndexPath:toIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_moveItemAtIndexPath:toIndexPath:</option>
+	
+	<option value="//api/name/mp_moveSection:toSection:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_moveSection:toSection:</option>
+	
+	<option value="//api/name/mp_reloadData">&nbsp;&nbsp;&nbsp;&nbsp;- mp_reloadData</option>
+	
+	<option value="//api/name/mp_reloadItemsAtIndexPaths:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_reloadItemsAtIndexPaths:</option>
+	
+	<option value="//api/name/mp_reloadSections:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_reloadSections:</option>
+	
+	<option value="//api/name/mp_scrollToItemAtIndexPath:atScrollPosition:animated:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_scrollToItemAtIndexPath:atScrollPosition:animated:</option>
+	
+	<option value="//api/name/mp_selectItemAtIndexPath:animated:scrollPosition:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_selectItemAtIndexPath:animated:scrollPosition:</option>
+	
+	<option value="//api/name/mp_setDataSource:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_setDataSource:</option>
+	
+	<option value="//api/name/mp_setDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_setDelegate:</option>
+	
+	<option value="//api/name/mp_visibleCells">&nbsp;&nbsp;&nbsp;&nbsp;- mp_visibleCells</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Obtaining the Collection View Ad Placer">Obtaining the Collection View Ad Placer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Setting and Getting the Delegate and Data Source">Setting and Getting the Delegate and Data Source</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Notifying the Collection View Ad Placer of Content Changes">Notifying the Collection View Ad Placer of Content Changes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Involving Index Paths">Methods Involving Index Paths</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_adPlacer">mp_adPlacer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_cellForItemAtIndexPath:">mp_cellForItemAtIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_dataSource">mp_dataSource</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_delegate">mp_delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_deleteItemsAtIndexPaths:">mp_deleteItemsAtIndexPaths:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_deleteSections:">mp_deleteSections:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:">mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_deselectItemAtIndexPath:animated:">mp_deselectItemAtIndexPath:animated:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathForCell:">mp_indexPathForCell:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathForItemAtPoint:">mp_indexPathForItemAtPoint:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathsForSelectedItems">mp_indexPathsForSelectedItems</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathsForVisibleItems">mp_indexPathsForVisibleItems</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_insertItemsAtIndexPaths:">mp_insertItemsAtIndexPaths:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_insertSections:">mp_insertSections:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_layoutAttributesForItemAtIndexPath:">mp_layoutAttributesForItemAtIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_moveItemAtIndexPath:toIndexPath:">mp_moveItemAtIndexPath:toIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_moveSection:toSection:">mp_moveSection:toSection:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_reloadData">mp_reloadData</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_reloadItemsAtIndexPaths:">mp_reloadItemsAtIndexPaths:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_reloadSections:">mp_reloadSections:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_scrollToItemAtIndexPath:atScrollPosition:animated:">mp_scrollToItemAtIndexPath:atScrollPosition:animated:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_selectItemAtIndexPath:animated:scrollPosition:">mp_selectItemAtIndexPath:animated:scrollPosition:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_setDataSource:">mp_setDataSource:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_setDelegate:">mp_setDelegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_visibleCells">mp_visibleCells</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="UICollectionView(MPCollectionViewAdPlacer) Category Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">UICollectionView(MPCollectionViewAdPlacer) Category Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPCollectionViewAdPlacer.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <a href="../Classes/MoPub.html">MoPub</a> SDK adds interfaces to the <code>UICollectionView</code> class to help your application with
+responsibilities related to <a href="../Classes/MPCollectionViewAdPlacer.html"><code>MPCollectionViewAdPlacer</code></a>. These APIs include methods to help notify
+the ad placer of all modifications to the original collection view, as well as to simplify your
+application code such that it does not need to perform index path manipulations to account for
+the presence of ads.</p>
+
+<p>Since the ad placer replaces the original data source and delegate objects of your collection
+view, the SDK also provides new methods for you to set these properties such that the ad placer
+remains aware of the changes.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Obtaining the Collection View Ad Placer" name="task_Obtaining the Collection View Ad Placer"></a>
+						<h3 class="subsubtitle task-title">Obtaining the Collection View Ad Placer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_adPlacer">&ndash;&nbsp;mp_adPlacer</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Setting and Getting the Delegate and Data Source" name="task_Setting and Getting the Delegate and Data Source"></a>
+						<h3 class="subsubtitle task-title">Setting and Getting the Delegate and Data Source</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_setDataSource:">&ndash;&nbsp;mp_setDataSource:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_dataSource">&ndash;&nbsp;mp_dataSource</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_setDelegate:">&ndash;&nbsp;mp_setDelegate:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_delegate">&ndash;&nbsp;mp_delegate</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Notifying the Collection View Ad Placer of Content Changes" name="task_Notifying the Collection View Ad Placer of Content Changes"></a>
+						<h3 class="subsubtitle task-title">Notifying the Collection View Ad Placer of Content Changes</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_reloadData">&ndash;&nbsp;mp_reloadData</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_insertItemsAtIndexPaths:">&ndash;&nbsp;mp_insertItemsAtIndexPaths:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_deleteItemsAtIndexPaths:">&ndash;&nbsp;mp_deleteItemsAtIndexPaths:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_reloadItemsAtIndexPaths:">&ndash;&nbsp;mp_reloadItemsAtIndexPaths:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_moveItemAtIndexPath:toIndexPath:">&ndash;&nbsp;mp_moveItemAtIndexPath:toIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_insertSections:">&ndash;&nbsp;mp_insertSections:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_deleteSections:">&ndash;&nbsp;mp_deleteSections:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_reloadSections:">&ndash;&nbsp;mp_reloadSections:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_moveSection:toSection:">&ndash;&nbsp;mp_moveSection:toSection:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Methods Involving Index Paths" name="task_Methods Involving Index Paths"></a>
+						<h3 class="subsubtitle task-title">Methods Involving Index Paths</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_cellForItemAtIndexPath:">&ndash;&nbsp;mp_cellForItemAtIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:">&ndash;&nbsp;mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_deselectItemAtIndexPath:animated:">&ndash;&nbsp;mp_deselectItemAtIndexPath:animated:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathForCell:">&ndash;&nbsp;mp_indexPathForCell:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathForItemAtPoint:">&ndash;&nbsp;mp_indexPathForItemAtPoint:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathsForSelectedItems">&ndash;&nbsp;mp_indexPathsForSelectedItems</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathsForVisibleItems">&ndash;&nbsp;mp_indexPathsForVisibleItems</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_layoutAttributesForItemAtIndexPath:">&ndash;&nbsp;mp_layoutAttributesForItemAtIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_scrollToItemAtIndexPath:atScrollPosition:animated:">&ndash;&nbsp;mp_scrollToItemAtIndexPath:atScrollPosition:animated:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_selectItemAtIndexPath:animated:scrollPosition:">&ndash;&nbsp;mp_selectItemAtIndexPath:animated:scrollPosition:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_visibleCells">&ndash;&nbsp;mp_visibleCells</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_adPlacer" title="mp_adPlacer"></a>
+	<h3 class="subsubtitle method-title">mp_adPlacer</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the ad placer currently being used for this collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (MPCollectionViewAdPlacer *)mp_adPlacer</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An ad placer object or <code>nil</code> if no ad placer is being used.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_cellForItemAtIndexPath:" title="mp_cellForItemAtIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_cellForItemAtIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the visible cell object at the specified index path.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UICollectionViewCell *)mp_cellForItemAtIndexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path that specifies the section and item number of the cell.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The cell object at the corresponding index path or <code>nil</code> if the cell is not visible or
+<em>indexPath</em> is out of range.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_dataSource" title="mp_dataSource"></a>
+	<h3 class="subsubtitle method-title">mp_dataSource</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original data source of the collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id&lt;UICollectionViewDataSource&gt;)mp_dataSource</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The original collection view data source.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When you instantiate an ad placer using a collection view, the ad placer replaces the collection
+view&rsquo;s original data source object. If your application needs to access the original data source,
+use this method instead of [UICollectionView dataSource].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_delegate" title="mp_delegate"></a>
+	<h3 class="subsubtitle method-title">mp_delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original delegate of the collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id&lt;UICollectionViewDelegate&gt;)mp_delegate</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The original collection view delegate.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When you instantiate an ad placer using a collection view, the ad placer replaces the collection
+view&rsquo;s original delegate object. If your application needs to access the original delegate, use
+this method instead of [UICollectionView delegate].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_deleteItemsAtIndexPaths:" title="mp_deleteItemsAtIndexPaths:"></a>
+	<h3 class="subsubtitle method-title">mp_deleteItemsAtIndexPaths:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deletes the items at the specified index paths, and informs the attached ad placer of the
+deletions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_deleteItemsAtIndexPaths:(NSArray *)<em>indexPaths</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPaths</em></dt>
+			<dd><p>An array of <code>NSIndexPath</code> objects, each of which contains a section index and
+item index for the item you want to delete from the collection view. This parameter must not be
+<code>nil</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_deleteSections:" title="mp_deleteSections:"></a>
+	<h3 class="subsubtitle method-title">mp_deleteSections:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deletes the sections at the specified indexes, and informs the attached ad placer of the
+deletions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_deleteSections:(NSIndexSet *)<em>sections</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sections</em></dt>
+			<dd><p>The indexes of the sections you want to delete. This parameter must not be <code>nil</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:" title="mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_dequeueReusableCellWithReuseIdentifier:forIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a reusable cell object located by its identifier.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)mp_dequeueReusableCellWithReuseIdentifier:(NSString *)<em>identifier</em> forIndexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>identifier</em></dt>
+			<dd><p>The reuse identifier for the specified cell. This parameter must not be <code>nil</code>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path specifying the location of the cell. The data source receives
+this information when it is asked for the cell and should just pass it along. This method uses
+the index path to perform additional configuration based on the cell’s position in the collection
+view.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A valid <code>UICollectionReusableView</code> object.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_deselectItemAtIndexPath:animated:" title="mp_deselectItemAtIndexPath:animated:"></a>
+	<h3 class="subsubtitle method-title">mp_deselectItemAtIndexPath:animated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deselects the item at the specified index.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_deselectItemAtIndexPath:(NSIndexPath *)<em>indexPath</em> animated:(BOOL)<em>animated</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path of the item to select. Specifying <code>nil</code> results in no change to
+the current selection.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animated</em></dt>
+			<dd><p>Specify YES to animate the change in the selection or NO to make the change
+without animating it.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathForCell:" title="mp_indexPathForCell:"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathForCell:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original index path for the given cell or <code>nil</code> if the cell is an ad cell.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)mp_indexPathForCell:(UICollectionViewCell *)<em>cell</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>cell</em></dt>
+			<dd><p>The cell object whose index path you want.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The index path of the cell or <code>nil</code> if the specified cell contains an ad or is not in the
+collection view.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathForItemAtPoint:" title="mp_indexPathForItemAtPoint:"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathForItemAtPoint:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the index path of the item at the specified point in the collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)mp_indexPathForItemAtPoint:(CGPoint)<em>point</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>point</em></dt>
+			<dd><p>A point in the collection view’s coordinate system.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The index path of the item at the specified point or <code>nil</code> if either an ad or no item was
+found at the specified point.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathsForSelectedItems" title="mp_indexPathsForSelectedItems"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathsForSelectedItems</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original index paths (as if no ads were inserted) for the selected items.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_indexPathsForSelectedItems</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of the original index paths for the selected items.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathsForVisibleItems" title="mp_indexPathsForVisibleItems"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathsForVisibleItems</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of original index paths each identifying a visible non-ad item in the collection
+view, calculated before any ads were inserted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_indexPathsForVisibleItems</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of the original index paths representing visible non-ad items in the collection
+view. Returns <code>nil</code> if no items are visible.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_insertItemsAtIndexPaths:" title="mp_insertItemsAtIndexPaths:"></a>
+	<h3 class="subsubtitle method-title">mp_insertItemsAtIndexPaths:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Inserts new items at the specified index paths, and informs the attached ad placer of the
+insertions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_insertItemsAtIndexPaths:(NSArray *)<em>indexPaths</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPaths</em></dt>
+			<dd><p>An array of <code>NSIndexPath</code> objects, each of which contains a section index and
+item index at which to insert a new cell. This parameter must not be <code>nil</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_insertSections:" title="mp_insertSections:"></a>
+	<h3 class="subsubtitle method-title">mp_insertSections:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Inserts new sections at the specified indexes, and informs the attached ad placer of the
+insertions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_insertSections:(NSIndexSet *)<em>sections</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sections</em></dt>
+			<dd><p>An index set containing the indexes of the sections you want to insert. This
+parameter must not be <code>nil</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_layoutAttributesForItemAtIndexPath:" title="mp_layoutAttributesForItemAtIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_layoutAttributesForItemAtIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the layout information for the item at the specified index path.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UICollectionViewLayoutAttributes *)mp_layoutAttributesForItemAtIndexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path of the item.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The layout attributes for the item or <code>nil</code> if no item exists at the specified path.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_moveItemAtIndexPath:toIndexPath:" title="mp_moveItemAtIndexPath:toIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_moveItemAtIndexPath:toIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Moves an item from one location to another in the collection view, taking into account ads
+inserted by the ad placer.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_moveItemAtIndexPath:(NSIndexPath *)<em>indexPath</em> toIndexPath:(NSIndexPath *)<em>newIndexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path of the item you want to move. This parameter must not be
+<code>nil</code>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>newIndexPath</em></dt>
+			<dd><p>The index path of the item’s new location. This parameter must not be <code>nil</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_moveSection:toSection:" title="mp_moveSection:toSection:"></a>
+	<h3 class="subsubtitle method-title">mp_moveSection:toSection:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Moves a section from one location to another in the collection view, and informs the attached ad
+placer.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_moveSection:(NSInteger)<em>section</em> toSection:(NSInteger)<em>newSection</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>section</em></dt>
+			<dd><p>The index path of the section you want to move. This parameter must not be
+<code>nil</code>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>newSection</em></dt>
+			<dd><p>The index path of the section’s new location. This parameter must not be <code>nil</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_reloadData" title="mp_reloadData"></a>
+	<h3 class="subsubtitle method-title">mp_reloadData</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reloads all of the data for the collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_reloadData</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_reloadItemsAtIndexPaths:" title="mp_reloadItemsAtIndexPaths:"></a>
+	<h3 class="subsubtitle method-title">mp_reloadItemsAtIndexPaths:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reloads just the items at the specified index paths.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_reloadItemsAtIndexPaths:(NSArray *)<em>indexPaths</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPaths</em></dt>
+			<dd><p>An array of <code>NSIndexPath</code> objects identifying the items you want to update.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_reloadSections:" title="mp_reloadSections:"></a>
+	<h3 class="subsubtitle method-title">mp_reloadSections:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reloads the data in the specified sections of the collection view, and informs the attached ad
+placer that sections may have changed.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_reloadSections:(NSIndexSet *)<em>sections</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sections</em></dt>
+			<dd><p>The indexes of the sections to reload.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_scrollToItemAtIndexPath:atScrollPosition:animated:" title="mp_scrollToItemAtIndexPath:atScrollPosition:animated:"></a>
+	<h3 class="subsubtitle method-title">mp_scrollToItemAtIndexPath:atScrollPosition:animated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Scrolls the collection view contents until the specified item is visible.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_scrollToItemAtIndexPath:(NSIndexPath *)<em>indexPath</em> atScrollPosition:(UICollectionViewScrollPosition)<em>scrollPosition</em> animated:(BOOL)<em>animated</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path of the item to scroll into view.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>scrollPosition</em></dt>
+			<dd><p>An option that specifies where the item should be positioned when scrolling
+finishes.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animated</em></dt>
+			<dd><p>Specify YES to animate the scrolling behavior or NO to adjust the scroll
+view’s visible content immediately.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_selectItemAtIndexPath:animated:scrollPosition:" title="mp_selectItemAtIndexPath:animated:scrollPosition:"></a>
+	<h3 class="subsubtitle method-title">mp_selectItemAtIndexPath:animated:scrollPosition:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Selects the item at the specified index path and optionally scrolls it into view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_selectItemAtIndexPath:(NSIndexPath *)<em>indexPath</em> animated:(BOOL)<em>animated</em> scrollPosition:(UICollectionViewScrollPosition)<em>scrollPosition</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path of the item to select. Specifying <code>nil</code> for this parameter
+clears the current selection.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animated</em></dt>
+			<dd><p>Specify YES to animate the change in the selection or NO to make the change
+without animating it.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>scrollPosition</em></dt>
+			<dd><p>An option that specifies where the item should be positioned when scrolling
+finishes.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_setDataSource:" title="mp_setDataSource:"></a>
+	<h3 class="subsubtitle method-title">mp_setDataSource:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the collection view&rsquo;s data source.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_setDataSource:(id&lt;UICollectionViewDataSource&gt;)<em>dataSource</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>dataSource</em></dt>
+			<dd><p>The new collection view data source.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If your application needs to change a collection view&rsquo;s data source after it has instantiated an
+ad placer using that collection view, use this method rather than
+[UICollectionView setDataSource:].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_setDelegate:" title="mp_setDelegate:"></a>
+	<h3 class="subsubtitle method-title">mp_setDelegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the collection view&rsquo;s delegate.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_setDelegate:(id&lt;UICollectionViewDelegate&gt;)<em>delegate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>delegate</em></dt>
+			<dd><p>The new collection view delegate.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If your application needs to change a collection view&rsquo;s delegate after it has instantiated an ad
+placer using that collection view, use this method rather than [UICollectionView setDelegate:].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_visibleCells" title="mp_visibleCells"></a>
+	<h3 class="subsubtitle method-title">mp_visibleCells</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of the non-ad cells that are visible in the collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_visibleCells</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of <code>UICollectionViewCell</code> objects, each representing a visible, non-ad cell in
+the receiving collection view.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

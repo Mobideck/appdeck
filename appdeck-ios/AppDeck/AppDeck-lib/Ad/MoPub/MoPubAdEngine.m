@@ -56,7 +56,7 @@
         self.rectangleTabletAdUnitId = [NSString stringWithFormat:@"%@", [config objectForKey:@"rectangleTabletAdUnitId"]];
         self.InterstitialTabletAdUnitId = [NSString stringWithFormat:@"%@", [config objectForKey:@"InterstitialTabletAdUnitId"]];
         self.InterstitialTabletLandscapeAdUnitId = [NSString stringWithFormat:@"%@", [config objectForKey:@"InterstitialTabletLandscapeAdUnitId"]];
-        
+        /*
         NSString *swelenPassback = [NSString stringWithFormat:@"%@", [config objectForKey:@"swelenPassBack"]];
         if ([swelenPassback isEqualToString:@"1"])
         {
@@ -71,7 +71,7 @@
             {
                 //SW_LOAD_ADMOB();
             }
-        }
+        }*/
         
         
     }

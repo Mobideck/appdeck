@@ -1,0 +1,653 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPNativeAdRenderer Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPNativeAdRenderer Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/viewSizeHandler">&nbsp;&nbsp;&nbsp;&nbsp;viewSizeHandler</option>
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/rendererConfigurationWithRendererSettings:">&nbsp;&nbsp;&nbsp;&nbsp;+ rendererConfigurationWithRendererSettings:</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/adViewWillMoveToSuperview:">&nbsp;&nbsp;&nbsp;&nbsp;- adViewWillMoveToSuperview:</option>
+	
+	<option value="//api/name/initWithRendererSettings:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithRendererSettings:</option>
+	
+	<option value="//api/name/nativeAdTapped">&nbsp;&nbsp;&nbsp;&nbsp;- nativeAdTapped</option>
+	
+	<option value="//api/name/retrieveViewWithAdapter:error:">&nbsp;&nbsp;&nbsp;&nbsp;- retrieveViewWithAdapter:error:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/viewSizeHandler">viewSizeHandler</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/rendererConfigurationWithRendererSettings:">rendererConfigurationWithRendererSettings:</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/adViewWillMoveToSuperview:">adViewWillMoveToSuperview:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithRendererSettings:">initWithRendererSettings:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/nativeAdTapped">nativeAdTapped</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/retrieveViewWithAdapter:error:">retrieveViewWithAdapter:error:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPNativeAdRenderer Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPNativeAdRenderer Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPNativeAdRenderer.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <a href="../Classes/MoPub.html">MoPub</a> SDK has a concept of native ad renderer that allows you to render the ad however you want. It also gives you the
+ability to expose configurable properties through renderer settings objects to the application that influence how you render
+your native custom event&rsquo;s view.</p>
+
+<p>Your renderer should implement this protocol. Your renderer is responsible for rendering the network&rsquo;s ad data into a view
+when <a href="#//api/name/retrieveViewWithAdapter:error:"><code>retrieveViewWithAdapter:error:</code></a> is called. Your renderer will be asked to render the native ad if your renderer configuration
+indicates that your renderer supports your specific native ad network.</p>
+
+<p>Finally, your renderer will live as long as the ad adapter so you may store data in your renderer if necessary.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/rendererConfigurationWithRendererSettings:">+&nbsp;rendererConfigurationWithRendererSettings:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithRendererSettings:">&ndash;&nbsp;initWithRendererSettings:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/retrieveViewWithAdapter:error:">&ndash;&nbsp;retrieveViewWithAdapter:error:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/viewSizeHandler">&nbsp;&nbsp;viewSizeHandler</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/adViewWillMoveToSuperview:">&ndash;&nbsp;adViewWillMoveToSuperview:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/nativeAdTapped">&ndash;&nbsp;nativeAdTapped</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/viewSizeHandler" title="viewSizeHandler"></a>
+	<h3 class="subsubtitle method-title">viewSizeHandler</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The viewSizeHandler is used to allow the app to configure its native ad view size
+given a maximum width when using ad placer solutions. This is not called when the
+app is manually integrating native ads.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) MPNativeViewSizeHandler viewSizeHandler</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>You should obtain the renderer&rsquo;s viewSizeHandler from the settings object in
+<a href="../Protocols/MPNativeAdRenderer.html#//api/name/initWithRendererSettings:"><code>initWithRendererSettings:</code></a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdRenderer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/rendererConfigurationWithRendererSettings:" title="rendererConfigurationWithRendererSettings:"></a>
+	<h3 class="subsubtitle method-title">rendererConfigurationWithRendererSettings:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>You must construct and return an MPNativeAdRendererConfiguration object specific for your renderer. You must
+set all the properties on the configuration object.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (MPNativeAdRendererConfiguration *)rendererConfigurationWithRendererSettings:(id&lt;MPNativeAdRendererSettings&gt;)<em>rendererSettings</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>rendererSettings</em></dt>
+			<dd><p>Application defined settings that you should store in the configuration object that you
+construct.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A configuration object that allows the <a href="../Classes/MoPub.html">MoPub</a> SDK to instantiate your renderer with the application
+settings and for the supported ad types.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdRenderer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/adViewWillMoveToSuperview:" title="adViewWillMoveToSuperview:"></a>
+	<h3 class="subsubtitle method-title">adViewWillMoveToSuperview:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The MoPubSDK will notify your renderer when your native ad&rsquo;s view has moved in
+the hierarchy. superview will be nil if the native ad&rsquo;s view has been removed
+from the view hierarchy.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)adViewWillMoveToSuperview:(UIView *)<em>superview</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>superview</em></dt>
+			<dd><p>The app&rsquo;s view that contains the native ad view. There is an
+intermediate view between the renderer&rsquo;s ad view and the app&rsquo;s view.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The view your renderer creates is attached to another view before being added
+to the view hierarchy. As a result, the superview argument will not be the renderer&rsquo;s ad view&rsquo;s superview.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdRenderer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithRendererSettings:" title="initWithRendererSettings:"></a>
+	<h3 class="subsubtitle method-title">initWithRendererSettings:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>This is the init method that will be called when the <a href="../Classes/MoPub.html">MoPub</a> SDK initializes your renderer.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (instancetype)initWithRendererSettings:(id&lt;MPNativeAdRendererSettings&gt;)<em>rendererSettings</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>rendererSettings</em></dt>
+			<dd><p>The renderer settings object that corresponds to your renderer.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdRenderer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/nativeAdTapped" title="nativeAdTapped"></a>
+	<h3 class="subsubtitle method-title">nativeAdTapped</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The MoPubSDK will call this method when the user has tapped the ad and will
+invoke the clickthrough action.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)nativeAdTapped</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdRenderer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/retrieveViewWithAdapter:error:" title="retrieveViewWithAdapter:error:"></a>
+	<h3 class="subsubtitle method-title">retrieveViewWithAdapter:error:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>You must return a native ad view when <code>-retrieveViewWithAdapter:error:</code> is called. Ideally, you should create a native view
+each time this is called as holding onto the view may end up consuming a lot of memory when many ads are being shown.
+However, it is OK to hold a strong reference to the view if you must.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UIView *)retrieveViewWithAdapter:(id&lt;MPNativeAdAdapter&gt;)<em>adapter</em> error:(NSError **)<em>error</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adapter</em></dt>
+			<dd><p>Your custom event&rsquo;s adapter class that contains the network specific data necessary to render the ad to
+a view.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>error</em></dt>
+			<dd><p>If you can&rsquo;t construct a view for whatever reason, you must fill in this error object.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>If successful, the method will return a native view presenting the ad. If it
+is unsuccessful at retrieving a view, it will return nil and create
+an error object for the error parameter.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdRenderer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

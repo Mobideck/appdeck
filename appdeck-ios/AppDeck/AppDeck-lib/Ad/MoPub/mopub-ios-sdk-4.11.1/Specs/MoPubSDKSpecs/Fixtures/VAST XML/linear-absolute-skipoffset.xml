@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This response is used to test that <Linear> elements with absolute "skipoffset" are parsed properly. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+  <Ad>
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear skipoffset="01:23:45.678">
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>

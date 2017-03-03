@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This response is used to test how the parser handles multiple <Extension> elements
+within an <Extensions> element. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+  <Ad>
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension>
+          <MoPubViewabilityTracker viewablePlaytime="30.5" percentViewable="60%">
+            <![CDATA[ http://ad.server.com/impression/dot.gif ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+        <Extension>
+          <AnotherExtension anAttribute="aValue">
+            <![CDATA[ http://ad.server.com/another ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+      </Extensions>
+    </InLine>
+  </Ad>
+  <Ad>
+</VAST>

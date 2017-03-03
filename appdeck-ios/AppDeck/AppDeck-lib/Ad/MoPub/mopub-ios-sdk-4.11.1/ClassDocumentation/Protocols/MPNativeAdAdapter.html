@@ -1,0 +1,735 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPNativeAdAdapter Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPNativeAdAdapter Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/defaultActionURL">&nbsp;&nbsp;&nbsp;&nbsp;defaultActionURL</option>
+	
+	<option value="//api/name/delegate">&nbsp;&nbsp;&nbsp;&nbsp;delegate</option>
+	
+	<option value="//api/name/properties">&nbsp;&nbsp;&nbsp;&nbsp;properties</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/displayContentForDAAIconTap">&nbsp;&nbsp;&nbsp;&nbsp;- displayContentForDAAIconTap</option>
+	
+	<option value="//api/name/displayContentForURL:rootViewController:">&nbsp;&nbsp;&nbsp;&nbsp;- displayContentForURL:rootViewController:</option>
+	
+	<option value="//api/name/enableThirdPartyClickTracking">&nbsp;&nbsp;&nbsp;&nbsp;- enableThirdPartyClickTracking</option>
+	
+	<option value="//api/name/trackClick">&nbsp;&nbsp;&nbsp;&nbsp;- trackClick</option>
+	
+	<option value="//api/name/willAttachToView:">&nbsp;&nbsp;&nbsp;&nbsp;- willAttachToView:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Ad Resources">Ad Resources</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Responding to an Ad Being Attached to a View">Responding to an Ad Being Attached to a View</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/defaultActionURL">defaultActionURL</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delegate">delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/properties">properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/displayContentForDAAIconTap">displayContentForDAAIconTap</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/displayContentForURL:rootViewController:">displayContentForURL:rootViewController:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/enableThirdPartyClickTracking">enableThirdPartyClickTracking</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/trackClick">trackClick</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/willAttachToView:">willAttachToView:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPNativeAdAdapter Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPNativeAdAdapter Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPNativeAdAdapter.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>MPNativeAdAdapter</code> protocol allows the <a href="../Classes/MoPub.html">MoPub</a> SDK to interact with native ad objects obtained
+from third-party ad networks. An object that adopts this protocol acts as a wrapper for a native
+ad object, translating its proprietary interface into a common one that the <a href="../Classes/MoPub.html">MoPub</a> SDK can
+understand.</p>
+
+<p>An object that adopts this protocol must implement the <a href="#//api/name/properties"><code>properties</code></a> property to specify a
+dictionary of assets, such as title and text, that should be rendered as part of a native ad.
+When possible, you should place values in the returned dictionary such that they correspond to
+the pre-defined keys in the MPNativeAdConstants header file.</p>
+
+<p>An adopting object must additionally implement -displayContentForURL:rootViewController:completion:
+to supply the behavior that should occur when the user interacts with the ad.</p>
+
+<p>Optional methods of the protocol allow the adopting object to define when and how impressions
+and interactions should be tracked.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Ad Resources" name="task_Ad Resources"></a>
+						<h3 class="subsubtitle task-title">Ad Resources</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/properties">&nbsp;&nbsp;properties</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/defaultActionURL">&nbsp;&nbsp;defaultActionURL</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/displayContentForURL:rootViewController:">&ndash;&nbsp;displayContentForURL:rootViewController:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/enableThirdPartyClickTracking">&ndash;&nbsp;enableThirdPartyClickTracking</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/trackClick">&ndash;&nbsp;trackClick</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Responding to an Ad Being Attached to a View" name="task_Responding to an Ad Being Attached to a View"></a>
+						<h3 class="subsubtitle task-title">Responding to an Ad Being Attached to a View</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/willAttachToView:">&ndash;&nbsp;willAttachToView:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/displayContentForDAAIconTap">&ndash;&nbsp;displayContentForDAAIconTap</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/defaultActionURL" title="defaultActionURL"></a>
+	<h3 class="subsubtitle method-title">defaultActionURL</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The default click-through URL for the ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSURL *defaultActionURL</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This may safely be set to nil if your network doesn&rsquo;t expose this value (for example, it may only
+provide a method to handle a click, lacking another for retrieving the URL itself).</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="subsubtitle method-title">delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The <a href="../Protocols/MPNativeAdAdapterDelegate.html"><code>MPNativeAdAdapterDelegate</code></a> to send messages to as events occur.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, weak) id&lt;MPNativeAdAdapterDelegate&gt; delegate</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The <code>delegate</code> object defines several methods that you should call in order to inform <a href="../Classes/MoPub.html">MoPub</a>
+of interactions with the ad. This delegate needs to be implemented if third party impression and/or
+click tracking is enabled.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/properties" title="properties"></a>
+	<h3 class="subsubtitle method-title">properties</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Provides a dictionary of all publicly accessible assets (such as title and text) for the
+native ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSDictionary *properties</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When possible, you should place values in the returned dictionary such that they correspond to
+the pre-defined keys in the MPNativeAdConstants header file.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/displayContentForDAAIconTap" title="displayContentForDAAIconTap"></a>
+	<h3 class="subsubtitle method-title">displayContentForDAAIconTap</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>This method will be called if your implementation provides a DAA icon through the <a href="#//api/name/properties">properties</a> dictionary
+and the user has tapped the icon.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)displayContentForDAAIconTap</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/displayContentForURL:rootViewController:" title="displayContentForURL:rootViewController:"></a>
+	<h3 class="subsubtitle method-title">displayContentForURL:rootViewController:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Tells the object to open the specified URL using an appropriate mechanism.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)displayContentForURL:(NSURL *)<em>URL</em> rootViewController:(UIViewController *)<em>controller</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>URL</em></dt>
+			<dd><p>The URL to be opened.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>controller</em></dt>
+			<dd><p>The view controller that should be used to present the modal view controller.</p>
+
+<p>Your implementation of this method should either forward the request to the underlying
+third-party ad object (if it has built-in support for handling ad interactions), or open an
+in-application modal web browser or a modal App Store controller.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/enableThirdPartyClickTracking" title="enableThirdPartyClickTracking"></a>
+	<h3 class="subsubtitle method-title">enableThirdPartyClickTracking</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Determines whether <a href="../Classes/MPNativeAd.html">MPNativeAd</a> should track clicks</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)enableThirdPartyClickTracking</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not implemented, this will be assumed to return NO, and <a href="../Classes/MPNativeAd.html">MPNativeAd</a> will track clicks.
+If this returns YES, then <a href="../Classes/MPNativeAd.html">MPNativeAd</a> will defer to the <a href="../Protocols/MPNativeAdAdapterDelegate.html">MPNativeAdAdapterDelegate</a> callbacks to
+track clicks.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/trackClick" title="trackClick"></a>
+	<h3 class="subsubtitle method-title">trackClick</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Tracks a click for this ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)trackClick</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>To avoid reporting discrepancies, you should only implement this method if the third-party ad
+network requires clicks to be reported manually.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/willAttachToView:" title="willAttachToView:"></a>
+	<h3 class="subsubtitle method-title">willAttachToView:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>This method will be called when your ad&rsquo;s content is about to be loaded into a view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)willAttachToView:(UIView *)<em>view</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>view</em></dt>
+			<dd><p>A view that will contain the ad content.</p>
+
+<p>You should implement this method if the underlying third-party ad object needs to be informed
+of this event.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPNativeAdAdapter.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is invalid because the <Wrapper> element must be nested in an <Ad> element. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+    <Wrapper>
+        <VASTAdTagURI><![CDATA[https://should-be-an-error.net]]></VASTAdTagURI>
+    </Wrapper>
+</VAST>

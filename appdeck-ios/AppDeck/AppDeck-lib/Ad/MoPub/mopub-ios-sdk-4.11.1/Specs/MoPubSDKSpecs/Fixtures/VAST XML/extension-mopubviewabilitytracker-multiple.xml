@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This response is used to test whether the parser correctly handles multiple instances
+of the <MoPubViewabilityTracker> extension within an <Extension> node. It should select
+the first instance and ignore the rest. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+  <Ad>
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension>
+          <MoPubViewabilityTracker viewablePlaytime="30.5" percentViewable="60%">
+            <![CDATA[ http://ad.server.com/impression/dot.gif ]]>
+          </MoPubViewabilityTracker>
+          <MoPubViewabilityTracker viewablePlaytime="2" percentViewable="20%">
+            <![CDATA[ http://ad.server.com/impression/anotherdot.gif ]]>
+          </MoPubViewabilityTracker>
+          <MoPubViewabilityTracker viewablePlaytime="5" percentViewable="1%">
+            <![CDATA[ http://ad.server.com/impression/yetanotherdot.gif ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+      </Extension>
+    </InLine>
+  </Ad>
+</VAST>

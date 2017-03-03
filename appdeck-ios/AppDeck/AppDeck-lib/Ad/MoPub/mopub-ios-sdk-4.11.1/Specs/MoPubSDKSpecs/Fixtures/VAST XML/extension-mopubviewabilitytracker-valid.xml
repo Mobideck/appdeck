@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This response is used to test how the parser handles valid usages of the <MoPubViewabilityTracker> extension. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+  <Ad>
+    <!-- This inline ad uses only the SS.mmm format for viewablePlaytime. -->
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension>
+          <MoPubViewabilityTracker viewablePlaytime="30.5" percentViewable="60%">
+            <![CDATA[ http://ad.server.com/impression/dot.gif ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+      </Extension>
+    </InLine>
+  </Ad>
+  <Ad>
+    <!-- This inline ad uses the full HH:MM:SS.mmm format for viewablePlaytime. -->
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension>
+          <MoPubViewabilityTracker viewablePlaytime="01:23:45.678" percentViewable="100%">
+            <![CDATA[ http://ad.server.com/impression/dot.gif ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+      </Extension>
+    </InLine>
+  </Ad>
+  <Ad>
+    <!-- This inline ad has zero values for both viewablePlaytime and percentViewable. -->
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension>
+          <MoPubViewabilityTracker viewablePlaytime="0" percentViewable="0%">
+            <![CDATA[ http://ad.server.com/impression/dot.gif ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+      </Extension>
+    </InLine>
+  </Ad>
+</VAST>

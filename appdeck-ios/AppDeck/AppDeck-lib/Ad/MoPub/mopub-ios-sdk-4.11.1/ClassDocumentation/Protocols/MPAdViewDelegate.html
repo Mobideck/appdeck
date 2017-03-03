@@ -1,0 +1,650 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPAdViewDelegate Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPAdViewDelegate Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/adViewDidFailToLoadAd:">&nbsp;&nbsp;&nbsp;&nbsp;- adViewDidFailToLoadAd:</option>
+	
+	<option value="//api/name/adViewDidLoadAd:">&nbsp;&nbsp;&nbsp;&nbsp;- adViewDidLoadAd:</option>
+	
+	<option value="//api/name/didDismissModalViewForAd:">&nbsp;&nbsp;&nbsp;&nbsp;- didDismissModalViewForAd:</option>
+	
+	<option value="//api/name/viewControllerForPresentingModalView">&nbsp;&nbsp;&nbsp;&nbsp;- viewControllerForPresentingModalView</option>
+	
+	<option value="//api/name/willLeaveApplicationFromAd:">&nbsp;&nbsp;&nbsp;&nbsp;- willLeaveApplicationFromAd:</option>
+	
+	<option value="//api/name/willPresentModalViewForAd:">&nbsp;&nbsp;&nbsp;&nbsp;- willPresentModalViewForAd:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Managing Modal Content Presentation">Managing Modal Content Presentation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detecting When a Banner Ad is Loaded">Detecting When a Banner Ad is Loaded</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detecting When a User Interacts With the Ad View">Detecting When a User Interacts With the Ad View</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/adViewDidFailToLoadAd:">adViewDidFailToLoadAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/adViewDidLoadAd:">adViewDidLoadAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/didDismissModalViewForAd:">didDismissModalViewForAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/viewControllerForPresentingModalView">viewControllerForPresentingModalView</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/willLeaveApplicationFromAd:">willLeaveApplicationFromAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/willPresentModalViewForAd:">willPresentModalViewForAd:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPAdViewDelegate Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPAdViewDelegate Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPAdView.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The delegate of an <a href="../Classes/MPAdView.html"><code>MPAdView</code></a> object must adopt the <code>MPAdViewDelegate</code> protocol. It must
+implement <a href="#//api/name/viewControllerForPresentingModalView"><code>viewControllerForPresentingModalView</code></a> to provide a root view controller from which
+the ad view should present modal content.</p>
+
+<p>Optional methods of this protocol allow the delegate to be notified of banner success or
+failure, as well as other lifecycle events.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Managing Modal Content Presentation" name="task_Managing Modal Content Presentation"></a>
+						<h3 class="subsubtitle task-title">Managing Modal Content Presentation</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/viewControllerForPresentingModalView">&ndash;&nbsp;viewControllerForPresentingModalView</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li>
+						</ul>
+						
+						
+						<a title="Detecting When a Banner Ad is Loaded" name="task_Detecting When a Banner Ad is Loaded"></a>
+						<h3 class="subsubtitle task-title">Detecting When a Banner Ad is Loaded</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/adViewDidLoadAd:">&ndash;&nbsp;adViewDidLoadAd:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/adViewDidFailToLoadAd:">&ndash;&nbsp;adViewDidFailToLoadAd:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Detecting When a User Interacts With the Ad View" name="task_Detecting When a User Interacts With the Ad View"></a>
+						<h3 class="subsubtitle task-title">Detecting When a User Interacts With the Ad View</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/willPresentModalViewForAd:">&ndash;&nbsp;willPresentModalViewForAd:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/didDismissModalViewForAd:">&ndash;&nbsp;didDismissModalViewForAd:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/willLeaveApplicationFromAd:">&ndash;&nbsp;willLeaveApplicationFromAd:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/adViewDidFailToLoadAd:" title="adViewDidFailToLoadAd:"></a>
+	<h3 class="subsubtitle method-title">adViewDidFailToLoadAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when an ad view fails to load an ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)adViewDidFailToLoadAd:(MPAdView *)<em>view</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>view</em></dt>
+			<dd><p>The ad view sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>To avoid displaying blank ads, you should hide the ad view in response to this message.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/adViewDidLoadAd:" title="adViewDidLoadAd:"></a>
+	<h3 class="subsubtitle method-title">adViewDidLoadAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when an ad view successfully loads an ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)adViewDidLoadAd:(MPAdView *)<em>view</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>view</em></dt>
+			<dd><p>The ad view sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Your implementation of this method should insert the ad view into the view hierarchy, if you
+have not already done so.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/didDismissModalViewForAd:" title="didDismissModalViewForAd:"></a>
+	<h3 class="subsubtitle method-title">didDismissModalViewForAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when an ad view has dismissed its modal content, returning control to your application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)didDismissModalViewForAd:(MPAdView *)<em>view</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>view</em></dt>
+			<dd><p>The ad view sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Your implementation of this method should resume any application activity that was paused
+in response to <a href="#//api/name/willPresentModalViewForAd:"><code>willPresentModalViewForAd:</code></a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/viewControllerForPresentingModalView" title="viewControllerForPresentingModalView"></a>
+	<h3 class="subsubtitle method-title">viewControllerForPresentingModalView</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Asks the delegate for a view controller to use for presenting modal content, such as the in-app
+browser that can appear when an ad is tapped.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UIViewController *)viewControllerForPresentingModalView</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A view controller that should be used for presenting modal content.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/willLeaveApplicationFromAd:" title="willLeaveApplicationFromAd:"></a>
+	<h3 class="subsubtitle method-title">willLeaveApplicationFromAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when a user is about to leave your application as a result of tapping
+on an ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)willLeaveApplicationFromAd:(MPAdView *)<em>view</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>view</em></dt>
+			<dd><p>The ad view sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Your application will be moved to the background shortly after this method is called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/willPresentModalViewForAd:" title="willPresentModalViewForAd:"></a>
+	<h3 class="subsubtitle method-title">willPresentModalViewForAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when an ad view is about to present modal content.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)willPresentModalViewForAd:(MPAdView *)<em>view</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>view</em></dt>
+			<dd><p>The ad view sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method is called when the user taps on the ad view. Your implementation of this method
+should pause any application activity that requires user interaction.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

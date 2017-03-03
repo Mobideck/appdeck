@@ -19,7 +19,7 @@
     self = [super init];
     if (self) {
         
-        self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"062e493d055c4a6784b4d4a902da06c4"]; // UFB
+        //self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"062e493d055c4a6784b4d4a902da06c4"]; // UFB
         //self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"76a3fefaced247959582d2d2df6f4757"]; // mopub
 
         MPNativeAdRequestTargeting *targeting = [MPNativeAdRequestTargeting targeting];
@@ -62,7 +62,7 @@
             NSString *propertiesJson = [[NSString alloc] initWithData:propertiesJsonData encoding:NSUTF8StringEncoding];
             NSString *javascript = [NSString stringWithFormat:@"app.injectNativeAd('%@', %@);", divId, propertiesJson];
             [apiCall.managedWebView executeJS:javascript];
-            [response trackImpression];
+            //[response trackImpression];
         }
         @catch (NSException *exception) {
             NSLog(@"AppDeckAdNative: Exception while writing JSon: %@", exception);
@@ -75,9 +75,10 @@
 
 -(BOOL)click:(UIViewController *)root
 {
+    /*
     [response displayContentWithCompletion:^(BOOL success, NSError *error) {
         NSLog(@"NativeAdClickResult: %d: %@", success, error);
-    }];
+    }];*/
     return YES;
 }
 

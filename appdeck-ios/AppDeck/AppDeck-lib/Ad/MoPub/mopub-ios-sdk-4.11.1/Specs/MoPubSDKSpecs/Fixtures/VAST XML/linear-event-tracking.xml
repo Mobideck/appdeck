@@ -1,0 +1,42 @@
+<VAST version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+    <Ad id="601364">
+        <InLine>
+            <AdSystem>Acudeo Compatible</AdSystem>
+            <AdTitle>VAST 2.0 Instream Test 1</AdTitle>
+            <Description>VAST 2.0 Instream Test 1</Description>
+            <Error>http://myErrorURL/error</Error>
+            <Impression>http://myTrackingURL/impression</Impression>
+            <Impression>http://myTrackingURL/impression2</Impression>
+            <Creatives>
+                <Creative AdID="601364">
+                    <Linear>
+                        <Duration>00:00:30</Duration>
+                        <TrackingEvents>
+                            <Tracking event="mute">http://myTrackingURL/mute</Tracking>
+                            <Tracking event="unmute">http://myTrackingURL/unmute</Tracking>
+                            <Tracking event="pause">http://myTrackingURL/pause</Tracking>
+                            <Tracking event="rewind">http://myTrackingURL/rewind</Tracking>
+                            <Tracking event="resume">http://myTrackingURL/resume</Tracking>
+                            <Tracking event="fullscreen">http://myTrackingURL/fullscreen</Tracking>
+                            <Tracking event="exitFullscreen">http://myTrackingURL/exitfullscreen</Tracking>
+                            <Tracking event="expand">http://myTrackingURL/expand</Tracking>
+                            <Tracking event="collapse">http://myTrackingURL/collapse</Tracking>
+                            <Tracking event="complete">http://myTrackingURL/complete</Tracking>
+                            <Tracking event="closeLinear">http://myTrackingURL/closelinear</Tracking>
+                        </TrackingEvents>
+                        <VideoClicks>
+                            <ClickThrough>http://www.tremormedia.com/video</ClickThrough>
+                            <ClickTracking>http://myTrackingURL/click</ClickTracking>
+                        </VideoClicks>
+                        <MediaFiles>
+                            <MediaFile id="1" delivery="progressive" type="video/mp4" bitrate="457" width="300"
+                                height="225">
+                                <![CDATA[ http://f.cl.ly/items/39222F2i3z0z350Q1H11/big_buck_bunny_short.mp4 ]]>
+                            </MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

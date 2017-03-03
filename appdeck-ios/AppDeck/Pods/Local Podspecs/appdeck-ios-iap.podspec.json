@@ -1,0 +1,30 @@
+{
+  "name": "appdeck-ios-iap",
+  "version": "0.1.0",
+  "summary": "In-App Purchase for AppDeck on iOS.",
+  "description": "This plugin allows In-App Purchases to be made from AppDeck iOS",
+  "homepage": "https://github.com/Mobideck/appdeck-ios-iap",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "mobideck": "mathieu@mobideck.net"
+  },
+  "source": {
+    "git": "https://github.com/Mobideck/appdeck-ios-iap.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "source_files": "appdeck-ios-iap/Classes/**/*",
+  "dependencies": {
+    "RMStore": [
+      "~> 0.7"
+    ],
+    "IAPHelper": [
+
+    ]
+  }
+}

@@ -12,7 +12,7 @@
 #import "GoogleAnalytics/GAI.h"
 #import "GoogleAnalytics/GAIFields.h"
 #import "GoogleAnalytics/GAIDictionaryBuilder.h"
-#import "Flurry.h"
+//#import "Flurry.h"
 
 @implementation AppDeckAnalytics
 
@@ -44,11 +44,13 @@
 
 -(void)configureFlurry
 {
+    /*
     if (self.loader.conf.flurry)
     {
         [Flurry setDebugLogEnabled:YES];
         [Flurry startSession:self.loader.conf.flurry];
     }
+     */
 }
 
 -(void)sendEventWithName:(NSString *)name action:(NSString *)action label:(NSString *)label value:(NSNumber *)value
@@ -67,6 +69,7 @@
                                                                       label:label
                                                                       value:value] build]];
     }
+    /*
     if (self.loader.conf.flurry)
     {
         NSDictionary *flurryParams = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -77,6 +80,7 @@
         
         [Flurry logEvent:name withParameters:flurryParams];
     }
+*/
 }
 
 -(void)sendScreenView:(NSString *)relativePath
@@ -91,10 +95,12 @@
         [self.GAGlobalTracker set:kGAIScreenName value:relativePath];
         [self.GAGlobalTracker send:[[GAIDictionaryBuilder createScreenView] build]];
     }
+    /*
     if (self.loader.conf.flurry)
     {
         [Flurry logPageView];
     }
+     */
 }
 
 @end

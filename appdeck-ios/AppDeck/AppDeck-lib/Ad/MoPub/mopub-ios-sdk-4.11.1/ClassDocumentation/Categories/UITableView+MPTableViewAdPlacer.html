@@ -1,0 +1,2024 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>UITableView(MPTableViewAdPlacer) Category Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">UITableView(MPTableViewAdPlacer) Category Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/mp_adPlacer">&nbsp;&nbsp;&nbsp;&nbsp;- mp_adPlacer</option>
+	
+	<option value="//api/name/mp_beginUpdates">&nbsp;&nbsp;&nbsp;&nbsp;- mp_beginUpdates</option>
+	
+	<option value="//api/name/mp_cellForRowAtIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_cellForRowAtIndexPath:</option>
+	
+	<option value="//api/name/mp_dataSource">&nbsp;&nbsp;&nbsp;&nbsp;- mp_dataSource</option>
+	
+	<option value="//api/name/mp_delegate">&nbsp;&nbsp;&nbsp;&nbsp;- mp_delegate</option>
+	
+	<option value="//api/name/mp_deleteRowsAtIndexPaths:withRowAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_deleteRowsAtIndexPaths:withRowAnimation:</option>
+	
+	<option value="//api/name/mp_deleteSections:withRowAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_deleteSections:withRowAnimation:</option>
+	
+	<option value="//api/name/mp_dequeueReusableCellWithIdentifier:forIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_dequeueReusableCellWithIdentifier:forIndexPath:</option>
+	
+	<option value="//api/name/mp_deselectRowAtIndexPath:animated:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_deselectRowAtIndexPath:animated:</option>
+	
+	<option value="//api/name/mp_endUpdates">&nbsp;&nbsp;&nbsp;&nbsp;- mp_endUpdates</option>
+	
+	<option value="//api/name/mp_indexPathForCell:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathForCell:</option>
+	
+	<option value="//api/name/mp_indexPathForRowAtPoint:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathForRowAtPoint:</option>
+	
+	<option value="//api/name/mp_indexPathForSelectedRow">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathForSelectedRow</option>
+	
+	<option value="//api/name/mp_indexPathsForRowsInRect:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathsForRowsInRect:</option>
+	
+	<option value="//api/name/mp_indexPathsForSelectedRows">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathsForSelectedRows</option>
+	
+	<option value="//api/name/mp_indexPathsForVisibleRows">&nbsp;&nbsp;&nbsp;&nbsp;- mp_indexPathsForVisibleRows</option>
+	
+	<option value="//api/name/mp_insertRowsAtIndexPaths:withRowAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_insertRowsAtIndexPaths:withRowAnimation:</option>
+	
+	<option value="//api/name/mp_insertSections:withRowAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_insertSections:withRowAnimation:</option>
+	
+	<option value="//api/name/mp_moveRowAtIndexPath:toIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_moveRowAtIndexPath:toIndexPath:</option>
+	
+	<option value="//api/name/mp_moveSection:toSection:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_moveSection:toSection:</option>
+	
+	<option value="//api/name/mp_rectForRowAtIndexPath:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_rectForRowAtIndexPath:</option>
+	
+	<option value="//api/name/mp_reloadData">&nbsp;&nbsp;&nbsp;&nbsp;- mp_reloadData</option>
+	
+	<option value="//api/name/mp_reloadRowsAtIndexPaths:withRowAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_reloadRowsAtIndexPaths:withRowAnimation:</option>
+	
+	<option value="//api/name/mp_reloadSections:withRowAnimation:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_reloadSections:withRowAnimation:</option>
+	
+	<option value="//api/name/mp_scrollToRowAtIndexPath:atScrollPosition:animated:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_scrollToRowAtIndexPath:atScrollPosition:animated:</option>
+	
+	<option value="//api/name/mp_selectRowAtIndexPath:animated:scrollPosition:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_selectRowAtIndexPath:animated:scrollPosition:</option>
+	
+	<option value="//api/name/mp_setDataSource:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_setDataSource:</option>
+	
+	<option value="//api/name/mp_setDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- mp_setDelegate:</option>
+	
+	<option value="//api/name/mp_visibleCells">&nbsp;&nbsp;&nbsp;&nbsp;- mp_visibleCells</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Obtaining the Table View Ad Placer">Obtaining the Table View Ad Placer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Setting and Getting the Delegate and Data Source">Setting and Getting the Delegate and Data Source</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Notifying the Table View Ad Placer of Content Changes">Notifying the Table View Ad Placer of Content Changes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Involving Index Paths">Methods Involving Index Paths</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_adPlacer">mp_adPlacer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_beginUpdates">mp_beginUpdates</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_cellForRowAtIndexPath:">mp_cellForRowAtIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_dataSource">mp_dataSource</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_delegate">mp_delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_deleteRowsAtIndexPaths:withRowAnimation:">mp_deleteRowsAtIndexPaths:withRowAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_deleteSections:withRowAnimation:">mp_deleteSections:withRowAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_dequeueReusableCellWithIdentifier:forIndexPath:">mp_dequeueReusableCellWithIdentifier:forIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_deselectRowAtIndexPath:animated:">mp_deselectRowAtIndexPath:animated:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_endUpdates">mp_endUpdates</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathForCell:">mp_indexPathForCell:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathForRowAtPoint:">mp_indexPathForRowAtPoint:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathForSelectedRow">mp_indexPathForSelectedRow</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathsForRowsInRect:">mp_indexPathsForRowsInRect:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathsForSelectedRows">mp_indexPathsForSelectedRows</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_indexPathsForVisibleRows">mp_indexPathsForVisibleRows</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_insertRowsAtIndexPaths:withRowAnimation:">mp_insertRowsAtIndexPaths:withRowAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_insertSections:withRowAnimation:">mp_insertSections:withRowAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_moveRowAtIndexPath:toIndexPath:">mp_moveRowAtIndexPath:toIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_moveSection:toSection:">mp_moveSection:toSection:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_rectForRowAtIndexPath:">mp_rectForRowAtIndexPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_reloadData">mp_reloadData</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_reloadRowsAtIndexPaths:withRowAnimation:">mp_reloadRowsAtIndexPaths:withRowAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_reloadSections:withRowAnimation:">mp_reloadSections:withRowAnimation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_scrollToRowAtIndexPath:atScrollPosition:animated:">mp_scrollToRowAtIndexPath:atScrollPosition:animated:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_selectRowAtIndexPath:animated:scrollPosition:">mp_selectRowAtIndexPath:animated:scrollPosition:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_setDataSource:">mp_setDataSource:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_setDelegate:">mp_setDelegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mp_visibleCells">mp_visibleCells</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="UITableView(MPTableViewAdPlacer) Category Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">UITableView(MPTableViewAdPlacer) Category Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPTableViewAdPlacer.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <a href="../Classes/MoPub.html">MoPub</a> SDK adds interfaces to the <code>UITableView</code> class to help your application with
+responsibilities related to <a href="../Classes/MPTableViewAdPlacer.html"><code>MPTableViewAdPlacer</code></a>. These APIs include methods to help notify the
+ad placer of all modifications to the original table view, as well as to simplify your
+application code such that it does not need to perform index path manipulations to account for
+the presence of ads.</p>
+
+<p>Since the ad placer replaces the original data source and delegate objects of your table view,
+the SDK also provides new methods for you to set these properties such that the ad placer remains
+aware of the changes.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Obtaining the Table View Ad Placer" name="task_Obtaining the Table View Ad Placer"></a>
+						<h3 class="subsubtitle task-title">Obtaining the Table View Ad Placer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_adPlacer">&ndash;&nbsp;mp_adPlacer</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Setting and Getting the Delegate and Data Source" name="task_Setting and Getting the Delegate and Data Source"></a>
+						<h3 class="subsubtitle task-title">Setting and Getting the Delegate and Data Source</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_setDataSource:">&ndash;&nbsp;mp_setDataSource:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_dataSource">&ndash;&nbsp;mp_dataSource</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_setDelegate:">&ndash;&nbsp;mp_setDelegate:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_delegate">&ndash;&nbsp;mp_delegate</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Notifying the Table View Ad Placer of Content Changes" name="task_Notifying the Table View Ad Placer of Content Changes"></a>
+						<h3 class="subsubtitle task-title">Notifying the Table View Ad Placer of Content Changes</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_beginUpdates">&ndash;&nbsp;mp_beginUpdates</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_endUpdates">&ndash;&nbsp;mp_endUpdates</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_reloadData">&ndash;&nbsp;mp_reloadData</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_insertRowsAtIndexPaths:withRowAnimation:">&ndash;&nbsp;mp_insertRowsAtIndexPaths:withRowAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_deleteRowsAtIndexPaths:withRowAnimation:">&ndash;&nbsp;mp_deleteRowsAtIndexPaths:withRowAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_reloadRowsAtIndexPaths:withRowAnimation:">&ndash;&nbsp;mp_reloadRowsAtIndexPaths:withRowAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_moveRowAtIndexPath:toIndexPath:">&ndash;&nbsp;mp_moveRowAtIndexPath:toIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_insertSections:withRowAnimation:">&ndash;&nbsp;mp_insertSections:withRowAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_deleteSections:withRowAnimation:">&ndash;&nbsp;mp_deleteSections:withRowAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_reloadSections:withRowAnimation:">&ndash;&nbsp;mp_reloadSections:withRowAnimation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_moveSection:toSection:">&ndash;&nbsp;mp_moveSection:toSection:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Methods Involving Index Paths" name="task_Methods Involving Index Paths"></a>
+						<h3 class="subsubtitle task-title">Methods Involving Index Paths</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_cellForRowAtIndexPath:">&ndash;&nbsp;mp_cellForRowAtIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_dequeueReusableCellWithIdentifier:forIndexPath:">&ndash;&nbsp;mp_dequeueReusableCellWithIdentifier:forIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_deselectRowAtIndexPath:animated:">&ndash;&nbsp;mp_deselectRowAtIndexPath:animated:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathForCell:">&ndash;&nbsp;mp_indexPathForCell:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathForRowAtPoint:">&ndash;&nbsp;mp_indexPathForRowAtPoint:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathForSelectedRow">&ndash;&nbsp;mp_indexPathForSelectedRow</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathsForRowsInRect:">&ndash;&nbsp;mp_indexPathsForRowsInRect:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathsForSelectedRows">&ndash;&nbsp;mp_indexPathsForSelectedRows</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_indexPathsForVisibleRows">&ndash;&nbsp;mp_indexPathsForVisibleRows</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_rectForRowAtIndexPath:">&ndash;&nbsp;mp_rectForRowAtIndexPath:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_scrollToRowAtIndexPath:atScrollPosition:animated:">&ndash;&nbsp;mp_scrollToRowAtIndexPath:atScrollPosition:animated:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_selectRowAtIndexPath:animated:scrollPosition:">&ndash;&nbsp;mp_selectRowAtIndexPath:animated:scrollPosition:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mp_visibleCells">&ndash;&nbsp;mp_visibleCells</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_adPlacer" title="mp_adPlacer"></a>
+	<h3 class="subsubtitle method-title">mp_adPlacer</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the ad placer currently being used for this table view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (MPTableViewAdPlacer *)mp_adPlacer</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An ad placer object or <code>nil</code> if no ad placer is being used.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_beginUpdates" title="mp_beginUpdates"></a>
+	<h3 class="subsubtitle method-title">mp_beginUpdates</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Begin a series of method calls that insert, delete, or select rows and sections of the table
+view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_beginUpdates</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_cellForRowAtIndexPath:" title="mp_cellForRowAtIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_cellForRowAtIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the table view cell at the specified index path.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UITableViewCell *)mp_cellForRowAtIndexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path locating the row in the table view.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An object representing a cell of the table or <code>nil</code> if the cell is not visible or
+<em>indexPath</em> is out of range.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_dataSource" title="mp_dataSource"></a>
+	<h3 class="subsubtitle method-title">mp_dataSource</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original data source of the table view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id&lt;UITableViewDataSource&gt;)mp_dataSource</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The original table view data source.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When you instantiate an ad placer using a table view, the ad placer replaces the table view&rsquo;s
+original data source object. If your application needs to access the original data source, use
+this method instead of [UITableView dataSource].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_delegate" title="mp_delegate"></a>
+	<h3 class="subsubtitle method-title">mp_delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original delegate of the table view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id&lt;UITableViewDelegate&gt;)mp_delegate</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The original table view delegate.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When you instantiate an ad placer using a table view, the ad placer replaces the table view&rsquo;s
+original delegate object. If your application needs to access the original delegate, use this
+method instead of [UITableView delegate].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_deleteRowsAtIndexPaths:withRowAnimation:" title="mp_deleteRowsAtIndexPaths:withRowAnimation:"></a>
+	<h3 class="subsubtitle method-title">mp_deleteRowsAtIndexPaths:withRowAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deletes rows in the receiver at the locations identified by an array of index paths, and informs
+the attached ad placer of the deletions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_deleteRowsAtIndexPaths:(NSArray *)<em>indexPaths</em> withRowAnimation:(UITableViewRowAnimation)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPaths</em></dt>
+			<dd><p>An array of <code>NSIndexPath</code> objects identifying the rows to delete.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>A constant that either specifies the kind of animation to perform when
+deleting the cells or requests no animation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_deleteSections:withRowAnimation:" title="mp_deleteSections:withRowAnimation:"></a>
+	<h3 class="subsubtitle method-title">mp_deleteSections:withRowAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deletes one or more sections in the receiver, and informs the attached ad placer of the
+deletions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_deleteSections:(NSIndexSet *)<em>sections</em> withRowAnimation:(UITableViewRowAnimation)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sections</em></dt>
+			<dd><p>An index set that specifies the sections to delete from the receiving table
+view. If a section exists after the specified index location, it is moved up one index location.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>A constant that either specifies the kind of animation to perform when deleting
+the section or requests no animation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_dequeueReusableCellWithIdentifier:forIndexPath:" title="mp_dequeueReusableCellWithIdentifier:forIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_dequeueReusableCellWithIdentifier:forIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a reusable table-view cell object for the specified reuse identifier.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)mp_dequeueReusableCellWithIdentifier:(NSString *)<em>identifier</em> forIndexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>identifier</em></dt>
+			<dd><p>A string identifying the cell object to be reused. This parameter must not be
+<code>nil</code>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>The index path specifying the location of the cell. The data source receives
+this information when asked for the cell and should just pass it along.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A <code>UITableViewCell</code> object with the associated reuse identifier.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_deselectRowAtIndexPath:animated:" title="mp_deselectRowAtIndexPath:animated:"></a>
+	<h3 class="subsubtitle method-title">mp_deselectRowAtIndexPath:animated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Deselects a given row identified by index path, with an option to animate the deselection.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_deselectRowAtIndexPath:(NSIndexPath *)<em>indexPath</em> animated:(BOOL)<em>animated</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>An index path identifying a row in the receiver.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animated</em></dt>
+			<dd><p>YES if you want to animate the deselection and NO if the change should be
+immediate.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_endUpdates" title="mp_endUpdates"></a>
+	<h3 class="subsubtitle method-title">mp_endUpdates</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Conclude a series of method calls that insert, delete, select, or reload rows and sections of
+the table view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_endUpdates</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathForCell:" title="mp_indexPathForCell:"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathForCell:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an index path representing the original row and section of a given table view cell,
+calculated before any ads were inserted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)mp_indexPathForCell:(UITableViewCell *)<em>cell</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>cell</em></dt>
+			<dd><p>A cell object of the table view.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An index path representing the row and section of the cell or <code>nil</code> if the index path
+is invalid or is a reference to a cell containing an ad.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathForRowAtPoint:" title="mp_indexPathForRowAtPoint:"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathForRowAtPoint:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an index path representing the original row and section at the given point.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)mp_indexPathForRowAtPoint:(CGPoint)<em>point</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>point</em></dt>
+			<dd><p>A point in the local coordinate system of the receiver (the table view&rsquo;s bounds).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An index path representing the row and section associated with <em>point</em> or <code>nil</code> if the
+point is out of bounds of any row or is associated with a cell containing an ad.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathForSelectedRow" title="mp_indexPathForSelectedRow"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathForSelectedRow</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the original index path for the selected row, as if no ads have been inserted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSIndexPath *)mp_indexPathForSelectedRow</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The original index path for the selected row.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathsForRowsInRect:" title="mp_indexPathsForRowsInRect:"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathsForRowsInRect:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of index paths each representing a non-ad row enclosed by a given rectangle,
+calculated before any ads were inserted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_indexPathsForRowsInRect:(CGRect)<em>rect</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>rect</em></dt>
+			<dd><p>A rectangle defining an area of the table view in local coordinates.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of <code>NSIndexPath</code> objects each representing a row and section index identifying
+a row within <em>rect</em>. Index paths representing ads are not returned.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathsForSelectedRows" title="mp_indexPathsForSelectedRows"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathsForSelectedRows</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of the original index paths for the selected rows, as if no ads have been
+inserted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_indexPathsForSelectedRows</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of the original index paths for the selected rows.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_indexPathsForVisibleRows" title="mp_indexPathsForVisibleRows"></a>
+	<h3 class="subsubtitle method-title">mp_indexPathsForVisibleRows</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of index paths each identifying a visible non-ad row in the table view,
+calculated before any ads were inserted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_indexPathsForVisibleRows</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of <code>NSIndexPath</code> objects each representing a visible non-ad row in the table
+view. Returns <code>nil</code> if no rows are visible.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_insertRowsAtIndexPaths:withRowAnimation:" title="mp_insertRowsAtIndexPaths:withRowAnimation:"></a>
+	<h3 class="subsubtitle method-title">mp_insertRowsAtIndexPaths:withRowAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Inserts rows in the receiver at the locations identified by an array of index paths, and informs
+the attached ad placer of the insertions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_insertRowsAtIndexPaths:(NSArray *)<em>indexPaths</em> withRowAnimation:(UITableViewRowAnimation)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPaths</em></dt>
+			<dd><p>An array of <code>NSIndexPath</code> objects that represent rows to insert into the
+table.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>A constant that either specifies the kind of animation to perform when
+inserting the cells or requests no animation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_insertSections:withRowAnimation:" title="mp_insertSections:withRowAnimation:"></a>
+	<h3 class="subsubtitle method-title">mp_insertSections:withRowAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Inserts one or more sections in the receiver, and informs the attached ad placer of the
+insertions.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_insertSections:(NSIndexSet *)<em>sections</em> withRowAnimation:(UITableViewRowAnimation)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sections</em></dt>
+			<dd><p>An index set that specifies the sections to insert in the receiving table view.
+If a section already exists at the specified index location, it is moved down one index
+location.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>A constant that indicates how the insertion is to be animated.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_moveRowAtIndexPath:toIndexPath:" title="mp_moveRowAtIndexPath:toIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_moveRowAtIndexPath:toIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Moves the row at a specified location to a destination location, taking into account ads
+inserted by the ad placer.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_moveRowAtIndexPath:(NSIndexPath *)<em>indexPath</em> toIndexPath:(NSIndexPath *)<em>newIndexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>An index path identifying the row to move.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>newIndexPath</em></dt>
+			<dd><p>An index path identifying the row that is the destination of the row at
+<em>indexPath</em>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_moveSection:toSection:" title="mp_moveSection:toSection:"></a>
+	<h3 class="subsubtitle method-title">mp_moveSection:toSection:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Moves a section to a new location in the table view, and informs the attached ad placer.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_moveSection:(NSInteger)<em>section</em> toSection:(NSInteger)<em>newSection</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>section</em></dt>
+			<dd><p>The index of the section to move.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>newSection</em></dt>
+			<dd><p>The index in the table view that is the destination of the move for the
+section. The existing section at that location slides up or down to an adjoining index position
+to make room for it.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_rectForRowAtIndexPath:" title="mp_rectForRowAtIndexPath:"></a>
+	<h3 class="subsubtitle method-title">mp_rectForRowAtIndexPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the drawing area for a row identified by index path.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (CGRect)mp_rectForRowAtIndexPath:(NSIndexPath *)<em>indexPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>An index path object that identifies a row of your original content.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A rectangle defining the area in which the table view draws the row or <code>CGRectZero</code> if
+<em>indexPath</em> is invalid.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_reloadData" title="mp_reloadData"></a>
+	<h3 class="subsubtitle method-title">mp_reloadData</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reloads the rows and sections of the table view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_reloadData</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_reloadRowsAtIndexPaths:withRowAnimation:" title="mp_reloadRowsAtIndexPaths:withRowAnimation:"></a>
+	<h3 class="subsubtitle method-title">mp_reloadRowsAtIndexPaths:withRowAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reloads the specified rows using the given animation effect, and informs the attached ad placer
+that the row positions may have changed.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_reloadRowsAtIndexPaths:(NSArray *)<em>indexPaths</em> withRowAnimation:(UITableViewRowAnimation)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPaths</em></dt>
+			<dd><p>An array of <code>NSIndexPath</code> objects identifying the rows to reload.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>A constant that indicates how the reloading is to be animated.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_reloadSections:withRowAnimation:" title="mp_reloadSections:withRowAnimation:"></a>
+	<h3 class="subsubtitle method-title">mp_reloadSections:withRowAnimation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Reloads the specified sections, and informs the attached ad placer that sections may have
+changed.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_reloadSections:(NSIndexSet *)<em>sections</em> withRowAnimation:(UITableViewRowAnimation)<em>animation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>sections</em></dt>
+			<dd><p>An index set identifying the sections to reload.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animation</em></dt>
+			<dd><p>A constant that indicates how the reloading is to be animated.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_scrollToRowAtIndexPath:atScrollPosition:animated:" title="mp_scrollToRowAtIndexPath:atScrollPosition:animated:"></a>
+	<h3 class="subsubtitle method-title">mp_scrollToRowAtIndexPath:atScrollPosition:animated:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Scrolls the table view so that the selected row nearest to a specified position in the table
+view is at that position.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_scrollToRowAtIndexPath:(NSIndexPath *)<em>indexPath</em> atScrollPosition:(UITableViewScrollPosition)<em>scrollPosition</em> animated:(BOOL)<em>animated</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>An index path that identifies a row in the table view by its row index and
+its section index.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>scrollPosition</em></dt>
+			<dd><p>A constant that identifies a relative position in the receiving table view
+(top, middle, bottom) for row when scrolling concludes.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animated</em></dt>
+			<dd><p>YES if you want to animate the change in position, NO if it should be
+immediate.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_selectRowAtIndexPath:animated:scrollPosition:" title="mp_selectRowAtIndexPath:animated:scrollPosition:"></a>
+	<h3 class="subsubtitle method-title">mp_selectRowAtIndexPath:animated:scrollPosition:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Selects a row in the receiver identified by index path, optionally scrolling the row to a
+location in the receiver.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_selectRowAtIndexPath:(NSIndexPath *)<em>indexPath</em> animated:(BOOL)<em>animated</em> scrollPosition:(UITableViewScrollPosition)<em>scrollPosition</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>indexPath</em></dt>
+			<dd><p>An index path identifying a row in the receiver.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>animated</em></dt>
+			<dd><p>YES if you want to animate the selection and any change in position, NO if
+the change should be immediate.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>scrollPosition</em></dt>
+			<dd><p>A constant that identifies a relative position in the receiving table view
+(top, middle, bottom) for the row when scrolling concludes.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_setDataSource:" title="mp_setDataSource:"></a>
+	<h3 class="subsubtitle method-title">mp_setDataSource:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the table view&rsquo;s data source.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_setDataSource:(id&lt;UITableViewDataSource&gt;)<em>dataSource</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>dataSource</em></dt>
+			<dd><p>The new table view data source.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If your application needs to change a table view&rsquo;s data source after it has instantiated an ad
+placer using that table view, use this method rather than [UITableView setDataSource:].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_setDelegate:" title="mp_setDelegate:"></a>
+	<h3 class="subsubtitle method-title">mp_setDelegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the table view&rsquo;s delegate.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)mp_setDelegate:(id&lt;UITableViewDelegate&gt;)<em>delegate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>delegate</em></dt>
+			<dd><p>The new table view delegate.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If your application needs to change a table view&rsquo;s delegate after it has instantiated an ad
+placer using that table view, use this method rather than [UITableView setDelegate:].</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mp_visibleCells" title="mp_visibleCells"></a>
+	<h3 class="subsubtitle method-title">mp_visibleCells</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of the non-ad cells that are visible in the table view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)mp_visibleCells</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array containing <code>UITableViewCell</code> objects, each representing a visible, non-ad cell
+in the receiving table view.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPTableViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

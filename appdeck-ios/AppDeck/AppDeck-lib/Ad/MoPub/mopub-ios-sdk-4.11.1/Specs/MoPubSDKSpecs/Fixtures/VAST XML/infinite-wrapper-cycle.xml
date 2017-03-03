@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This should generate an error because the wrapper VASTAdTagURI points it back to itself. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+  <Ad>
+    <Wrapper>
+      <Error><![CDATA[ http://httpstat.us/200?error=[ERRORCODE]&playhead=[CONTENTPLAYHEAD]&cachebust=[CACHEBUSTING]&asseturi=[ASSETURI] ]]></Error>
+      <VASTAdTagURI><![CDATA[https://redirect-to-self.com]]></VASTAdTagURI>
+    </Wrapper>
+  </Ad>
+</VAST>

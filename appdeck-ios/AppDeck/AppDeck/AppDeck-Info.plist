@@ -2,18 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Advertisement would like to use your camera.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Advertisement would like to use your microphone.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Advertisement would like to use bluetooth.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Advertisement would like to store a photo.</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>Advertisement would like to create a calendar event.</string>
 	<key>AppDeckApiKey</key>
-	<string>218hf32d1901627d35131fa83b63f56ae906#AppDeck Test App</string>
+	<string>2571ha0eb3d02aee74a589698cf9349c99e77#Winch RH</string>
 	<key>AppDeckApiKey - 10</key>
 	<string>989hb11900d8d83ee53fbe22c0e922f3ba09#Tool Fitness</string>
 	<key>AppDeckApiKey - 11</key>
@@ -46,6 +36,8 @@
 	<string>2207hecedafac70454b2fb07a80867e2ca258#Canin plus</string>
 	<key>AppDeckApiKey - 24</key>
 	<string>2404h964e5f3635b95b86edc3336cced1d5e5#Copilot</string>
+	<key>AppDeckApiKey - 25</key>
+	<string>2571ha0eb3d02aee74a589698cf9349c99e77#Winch RH</string>
 	<key>AppDeckApiKey - 3</key>
 	<string>757h76c94e17ec542ce74d210eb3f949bf6f#Play3-Live 2.2</string>
 	<key>AppDeckApiKey - 4</key>
@@ -133,6 +125,16 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use bluetooth.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to create a calendar event.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your microphone.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to store a photo.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

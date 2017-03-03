@@ -1,0 +1,22 @@
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:noNamespaceSchemaLocation="vast.xsd">
+<!-- This response is used to test whether TrackingEvents on a wrapper are correctly merged
+with those from ads following the wrapper. -->
+   <Ad>
+      <Wrapper>
+         <AdSystem>RUN</AdSystem>
+         <VASTAdTagURI><![CDATA[http://cl.ly/code/3w3i0O1p3m1Q/longvideoVAST.xml]]></VASTAdTagURI>
+         <Creatives>
+         	<Creative>
+         		<Linear>
+         			<TrackingEvents>
+         				<Tracking event="creativeView">http://wrapperTrackingURL/creativeView1</Tracking>
+         				<Tracking event="creativeView">http://wrapperTrackingURL/creativeView2</Tracking>
+                     <Tracking event="skip">http://wrapperTrackingURL/skip1</Tracking>
+                     <Tracking event="skip">http://wrapperTrackingURL/skip2</Tracking>
+         			</TrackingEvents>
+         		</Linear>
+         	</Creative>
+         </Creatives>
+      </Wrapper>
+   </Ad>
+</VAST>

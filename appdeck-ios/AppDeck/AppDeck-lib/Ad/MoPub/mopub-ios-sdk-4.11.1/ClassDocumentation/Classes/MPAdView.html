@@ -1,0 +1,1238 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPAdView Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPAdView Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/adUnitId">&nbsp;&nbsp;&nbsp;&nbsp;adUnitId</option>
+	
+	<option value="//api/name/delegate">&nbsp;&nbsp;&nbsp;&nbsp;delegate</option>
+	
+	<option value="//api/name/keywords">&nbsp;&nbsp;&nbsp;&nbsp;keywords</option>
+	
+	<option value="//api/name/location">&nbsp;&nbsp;&nbsp;&nbsp;location</option>
+	
+	<option value="//api/name/testing">&nbsp;&nbsp;&nbsp;&nbsp;testing</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/adContentViewSize">&nbsp;&nbsp;&nbsp;&nbsp;- adContentViewSize</option>
+	
+	<option value="//api/name/allowedNativeAdsOrientation">&nbsp;&nbsp;&nbsp;&nbsp;- allowedNativeAdsOrientation</option>
+	
+	<option value="//api/name/forceRefreshAd">&nbsp;&nbsp;&nbsp;&nbsp;- forceRefreshAd</option>
+	
+	<option value="//api/name/initWithAdUnitId:size:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithAdUnitId:size:</option>
+	
+	<option value="//api/name/loadAd">&nbsp;&nbsp;&nbsp;&nbsp;- loadAd</option>
+	
+	<option value="//api/name/lockNativeAdsToOrientation:">&nbsp;&nbsp;&nbsp;&nbsp;- lockNativeAdsToOrientation:</option>
+	
+	<option value="//api/name/rotateToOrientation:">&nbsp;&nbsp;&nbsp;&nbsp;- rotateToOrientation:</option>
+	
+	<option value="//api/name/startAutomaticallyRefreshingContents">&nbsp;&nbsp;&nbsp;&nbsp;- startAutomaticallyRefreshingContents</option>
+	
+	<option value="//api/name/stopAutomaticallyRefreshingContents">&nbsp;&nbsp;&nbsp;&nbsp;- stopAutomaticallyRefreshingContents</option>
+	
+	<option value="//api/name/unlockNativeAdsOrientation">&nbsp;&nbsp;&nbsp;&nbsp;- unlockNativeAdsOrientation</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Initializing a Banner Ad">Initializing a Banner Ad</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Setting and Getting the Delegate">Setting and Getting the Delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Setting Request Parameters">Setting Request Parameters</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Enabling Test Mode">Enabling Test Mode</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Loading a Banner Ad">Loading a Banner Ad</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Handling Orientation Changes">Handling Orientation Changes</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Obtaining the Size of the Current Ad">Obtaining the Size of the Current Ad</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Managing the Automatic Refreshing of Ads">Managing the Automatic Refreshing of Ads</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/adUnitId">adUnitId</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delegate">delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/keywords">keywords</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/location">location</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/testing">testing</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/adContentViewSize">adContentViewSize</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/allowedNativeAdsOrientation">allowedNativeAdsOrientation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/forceRefreshAd">forceRefreshAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithAdUnitId:size:">initWithAdUnitId:size:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/loadAd">loadAd</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/lockNativeAdsToOrientation:">lockNativeAdsToOrientation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/rotateToOrientation:">rotateToOrientation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/startAutomaticallyRefreshingContents">startAutomaticallyRefreshingContents</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stopAutomaticallyRefreshingContents">stopAutomaticallyRefreshingContents</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unlockNativeAdsOrientation">unlockNativeAdsOrientation</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPAdView Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPAdView Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">UIView</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPAdView.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The MPAdView class provides a view that can display banner advertisements.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Initializing a Banner Ad" name="task_Initializing a Banner Ad"></a>
+						<h3 class="subsubtitle task-title">Initializing a Banner Ad</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithAdUnitId:size:">&ndash;&nbsp;initWithAdUnitId:size:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Setting and Getting the Delegate" name="task_Setting and Getting the Delegate"></a>
+						<h3 class="subsubtitle task-title">Setting and Getting the Delegate</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Setting Request Parameters" name="task_Setting Request Parameters"></a>
+						<h3 class="subsubtitle task-title">Setting Request Parameters</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/adUnitId">&nbsp;&nbsp;adUnitId</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/keywords">&nbsp;&nbsp;keywords</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/location">&nbsp;&nbsp;location</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Enabling Test Mode" name="task_Enabling Test Mode"></a>
+						<h3 class="subsubtitle task-title">Enabling Test Mode</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/testing">&nbsp;&nbsp;testing</a></code>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Loading a Banner Ad" name="task_Loading a Banner Ad"></a>
+						<h3 class="subsubtitle task-title">Loading a Banner Ad</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/loadAd">&ndash;&nbsp;loadAd</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/forceRefreshAd">&ndash;&nbsp;forceRefreshAd</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Handling Orientation Changes" name="task_Handling Orientation Changes"></a>
+						<h3 class="subsubtitle task-title">Handling Orientation Changes</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/rotateToOrientation:">&ndash;&nbsp;rotateToOrientation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/lockNativeAdsToOrientation:">&ndash;&nbsp;lockNativeAdsToOrientation:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unlockNativeAdsOrientation">&ndash;&nbsp;unlockNativeAdsOrientation</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/allowedNativeAdsOrientation">&ndash;&nbsp;allowedNativeAdsOrientation</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Obtaining the Size of the Current Ad" name="task_Obtaining the Size of the Current Ad"></a>
+						<h3 class="subsubtitle task-title">Obtaining the Size of the Current Ad</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/adContentViewSize">&ndash;&nbsp;adContentViewSize</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Managing the Automatic Refreshing of Ads" name="task_Managing the Automatic Refreshing of Ads"></a>
+						<h3 class="subsubtitle task-title">Managing the Automatic Refreshing of Ads</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/stopAutomaticallyRefreshingContents">&ndash;&nbsp;stopAutomaticallyRefreshingContents</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/startAutomaticallyRefreshingContents">&ndash;&nbsp;startAutomaticallyRefreshingContents</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/adUnitId" title="adUnitId"></a>
+	<h3 class="subsubtitle method-title">adUnitId</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The <a href="../Classes/MoPub.html">MoPub</a> ad unit ID for this ad view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *adUnitId</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Ad unit IDs are created on the <a href="../Classes/MoPub.html">MoPub</a> website. An ad unit is a defined placement in your
+application set aside for advertising. If no ad unit ID is set, the ad view will use a default
+ID that only receives test ads.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="subsubtitle method-title">delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The delegate (<a href="../Protocols/MPAdViewDelegate.html"><code>MPAdViewDelegate</code></a>) of the ad view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, weak) id&lt;MPAdViewDelegate&gt; delegate</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Important</strong>: Before releasing an instance of <code>MPAdView</code>, you must set its delegate
+property to <code>nil</code>.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/keywords" title="keywords"></a>
+	<h3 class="subsubtitle method-title">keywords</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A string representing a set of keywords that should be passed to the <a href="../Classes/MoPub.html">MoPub</a> ad server to receive
+more relevant advertising.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *keywords</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Keywords are typically used to target ad campaigns at specific user segments. They should be
+formatted as comma-separated key-value pairs (e.g. &ldquo;marital:single,age:24&rdquo;).</p>
+
+<p>On the <a href="../Classes/MoPub.html">MoPub</a> website, keyword targeting options can be found under the &ldquo;Advanced Targeting&rdquo;
+section when managing campaigns.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/location" title="location"></a>
+	<h3 class="subsubtitle method-title">location</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A <code>CLLocation</code> object representing a user&rsquo;s location that should be passed to the <a href="../Classes/MoPub.html">MoPub</a> ad server
+to receive more relevant advertising.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) CLLocation *location</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/testing" title="testing"></a>
+	<h3 class="subsubtitle method-title">testing</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A Boolean value that determines whether the ad view should request ads in test mode.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isTesting) BOOL testing</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The default value is NO.</p><div class="warning"><p><strong>Important</strong>: If you set this value to YES, make sure to reset it to NO before
+submitting your application to the App Store.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/adContentViewSize" title="adContentViewSize"></a>
+	<h3 class="subsubtitle method-title">adContentViewSize</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the size of the current ad being displayed in the ad view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (CGSize)adContentViewSize</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The size of the underlying mediated ad.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Ad sizes may vary between different ad networks. This method returns the actual size of the
+underlying mediated ad. This size may be different from the original, initialized size of the
+ad view. You may use this size to determine to adjust the size or positioning of the ad view
+to avoid clipping or border issues.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/allowedNativeAdsOrientation" title="allowedNativeAdsOrientation"></a>
+	<h3 class="subsubtitle method-title">allowedNativeAdsOrientation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the banner orientations that third-party ad networks are allowed to use.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (MPNativeAdOrientation)allowedNativeAdsOrientation</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An enum value representing an allowed set of orientations.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/lockNativeAdsToOrientation:">- lockNativeAdsToOrientation:</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/unlockNativeAdsOrientation">- unlockNativeAdsOrientation</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/forceRefreshAd" title="forceRefreshAd"></a>
+	<h3 class="subsubtitle method-title">forceRefreshAd</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Cancels any existing ad requests and requests a new ad from the <a href="../Classes/MoPub.html">MoPub</a> ad server.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)forceRefreshAd</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithAdUnitId:size:" title="initWithAdUnitId:size:"></a>
+	<h3 class="subsubtitle method-title">initWithAdUnitId:size:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initializes an MPAdView with the given ad unit ID and banner size.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithAdUnitId:(NSString *)<em>adUnitId</em> size:(CGSize)<em>size</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adUnitId</em></dt>
+			<dd><p>A string representing a <a href="../Classes/MoPub.html">MoPub</a> ad unit ID.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>size</em></dt>
+			<dd><p>The desired ad size. A list of standard ad sizes is available in MPConstants.h.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A newly initialized ad view corresponding to the given ad unit ID and size.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/loadAd" title="loadAd"></a>
+	<h3 class="subsubtitle method-title">loadAd</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Requests a new ad from the <a href="../Classes/MoPub.html">MoPub</a> ad server.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)loadAd</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If the ad view is already loading an ad, this call will be ignored. You may use <a href="#//api/name/forceRefreshAd"><code>forceRefreshAd</code></a>
+if you would like cancel any existing ad requests and force a new ad to load.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/lockNativeAdsToOrientation:" title="lockNativeAdsToOrientation:"></a>
+	<h3 class="subsubtitle method-title">lockNativeAdsToOrientation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Forces third-party native ad networks to only use ads sized for the specified orientation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)lockNativeAdsToOrientation:(MPNativeAdOrientation)<em>orientation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>orientation</em></dt>
+			<dd><p>An MPNativeAdOrientation enum value.</p>
+
+<pre><code>typedef enum {
+MPNativeAdOrientationAny,
+MPNativeAdOrientationPortrait,
+MPNativeAdOrientationLandscape
+} MPNativeAdOrientation;
+</pre>
+
+
+<p></code></p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Banners from some third-party ad networks have orientation-specific behaviors and/or sizes.
+You may use this method to lock ads to a certain orientation. For instance,
+if you call this with MPInterfaceOrientationPortrait, native networks (e.g. iAd) will never
+return ads sized for the landscape orientation.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/unlockNativeAdsOrientation">- unlockNativeAdsOrientation</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/allowedNativeAdsOrientation">- allowedNativeAdsOrientation</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/rotateToOrientation:" title="rotateToOrientation:"></a>
+	<h3 class="subsubtitle method-title">rotateToOrientation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the ad view that the device orientation has changed.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)rotateToOrientation:(UIInterfaceOrientation)<em>newOrientation</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>newOrientation</em></dt>
+			<dd><p>The new interface orientation (after orientation changes have occurred).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Banners from some third-party ad networks have orientation-specific behavior. You should call
+this method when your application&rsquo;s orientation changes if you want mediated ads to acknowledge
+their new orientation.</p>
+
+<p>If your application layout needs to change based on the size of the mediated ad, you may want to
+check the value of <a href="#//api/name/adContentViewSize"><code>adContentViewSize</code></a> after calling this method, in case the orientation change
+causes the mediated ad to resize.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/startAutomaticallyRefreshingContents" title="startAutomaticallyRefreshingContents"></a>
+	<h3 class="subsubtitle method-title">startAutomaticallyRefreshingContents</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Causes the ad view to periodically load new advertisements in accordance with user-defined
+refresh settings on the <a href="../Classes/MoPub.html">MoPub</a> website.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)startAutomaticallyRefreshingContents</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Calling this method is only necessary if you have previously stopped the ad view&rsquo;s refresh
+behavior using <a href="#//api/name/stopAutomaticallyRefreshingContents"><code>stopAutomaticallyRefreshingContents</code></a>. By default, an ad view is allowed to
+automatically load new advertisements if a refresh interval has been configured on the <a href="../Classes/MoPub.html">MoPub</a>
+website. This method has no effect if a refresh interval has not been set.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/stopAutomaticallyRefreshingContents">- stopAutomaticallyRefreshingContents</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/stopAutomaticallyRefreshingContents" title="stopAutomaticallyRefreshingContents"></a>
+	<h3 class="subsubtitle method-title">stopAutomaticallyRefreshingContents</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Stops the ad view from periodically loading new advertisements.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)stopAutomaticallyRefreshingContents</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>By default, an ad view is allowed to automatically load new advertisements if a refresh interval
+has been configured on the <a href="../Classes/MoPub.html">MoPub</a> website. This method prevents new ads from automatically loading,
+even if a refresh interval has been specified.</p>
+
+<p>As a best practice, you should call this method whenever the ad view will be hidden from the user
+for any period of time, in order to avoid unnecessary ad requests. You can then call
+<a href="#//api/name/startAutomaticallyRefreshingContents"><code>startAutomaticallyRefreshingContents</code></a> to re-enable the refresh behavior when the ad view becomes
+visible.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/startAutomaticallyRefreshingContents">- startAutomaticallyRefreshingContents</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unlockNativeAdsOrientation" title="unlockNativeAdsOrientation"></a>
+	<h3 class="subsubtitle method-title">unlockNativeAdsOrientation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Allows third-party native ad networks to use ads sized for any orientation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)unlockNativeAdsOrientation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>You do not need to call this method unless you have previously called
+<a href="#//api/name/lockNativeAdsToOrientation:"><code>lockNativeAdsToOrientation:</code></a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/lockNativeAdsToOrientation:">- lockNativeAdsToOrientation:</a></p></code></li>
+			
+			<li><code><p><a href="#//api/name/allowedNativeAdsOrientation">- allowedNativeAdsOrientation</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPAdView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

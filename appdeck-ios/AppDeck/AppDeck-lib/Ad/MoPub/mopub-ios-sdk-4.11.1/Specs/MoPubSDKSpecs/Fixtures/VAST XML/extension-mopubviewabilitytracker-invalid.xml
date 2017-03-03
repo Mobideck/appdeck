@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This response is used to test how the parser handles invalid usages of the <MoPubViewabilityTracker> extension. -->
+<VAST version="3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd">
+  <Ad>
+    <!-- This inline ad has a percentViewable that is not a number. -->
+    <InLine>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <MediaFiles>
+              <MediaFile type="video/mp4">
+                  <![CDATA[ http://media.w3.org/2010/05/video/movie_300.mp4 ]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension>
+          <MoPubViewabilityTracker viewablePlaytime="30.5" percentViewable="abc">
+            <![CDATA[ http://ad.server.com/impression/dot.gif ]]>
+          </MoPubViewabilityTracker>
+        </Extension>
+      </Extensions>
+    </InLine>
+  </Ad>
+</VAST>

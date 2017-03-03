@@ -1,4 +1,7 @@
 PODS:
+  - appdeck-ios-iap (0.1.0):
+    - IAPHelper
+    - RMStore (~> 0.7)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -16,15 +19,20 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.18.0):
     - FBSDKCoreKit
+  - IAPHelper (1.1)
+  - RMStore (0.7.1):
+    - RMStore/Core (= 0.7.1)
+  - RMStore/Core (0.7.1)
   - SIAlertView (1.3)
   - SSSnackbar (0.1.2)
-  - SVProgressHUD (2.1.1)
+  - SVProgressHUD (2.1.2)
   - TwitterCore (1.15.3):
     - Fabric
   - TwitterKit (1.15.3):
     - TwitterCore (= 1.15.3)
 
 DEPENDENCIES:
+  - appdeck-ios-iap (from `~/Documents/git/plugins/appdeck-ios-iap`)
   - Crashlytics
   - ECSlidingViewController (from `https://github.com/mdekermadec/ECSlidingViewController.git`)
   - Fabric
@@ -39,6 +47,8 @@ DEPENDENCIES:
   - TwitterKit
 
 EXTERNAL SOURCES:
+  appdeck-ios-iap:
+    :path: "~/Documents/git/plugins/appdeck-ios-iap"
   ECSlidingViewController:
     :git: https://github.com/mdekermadec/ECSlidingViewController.git
 
@@ -48,6 +58,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/mdekermadec/ECSlidingViewController.git
 
 SPEC CHECKSUMS:
+  appdeck-ios-iap: 8a75521bb35f8332fdcbebae7fcd59f94845688a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
@@ -56,12 +67,14 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
   FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
   FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
+  IAPHelper: fd74f53b0ac142eed085777b88b86a11746a2dd4
+  RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
   SSSnackbar: 6a16cf8ab848d99a03ba21a7dab94d4478beabed
-  SVProgressHUD: 1127180503b9a308ddf7006f3cc58fc05cc1092d
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
   TwitterKit: 43600f2d2848c227739efea5b2939585e69339c3
 
-PODFILE CHECKSUM: c0fd16b8dae4d036ca720c132c3b545bf0b1de91
+PODFILE CHECKSUM: c69439e85c4c4db2f457270bc954dcfc41870b86
 
 COCOAPODS: 1.1.1

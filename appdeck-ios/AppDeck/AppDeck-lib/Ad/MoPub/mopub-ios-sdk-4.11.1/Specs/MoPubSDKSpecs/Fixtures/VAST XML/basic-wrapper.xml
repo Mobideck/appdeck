@@ -1,0 +1,8 @@
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:noNamespaceSchemaLocation="vast.xsd">
+   <Ad>
+      <Wrapper>
+         <AdSystem>RUN</AdSystem>
+         <VASTAdTagURI><![CDATA[http://cl.ly/code/3w3i0O1p3m1Q/longvideoVAST.xml]]></VASTAdTagURI>
+      </Wrapper>
+   </Ad>
+</VAST>

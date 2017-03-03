@@ -1,0 +1,839 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPBannerCustomEventDelegate Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPBannerCustomEventDelegate Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/bannerCustomEvent:didFailToLoadAdWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- bannerCustomEvent:didFailToLoadAdWithError:</option>
+	
+	<option value="//api/name/bannerCustomEvent:didLoadAd:">&nbsp;&nbsp;&nbsp;&nbsp;- bannerCustomEvent:didLoadAd:</option>
+	
+	<option value="//api/name/bannerCustomEventDidFinishAction:">&nbsp;&nbsp;&nbsp;&nbsp;- bannerCustomEventDidFinishAction:</option>
+	
+	<option value="//api/name/bannerCustomEventWillBeginAction:">&nbsp;&nbsp;&nbsp;&nbsp;- bannerCustomEventWillBeginAction:</option>
+	
+	<option value="//api/name/bannerCustomEventWillLeaveApplication:">&nbsp;&nbsp;&nbsp;&nbsp;- bannerCustomEventWillLeaveApplication:</option>
+	
+	<option value="//api/name/location">&nbsp;&nbsp;&nbsp;&nbsp;- location</option>
+	
+	<option value="//api/name/trackClick">&nbsp;&nbsp;&nbsp;&nbsp;- trackClick</option>
+	
+	<option value="//api/name/trackImpression">&nbsp;&nbsp;&nbsp;&nbsp;- trackImpression</option>
+	
+	<option value="//api/name/viewControllerForPresentingModalView">&nbsp;&nbsp;&nbsp;&nbsp;- viewControllerForPresentingModalView</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Banner Ad Event Callbacks - Fetching Ads">Banner Ad Event Callbacks - Fetching Ads</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Banner Ad Event Callbacks - User Interaction">Banner Ad Event Callbacks - User Interaction</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Impression and Click Tracking">Impression and Click Tracking</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bannerCustomEvent:didFailToLoadAdWithError:">bannerCustomEvent:didFailToLoadAdWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bannerCustomEvent:didLoadAd:">bannerCustomEvent:didLoadAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bannerCustomEventDidFinishAction:">bannerCustomEventDidFinishAction:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bannerCustomEventWillBeginAction:">bannerCustomEventWillBeginAction:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bannerCustomEventWillLeaveApplication:">bannerCustomEventWillLeaveApplication:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/location">location</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/trackClick">trackClick</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/trackImpression">trackImpression</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/viewControllerForPresentingModalView">viewControllerForPresentingModalView</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPBannerCustomEventDelegate Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPBannerCustomEventDelegate Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPBannerCustomEventDelegate.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>Instances of your custom subclass of <a href="../Classes/MPBannerCustomEvent.html"><code>MPBannerCustomEvent</code></a> will have an <code>MPBannerCustomEventDelegate</code> delegate.
+You use this delegate to communicate events ad events back to the <a href="../Classes/MoPub.html">MoPub</a> SDK.</p>
+
+<p>When mediating a third party ad network it is important to call as many of these methods
+as accurately as possible.  Not all ad networks support all these events, and some support
+different events.  It is your responsibility to find an appropriate mapping betwen the ad
+network&rsquo;s events and the callbacks defined on <code>MPBannerCustomEventDelegate</code>.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/viewControllerForPresentingModalView">&ndash;&nbsp;viewControllerForPresentingModalView</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/location">&ndash;&nbsp;location</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li>
+						</ul>
+						
+						
+						<a title="Banner Ad Event Callbacks - Fetching Ads" name="task_Banner Ad Event Callbacks - Fetching Ads"></a>
+						<h3 class="subsubtitle task-title">Banner Ad Event Callbacks - Fetching Ads</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/bannerCustomEvent:didLoadAd:">&ndash;&nbsp;bannerCustomEvent:didLoadAd:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/bannerCustomEvent:didFailToLoadAdWithError:">&ndash;&nbsp;bannerCustomEvent:didFailToLoadAdWithError:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li>
+						</ul>
+						
+						
+						<a title="Banner Ad Event Callbacks - User Interaction" name="task_Banner Ad Event Callbacks - User Interaction"></a>
+						<h3 class="subsubtitle task-title">Banner Ad Event Callbacks - User Interaction</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/bannerCustomEventWillBeginAction:">&ndash;&nbsp;bannerCustomEventWillBeginAction:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/bannerCustomEventDidFinishAction:">&ndash;&nbsp;bannerCustomEventDidFinishAction:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/bannerCustomEventWillLeaveApplication:">&ndash;&nbsp;bannerCustomEventWillLeaveApplication:</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li>
+						</ul>
+						
+						
+						<a title="Impression and Click Tracking" name="task_Impression and Click Tracking"></a>
+						<h3 class="subsubtitle task-title">Impression and Click Tracking</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/trackImpression">&ndash;&nbsp;trackImpression</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/trackClick">&ndash;&nbsp;trackClick</a></code>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/bannerCustomEvent:didFailToLoadAdWithError:" title="bannerCustomEvent:didFailToLoadAdWithError:"></a>
+	<h3 class="subsubtitle method-title">bannerCustomEvent:didFailToLoadAdWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method immediately after an ad fails to load.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)bannerCustomEvent:(MPBannerCustomEvent *)<em>event</em> didFailToLoadAdWithError:(NSError *)<em>error</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>event</em></dt>
+			<dd><p>You should pass <code>self</code> to allow the <a href="../Classes/MoPub.html">MoPub</a> SDK to associate this event with the correct
+instance of your custom event.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>error</em></dt>
+			<dd><p>(<em>optional</em>) You may pass an error describing the failure.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Important</strong>: Your custom event subclass <strong>must</strong> call this method when it fails to load an ad.
+Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/bannerCustomEvent:didLoadAd:" title="bannerCustomEvent:didLoadAd:"></a>
+	<h3 class="subsubtitle method-title">bannerCustomEvent:didLoadAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method immediately after an ad loads succesfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)bannerCustomEvent:(MPBannerCustomEvent *)<em>event</em> didLoadAd:(UIView *)<em>ad</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>event</em></dt>
+			<dd><p>You should pass <code>self</code> to allow the <a href="../Classes/MoPub.html">MoPub</a> SDK to associate this event with the correct
+instance of your custom event.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>ad</em></dt>
+			<dd><p>The <code>UIView</code> representing the banner ad.  This view will be inserted into the <a href="../Classes/MPAdView.html"><code>MPAdView</code></a>
+and presented to the user by the <a href="../Classes/MoPub.html">MoPub</a> SDK.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Important</strong>: Your custom event subclass <strong>must</strong> call this method when it successfully loads an ad.
+Failure to do so will disrupt the mediation waterfall and cause future ad requests to stall.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/bannerCustomEventDidFinishAction:" title="bannerCustomEventDidFinishAction:"></a>
+	<h3 class="subsubtitle method-title">bannerCustomEventDidFinishAction:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method when the user finishes interacting with the banner ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)bannerCustomEventDidFinishAction:(MPBannerCustomEvent *)<em>event</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>event</em></dt>
+			<dd><p>You should pass <code>self</code> to allow the <a href="../Classes/MoPub.html">MoPub</a> SDK to associate this event with the correct
+instance of your custom event.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>For example, the user may have dismissed any modal content. This method is optional.</p><div class="warning"><p><strong>Important</strong>: If you call <a href="#//api/name/bannerCustomEventWillBeginAction:"><code>bannerCustomEventWillBeginAction:</code></a>, you <em><strong>must</strong></em> also call
+<code>-bannerCustomEventDidFinishAction:</code> at a later point.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/bannerCustomEventWillBeginAction:" title="bannerCustomEventWillBeginAction:"></a>
+	<h3 class="subsubtitle method-title">bannerCustomEventWillBeginAction:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method when the user taps on the banner ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)bannerCustomEventWillBeginAction:(MPBannerCustomEvent *)<em>event</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>event</em></dt>
+			<dd><p>You should pass <code>self</code> to allow the <a href="../Classes/MoPub.html">MoPub</a> SDK to associate this event with the correct
+instance of your custom event.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method is optional.  When automatic click and impression tracking is enabled (the default)
+this method will track a click (the click is guaranteed to only be tracked once per ad).</p><div class="warning"><p><strong>Important</strong>: If you call <code>-bannerCustomEventWillBeginAction:</code>, you <em><strong>must</strong></em> also call
+<a href="#//api/name/bannerCustomEventDidFinishAction:"><code>bannerCustomEventDidFinishAction:</code></a> at a later point.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/bannerCustomEventWillLeaveApplication:" title="bannerCustomEventWillLeaveApplication:"></a>
+	<h3 class="subsubtitle method-title">bannerCustomEventWillLeaveApplication:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method when the banner ad will cause the user to leave the application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)bannerCustomEventWillLeaveApplication:(MPBannerCustomEvent *)<em>event</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>event</em></dt>
+			<dd><p>You should pass <code>self</code> to allow the <a href="../Classes/MoPub.html">MoPub</a> SDK to associate this event with the correct
+instance of your custom event.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>For example, the user may have tapped on a link to visit the App Store or Safari.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/location" title="location"></a>
+	<h3 class="subsubtitle method-title">location</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The user&rsquo;s current location.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (CLLocation *)location</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>This method provides the location that was passed into the parent <a href="../Classes/MPAdView.html"><code>MPAdView</code></a>.  The <a href="../Classes/MoPub.html">MoPub</a>
+SDK does <strong>not</strong> automatically request the user&rsquo;s location.  It is your responsibility to pass the location
+into <a href="../Classes/MPAdView.html"><code>MPAdView</code></a>.</p>
+
+<p>You may use this to inform third-party ad networks of the user&rsquo;s location.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/trackClick" title="trackClick"></a>
+	<h3 class="subsubtitle method-title">trackClick</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method to track a click.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)trackClick</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Important</strong>: You should <strong>only</strong> call this method if you have <a href="../Classes/MPBannerCustomEvent.html#//api/name/enableAutomaticImpressionAndClickTracking">opted out of automatic click and impression tracking</a>.
+By default the <a href="../Classes/MoPub.html">MoPub</a> SDK automatically tracks clicks.</p>
+
+<p><strong>Important</strong>: In order to obtain accurate metrics, it is your responsibility to call <code>trackClick</code> only <strong>once</strong> per ad.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/trackImpression" title="trackImpression"></a>
+	<h3 class="subsubtitle method-title">trackImpression</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method to track an impression.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)trackImpression</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p><strong>Important</strong>: You should <strong>only</strong> call this method if you have <a href="../Classes/MPBannerCustomEvent.html#//api/name/enableAutomaticImpressionAndClickTracking">opted out of automatic click and impression tracking</a>.
+By default the <a href="../Classes/MoPub.html">MoPub</a> SDK automatically tracks impressions.</p>
+
+<p><strong>Important</strong>: In order to obtain accurate metrics, it is your responsibility to call <code>trackImpression</code> only <strong>once</strong> per ad.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/viewControllerForPresentingModalView" title="viewControllerForPresentingModalView"></a>
+	<h3 class="subsubtitle method-title">viewControllerForPresentingModalView</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The view controller instance to use when presenting modals.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (UIViewController *)viewControllerForPresentingModalView</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p><code>viewControllerForPresentingModalView</code> returns the same view controller that you
+specify when implementing the <a href="../Protocols/MPAdViewDelegate.html"><code>MPAdViewDelegate</code></a> protocol.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPBannerCustomEventDelegate.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

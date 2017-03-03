@@ -1,0 +1,779 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPInterstitialAdControllerDelegate Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPInterstitialAdControllerDelegate Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/interstitialDidAppear:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialDidAppear:</option>
+	
+	<option value="//api/name/interstitialDidDisappear:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialDidDisappear:</option>
+	
+	<option value="//api/name/interstitialDidExpire:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialDidExpire:</option>
+	
+	<option value="//api/name/interstitialDidFailToLoadAd:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialDidFailToLoadAd:</option>
+	
+	<option value="//api/name/interstitialDidLoadAd:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialDidLoadAd:</option>
+	
+	<option value="//api/name/interstitialDidReceiveTapEvent:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialDidReceiveTapEvent:</option>
+	
+	<option value="//api/name/interstitialWillAppear:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialWillAppear:</option>
+	
+	<option value="//api/name/interstitialWillDisappear:">&nbsp;&nbsp;&nbsp;&nbsp;- interstitialWillDisappear:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detecting When an Interstitial Ad is Loaded">Detecting When an Interstitial Ad is Loaded</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detecting When an Interstitial Ad is Presented">Detecting When an Interstitial Ad is Presented</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detecting When an Interstitial Ad is Dismissed">Detecting When an Interstitial Ad is Dismissed</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Detecting When an Interstitial Ad Expires">Detecting When an Interstitial Ad Expires</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialDidAppear:">interstitialDidAppear:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialDidDisappear:">interstitialDidDisappear:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialDidExpire:">interstitialDidExpire:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialDidFailToLoadAd:">interstitialDidFailToLoadAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialDidLoadAd:">interstitialDidLoadAd:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialDidReceiveTapEvent:">interstitialDidReceiveTapEvent:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialWillAppear:">interstitialWillAppear:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/interstitialWillDisappear:">interstitialWillDisappear:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPInterstitialAdControllerDelegate Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPInterstitialAdControllerDelegate Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPInterstitialAdController.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The delegate of an <a href="../Classes/MPInterstitialAdController.html"><code>MPInterstitialAdController</code></a> object must adopt the
+<code>MPInterstitialAdControllerDelegate</code> protocol.</p>
+
+<p>The optional methods of this protocol allow the delegate to be notified of interstitial state
+changes, such as when an ad has loaded, when an ad has been presented or dismissed from the
+screen, and when an ad has expired.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Detecting When an Interstitial Ad is Loaded" name="task_Detecting When an Interstitial Ad is Loaded"></a>
+						<h3 class="subsubtitle task-title">Detecting When an Interstitial Ad is Loaded</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialDidLoadAd:">&ndash;&nbsp;interstitialDidLoadAd:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialDidFailToLoadAd:">&ndash;&nbsp;interstitialDidFailToLoadAd:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Detecting When an Interstitial Ad is Presented" name="task_Detecting When an Interstitial Ad is Presented"></a>
+						<h3 class="subsubtitle task-title">Detecting When an Interstitial Ad is Presented</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialWillAppear:">&ndash;&nbsp;interstitialWillAppear:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialDidAppear:">&ndash;&nbsp;interstitialDidAppear:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Detecting When an Interstitial Ad is Dismissed" name="task_Detecting When an Interstitial Ad is Dismissed"></a>
+						<h3 class="subsubtitle task-title">Detecting When an Interstitial Ad is Dismissed</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialWillDisappear:">&ndash;&nbsp;interstitialWillDisappear:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialDidDisappear:">&ndash;&nbsp;interstitialDidDisappear:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Detecting When an Interstitial Ad Expires" name="task_Detecting When an Interstitial Ad Expires"></a>
+						<h3 class="subsubtitle task-title">Detecting When an Interstitial Ad Expires</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialDidExpire:">&ndash;&nbsp;interstitialDidExpire:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/interstitialDidReceiveTapEvent:">&ndash;&nbsp;interstitialDidReceiveTapEvent:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialDidAppear:" title="interstitialDidAppear:"></a>
+	<h3 class="subsubtitle method-title">interstitialDidAppear:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent after an interstitial ad object has been presented on the screen.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialDidAppear:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialDidDisappear:" title="interstitialDidDisappear:"></a>
+	<h3 class="subsubtitle method-title">interstitialDidDisappear:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent after an interstitial ad object has been dismissed from the screen, returning control
+to your application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialDidDisappear:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Your implementation of this method should resume any application activity that was paused
+prior to the interstitial being presented on-screen.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialDidExpire:" title="interstitialDidExpire:"></a>
+	<h3 class="subsubtitle method-title">interstitialDidExpire:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when a loaded interstitial ad is no longer eligible to be displayed.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialDidExpire:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Interstitial ads from certain networks (such as iAd) may expire their content at any time,
+even if the content is currently on-screen. This method notifies you when the currently-
+loaded interstitial has expired and is no longer eligible for display.</p>
+
+<p>If the ad was on-screen when it expired, you can expect that the ad will already have been
+dismissed by the time this message is sent.</p>
+
+<p>Your implementation may include a call to <code>loadAd</code> to fetch a new ad, if desired.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialDidFailToLoadAd:" title="interstitialDidFailToLoadAd:"></a>
+	<h3 class="subsubtitle method-title">interstitialDidFailToLoadAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when an interstitial ad object fails to load an ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialDidFailToLoadAd:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialDidLoadAd:" title="interstitialDidLoadAd:"></a>
+	<h3 class="subsubtitle method-title">interstitialDidLoadAd:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when an interstitial ad object successfully loads an ad.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialDidLoadAd:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialDidReceiveTapEvent:" title="interstitialDidReceiveTapEvent:"></a>
+	<h3 class="subsubtitle method-title">interstitialDidReceiveTapEvent:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent when the user taps the interstitial ad and the ad is about to perform its target action.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialDidReceiveTapEvent:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This action may include displaying a modal or leaving your application. Certain ad networks
+may not expose a &ldquo;tapped&rdquo; callback so you should not rely on this callback to perform
+critical tasks.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialWillAppear:" title="interstitialWillAppear:"></a>
+	<h3 class="subsubtitle method-title">interstitialWillAppear:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent immediately before an interstitial ad object is presented on the screen.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialWillAppear:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Your implementation of this method should pause any application activity that requires user
+interaction.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/interstitialWillDisappear:" title="interstitialWillDisappear:"></a>
+	<h3 class="subsubtitle method-title">interstitialWillDisappear:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sent immediately before an interstitial ad object will be dismissed from the screen.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)interstitialWillDisappear:(MPInterstitialAdController *)<em>interstitial</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>interstitial</em></dt>
+			<dd><p>The interstitial ad object sending the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPInterstitialAdController.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

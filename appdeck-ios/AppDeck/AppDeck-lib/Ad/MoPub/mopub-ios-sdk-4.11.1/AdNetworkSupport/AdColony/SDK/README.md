@@ -1,0 +1,1 @@
+To use the AdColony Video Ad Network, download the AdColony SDK and place the framework in this folder.

@@ -1,0 +1,586 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>MPCollectionViewAdPlacer Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">MoPubSDK </a></h1>
+				<a id="developerHome" href="../index.html">MoPub</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">MPCollectionViewAdPlacer Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/placerWithCollectionView:viewController:adPositioning:rendererConfigurations:">&nbsp;&nbsp;&nbsp;&nbsp;+ placerWithCollectionView:viewController:adPositioning:rendererConfigurations:</option>
+	
+	<option value="//api/name/placerWithCollectionView:viewController:rendererConfigurations:">&nbsp;&nbsp;&nbsp;&nbsp;+ placerWithCollectionView:viewController:rendererConfigurations:</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/loadAdsForAdUnitID:">&nbsp;&nbsp;&nbsp;&nbsp;- loadAdsForAdUnitID:</option>
+	
+	<option value="//api/name/loadAdsForAdUnitID:targeting:">&nbsp;&nbsp;&nbsp;&nbsp;- loadAdsForAdUnitID:targeting:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Initializing a Collection View Ad Placer">Initializing a Collection View Ad Placer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Requesting Ads">Requesting Ads</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/placerWithCollectionView:viewController:adPositioning:rendererConfigurations:">placerWithCollectionView:viewController:adPositioning:rendererConfigurations:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/placerWithCollectionView:viewController:rendererConfigurations:">placerWithCollectionView:viewController:rendererConfigurations:</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/loadAdsForAdUnitID:">loadAdsForAdUnitID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/loadAdsForAdUnitID:targeting:">loadAdsForAdUnitID:targeting:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="MPCollectionViewAdPlacer Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">MPCollectionViewAdPlacer Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">MPCollectionViewAdPlacer.h</td>
+</tr>
+						</tbody></table></div>
+					
+                    
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>MPCollectionViewAdPlacer</code> class allows you to request native ads from the <a href="../Classes/MoPub.html">MoPub</a> ad server
+and place them into a <code>UICollectionView</code> object.</p>
+
+<p>When an instance of this class is initialized with a collection view, it wraps the collection
+view&rsquo;s data source and delegate in order to insert ads and adjust the positions of your regular
+content cells.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Initializing a Collection View Ad Placer" name="task_Initializing a Collection View Ad Placer"></a>
+						<h3 class="subsubtitle task-title">Initializing a Collection View Ad Placer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/placerWithCollectionView:viewController:rendererConfigurations:">+&nbsp;placerWithCollectionView:viewController:rendererConfigurations:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/placerWithCollectionView:viewController:adPositioning:rendererConfigurations:">+&nbsp;placerWithCollectionView:viewController:adPositioning:rendererConfigurations:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Requesting Ads" name="task_Requesting Ads"></a>
+						<h3 class="subsubtitle task-title">Requesting Ads</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/loadAdsForAdUnitID:">&ndash;&nbsp;loadAdsForAdUnitID:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/loadAdsForAdUnitID:targeting:">&ndash;&nbsp;loadAdsForAdUnitID:targeting:</a></code>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/placerWithCollectionView:viewController:adPositioning:rendererConfigurations:" title="placerWithCollectionView:viewController:adPositioning:rendererConfigurations:"></a>
+	<h3 class="subsubtitle method-title">placerWithCollectionView:viewController:adPositioning:rendererConfigurations:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates and returns an ad placer that will insert ads into a collection view.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (instancetype)placerWithCollectionView:(UICollectionView *)<em>collectionView</em> viewController:(UIViewController *)<em>controller</em> adPositioning:(MPAdPositioning *)<em>positioning</em> rendererConfigurations:(NSArray *)<em>rendererConfigurations</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collectionView</em></dt>
+			<dd><p>The collection view in which to insert ads.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>controller</em></dt>
+			<dd><p>The view controller which should be used to present modal content.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>positioning</em></dt>
+			<dd><p>The positioning object that specifies where ads should be shown in the stream.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>rendererConfigurations</em></dt>
+			<dd><p>An array of <a href="../Classes/MPNativeAdRendererConfiguration.html">MPNativeAdRendererConfiguration</a> objects that control how
+the native ad is rendered.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An <code>MPCollectionViewAdPlacer</code> object.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When using this method, there are two options for controlling the positions where ads appear
+within the collection view.</p>
+
+<p>First, you may pass an <a href="../Classes/MPServerAdPositioning.html"><code>MPServerAdPositioning</code></a> object as the <code>positioning</code> parameter, which tells
+the ad placer to obtain positioning information dynamically from the ad server, which you can
+configure on the <a href="../Classes/MoPub.html">MoPub</a> website. In many cases, this is the preferred approach, since it allows
+you to modify the positions without rebuilding your application. Note that calling the
+convenience method +placerWithCollectionView:viewController:defaultAdRenderingClass: accomplishes
+this as well.</p>
+
+<p>Alternatively, if you wish to hard-code your positions, you may pass an <a href="../Classes/MPClientAdPositioning.html"><code>MPClientAdPositioning</code></a>
+object instead.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/placerWithCollectionView:viewController:rendererConfigurations:" title="placerWithCollectionView:viewController:rendererConfigurations:"></a>
+	<h3 class="subsubtitle method-title">placerWithCollectionView:viewController:rendererConfigurations:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates and returns an ad placer that will insert ads into a collection view at positions that can
+be configured dynamically on the <a href="../Classes/MoPub.html">MoPub</a> website.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (instancetype)placerWithCollectionView:(UICollectionView *)<em>collectionView</em> viewController:(UIViewController *)<em>controller</em> rendererConfigurations:(NSArray *)<em>rendererConfigurations</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>collectionView</em></dt>
+			<dd><p>The collection view in which to insert ads.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>controller</em></dt>
+			<dd><p>The view controller which should be used to present modal content.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>rendererConfigurations</em></dt>
+			<dd><p>An array of <a href="../Classes/MPNativeAdRendererConfiguration.html">MPNativeAdRendererConfiguration</a> objects that control how
+the native ad is rendered.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An <code>MPCollectionViewAdPlacer</code> object.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When you make an ad request, the ad placer will ask the <a href="../Classes/MoPub.html">MoPub</a> ad server for the positions where
+ads should be inserted into the collection view. You can configure these positioning values by
+editing your ad unit&rsquo;s settings on the <a href="../Classes/MoPub.html">MoPub</a> website.</p>
+
+<p>Using this method is equivalent to calling
++placerWithCollectionView:viewController:adPositioning:defaultAdRenderingClass: and passing in an
+<a href="../Classes/MPServerAdPositioning.html"><code>MPServerAdPositioning</code></a> object as the <code>positioning</code> parameter.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/loadAdsForAdUnitID:" title="loadAdsForAdUnitID:"></a>
+	<h3 class="subsubtitle method-title">loadAdsForAdUnitID:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Requests ads from the <a href="../Classes/MoPub.html">MoPub</a> ad server using the specified ad unit ID.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)loadAdsForAdUnitID:(NSString *)<em>adUnitID</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adUnitID</em></dt>
+			<dd><p>A string representing a <a href="../Classes/MoPub.html">MoPub</a> ad unit ID.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/loadAdsForAdUnitID:targeting:" title="loadAdsForAdUnitID:targeting:"></a>
+	<h3 class="subsubtitle method-title">loadAdsForAdUnitID:targeting:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Requests ads from the <a href="../Classes/MoPub.html">MoPub</a> ad server using the specified ad unit ID and targeting parameters.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)loadAdsForAdUnitID:(NSString *)<em>adUnitID</em> targeting:(MPNativeAdRequestTargeting *)<em>targeting</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>adUnitID</em></dt>
+			<dd><p>A string representing a <a href="../Classes/MoPub.html">MoPub</a> ad unit ID.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>targeting</em></dt>
+			<dd><p>An object containing targeting information, such as geolocation data.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">MPCollectionViewAdPlacer.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+                    
+                    
+                    
+                    
+
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2015 MoPub. All rights reserved. (Last updated: 2015-10-07)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

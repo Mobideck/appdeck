@@ -16,6 +16,7 @@
 #include "NSString+URLEncoding.h"
 #include "NSString+MD5.h"
 
+// https://developer.apple.com/library/content/samplecode/CustomHTTPProtocol/Listings/CustomHTTPProtocol_Core_Code_CustomHTTPProtocol_m.html#//apple_ref/doc/uid/DTS40013653-CustomHTTPProtocol_Core_Code_CustomHTTPProtocol_m-DontLinkElementID_10
 
 // The HttpProtocolHandlerCore class is the bridge between the URLRequest
 // and the NSURLProtocolClient.
