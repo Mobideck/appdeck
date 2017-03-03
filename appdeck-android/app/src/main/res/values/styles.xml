@@ -1,26 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/AppDeckColorTopBarBg1</item>
+        <item name="colorPrimaryDark">@color/AppDeckColorApp</item>
+        <item name="colorAccent">@color/AppDeckColorApp</item>
     </style>-->
 
+<!--    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>-->
 
-    <color name="black">#000000</color>
-    <color name="black_10">#19000000</color>
-    <color name="black_20">#32000000</color>
-    <color name="black_30">#AC000000</color>
-    <color name="white">#ffffff</color>
+    <!--
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <color name="purple_light">#a276eb</color>
-    <color name="purple_middle">#8658ce</color>
-    <color name="purple_dark">#6a3ab2</color>
-
-    <style name="Presage.Theme.Transparent" parent="android:Theme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+-->
 </resources>

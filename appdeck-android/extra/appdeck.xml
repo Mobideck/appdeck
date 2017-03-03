@@ -15,17 +15,26 @@
     <!--
         App Color
     -->
-    <!-- app_topbar_color[0], action bar background -->
-    <color name="AppDeckColorTopBarBg1">##AppDeckColorTopBarBg1##</color>
-    <!-- app_topbar_color[1], action bar background -->
-    <color name="AppDeckColorTopBarBg2">##AppDeckColorTopBarBg2##</color>
-    <!-- app_topbar_text_color, actionbar text color -->
-    <color name="AppDeckColorTopBarText">##AppDeckColorTopBarText##</color>
-
-    <!-- icon_theme, black or white theme -->
-    <color name="AppDeckColorTheme">##AppDeckColorTheme##</color>
 
     <!-- app_color, color of loading, scrollbar, ... -->
     <color name="AppDeckColorApp">##AppDeckColorApp##</color>
+
+    <!-- app_topbar_color, top toolbar bar background -->
+    <color name="AppDeckColorTopBar">##AppDeckColorTopBar##</color>
+
+    <!-- app_topbar_text_color, actionbar text color -->
+    <color name="AppDeckColorTopBarText">##AppDeckColorTopBarText##</color>
+
+    <!-- app_actionbar_color, bottom toolbar (action bar) background -->
+    <color name="AppDeckColorActionBar">##AppDeckColorActionBar##</color>
+
+    <!-- app_bottombar_color, bottom toolbar (action bar) background -->
+    <color name="AppDeckColorBottomBar">##AppDeckColorBottomBar##</color>
+
+    <!-- app_bottombar_color, bottom toolbar (action bar) background -->
+    <color name="AppDeckColorBottomBarText">##AppDeckColorBottomBarText##</color>
+
+    <!-- control_color, black or white theme -->
+    <color name="AppDeckColorTheme">##AppDeckColorTheme##</color>
 
 </resources>

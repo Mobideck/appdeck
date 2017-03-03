@@ -1,0 +1,6 @@
+<resources>
+    
+    <!-- general dimensions for all custom menu items -->
+    <dimen name="menu_item_ripple_size">28dp</dimen>
+
+</resources>

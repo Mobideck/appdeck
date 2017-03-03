@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/app_container"
+    >
+
+    <!-- View that will be hidden when video goes fullscreen -->
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        tools:openDrawer="start">
+
+        <include
+            layout="@layout/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    <!--    <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main"
+            app:menu="@menu/activity_main_drawer" />-->
+
+        <android.support.design.internal.ScrimInsetsFrameLayout
+            android:id="@+id/left_drawer"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:fitsSystemWindows="false"
+            />
+        <android.support.design.internal.ScrimInsetsFrameLayout
+            android:id="@+id/right_drawer"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:fitsSystemWindows="false" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <!-- View where the video will be shown when video goes fullscreen -->
+    <FrameLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <!-- loading Layout -->
+    <FrameLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/alpha_black"
+        android:clickable="true"
+        android:visibility="gone">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/loading_background"
+            android:padding="30dp">
+            <ProgressBar
+                style="@style/Base.Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_gravity="center" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <!-- DebugLog -->
+    <FrameLayout
+    android:id="@+id/debugLog"
+    android:layout_width="match_parent"
+    android:layout_height="280dp"
+    android:layout_gravity="bottom"
+    android:background="@android:color/white"
+    android:visibility="gone"
+    android:elevation="2dp"
+    android:gravity="bottom"
+    android:translationY="280dp"
+    android:alpha="0">
+    <TextView
+        android:id="@+id/debugTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:maxLines = "1000"
+        android:scrollbars = "vertical"/>
+    </FrameLayout>
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right|bottom"
+    android:padding="2dp"
+    android:text="log"
+    android:id="@+id/closeDebug"
+    android:visibility="gone"/>
+</FrameLayout>

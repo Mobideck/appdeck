@@ -398,33 +398,44 @@ function easy_embed($name, $default_url = false)
 
 function buildAppDeckAndroidRes()
 {
-  global $info, $project_path;
+  global $info, $project_path, $json_data;
 
   $xml = file_get_contents($project_path.'/extra/appdeck.xml');
   if (isset($info->icon_theme) && $info->icon_theme == 'dark')
-    $conf = array('AppDeckColorTopBarBg1' => '#000000',
-                  'AppDeckColorTopBarBg2' => '#000000',
+    $conf = array('AppDeckColorTopBar' => '#000000',
                   'AppDeckColorTopBarText' => '#FFFFFF',
+                  'AppDeckColorActionBar' => '#000000',
+                  'AppDeckColorBottomBar' => '#000000',
+                  'AppDeckColorBottomBarText' => '#FFFFFF',
                   'AppDeckColorTheme' => '#000000',
                   'AppDeckColorApp' => '#000000');
   else
-    $conf = array('AppDeckColorTopBarBg1' => '#FFFFFF',
-                  'AppDeckColorTopBarBg2' => '#FFFFFF',
+    $conf = array('AppDeckColorTopBar' => '#FFFFFF',
                   'AppDeckColorTopBarText' => '#000000',
+                  'AppDeckColorActionBar' => '#FFFFFF',
+                  'AppDeckColorBottomBar' => '#FFFFFF',
+                  'AppDeckColorBottomBarText' => '#000000',
                   'AppDeckColorTheme' => '#FFFFFF',
                   'AppDeckColorApp' => '#000000');
-
+/*
+  // check values
+  if (is_array($info->app_topbar_color))
+    $info->app_topbar_color = $info->app_topbar_color[0];
+*/
   // patch conf
-  if (isset($info->app_topbar_color[0]) && $info->app_topbar_color[0] != '') {
-    $conf['AppDeckColorTopBarBg1'] = $info->app_topbar_color[0];
-    $conf['AppDeckColorTopBarBg2'] = $info->app_topbar_color[0];
-  }
-  if (isset($info->app_topbar_color[1]) && $info->app_topbar_color[1] != '')
-    $conf['AppDeckColorTopBarBg2'] = $info->app_topbar_color[1];
-  if (isset($info->app_topbar_text_color) && $info->app_topbar_text_color != '')
-    $conf['AppDeckColorTopBarText'] = $info->app_topbar_text_color;
   if (isset($info->app_color) && $info->app_color != '')
     $conf['AppDeckColorApp'] = $info->app_color;
+  if (isset($info->app_topbar_color) && $info->app_topbar_color != '')
+    $conf['AppDeckColorTopBar'] = $info->app_topbar_color;
+  if (isset($info->app_topbar_text_color) && $info->app_topbar_text_color != '')
+    $conf['AppDeckColorTopBarText'] = $info->app_topbar_text_color;
+  if (isset($info->app_actionbar_color) && $info->app_actionbar_color != '')
+    $conf['AppDeckColorActionBar'] = $info->app_actionbar_color;
+  if (isset($info->app_bottombar_color) && $info->app_bottombar_color != '')
+    $conf['AppDeckColorBottomBar'] = $info->app_bottombar_color;
+  if (isset($info->app_bottombar_text_color) && $info->app_bottombar_text_color != '')
+    $conf['AppDeckColorBottomBarText'] = $info->app_bottombar_text_color;
+
 
   if (isset($info->icon_theme) && $info->icon_theme == 'light')
     $xml = str_replace('Theme.AppCompat.NoActionBar', 'Theme.AppCompat.Light.NoActionBar', $xml);
@@ -438,4 +449,6 @@ function buildAppDeckAndroidRes()
   $xml_path = $project_path.'/app/src/main/res/values/appdeck.xml';
   if (!file_exists($xml_path) || file_get_contents($project_path.'/app/src/main/res/values/appdeck.xml') != $xml)
     file_put_contents($project_path.'/app/src/main/res/values/appdeck.xml', $xml);
+
+  file_put_contents($project_path.'/app/src/main/res/raw/app_config.json', $json_data);
 }

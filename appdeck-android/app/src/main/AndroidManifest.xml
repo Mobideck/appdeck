@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.mobideck.appdeck">
+    package="net.mobideck.appdeck">
 
     <!--  permission for appdeck -->
     <uses-permission android:name="android.permission.INTERNET" /><!-- Internet Access -->
@@ -13,147 +12,139 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/><!-- Get user ID -->
 
     <!--  permission for push -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /><!-- Receive Push message -->
-    <permission android:name="com.mobideck.appdeck.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.mobideck.appdeck.permission.C2D_MESSAGE" />
-
-    <!--  permission for WideSpace -->
-    <!--
-	<uses-permission android:name="android.permission.READ_CALENDAR" />
-	<uses-permission android:name="android.permission.WRITE_CALENDAR" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
-     -->
-
-    <!--  permission for crosswalk -->
-    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--<uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
-
-    <!-- WideSapce minSdk 17 override -->
-    <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="com.widespace, com.gc.materialdesign, com.millennialmedia" />
+    <permission android:name="net.mobideck.appdeck.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="net.mobideck.appdeck.permission.C2D_MESSAGE" />
 
     <application
-        tools:replace="android:icon,android:theme"
+        android:name=".AppDeckApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:supportsRtl="true"
         android:hardwareAccelerated="true"
-        android:name="com.mobideck.appdeck.AppDeckApplication"
-        android:theme="@style/Theme.MyAppDeckTheme" >
+        android:theme="@style/Theme.MyAppDeckTheme">
 
         <!-- AppDeck Test App -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/218hf32d1901627d35131fa83b63f56ae906"></meta-data>-->
 
         <!-- Test Cache -->
-        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
+        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
 
         <!-- AppDeck Dev App -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
 
         <!-- PC INpact -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/224h315e5a19e0865b35ac7e5b3713ef5a3b" />-->
 
         <!-- PC INpact Dev -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1060hc931f3cbf173612382d474a58d3a78b0" />-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1060hc931f3cbf173612382d474a58d3a78b0" />-->
 
         <!--  Play3-Live iOS -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
 
         <!--  Play3-Live Android -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
 
         <!--  Monsieur-Mademoiselle -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
 
         <!--  94 citoyens -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
 
         <!-- Univers Freebox -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->
 
         <!-- Actu Animaux -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/979hf2a89dc17ae78bd6e3ff60a65f301724"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/979hf2a89dc17ae78bd6e3ff60a65f301724"></meta-data>-->
 
         <!-- Jeux Video Live -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>-->
+        <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>
 
         <!-- Tool Fitness -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/989hb11900d8d83ee53fbe22c0e922f3ba09"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/989hb11900d8d83ee53fbe22c0e922f3ba09"></meta-data>-->
 
         <!-- JP News -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1086h2bcaa38f9a89f2e90b3e19b46b583f41"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1086h2bcaa38f9a89f2e90b3e19b46b583f41"></meta-data>-->
 
         <!-- xboxygen -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1089habcccfd19841b01be8f081b17e1d9dc1"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1089habcccfd19841b01be8f081b17e1d9dc1"></meta-data>-->
 
         <!-- SNIIM -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/959hc85fdc336418aade8d2d86f6af4a5fa9"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/959hc85fdc336418aade8d2d86f6af4a5fa9"></meta-data>-->
 
         <!-- RDD -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1109h4bed9177a3e9d426e75a0055ca5fefa2"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1109h4bed9177a3e9d426e75a0055ca5fefa2"></meta-data>-->
 
         <!-- Jeux Online -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1282h3a3bf9a93a263a6e3118e9ef55dcf69d"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1282h3a3bf9a93a263a6e3118e9ef55dcf69d"></meta-data>-->
 
         <!-- Serie Addict -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1180h595374b1057d1e57537d6c1d3639cea4"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1180h595374b1057d1e57537d6c1d3639cea4"></meta-data>-->
 
         <!-- Team AAA -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1279hf8895674d261055a2a3818b41cbd4d03"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1279hf8895674d261055a2a3818b41cbd4d03"></meta-data>-->
 
         <!-- Dev Test -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
 
         <!-- Ginjfo -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1622h34412ab3c04f08e74e473a53b0dbd795"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1622h34412ab3c04f08e74e473a53b0dbd795"></meta-data>-->
 
         <!-- Tatoo -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1571h24994efd99e8f6dacac48a298ac319f7"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1571h24994efd99e8f6dacac48a298ac319f7"></meta-data>-->
 
         <!-- Krewe -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1818hf63940ad7859260deba357b98fe1b3ef"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1818hf63940ad7859260deba357b98fe1b3ef"></meta-data>-->
 
         <!-- Fis-Ski -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1833h98708fb114b52085fe57a6e301611916"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1833h98708fb114b52085fe57a6e301611916"></meta-data>-->
 
         <!-- Somfy -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1913h07f960c6a85e4e288e3c8fcf056e8fc2"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1913h07f960c6a85e4e288e3c8fcf056e8fc2"></meta-data>-->
 
         <!-- Gamer Network -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1924h9126a001382240adb058f23f60fb93d2"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1924h9126a001382240adb058f23f60fb93d2"></meta-data>-->
 
         <!-- Freenews -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2110hf12a8cb06f755b12f947c710e43cd47c"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/2110hf12a8cb06f755b12f947c710e43cd47c"></meta-data>-->
 
         <!-- Memo Heures -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2247hadc45a049e11769f39f2719601b9f0a6"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/2247hadc45a049e11769f39f2719601b9f0a6"></meta-data>-->
 
         <!-- Game Love -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2394h80b265540a1cb6e70ad4b6aadb4652b1"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/2394h80b265540a1cb6e70ad4b6aadb4652b1"></meta-data>-->
 
         <!-- Zebulon -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1882h9fcb3c7b1f3831cf00853cf085e1e1d3"></meta-data>-->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1882h9fcb3c7b1f3831cf00853cf085e1e1d3"></meta-data>-->
 
-
-        <meta-data android:name="noCache" android:value="false" />
-
-        <!-- GCM -->
-        <!--<receiver
-            android:name=".GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+        <activity
+            android:name=".AppDeckActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name" >
+            <!-- default -->
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.mobideck.appdeck" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
-        <service android:name=".GcmIntentService" />-->
+            <!-- Depp Linking -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="http" android:host="testappv2.appdeck.mobi" android:pathPrefix="/" />
+                <data android:scheme="https" android:host="testappv2.appdeck.mobi" android:pathPrefix="/" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Android TV -->
+                <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
+            </intent-filter>
+        </activity>
 
+        <!-- Configuration -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="e62d5eb16cef87dc2d56665e3205360edcbd44bb"/>
+
+        <!-- Push Notification -->
         <!-- [START gcm_receiver] -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -162,14 +153,14 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.mobideck.appdeck" />
+                <category android:name="net.mobideck.appdeck" />
             </intent-filter>
         </receiver>
         <!-- [END gcm_receiver] -->
 
         <!-- [START gcm_listener] -->
         <service
-            android:name="com.mobideck.appdeck.GCMGcmListenerService"
+            android:name="net.mobideck.appdeck.push.GCMGcmListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -178,7 +169,7 @@
         <!-- [END gcm_listener] -->
         <!-- [START instanceId_listener] -->
         <service
-            android:name="com.mobideck.appdeck.GCMInstanceIDListenerService"
+            android:name="net.mobideck.appdeck.push.GCMInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
@@ -186,239 +177,31 @@
         </service>
         <!-- [END instanceId_listener] -->
         <service
-            android:name="com.mobideck.appdeck.GCMRegistrationIntentService"
+            android:name="net.mobideck.appdeck.push.GCMRegistrationIntentService"
             android:exported="false">
         </service>
 
-<!--        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+
+
+        <!-- Google Analytics -->
+        <receiver android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.mobideck.appdeck" />
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
         </receiver>
-        <service
-            android:name="com.mobideck.appdeck.GCMGcmListenerService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name="com.mobideck.appdeck.GCMInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>-->
-
-        <!-- Branch.io receiver -->
-        <!--<receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+        <receiver android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
-        </receiver>-->
-
-        <activity
-            android:name=".Loader"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!--
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="http" android:host="testappv2.appdeck.mobi" />
-                <data android:scheme="https" android:host="testappv2.appdeck.mobi" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />-->
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <data android:scheme="http" android:host="testappv2.appdeck.mobi" android:pathPrefix="/" />
-                <data android:scheme="https" android:host="testappv2.appdeck.mobi" android:pathPrefix="/" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
-            </intent-filter>
-
-            <!-- Branch.io intent filter -->
-            <!--
-            <intent-filter>
-                <data android:scheme="branchio" android:host="open" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>-->
-
-        </activity>
-
-        <!-- MoPub Activity -->
-        <activity android:name="com.mopub.mobileads.MoPubActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.mopub.mobileads.MraidActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.mopub.common.MoPubBrowser" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.mopub.mobileads.MraidVideoPlayerActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <!-- AdMob Activity -->
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent" />
-
-        <!-- Millennial Media -->
-        <!--<activity android:name="com.millennialmedia.android.MMActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="keyboardHidden|orientation|keyboard" />
-        <activity android:name="com.millennialmedia.android.VideoPlayer" android:configChanges="keyboardHidden|orientation|keyboard" />-->
-
-        <!-- InMobi -->
-        <!--<activity android:name="com.inmobi.androidsdk.IMBrowserActivity"
-            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:hardwareAccelerated="true" />
-        <receiver
-            android:name="com.inmobi.commons.analytics.androidsdk.IMAdTrackerReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.inmobi.share.id" />
-            </intent-filter>
-        </receiver>-->
-        <!--Required Activity for rendering ads in the embedded browser-->
-        <activity android:name="com.inmobi.rendering.InMobiAdActivity"
-            android:configChanges="keyboardHidden|orientation|keyboard|smallestScreenSize|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:hardwareAccelerated="true" />
-        <!--Required Receiver for enhanced targeting for better ads.-->
-        <receiver android:name="com.inmobi.commons.core.utilities.uid.ImIdShareBroadCastReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.inmobi.share.id" />
-            </intent-filter>
         </receiver>
-        <service android:enabled="true" android:name="com.inmobi.signals.activityrecognition.ActivityRecognitionManager" />
-
-        <!-- Facebook -->
-        <activity android:name="com.facebook.ads.InterstitialAdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-
-        <provider android:authorities="com.facebook.app.FacebookContentProvider1635878233340418"
-            android:name="com.facebook.FacebookContentProvider"
-            android:exported="true" />
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-
-        <!-- Flurry -->
-        <activity
-            android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize">
-        </activity>
-
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="e62d5eb16cef87dc2d56665e3205360edcbd44bb"/>
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-
-        <!-- Start Apps -->
-        <activity android:name="com.startapp.android.publish.list3d.List3DActivity"
-            android:theme="@android:style/Theme" />
-
-        <activity android:name="com.startapp.android.publish.OverlayActivity"
-            android:theme="@android:style/Theme.Translucent"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-
-        <activity android:name="com.startapp.android.publish.FullScreenActivity"
-            android:theme="@android:style/Theme"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-
-        <!-- Smaato -->
-        <activity android:name="com.smaato.soma.ExpandedBannerActivity" ></activity>
-        <activity android:name="com.smaato.soma.interstitial.InterstitialActivity" ></activity>
-
-        <!-- Mobile Core -->
-        <service
-            android:name="com.ironsource.mobilcore.MobileCoreReport"
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService"
             android:enabled="true"
-            android:exported="false" />
-        <receiver
-            android:name="com.ironsource.mobilcore.InstallationTracker"
-            android:enabled="true" />
-        <activity
-            android:name="com.ironsource.mobilcore.InterstitialVideoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:keepScreenOn="true" />
-
-        <!-- Required Aerserv Activity -->
-        <activity android:name="com.aerserv.sdk.view.ASVastInterstitialActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent" />
-        <activity android:name="com.aerserv.sdk.view.ASWebviewInterstitialActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <activity android:name="com.aerserv.sdk.view.ASVpaidInterstitalActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-
-        <!--Grants the SDK permission to start mng analytics service -->
-        <service android:name="com.mngads.service.MNGAnalyticsService"/>
-        <!--MNG Ad server activity -->
-        <activity
-            android:name="com.mngads.sdk.MNGInAppWebView"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <activity
-            android:name="com.mngads.sdk.interstitial.MNGInterstitialAdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <activity
-            android:name="com.mngads.sdk.MNGVideoPlayerActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <activity
-            android:name="com.mngads.sdk.nativead.MNGNativeAdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
-        <!--Retency SDK Ad activitys  -->
-        <activity
-            android:name="com.retency.sdk.android.video.RichMediaActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:hardwareAccelerated="false" />
-        <activity
-            android:name="com.retency.sdk.android.mraid.MraidBrowser"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <!--Amazon SDK Ad activity  -->
-        <activity
-            android:name="com.amazon.device.ads.AdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <!-- AppLovin -->
-        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" />
-        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity" />
-
-        <!-- PRESAGE LIBRARY -->
-        <meta-data android:name="presage_key" android:value="presage_key"/>
-        <service android:name="io.presage.services.PresageServiceImp"/>
-        <activity android:name="io.presage.activities.PresageActivity"
-            android:label="@string/app_name"
-            android:theme="@style/Presage.Theme.Transparent"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true" >
-            <intent-filter>
-                <action android:name="io.presage.intent.action.LAUNCH_WEBVIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <receiver android:name="io.presage.receivers.BootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.DATE_CHANGED"/>
-                <action android:name="io.presage.receivers.BootReceiver.RESTART_SERVICE"/>
-            </intent-filter>
-        </receiver>
-
-        <!-- Branch.io -->
-        <!--<meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_adjV9Pb01wO0C4KJEQ2GifcoCEfz7Ad2" />-->
+            android:exported="false"/>
+        <service android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false"/>
 
     </application>
 

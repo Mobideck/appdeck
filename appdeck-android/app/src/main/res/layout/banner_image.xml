@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:gravity="bottom">
+
+
+        <TextView
+            android:text="Title will appear here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:layout_weight="1"
+            android:textSize="24sp" />
+
+        <TextView
+            android:text="Subtitle will appear here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/subtitle"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</FrameLayout>

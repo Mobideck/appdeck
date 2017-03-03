@@ -1,172 +1,86 @@
-/*buildscript {
-    repositories {
-        jcenter()
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}*/
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 apply plugin: 'io.fabric'
+
+def AAVersion = '4.2.0'
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
-    }
-    maven { url 'https://maven.fabric.io/public' }
-
+    mavenLocal()
     maven { url "https://jitpack.io" }
-
-    flatDir {
-        dirs 'libs'
-    }
-
+    maven { url 'https://maven.fabric.io/public' }
     jcenter()
 }
 
 android {
-    compileSdkVersion 24
-
-    // http://tools.android.com/release
-    buildToolsVersion '24.0.2'
-
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "com.mobideck.appdeck"
-
-        minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 71
-        versionName "1.7.5"
-
-        // Enabling multidex support.
-        multiDexEnabled true
-
+        applicationId "net.mobideck.appdeck"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "2.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
-    lintOptions {
-        abortOnError false
-    }
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude '.readme'
-        exclude 'META-INF/BCKEY.DSA'
-        exclude 'META-INF/BCKEY.SF'
-        exclude 'META-INF/maven/log4j/log4j/pom.xml'
-        exclude 'META-INF/maven/log4j/log4j/pom.properties'
-    }
-
-    productFlavors {
-        crosswalk {
-            dimension "webview"
-            // 15 by default, set 21 for faster build time
-            minSdkVersion 16
-            versionCode = 1
-        }
-        chromium {
-            dimension "webview"
-            // 19 by default, set 21 for faster build time
-            minSdkVersion 19
-            versionCode = 2
-        }
-    }
-
-    splits {
-        abi {
-            enable true // enable ABI split feature to create one APK per ABI
-            reset()
-            include 'x86', 'armeabi-v7a'//, 'mips'
-            universalApk true // generate an additional APK that targets all the ABIs
-        }
-    }
-
-    // map for the version code
-    project.ext.versionCodes = ['armeabi':1, 'armeabi-v7a':2, 'arm64-v8a':3, 'mips':5, 'mips64':6, 'x86':8, 'x86_64':9]
-
-    android.applicationVariants.all { variant ->
-        // assign different version code for each output
-        variant.outputs.each { output ->
-            output.versionCodeOverride =
-                    android.defaultConfig.versionCode * 10000 + variant.productFlavors.get(0).versionCode * 100 + project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0)
-        }
-    }
-
-    dexOptions {
-        //jumboMode true
-        javaMaxHeapSize "4g"
-
-        // smaller build time
-        incremental false // make rebuild failed at launch with You need to use a Theme.AppCompat theme (or descendant) with this activity.
-        preDexLibraries false// make rebuild failed at launch with You need to use a Theme.AppCompat theme (or descendant) with this activity.
-    }
-
     buildTypes {
         debug {
             ext.enableCrashlytics = false
-
-
-            // enable to validate proguard
             minifyEnabled false
             shrinkResources false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
         }
         release {
             minifyEnabled true
-            shrinkResources false
-            zipAlignEnabled true
-            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
     useLibrary 'org.apache.http.legacy'
-
-
-/*    aaptOptions {
-        noCompress 'icudtl.dat', 'natives_blob.bin', 'snapshot_blob.bin', 'chrome_100_percent.pak', 'resources.pak'
-    }*/
 }
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
 
-    // http://developer.android.com/tools/building/multidex.html
-    compile 'com.android.support:multidex:1.0.1'
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
 
     // https://developer.android.com/topic/libraries/support-library/revisions.html
-    //compile 'com.android.support:appcompat-v7:23.3.0'
-    //compile 'com.android.support:support-v4:23.3.0'
-    //compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
 
     // https://developers.google.com/android/guides/setup
-    compile 'com.google.android.gms:play-services-analytics:9.6.1'
-    compile 'com.google.android.gms:play-services-gcm:9.6.1'
-    compile 'com.google.android.gms:play-services-ads:9.6.1'
-    //compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile 'com.google.android.gms:play-services-analytics:10.0.1'
+    compile 'com.google.android.gms:play-services-gcm:10.0.1'
+    compile 'com.google.android.gms:play-services-ads:10.0.1'
 
-    // https://github.com/chrisbanes/PhotoView
-    compile 'com.github.chrisbanes:PhotoView:1.3.0'
+    // https://developer.android.com/training/volley/index.html
+    compile 'com.android.volley:volley:1.0.0'
 
-    // https://github.com/loopj/android-async-http
-    compile 'com.loopj.android:android-async-http:1.4.9'
+    // https://github.com/square/okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
 
-    // https://download.01.org/crosswalk/releases/crosswalk/android/maven2/org/xwalk/xwalk_core_library/
-    //crosswalkCompile 'org.xwalk:xwalk_core_library:15.44.384.13'
-    //crosswalkCompile 'org.xwalk:xwalk_core_library:16.45.421.19' // not compatible with genymotion
-    //crosswalkCompile 'org.xwalk:xwalk_core_library:17.46.448.10' // not compatible with genymotion
-    //crosswalkCompile 'org.xwalk:xwalk_core_library:18.48.477.13' // XWalkSettings not found
-    //crosswalkCompile 'org.xwalk:xwalk_core_library:20.50.533.12' // A tester
-    crosswalkCompile 'org.xwalk:xwalk_core_library:21.51.546.6' // A tester
+    // https://github.com/afollestad/material-dialogs
+    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
+
+    // http://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile 'com.google.code.gson:gson:2.7'
 
     // https://fabric.io/kits/android/crashlytics/install
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
     }
+
+    // https://github.com/hotchemi/Android-Rate
+    compile 'com.github.hotchemi:android-rate:1.0.1'
+
+    // https://developers.facebook.com/docs/android
+    compile 'com.facebook.android:facebook-android-sdk:4.16.0'
 
     // https://fabric.io/kits/android/twitterkit/install
     // https://twittersdk.artifactoryonline.com/twittersdk/public/com/twitter/sdk/android/twitter-core/
@@ -175,105 +89,21 @@ dependencies {
         exclude module: 'gson';
     }
 
-    // https://fabric.io/kits/android/mopub/install
-    /*compile('com.mopub:mopub-sdk:4.5.1@aar') {
-        transitive = true
-    }*/
-    compile('com.mopub:mopub-sdk:4.9.0@aar') {
-        transitive = true
-    }
-    // https://developers.facebook.com/docs/android
-    compile 'com.facebook.android:facebook-android-sdk:4.16.0'
-
-    // https://github.com/hotchemi/Android-Rate
-    compile 'com.github.hotchemi:android-rate:1.0.1'
-
-    // http://info.widespace.com/publishers/integrations/android-sdk-guidelines/
-    compile 'com.widespace:widespace-sdk-4.7.1@aar'
-    compile 'org.slf4j:slf4j-android:1.7.10' // widespace dependency
-
-
-    //compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    //compile 'com.github.vajro:MaterialDesignLibrary:1.6'
-    //compile 'com.nineoldandroids:library:2.4.0'
-
-    // https://github.com/nostra13/Android-Universal-Image-Loader
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
-
-    //compile 'com.jakewharton.timber:timber:4.1.0'
-
-    // https://github.com/afollestad/material-dialogs
-    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
-
-    /*compile('com.github.afollestad.material-dialogs:commons:0.8.5.3@aar') {
-        transitive = true
-    }*/
-
-    // http://mvnrepository.com/artifact/com.google.code.gson/gson
-    compile 'com.google.code.gson:gson:2.7'
-
-    //compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
-
-    //compile 'io.branch.sdk.android:library:1.+'
-
-    // millenial media
-    compile 'com.millennialmedia:mm-ad-sdk@aar'
-
-    compile 'net.grunt:gruntlib-0.1.9@aar'
-
-    // https://github.com/google/guava#latest-release
-    //compile 'com.google.guava:guava:19.0'
-
-    //compile group: 'org.littleshoot', name: 'littleproxy', version: '1.1.0-beta2'
-
-    // in libs
-    // aerserv: 2.33.0: https://support.aerserv.com/hc/en-us/articles/204159160-Android-SDK-Integration-Version-2-30
-    // amazonAds: 5.7.1.1 https://developer.amazon.com/public/resources/development-tools/sdk
+    // https://github.com/davemorrissey/subsampling-scale-image-view
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
 
     compile 'com.github.mobideck:appdeck-android-plugin:1.0.6'
+}
 
-    // begin appdeck plugin
+apt {
+    arguments {
+        // you should set your package name here if you are using different application IDs
+        // resourcePackageName "your.package.name"
 
-    compile 'com.github.mobideck:appdeck-android-iap:1.0.6'
-
-    // end appdeck plugin
-
-//    compile group: 'org.littleshoot', name: 'littleproxy', version: '1.1.0'
-
-    //compile group: 'com.github.ganskef', name: 'littleproxy-mitm', version: '1.1.0'
-
-//    compile group: 'org.jamel.j7zip', name: 'j7zip', version: '0.0.1'
-
-    // https://mvnrepository.com/artifact/com.google.guava/guava
-    compile group: 'com.google.guava', name: 'guava', version: '19.0'
-    // https://mvnrepository.com/artifact/com.barchart.udt/barchart-udt-bundle
-    compile group: 'com.barchart.udt', name: 'barchart-udt-bundle', version: '2.3.0'
-// https://mvnrepository.com/artifact/commons-cli/commons-cli
-    compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
-// https://mvnrepository.com/artifact/commons-codec/commons-codec
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
-// https://mvnrepository.com/artifact/commons-io/commons-io
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
-// https://mvnrepository.com/artifact/io.netty/netty-all
-    compile group: 'io.netty', name: 'netty-all', version: '4.1.4.Final'
-// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
-// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
-    //compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
-
-
-// https://mvnrepository.com/artifact/org.slf4j/slf4j-android
-    compile group: 'org.slf4j', name: 'slf4j-android', version: '1.7.21'
-
-// https://mvnrepository.com/artifact/log4j/log4j
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
-
-    // https://github.com/d-tarasov/android-intents
-//    compile 'com.dmitriy-tarasov:android-intents:1.1.0'
-
+        // You can set optional annotation processing options here, like these commented options:
+        // logLevel 'INFO'
+        // logFile '/var/log/aa.log'
+    }
 }
 
 preBuild.doFirst {

@@ -1,6 +1,6 @@
 package MySevenZip;
 
-import com.mobideck.appdeck.Utils;
+import net.mobideck.appdeck.util.Utils;
 
 import MySevenZip.Archive.IArchiveExtractCallback;
 import MySevenZip.Archive.IInArchive;
