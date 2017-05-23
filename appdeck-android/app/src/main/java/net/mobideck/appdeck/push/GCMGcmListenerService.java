@@ -19,7 +19,6 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckActivity;
-import net.mobideck.appdeck.AppDeckActivity_;
 import net.mobideck.appdeck.AppDeckApplication;
 import net.mobideck.appdeck.R;
 import net.mobideck.appdeck.core.RemoteAppCache;
@@ -113,7 +112,7 @@ public class GCMGcmListenerService extends GcmListenerService {
 
         int requestCode =  (int)System.currentTimeMillis()/1000;
 
-        Intent notificationIntent = new Intent(this, AppDeckActivity_.class);
+        Intent notificationIntent = new Intent(this, AppDeckActivity.class);
         notificationIntent.setFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TOP | */Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         Bundle bundle = new Bundle();
