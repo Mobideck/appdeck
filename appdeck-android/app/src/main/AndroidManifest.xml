@@ -27,7 +27,7 @@
         android:theme="@style/Theme.MyAppDeckTheme">
 
         <!-- AppDeck Test App -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/218hf32d1901627d35131fa83b63f56ae906"></meta-data>-->
+        <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
 
         <!-- Test Cache -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
@@ -54,7 +54,7 @@
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
 
         <!-- Univers Freebox -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->
 
         <!-- Actu Animaux -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/979hf2a89dc17ae78bd6e3ff60a65f301724"></meta-data>-->
