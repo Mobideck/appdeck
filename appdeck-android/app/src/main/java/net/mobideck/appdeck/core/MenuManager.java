@@ -16,6 +16,13 @@ import net.mobideck.appdeck.util.Utils;
 
 public class MenuManager {
 
+    public static int ICON_HAMBURGER = 1;
+    public static int ICON_CLOSE = 2;
+    public static int ICON_BACK = 3;
+    public static int ICON_NONE = 4;
+
+    public boolean noMenu = false;
+
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private FrameLayout mDrawerLeftMenu;
@@ -26,6 +33,8 @@ public class MenuManager {
 
     private Drawable mUpArrow;
     private Drawable mCloseArrow;
+
+    private int mCurrentMenuIcon;
 
     public MenuManager(DrawerLayout drawerLayout, ActionBarDrawerToggle actionBarDrawerToggle, FrameLayout drawerLeftMenu, FrameLayout drawerRightMenu, ActionBar actionBar/*, SmartWebView leftMenuWebView, SmartWebView rightMenuWebView*/, Drawable upArrow, Drawable closeArrow) {
         mDrawerLayout = drawerLayout;
@@ -38,6 +47,8 @@ public class MenuManager {
 
         mUpArrow = upArrow;
         mCloseArrow = closeArrow;
+
+        mCurrentMenuIcon = ICON_HAMBURGER;
     }
 
     public void setLeftMenuWebView(SmartWebView leftMenuWebView) {
@@ -153,6 +164,8 @@ public class MenuManager {
 
     public void disableMenu()
     {
+        if (true)
+            return;
         menuEnabled = false;
         closeMenu();
         if (mDrawerLayout == null)
@@ -187,18 +200,47 @@ public class MenuManager {
         mActionBar.setDisplayShowHomeEnabled(true); // make icon + logo + title clickable*/
     }
 
-    private boolean mMenuArrowIsShown = false;
-    public void setMenuArrow(boolean show)
-    {
-        if (mCloseIsShown) {
-            shouldShowCloseButton(false);
-        }
-
-        if (mMenuArrowIsShown == show)
+    public void setMenuIcon(int menuIcon) {
+        if (noMenu && menuIcon == ICON_HAMBURGER)
+            menuIcon = ICON_NONE;
+        if (menuIcon == mCurrentMenuIcon)
             return;
-        mMenuArrowIsShown = show;
-        float start = (show ? 0 : 1);
-        float end = (show ? 1 : 0);
+        if (menuIcon == ICON_HAMBURGER) {
+            if (mCurrentMenuIcon == ICON_CLOSE || mCurrentMenuIcon == ICON_NONE) {
+                mActionBar.setDisplayHomeAsUpEnabled(true);
+                mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+                mActionBar.setHomeAsUpIndicator(mUpArrow);
+            }
+            animateMenuArrow(false);
+        } else if (menuIcon == ICON_CLOSE) {
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+            mActionBar.setHomeAsUpIndicator(mCloseArrow);
+        } else if (menuIcon == ICON_BACK) {
+            if (mCurrentMenuIcon == ICON_CLOSE || mCurrentMenuIcon == ICON_NONE) {
+                mActionBar.setDisplayHomeAsUpEnabled(true);
+                mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+                mActionBar.setHomeAsUpIndicator(mUpArrow);
+            }
+            animateMenuArrow(true);
+        } else {
+            /*mActionBar.setHomeButtonEnabled(false);
+            mActionBar.setDisplayHomeAsUpEnabled(false);
+            mActionBar.setDisplayShowHomeEnabled(false);*/
+            //mActionBar.setHomeAsUpIndicator(null);
+            //mUpArrow.setVisible(false, true);
+            //mActionBar.setHomeAsUpIndicator(mUpArrow);
+            mActionBar.setDisplayHomeAsUpEnabled(false);
+            mActionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+            mActionBar.setHomeAsUpIndicator(null);
+        }
+        mCurrentMenuIcon = menuIcon;
+    }
+
+    private void animateMenuArrow(final boolean menuArrowIsShown)
+    {
+        float start = (menuArrowIsShown ? 0 : 1);
+        float end = (menuArrowIsShown ? 1 : 0);
         ValueAnimator anim = ValueAnimator.ofFloat(start, end);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -213,16 +255,18 @@ public class MenuManager {
         anim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                if (mMenuArrowIsShown == false)
+                if (!menuArrowIsShown)
                     mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+                mActionBarDrawerToggle.syncState();
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (mMenuArrowIsShown)
+                if (menuArrowIsShown)
                     mActionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                 else
                     mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+                mActionBarDrawerToggle.syncState();
             }
 
             @Override
@@ -236,24 +280,6 @@ public class MenuManager {
             }
         });
         anim.start();
-    }
-
-    private boolean mCloseIsShown = false;
-    public void shouldShowCloseButton(boolean showCloseButton)
-    {
-        if (mCloseIsShown == showCloseButton)
-            return;
-        if (showCloseButton) {
-            mCloseIsShown = true;
-            mMenuArrowIsShown = true;
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setHomeAsUpIndicator(mCloseArrow);
-        } else {
-            mCloseIsShown = true;
-            mMenuArrowIsShown = true;
-            mActionBar.setDisplayHomeAsUpEnabled(true);
-            mActionBar.setHomeAsUpIndicator(mUpArrow);
-        }
     }
 
     public void evaluateJavascript(String js)

@@ -9,12 +9,12 @@ buildscript {
     dependencies {
         // http://tools.android.com/release
         // https://bintray.com/android/android-tools/com.android.tools.build.gradle
-        classpath ('com.android.tools.build:gradle:2.2.3') {
+        classpath ('com.android.tools.build:gradle:2.3.2') {
             exclude module: 'proguard-gradle'
         }
         // force last version of proguard
         // https://mvnrepository.com/artifact/net.sf.proguard/proguard-gradle
-        classpath ('net.sf.proguard:proguard-gradle:5.2.1') {
+        classpath ('net.sf.proguard:proguard-gradle:5.3.2') {
             force = true
         }
 

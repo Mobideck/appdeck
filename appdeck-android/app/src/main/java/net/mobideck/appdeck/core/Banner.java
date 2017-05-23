@@ -1,6 +1,5 @@
 package net.mobideck.appdeck.core;
 
-import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.view.PagerAdapter;
@@ -35,11 +34,11 @@ public class Banner {
 
     private List<BannerItem> mBanners;
 
-    private BannerPagerAdaptater mBannerPagerAdaptater;
+    private BannerPagerAdapter mBannerPagerAdaptater;
 
     public Banner(ViewPager viewPager) {
         mViewPager = viewPager;
-        mBannerPagerAdaptater = new BannerPagerAdaptater();
+        mBannerPagerAdaptater = new BannerPagerAdapter();
         mViewPager.setAdapter(mBannerPagerAdaptater);
     }
 
@@ -65,6 +64,15 @@ public class Banner {
             newBanners.add(banner);
         }
 
+        /*if (mBanners.size() > 0 && newBanners.size() > 0) {
+            if (mBanners.get(0).equals(newBanners.get(0))) {
+                newBanners.set(0, mBanners.get(0));
+            }
+        }*/
+
+        if (newBanners.equals(mBanners))
+            return;
+
         mBanners = newBanners;
 
         mViewPager.setAdapter(mBannerPagerAdaptater);
@@ -76,7 +84,7 @@ public class Banner {
         return mHeight;
     }
 
-    public class BannerPagerAdaptater extends PagerAdapter {
+    public class BannerPagerAdapter extends PagerAdapter {
 
         @Override
         public Object instantiateItem(ViewGroup collection, int position) {
@@ -175,10 +183,14 @@ public class Banner {
 
             if (mBanner.title != null || mBanner.subtitle != null) {
                 mCaption.setVisibility(View.VISIBLE);
-                if (mBanner.title != null)
+                if (mBanner.title != null) {
                     mTitle.setText(mBanner.title);
-                if (mBanner.subtitle != null)
+                    //Utils.adjustTextViewTextSize(mTitle, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, mBannerHeight / 2, 24, 10);
+                }
+                if (mBanner.subtitle != null) {
                     mSubtitle.setText(mBanner.subtitle);
+                    //Utils.adjustTextViewTextSize(mSubtitle, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, mBannerHeight / 2, 18, 8);
+                }
             } else {
                 mCaption.setVisibility(View.INVISIBLE);
             }
@@ -207,6 +219,7 @@ public class Banner {
                 });
             }
 
+
             return mRoot;
         }
 
@@ -218,6 +231,14 @@ public class Banner {
 
         public int getHeight() {
             return mBannerHeight;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other)
+                return true;
+            if (other instanceof BannerImage)
+                return mBanner.equals(BannerImage.class.cast(other).mBanner);
+            return false;
         }
 
     }

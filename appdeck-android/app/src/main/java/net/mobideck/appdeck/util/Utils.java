@@ -22,7 +22,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -55,6 +57,12 @@ public class Utils {
     public static int convertDpToPixels(float dp) {
         Context context = AppDeckApplication.getContext();
         int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+        return px;
+    }
+
+    public static int convertSpToPixels(float sp) {
+        Context context = AppDeckApplication.getContext();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
         return px;
     }
 
@@ -196,12 +204,23 @@ public class Utils {
     public static int parseColor(String colorTxt, float alpha)
     {
         return ColorUtils.setAlphaComponent(Utils.parseColor(colorTxt), Math.round(255 * alpha));
-        /*int color = Utils.parseColor(colorTxt);
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-        return Color.argb(Math.round(255 * alpha), red, green, blue);*/
     }
+
+    public static int parseColor(String colorTxt, String defaultValue)
+    {
+        if (colorTxt == null || colorTxt.isEmpty())
+            colorTxt = defaultValue;
+        return Utils.parseColor(colorTxt);
+    }
+
+    public static int parseColor(String colorTxt, float alpha, String defaultValue)
+    {
+        if (colorTxt == null || colorTxt.isEmpty())
+            colorTxt = defaultValue;
+        return Utils.parseColor(colorTxt, alpha);
+    }
+
+
 
     public static Pattern[] initRegexp(List<String> urlRegexp) {
         if (urlRegexp == null) {
@@ -360,6 +379,22 @@ public class Utils {
         if (string1 == null || string2 == null)
             return false;
         return string1.equalsIgnoreCase(string2);
+    }
+
+    public static void adjustTextViewTextSize(TextView textView, int maxWidth, int maxHeight, float defaultTextSize, float minimumTextSize) {
+
+        float testSize = defaultTextSize;
+
+        while (testSize > minimumTextSize) {
+            textView.setTextSize(Utils.convertSpToPixels(testSize));
+            // ... call measure to find the current values that the text WANTS to occupy
+            textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            int width = textView.getMeasuredWidth();
+            int height = textView.getMeasuredHeight();
+            if (width <= maxWidth && height <= maxHeight)
+                return;
+            testSize = testSize - 1;
+        }
     }
 
     // System Colors

@@ -59,7 +59,10 @@ public class Navigation {
 
         PageManager pageManager = new PageManager(this, AppDeckApplication.getActivity(), absoluteURL);
 
-        push(pageManager);
+        if (pageManager.getViewConfig().isPopUp())
+            popup(pageManager);
+        else
+            push(pageManager);
     }
 
     public void popupURL(String absoluteURL) {
@@ -93,7 +96,7 @@ public class Navigation {
         pageAnimation = new PageAnimation(AppDeckApplication.getActivity());
         pageAnimation.root(appDeckView);
 
-        AppDeckApplication.getActivity().menuManager.setMenuArrow(false);
+        AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_HAMBURGER);
 
         AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_ROOT);
 
@@ -115,7 +118,7 @@ public class Navigation {
         pageAnimation = new PageAnimation(AppDeckApplication.getActivity());
         pageAnimation.push(appDeckView);
 
-        AppDeckApplication.getActivity().menuManager.setMenuArrow(true);
+        AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
 
         AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_PUSH);
 
@@ -172,6 +175,7 @@ public class Navigation {
             public void onAnimationEnd() {
                 fromAppDeckView.destroy();
                 //toPageManager.onResume();
+
                 if (toAppDeckView.viewState.isPopUp)
                     AppDeckApplication.getActivity().menuManager.disableMenu();
                 else
@@ -184,12 +188,12 @@ public class Navigation {
         else
             pageAnimation.pop(toAppDeckView);
 
-        if (toAppDeckView.viewState.isPopUp)
+        if (fromAppDeckView.viewState.isPopUp || toAppDeckView.viewState.isPopUp)
             ;
         else if (mStack.size() == 1)
-            AppDeckApplication.getActivity().menuManager.setMenuArrow(false);
+            AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_HAMBURGER);
         else
-            AppDeckApplication.getActivity().menuManager.setMenuArrow(true);
+            AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
 
         AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_POP);
 

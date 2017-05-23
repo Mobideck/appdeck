@@ -72,6 +72,7 @@ public class Page extends AppDeckView {
 
         mDefaultViewConfig = appDeck.appConfig.getViewConfig(absoluteURL);
         mPageConfig = mDefaultViewConfig;
+        mPageConfigAlt = mDefaultViewConfig;
 
         mRootView = (FrameLayout)AppDeckApplication.getActivity().getLayoutInflater().inflate(R.layout.page, null);
 
@@ -415,10 +416,14 @@ public class Page extends AppDeckView {
                                 mWebViewAlt.setTouchDisabled(false);
                                 mWebViewAlt.setVerticalScrollBarEnabled(true);
 
-                                // swap webview and layout
+                                // swap webview and config
                                 SmartWebView tmpWebView = mWebView;
                                 mWebView = mWebViewAlt;
                                 mWebViewAlt = tmpWebView;
+
+                                ViewConfig tmpConfig = mPageConfig;
+                                mPageConfig = mPageConfigAlt;
+                                mPageConfigAlt = mPageConfig;
 
                                 mWebViewAlt.unloadPage();
 
@@ -435,6 +440,8 @@ public class Page extends AppDeckView {
 
                                 mSwapInProgress = false;
                                 mReloadInProgress = false;
+
+                                mPageManager.onConfigurationChange(Page.this, mPageConfig);
                             }
                         });
             }
@@ -493,19 +500,23 @@ public class Page extends AppDeckView {
     }
 
     public void onShow() {
-
+        mWebView.resume();
+        mWebViewAlt.resume();
     }
 
     public void onHide() {
-
+        mWebView.pause();
+        mWebViewAlt.pause();
     }
 
     public void onPause() {
-        mWebView.onPause();
+        mWebView.pause();
+        mWebViewAlt.pause();
     }
 
     public void onResume() {
-        mWebView.onResume();
+        mWebView.resume();
+        mWebViewAlt.resume();
     }
 
     public void destroy() {
@@ -521,7 +532,7 @@ public class Page extends AppDeckView {
             mPageConfig = appDeckViewConfig;
             mPageManager.onConfigurationChange(this, mPageConfig);
         }
-        if (origin == mWebView) {
+        if (origin == mWebViewAlt) {
             mPageConfigAlt = appDeckViewConfig;
         }
     }

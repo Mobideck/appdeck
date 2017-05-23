@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +28,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -44,6 +46,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Response;
@@ -70,6 +73,7 @@ import net.mobideck.appdeck.core.AppDeckMenuItem;
 import net.mobideck.appdeck.core.PageAnimation;
 import net.mobideck.appdeck.core.ViewState;
 import net.mobideck.appdeck.util.Utils;
+import net.mobideck.appdeck.util.ViewTools;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -96,6 +100,9 @@ public class AppDeckActivity extends AppCompatActivity
 
     @ViewById(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+
+    @ViewById(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @ViewById(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
@@ -140,10 +147,14 @@ public class AppDeckActivity extends AppCompatActivity
     @ViewById(R.id.loading)
     FrameLayout mLoading;
 
+    private ActionBar mActionBar;
+
     private SmartWebView mLeftMenuWebView;
     private SmartWebView mRightMenuWebView;
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
+
+    private ImageView mTopBarLogoImageView;
 
     private Drawable mUpArrow;
     private Drawable mCloseArrow;
@@ -215,8 +226,21 @@ public class AppDeckActivity extends AppCompatActivity
 
         setSupportActionBar(mToolbar);
 
+        mActionBar = getSupportActionBar();
+
+        mToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: implement scrollToTop
+                Log.d(TAG, "Scroll To Top");
+            }
+        });
+
         // make sure toolbar is above other view
         mCoordinatorLayout.bringChildToFront(mAppBarLayout);
+
+        // Always hide title
+        mCollapsingToolbarLayout.setTitle(" ");
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,6 +279,8 @@ public class AppDeckActivity extends AppCompatActivity
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.syncState();
 
+        // used only when popup close button is showed
+        // => mActionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         mActionBarDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,9 +304,14 @@ public class AppDeckActivity extends AppCompatActivity
         mCloseArrow = ContextCompat.getDrawable(this, R.drawable.ic_close_white_24dp);
         mCloseArrow.setColorFilter(getResources().getColor(R.color.AppDeckColorTopBarText), PorterDuff.Mode.SRC_ATOP);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
-        getSupportActionBar().setDisplayShowHomeEnabled(true); // show logo
-        getSupportActionBar().setHomeButtonEnabled(true); // ???
+        /*mTopBarLogoImageView = new ImageView(AppDeckActivity.this);
+        ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        mActionBar.setCustomView(mTopBarLogoImageView, layout);
+        mActionBar.setDisplayShowCustomEnabled(false);*/
+
+        mActionBar.setDisplayHomeAsUpEnabled(true); // show icon on the left of logo
+        mActionBar.setDisplayShowHomeEnabled(true); // show logo
+        mActionBar.setHomeButtonEnabled(true); // ???
 
         // Tabs
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -343,7 +374,7 @@ public class AppDeckActivity extends AppCompatActivity
             }
         });
 
-        menuManager = new MenuManager(mDrawerLayout, mActionBarDrawerToggle,mDrawerLeftMenu, mDrawerRightMenu, getSupportActionBar()/*, mLeftMenuWebView, mRightMenuWebView*/, mUpArrow, mCloseArrow);
+        menuManager = new MenuManager(mDrawerLayout, mActionBarDrawerToggle,mDrawerLeftMenu, mDrawerRightMenu, mActionBar/*, mLeftMenuWebView, mRightMenuWebView*/, mUpArrow, mCloseArrow);
 
         mBannerManager = new Banner(mBannerContainer);
 
@@ -378,12 +409,14 @@ public class AppDeckActivity extends AppCompatActivity
         mCurrentViewConfig = new ViewConfig();
 
         //if (appDeck.appConfig.topbar_color != null)
-        //    getSupportActionBar().setBackgroundDrawable(appDeck.appConfig.topbar_color.getDrawable());
+        //    mActionBar.setBackgroundDrawable(appDeck.appConfig.topbar_color.getDrawable());
 
         //if (appDeck.appConfig.title != null)
-        //    getSupportActionBar().setTitle(appDeck.appConfig.title);
+        //    mActionBar.setTitle(appDeck.appConfig.title);
 
+        menuManager.noMenu = true;
         if (appDeck.appConfig.leftMenu != null && appDeck.appConfig.leftMenu.url != null) {
+            menuManager.noMenu = false;
             mLeftMenuWebView = SmartWebView.createMenuSmartWebView(this, appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url));
             if (appDeck.appConfig.leftMenuBackgroundColor != null)
                 mDrawerLeftMenu.setBackground(Utils.getColorDrawable(appDeck.appConfig.leftMenuBackgroundColor));
@@ -403,6 +436,7 @@ public class AppDeckActivity extends AppCompatActivity
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
         }
         if (appDeck.appConfig.rightMenu != null && appDeck.appConfig.rightMenu.url != null) {
+            menuManager.noMenu = false;
             mRightMenuWebView = SmartWebView.createMenuSmartWebView(this, appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
             if (appDeck.appConfig.rightMenuBackgroundColor != null)
                 mDrawerRightMenu.setBackground(Utils.getColorDrawable(appDeck.appConfig.rightMenuBackgroundColor));
@@ -422,8 +456,14 @@ public class AppDeckActivity extends AppCompatActivity
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
         }
 
+        if (menuManager.noMenu)
+            mToolbar.setNavigationIcon(null);
+
         menuManager.setLeftMenuWebView(mLeftMenuWebView);
         menuManager.setRightMenuWebView(mRightMenuWebView);
+
+        if (menuManager.noMenu)
+            menuManager.setMenuIcon(MenuManager.ICON_NONE);
 
         // tabs
         mTabLayout.setTabTextColors(
@@ -468,8 +508,7 @@ public class AppDeckActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         PluginManager.getSharedInstance().onActivityResume(this);
         AppDeckApplication.getAppDeck().push.registerReceiver();
@@ -490,8 +529,7 @@ public class AppDeckActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         PluginManager.getSharedInstance().onActivityDestroy(this);
     }
@@ -602,15 +640,13 @@ public class AppDeckActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
-    public  void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public  void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (smartWebViewRegiteredForActivityResult != null) {
             smartWebViewRegiteredForActivityResult.onActivityResult(this, requestCode, resultCode, data);
@@ -674,7 +710,10 @@ public class AppDeckActivity extends AppCompatActivity
 
     private AnimatorSet mAnimatorSet;
 
-    public void setViewConfig(ViewConfig viewConfig) {
+    public void setViewConfig(final ViewConfig viewConfig) {
+
+        AppDeck appDeck = AppDeckApplication.getAppDeck();
+        AppConfig appConfig = appDeck.appConfig;
 
         if (mAnimatorSet != null) {
             mAnimatorSet.cancel();
@@ -699,24 +738,41 @@ public class AppDeckActivity extends AppCompatActivity
 
         // title
         mToolbar.setTitle(viewConfig.title);
+        //mCollapsingToolbarLayout.setTitle(viewConfig.title);
 
         // logo
-        String logo = AppDeckApplication.getAppDeck().appConfig.logo;
+        String logo = appConfig.logo;
         if (viewConfig.logo != null && !viewConfig.logo.isEmpty())
             logo = viewConfig.logo;
+
+        // disable logo and title if there are some banners
+        if (viewConfig.banners != null && viewConfig.banners.size() > 0)
+        {
+            logo = null;
+
+            /*mToolbar.setTitle("");
+            mActionBar.setTitle("");*/
+        }
+
         if (logo != null && !logo.isEmpty()) {
             AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(logo, new Response.Listener<Bitmap>() {
                 @Override
                 public void onResponse(Bitmap response) {
-                getSupportActionBar().setLogo(new BitmapDrawable(response));
+                BitmapDrawable draw = new BitmapDrawable(getResources(), response);
+                mActionBar.setTitle(null);
+                mActionBar.setIcon(draw);
+                mActionBar.setDisplayShowHomeEnabled(true); // show logo
+                mActionBar.setDisplayShowTitleEnabled(false); // hide String title
                 }
-            }, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, AppDeckApplication.getAppDeck().deviceInfo.actionBarIconSize, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
+            }, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, AppDeckApplication.getAppDeck().deviceInfo.actionBarIconSize * 2, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
                 public void onErrorResponse(VolleyError error) {
-                    Log.e(TAG, "Error while fetching Logo : "+error.getLocalizedMessage());
+                Log.e(TAG, "Error while fetching Logo : "+error.getLocalizedMessage());
                 }
             }));
         } else {
-            getSupportActionBar().setLogo(null);
+            mActionBar.setIcon(null);
+            mActionBar.setDisplayShowHomeEnabled(false); // hide logo
+            //mActionBar.setDisplayShowTitleEnabled(true); // show String title
         }
 
         // topbar color
@@ -768,10 +824,10 @@ public class AppDeckActivity extends AppCompatActivity
             mAnimatorSet.play(colorAnimation);
         }
 
-        AppDeck appDeck = AppDeckApplication.getAppDeck();
+
 
         boolean shouldShowActionBar = (viewConfig.actionMenu != null && viewConfig.actionMenu.size() > 0);
-        boolean shouldShowBottomBar = (appDeck.appConfig.bottomMenu != null && appDeck.appConfig.bottomMenu.size() > 0);
+        boolean shouldShowBottomBar = (appConfig.bottomMenu != null && appConfig.bottomMenu.size() > 0);
 
         // Floating Button
         if (viewConfig.floatingButton != null) {
@@ -790,6 +846,7 @@ public class AppDeckActivity extends AppCompatActivity
 
             // already hidden ?
             if (mFloatingActionButton.getVisibility() != View.VISIBLE) {
+                mFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Utils.parseColor((viewConfig.floatingButton.backgroundColor != null ? viewConfig.floatingButton.backgroundColor : mCurrentViewConfig.topbarColor))));
                 AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(icon, new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
@@ -814,6 +871,7 @@ public class AppDeckActivity extends AppCompatActivity
                         @Override
                         public void onHidden(FloatingActionButton fab) {
                             super.onHidden(fab);
+                            mFloatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Utils.parseColor((viewConfig.floatingButton.backgroundColor != null ? viewConfig.floatingButton.backgroundColor : mCurrentViewConfig.topbarColor))));
                             AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(icon, new Response.Listener<Bitmap>() {
                                 @Override
                                 public void onResponse(Bitmap response) {
@@ -913,6 +971,7 @@ public class AppDeckActivity extends AppCompatActivity
         // Banner
         if (viewConfig.banners != null && viewConfig.banners.size() > 0) {
             //mBannerContainer.setVisibility(View.VISIBLE);
+            mActionBar.setDisplayShowTitleEnabled(false); // show String title
             mBannerManager.setBanners(viewConfig.banners);
             int height = mBannerManager.getHeight();
             ValueAnimator anim = ValueAnimator.ofInt(mBannerContainer.getMeasuredHeight(), height);
@@ -952,8 +1011,8 @@ public class AppDeckActivity extends AppCompatActivity
         if (viewConfig.tabs != null && viewConfig.tabs.size() > 0) {
             mTabLayout.setVisibility(View.VISIBLE);
             mTabLayout.setTabTextColors(
-                    Utils.parseColor(viewConfig.topbarTextColor, 0.50f), // unselected
-                    Utils.parseColor(viewConfig.topbarTextColor) // selected
+                    Utils.parseColor(viewConfig.topbarTextColor, 0.50f, appConfig.appTopbarTextColor), // unselected
+                    Utils.parseColor(viewConfig.topbarTextColor, appConfig.appTopbarTextColor) // selected
             );
         } else {
             mTabLayout.setVisibility(View.GONE);
@@ -971,12 +1030,13 @@ public class AppDeckActivity extends AppCompatActivity
         // Menu
         int i = 0;
         if (viewConfig.menu != null) {
-            for (i = 0; i < viewConfig.menu.size(); i++) {
+            int menuSize = Math.min(viewConfig.menu.size(), mTopMenuItems.length);
+            for (i = 0; i < menuSize; i++) {
                 MenuEntry menuEntry = viewConfig.menu.get(i);
-                AppDeckMenuItem appDeckMenuItem = mTopMenuItems[mTopMenuItems.length - viewConfig.menu.size() + i];
+                AppDeckMenuItem appDeckMenuItem = mTopMenuItems[mTopMenuItems.length - menuSize + i];
                 appDeckMenuItem.configure(menuEntry.title, menuEntry.icon, menuEntry.content, menuEntry.badge, menuEntry.disabled, mCurrentAppDeckView);
             }
-            for (i = 0; i < mTopMenuItems.length - viewConfig.menu.size(); i++) {
+            for (i = 0; i < mTopMenuItems.length - menuSize; i++) {
                 AppDeckMenuItem appDeckMenuItem = mTopMenuItems[i];
                 appDeckMenuItem.hide();
             }
@@ -989,12 +1049,13 @@ public class AppDeckActivity extends AppCompatActivity
 
         // Action Menu
         if (viewConfig.actionMenu != null && viewConfig.actionMenu.size() > 0) {
-            for (i = 0 ; i < viewConfig.actionMenu.size(); i++) {
+            int actionMenuSize = Math.min(viewConfig.actionMenu.size(), mActionMenuItems.length);
+            for (i = 0 ; i < actionMenuSize && i < mActionMenuItems.length; i++) {
                 MenuEntry menuEntry = viewConfig.actionMenu.get(i);
-                AppDeckMenuItem appDeckMenuItem = mActionMenuItems[mActionMenuItems.length - viewConfig.actionMenu.size() + i];
+                AppDeckMenuItem appDeckMenuItem = mActionMenuItems[mActionMenuItems.length - actionMenuSize + i];
                 appDeckMenuItem.configure(menuEntry.title, menuEntry.icon, menuEntry.content, menuEntry.badge, menuEntry.disabled, mCurrentAppDeckView);
             }
-            for (i = 0 ; i < mActionMenuItems.length - viewConfig.actionMenu.size(); i++) {
+            for (i = 0 ; i < mActionMenuItems.length - actionMenuSize && i < mActionMenuItems.length; i++) {
                 AppDeckMenuItem appDeckMenuItem = mActionMenuItems[i];
                 appDeckMenuItem.hide();
             }

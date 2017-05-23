@@ -574,7 +574,7 @@ public class AppConfig {
             screens = new ArrayList<>();
         for (int i = 0; i < screens.size(); i++) {
             ViewConfig screen = screens.get(i);
-            screen.configure();
+            screen.configure(null);
         }
 
     }
@@ -638,7 +638,7 @@ public class AppConfig {
         config.bottombarColor = appBottombarColor;
         config.bottombarTextColor = appBottombarTextColor;
         config.backgroundColor = appBackgroundColor;
-        config.configure();
+        config.configure(null);
         return config;
     }
 }

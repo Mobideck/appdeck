@@ -114,7 +114,7 @@ public class PhotoBrowser extends AppDeckView {
 
         //mMenuItems =  Arrays.asList(mMenuItemPrevious, mMenuItemNext, mMenuItemShare);
 
-        mViewConfig = AppDeckApplication.getAppDeck().getDefaultConfiguration();
+        mViewConfig = AppDeckApplication.getAppDeck().getDefaultConfiguration().copy();
 
         mViewConfig.menu = Arrays.asList(mMenuItemPrevious, mMenuItemNext, mMenuItemShare);
 
@@ -277,7 +277,7 @@ public class PhotoBrowser extends AppDeckView {
             mImageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
             mImageView.setMaxScale(10f);
 
-            mImageView.setImage(ImageSource.resource(R.drawable.appdeck));
+            mImageView.setImage(ImageSource.resource(R.drawable.transparent));
 
             mImageFile = new File(AppDeckApplication.getAppDeck().cache.getCacheEntryPath(mImageUrl));
 

@@ -71,6 +71,7 @@ public class AppDeckMenuItem {
     {
         mAppDeckView = appDeckView;
 
+        mMenuItem.setEnabled(false);
         mMenuItem.setVisible(true);
         mIsValid = true;
 
@@ -230,6 +231,8 @@ public class AppDeckMenuItem {
         mBadge = 0;
         mUrl = null;
         mIconVisible = false;
+        mMenuItem.setEnabled(false);
+        //mMenuItem.setVisible(false);
     }
 
 /*    public void setAvailable(boolean available)

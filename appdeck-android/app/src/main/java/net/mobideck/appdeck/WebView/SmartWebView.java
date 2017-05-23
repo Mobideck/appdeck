@@ -224,7 +224,10 @@ public class SmartWebView extends VideoEnabledWebView {
             uri = Uri.parse(url);
             mFirstLoad = true;
         }
-        super.loadUrl(url);
+        Map <String, String> extraHeaders = new HashMap<String, String>();
+        extraHeaders.put("AppDeck-User-Id", AppDeckApplication.getAppDeck().deviceInfo.uid);
+        extraHeaders.put("AppDeck-App-Key", AppDeckApplication.getAppDeck().appConfig.apiKey);
+        super.loadUrl(url, extraHeaders);
     }
 
     public String resolve(String relativeURL)

@@ -23,6 +23,7 @@ public class InfoPlugin extends PluginAdaptater {
         commands.add("islandscape");
         commands.add("isportrait");
         commands.add("getuserid");
+        commands.add("getappkey");
         return commands;
     }
 
@@ -65,6 +66,12 @@ public class InfoPlugin extends PluginAdaptater {
     public boolean getuserid(final ApiCall call) {
         Log.d(TAG, "getuserid");
         call.setResult(AppDeckApplication.getAppDeck().deviceInfo.uid);
+        return true;
+    }
+
+    public boolean getappkey(final ApiCall call) {
+        Log.d(TAG, "getappkey");
+        call.setResult(AppDeckApplication.getAppDeck().appConfig.apiKey);
         return true;
     }
 

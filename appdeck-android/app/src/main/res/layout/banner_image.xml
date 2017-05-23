@@ -21,19 +21,25 @@
 
 
         <TextView
-            android:text="Title will appear here"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/title"
             android:layout_weight="1"
-            android:textSize="24sp" />
+            android:text="Title will appear here"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:maxLines="3"
+            android:ellipsize="end"
+            />
 
         <TextView
             android:text="Subtitle will appear here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/subtitle"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:maxLines="3"
+            android:ellipsize="end"
+            />
 
     </LinearLayout>
 

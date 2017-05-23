@@ -249,7 +249,7 @@ public class PageAnimation {
                 .withLayer()
                 .withEndAction(new Runnable(){
                     public void run(){
-                        AppDeckApplication.getActivity().menuManager.shouldShowCloseButton(true);
+                        AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_CLOSE);
                         appBarLayout.setTranslationY(height);
                         appBarLayout.animate()
                                 .setDuration(ANIMATION_DELAY)
@@ -327,7 +327,10 @@ public class PageAnimation {
                 .withLayer()
                 .withEndAction(new Runnable(){
                     public void run(){
-                        AppDeckApplication.getActivity().menuManager.shouldShowCloseButton(appDeckView.viewState.isPopUp);
+                        if (AppDeckApplication.getAppDeck().navigation.getStackSize() > 1)
+                            AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
+                        else
+                            AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_HAMBURGER);
                         appBarLayout.setTranslationY(-appBarLayout.getHeight());
                         appBarLayout.animate()
                                 .setDuration(ANIMATION_DELAY)

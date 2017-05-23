@@ -54,13 +54,13 @@
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
 
         <!-- Univers Freebox -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->
+        <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>
 
         <!-- Actu Animaux -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/979hf2a89dc17ae78bd6e3ff60a65f301724"></meta-data>-->
 
         <!-- Jeux Video Live -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>-->
 
         <!-- Tool Fitness -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/989hb11900d8d83ee53fbe22c0e922f3ba09"></meta-data>-->

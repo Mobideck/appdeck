@@ -22,8 +22,8 @@
              colorControlHighlight, and colorSwitchThumbNormal. -->
 
         <item name="colorControlNormal">@color/AppDeckColorTopBarText</item>
-        <item name="android:colorControlNormal">@color/AppDeckColorApp</item>
-        <item name="android:colorControlHighlight">@color/AppDeckColorApp</item>
+        <item name="colorControlActivated">@color/AppDeckColorApp</item>
+        <item name="colorControlHighlight">@color/AppDeckColorApp</item>
 
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
 

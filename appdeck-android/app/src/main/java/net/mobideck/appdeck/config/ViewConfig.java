@@ -19,6 +19,7 @@ import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckActivity;
 import net.mobideck.appdeck.AppDeckApplication;
 import net.mobideck.appdeck.R;
+import net.mobideck.appdeck.core.AppDeckView;
 
 public class ViewConfig {
 
@@ -93,6 +94,11 @@ public class ViewConfig {
     @Expose
     public List<String> urls = null;
 
+    @SerializedName("notUrls")
+    @Expose
+    public List<String> notUrls = null;
+
+
     @SerializedName("type")
     @Expose
     public String type;
@@ -103,15 +109,15 @@ public class ViewConfig {
 
     @SerializedName("popup")
     @Expose
-    public String popup;
+    private String popup;
 
-    @SerializedName("urlRegexp")
+    /*@SerializedName("urlRegexp")
     @Expose
     public List<String> urlRegexp;
 
     @SerializedName("notUrlRegexp")
     @Expose
-    public List<String> notUrlRegexp;
+    public List<String> notUrlRegexp;*/
 
     public transient boolean isDefault = false;
 
@@ -143,13 +149,13 @@ public class ViewConfig {
     }
     */
 
-    public void configure() {
-        if (urlRegexp == null) {
+    public void configure(AppDeckView source) {
+        if (urls == null) {
             mUrlRegexp = new Pattern[0];
         } else {
-            mUrlRegexp = new Pattern[urlRegexp.size()];
-            for (int i = 0; i < urlRegexp.size(); i++) {
-                String regexp = urlRegexp.get(i).trim();
+            mUrlRegexp = new Pattern[urls.size()];
+            for (int i = 0; i < urls.size(); i++) {
+                String regexp = urls.get(i).trim();
                 if (regexp.isEmpty()) {
                     mUrlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
                     continue;
@@ -164,12 +170,12 @@ public class ViewConfig {
                 }
             }
         }
-        if (notUrlRegexp == null) {
+        if (notUrls == null) {
             mNotUrlRegexp = new Pattern[0];
         } else {
-            mNotUrlRegexp = new Pattern[notUrlRegexp.size()];
-            for (int i = 0; i < notUrlRegexp.size(); i++) {
-                String regexp = notUrlRegexp.get(i).trim();
+            mNotUrlRegexp = new Pattern[notUrls.size()];
+            for (int i = 0; i < notUrls.size(); i++) {
+                String regexp = notUrls.get(i).trim();
                 if (regexp.isEmpty()) {
                     mNotUrlRegexp[i] = Pattern.compile("^$", Pattern.CASE_INSENSITIVE);
                     continue;
@@ -184,7 +190,78 @@ public class ViewConfig {
                 }
             }
         }
+        // resolves URLS using AppDeckView
+        if (source != null) {
+            if (logo != null && !logo.isEmpty())
+                logo = source.resolveURL(logo);
+        } else {
+            if (logo != null && !logo.isEmpty())
+                logo = AppDeckApplication.getAppDeck().appConfig.resolveURL(logo);
+        }
+
+        // also resolve URLs in all menu entries
+        for (int i = 0; banners != null && i < banners.size(); i++) {
+            MenuEntry menuEntry = banners.get(i);
+            menuEntry.configure(source);
+        }
+        for (int i = 0; tabs != null && i < tabs.size(); i++) {
+            MenuEntry menuEntry = tabs.get(i);
+            menuEntry.configure(source);
+        }
+        for (int i = 0; menu != null && i < menu.size(); i++) {
+            MenuEntry menuEntry = menu.get(i);
+            menuEntry.configure(source);
+        }
+        for (int i = 0; actionMenu != null && i < actionMenu.size(); i++) {
+            MenuEntry menuEntry = actionMenu.get(i);
+            menuEntry.configure(source);
+        }
+
+//        setDefault();
+
     }
+
+    /*
+    private void setDefault() {
+        AppConfig appConfig = AppDeckApplication.getAppDeck().appConfig;
+
+        if (title == null)
+            title = defaultConfig.title;
+        if (logo == null)
+            logo = defaultConfig.logo;
+        if (color == null)
+            color = defaultConfig.color;
+        if (topbarColor == null)
+            topbarColor = appConfig.topbarColor;
+        if (topbarTextColor == null)
+            topbarTextColor = defaultConfig.topbarTextColor;
+        if (actionbarColor == null)
+            actionbarColor = defaultConfig.actionbarColor;
+        if (bottombarColor == null)
+            bottombarColor = defaultConfig.bottombarColor;
+        if (bottombarTextColor == null)
+            bottombarTextColor = defaultConfig.bottombarTextColor;
+        if (backgroundColor == null)
+            backgroundColor = defaultConfig.backgroundColor;
+        if (banners == null)
+            banners = defaultConfig.banners;
+        if (tabs == null)
+            tabs = defaultConfig.tabs;
+        if (menu == null)
+            menu = defaultConfig.menu;
+        if (actionMenu == null)
+            actionMenu = defaultConfig.actionMenu;
+        if (floatingButton == null)
+            floatingButton = defaultConfig.floatingButton;
+        if (urls == null)
+            urls = defaultConfig.urls;
+        if (notUrls == null)
+            notUrls = defaultConfig.notUrls;
+        if (type == null)
+            type = defaultConfig.type;
+        if (popup == null)
+            popup = defaultConfig.popup;
+    }*/
 
     public boolean match(String absoluteURL)
     {
@@ -262,14 +339,16 @@ public class ViewConfig {
             floatingButton = defaultConfig.floatingButton;
         if (urls == null)
             urls = defaultConfig.urls;
+        if (notUrls == null)
+            notUrls = defaultConfig.notUrls;
         if (type == null)
             type = defaultConfig.type;
         if (popup == null)
             popup = defaultConfig.popup;
-        if (urlRegexp == null)
+        /*if (urlRegexp == null)
             urlRegexp = defaultConfig.urlRegexp;
         if (notUrlRegexp == null)
-            notUrlRegexp = defaultConfig.notUrlRegexp;
+            notUrlRegexp = defaultConfig.notUrlRegexp;*/
     }
 
     public ViewConfig mergeDefault(ViewConfig defaultViewConfig) {
@@ -296,11 +375,12 @@ public class ViewConfig {
         config.actionMenu = actionMenu;
         config.floatingButton = floatingButton;
         config.urls = urls;
+        config.notUrls = notUrls;
         config.type = type;
         config.ttl = ttl;
         config.popup = popup;
-        config.urlRegexp = urlRegexp;
-        config.notUrlRegexp = notUrlRegexp;
+        /*config.urlRegexp = urlRegexp;
+        config.notUrlRegexp = notUrlRegexp;*/
         config.mUrlRegexp = mUrlRegexp;
         config.mNotUrlRegexp = mNotUrlRegexp;
         config.isDefault = isDefault;
@@ -312,17 +392,29 @@ public class ViewConfig {
                 "logo: "+ logo + "\n" +
                 "type: "+ type + "\n" +
                 "isPopUp: "+ popup + "\n" +
-                "urlRegexp: ";
-        for (int i = 0; i < urlRegexp.size(); i++) {
-            r = r + " '" + urlRegexp.get(i) + "'";
+                "urls: ";
+        for (int i = 0; i < urls.size(); i++) {
+            r = r + " '" + urls.get(i) + "'";
         }
 
-        r = r + "\nnotUrlRegexp: ";
+        r = r + "\nnot Urls: ";
 
-        for (int i = 0; i < notUrlRegexp.size(); i++) {
-            r = r + " '" + notUrlRegexp.get(i) + "'";
+        for (int i = 0; i < notUrls.size(); i++) {
+            r = r + " '" + notUrls.get(i) + "'";
         }
 
         return r;
+    }
+
+    public boolean isPopUp() {
+        if (popup == null)
+            return false;
+        if (popup.equalsIgnoreCase("1"))
+            return true;
+        if (popup.equalsIgnoreCase("true"))
+            return true;
+        if (popup.equalsIgnoreCase("yes"))
+            return true;
+        return false;
     }
 }

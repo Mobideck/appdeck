@@ -42,6 +42,8 @@ public class UIPlugin extends PluginAdaptater {
         ParamViewConfig paramViewConfig = AppDeckApplication.getAppDeck().gson.fromJson(call.inputJSON, ParamViewConfig.class);
         ViewConfig viewConfig = paramViewConfig.param;
 
+        viewConfig.configure(apiCall.page);
+
         apiCall.page.onConfigurationChange(apiCall.smartWebView, viewConfig);
         return true;
     }

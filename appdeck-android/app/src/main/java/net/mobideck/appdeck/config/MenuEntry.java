@@ -12,7 +12,9 @@ import com.android.volley.toolbox.ImageRequest;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckApplication;
+import net.mobideck.appdeck.core.AppDeckView;
 
 public class MenuEntry {
 
@@ -95,4 +97,46 @@ public class MenuEntry {
     public String getAbsoluteURL() {
         return AppDeckApplication.getAppDeck().appConfig.resolveURL(url);
     }
+
+    public void configure(AppDeckView source) {
+        AppConfig appConfig = AppDeckApplication.getAppDeck().appConfig;
+
+        // resolves URLS using AppDeckView
+        if (source != null) {
+            if (image != null && !image.isEmpty())
+                image = source.resolveURL(image);
+            if (icon != null && !icon.isEmpty() && !icon.startsWith("!"))
+                icon = source.resolveURL(url);
+        } else {
+            if (image != null && !image.isEmpty())
+                image = appConfig.resolveURL(image);
+            if (icon != null && !icon.isEmpty() && !icon.startsWith("!"))
+                icon = appConfig.resolveURL(icon);
+        }
+    }
+
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (other instanceof MenuEntry) {
+            MenuEntry menuEntry = MenuEntry.class.cast(other);
+            return (url == null ?menuEntry.url == null : url.equals(menuEntry.url)) &&
+                    (content == null ?menuEntry.content == null : content.equals(menuEntry.content)) &&
+                    (title == null ?menuEntry.title == null : title.equals(menuEntry.title)) &&
+                    (subtitle == null ?menuEntry.subtitle == null : subtitle.equals(menuEntry.subtitle)) &&
+                    (image == null ?menuEntry.image == null : image.equals(menuEntry.image)) &&
+                    (type == null ?menuEntry.type == null : type.equals(menuEntry.type)) &&
+                    (icon == null ?menuEntry.icon == null : icon.equals(menuEntry.icon)) &&
+                    (width == menuEntry.width) &&
+                    (height == null ?menuEntry.height == null : height.equals(menuEntry.height)) &&
+                    (color == null ?menuEntry.color == null : color.equals(menuEntry.color)) &&
+                    (backgroundColor == null ?menuEntry.backgroundColor == null : backgroundColor.equals(menuEntry.backgroundColor)) &&
+                    (foregroundColor == null ?menuEntry.foregroundColor == null : foregroundColor.equals(menuEntry.foregroundColor)) &&
+                    (badge == menuEntry.badge) &&
+                    (selected == menuEntry.selected) &&
+                    (disabled == menuEntry.disabled);
+        }
+        return false;
+    }
+
 }

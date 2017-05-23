@@ -10,7 +10,7 @@
     <!--
         App Theme
     -->
-    <style name="Theme.AppDeckTheme" parent="Theme.AppCompat.NoActionBar"></style>
+    <style name="Theme.AppDeckTheme" parent="Theme.AppCompat.NoActionBar" />
 
     <!--
         App Color

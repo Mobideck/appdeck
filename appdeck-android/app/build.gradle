@@ -14,7 +14,7 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "net.mobideck.appdeck"
         minSdkVersion 21
@@ -51,28 +51,28 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:$AAVersion"
 
     // https://developer.android.com/topic/libraries/support-library/revisions.html
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
 
     // https://developers.google.com/android/guides/setup
-    compile 'com.google.android.gms:play-services-analytics:10.0.1'
-    compile 'com.google.android.gms:play-services-gcm:10.0.1'
-    compile 'com.google.android.gms:play-services-ads:10.0.1'
+    compile 'com.google.android.gms:play-services-analytics:10.2.6'
+    compile 'com.google.android.gms:play-services-gcm:10.2.6'
+    compile 'com.google.android.gms:play-services-ads:10.2.6'
 
     // https://developer.android.com/training/volley/index.html
     compile 'com.android.volley:volley:1.0.0'
 
     // https://github.com/square/okhttp
-    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
 
     // https://github.com/afollestad/material-dialogs
-    compile 'com.afollestad.material-dialogs:core:0.9.0.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
 
     // http://mvnrepository.com/artifact/com.google.code.gson/gson
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.8.0'
 
     // https://fabric.io/kits/android/crashlytics/install
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
 
@@ -80,11 +80,11 @@ dependencies {
     compile 'com.github.hotchemi:android-rate:1.0.1'
 
     // https://developers.facebook.com/docs/android
-    compile 'com.facebook.android:facebook-android-sdk:4.16.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.22.1'
 
     // https://fabric.io/kits/android/twitterkit/install
-    // https://twittersdk.artifactoryonline.com/twittersdk/public/com/twitter/sdk/android/twitter-core/
-    compile('com.twitter.sdk.android:twitter-core:2.1.0') {
+    // https://docs.fabric.io/android/changelog.html#twitter-core
+    compile('com.twitter.sdk.android:twitter-core:2.3.1') {
         transitive = true
         exclude module: 'gson';
     }
@@ -113,4 +113,17 @@ preBuild.doFirst {
 
 clean.doFirst {
     println "php extra/embedresources_android_studio.php clean".execute(null, new File(".")).text
+}
+
+// force Support Library version
+// http://stackoverflow.com/questions/42949974/android-support-repo-46-0-0-with-android-studio-2-3
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '25.3.1'
+            }
+        }
+    }
 }
