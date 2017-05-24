@@ -100,7 +100,7 @@
 
         app:layout_anchor="@+id/bottom_hook"
         android:layout_gravity="top"
-        app:layout_behavior=".UI.BottomNavigationBehavior"
+        app:layout_behavior="net.mobideck.appdeck.UI.BottomNavigationBehavior"
         android:elevation="2dp"
         />
 
@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:elevation="4dp"
-        app:layout_behavior=".UI.BottomNavigationBehavior"
+        app:layout_behavior="net.mobideck.appdeck.UI.BottomNavigationBehavior"
 
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"

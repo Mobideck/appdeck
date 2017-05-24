@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 apply plugin: 'io.fabric'
-
-def AAVersion = '4.2.0'
 
 repositories {
     mavenCentral()
@@ -21,8 +18,10 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "2.0.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
+
     buildTypes {
         debug {
             ext.enableCrashlytics = false
@@ -38,17 +37,12 @@ android {
     useLibrary 'org.apache.http.legacy'
 }
 
-
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-
-    apt "org.androidannotations:androidannotations:$AAVersion"
-    compile "org.androidannotations:androidannotations-api:$AAVersion"
+    testCompile 'junit:junit:4.12'*/
 
     // https://developer.android.com/topic/libraries/support-library/revisions.html
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -93,17 +87,6 @@ dependencies {
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
 
     compile 'com.github.mobideck:appdeck-android-plugin:1.0.6'
-}
-
-apt {
-    arguments {
-        // you should set your package name here if you are using different application IDs
-        // resourcePackageName "your.package.name"
-
-        // You can set optional annotation processing options here, like these commented options:
-        // logLevel 'INFO'
-        // logFile '/var/log/aa.log'
-    }
 }
 
 preBuild.doFirst {

@@ -75,9 +75,9 @@ import net.mobideck.appdeck.core.ViewState;
 import net.mobideck.appdeck.util.Utils;
 import net.mobideck.appdeck.util.ViewTools;
 
-import org.androidannotations.annotations.AfterViews;
+/*import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.ViewById;*/
 
 import java.util.ArrayList;
 
@@ -86,65 +86,46 @@ import hotchemi.android.rate.OnClickButtonListener;
 
 import static net.mobideck.appdeck.AppDeckApplication.setAppDeck;
 
-@EActivity(R.layout.activity_main)
 public class AppDeckActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static String TAG = "AppDeckActivity";
 
-    @ViewById(R.id.toolbar)
     Toolbar mToolbar;
 
-    @ViewById(R.id.fab)
     FloatingActionButton mFloatingActionButton;
 
-    @ViewById(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    @ViewById(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    @ViewById(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
 
-    @ViewById(R.id.appbar)
     AppBarLayout mAppBarLayout;
 
-    @ViewById(R.id.actionmenu)
     Toolbar mActionMenu;
 
-    @ViewById(R.id.content_main)
     FrameLayout mViewContainer;
 
-    @ViewById(R.id.tabs)
     TabLayout mTabLayout;
 
-    @ViewById(R.id.bottom_navigation)
     BottomNavigationView mBottomNavigationView;
 
-    @ViewById(R.id.drawer_layout)
     public View nonVideoLayout;
 
-    @ViewById(R.id.videoLayout)
     public ViewGroup videoLayout;
 
-    @ViewById(R.id.left_drawer)
     FrameLayout mDrawerLeftMenu;
 
-    @ViewById(R.id.right_drawer)
     FrameLayout mDrawerRightMenu;
 
-    @ViewById(R.id.adsBannerContainer)
     View mAdsBannerContainer;
 
-    @ViewById(R.id.bottom_hook)
     View mBottomHook;
 
-    @ViewById(R.id.bannerContainer)
     ViewPager mBannerContainer;
     private Banner mBannerManager;
 
-    @ViewById(R.id.loading)
     FrameLayout mLoading;
 
     private ActionBar mActionBar;
@@ -182,11 +163,27 @@ public class AppDeckActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
         super.onCreate(savedInstanceState);
-    }
 
-    @AfterViews
-    protected void init() {
+        setContentView(R.layout.activity_main);
 
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mFloatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+        mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinator);
+        mAppBarLayout = (AppBarLayout)findViewById(R.id.appbar);
+        mActionMenu = (Toolbar)findViewById(R.id.actionmenu);
+        mViewContainer = (FrameLayout)findViewById(R.id.content_main);
+        mTabLayout = (TabLayout)findViewById(R.id.tabs);
+        mBottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        nonVideoLayout = findViewById(R.id.drawer_layout);
+        videoLayout = (ViewGroup)findViewById(R.id.videoLayout);
+        mDrawerLeftMenu = (FrameLayout)findViewById(R.id.left_drawer);
+        mDrawerRightMenu = (FrameLayout)findViewById(R.id.right_drawer);
+        mAdsBannerContainer = (View)findViewById(R.id.adsBannerContainer);
+        mBottomHook = (View)findViewById(R.id.bottom_hook);
+        mBannerContainer = (ViewPager)findViewById(R.id.bannerContainer);
+        mLoading = (FrameLayout)findViewById(R.id.loading);
         AppDeckApplication.setActivity(this);
         setAppDeck(new AppDeck(this));
 

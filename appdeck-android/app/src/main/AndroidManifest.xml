@@ -120,7 +120,7 @@
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/1882h9fcb3c7b1f3831cf00853cf085e1e1d3"></meta-data>-->
 
         <activity
-            android:name=".AppDeckActivity_"
+            android:name=".AppDeckActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name" >
             <!-- default -->

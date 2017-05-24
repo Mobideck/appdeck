@@ -2,7 +2,6 @@
 
 buildscript {
     repositories {
-        jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
     }
@@ -20,10 +19,7 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
-        // https://bitbucket.org/hvisser/android-apt
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-
+        
         // https://docs.fabric.io/android/fabric/integration.html
         classpath 'io.fabric.tools:gradle:1.+'
     }
