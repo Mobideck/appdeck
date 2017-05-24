@@ -21,6 +21,9 @@
 
 #appdeck plugin
 #-keep class * implements com.mobideck.appdeck.plugin.Plugin
+-keep class net.mobideck.appdeck.** {*;}
+-keep class net.mobideck.appdeck.plugin.* {*;}
+
 -keep class com.mobideck.appdeck.** {*;}
 -keep class com.mobideck.appdeck.plugin.* {*;}
 

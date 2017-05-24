@@ -500,30 +500,42 @@ public class Page extends AppDeckView {
     }
 
     public void onShow() {
-        mWebView.resume();
-        mWebViewAlt.resume();
+        if (mWebView != null)
+            mWebView.resume();
+        if (mWebViewAlt != null)
+            mWebViewAlt.resume();
     }
 
     public void onHide() {
-        mWebView.pause();
-        mWebViewAlt.pause();
+        if (mWebView != null)
+            mWebView.pause();
+        if (mWebViewAlt != null)
+            mWebViewAlt.pause();
     }
 
     public void onPause() {
-        mWebView.pause();
-        mWebViewAlt.pause();
+        if (mWebView != null)
+            mWebView.pause();
+        if (mWebViewAlt != null)
+            mWebViewAlt.pause();
     }
 
     public void onResume() {
-        mWebView.resume();
-        mWebViewAlt.resume();
+        if (mWebView != null)
+            mWebView.resume();
+        if (mWebViewAlt != null)
+            mWebViewAlt.resume();
     }
 
     public void destroy() {
-        mWebView.destroy();
-        mWebViewAlt.destroy();
-        mWebView = null;
-        mWebViewAlt = null;
+        if (mWebView != null) {
+            mWebView.destroy();
+            mWebView = null;
+        }
+        if (mWebViewAlt != null) {
+            mWebViewAlt.destroy();
+            mWebViewAlt = null;
+        }
     }
 
     public void onConfigurationChange(SmartWebView origin, ViewConfig appDeckViewConfig) {
