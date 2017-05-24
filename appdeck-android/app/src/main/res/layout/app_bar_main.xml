@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
-    tools:context="net.mobideck.appdeck.AppDeckActivity"
+    tools:context=".AppDeckActivity"
     android:background="@android:color/black"
     android:id="@+id/coordinator"
     >
