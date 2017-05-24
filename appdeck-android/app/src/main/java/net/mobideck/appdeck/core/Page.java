@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckApplication;
 import net.mobideck.appdeck.R;
+import net.mobideck.appdeck.WebView.Factory;
 import net.mobideck.appdeck.WebView.NestedScrollWebView;
 import net.mobideck.appdeck.WebView.SmartWebView;
 import net.mobideck.appdeck.config.ViewConfig;
@@ -78,10 +79,10 @@ public class Page extends AppDeckView {
 
         mProgressBar = (ProgressBar)mRootView.findViewById(R.id.progressBar);
 
-        mWebView = new SmartWebView(AppDeckApplication.getActivity());
+        mWebView = Factory.createSmartWebView(AppDeckApplication.getActivity());// new SmartWebView(AppDeckApplication.getActivity());
         mWebView.page = this;
 
-        mWebViewAlt = new SmartWebView(AppDeckApplication.getActivity());
+        mWebViewAlt = Factory.createSmartWebView(AppDeckApplication.getActivity());//new SmartWebView(AppDeckApplication.getActivity());
         mWebViewAlt.page = this;
 
         mNestedScrollView = new NestedScrollWebView(AppDeckApplication.getActivity());
@@ -529,11 +530,15 @@ public class Page extends AppDeckView {
 
     public void destroy() {
         if (mWebView != null) {
-            mWebView.destroy();
+            mNestedScrollView.removeView(mWebView);
+            Factory.recycleSmartWebView(mWebView);
+            //mWebView.destroy();
             mWebView = null;
         }
         if (mWebViewAlt != null) {
-            mWebViewAlt.destroy();
+            mNestedScrollViewAlt.removeView(mWebViewAlt);
+            Factory.recycleSmartWebView(mWebViewAlt);
+            //mWebViewAlt.destroy();
             mWebViewAlt = null;
         }
     }
