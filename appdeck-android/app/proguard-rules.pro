@@ -17,6 +17,7 @@
 #}
 
 -dontobfuscate
+-printmapping mapping.txt
 
 #appdeck plugin
 #-keep class * implements com.mobideck.appdeck.plugin.Plugin
