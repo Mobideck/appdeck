@@ -38,6 +38,7 @@
 -(void)sendCallBackWithErrorMessage:(NSString *)errorMessage;
 -(void)sendCallBackWithError:(NSError *)error;
 -(void)sendCallbackWithResult:(NSArray *)result;
+-(void)sendRepeatingCallback:(NSArray *)result;
 
 @end
 
