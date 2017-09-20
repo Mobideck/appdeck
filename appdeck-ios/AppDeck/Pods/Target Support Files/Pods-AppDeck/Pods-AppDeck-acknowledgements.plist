@@ -92,7 +92,7 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+			<string>Copyright 2004-present Facebook. All Rights Reserved.
 
 You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
 copy, modify, and distribute this software in source code or binary form for use
@@ -205,6 +205,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			<string>Commercial</string>
 			<key>Title</key>
 			<string>Fabric</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2017 Google</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>Google-Mobile-Ads-SDK</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

@@ -5,20 +5,21 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Crashlytics (3.8.3):
+  - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - ECSlidingViewController (2.0.3)
   - Fabric (1.6.11)
-  - FBAudienceNetwork (4.18.0)
-  - FBSDKCoreKit (4.18.0):
+  - FBAudienceNetwork (4.23.0)
+  - FBSDKCoreKit (4.23.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.18.0):
+  - FBSDKLoginKit (4.23.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.18.0):
+  - FBSDKShareKit (4.23.0):
     - FBSDKCoreKit
+  - Google-Mobile-Ads-SDK (7.20.0)
   - SIAlertView (1.3)
   - SSSnackbar (0.1.2)
-  - SVProgressHUD (2.1.1)
+  - SVProgressHUD (2.1.2)
   - TwitterCore (1.15.3):
     - Fabric
   - TwitterKit (1.15.3):
@@ -32,6 +33,7 @@ DEPENDENCIES:
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
+  - Google-Mobile-Ads-SDK
   - SIAlertView
   - SSSnackbar
   - SVProgressHUD
@@ -49,19 +51,20 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBAudienceNetwork: 56c08468fbd5366f06c84037d859964403d83ce3
-  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
-  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
-  FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
+  FBAudienceNetwork: 20a0e3d20e377dbb6708365e4c6d0711bf08ca97
+  FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
+  FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
+  FBSDKShareKit: 65751c3b9937ab9d594e6c37611ecc115ceeb448
+  Google-Mobile-Ads-SDK: 168312cdc167fa22746d4ea8e839fc4825dd2966
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
   SSSnackbar: 6a16cf8ab848d99a03ba21a7dab94d4478beabed
-  SVProgressHUD: 1127180503b9a308ddf7006f3cc58fc05cc1092d
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
   TwitterKit: 43600f2d2848c227739efea5b2939585e69339c3
 
-PODFILE CHECKSUM: c0fd16b8dae4d036ca720c132c3b545bf0b1de91
+PODFILE CHECKSUM: c14d48e4fd80e2c1bd08e0b6dc44e04b68ca98f6
 
 COCOAPODS: 1.1.1
