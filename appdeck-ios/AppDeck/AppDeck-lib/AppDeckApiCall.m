@@ -78,6 +78,13 @@
     [self sendCallBackWithType:@"success" params:result];
 }
 
+-(void)sendRepeatingCallback:(NSArray *)result
+{
+    self.callBackSend = YES;
+    [self sendCallBackWithType:@"callback" params:result];
+}
+
+
 -(void)dealloc
 {
     if (self.callBackSend == NO)
