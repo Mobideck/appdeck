@@ -9,21 +9,21 @@
 #import <Foundation/Foundation.h>
 
 #import "AppDeckApiCall.h"
-#import "MPNativeAd.h"
+/*#import "MPNativeAd.h"
 #import "MPNativeAdDelegate.h"
 #import "MPNativeAdRequest.h"
 #import "MPNativeAdRequestTargeting.h"
 #import "MPNativeAdConstants.h"
-#import "MPNativeAdRendering.h"
+#import "MPNativeAdRendering.h"*/
 
-@interface AppDeckAdNative : NSObject <MPNativeAdDelegate>
+@interface AppDeckAdNative : NSObject //<MPNativeAdDelegate>
 {
     NSMutableArray *apiCalls;
-    MPNativeAd *response;
+    //MPNativeAd *response;
     BOOL ready;
 }
 @property (nonatomic, retain) NSString *divId;
-@property (nonatomic, retain) MPNativeAdRequest *adRequest;
+//@property (nonatomic, retain) MPNativeAdRequest *adRequest;
 @property (nonatomic, weak) AppDeckApiCall *apiCall;
 
 
