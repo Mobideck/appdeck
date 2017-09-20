@@ -181,10 +181,13 @@
 		A925D53317003D6E000F6EEC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A925D53217003D6E000F6EEC /* MessageUI.framework */; };
 		A93047C4176C8E7A0094CD57 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A93047C3176C8E7A0094CD57 /* libz.dylib */; };
 		A93FED0E1A94D46100F94B66 /* AdBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A93FED0D1A94D46100F94B66 /* AdBlock.m */; };
+		A9416AC81BAC47DE001F9FF8 /* AppDeckAdNative.m in Sources */ = {isa = PBXBuildFile; fileRef = A9416AC71BAC47DE001F9FF8 /* AppDeckAdNative.m */; };
 		A948B4C4186B080B00F61664 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A948B4C3186B080A00F61664 /* libsqlite3.dylib */; };
 		A948B4C6186B082C00F61664 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A948B4C5186B082B00F61664 /* Twitter.framework */; };
 		A95154001861B6EE00B2C396 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95153FF1861B6EE00B2C396 /* Accelerate.framework */; };
-		A952A2561F72B8DF002894F5 /* mire.png in Resources */ = {isa = PBXBuildFile; fileRef = A952A2551F72B8DF002894F5 /* mire.png */; };
+		A952A2591F72C995002894F5 /* mire.png in Resources */ = {isa = PBXBuildFile; fileRef = A952A2581F72C995002894F5 /* mire.png */; };
+		A952A25D1F72C99D002894F5 /* BarCodeScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A952A25B1F72C99D002894F5 /* BarCodeScannerViewController.m */; };
+		A952A25E1F72C99D002894F5 /* BarCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A952A25C1F72C99D002894F5 /* BarCodeScannerViewController.xib */; };
 		A9573C4E1AF9104E0086FCC2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9573C4D1AF9104E0086FCC2 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		A9587FC71B68FE010037FD53 /* AppDeckAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A9587FC51B68FE010037FD53 /* AppDeckAnalytics.m */; };
 		A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D313C1C3BFFE1007D0C63 /* UIColor+blur.m */; };
@@ -193,7 +196,6 @@
 		A979298A1C564BE90079D49D /* ManagedWKWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97929891C564BE90079D49D /* ManagedWKWebViewController.m */; };
 		A979298D1C58BD140079D49D /* CacheURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = A979298C1C58BD140079D49D /* CacheURLProtocol.m */; };
 		A97929921C5B7ADC0079D49D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A97929911C5B7ADC0079D49D /* Images.xcassets */; };
-		A98DA7991F5D95ED00002AE9 /* BarCodeScannerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98DA7981F5D95ED00002AE9 /* BarCodeScannerViewController.m */; };
 		A99A58F3172FCB95007D2106 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A99A58F1172FCB95007D2106 /* app.cpp */; };
 		A99B48A11CF314F400261446 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99B48A01CF314F400261446 /* AssetsLibrary.framework */; };
 		A99EF6DA1C09E11200DAC126 /* CustomECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99EF6D91C09E11200DAC126 /* CustomECSlidingViewController.m */; };
@@ -235,7 +237,6 @@
 		A9BA71271BC524D0005A212E /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = A9BA70E41BC524D0005A212E /* thread.cc */; };
 		A9BA71291BC524D0005A212E /* valgrind.cc in Sources */ = {isa = PBXBuildFile; fileRef = A9BA70E91BC524D0005A212E /* valgrind.cc */; };
 		A9BE1A601C6224DA002177EE /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9BE1A5F1C6224DA002177EE /* PassKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		A9D716531F5FF12B009301D5 /* BarCodeScannerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9D716521F5FF12B009301D5 /* BarCodeScannerViewController.xib */; };
 		A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */; };
 		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
@@ -583,10 +584,15 @@
 		A92A67931A9385F6008A607E /* AdBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdBlock.h; sourceTree = "<group>"; };
 		A93047C3176C8E7A0094CD57 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A93FED0D1A94D46100F94B66 /* AdBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdBlock.m; sourceTree = "<group>"; };
+		A9416AC61BAC47DE001F9FF8 /* AppDeckAdNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDeckAdNative.h; sourceTree = "<group>"; };
+		A9416AC71BAC47DE001F9FF8 /* AppDeckAdNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDeckAdNative.m; sourceTree = "<group>"; };
 		A948B4C3186B080A00F61664 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A948B4C5186B082B00F61664 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		A95153FF1861B6EE00B2C396 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		A952A2551F72B8DF002894F5 /* mire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mire.png; sourceTree = "<group>"; };
+		A952A2581F72C995002894F5 /* mire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mire.png; path = "AppDeck-lib/mire.png"; sourceTree = "<group>"; };
+		A952A25A1F72C99D002894F5 /* BarCodeScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarCodeScannerViewController.h; path = "AppDeck-lib/BarCodeScannerViewController.h"; sourceTree = "<group>"; };
+		A952A25B1F72C99D002894F5 /* BarCodeScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BarCodeScannerViewController.m; path = "AppDeck-lib/BarCodeScannerViewController.m"; sourceTree = "<group>"; };
+		A952A25C1F72C99D002894F5 /* BarCodeScannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BarCodeScannerViewController.xib; path = "AppDeck-lib/BarCodeScannerViewController.xib"; sourceTree = "<group>"; };
 		A9573C4D1AF9104E0086FCC2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		A9587FC51B68FE010037FD53 /* AppDeckAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckAnalytics.m; path = "AppDeck-lib/AppDeckAnalytics.m"; sourceTree = "<group>"; };
 		A9587FC61B68FE010037FD53 /* AppDeckAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckAnalytics.h; path = "AppDeck-lib/AppDeckAnalytics.h"; sourceTree = "<group>"; };
@@ -600,8 +606,6 @@
 		A979298B1C58BD140079D49D /* CacheURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CacheURLProtocol.h; path = "AppDeck-lib/CacheURLProtocol.h"; sourceTree = "<group>"; };
 		A979298C1C58BD140079D49D /* CacheURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CacheURLProtocol.m; path = "AppDeck-lib/CacheURLProtocol.m"; sourceTree = "<group>"; };
 		A97929911C5B7ADC0079D49D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A98DA7971F5D95ED00002AE9 /* BarCodeScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarCodeScannerViewController.h; sourceTree = "<group>"; };
-		A98DA7981F5D95ED00002AE9 /* BarCodeScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarCodeScannerViewController.m; sourceTree = "<group>"; };
 		A99A58F1172FCB95007D2106 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = app.cpp; sourceTree = "<group>"; };
 		A99B48A01CF314F400261446 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A99EF6D81C09E11200DAC126 /* CustomECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomECSlidingViewController.h; sourceTree = "<group>"; };
@@ -668,7 +672,6 @@
 		A9BA70E91BC524D0005A212E /* valgrind.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = valgrind.cc; sourceTree = "<group>"; };
 		A9BA70EA1BC524D0005A212E /* valgrind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = valgrind.h; sourceTree = "<group>"; };
 		A9BE1A5F1C6224DA002177EE /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
-		A9D716521F5FF12B009301D5 /* BarCodeScannerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BarCodeScannerViewController.xib; sourceTree = "<group>"; };
 		A9F3F9B61CF754800079225D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A9F3F9BA1CF82BE20079225D /* AppDeckPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckPlugin.h; path = "AppDeck-lib/AppDeckPlugin.h"; sourceTree = "<group>"; };
 		A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPlugin.m; path = "AppDeck-lib/AppDeckPlugin.m"; sourceTree = "<group>"; };
@@ -747,21 +750,21 @@
 			path = JSBadgeView;
 			sourceTree = "<group>";
 		};
+		A91124B41BC5015800B28405 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Facebook;
+			sourceTree = "<group>";
+		};
 		A916C2B81A1E03D4005FE1AE /* Networks */ = {
 			isa = PBXGroup;
 			children = (
-				A916C33E1A1E03D5005FE1AE /* AdMob */,
+				A91124B41BC5015800B28405 /* Facebook */,
 				A916C40A1A1E03D5005FE1AE /* HTMLChunk */,
 			);
 			name = Networks;
 			path = "AppDeck-lib/Ad";
-			sourceTree = "<group>";
-		};
-		A916C33E1A1E03D5005FE1AE /* AdMob */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AdMob;
 			sourceTree = "<group>";
 		};
 		A916C40A1A1E03D5005FE1AE /* HTMLChunk */ = {
@@ -1086,7 +1089,7 @@
 				A916D4921A1E0B18005FE1AE /* AppDeck */,
 				A916D4911A1E0B08005FE1AE /* PhotoBrowser */,
 				A916D4901A1E0AF5005FE1AE /* WebBrowser */,
-				A98DA7961F5D959E00002AE9 /* BarCodeScanner */,
+				A952A2571F72C88B002894F5 /* BarCodeScanner */,
 				A916D48F1A1E0AEC005FE1AE /* Page */,
 				A916D48E1A1E0AE5005FE1AE /* Loader */,
 				A916D48D1A1E0AD6005FE1AE /* Cache */,
@@ -1216,6 +1219,8 @@
 				A916CBCC1A1E03DA005FE1AE /* AppDeckAdViewController.m */,
 				A916CBAD1A1E03D8005FE1AE /* AdActionHelper.h */,
 				A916CBAE1A1E03D9005FE1AE /* AdActionHelper.m */,
+				A9416AC61BAC47DE001F9FF8 /* AppDeckAdNative.h */,
+				A9416AC71BAC47DE001F9FF8 /* AppDeckAdNative.m */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -1440,13 +1445,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A98DA7961F5D959E00002AE9 /* BarCodeScanner */ = {
+		A952A2571F72C88B002894F5 /* BarCodeScanner */ = {
 			isa = PBXGroup;
 			children = (
-				A952A2551F72B8DF002894F5 /* mire.png */,
-				A98DA7971F5D95ED00002AE9 /* BarCodeScannerViewController.h */,
-				A98DA7981F5D95ED00002AE9 /* BarCodeScannerViewController.m */,
-				A9D716521F5FF12B009301D5 /* BarCodeScannerViewController.xib */,
+				A952A25A1F72C99D002894F5 /* BarCodeScannerViewController.h */,
+				A952A25B1F72C99D002894F5 /* BarCodeScannerViewController.m */,
+				A952A25C1F72C99D002894F5 /* BarCodeScannerViewController.xib */,
+				A952A2581F72C995002894F5 /* mire.png */,
 			);
 			name = BarCodeScanner;
 			sourceTree = "<group>";
@@ -1582,7 +1587,7 @@
 				ORGANIZATIONNAME = "Mathieu De Kermadec";
 				TargetAttributes = {
 					A91DFA0F16CE8D1400512CA0 = {
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 9K2HP594UT;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1627,11 +1632,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A952A2561F72B8DF002894F5 /* mire.png in Resources */,
-				A9D716531F5FF12B009301D5 /* BarCodeScannerViewController.xib in Resources */,
+				A952A2591F72C995002894F5 /* mire.png in Resources */,
 				A96BD5501BB2D01600F6F658 /* Launch Screen.storyboard in Resources */,
 				A91DFA1E16CE8D1400512CA0 /* InfoPlist.strings in Resources */,
 				A908D777170C668C00C858BA /* Localizable.strings in Resources */,
+				A952A25E1F72C99D002894F5 /* BarCodeScannerViewController.xib in Resources */,
 				A916D4881A1E09C9005FE1AE /* iRate.bundle in Resources */,
 				A97929921C5B7ADC0079D49D /* Images.xcassets in Resources */,
 				A9A0B0B117326583003237E0 /* iTunesArtwork in Resources */,
@@ -1779,7 +1784,6 @@
 				A916D3671A1E03E7005FE1AE /* LzmaDec.c in Sources */,
 				A916D2EB1A1E03E7005FE1AE /* iCarousel.m in Sources */,
 				A916D40C1A1E03E7005FE1AE /* NSData+Zlib.m in Sources */,
-				A98DA7991F5D95ED00002AE9 /* BarCodeScannerViewController.m in Sources */,
 				A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */,
 				A916D2F11A1E03E7005FE1AE /* JSonHTTPApi.m in Sources */,
 				A916D3BB1A1E03E7005FE1AE /* PhotoBrowserViewController.m in Sources */,
@@ -1820,6 +1824,7 @@
 				A9BA71271BC524D0005A212E /* thread.cc in Sources */,
 				A916D2E61A1E03E7005FE1AE /* FPPopoverController.m in Sources */,
 				A9BA70EB1BC524D0005A212E /* bitstate.cc in Sources */,
+				A952A25D1F72C99D002894F5 /* BarCodeScannerViewController.m in Sources */,
 				A916D2E91A1E03E7005FE1AE /* FPPopoverController+JSon.m in Sources */,
 				A916D3EA1A1E03E7005FE1AE /* SwipeViewController.m in Sources */,
 				A916D3581A1E03E7005FE1AE /* LoaderConfiguration.m in Sources */,
@@ -1892,6 +1897,7 @@
 				A916CEB41A1E03E6005FE1AE /* HTMLChunkAdEngine.m in Sources */,
 				A916D3D41A1E03E7005FE1AE /* RIButtonItem.m in Sources */,
 				A916D2D31A1E03E7005FE1AE /* AMBlurView.m in Sources */,
+				A9416AC81BAC47DE001F9FF8 /* AppDeckAdNative.m in Sources */,
 				A916D3D51A1E03E7005FE1AE /* RNCachingURLProtocol.m in Sources */,
 				A916D3FC1A1E03E7005FE1AE /* UIView+forceSetScrollTop.m in Sources */,
 				A916D3611A1E03E7005FE1AE /* 7zIn.c in Sources */,
@@ -2064,7 +2070,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
-				PROVISIONING_PROFILE_SPECIFIER = "20160517 AppStore AppDeck";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2079,7 +2084,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = AppDeck/AppDeck.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mobideck (9K2HP594UT)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2128,7 +2132,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
-				PROVISIONING_PROFILE_SPECIFIER = "20160517 AppStore AppDeck";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
