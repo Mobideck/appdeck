@@ -12,7 +12,7 @@
 #import "GoogleAnalytics/GAI.h"
 #import "GoogleAnalytics/GAIFields.h"
 #import "GoogleAnalytics/GAIDictionaryBuilder.h"
-#import "Flurry.h"
+//#import "Flurry.h"
 
 @implementation AppDeckAnalytics
 
@@ -46,8 +46,8 @@
 {
     if (self.loader.conf.flurry)
     {
-        [Flurry setDebugLogEnabled:YES];
-        [Flurry startSession:self.loader.conf.flurry];
+        //[Flurry setDebugLogEnabled:YES];
+        //[Flurry startSession:self.loader.conf.flurry];
     }
 }
 
@@ -75,7 +75,7 @@
                                       value, @"value",
                                       nil];
         
-        [Flurry logEvent:name withParameters:flurryParams];
+        //[Flurry logEvent:name withParameters:flurryParams];
     }
 }
 
@@ -93,7 +93,7 @@
     }
     if (self.loader.conf.flurry)
     {
-        [Flurry logPageView];
+        //[Flurry logPageView];
     }
 }
 
