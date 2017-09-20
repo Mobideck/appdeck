@@ -109,20 +109,25 @@ FBSDK_STATIC_INLINE void FBSDKShareDialogValidateShareExtensionSchemeRegisteredF
 
 - (BOOL)canShow
 {
-  switch (self.mode) {
-    case FBSDKShareDialogModeAutomatic:
-    case FBSDKShareDialogModeBrowser:
-    case FBSDKShareDialogModeFeedBrowser:
-    case FBSDKShareDialogModeFeedWeb:
-    case FBSDKShareDialogModeWeb:{
-      return YES;
+  if (!self.shareContent) {
+    switch (self.mode) {
+      case FBSDKShareDialogModeAutomatic:
+      case FBSDKShareDialogModeBrowser:
+      case FBSDKShareDialogModeFeedBrowser:
+      case FBSDKShareDialogModeFeedWeb:
+      case FBSDKShareDialogModeWeb:{
+        return YES;
+      }
+      case FBSDKShareDialogModeNative:{
+        return [self _canShowNative];
+      }
+      case FBSDKShareDialogModeShareSheet:{
+        return [self _canShowShareSheet];
+      }
     }
-    case FBSDKShareDialogModeNative:{
-      return [self _canShowNative];
-    }
-    case FBSDKShareDialogModeShareSheet:{
-      return [self _canShowShareSheet];
-    }
+  } else {
+    NSError *error = nil;
+    return [self _validateWithError:&error];
   }
 }
 
@@ -195,10 +200,10 @@ FBSDK_STATIC_INLINE void FBSDKShareDialogValidateShareExtensionSchemeRegisteredF
                                                       }
                                             message:results[@"error_message"]
                                     underlyingError:nil];
-    [self _handleWebResponseParameters:nil error:error];
+    [self _handleWebResponseParameters:nil error:error cancelled: NO];
   } else {
     // not all web dialogs report cancellation, so assume that the share has completed with no additional information
-    [self _handleWebResponseParameters:results error:nil];
+    [self _handleWebResponseParameters:results error:nil cancelled: NO];
   }
   [FBSDKInternalUtility unregisterTransientObject:self];
 }
@@ -433,14 +438,16 @@ FBSDK_STATIC_INLINE void FBSDKShareDialogValidateShareExtensionSchemeRegisteredF
   return URLs;
 }
 
-- (void)_handleWebResponseParameters:(NSDictionary *)webResponseParameters error:(NSError *)error
+- (void)_handleWebResponseParameters:(NSDictionary *)webResponseParameters
+                               error:(NSError *)error
+                           cancelled:(BOOL)isCancelled
 {
   if (error) {
     [self _invokeDelegateDidFailWithError:error];
     return;
   } else {
     NSString *completionGesture = webResponseParameters[FBSDK_SHARE_RESULT_COMPLETION_GESTURE_KEY];
-    if ([completionGesture isEqualToString:FBSDK_SHARE_RESULT_COMPLETION_GESTURE_VALUE_CANCEL]) {
+    if ([completionGesture isEqualToString:FBSDK_SHARE_RESULT_COMPLETION_GESTURE_VALUE_CANCEL] || isCancelled) {
       [self _invokeDelegateDidCancel];
     } else {
       // not all web dialogs report cancellation, so assume that the share has completed with no additional information
@@ -477,7 +484,7 @@ FBSDK_STATIC_INLINE void FBSDKShareDialogValidateShareExtensionSchemeRegisteredF
     void(^completion)(BOOL, NSString *, NSDictionary *) = ^(BOOL successfullyBuilt, NSString *cMethodName, NSDictionary *cParameters) {
       if (successfullyBuilt) {
         FBSDKBridgeAPICallbackBlock completionBlock = ^(FBSDKBridgeAPIResponse *response) {
-          [self _handleWebResponseParameters:response.responseParameters error:response.error];
+          [self _handleWebResponseParameters:response.responseParameters error:response.error cancelled: response.isCancelled];
           [FBSDKInternalUtility unregisterTransientObject:self];
         };
         FBSDKBridgeAPIRequest *request;
@@ -504,7 +511,7 @@ FBSDK_STATIC_INLINE void FBSDKShareDialogValidateShareExtensionSchemeRegisteredF
       return NO;
     }
     FBSDKBridgeAPICallbackBlock completionBlock = ^(FBSDKBridgeAPIResponse *response) {
-      [self _handleWebResponseParameters:response.responseParameters error:response.error];
+      [self _handleWebResponseParameters:response.responseParameters error:response.error cancelled: response.isCancelled];
       [FBSDKInternalUtility unregisterTransientObject:self];
     };
     FBSDKBridgeAPIRequest *request;
@@ -530,7 +537,7 @@ FBSDK_STATIC_INLINE void FBSDKShareDialogValidateShareExtensionSchemeRegisteredF
   id<FBSDKSharingContent> shareContent = self.shareContent;
   NSDictionary *parameters = [FBSDKShareUtility feedShareDictionaryForContent:shareContent];
   FBSDKBridgeAPICallbackBlock completionBlock = ^(FBSDKBridgeAPIResponse *response) {
-    [self _handleWebResponseParameters:response.responseParameters error:response.error];
+    [self _handleWebResponseParameters:response.responseParameters error:response.error cancelled:response.isCancelled];
     [FBSDKInternalUtility unregisterTransientObject:self];
   };
   FBSDKBridgeAPIRequest *request;
