@@ -18,7 +18,7 @@
 {
     self = [super init];
     if (self) {
-        
+        /*
         self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"062e493d055c4a6784b4d4a902da06c4"]; // UFB
         //self.adRequest = [MPNativeAdRequest requestWithAdUnitIdentifier:@"76a3fefaced247959582d2d2df6f4757"]; // mopub
 
@@ -33,7 +33,7 @@
                 response = resp;
                 [self injectInApiCalls];
             }
-        }];
+        }];*/
 
     }
     return self;
@@ -45,15 +45,15 @@
         apiCalls = [[NSMutableArray alloc] init];
     
     [apiCalls addObject:apiCall];
-    if (response != nil)
-        [self injectInApiCalls];
+    /*if (response != nil)
+        [self injectInApiCalls];*/
     return YES;
 }
 
 -(BOOL)injectInApiCalls
 {
     NSError *error;
-    
+    /*
     for (AppDeckApiCall *apiCall in apiCalls)
     {
         @try {
@@ -68,16 +68,16 @@
             NSLog(@"AppDeckAdNative: Exception while writing JSon: %@", exception);
         }
     }
-    [apiCalls removeAllObjects];
+    [apiCalls removeAllObjects];*/
     return YES;
 }
 
 
 -(BOOL)click:(UIViewController *)root
-{
+{/*
     [response displayContentWithCompletion:^(BOOL success, NSError *error) {
         NSLog(@"NativeAdClickResult: %d: %@", success, error);
-    }];
+    }];*/
     return YES;
 }
 
