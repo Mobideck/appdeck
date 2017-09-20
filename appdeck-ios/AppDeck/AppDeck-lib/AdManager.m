@@ -8,7 +8,7 @@
 
 #import "AdManager.h"
 #import "AppDeckAdEngine.h"
-#import "Ad/WideSpace/WideSpaceAdEngine.h"
+//#import "Ad/WideSpace/WideSpaceAdEngine.h"
 #import "SwipeViewController.h"
 #import "LoaderChildViewController.h"
 #import "LoaderConfiguration.h"
