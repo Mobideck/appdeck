@@ -29,7 +29,7 @@
 
 #import "SwipeViewController.h"
 #import "UIScrollView+ScrollsToTop.h"
-#import "iRate/iRate-1.11.3/iRate/iRate.h"
+#import "irate/iRate-1.11.3/iRate/iRate.h"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -42,6 +42,8 @@
 #import "CacheURLProtocol.h"
 
 #import "KeyboardStateListener.h"
+
+#import <AudioToolbox/AudioServices.h>
 
 @import MessageUI;
 @import SafariServices;
@@ -503,6 +505,12 @@
         return YES;
     }
     
+    // api key
+    if ([call.command isEqualToString:@"apikey"])
+    {
+        call.result = self.loader.conf.app_api_key;
+        return YES;
+    }
     // device check
     
     if ([call.command hasPrefix:@"is"])
@@ -643,6 +651,12 @@
     {
         call.result = [CacheMonitoringURLProtocol getUserId];
         
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"vibrate"])
+    {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         return YES;
     }
     
