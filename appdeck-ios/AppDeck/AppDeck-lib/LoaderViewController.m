@@ -18,6 +18,7 @@
 #import "NSDictionary+query.h"
 #import "PageViewController.h"
 #import "WebBrowserViewController.h"
+#import "BarCodeScannerViewController.h"
 //#import <QuartzCore/QuartzCore.h>
 #import "AppURLCache.h"
 #import "NSString+UIColor.h"
@@ -1073,6 +1074,8 @@
 
 -(LoaderChildViewController *)getCurrentChild
 {
+    if (popUp)
+        return ((SwipeViewController *)popUp.topViewController).current;
     return ((SwipeViewController *)navController.topViewController).current;
 }
 
@@ -1189,6 +1192,10 @@
     else if ([type isEqualToString:@"browser"])
     {
         page = [[WebBrowserViewController alloc] initWithNibName:nil bundle:nil URL:pageUrl content:nil header:nil footer:nil loader:self];
+    }
+    else if ([type isEqualToString:@"barcode"])
+    {
+        page = [[BarCodeScannerViewController alloc] initWithNibName:nil bundle:nil URL:pageUrl content:nil header:nil footer:nil loader:self];
     }
     else
     {
@@ -1648,6 +1655,45 @@
         
     }
     
+    //barcode ?
+    if ([call.command isEqualToString:@"barcode"])
+    {
+        NSError *error;
+        
+        BarCodeScannerViewController *barcode = [[BarCodeScannerViewController alloc] initWithNibName:@"BarCodeScannerViewController" bundle:nil URL:[NSURL URLWithString:[call.child.url.absoluteString stringByAppendingString:@"#BarCode"]] content:nil header:nil footer:nil loader:self];
+        //barcode.url = [NSURL URLWithString:[call.child.url.absoluteString stringByAppendingString:@"#BarCode"]];
+        if (barcode == nil)
+        {
+            NSLog(@"barcode Error: %@", error);
+            return YES;
+        }
+        
+        barcode.loader = self;
+        barcode.origin = call;
+        barcode.screenConfiguration = call.child.screenConfiguration;// [ScreenConfiguration defaultConfigurationWitehLoader:self];//[ScreenConfiguration defaultConfigurationWitehLoader:self];
+        barcode.title = barcode.screenConfiguration.title;
+        
+        [self loadChild:barcode root:NO popup:LoaderPopUpYes];
+        
+        return YES;
+        
+    }
+    
+    if ([call.command isEqualToString:@"barcodehide"])
+    {
+            UIViewController *top = [self getCurrentChild];
+        
+            if ([top isKindOfClass:[BarCodeScannerViewController class]])
+            {
+                BarCodeScannerViewController *barcode = (BarCodeScannerViewController *)top;
+                [navController dismissViewControllerAnimated:YES completion:^{
+                    navController.isAnimating = NO;
+                    popUp = nil;
+                    [barcode stopReading];
+                }];
+            }
+        return YES;
+    }
     
     return [self.appDeck apiCall:call];
 }
