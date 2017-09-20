@@ -784,6 +784,7 @@
     }
     if ([call.command isEqualToString:@"nativead"])
     {
+        /*
         NSString *divId = [NSString stringWithFormat:@"%@", [call.param objectForKey:@"id"]];
         if (nativeAds == nil)
             nativeAds = [[NSMutableDictionary alloc] init];
@@ -793,7 +794,7 @@
             nativeAd = [[AppDeckAdNative alloc] init];
             [nativeAds setObject:nativeAd forKey:divId];
         }
-        [nativeAd addApiCall:call];     
+        [nativeAd addApiCall:call];  */   
         return YES;
     }
 
