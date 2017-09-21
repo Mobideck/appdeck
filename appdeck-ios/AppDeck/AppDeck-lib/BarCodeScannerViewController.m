@@ -72,12 +72,19 @@
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     if (metadataObjects != nil && [metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
-        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
-            //[_lblStatus performSelectorOnMainThread:@selector(setText:) withObject:[metadataObj stringValue] waitUntilDone:NO];
-            
-            //[self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
-            //[_bbitemStart performSelectorOnMainThread:@selector(setTitle:) withObject:@"Start!" waitUntilDone:NO];
-            //_isReading = NO;
+        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeUPCECode] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeCode39Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeCode39Mod43Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeEAN13Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeEAN8Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeCode93Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeCode128Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypePDF417Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeAztecCode] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeInterleaved2of5Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeITF14Code] ||
+            [[metadataObj type] isEqualToString:AVMetadataObjectTypeDataMatrixCode]) {
             NSString *match = [metadataObj stringValue];
             if (![self.lastMatch isEqualToString:match])
             {
