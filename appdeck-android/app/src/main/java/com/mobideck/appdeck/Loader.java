@@ -1795,8 +1795,79 @@ public class Loader extends AppCompatActivity {
 			}
 			
 			return true;
-		}		
-		
+		}
+
+        if (call.command.equalsIgnoreCase("barcode"))
+        {
+            Log.i("API", "**BARCODE**");
+//            BarCodeReader barCodeReader = (BarCodeReader)initPageFragment("barcode://reader", true, false);
+            BarCodeReader barCodeReader = BarCodeReader.newInstance(call.param, call.appDeckFragment);
+            barCodeReader.loader = this;
+            barCodeReader.appDeck = appDeck;
+            barCodeReader.currentPageUrl = "barcode://reader";
+            barCodeReader.apiCall = call;
+            //call.postponeResult();
+  //          this.showPopUp(call.appDeckFragment, absoluteURL);
+            pushFragment(barCodeReader);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("barcodehide"))
+        {
+            Log.i("API", "**BARCODE HIDE**");
+
+            AppDeckFragment top = this.getCurrentAppDeckFragment();
+            if (top.getClass() == BarCodeReader.class) {
+                this.popFragment();
+            }
+            return true;
+        }
+
+		/*
+    //barcode ?
+    if ([call.command isEqualToString:@"barcode"])
+    {
+        NSError *error;
+
+        BarCodeScannerViewController *barcode = [[BarCodeScannerViewController alloc] initWithNibName:@"BarCodeScannerViewController" bundle:nil URL:[NSURL URLWithString:[call.child.url.absoluteString stringByAppendingString:@"#BarCode"]] content:nil header:nil footer:nil loader:self];
+        //barcode.url = [NSURL URLWithString:[call.child.url.absoluteString stringByAppendingString:@"#BarCode"]];
+        if (barcode == nil)
+        {
+            NSLog(@"barcode Error: %@", error);
+            return YES;
+        }
+
+        barcode.loader = self;
+        barcode.origin = call;
+        barcode.screenConfiguration = call.child.screenConfiguration;// [ScreenConfiguration defaultConfigurationWitehLoader:self];//[ScreenConfiguration defaultConfigurationWitehLoader:self];
+        barcode.title = barcode.screenConfiguration.title;
+
+        [self loadChild:barcode root:NO popup:LoaderPopUpYes];
+
+        return YES;
+
+    }
+
+    if ([call.command isEqualToString:@"barcodehide"])
+    {
+            UIViewController *top = [self getCurrentChild];
+
+            if ([top isKindOfClass:[BarCodeScannerViewController class]])
+            {
+                BarCodeScannerViewController *barcode = (BarCodeScannerViewController *)top;
+                [navController dismissViewControllerAnimated:YES completion:^{
+                    navController.isAnimating = NO;
+                    popUp = nil;
+                    [barcode stopReading];
+                }];
+            }
+        return YES;
+    }
+		 */
+
+
+
+
 		if (call.command.equalsIgnoreCase("loadapp"))
 		{
 			Log.i("API", "**LOAD APP**");
@@ -1881,7 +1952,7 @@ public class Loader extends AppCompatActivity {
 		if (call.command.equalsIgnoreCase("pagepop"))
 		{
 			Log.i("API", "**PAGE POP**");
-			this.popFragment();			
+			this.popFragment();
 			return true;
 		}
 
