@@ -25,13 +25,14 @@ repositories {
     }
 
     jcenter()
+    google()
 }
 
 android {
     compileSdkVersion 24
 
     // http://tools.android.com/release
-    buildToolsVersion '24.0.2'
+    //buildToolsVersion '24.0.2'
 
     defaultConfig {
         applicationId "com.mobideck.appdeck"
@@ -59,6 +60,8 @@ android {
         exclude 'META-INF/maven/log4j/log4j/pom.xml'
         exclude 'META-INF/maven/log4j/log4j/pom.properties'
     }
+
+    flavorDimensions "webview"
 
     productFlavors {
         crosswalk {
@@ -135,18 +138,19 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // http://developer.android.com/tools/building/multidex.html
-    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.2'
 
     // https://developer.android.com/topic/libraries/support-library/revisions.html
     //compile 'com.android.support:appcompat-v7:23.3.0'
     //compile 'com.android.support:support-v4:23.3.0'
     //compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:design:25.2.0'
 
     // https://developers.google.com/android/guides/setup
-    compile 'com.google.android.gms:play-services-analytics:9.6.1'
-    compile 'com.google.android.gms:play-services-gcm:9.6.1'
-    compile 'com.google.android.gms:play-services-ads:9.6.1'
+    compile 'com.google.android.gms:play-services-analytics:11.6.0'
+    compile 'com.google.android.gms:play-services-gcm:11.6.0'
+    compile 'com.google.android.gms:play-services-ads:11.6.0'
+    compile 'com.google.android.gms:play-services-vision:11.6.0'
     //compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 
     // https://github.com/chrisbanes/PhotoView
