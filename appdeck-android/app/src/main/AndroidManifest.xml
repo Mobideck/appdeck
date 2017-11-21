@@ -4,6 +4,7 @@
     package="com.mobideck.appdeck">
 
     <!--  permission for appdeck -->
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" /><!-- Internet Access -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- Check Internet Access -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- Read cached files -->
@@ -37,6 +38,9 @@
 
     <!-- WideSapce minSdk 17 override -->
     <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="com.widespace, com.gc.materialdesign, com.millennialmedia" />
+
+    <!-- BarCode -->
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
     <application
         tools:replace="android:icon,android:theme"
@@ -141,6 +145,9 @@
 
 
         <meta-data android:name="noCache" android:value="false" />
+
+        <!-- BarCode API -->
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
 
         <!-- GCM -->
         <!--<receiver
