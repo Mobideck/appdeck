@@ -5,11 +5,12 @@ buildscript {
         jcenter()
         //mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        google()
     }
     dependencies {
         // http://tools.android.com/release
         // https://bintray.com/android/android-tools/com.android.tools.build.gradle
-        classpath ('com.android.tools.build:gradle:2.2.0') {
+        classpath ('com.android.tools.build:gradle:3.0.0') {
             exclude module: 'proguard-gradle'
         }
         // force last version of proguard
