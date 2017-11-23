@@ -42,6 +42,11 @@
                                     didFinishLaunchingWithOptions:launchOptions];
 }
 
++ (AppDelegate *)sharedAppDelegate
+{
+    return (AppDelegate *)[UIApplication sharedApplication].delegate;
+}
+
 #pragma mark - Push \Notification
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken

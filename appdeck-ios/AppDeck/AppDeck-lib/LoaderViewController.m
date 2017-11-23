@@ -24,7 +24,7 @@
 #import "NSString+UIColor.h"
 #import "NSString+URLEncoding.h"
 #import "UIImage+Resize.h"
-//#import "AppDelegate.h"
+#import "AppDelegate.h"
 #import "SwipeViewController.h"
 #import "ScreenConfiguration.h"
 #import "UIApplication+setStatusBarHidden.h"
@@ -337,6 +337,17 @@
 
 -(void)loadAppConf:(NSDictionary *)result
 {
+    statusBarHeight = 20;
+    navigationBarHeight = 64;
+    
+    if (@available(iOS 11, *)) {
+        UIEdgeInsets insets = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+        if (insets.top > 0) {
+            statusBarHeight = 44;
+            navigationBarHeight = 88;
+        }
+    }
+    
     [self clean];
 
     //self.appDeck.cache.alwaysCache = NO;
@@ -420,7 +431,7 @@
             [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
         } else {
 //            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.app_topbar_color1.blur CGColor], (id)[self.conf.app_topbar_color2.blur CGColor] ]];
-            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, navigationBarHeight) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -542,7 +553,7 @@
             viewInducingVibrancy.userInteractionEnabled = false;
             [viewWithBlurredBackground.contentView addSubview:viewInducingVibrancy];
 
-            UIView *vibrantStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, bounds.size.width, 20)];
+            UIView *vibrantStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, -statusBarHeight, bounds.size.width, statusBarHeight)];
             vibrantStatusBar.userInteractionEnabled = false;
             vibrantStatusBar.backgroundColor = blur_app_color;//[blur_app_color colorWithAlphaComponent:0.5];//[UIColor ] [UIColor colorWithWhite:1.0f alpha:0.5f];//self.conf.app_color;
             // Set the text and the position of your label
@@ -823,7 +834,7 @@
     // create fake status bar
     if (self.appDeck.iosVersion >= 7.0)
     {
-        fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
+        fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, statusBarHeight)];
         if (self.conf.icon_theme == IconThemeDark)
             fakeStatusBar.backgroundColor = [UIColor blackColor];
         else
@@ -1862,7 +1873,7 @@
     // backgroundImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/* * backgroundImageView.image.size.width / self.view.frame.size.width*/);
     
     if (fakeStatusBar)
-        fakeStatusBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 20);
+        fakeStatusBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, statusBarHeight);
     
     if (self.log)
     {

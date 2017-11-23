@@ -79,6 +79,10 @@ typedef enum AdManagerEvent: int {
     JSonHTTPApi *appJson;
     
     UIView *overlay;
+    
+    CGFloat statusBarHeight;
+    CGFloat navigationBarHeight;
+    CGFloat bottomSafeZone;
 }
 
 @property (nonatomic) AppDeck *appDeck;
