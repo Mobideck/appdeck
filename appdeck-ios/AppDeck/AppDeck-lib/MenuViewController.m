@@ -43,7 +43,7 @@
     
     if (self.loader.appDeck.iosVersion >= 7.0)
     {
-        fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - width, 20)];
+        fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - width, [UIApplication sharedApplication].statusBarFrame.size.height)];
         if (self.loader.conf.icon_theme == IconThemeDark)
             fakeStatusBar.backgroundColor = [UIColor blackColor];
         else
@@ -241,8 +241,8 @@
     float y = 0;
     if (fakeStatusBar)
     {
-        y = 20;
-        fakeStatusBar.frame = CGRectMake((align == MenuAlignLeft ? 0 : self.view.frame.size.width - width), 0, width, 20);
+        y = [UIApplication sharedApplication].statusBarFrame.size.height;
+        fakeStatusBar.frame = CGRectMake((align == MenuAlignLeft ? 0 : self.view.frame.size.width - width), 0, width, [UIApplication sharedApplication].statusBarFrame.size.height);
     }
     container.frame = CGRectMake((align == MenuAlignLeft ? 0 : self.view.frame.size.width - width), y, width, self.view.bounds.size.height - y);
     content.view.frame = CGRectMake(0, 0, width, self.view.bounds.size.height - y);
