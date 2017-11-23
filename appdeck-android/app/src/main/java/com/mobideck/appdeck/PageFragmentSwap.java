@@ -279,13 +279,14 @@ public class PageFragmentSwap extends AppDeckFragment {
 			currentProgress.dismiss();
 			currentProgress = null;
 		}
-    	super.onDestroyView();
-        SmartWebViewFactory.recycleSmartWebView(pageWebView);
-        SmartWebViewFactory.recycleSmartWebView(pageWebViewAlt);
+
         swipeView.removeAllViews();
         swipeViewAlt.removeAllViews();
+		SmartWebViewFactory.recycleSmartWebView(pageWebView);
+		SmartWebViewFactory.recycleSmartWebView(pageWebViewAlt);
         pageWebView = null;
         pageWebViewAlt = null;
+		super.onDestroyView();
     }
     
     @Override
@@ -487,7 +488,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 			reloadInBackground();
 		}*/
 
-		if (origin == pageWebViewAlt.view)
+		if (pageWebViewAlt!= null && origin == pageWebViewAlt.view)
 			swapWebView();
 		//android.os.Debug.stopMethodTracing();
     }
@@ -539,7 +540,7 @@ public class PageFragmentSwap extends AppDeckFragment {
                 //pageWebView.ctl.evaluateJavascript("document.head.innerHTML = ''; document.body.innerHTML = \"<style>body { background-color: "+loader.appDeck.config.image_network_error_background_color+"; background-image: url('"+loader.appDeck.config.image_network_error_url+"'); background-repeat:no-repeat; background-position:top center; }</style>\";", null);
             }
     	}
-    	else if (origin == pageWebViewAlt.view)
+    	else if (pageWebViewAlt!= null && origin == pageWebViewAlt.view)
     	{
 			/*swipeViewAlt.setVisibility(View.VISIBLE);
 			rootView.bringChildToFront(swipeViewAlt);
