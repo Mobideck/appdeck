@@ -168,13 +168,13 @@ dependencies {
     crosswalkCompile 'org.xwalk:xwalk_core_library:21.51.546.6' // A tester
 
     // https://fabric.io/kits/android/crashlytics/install
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true;
     }
 
     // https://fabric.io/kits/android/twitterkit/install
     // https://twittersdk.artifactoryonline.com/twittersdk/public/com/twitter/sdk/android/twitter-core/
-    compile('com.twitter.sdk.android:twitter-core:2.1.0') {
+    compile('com.twitter.sdk.android:twitter-core:3.1.1') {
         transitive = true
         exclude module: 'gson';
     }
@@ -183,51 +183,27 @@ dependencies {
     /*compile('com.mopub:mopub-sdk:4.5.1@aar') {
         transitive = true
     }*/
-    compile('com.mopub:mopub-sdk:4.9.0@aar') {
-        transitive = true
-    }
+
     // https://developers.facebook.com/docs/android
-    compile 'com.facebook.android:facebook-android-sdk:4.28.0'
+    compile 'com.facebook.android:facebook-core:4.28.0'
+    compile 'com.facebook.android:facebook-login:4.28.0'
 
     // https://github.com/hotchemi/Android-Rate
     compile 'com.github.hotchemi:android-rate:1.0.1'
 
     // http://info.widespace.com/publishers/integrations/android-sdk-guidelines/
-    compile 'com.widespace:widespace-sdk-4.7.1@aar'
-    compile 'org.slf4j:slf4j-android:1.7.21' // widespace dependency
-
-
-    //compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    //compile 'com.github.vajro:MaterialDesignLibrary:1.6'
-    //compile 'com.nineoldandroids:library:2.4.0'
+    //compile 'org.slf4j:slf4j-android:1.7.21' // widespace dependency
 
     // https://github.com/nostra13/Android-Universal-Image-Loader
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
-
-    //compile 'com.jakewharton.timber:timber:4.1.0'
-
     // https://github.com/afollestad/material-dialogs
     compile 'com.afollestad.material-dialogs:core:0.9.5.0'
-
-    /*compile('com.github.afollestad.material-dialogs:commons:0.8.5.3@aar') {
-        transitive = true
-    }*/
 
     // http://mvnrepository.com/artifact/com.google.code.gson/gson
     compile 'com.google.code.gson:gson:2.8.0'
 
-    //compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
-
-    //compile 'io.branch.sdk.android:library:1.+'
-
-    // millenial media
-    compile 'com.millennialmedia:mm-ad-sdk@aar'
-
     compile 'net.grunt:gruntlib-0.1.9@aar'
-
-    // https://github.com/google/guava#latest-release
-    //compile 'com.google.guava:guava:19.0'
 
     //compile group: 'org.littleshoot', name: 'littleproxy', version: '1.1.0-beta2'
 

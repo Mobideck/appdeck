@@ -135,9 +135,12 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.facebook.FacebookSdk;
 //import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.IntentUtils;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -643,8 +646,13 @@ public class Loader extends AppCompatActivity {
         if (appDeck.config.twitter_consumer_key != null && appDeck.config.twitter_consumer_secret != null &&
                 appDeck.config.twitter_consumer_key.length() > 0 && appDeck.config.twitter_consumer_secret.length() > 0
                 ) {
-            TwitterAuthConfig authConfig = new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret);
-            Fabric.with(app, crashlytics, new TwitterCore(authConfig));
+            TwitterConfig config = new TwitterConfig.Builder(this)
+                    //.logger(new DefaultLogger(Log.DEBUG))
+                    .twitterAuthConfig(new TwitterAuthConfig(appDeck.config.twitter_consumer_key, appDeck.config.twitter_consumer_secret))
+                    //.debug(true)
+                    .build();
+            Twitter.initialize(config);
+            Fabric.with(app, crashlytics);
             mTwitterAuthClient = new TwitterAuthClient();
         } else {
             Fabric.with(app, crashlytics);
