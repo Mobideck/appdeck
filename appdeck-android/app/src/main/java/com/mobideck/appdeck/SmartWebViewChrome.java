@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -838,8 +839,28 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         onResume();
     }
 
-    public void destroy() {
+    private void postPonedDestroy() {
         super.destroy();
+    }
+
+    public void destroy() {
+        setWebViewClient(null);
+        setWebChromeClient(null);
+        super.removeAllViews();
+
+        final SmartWebViewChrome self = this;
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                self.postPonedDestroy();
+            }
+        }, 5000);
+
+        //super.destroy();
     }
 
     private boolean touchDisabled = false;
