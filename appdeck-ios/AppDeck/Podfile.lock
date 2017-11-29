@@ -5,20 +5,18 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - ECSlidingViewController (2.0.3)
-  - Fabric (1.6.13)
-  - FBAudienceNetwork (4.26.0):
-    - KVOController
-  - FBSDKCoreKit (4.26.0):
+  - Fabric (1.7.2)
+  - FBAudienceNetwork (4.26.1)
+  - FBSDKCoreKit (4.28.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.26.0):
+  - FBSDKLoginKit (4.28.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.26.0):
+  - FBSDKShareKit (4.28.0):
     - FBSDKCoreKit
-  - Google-Mobile-Ads-SDK (7.23.0)
-  - KVOController (1.2.0)
+  - Google-Mobile-Ads-SDK (7.26.0)
   - SIAlertView (1.3)
   - SSSnackbar (0.1.2)
   - SVProgressHUD (2.1.2)
@@ -53,15 +51,14 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   ECSlidingViewController: 6485c14f23b4487e9946535421ca8f111f86cc53
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
-  FBAudienceNetwork: c3488041a9aa3f716d2edb3ceec8929e54c8f95a
-  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
-  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
-  FBSDKShareKit: 320712d8293fde6392872c91eb80ef0da5d73cc3
-  Google-Mobile-Ads-SDK: a43dc8efdb566c74d00ac6934c781de969348d80
-  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  FBAudienceNetwork: 224f561f2af4982aa5558feef5d88b7cd27ead14
+  FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
+  FBSDKLoginKit: b077381c27d800f21661757e8140cf2c80a91e4a
+  FBSDKShareKit: 4f525556e0df4cf0f574cb3f01c675434f29d477
+  Google-Mobile-Ads-SDK: 22d4a6fe18d526adcc12a86d8cc2d53872700966
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
   SSSnackbar: 6a16cf8ab848d99a03ba21a7dab94d4478beabed
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
