@@ -98,8 +98,10 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
   Using the superview, this updates the frame of this view, positioning the icon in the corner specified. UIRectCornerAllCorners not supported.
 
  - Parameter corner: The corner to display this view from.
+ - Parameter insets: Insets to take into account when positioning the view. Only respective insets are applied to corners.
  */
 - (void)updateFrameFromSuperview:(UIRectCorner)corner;
+- (void)updateFrameFromSuperview:(UIRectCorner)corner insets:(UIEdgeInsets)insets;
 
 @end
 
