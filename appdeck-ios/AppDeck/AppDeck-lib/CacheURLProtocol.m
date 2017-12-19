@@ -73,16 +73,21 @@
     return NO;
 }
 
++ (BOOL)canInitWithTask:(NSURLSessionTask *)task
+{
+    return NO;
+}
+
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
 {
     return request;
 }
-
+/*
 + (BOOL)requestIsCacheEquivalent:(NSURLRequest *)aRequest toRequest:(NSURLRequest *)bRequest
 {
     return YES;
 }
-
+*/
 #pragma mark - instance method
 
 +(NSString *)getUserId
