@@ -17,6 +17,7 @@
     BOOL        shouldCDN;
 }
 
+@property (nonatomic, readwrite, strong) NSURLRequest *oldRequest;
 @property (nonatomic, readwrite, strong) NSMutableURLRequest *MyRequest;
 @property (nonatomic, readwrite, strong) NSURLConnection *MyConnection;
 @property (nonatomic, readwrite, strong) NSMutableData *data;

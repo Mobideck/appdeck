@@ -26,6 +26,11 @@
     return NO;
 }
 
++   (BOOL)canInitWithTask:(NSURLSessionTask *)task
+{
+    return NO;
+}
+
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
 {
     return request;
@@ -60,6 +65,7 @@
                client:(id <NSURLProtocolClient>)client
 {
     // Modify request so we don't loop
+    _oldRequest = request;
     NSMutableURLRequest *myRequest = [request mutableCopy];
     [NSURLProtocol setProperty:@"set" forKey:@"CacheMonitoringURLProtocol" inRequest:myRequest];
 
@@ -232,6 +238,7 @@
     self.MyRequest = nil;
     self.response = nil;
     self.data = nil;
+    _oldRequest = nil;
 }
 
 @end
