@@ -372,7 +372,7 @@
         
         if (self.conf.prefetch_url != nil)
         {
-            remoteAppCache = [[RemoteAppCache alloc] initWithURL:self.conf.prefetch_url andTTL:self.conf.prefetch_ttl];
+            //remoteAppCache = [[RemoteAppCache alloc] initWithURL:self.conf.prefetch_url andTTL:self.conf.prefetch_ttl];
         }
         
         // analytics
@@ -862,7 +862,7 @@
     [self loadChild:page root:YES popup:LoaderPopUpNo];
     
     // init ad engine
-    self.adManager = [[AdManager alloc] initWithLoader:self];
+    //self.adManager = [[AdManager alloc] initWithLoader:self];
     
     [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventLaunch];
     
