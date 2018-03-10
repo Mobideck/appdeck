@@ -8,6 +8,11 @@
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }*/
+
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-v4:27.0.1'
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
