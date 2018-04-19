@@ -23,6 +23,7 @@
 @property (assign, nonatomic) NSInteger expectedSize;
 @property (strong, nonatomic) NSMutableData *imageData;
 @property (strong, nonatomic) NSURLConnection *connection;
+@property (strong, nonatomic) NSURLSession *session;
 @property (strong, atomic) NSThread *thread;
 
 #if TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
@@ -85,7 +86,15 @@
 #endif
 
         self.executing = YES;
-        self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];
+        
+        NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURLSessionDataTask*downloadTask =[_session dataTaskWithRequest:self.request];
+        
+        [downloadTask resume];
+        
+       // self.connection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:NO];
         self.thread = [NSThread currentThread];
     }
 

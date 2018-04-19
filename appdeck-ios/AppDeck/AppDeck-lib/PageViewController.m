@@ -451,7 +451,7 @@
         def.top += _rectangleAd.height;
     }
     // add navigationbar
-    if (NO)
+    if (/* DISABLES CODE */ (NO))
     {
         def.top += 64;
     }
@@ -871,6 +871,9 @@
         self.rightBarButtonItems = buttons;
         if (self.isMain)
             self.swipeContainer.navigationItem.rightBarButtonItems = buttons;
+        
+        
+        
     }
     
     if ([call.command isEqualToString:@"loadingshow"])
@@ -1460,7 +1463,7 @@
     
     return;
     
-    // add perspective to appView
+    // add perspective to appView  
     CATransform3D perspective = CATransform3DIdentity;
     if (self.loader.appDeck.iosVersion >= 4.2)
     {
@@ -1619,7 +1622,12 @@
 
 -(void)updateWebViewOrientation
 {
-    BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+    
+    //changed by hanine
+   // BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);  --> UIInterfaceOrientation
+    
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]); //  --> UIDeviceOrientation
+
     if (isLandscape)
         [contentCtl executeJS:@"app.helper.removeClass(document.documentElement, 'appdeck_portrait'); app.helper.addClass(document.documentElement, 'appdeck_landscape');"];
     else
@@ -1675,7 +1683,8 @@
     }
 
     // rotate ?
-    BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+  //  BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]);
     if (isLandscape != wasLandscape)
     {
         UIEdgeInsets defaultInsets = [self getPageContentInset];

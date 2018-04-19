@@ -17,9 +17,8 @@ typedef void ( ^ManagedWebViewCompletedCallBack )( NSError *error ) ;
 
 @protocol ManagedWebViewDelegate <NSObject>
 
-- (BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
-
 @optional
+- (BOOL)managedWebView:(ManagedWebView *)managedWebView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
 - (NSString *)managedWebView:(ManagedWebView *)managedWebView runPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(id)frame;
 
 
@@ -47,7 +46,6 @@ typedef void ( ^ManagedWebViewCompletedCallBack )( NSError *error ) ;
 -(void)setMaskColor:(UIColor *)color opcacity:(CGFloat)opacity anim:(CGFloat)anim userInteractionEnabled:(BOOL)interaction;
 -(void)disableMask;
 
-
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id result, NSError *error))completionHandler;
 
 //- (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script;
@@ -56,16 +54,15 @@ typedef void ( ^ManagedWebViewCompletedCallBack )( NSError *error ) ;
 
 -(void)sendJSEvent:(NSString *)name withJsonData:(NSString *)dataJson;
 
-
 /* history API */
 +(void)addURLInHistory:(NSString *)manual_url;
 -(void)manualAddURLInHistory:(NSString *)manual_url;
 -(void)addURLInOtherHistory:(NSString *)manual_url;
 
-
 -(void)clean;
 
 /* webview API */
+
 -(BOOL)canGoBack;
 -(BOOL)canGoForward;
 -(BOOL)isLoading;
@@ -81,7 +78,7 @@ typedef void ( ^ManagedWebViewCompletedCallBack )( NSError *error ) ;
 
 @property (nonatomic, weak) id<ManagedWebViewDelegate, AppDeckApiCallDelegate> delegate;
 
-@property (nonatomic, assign)       BOOL catch_link;
-@property (nonatomic, assign)       BOOL enable_api;
+@property (nonatomic, assign) BOOL catch_link;
+@property (nonatomic, assign) BOOL enable_api;
 
 @end

@@ -375,7 +375,7 @@ bool RE2::Replace(string *str,
   int nvec = 1 + MaxSubmatch(rewrite);
   if (nvec > arraysize(vec))
     return false;
-  if (!re.Match(*str, 0, str->size(), UNANCHORED, vec, nvec))
+  if (!re.Match(*str, 0, (int)str->size(), UNANCHORED, vec, nvec))
     return false;
 
   string s;
@@ -402,7 +402,7 @@ int RE2::GlobalReplace(string *str,
   string out;
   int count = 0;
   while (p <= ep) {
-    if (!re.Match(*str, p - str->data(), str->size(), UNANCHORED, vec, nvec))
+    if (!re.Match(*str, (int)(p - str->data()), (int)str->size(), UNANCHORED, vec, nvec))
       break;
     if (p < vec[0].begin())
       out.append(p, vec[0].begin() - p);
@@ -486,7 +486,7 @@ bool RE2::PossibleMatchRange(string* min, string* max, int maxlen) const {
   if (prog_ == NULL)
     return false;
 
-  int n = prefix_.size();
+  int n =(int) prefix_.size();
   if (n > maxlen)
     n = maxlen;
 
@@ -598,7 +598,7 @@ bool RE2::Match(const StringPiece& text,
   if (!prefix_.empty()) {
     if (startpos != 0)
       return false;
-    prefixlen = prefix_.size();
+    prefixlen = (int)prefix_.size();
     if (prefixlen > subtext.size())
       return false;
     if (prefix_foldcase_) {
@@ -840,7 +840,7 @@ bool RE2::DoMatch(const StringPiece& text,
   }
 
   if(consumed != NULL)
-    *consumed = vec[0].end() - text.begin();
+    *consumed =(int)(vec[0].end() - text.begin());
 
   if (n == 0 || args == NULL) {
     // We are not interested in results
@@ -1124,7 +1124,7 @@ bool RE2::Arg::parse_int_radix(const char* str,
   if (!parse_long_radix(str, n, &r, radix)) return false; // Could not parse
   if ((int)r != r) return false;         // Out of range
   if (dest == NULL) return true;
-  *(reinterpret_cast<int*>(dest)) = r;
+  *(reinterpret_cast<int*>(dest)) = (int)r;
   return true;
 }
 
@@ -1136,7 +1136,7 @@ bool RE2::Arg::parse_uint_radix(const char* str,
   if (!parse_ulong_radix(str, n, &r, radix)) return false; // Could not parse
   if ((uint)r != r) return false;                       // Out of range
   if (dest == NULL) return true;
-  *(reinterpret_cast<unsigned int*>(dest)) = r;
+  *(reinterpret_cast<unsigned int*>(dest)) =(int)r;
   return true;
 }
 

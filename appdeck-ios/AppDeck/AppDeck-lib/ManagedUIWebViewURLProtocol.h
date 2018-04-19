@@ -10,7 +10,7 @@
 
 @class ManagedUIWebViewController;
 
-@interface ManagedUIWebViewURLProtocol : NSURLProtocol <NSURLConnectionDelegate>
+@interface ManagedUIWebViewURLProtocol : NSURLProtocol <NSURLConnectionDelegate,NSURLSessionDelegate>
 {    
     ManagedUIWebViewController *ctl;
     NSUInteger expectedContentLength;
@@ -20,6 +20,7 @@
 
 @property (nonatomic, readwrite, strong) NSMutableURLRequest *myRequest;
 @property (nonatomic, readwrite, strong) NSURLConnection *myConnection;
+@property (nonatomic, readwrite, strong) NSURLSession*session;
 @property (nonatomic, readwrite, strong) NSMutableData *data;
 @property (nonatomic, readwrite, strong) NSURLResponse *response;
 

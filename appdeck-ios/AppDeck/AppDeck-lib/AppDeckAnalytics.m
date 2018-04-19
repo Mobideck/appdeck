@@ -69,11 +69,12 @@
     }
     if (self.loader.conf.flurry)
     {
-        NSDictionary *flurryParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      action, @"action",
-                                      label, @"label",
-                                      value, @"value",
-                                      nil];
+        
+//        NSDictionary *flurryParams = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                      action, @"action",
+//                                      label, @"label",
+//                                      value, @"value",
+//                                      nil];
         
         //[Flurry logEvent:name withParameters:flurryParams];
     }

@@ -466,7 +466,7 @@
         @try {
         
             NSString *sid = [config objectForKey:@"sid"];
-            NSString *uid = [config objectForKey:@"uid"];
+            //NSString *uid = [config objectForKey:@"uid"];
             NSString *ua = [config objectForKey:@"ua"];
             
             //NSLog(@"Scenario: sid:%@ uid:%@ %@", sid, uid, config);
@@ -474,7 +474,7 @@
             // load cookies
             NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
             NSString *cookie_storage_path = [cachesPath stringByAppendingPathComponent:sid];
-            NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithFile:cookie_storage_path];
+           __block NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithFile:cookie_storage_path];
             
             //NSLog(@"result: %@", cookies);
             
@@ -521,44 +521,59 @@
                 
                 if (body != nil && [[body class] isSubclassOfClass:[NSString class]])
                 {
-                    [request setValue:[NSString stringWithFormat:@"%ud", body.length] forHTTPHeaderField:@"Content-Length"];
+                    [request setValue:[NSString stringWithFormat:@"%lud", (unsigned long)body.length] forHTTPHeaderField:@"Content-Length"];
                     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
                     [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
                 }
                 
                 //NSLog(@"request headers: %@", request.allHTTPHeaderFields);
                 
-                NSHTTPURLResponse* response;
-                NSError* error = nil;
-                [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
+//                NSHTTPURLResponse* response;
+//                NSError* error = nil;
+//                [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
+                
+                NSURLSession *session = [NSURLSession sharedSession];
+                NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                                        completionHandler:
+                                              ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                  
+                                                  NSArray *new_cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:((NSHTTPURLResponse*)response).allHeaderFields forURL:[NSURL URLWithString:url]];
+                                                  NSDictionary *all_cookies = [[NSMutableDictionary alloc] initWithCapacity:new_cookies.count + cookies.count];
+                                                  for (NSHTTPCookie *cookie in cookies) {
+                                                      [all_cookies setValue:cookie forKey:cookie.name];
+                                                  }
+                                                  for (NSHTTPCookie *cookie in new_cookies) {
+                                                      [all_cookies setValue:cookie forKey:cookie.name];
+                                                  }
+                                                  cookies = [all_cookies allValues];
+                                                  
+                                                  //NSLog(@"response cookies: %@", response.allHeaderFields);
+                                                  
+                                                  // clean
+                                                  [NSURLProtocol removePropertyForKey:@"CacheMonitoringURLProtocol" inRequest:request];
+                                                  
+                                                  if (error != nil)
+                                                  return;
+                                                  
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      // Your code to run on the main queue/thread
+                                                  });
+                                                  
+                                              }];
+                
+                [task resume];
+                
                 
                 //NSLog(@"response headers: %@", response.allHeaderFields);
                 
                 // get cookie
-                NSArray *new_cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:response.allHeaderFields forURL:[NSURL URLWithString:url]];
-                NSDictionary *all_cookies = [[NSMutableDictionary alloc] initWithCapacity:new_cookies.count + cookies.count];
-                for (NSHTTPCookie *cookie in cookies) {
-                    [all_cookies setValue:cookie forKey:cookie.name];
-                }
-                for (NSHTTPCookie *cookie in new_cookies) {
-                    [all_cookies setValue:cookie forKey:cookie.name];
-                }
-                cookies = [all_cookies allValues];
-                
-                //NSLog(@"response cookies: %@", response.allHeaderFields);
-                
-                // clean
-                [NSURLProtocol removePropertyForKey:@"CacheMonitoringURLProtocol" inRequest:request];
-                
-                if (error != nil)
-                    return;
-                
+               
                 // callback
                 
             }
             
             // save cookies
-            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+            //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
             BOOL result = [NSKeyedArchiver archiveRootObject:cookies toFile:cookie_storage_path];
             
             NSLog(@"result: %d", result);

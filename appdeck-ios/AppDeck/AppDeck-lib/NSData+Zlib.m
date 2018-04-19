@@ -18,8 +18,8 @@
     
     if ([data length] == 0) return data;
     
-    unsigned full_length = [data length];
-    unsigned half_length = [data length] / 2;
+    unsigned full_length = (int)[data length];
+    unsigned half_length =(int) [data length] / 2;
     
     NSMutableData *decompressed = [NSMutableData dataWithLength: full_length + half_length];
     BOOL done = NO;
@@ -27,7 +27,7 @@
     
     z_stream strm;
     strm.next_in = (Bytef *)[data bytes];
-    strm.avail_in = [data length];
+    strm.avail_in = (int)[data length];
     strm.total_out = 0;
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
@@ -39,7 +39,7 @@
         if (strm.total_out >= [decompressed length])
             [decompressed increaseLengthBy: half_length];
         strm.next_out = [decompressed mutableBytes] + strm.total_out;
-        strm.avail_out = [decompressed length] - strm.total_out;
+        strm.avail_out = (int)[decompressed length] - (int)strm.total_out;
         
         // Inflate another chunk.
         status = inflate (&strm, Z_SYNC_FLUSH);
@@ -70,7 +70,7 @@
     strm.opaque = Z_NULL;
     strm.total_out = 0;
     strm.next_in=(Bytef *)[data bytes];
-    strm.avail_in = [data length];
+    strm.avail_in = (int)[data length];
     
     // Compresssion Levels:
     //   Z_NO_COMPRESSION
@@ -88,7 +88,7 @@
             [compressed increaseLengthBy: 16384];
         
         strm.next_out = [compressed mutableBytes] + strm.total_out;
-        strm.avail_out = [compressed length] - strm.total_out;
+        strm.avail_out =(int) ([compressed length] - strm.total_out);
         
         deflate(&strm, Z_FINISH);
         

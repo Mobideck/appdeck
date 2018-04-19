@@ -18,9 +18,13 @@
 
 @interface HTMLChunkAdViewController ()
 
+
+
 @end
 
 @implementation HTMLChunkAdViewController
+
+@synthesize adEngine;
 
 - (id)initWithAdRation:(AdRation *)adRation engine:(HTMLChunkAdEngine *)adEngine config:(NSDictionary *)config
 {

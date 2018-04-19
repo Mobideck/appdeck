@@ -103,7 +103,7 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:BFWebViewAppLinkResolverMetaTagPrefix forHTTPHeaderField:BFWebViewAppLinkResolverPreferHeader];
 
-    void (^completion)(NSURLResponse *response, NSData *data, NSError *error) = ^(NSURLResponse *response, NSData *data, NSError *error) {
+    void (^completion)(NSData *data, NSURLResponse *response, NSError *error) = ^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             [tcs setError:error];
             return;
@@ -128,10 +128,15 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0 || __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_10_9
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        completion(response, data, error);
+        completion(data , response, error);
     }] resume];
 #else
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:completion];
+    //[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:completion];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:completion];
+    
+    [task resume];
+    //
 #endif
 
     return [tcs.task continueWithSuccessBlock:^id(BFTask *task) {

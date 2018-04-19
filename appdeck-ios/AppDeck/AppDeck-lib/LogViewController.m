@@ -130,22 +130,22 @@ __strong LogViewController *glLog = nil;
     warnColor = [UIColor orangeColor];
     errorColor = [UIColor redColor];
     
-    debug = [[UIBarButtonItem alloc] initWithTitle:@"d" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonDebug:)];
+    debug = [[UIBarButtonItem alloc] initWithTitle:@"d" style:UIBarButtonItemStylePlain target:self action:@selector(buttonDebug:)];
 //    debug.tintColor = [UIColor blackColor];
     debug.style = UIBarButtonItemStyleDone;
-    info = [[UIBarButtonItem alloc] initWithTitle:@"i" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonDebug:)];
+    info = [[UIBarButtonItem alloc] initWithTitle:@"i" style:UIBarButtonItemStylePlain target:self action:@selector(buttonDebug:)];
     info.tintColor = infoColor;
-    warn = [[UIBarButtonItem alloc] initWithTitle:@"w" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonDebug:)];
+    warn = [[UIBarButtonItem alloc] initWithTitle:@"w" style:UIBarButtonItemStylePlain target:self action:@selector(buttonDebug:)];
     warn.tintColor = warnColor;
-    error = [[UIBarButtonItem alloc] initWithTitle:@"e" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonDebug:)];
+    error = [[UIBarButtonItem alloc] initWithTitle:@"e" style:UIBarButtonItemStylePlain target:self action:@selector(buttonDebug:)];
     error.tintColor = errorColor;
-    code = [[UIBarButtonItem alloc] initWithTitle:@"{}" style:UIBarButtonItemStyleBordered target:self action:@selector(buttonCode:)];
+    code = [[UIBarButtonItem alloc] initWithTitle:@"{}" style:UIBarButtonItemStylePlain target:self action:@selector(buttonCode:)];
     code.tintColor = [UIColor lightGrayColor];
-    clear = [[UIBarButtonItem alloc] initWithTitle:@"x" style:UIBarButtonItemStyleBordered target:self action:@selector(clear:)];
+    clear = [[UIBarButtonItem alloc] initWithTitle:@"x" style:UIBarButtonItemStylePlain target:self action:@selector(clear:)];
     clear.tintColor = [UIColor lightGrayColor];
     
     UISegmentedControl *closeSegment = [[UISegmentedControl alloc] initWithItems:@[self.loader.conf.icon_up.image, self.loader.conf.icon_down.image]];
-    closeSegment.segmentedControlStyle = UISegmentedControlStylePlain;
+   // closeSegment.segmentedControlStyle = UISegmentedControlStylePlain;
     closeSegment.frame = CGRectMake(0, 0, 60, 30.0);
     closeSegment.tintColor = [UIColor blackColor];
     //close = [[UIBarButtonItem alloc] initWithTitle:@"close" style:UIBarButtonItemStyleDone target:self action:@selector(buttonClose:)];
@@ -188,7 +188,7 @@ __strong LogViewController *glLog = nil;
     BOOL enable;
     if (button.style == UIBarButtonItemStyleDone)
     {
-        button.style = UIBarButtonItemStyleBordered;
+        button.style = UIBarButtonItemStylePlain;
         enable = YES;
     }
     else
@@ -262,29 +262,44 @@ __strong LogViewController *glLog = nil;
 
 -(void)buttonCode:(UIBarButtonItem *)button
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Execute local JS code"
-                                                      message:nil
-                                                     delegate:self
-                                            cancelButtonTitle:@"Cancel"
-                                            otherButtonTitles:@"Execute", nil];
-    [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    [message textFieldAtIndex:0].text = lastJS;
-    [message show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
-        UITextField *field = [alertView textFieldAtIndex:0];
+    UIAlertController*controller=[UIAlertController alertControllerWithTitle:@"Execute local JS code" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [controller addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = lastJS;
+    }];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [controller addAction:[UIAlertAction actionWithTitle:@"Execute" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *field = [[controller textFields] firstObject];
         lastJS = field.text;
-//        AppDeck *app = [AppDeck sharedInstance];
+        //        AppDeck *app = [AppDeck sharedInstance];
         LoaderChildViewController *current = [self.loader getCurrentChild];
         NSString *fulljs = [NSString stringWithFormat:@"javascriptlog:%@;", lastJS];
         [current load:fulljs];
-    }
+    }]];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+//    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Execute local JS code"
+//                                                      message:nil
+//                                                     delegate:self
+//                                            cancelButtonTitle:@"Cancel"
+//                                            otherButtonTitles:@"Execute", nil];
+//    [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
+//    [message textFieldAtIndex:0].text = lastJS;
+//    [message show];
 }
 
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex == 1)
+//    {
+//        UITextField *field = [alertView textFieldAtIndex:0];
+//        lastJS = field.text;
+////        AppDeck *app = [AppDeck sharedInstance];
+//        LoaderChildViewController *current = [self.loader getCurrentChild];
+//        NSString *fulljs = [NSString stringWithFormat:@"javascriptlog:%@;", lastJS];
+//        [current load:fulljs];
+//    }
+//}
+//
 
 -(void)clear:(UIBarButtonItem *)button
 {
@@ -304,9 +319,8 @@ __strong LogViewController *glLog = nil;
 
 -(void)addLog:(UIColor *)color content:(NSString *)content
 {
-    CGSize expectedLabelSize = [content sizeWithFont:font
-                                   constrainedToSize:self.view.bounds.size
-                                       lineBreakMode:NSLineBreakByCharWrapping];
+    
+    CGSize expectedLabelSize = [content sizeWithAttributes:@{NSFontAttributeName:font}];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, scrollView.contentSize.height, self.view.bounds.size.width, expectedLabelSize.height)];
     label.text = content;
@@ -567,9 +581,7 @@ __strong LogViewController *glLog = nil;
         CGFloat height = label.frame.size.height;
         if (rotate)
         {
-            CGSize expectedLabelSize = [label.text sizeWithFont:font
-                                           constrainedToSize:self.view.bounds.size
-                                               lineBreakMode:NSLineBreakByCharWrapping];
+            CGSize expectedLabelSize = [label.text sizeWithAttributes:@{NSFontAttributeName:font}];
             height = expectedLabelSize.height;
         }
         label.frame = CGRectMake(0, size.height, size.width, height);

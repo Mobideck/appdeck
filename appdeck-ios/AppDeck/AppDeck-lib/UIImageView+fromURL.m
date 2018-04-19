@@ -21,7 +21,7 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    void (^handler)(NSURLResponse *, NSData *, NSError *) = ^(NSURLResponse *response, NSData *data, NSError *error) {
+    void (^handler)( NSData *,NSURLResponse *, NSError *) =  ^(NSData *data, NSURLResponse *response, NSError *error) {
         __block UIImage *image = [UIImage imageWithData:data];
         if (error != nil || data == nil || image == nil)
         {
@@ -41,9 +41,17 @@
         AppDeck *app = [AppDeck sharedInstance];
         NSCachedURLResponse *cachedResponse = [app.cache getCacheResponseForRequest:request];
         if (cachedResponse)
-            handler(cachedResponse.response, cachedResponse.data, nil);
-        else
-            [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+            handler(cachedResponse.data,cachedResponse.response,nil);
+        else{
+           // [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+        
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:handler];
+        
+            [task resume];
+        }
+        
+        
     });
     
 
@@ -56,7 +64,7 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    void (^handler)(NSURLResponse *, NSData *, NSError *) = ^(NSURLResponse *response, NSData *data, NSError *error) {
+    void (^handler)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error)  {
         UIImage *image = [UIImage imageWithData:data];
         if (error != nil || data == nil || image == nil)
         {
@@ -77,9 +85,14 @@
     AppDeck *app = [AppDeck sharedInstance];
     NSCachedURLResponse *cachedResponse = [app.cache getCacheResponseForRequest:request];
     if (cachedResponse)
-        handler(cachedResponse.response, cachedResponse.data, nil);
-    else
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+        handler(cachedResponse.data, cachedResponse.response, nil);
+    else{
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:handler];
+        
+        [task resume];
+    }
+       // [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
     
     return imageView;
 }

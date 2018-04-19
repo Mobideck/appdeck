@@ -94,7 +94,7 @@ BitState::~BitState() {
 // If so, remember that it was visited so that the next time,
 // we don't repeat the visit.
 bool BitState::ShouldVisit(int id, const char* p) {
-  uint n = id * (text_.size() + 1) + (p - text_.begin());
+  uint n = (uint) (id * (text_.size() + 1) + (p - text_.begin()));
   if (visited_[n/VisitedBits] & (1 << (n & (VisitedBits-1))))
     return false;
   visited_[n/VisitedBits] |= 1 << (n & (VisitedBits-1));
@@ -272,7 +272,7 @@ bool BitState::TrySearch(int id0, const char* p0) {
         if (submatch_[0].data() == NULL ||
             (longest_ && p > submatch_[0].end())) {
           for (int i = 0; i < nsubmatch_; i++)
-            submatch_[i] = StringPiece(cap_[2*i], cap_[2*i+1] - cap_[2*i]);
+            submatch_[i] = StringPiece(cap_[2*i], (int) (cap_[2*i+1] - cap_[2*i]));
         }
 
         // If going for first match, we're done.

@@ -52,7 +52,7 @@
 
 -(BOOL)injectInApiCalls
 {
-    NSError *error;
+  //  NSError *error;
     /*
     for (AppDeckApiCall *apiCall in apiCalls)
     {

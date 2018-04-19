@@ -28,26 +28,60 @@
 -(void)preload
 {
     __block AppDeck *app = [AppDeck sharedInstance];
-    __block ImagePreload *me = self;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-
-        NSURLResponse *response;
-        NSError *error;
-        NSData *data = nil;
+ __block ImagePreload *me = self;
+//        NSURLResponse *response;
+//        NSError *error;
+       __block NSData *data = nil;
         NSCachedURLResponse *cacheResponse = [app.cache cachedResponseForRequest:[NSURLRequest requestWithURL:me.url]];
         
-        if (cacheResponse)
+        if (cacheResponse){
             data = cacheResponse.data;
+
+        }
         else
-            data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:self.url] returningResponse:&response error:&error];
+           // data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:self.url] returningResponse:&response error:&error];
+        {
+            
+            dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:self.url]
+                                                    completionHandler:
+                                          ^(NSData *dataa, NSURLResponse *response, NSError *error) {
+                                              
+                                             // dispatch_async(dispatch_get_main_queue(), ^{
+                                                 data=dataa;
+                                                  
+                                                  dispatch_semaphore_signal(semaphore);
+
+                                                  // Your code to run on the main queue/thread
+                                           //   });
+                                              
+                                          }];
+            
+            [task resume];
+            
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+            
+        }
+        
         UIImage *tmp = [UIImage imageWithData:data];
         if (tmp == nil)
-            me.internal_image = [[UIImage alloc] init];
+        me.internal_image = [[UIImage alloc] init];
         else
-            me.internal_image = [tmp retinaEnabledImageScaledToFitHeight:self.height];
+        me.internal_image = [tmp retinaEnabledImageScaledToFitHeight:self.height];
+        
+        
+        
+
+        
     });
 }
+
+
 
 -(UIImage *)image
 {

@@ -47,6 +47,7 @@
 #import "RE2Regexp.h"
 #import "UIColor+blur.h"
 #import "MEZoomAnimationController.h"
+#import "MapViewController.h"
 
 @import SafariServices;
 
@@ -63,7 +64,7 @@
         // Custom initialization
         self.appDeck = [AppDeck sharedInstance];
         self.view.contentMode = UIViewContentModeScaleToFill;
-        self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth  | UIViewAutoresizingFlexibleHeight;
+        self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return self;
 }
@@ -93,7 +94,7 @@
         statusBarInfo.backgroundColor = [UIColor blackColor];
         [self.view addSubview:statusBarInfo];
     }
-
+    
     self.view.backgroundColor = [UIColor whiteColor];
     //self.view.hidden = YES;
     //self.view.opaque = NO;
@@ -123,28 +124,54 @@
     else
         request = [[NSURLRequest alloc] initWithURL:self.jsonUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
     
-    NSMutableDictionary *result;
-    NSURLResponse * response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+   __block NSMutableDictionary *result;
+//    NSURLResponse * response = nil;
+//    NSError *error = nil;
+   // NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    if (error == nil)
-    {
-        result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    }
-    
-    if (error != nil)
-    {
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"App Conf Error"
-                                                          message:[NSString stringWithFormat:@"%@", error]
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-        [message show];
-        return;
-    }
-    
-    [self loadAppConf:result];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:
+                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                      if (error == nil)
+                                      {
+                                          result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                      }
+
+                                      if (error != nil)
+                                      {
+                                          UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"App Conf Error" message:[NSString stringWithFormat:@"%@", error] preferredStyle:UIAlertControllerStyleAlert];
+                                          [controller addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+                                          [self presentViewController:controller animated:YES completion:nil];
+                                         
+                                          return;
+                                      }
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [self loadAppConf:result];
+                                          // Your code to run on the main queue/thread
+                                      });
+                                     
+                                  }];
+
+    [task resume];
+//
+//    if (error == nil)
+//    {
+//        result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+//    }
+//
+//    if (error != nil)
+//    {
+//        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"App Conf Error"
+//                                                          message:[NSString stringWithFormat:@"%@", error]
+//                                                         delegate:nil
+//                                                cancelButtonTitle:@"OK"
+//                                                otherButtonTitles:nil];
+//        [message show];
+//        return;
+//    }
+//
+//    [self loadAppConf:result];
     
 /*
     appJson = [JSonHTTPApi apiWithRequest:request callback:^(NSDictionary *result, NSError *error)
@@ -401,15 +428,15 @@
         if (self.conf.icon_theme == IconThemeDark)
         {
             NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                      [UIColor blackColor],UITextAttributeTextColor,
-                                                      [UIColor whiteColor], UITextAttributeTextShadowColor,
-                                                      [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
+                                                      [UIColor blackColor],NSForegroundColorAttributeName,
+                                                      [UIColor whiteColor], NSShadowAttributeName,
+                                                      [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], NSShadowAttributeName, nil];
             [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
         } else {
             NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                       [UIColor whiteColor],UITextAttributeTextColor,
-                                                       [UIColor blackColor], UITextAttributeTextShadowColor,
-                                                       [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
+                                                       [UIColor whiteColor],NSForegroundColorAttributeName,
+                                                       [UIColor blackColor], NSShadowAttributeName,
+                                                       [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], NSShadowAttributeName, nil];
             [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
         }
     }
@@ -516,7 +543,7 @@
     navCtl.navigationBar.tintColor = self.conf.app_topbar_text_color;
 
     
-    if (NO && self.appDeck.iosVersion >= 8.0 && self.conf.app_color != nil)
+    if (/* DISABLES CODE */ (NO) && self.appDeck.iosVersion >= 8.0 && self.conf.app_color != nil)
     {
         navCtl.navigationBar.translucent = YES;
         // Add blur view
@@ -526,7 +553,7 @@
         bounds.origin.y -= 20;
         bounds.size.height += 20;
         //}
-        if (YES)
+        if (/* DISABLES CODE */ (YES))
         {
             UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
             visualEffectView.userInteractionEnabled = false;
@@ -572,7 +599,7 @@
     }
     else if (self.appDeck.iosVersion >= 7.0)
     {
-        if (NO)
+        if (/* DISABLES CODE */ (NO))
             navCtl.navigationBar.translucent = YES;
         //[navCtl.navigationBar setBarTintColor:[self.conf.topbar_color1 colorWithAlphaComponent:0.6]];
         //navCtl.navigationBar.tintColor = (self.conf.icon_theme == IconThemeDark ? [UIColor whiteColor] : [UIColor blackColor]);
@@ -1195,7 +1222,7 @@
         }
     }
     
-    if (false)
+    if (/* DISABLES CODE */ (false))
     {
         page = [[LoaderChildViewController alloc] initWithNibName:nil bundle:nil URL:pageUrl content:nil header:nil footer:nil loader:self];
         page.view.backgroundColor = [UIColor redColor];        
@@ -1502,7 +1529,6 @@
         return YES;
     }
     
-    
     if ([call.command isEqualToString:@"pagepush"])
     {
         [self loadPage:[NSString stringWithFormat:@"%@",call.param] root:NO popup:LoaderPopUpDefault];
@@ -1665,7 +1691,12 @@
         return YES;
         
     }
-    
+    if ([call.command isEqualToString:@"select"])
+    {
+        MapViewController*vc= [[MapViewController alloc]init];
+        vc.view.backgroundColor=[UIColor redColor];
+        [self loadChild:vc root:NO popup:LoaderPopUpYes];
+    }
     //barcode ?
     if ([call.command isEqualToString:@"barcode"])
     {
@@ -1811,7 +1842,6 @@
 
     }
     
-    
     if (self.appDeck.iosVersion >= 7.0)
         return;
         
@@ -1822,7 +1852,9 @@
     
     // Check if statusBar's frame is worth dodging.
     if (!CGRectEqualToRect(statusBarFrame, CGRectZero)){
-        UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
+       // UIInterfaceOrientation currentOrientation = self.interfaceOrientation;
+        UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+        
         if (UIInterfaceOrientationIsPortrait(currentOrientation)){
             // If portrait we need to shrink height
             newViewFrame.size.height -= statusBarFrame.size.height;
@@ -1894,8 +1926,7 @@
         loadingView.frame = CGRectMake(self.view.bounds.size.width / 2 - loadingView.bounds.size.width / 2, self.view.bounds.size.height * 0.75, loadingView.frame.size.width, loadingView.frame.size.height);
         [self.view bringSubviewToFront:loadingView];
     }
-    
-    
+ 
     //self.slidingViewController.view.frame = self.view.bounds;
     //centerController.view.frame = self.view.bounds;
     //navController.view.frame = self.view.bounds;
@@ -1913,6 +1944,7 @@
     [centerController.view.layer setShadowPath:[[UIBezierPath
                                                  bezierPathWithRect:centerController.view.bounds] CGPath]];    
     return;
+    
     self.slidingViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     NSLog(@"View: %f - %f", self.view.frame.size.width, self.view.frame.size.height);
     NSLog(@"Image: %f - %f", backgroundImageView.image.size.width, backgroundImageView.image.size.height);
@@ -2000,7 +2032,7 @@
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)(void))completionHandler
 {
     //handle the actions
     if ([identifier isEqualToString:@"declineAction"]){
@@ -2146,14 +2178,22 @@
     NSLog(@"Notification: title: %@ url:%@ reload: %@", notification_title, notification_url, notification_reload_app);
     if ([userInfo objectForKey:@"url"] != nil)
     {
-        [[[UIAlertView alloc] initWithTitle:notification_title
-                                    message:nil
-                           cancelButtonItem:[RIButtonItem itemWithLabel:@"Ok" action:^{
-            [self loadPage:notification_url root:NO popup:LoaderPopUpDefault];
-        }]
-                           otherButtonItems:[RIButtonItem itemWithLabel:@"Cancel" action:^{
-            
-        }], nil] show];
+        
+        UIAlertController*controller = [UIAlertController alertControllerWithTitle:notification_title message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+             [self loadPage:notification_url root:NO popup:LoaderPopUpDefault];
+        }]];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:controller animated:YES completion:nil];
+//
+//        [[[UIAlertView alloc] initWithTitle:notification_title
+//                                    message:nil
+//                           cancelButtonItem:[RIButtonItem itemWithLabel:@"Ok" action:^{
+//            [self loadPage:notification_url root:NO popup:LoaderPopUpDefault];
+//        }]
+//                           otherButtonItems:[RIButtonItem itemWithLabel:@"Cancel" action:^{
+//
+//        }], nil] show];
     }
     
     if (notification_reload_app != nil)

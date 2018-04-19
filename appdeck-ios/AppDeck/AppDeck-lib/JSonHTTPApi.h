@@ -11,9 +11,10 @@
 typedef void ( ^JSonHTTPApiCallBack )( NSDictionary *, NSError *error ) ;
 
 
-@interface JSonHTTPApi : NSObject
+@interface JSonHTTPApi : NSObject <NSURLSessionDelegate>
 {
 	NSURLConnection	*conn;
+    NSURLSession*session;
 	NSMutableData	*receivedData;
 
 }

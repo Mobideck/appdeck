@@ -9,6 +9,6 @@
 #ifndef AppDeck_AdBlock_h_h
 #define AppDeck_AdBlock_h_h
 
-NSDictionary *getBlockedHosts();
+NSDictionary *getBlockedHosts(void);
 
 #endif

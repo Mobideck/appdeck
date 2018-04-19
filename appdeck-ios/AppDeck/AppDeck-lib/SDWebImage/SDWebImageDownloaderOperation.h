@@ -10,7 +10,7 @@
 #import "SDWebImageDownloader.h"
 #import "SDWebImageOperation.h"
 
-@interface SDWebImageDownloaderOperation : NSOperation <SDWebImageOperation>
+@interface SDWebImageDownloaderOperation : NSOperation <SDWebImageOperation,NSURLSessionDelegate>
 
 /**
  * The request used by the operation's connection.

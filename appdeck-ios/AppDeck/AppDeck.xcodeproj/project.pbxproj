@@ -240,6 +240,7 @@
 		A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */; };
 		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
+		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -678,6 +679,8 @@
 		A9F3F9C01CF82C1C0079225D /* AppDeckPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckPluginManager.h; path = "AppDeck-lib/AppDeckPluginManager.h"; sourceTree = "<group>"; };
 		A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPluginManager.m; path = "AppDeck-lib/AppDeckPluginManager.m"; sourceTree = "<group>"; };
 		A9F643911708BF1F003D07B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F09DC45D20873C90002F5A31 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		F09DC45E20873C90002F5A31 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1145,6 +1148,8 @@
 				A916CCA11A1E03DD005FE1AE /* LoaderViewController.m */,
 				A99EF6D81C09E11200DAC126 /* CustomECSlidingViewController.h */,
 				A99EF6D91C09E11200DAC126 /* CustomECSlidingViewController.m */,
+				F09DC45D20873C90002F5A31 /* MapViewController.h */,
+				F09DC45E20873C90002F5A31 /* MapViewController.m */,
 			);
 			name = Loader;
 			sourceTree = "<group>";
@@ -1583,7 +1588,7 @@
 		A91DFA0816CE8D1400512CA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Mathieu De Kermadec";
 				TargetAttributes = {
 					A91DFA0F16CE8D1400512CA0 = {
@@ -1728,6 +1733,7 @@
 			files = (
 				A916D2CE1A1E03E7005FE1AE /* AdRation.m in Sources */,
 				A916D2CB1A1E03E7005FE1AE /* AdActionHelper.m in Sources */,
+				F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */,
 				A916D2CD1A1E03E7005FE1AE /* AdPlacement.m in Sources */,
 				A916D2F31A1E03E7005FE1AE /* KeyboardStateListener.m in Sources */,
 				A916D3E31A1E03E7005FE1AE /* UIImage+MultiFormat.m in Sources */,
@@ -1941,12 +1947,18 @@
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1967,7 +1979,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
@@ -1981,12 +1993,18 @@
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1999,7 +2017,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
@@ -2020,7 +2038,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = AppDeck/AppDeck.entitlements;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = AppDeck/AppDeck.entitlements;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2028,12 +2046,7 @@
 					"$(PROJECT_DIR)/AppDeck",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/AmazonAds/AmazonAds-2.2.5",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/**",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/WideSpace/widespace-sdk-ios-4.6.0",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdColony/AdColony-iOS-SDK-2.5.1",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdMob/GoogleMobileAdsSdkiOS-7.4.1",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/Vungle/vungle-sdk-3.1.2",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppDeck/AppDeck-Prefix.pch";
@@ -2044,23 +2057,14 @@
 					"$(SRCROOT)/AppDeck-lib/re2lib",
 				);
 				INFOPLIST_FILE = "AppDeck/AppDeck-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AppDeck-lib/GoogleAnalytics",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/Greystripe/conversant-ios-sdk-4.4.0/ConversantSDK",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/InMobi/InMobi-iOS-SDK-4.5.3/Libs",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/Swelen/SwelenAds-50000e/SwelenSDK",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK/MediationAdapters/Facebook",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK/MediationAdapters/iAd",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK/MediationAdapters/InMobi",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/Flurry",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/Flurry/Flurry-iOS-7.1.0/FlurryAds",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/Appsfire/appsfire-sdk-2.7.8",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/SmartAdServer/SmartAdServer-6.1",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/NetAvenir/NetAvenirAds-15.10/Vendor/libYuMeSDK",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -2091,12 +2095,7 @@
 					"$(PROJECT_DIR)/AppDeck",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/AmazonAds/AmazonAds-2.2.5",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/**",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/WideSpace/widespace-sdk-ios-4.6.0",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdColony/AdColony-iOS-SDK-2.5.1",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdBuddiz/AdBuddiz-MoPub-ObjectiveC-2.5.2",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/AdMob/GoogleMobileAdsSdkiOS-7.4.1",
 					"$(PROJECT_DIR)/AppDeck-lib/Ad/MMedia/mm-ad-sdk-ios-601-30a1dfa/SDK",
-					"$(PROJECT_DIR)/AppDeck-lib/Ad/Vungle/vungle-sdk-3.1.2",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AppDeck/AppDeck-Prefix.pch";
@@ -2107,7 +2106,7 @@
 					"$(SRCROOT)/AppDeck-lib/re2lib",
 				);
 				INFOPLIST_FILE = "AppDeck/AppDeck-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AppDeck-lib/GoogleAnalytics",

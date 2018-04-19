@@ -25,7 +25,7 @@
 //#import "TestFlight.h"
 #import "MMPickerView/CustomMMPickerView.h"
 
-#import "SelectActionSheet.h"
+#import "SelectActionSheet.h"  //unused
 
 #import "SwipeViewController.h"
 #import "UIScrollView+ScrollsToTop.h"
@@ -142,8 +142,6 @@
     else
         self.userAgentChunk = @" WebView AppDeck-ios AppDeck-phone";
     
-    
-    
     // force user agent system wide
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:self.userAgent, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
@@ -216,7 +214,6 @@
     return (LoaderViewController *)navController;*/
     
     
-    
     AppDeck *appDeck = [AppDeck sharedInstance];
     
     appDeck.url = url;
@@ -261,8 +258,7 @@
     
 /*    if ([call.command isEqualToString:@"menu"])
     {
-
-        
+ 
         return @"";
     }*/
     
@@ -273,7 +269,7 @@
         if (externurl == nil)
             externurl = [NSURL URLWithString:urlstring];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] openURL:externurl];
+            [[UIApplication sharedApplication] openURL:externurl options:@{} completionHandler:nil];
         });
         return YES;
     }
@@ -375,6 +371,8 @@
     
     if ([call.command isEqualToString:@"select"])
     {
+        
+        return YES;
         //NSString *title = [call.param objectForKey:@"title"];
         NSArray *values = [call.param objectForKey:@"values"];
         
@@ -429,15 +427,16 @@
         return YES;
     }
     
-    
     if ([call.command isEqualToString:@"selectdate"])
     {
         id year = [call.param objectForKey:@"year"];
         id month = [call.param objectForKey:@"month"];
         id day = [call.param objectForKey:@"day"];
-        
-        UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"AppDeck" delegate:nil cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
-        action.actionSheetStyle = (self.loader.conf.icon_theme == IconThemeLight ? UIBarStyleDefault : UIBarStyleBlackOpaque);
+        UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"AppDeck \n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil]];
+
+//        UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"AppDeck \n\n\n\n\n\n" delegate:nil cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
+//        action.actionSheetStyle = (self.loader.conf.icon_theme == IconThemeLight ? UIBarStyleDefault : UIBarStyleBlackOpaque);
         // init the date
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
@@ -451,35 +450,38 @@
 
         NSDate *date = [calendar dateFromComponents:components];
 
-        
         // Add the picker
-        UIDatePicker *pickerView = [[UIDatePicker alloc] init];
+        UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 20, 320, 120)];
         pickerView.date = date;
         pickerView.datePickerMode = UIDatePickerModeDate;
-        [action addSubview:pickerView];
+        [pickerView addTarget:self action:@selector(dateSelected:) forControlEvents:UIControlEventValueChanged];
         
-        [action showInView:self.loader.view];
+      //  [action addSubview:pickerView];
+        
+       // [action showInView:self.loader.view];
 
-        [action setBounds:CGRectMake(0,0,320, 500)];
+       // [action setBounds:CGRectMake(0,0,320, 500)];
         
-        CGRect pickerRect = pickerView.bounds;
-        pickerRect.origin.y = -100;
-        pickerView.bounds = pickerRect;
+        [controller.view addSubview:pickerView];
+        
+        [self.loader presentViewController:controller animated:YES completion:nil];
+        
+//        CGRect pickerRect = pickerView.bounds;
+//        pickerRect.origin.y = -100;
+//        pickerView.bounds = pickerRect;
         
         NSRunLoop *rl = [NSRunLoop currentRunLoop];
         NSDate *d;
-        while ([action isVisible]) {
+        
+      //  while ([action isVisible]) {
             d = [[NSDate alloc] init];
             [rl runUntilDate:d];
-        }
-        
-        components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:pickerView.date]; // Get necessary date components
-        call.result = @{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]};
+      //  }
+//
+        components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:pickerView.date]; // Get necessary date components
+         [call sendCallbackWithResult:@[@{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]}]];
+       // call.result = @{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]};
 /*
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"O rlly?" message:nil delegate:nil
-                              cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alert show];
         NSRunLoop *rl = [NSRunLoop currentRunLoop];
         NSDate *d;
         while ([alert isVisible]) {
@@ -490,7 +492,11 @@
          call.result = @"OK";
  */
         
-
+//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                
+//            });
+//        });
         
         return YES;
     }
@@ -642,7 +648,7 @@
             ctl.delegate = self;
             [self.loader presentViewController:ctl animated:YES completion:nil];
         } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
         }
         return YES;
     }
@@ -662,6 +668,7 @@
     
     return [AppDeckPluginManager handleAPICall:call];
 }
+
 
 // call after json config is loaded
 -(void)configureApp

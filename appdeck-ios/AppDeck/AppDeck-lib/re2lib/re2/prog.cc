@@ -147,7 +147,7 @@ static string ProgToString(Prog* prog, Workq* q) {
 
 string Prog::Dump() {
   string map;
-  if (false) {  // Debugging
+    if (/* DISABLES CODE */ (false)) {  // Debugging
     int lo = 0;
     StringAppendF(&map, "byte map:\n");
     for (int i = 0; i < bytemap_range_; i++) {
@@ -329,7 +329,7 @@ void Prog::ComputeByteMap() {
   for (int i = 0; i < 256; i++)
     unbytemap_[bytemap_[i]] = static_cast<uint8>(i);
 
-  if (0) {  // For debugging: use trivial byte map.
+    if (/* DISABLES CODE */ (0)) {  // For debugging: use trivial byte map.
     for (int i = 0; i < 256; i++) {
       bytemap_[i] = static_cast<uint8>(i);
       unbytemap_[i] = static_cast<uint8>(i);

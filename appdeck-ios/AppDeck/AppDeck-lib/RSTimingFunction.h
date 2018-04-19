@@ -45,7 +45,7 @@ extern NSString *const kRSTimingFunctionDefault;       // controlPoint1=(0.25, 0
 + (instancetype)timingFunctionWithControlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2;
 
 // This is the meat and potatoes: returns `y` for a given `x` value.
-- (float)valueForX:(CGFloat)x;
+- (CGFloat)valueForX:(CGFloat)x;
 
 // If control points are changed after creation, returned values will reflect the changed curve immediately.
 // It's more performant to use multiple timing functions with set control points instead of reusing one and changing its control points over and over.

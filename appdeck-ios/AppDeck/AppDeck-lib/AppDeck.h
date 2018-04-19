@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AppDeckApiCall.h"
 #import "AppDeckUserProfile.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import <MessageUI/MFMessageComposeViewController.h>
+#import <SafariServices/SFSafariViewController.h>
 
 
 #define APPDECK_VERSION @"1.10"

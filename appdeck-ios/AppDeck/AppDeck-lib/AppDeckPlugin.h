@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AppDeckAPICall.h"
+#import "AppDeckApiCall.h"
 
 @interface AppDeckPlugin : NSObject
 

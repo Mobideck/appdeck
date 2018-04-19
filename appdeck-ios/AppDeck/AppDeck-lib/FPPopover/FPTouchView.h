@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^FPTouchedOutsideBlock)();
-typedef void (^FPTouchedInsideBlock)();
+typedef void (^FPTouchedOutsideBlock)(void);
+typedef void (^FPTouchedInsideBlock)(void);
 
 @interface FPTouchView : UIView
 {

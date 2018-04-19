@@ -38,7 +38,7 @@ void StringPiece::AppendToString(string* target) const {
 }
 
 int StringPiece::copy(char* buf, size_type n, size_type pos) const {
-  int ret = min(length_ - pos, n);
+  int ret =  (int)min(length_ - pos, n);
   memcpy(buf, ptr_ + pos, ret);
   return ret;
 }
@@ -49,47 +49,47 @@ bool StringPiece::contains(StringPiece s) const {
 
 int StringPiece::find(const StringPiece& s, size_type pos) const {
   if (length_ < 0 || pos > static_cast<size_type>(length_))
-    return npos;
+    return (int)npos;
 
   const char* result = std::search(ptr_ + pos, ptr_ + length_,
                                    s.ptr_, s.ptr_ + s.length_);
   const size_type xpos = result - ptr_;
-  return xpos + s.length_ <= static_cast<size_type>(length_) ? xpos : npos;
+  return xpos + s.length_ <= static_cast<size_type>((int)length_) ? (int)xpos : (int)npos;
 }
 
 int StringPiece::find(char c, size_type pos) const {
   if (length_ <= 0 || pos >= static_cast<size_type>(length_)) {
-    return npos;
+    return (int)npos;
   }
   const char* result = std::find(ptr_ + pos, ptr_ + length_, c);
-  return result != ptr_ + length_ ? result - ptr_ : npos;
+  return result != ptr_ + length_ ? (int)(result - ptr_) : (int)npos;
 }
 
 int StringPiece::rfind(const StringPiece& s, size_type pos) const {
-  if (length_ < s.length_) return npos;
+  if (length_ < s.length_) return (int)npos;
   const size_t ulen = length_;
-  if (s.length_ == 0) return min(ulen, pos);
+  if (s.length_ == 0) return (int)min(ulen, pos);
 
   const char* last = ptr_ + min(ulen - s.length_, pos) + s.length_;
   const char* result = std::find_end(ptr_, last, s.ptr_, s.ptr_ + s.length_);
-  return result != last ? result - ptr_ : npos;
+  return result != last ? (int)(result - ptr_) : (int)npos;
 }
 
 int StringPiece::rfind(char c, size_type pos) const {
-  if (length_ <= 0) return npos;
-  for (int i = min(pos, static_cast<size_type>(length_ - 1));
+  if (length_ <= 0) return (int)npos;
+  for (int i =(int) min(pos, static_cast<size_type>(length_ - 1));
        i >= 0; --i) {
     if (ptr_[i] == c) {
       return i;
     }
   }
-  return npos;
+  return (int)npos;
 }
 
 StringPiece StringPiece::substr(size_type pos, size_type n) const {
   if (pos > static_cast<size_type>(length_)) pos = static_cast<size_type>(length_);
   if (n > length_ - pos) n = length_ - pos;
-  return StringPiece(ptr_ + pos, n);
+  return StringPiece(ptr_ + pos, (int)n);
 }
 
 const StringPiece::size_type StringPiece::npos = size_type(-1);

@@ -27,7 +27,7 @@
     UITapGestureRecognizer *tapRecognizer;
     UITapGestureRecognizer *doubleTapRecognizer;
     
-    UIActionSheet *actionSheet;
+   // UIActionSheet *actionSheet;
     
     NSInteger currentIndex;
 }

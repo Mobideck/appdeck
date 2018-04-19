@@ -319,7 +319,6 @@
         NSLog(@"Error while parsing http headers: %@", error);
         return;
     }
-
     
     if (![json writeToFile:cachedFilePathMetaTmp atomically:YES])
     {

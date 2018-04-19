@@ -13,8 +13,10 @@
     NSString *title;
     NSArray *values;
     UIPickerView *picker;
+    NSDate*cDate;
 }
 
 -(id)initWithTitle:(NSString *)title andValues:(NSArray *)values;
+-(id)initWithTitle:(NSString *)title andDate:(NSDate *)date;
 -(void)postSetup;
 @end

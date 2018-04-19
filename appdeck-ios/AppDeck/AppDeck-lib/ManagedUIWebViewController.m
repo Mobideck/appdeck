@@ -318,6 +318,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 @synthesize resourceCount;
 @synthesize resourceCompletedCount;
 @synthesize webDataSource;
+@synthesize webView;
+@synthesize delegate;
 
 - (void)webView:(UIWebView *)_webView didReceiveResourceNumber:(int)resourceNumber totalResources:(int)totalResources
 {
@@ -401,7 +403,7 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     // handle famous app
     if ([[[request URL] absoluteString] hasPrefix:@"fb://"])
     {
-        [[UIApplication sharedApplication] openURL:[request URL]];
+        [[UIApplication sharedApplication] openURL:[request URL] options:@{} completionHandler:nil];
         return NO;
     }
 
@@ -886,7 +888,6 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     
     [webView stringByEvaluatingJavaScriptFromString:@"$( document ).on( 'pagechange', function( event, data ){ setTimeout(\"prompt('event:pagechange')\",250); });"];
     
-    
     //    [webView stringByEvaluatingJavaScriptFromString:@"    if(document.loaded) { prompt('toto', 'tutu'); } else { window.addEventListener('load', prompt('toto', 'tutu'), false); }"];
     //    [webView stringByEvaluatingJavaScriptFromString:@"window.addEventListener('load', prompt('toto', 'tutu'), false);"];
     //    [webView stringByEvaluatingJavaScriptFromString:@"$(document).ready(function() { prompt('toto', 'tutu');  });"];
@@ -921,6 +922,5 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 {
     [self.webView stopLoading];
 }
-
 
 @end

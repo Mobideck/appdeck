@@ -58,7 +58,7 @@
 	
 	CC_MD5_CTX md5;
 	CC_MD5_Init (&md5);
-	CC_MD5_Update (&md5, [self UTF8String], [self length]);
+	CC_MD5_Update (&md5, [self UTF8String], (CC_LONG)[self length]);
 		
 	unsigned char digest[CC_MD5_DIGEST_LENGTH];
 	CC_MD5_Final (digest, &md5);

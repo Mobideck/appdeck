@@ -122,10 +122,13 @@
 	
 	CGContextRef curContext = UIGraphicsGetCurrentContext();
 
-	NSString* numberString = [NSString stringWithFormat:@"%d", (unsigned long)self.value];
+    
+    //changed by hanine
+    NSString* numberString = [NSString stringWithFormat:@"%lu", (unsigned long)self.value];
 	
 	
-	CGSize numberSize = [numberString sizeWithFont:self.font];
+	CGSize numberSize = [numberString sizeWithAttributes:@{NSFontAttributeName:self.font}]; //sizeWithFont -->sizeWithAttributes
+    
 		
 	CGPathRef badgePath = [self newBadgePathForTextSize:numberSize];
 	
@@ -236,13 +239,12 @@
 		
 	CGPoint textPt = CGPointMake( ctm.x + (badgeRect.size.width - numberSize.width)/2 , ctm.y + (badgeRect.size.height - numberSize.height)/2 );
 	
-	[numberString drawAtPoint:textPt withFont:self.font];
+	[numberString drawAtPoint:textPt withAttributes:@{NSFontAttributeName:self.font}];
 
 	CGContextRestoreGState( curContext );
 
 }
-
-
+ 
 - (CGPathRef)newBadgePathForTextSize:(CGSize)inSize
 {
 	CGFloat arcRadius = ceil((inSize.height+self.pad)/2.0);
@@ -281,10 +283,11 @@
 
 - (CGSize)badgeSize
 {
-	NSString* numberString = [NSString stringWithFormat:@"%d", (unsigned long)self.value];
+    NSString* numberString = [NSString stringWithFormat:@"%lu", (unsigned long)self.value];
 	
 	
-	CGSize numberSize = [numberString sizeWithFont:self.font];
+	CGSize numberSize = [numberString sizeWithAttributes:@{NSFontAttributeName:self.font}];
+    
 	
 	CGPathRef badgePath = [self newBadgePathForTextSize:numberSize];
 	

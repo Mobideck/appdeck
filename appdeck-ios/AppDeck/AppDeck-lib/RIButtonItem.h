@@ -11,10 +11,10 @@
 @interface RIButtonItem : NSObject
 {
     NSString *label;
-    void (^action)();
+    void (^action)(void);
 }
 @property (retain, nonatomic) NSString *label;
-@property (copy, nonatomic) void (^action)();
+@property (copy, nonatomic) void (^action)(void);
 +(id)item;
 +(id)itemWithLabel:(NSString *)inLabel;
 +(id)itemWithLabel:(NSString *)inLabel action:(void(^)(void))action;

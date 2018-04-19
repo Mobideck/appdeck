@@ -67,9 +67,7 @@
 
 -(NSMutableURLRequest *)prepareRequest:(NSURLRequest *)request
 {
-    
-    
-    
+
     return [request mutableCopy];
 }
 
@@ -82,8 +80,16 @@
         self.callback = callback;
         self.request = [self prepareRequest:request];
         
-        conn = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:YES];
-        if (conn)
+        //conn = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:YES];
+    
+        NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
+        
+        NSURLSessionDataTask*downloadTask =[session dataTaskWithRequest:self.request];
+        
+        [downloadTask resume];
+        
+        if (downloadTask)
         {
             receivedData = [NSMutableData data];
         }
@@ -118,30 +124,48 @@
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
+//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+//{
+//    [receivedData setLength:0];
+//}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
     [receivedData setLength:0];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [receivedData appendData:data];
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
+     [receivedData appendData:data];
 }
+//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+//{
+//    [receivedData appendData:data];
+//}
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-//    NSLog(@"Succeeded! Received %lud bytes of data: %@",(unsigned long)[receivedData length], [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
-    NSError *error;
-
-	//NSMutableDictionary *result = [receivedData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
-    NSMutableDictionary *result = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableContainers error:&error];
-    self.callback(result, error);
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error{
+    if (error){
+         self.callback(nil, error);
+    }else{
+        NSError *error;
+        
+        //NSMutableDictionary *result = [receivedData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+        NSMutableDictionary *result = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableContainers error:&error];
+        self.callback(result, error);
+    }
 }
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    self.callback(nil, error);
-}
+//- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+//{
+////    NSLog(@"Succeeded! Received %lud bytes of data: %@",(unsigned long)[receivedData length], [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
+//    NSError *error;
+//
+//    //NSMutableDictionary *result = [receivedData objectFromJSONDataWithParseOptions:JKParseOptionComments|JKParseOptionUnicodeNewlines|JKParseOptionLooseUnicode|JKParseOptionPermitTextAfterValidJSON error:&error];
+//    NSMutableDictionary *result = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableContainers error:&error];
+//    self.callback(result, error);
+//}
+//
+//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+//{
+//    self.callback(nil, error);
+//}
 
 
 

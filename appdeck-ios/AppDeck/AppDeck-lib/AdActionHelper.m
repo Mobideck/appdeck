@@ -8,7 +8,7 @@
 
 #import "AdActionHelper.h"
 
-@implementation AdActionHelper
+@implementation AdActionHelper 
 
 -(id)initWithURL:(NSString *)url target:(NSString *)target adManager:(AdManager *)adManager
 {
@@ -31,14 +31,47 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:self.url]];
     [request addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];
 
-	conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
-	if (conn)
-	{
+
+    
+    //conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    
+    NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURLSessionDataTask*downloadTask =[session dataTaskWithRequest:request];
+    
+    [downloadTask resume];
+    if (downloadTask)
+    {
         currentRequest = request;
-		receivedData = [NSMutableData data];
-	} else {
+        receivedData = [NSMutableData data];
+    } else {
         [self failed];
     }
+
+    
+//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    configuration.HTTPAdditionalHeaders=@{@"User-Agent":[[AppDeck sharedInstance] userAgent]};
+//    session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+//    
+//    NSURLSessionTask *task = [session dataTaskWithURL:[NSURL URLWithString:self.url]];
+//    [task resume];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]];
+//    [request addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];
+//
+//    session = [NSURLSession sharedSession];
+//    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+//                                            completionHandler:
+//                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
+//                                      if(error)
+//                                        [self failed];
+//                                      else{
+//
+//                                      }
+//                                  }];
+//
+//    [task resume];
+    
 }
 
 -(void)success
@@ -120,7 +153,7 @@
      return YES;
      } else {*/
     [self success];
-    [[UIApplication sharedApplication] openURL:request.URL];
+    [[UIApplication sharedApplication] openURL:request.URL options:@{} completionHandler:nil];
 /*     return YES;
      }*/
     
@@ -132,11 +165,14 @@
     [self success];
 }
 
-#pragma mark - NSURLConnectionDelegate
+#pragma mark - NSURLSessionDelegate
 
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
-{
-    //[connection cancel];
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler{
+    
+    [task cancel];
     NSLog(@"Redirect: %@", request.URL.absoluteString);
     
     //https://itunes.apple.com/app/game-of-war-fire-age/id667728512?ls=1&mt=8
@@ -144,46 +180,97 @@
     if ([request.URL.scheme isEqualToString:@"itms-appss"] || [request.URL.host isEqualToString:@"itunes.apple.com"])
     {
         [self handleAppStore:request];
-        [connection cancel];
-        return nil;
+       // [session cancel];
     }
     
     // update current Request if needed
     currentRequest = request;
-    return request;
+    
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if ([httpResponse statusCode] != 200)
-            [self failed];
-
-        [connection cancel];
+        [self failed];
+        
+        [dataTask cancel];
         [self handleURL:currentRequest];
         return;
-
+        
     }
     [receivedData setLength:0];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data{
     [receivedData appendData:data];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-//    NSLog(@"Succeeded! Received %d bytes of data: %@",[receivedData length], [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
-    [self handleHTML:currentRequest data:receivedData];
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+didCompleteWithError:(nullable NSError *)error{
+    if (error){
+         [self failed];
+    }else{
+         [self handleHTML:currentRequest data:receivedData];
+    }
+    
 }
+#pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [self failed];
-}
+//- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
+//{
+//    //[connection cancel];
+//    NSLog(@"Redirect: %@", request.URL.absoluteString);
+//
+//    //https://itunes.apple.com/app/game-of-war-fire-age/id667728512?ls=1&mt=8
+//    //itms-appss://itunes.apple.com/fr/app/empire-four-kingdoms/id585661281?mt=8&ls=1&uo=4
+//    if ([request.URL.scheme isEqualToString:@"itms-appss"] || [request.URL.host isEqualToString:@"itunes.apple.com"])
+//    {
+//        [self handleAppStore:request];
+//        [connection cancel];
+//        return nil;
+//    }
+//
+//    // update current Request if needed
+//    currentRequest = request;
+//    return request;
+//}
+
+//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+//{
+//    if ([response isKindOfClass:[NSHTTPURLResponse class]])
+//    {
+//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+//        if ([httpResponse statusCode] != 200)
+//            [self failed];
+//
+//        [connection cancel];
+//        [self handleURL:currentRequest];
+//        return;
+//
+//    }
+//    [receivedData setLength:0];
+//}
+
+//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+//{
+//    [receivedData appendData:data];
+//}
+
+//- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+//{
+////    NSLog(@"Succeeded! Received %d bytes of data: %@",[receivedData length], [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
+//    [self handleHTML:currentRequest data:receivedData];
+//}
+//
+//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+//{
+//    [self failed];
+//}
 
 
 @end

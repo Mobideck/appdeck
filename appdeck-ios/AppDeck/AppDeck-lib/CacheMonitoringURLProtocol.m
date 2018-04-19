@@ -148,7 +148,14 @@
 
 - (void)startLoading
 {
-    self.MyConnection = [NSURLConnection connectionWithRequest:[self request] delegate:self];
+    
+    NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURLSessionDataTask*downloadTask =[_session dataTaskWithRequest:[self request]];
+    
+    [downloadTask resume];
+   // self.MyConnection = [NSURLConnection connectionWithRequest:[self request] delegate:self];
 }
 
 - (void)stopLoading
@@ -159,75 +166,133 @@
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
+//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+//{
+//    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
+//    self.response = response;
+//}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
+    
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
     self.response = response;
+    
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
     [[self client] URLProtocol:self didLoadData:data];
     if (shouldCache)
     {
         if (self.data == nil)
-            self.data = [data mutableCopy];
+        self.data = [data mutableCopy];
         else
-            [self.data appendData:data];
+        [self.data appendData:data];
     }
 }
+
+//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+//{
+//    [[self client] URLProtocol:self didLoadData:data];
+//    if (shouldCache)
+//    {
+//        if (self.data == nil)
+//            self.data = [data mutableCopy];
+//        else
+//            [self.data appendData:data];
+//    }
+//}
 
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     
 }
+//
+//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+//{
+////    [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
+//    return cachedResponse;
+//}
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-//    [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
-    return cachedResponse;
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable cachedResponse))completionHandler{
+    //    [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
 }
 
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
-{
-    if (redirectResponse)
-        [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:redirectResponse];
-    return request;
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler{
+    if (response)
+        [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    if (shouldCache == YES)
-    {
-        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:self.response data:self.data];
-        AppDeck *appDeck = [AppDeck sharedInstance];
-        [appDeck.cache storeCachedResponse:cachedResponse forRequest:self.request];
+//- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
+//{
+//    if (redirectResponse)
+//        [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:redirectResponse];
+//    return request;
+//}
 
-    }
-    [[self client] URLProtocolDidFinishLoading:self];
-    [self clean];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    // request failed, we try to get it from cache just in case
-    if (self.request && self.request.URL != nil)
-    {
-        AppDeck *appDeck = [AppDeck sharedInstance];
-        NSCachedURLResponse *cachedResponse = [appDeck.cache getCacheResponseForRequest:self.request];
-        if (cachedResponse != nil)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error{
+    
+    if (error==nil){
+        if (shouldCache == YES)
         {
-            NSLog(@"network failure: force pop %@ from cache", self.request);
-            [[self client] URLProtocol:self didReceiveResponse:cachedResponse.response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-            [[self client] URLProtocol:self didLoadData:cachedResponse.data];
-            [[self client] URLProtocolDidFinishLoading:self];
-            return;
+            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:self.response data:self.data];
+            AppDeck *appDeck = [AppDeck sharedInstance];
+            [appDeck.cache storeCachedResponse:cachedResponse forRequest:self.request];
+            
         }
+        [[self client] URLProtocolDidFinishLoading:self];
+        [self clean];
+    }else{
+        if (self.request && self.request.URL != nil)
+        {
+            AppDeck *appDeck = [AppDeck sharedInstance];
+            NSCachedURLResponse *cachedResponse = [appDeck.cache getCacheResponseForRequest:self.request];
+            if (cachedResponse != nil)
+            {
+                NSLog(@"network failure: force pop %@ from cache", self.request);
+                [[self client] URLProtocol:self didReceiveResponse:cachedResponse.response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+                [[self client] URLProtocol:self didLoadData:cachedResponse.data];
+                [[self client] URLProtocolDidFinishLoading:self];
+                return;
+            }
+        }
+        [[self client] URLProtocol:self didFailWithError:error];
+        [self clean];
     }
-    [[self client] URLProtocol:self didFailWithError:error];
-    [self clean];
 }
+
+//- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+//{
+//    if (shouldCache == YES)
+//    {
+//        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:self.response data:self.data];
+//        AppDeck *appDeck = [AppDeck sharedInstance];
+//        [appDeck.cache storeCachedResponse:cachedResponse forRequest:self.request];
+//
+//    }
+//    [[self client] URLProtocolDidFinishLoading:self];
+//    [self clean];
+//}
+//
+//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+//{
+//    // request failed, we try to get it from cache just in case
+//    if (self.request && self.request.URL != nil)
+//    {
+//        AppDeck *appDeck = [AppDeck sharedInstance];
+//        NSCachedURLResponse *cachedResponse = [appDeck.cache getCacheResponseForRequest:self.request];
+//        if (cachedResponse != nil)
+//        {
+//            NSLog(@"network failure: force pop %@ from cache", self.request);
+//            [[self client] URLProtocol:self didReceiveResponse:cachedResponse.response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+//            [[self client] URLProtocol:self didLoadData:cachedResponse.data];
+//            [[self client] URLProtocolDidFinishLoading:self];
+//            return;
+//        }
+//    }
+//    [[self client] URLProtocol:self didFailWithError:error];
+//    [self clean];
+//}
 
 #pragma mark - internal
 

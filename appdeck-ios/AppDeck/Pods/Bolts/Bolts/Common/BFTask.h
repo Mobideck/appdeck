@@ -136,7 +136,7 @@ __attribute__((deprecated("`BFTask` exception handling is deprecated and will be
  If block returns a BFTask, then the task returned from
  this method will not be completed until that task is completed.
  */
-+ (instancetype)taskFromExecutor:(BFExecutor *)executor withBlock:(nullable id (^)())block;
++ (instancetype)taskFromExecutor:(BFExecutor *)executor withBlock:(nullable id (^)(void))block;
 
 // Properties that will be set on the task once it is completed.
 

@@ -93,17 +93,31 @@
         [self setImage:buttonImage forState:state];
         [self setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
         
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   if (error == nil)
-                                   {
-                                       [self setImageFromData:data forState:state];
-                                       [self.superview setNeedsLayout];
-                                   }
-                                   else
-                                       NSLog(@"Failed to download icon: %@: %@", url, error);
-                               }];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error == nil)
+            {
+                [self setImageFromData:data forState:state];
+                [self.superview setNeedsLayout];
+            }
+            else
+            NSLog(@"Failed to download icon: %@: %@", url, error);
+        }];
+        
+        [task resume];
+//        
+//        [NSURLConnection sendAsynchronousRequest:request
+//                                           queue:[NSOperationQueue mainQueue]
+//                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//                                   if (error == nil)
+//                                   {
+//                                       [self setImageFromData:data forState:state];
+//                                       [self.superview setNeedsLayout];
+//                                   }
+//                                   else
+//                                       NSLog(@"Failed to download icon: %@: %@", url, error);
+//                               }];
     }
 }
 

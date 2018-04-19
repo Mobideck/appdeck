@@ -22,6 +22,16 @@
     return self;
 }
 
+-(id)initWithTitle:(NSString *)title andDate:(NSDate *)date{
+    self = [super initWithTitle:title delegate:self cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
+    if (self) {
+        // Initialization code
+        title = title;
+        cDate = date;
+        [self setDate:cDate];
+    }
+    return self;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -31,15 +41,23 @@
 }
 */
 
+-(void)setDate:(NSDate*)date{
+    UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 20, 320, 120)];
+    pickerView.date = date;
+    pickerView.datePickerMode = UIDatePickerModeDate;
+    [self addSubview:pickerView];
+}
+
 -(void)setValues:(NSArray *)values
 {
     picker = [[UIPickerView alloc] init];
     picker.delegate = self;
     picker.dataSource = self;
  
-    
     [self addSubview:picker];
-    
+
+    // Add the picker
+  
 }
 
 -(void)postSetup

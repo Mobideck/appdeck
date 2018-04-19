@@ -1422,12 +1422,12 @@ static bool ParseEscape(StringPiece* s, Rune* rp,
     //   return true;
   }
 
-  LOG(DFATAL) << "Not reached in ParseEscape.";
+ // LOG(DFATAL) << "Not reached in ParseEscape."; 
 
 BadEscape:
   // Unrecognized escape sequence.
   status->set_code(kRegexpBadEscape);
-  status->set_error_arg(StringPiece(begin, s->data() - begin));
+  status->set_error_arg(StringPiece(begin, (int)(s->data() - begin)));
   return false;
 }
 
@@ -1586,7 +1586,7 @@ ParseStatus ParseUnicodeGroup(StringPiece* s, Regexp::ParseFlags parse_flags,
   if (c != '{') {
     // Name is the bit of string we just skipped over for c.
     const char* p = seq.begin() + 2;
-    name = StringPiece(p, s->begin() - p);
+    name = StringPiece(p, (int)(s->begin() - p));
   } else {
     // Name is in braces. Look for closing }
     size_t end = s->find('}', 0);
@@ -1597,14 +1597,14 @@ ParseStatus ParseUnicodeGroup(StringPiece* s, Regexp::ParseFlags parse_flags,
       status->set_error_arg(seq);
       return kParseError;
     }
-    name = StringPiece(s->begin(), end);  // without '}'
-    s->remove_prefix(end + 1);  // with '}'
+    name = StringPiece(s->begin(), (int)end);  // without '}'
+    s->remove_prefix((int)end + 1);  // with '}'
     if (!IsValidUTF8(name, status))
       return kParseError;
   }
 
   // Chop seq where s now begins.
-  seq = StringPiece(seq.begin(), s->begin() - seq.begin());
+  seq = StringPiece(seq.begin(),(int) (s->begin() - seq.begin()));
 
   // Look up group
   if (name.size() > 0 && name[0] == '^') {
@@ -1645,7 +1645,7 @@ static ParseStatus ParseCCName(StringPiece* s, Regexp::ParseFlags parse_flags,
 
   // Got it.  Check that it's valid.
   q += 2;
-  StringPiece name(p, q-p);
+  StringPiece name(p, (int)(q-p));
 
   const UGroup *g = LookupPosixGroup(name);
   if (g == NULL) {
@@ -1699,7 +1699,7 @@ bool Regexp::ParseState::ParseCCRange(StringPiece* s, RuneRange* rr,
       return false;
     if (rr->hi < rr->lo) {
       status->set_code(kRegexpBadCharRange);
-      status->set_error_arg(StringPiece(os.data(), s->data() - os.data()));
+      status->set_error_arg(StringPiece(os.data(), (int)(s->data() - os.data())));
       return false;
     }
   } else {
@@ -1881,8 +1881,8 @@ bool Regexp::ParseState::ParsePerlFlags(StringPiece* s) {
     }
 
     // t is "P<name>...", t[end] == '>'
-    StringPiece capture(t.begin()-2, end+3);  // "(?P<name>"
-    StringPiece name(t.begin()+2, end-2);     // "name"
+    StringPiece capture(t.begin()-2, (int)end+3);  // "(?P<name>"
+    StringPiece name(t.begin()+2, (int)end-2);     // "name"
     if (!IsValidUTF8(name, status_))
       return false;
     if (!IsValidCaptureName(name)) {
@@ -1896,7 +1896,7 @@ bool Regexp::ParseState::ParsePerlFlags(StringPiece* s) {
       return false;
     }
 
-    s->remove_prefix(capture.end() - s->begin());
+    s->remove_prefix((int)(capture.end() - s->begin()));
     return true;
   }
 
@@ -1979,7 +1979,7 @@ bool Regexp::ParseState::ParsePerlFlags(StringPiece* s) {
 
 BadPerlOp:
   status_->set_code(kRegexpBadPerlOp);
-  status_->set_error_arg(StringPiece(s->begin(), t.begin() - s->begin()));
+  status_->set_error_arg(StringPiece(s->begin(),(int) (t.begin() - s->begin())));
   return false;
 }
 
@@ -2127,11 +2127,11 @@ Regexp* Regexp::Parse(const StringPiece& s, ParseFlags global_flags,
             // (and a++ means something else entirely, which we don't support!)
             status->set_code(kRegexpRepeatOp);
             status->set_error_arg(StringPiece(lastunary.begin(),
-                                              t.begin() - lastunary.begin()));
+                                             (int) (t.begin() - lastunary.begin())));
             return NULL;
           }
         }
-        opstr.set(opstr.data(), t.data() - opstr.data());
+        opstr.set(opstr.data(),(int)( t.data() - opstr.data()));
         if (!ps.PushRepeatOp(op, opstr, nongreedy))
           return NULL;
         isunary = opstr;
@@ -2158,11 +2158,11 @@ Regexp* Regexp::Parse(const StringPiece& s, ParseFlags global_flags,
             // Not allowed to stack repetition operators.
             status->set_code(kRegexpRepeatOp);
             status->set_error_arg(StringPiece(lastunary.begin(),
-                                              t.begin() - lastunary.begin()));
+                                            (int)  (t.begin() - lastunary.begin())));
             return NULL;
           }
         }
-        opstr.set(opstr.data(), t.data() - opstr.data());
+        opstr.set(opstr.data(),(int) (t.data() - opstr.data()));
         if (!ps.PushRepetition(lo, hi, opstr, nongreedy))
           return NULL;
         isunary = opstr;
@@ -2192,6 +2192,7 @@ Regexp* Regexp::Parse(const StringPiece& s, ParseFlags global_flags,
             t.remove_prefix(2);  // '\\', 'z'
             break;
           }
+            
           // Do not recognize \Z, because this library can't
           // implement the exact Perl/PCRE semantics.
           // (This library treats "(?-m)$" as \z, even though

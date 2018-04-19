@@ -97,24 +97,24 @@
 
     }
     return [self altwebView:sender runJavaScriptTextInputPanelWithPrompt:prompt defaultText:defaultText initiatedByFrame:frame];    
-    if ([prompt hasPrefix:@"toto"])
-    {
-        NSLog(@"%@", defaultText);
-        return @"";
-    }
-    if ([prompt hasPrefix:@"event:"])
-    {
-        if (self.delegate!= nil && [self.delegate respondsToSelector:@selector(webView:runPrompt:defaultText:initiatedByFrame:)])
-        {
-            id<CustomUIWebViewProgressDelegate> progressDelegate = (id<CustomUIWebViewProgressDelegate>)self.delegate;
-            return [progressDelegate webView:self runPrompt:prompt defaultText:defaultText initiatedByFrame:frame];
-        }
-    }
-    else
-    {
-        return [self altwebView:sender runJavaScriptTextInputPanelWithPrompt:prompt defaultText:defaultText initiatedByFrame:frame];
-    }
-    return @"";
+//    if ([prompt hasPrefix:@"toto"])
+//    {
+//        NSLog(@"%@", defaultText);
+//        return @"";
+//    }
+//    if ([prompt hasPrefix:@"event:"])
+//    {
+//        if (self.delegate!= nil && [self.delegate respondsToSelector:@selector(webView:runPrompt:defaultText:initiatedByFrame:)])
+//        {
+//            id<CustomUIWebViewProgressDelegate> progressDelegate = (id<CustomUIWebViewProgressDelegate>)self.delegate;
+//            return [progressDelegate webView:self runPrompt:prompt defaultText:defaultText initiatedByFrame:frame];
+//        }
+//    }
+//    else
+//    {
+//        return [self altwebView:sender runJavaScriptTextInputPanelWithPrompt:prompt defaultText:defaultText initiatedByFrame:frame];
+//    }
+//    return @"";
 }
 
 @end

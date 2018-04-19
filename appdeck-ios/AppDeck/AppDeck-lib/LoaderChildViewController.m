@@ -80,7 +80,6 @@
 {
     [super viewWillDisappear:animated];
     
-    
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -314,32 +313,57 @@
                     __block LoaderChildViewController *me = self;
                     
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:imageUrl] returningResponse:nil error:nil];
-                        UIImage *image = nil;
-                        if (data)
-                            image = [UIImage imageWithData:data];
                         
-                        NSMutableArray *dataToShare = [[NSMutableArray alloc] init];
-                        if (title)
-                            [dataToShare addObject:title];
-                        if (url)
-                            [dataToShare addObject:url];
-                        if (image)
-                            [dataToShare addObject:image];
+                        NSURLSession *session = [NSURLSession sharedSession];
+                        NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:imageUrl]
+                                                                completionHandler:
+                                                      ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                          
+                                                          UIImage *image = nil;
+                                                          if (data)
+                                                          image = [UIImage imageWithData:data];
+                                                          
+                                                          NSMutableArray *dataToShare = [[NSMutableArray alloc] init];
+                                                          if (title)
+                                                          [dataToShare addObject:title];
+                                                          if (url)
+                                                          [dataToShare addObject:url];
+                                                          if (image)
+                                                          [dataToShare addObject:image];
+                                                          
+                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                              UIActivityViewController* activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare applicationActivities:nil];
+                                                              if (me.loader.appDeck.iosVersion >= 8.0)
+                                                              activityViewController.popoverPresentationController.sourceView = me.view;
+                                                              [me presentViewController:activityViewController animated:YES completion:^{}];
+                                                          });
+                                                          
+                                                      }];
                         
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            UIActivityViewController* activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare applicationActivities:nil];
-                            if (me.loader.appDeck.iosVersion >= 8.0)
-                                activityViewController.popoverPresentationController.sourceView = me.view;
-                            [me presentViewController:activityViewController animated:YES completion:^{}];
-                        });
+                        [task resume];
+//                        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:imageUrl] returningResponse:nil error:nil];
+//                        UIImage *image = nil;
+//                        if (data)
+//                            image = [UIImage imageWithData:data];
+//                        
+//                        NSMutableArray *dataToShare = [[NSMutableArray alloc] init];
+//                        if (title)
+//                            [dataToShare addObject:title];
+//                        if (url)
+//                            [dataToShare addObject:url];
+//                        if (image)
+//                            [dataToShare addObject:image];
+//                        
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            UIActivityViewController* activityViewController = [[UIActivityViewController alloc] initWithActivityItems:dataToShare applicationActivities:nil];
+//                            if (me.loader.appDeck.iosVersion >= 8.0)
+//                                activityViewController.popoverPresentationController.sourceView = me.view;
+//                            [me presentViewController:activityViewController animated:YES completion:^{}];
+//                        });
                         
                     });
                 }
-                
-                
-                
-                
+
                 // stats
                 [self.loader.analytics sendEventWithName:@"action" action:@"share" label:(url ? url.absoluteString : title) value:[NSNumber numberWithInt:1]];
                 

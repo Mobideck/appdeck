@@ -47,7 +47,7 @@ NSString *const SUUIDIdentifierKey       = @"SUUIDIdentifierKey";
 NSString *const SUUIDOptOutKey           = @"SUUIDOptOutKey";
 NSString *const SUUIDModelHashKey        = @"SUUIDModelHashKey";
 NSString *const SUUIDSchemaVersionKey    = @"SUUIDSchemaVersionKey";
-NSString *const SUUIDPastboardFileFormat = @"org.secureudid-%d";
+NSString *const SUUIDPastboardFileFormat = @"org.secureudid-%ld";
 
 NSData       *SUUIDCryptorToData(CCOperation operation, NSData *value, NSData *key);
 NSString     *SUUIDCryptorToString(CCOperation operation, NSData *value, NSData *key);
@@ -71,12 +71,12 @@ BOOL          SUUIDValidOwnerObject(id object);
 
 /*
  Returns a unique id for the device, sandboxed to the domain and salt provided.
-
+ 
  Example usage:
  #import "SecureUDID.h"
-
+ 
  NSString *udid = [SecureUDID UDIDForDomain:@"com.example.myapp" salt:@"superSecretCodeHere!@##%#$#%$^"];
-
+ 
  */
 + (NSString *)UDIDForDomain:(NSString *)domain usingKey:(NSString *)key {
     NSString *identifier = SUUIDDefaultIdentifier;
@@ -206,7 +206,7 @@ BOOL          SUUIDValidOwnerObject(id object);
  */
 NSData *SUUIDCryptorToData(CCOperation operation, NSData *value, NSData *key) {
     NSMutableData *output = [NSMutableData dataWithLength:value.length + kCCBlockSizeAES128];
-
+    
     size_t numBytes = 0;
     CCCryptorStatus cryptStatus = CCCrypt(operation,
                                           kCCAlgorithmAES128,
@@ -248,7 +248,7 @@ NSString *SUUIDCryptorToString(CCOperation operation, NSData *value, NSData *key
 NSData *SUUIDHash(NSData *data) {
     uint8_t digest[CC_SHA1_DIGEST_LENGTH] = {0};
     
-    CC_SHA1(data.bytes, data.length, digest);
+    CC_SHA1(data.bytes, (CC_LONG) data.length, digest);
     
     return [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
 }
@@ -295,7 +295,7 @@ void SUUIDMarkOptedOut(void) {
     
     [mostRecentDictionary setObject:[NSDate date]                 forKey:SUUIDTimeStampKey];
     [mostRecentDictionary setObject:[NSNumber numberWithBool:YES] forKey:SUUIDOptOutKey];
-     
+    
     for (NSInteger i = 0; i < SUUID_MAX_STORAGE_LOCATIONS; ++i) {
         NSData* owner;
         
@@ -346,7 +346,7 @@ void SUUIDMarkOptedIn(void) {
 /*
  Removes all SecureUDID data from storage with the exception of Opt-Out flags, which
  are never removed.  Removing the Opt-Out flags would effectively opt a user back in.
-*/
+ */
 void SUUIDRemoveAllSecureUDIDData(void) {
     NSDictionary* optOutPlaceholder = nil;
     
@@ -368,7 +368,7 @@ void SUUIDRemoveAllSecureUDIDData(void) {
  Returns an NSString formatted with the supplied number.
  */
 NSString *SUUIDPasteboardNameForNumber(NSInteger number) {
-    return [NSString stringWithFormat:SUUIDPastboardFileFormat, number];
+    return [NSString stringWithFormat:SUUIDPastboardFileFormat, (long)number];
 }
 
 /*
@@ -471,7 +471,9 @@ void SUUIDWriteDictionaryToStorageLocation(NSInteger number, NSDictionary* dicti
         return;
     }
     
-    pasteboard.persistent = YES;
+    //changed by hanine
+    
+  //  pasteboard.persistent = YES; //Do not set persistence on pasteboards. This property is set automatically.
     
     [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:dictionary]
       forPasteboardType:SUUIDTypeDataDictionary];

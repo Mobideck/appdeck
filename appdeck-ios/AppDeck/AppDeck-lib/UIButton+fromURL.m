@@ -19,7 +19,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     
-    void (^handler)(NSURLResponse *, NSData *, NSError *) = ^(NSURLResponse *response, NSData *data, NSError *error) {
+    void (^handler)(NSData *,NSURLResponse *,NSError *) = ^(NSData *data, NSURLResponse *response, NSError *error) {
         UIImage *image = [UIImage imageWithData:data];
         if (error != nil || data == nil || image == nil)
         {
@@ -35,9 +35,12 @@
     AppDeck *app = [AppDeck sharedInstance];
     NSCachedURLResponse *cachedResponse = [app.cache getCacheResponseForRequest:request];
     if (cachedResponse)
-        handler(cachedResponse.response, cachedResponse.data, nil);
+        handler(cachedResponse.data, cachedResponse.response, nil);
     else
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+    
+        [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler: handler] resume];
+
+       // [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
     
     return button;
 }

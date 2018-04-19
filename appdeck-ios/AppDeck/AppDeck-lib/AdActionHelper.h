@@ -10,9 +10,10 @@
 #import "AdManager.h"
 #import <StoreKit/StoreKit.h>
 
-@interface AdActionHelper : NSObject<SKStoreProductViewControllerDelegate>
+@interface AdActionHelper : NSObject<SKStoreProductViewControllerDelegate,NSURLSessionDelegate>
 {
     NSURLConnection *conn;
+    NSURLSession *session;
     NSMutableData	*receivedData;
     NSURLRequest    *currentRequest;
 }

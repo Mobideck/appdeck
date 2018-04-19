@@ -296,12 +296,11 @@
         p.x = fromView.frame.origin.x + fromView.frame.size.width;
         p.y = fromView.frame.origin.y + fromView.frame.size.height/2.0;
     }
-    else if([_contentView arrowDirection] == FPPopoverArrowDirectionRight)
-    {
+    else {
         p.x = fromView.frame.origin.x;
         p.y = fromView.frame.origin.y + fromView.frame.size.height/2.0;
     }
-
+    
     return p;
 }
 

@@ -9,7 +9,7 @@
 #import "ManagedWebView.h"
 #import "ManagedUIWebViewController.h"
 #import "ManagedWKWebViewController.h"
-#import "Appdeck.h"
+#import "AppDeck.h"
 #import "LoaderViewController.h"
 
 @implementation ManagedWebView

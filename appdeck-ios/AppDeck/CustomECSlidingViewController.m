@@ -73,7 +73,6 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
                 [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewUnderLeftWillDisappear object:self userInfo:nil];
             });
         
-        
     }
     
 //    if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionCentered)
@@ -106,6 +105,7 @@ NSString *const ECSlidingViewTopDidReset             = @"ECSlidingViewTopDidRese
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewTopDidAnchorRight object:self userInfo:nil];
         });
+    
     if (self.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredLeft)
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:ECSlidingViewTopDidAnchorLeft object:self userInfo:nil];

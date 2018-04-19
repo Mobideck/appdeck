@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, SIAlertViewTransitionStyle) {
 @class SIAlertView;
 typedef void(^SIAlertViewHandler)(SIAlertView *alertView);
 
-@interface SIAlertView : UIView
+@interface SIAlertView : UIView <CAAnimationDelegate>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *message;

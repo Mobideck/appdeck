@@ -71,7 +71,7 @@
 -(void)dismissPopoverAnimated:(BOOL)animated;
 
 /** @brief Dismiss the popover with completion block for post-animation cleanup **/
-typedef void (^FPPopoverCompletion)();
+typedef void (^FPPopoverCompletion)(void);
 -(void)dismissPopoverAnimated:(BOOL)animated completion:(FPPopoverCompletion)completionBlock;
 
 /** @brief Hide the shadows to get better performances **/

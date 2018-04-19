@@ -44,7 +44,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
 
 @end
 
-
 @implementation CustomMMPickerView
 
 #pragma mark - Singleton
@@ -147,7 +146,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
     selectedRow = [[_pickerViewArray objectAtIndex:0] integerValue];
   }
   
-  
   NSNumber *textAlignment = [[NSNumber alloc] init];
   textAlignment = options[MMtextAlignment];
   //Default value is NSTextAlignmentCenter
@@ -183,7 +181,8 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   [self addSubview:_pickerViewContainerView];
 
   //PickerView Container with top bar
-  _pickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(view.frame.size.width / 2 - 320 / 2, _pickerViewContainerView.bounds.size.height - 260.0, 320.0, 260.0)];
+//x:view.frame.size.width / 2 - 320 / 2
+  _pickerContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, _pickerViewContainerView.bounds.size.height - 260.0, _pickerViewContainerView.bounds.size.width, 260.0)];
     
   //Default Color Values (if colors == nil)
   
@@ -228,7 +227,6 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   _pickerContainerView.backgroundColor = pickerViewBackgroundColor;
   [_pickerViewContainerView addSubview:_pickerContainerView];
   
-  
   //Content of pickerContainerView
   
   //Top bar view
@@ -236,8 +234,8 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   [_pickerContainerView addSubview:_pickerTopBarView];
   [_pickerTopBarView setBackgroundColor:[UIColor whiteColor]];
   
-  
   _pickerViewToolBar = [[UIToolbar alloc] initWithFrame:_pickerTopBarView.frame];
+    
   [_pickerContainerView addSubview:_pickerViewToolBar];
   
   CGFloat iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
@@ -276,7 +274,7 @@ NSString * const MMshowsSelectionIndicator = @"showsSelectionIndicator";
   */
   
   //Add pickerView
-  _pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 44.0, 320.0, 216.0)];
+  _pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 44.0, _pickerContainerView.bounds.size.width, 216.0)];
   [_pickerView setDelegate:self];
   [_pickerView setDataSource:self];
   [_pickerView setShowsSelectionIndicator: _pickerViewShowsSelectionIndicator];//YES];

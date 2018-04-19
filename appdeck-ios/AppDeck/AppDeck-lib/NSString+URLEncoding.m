@@ -15,15 +15,19 @@
 
 -(NSString *)urlEncodeUsingEncoding:(NSStringEncoding)encoding
 {
-	return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                               (CFStringRef)self,
-                                                               NULL,
-                                                               (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
-                                                               CFStringConvertNSStringEncodingToEncoding(encoding));
+    
+    return  [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+
+//    return (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
+//                                                               (CFStringRef)self,
+//                                                               NULL,
+//                                                               (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+//                                                               CFStringConvertNSStringEncodingToEncoding(encoding));
 }
 
 -(NSString *)urlDecodeUsingEncoding:(NSStringEncoding)encoding;
 {
-    return [[self stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByReplacingPercentEscapesUsingEncoding:encoding];
+   // return [[self stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByReplacingPercentEscapesUsingEncoding:encoding];
+     return [[self stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByRemovingPercentEncoding];
 }
 @end

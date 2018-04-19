@@ -10,12 +10,14 @@
 #import "AppDeck.h"
 #import "SIAlertView.h"
 
+
 @interface ManagedWKWebViewController ()
 
 @end
 
 @implementation ManagedWKWebViewController
 
+@synthesize webView;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,7 +25,7 @@
     //AppDeck *appDeck = [AppDeck sharedInstance];
     
     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
-    configuration.requiresUserActionForMediaPlayback = NO;
+    configuration.mediaTypesRequiringUserActionForPlayback = NO;
     configuration.processPool = [ManagedWKWebViewController sharedWKProcessPool];
     
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:configuration];

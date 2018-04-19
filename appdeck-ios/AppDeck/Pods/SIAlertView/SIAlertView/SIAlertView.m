@@ -231,7 +231,9 @@ static SIAlertView *__si_alert_current_view;
 }
 #endif
 
-- (NSUInteger)supportedInterfaceOrientations
+
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
     UIViewController *viewController = [self.alertView.oldKeyWindow currentViewController];
     if (viewController) {
@@ -845,16 +847,17 @@ static SIAlertView *__si_alert_current_view;
 - (CGFloat)heightForTitleLabel
 {
     if (self.titleLabel) {
-        CGSize size = [self.title sizeWithFont:self.titleLabel.font
-                                   minFontSize:
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
-                       self.titleLabel.font.pointSize * self.titleLabel.minimumScaleFactor
-#else
-                       self.titleLabel.minimumFontSize
-#endif
-                                actualFontSize:nil
-                                      forWidth:CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2
-                                 lineBreakMode:self.titleLabel.lineBreakMode];
+        CGSize size = [self.title sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
+//        CGSize size = [self.title sizeWithFont:self.titleLabel.font
+//                                   minFontSize:
+//#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+//                       self.titleLabel.font.pointSize * self.titleLabel.minimumScaleFactor
+//#else
+//                       self.titleLabel.minimumFontSize
+//#endif
+//                                actualFontSize:nil
+//                                      forWidth:CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2
+//                                 lineBreakMode:self.titleLabel.lineBreakMode];
         return size.height;
     }
     return 0;
@@ -864,10 +867,12 @@ static SIAlertView *__si_alert_current_view;
 {
     CGFloat minHeight = MESSAGE_MIN_LINE_COUNT * self.messageLabel.font.lineHeight;
     if (self.messageLabel) {
-        CGFloat maxHeight = MESSAGE_MAX_LINE_COUNT * self.messageLabel.font.lineHeight;
-        CGSize size = [self.message sizeWithFont:self.messageLabel.font
-                               constrainedToSize:CGSizeMake(CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2, maxHeight)
-                                   lineBreakMode:self.messageLabel.lineBreakMode];
+       // CGFloat maxHeight = MESSAGE_MAX_LINE_COUNT * self.messageLabel.font.lineHeight;
+//        CGSize size = [self.message sizeWithFont:self.messageLabel.font
+//                               constrainedToSize:CGSizeMake(CONTAINER_WIDTH - CONTENT_PADDING_LEFT * 2, maxHeight)
+//                                   lineBreakMode:self.messageLabel.lineBreakMode];
+//
+        CGSize size = [self.message sizeWithAttributes:@{NSFontAttributeName:self.messageLabel.font}];
         return MAX(minHeight, size.height);
     }
     return minHeight;

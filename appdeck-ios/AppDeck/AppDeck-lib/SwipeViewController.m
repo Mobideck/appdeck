@@ -178,8 +178,7 @@
         [targetView.layer setShadowColor:[[UIColor blackColor] CGColor]];
         [targetView.layer setShadowOpacity:0.25];
         // adjust shadow
-        [targetView.layer setShadowPath:[[UIBezierPath
-                                                     bezierPathWithRect:targetView.bounds] CGPath]];
+        [targetView.layer setShadowPath:[[UIBezierPath bezierPathWithRect:targetView.bounds] CGPath]];
     } else {
         [targetView.layer setShadowOffset:CGSizeZero];
         [targetView.layer setShadowColor:[[UIColor blackColor] CGColor]];
@@ -193,10 +192,8 @@
         [self.view insertSubview:_previous.view belowSubview:_current.view];
     if (_next)
         [self.view insertSubview:_next.view aboveSubview:_current.view];
-
     
 }
-
 
 -(void)setPrevious:(LoaderChildViewController *)previous
 {
@@ -823,7 +820,8 @@
         [self.navigationController setNavigationBarHidden:YES animated:NO];
         if (_current.loader.appDeck.iosVersion >= 7.0)
             [_current.loader setNeedsStatusBarAppearanceUpdate];
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        //[[UIApplication sharedApplication] setStatusBarHidden:YES];
+        [self prefersStatusBarHidden];
         //if (self.lo)
         //[self setNeedsStatusBarAppearanceUpdate];
     } else {
@@ -831,7 +829,9 @@
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         if (_current.loader.appDeck.iosVersion >= 7.0)
             [_current.loader setNeedsStatusBarAppearanceUpdate];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+        //[[UIApplication sharedApplication] setStatusBarHidden:NO];
+        [self prefersStatusBarHidden];
+        //[self prefe];
     }
 }
 

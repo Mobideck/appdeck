@@ -67,13 +67,24 @@ static const CGFloat labelPadding = 10;
 
 - (CGSize)sizeThatFits:(CGSize)size {
     CGFloat maxHeight = 9999;
-    if (captionLabel.numberOfLines > 0) maxHeight = captionLabel.font.leading*captionLabel.numberOfLines;
-
-    CGSize textSize = [captionLabel.text sizeWithFont:captionLabel.font
-                              constrainedToSize:CGSizeMake(size.width - labelPadding*2, maxHeight)
-                                  lineBreakMode:captionLabel.lineBreakMode];
-    return CGSizeMake(size.width, textSize.height + labelPadding * 2);
+    if (captionLabel.numberOfLines > 0){
+        maxHeight = captionLabel.font.leading*captionLabel.numberOfLines;
+        CGSize textSize =[captionLabel.text sizeWithAttributes:@{NSFontAttributeName:captionLabel.font}];
+        
+        
+        // NSLog(@"sizee %f",textSize1.);
+        
+        return CGSizeMake(size.width, textSize.height + labelPadding * 2);
+        
+    }
+    
+    //    CGSize textSize = [captionLabel.text sizeWithFont:captionLabel.font
+    //                              constrainedToSize:CGSizeMake(size.width - labelPadding*2, maxHeight)
+    //                                  lineBreakMode:captionLabel.lineBreakMode];
+    
+    return CGSizeZero;
 }
+
 
 - (void)setupCaption
 {
@@ -161,7 +172,7 @@ static const CGFloat labelPadding = 10;
     
     // image ration should be almost equals
     //NSLog(@"%fx%f - %fx%f => %f", image.size.width, image.size.height, placeholder.size.width, placeholder.size.height, fabsf(image.size.width / image.size.height - placeholder.size.width / placeholder.size.height));
-    if (fabsf(image.size.width / image.size.height - placeholder.size.width / placeholder.size.height) > 0.2)
+    if (fabs(image.size.width / image.size.height - placeholder.size.width / placeholder.size.height) > 0.2)
     {
         //NSLog(@"image and placeHolder are too different: %fx%f - %fx%f", image.size.width, image.size.height, placeholder.size.width, placeholder.size.height);
         return image;
