@@ -90,13 +90,8 @@
     UIDatePicker*datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 20, 320, 120)];
     datePicker.date = date;
     datePicker.datePickerMode = UIDatePickerModeDate;
-    [datePicker addTarget:self action:@selector(selectDate) forControlEvents:UIControlEventValueChanged];
     
     return datePicker;
-}
-
--(UIPickerView*)initializePickerViewWithDate:(NSDate*)date{
-    
 }
 
 +(void)SelectWithCompletion:(void (^)(NSString *))completion{
