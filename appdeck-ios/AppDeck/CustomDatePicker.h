@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDeckApiCall.h"
+@interface CustomDatePicker : UIAlertController{
+  
+}
 
-@interface CustomDatePicker : UIAlertController
 
++(void)PresentInVC:(UIViewController*)vc fromCall:(AppDeckApiCall*)call completion:(void(^)(NSString *selectedString))completion;
 @end

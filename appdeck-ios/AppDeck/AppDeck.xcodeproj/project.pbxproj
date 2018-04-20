@@ -241,6 +241,8 @@
 		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
 		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
+		F09DC4652088D36E002F5A31 /* CustomDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4642088D36E002F5A31 /* CustomDatePicker.m */; };
+		F09DC4682089E634002F5A31 /* YearMonthPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4672089E634002F5A31 /* YearMonthPickerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -681,6 +683,10 @@
 		A9F643911708BF1F003D07B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F09DC45D20873C90002F5A31 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		F09DC45E20873C90002F5A31 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		F09DC4632088D36E002F5A31 /* CustomDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDatePicker.h; sourceTree = "<group>"; };
+		F09DC4642088D36E002F5A31 /* CustomDatePicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomDatePicker.m; sourceTree = "<group>"; };
+		F09DC4662089E634002F5A31 /* YearMonthPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YearMonthPickerView.h; sourceTree = "<group>"; };
+		F09DC4672089E634002F5A31 /* YearMonthPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YearMonthPickerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1196,6 +1202,10 @@
 				A9587FC51B68FE010037FD53 /* AppDeckAnalytics.m */,
 				A916CDAA1A1E03E1005FE1AE /* SelectActionSheet.h */,
 				A916CDAB1A1E03E2005FE1AE /* SelectActionSheet.m */,
+				F09DC4632088D36E002F5A31 /* CustomDatePicker.h */,
+				F09DC4642088D36E002F5A31 /* CustomDatePicker.m */,
+				F09DC4662089E634002F5A31 /* YearMonthPickerView.h */,
+				F09DC4672089E634002F5A31 /* YearMonthPickerView.m */,
 				A916CBCF1A1E03DA005FE1AE /* AppDeckProgressHUD.h */,
 				A916CBD01A1E03DA005FE1AE /* AppDeckProgressHUD.m */,
 				A916CBD11A1E03DA005FE1AE /* AppDeckUserProfile.h */,
@@ -1883,6 +1893,7 @@
 				A916D2CC1A1E03E7005FE1AE /* AdManager.m in Sources */,
 				A916D3EE1A1E03E7005FE1AE /* UIApplication+setStatusBarHidden.m in Sources */,
 				A916D35D1A1E03E7005FE1AE /* 7zBuf.c in Sources */,
+				F09DC4652088D36E002F5A31 /* CustomDatePicker.m in Sources */,
 				A9BA70EC1BC524D0005A212E /* compile.cc in Sources */,
 				A916D3D71A1E03E7005FE1AE /* ScreenConfiguration.m in Sources */,
 				A916D3F11A1E03E7005FE1AE /* UIImage+Alpha.m in Sources */,
@@ -1901,6 +1912,7 @@
 				A916D3EC1A1E03E7005FE1AE /* UIActionSheet+Blocks.m in Sources */,
 				A916D3E01A1E03E7005FE1AE /* SDWebImagePrefetcher.m in Sources */,
 				A916CEB41A1E03E6005FE1AE /* HTMLChunkAdEngine.m in Sources */,
+				F09DC4682089E634002F5A31 /* YearMonthPickerView.m in Sources */,
 				A916D3D41A1E03E7005FE1AE /* RIButtonItem.m in Sources */,
 				A916D2D31A1E03E7005FE1AE /* AMBlurView.m in Sources */,
 				A9416AC81BAC47DE001F9FF8 /* AppDeckAdNative.m in Sources */,

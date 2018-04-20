@@ -24,6 +24,7 @@
 #import "WebViewHistory.h"
 //#import "TestFlight.h"
 #import "MMPickerView/CustomMMPickerView.h"
+#import "CustomDatePicker.h"
 
 #import "SelectActionSheet.h"  //unused
 
@@ -429,32 +430,29 @@
     
     if ([call.command isEqualToString:@"selectdate"])
     {
-        id year = [call.param objectForKey:@"year"];
-        id month = [call.param objectForKey:@"month"];
-        id day = [call.param objectForKey:@"day"];
-        UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"AppDeck \n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil]];
-
-//        UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"AppDeck \n\n\n\n\n\n" delegate:nil cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
-//        action.actionSheetStyle = (self.loader.conf.icon_theme == IconThemeLight ? UIBarStyleDefault : UIBarStyleBlackOpaque);
-        // init the date
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [[NSDateComponents alloc] init];
-
-        if (day != nil && day != [NSNull null])
-            [components setDay:[day intValue]];
-        if (month != nil && month != [NSNull null])
-            [components setMonth:[month intValue]];
-        if (year != nil&& year != [NSNull null])
-            [components setYear:[year intValue]];
-
-        NSDate *date = [calendar dateFromComponents:components];
+//        id year = [call.param objectForKey:@"year"];
+//        id month = [call.param objectForKey:@"month"];
+//        id day = [call.param objectForKey:@"day"];
+////        UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"AppDeck \n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+////        [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil]];
+//
+////        UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"AppDeck \n\n\n\n\n\n" delegate:nil cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
+////        action.actionSheetStyle = (self.loader.conf.icon_theme == IconThemeLight ? UIBarStyleDefault : UIBarStyleBlackOpaque);
+//        // init the date
+//        NSCalendar *calendar = [NSCalendar currentCalendar];
+//        NSDateComponents *components = [[NSDateComponents alloc] init];
+//
+//        if (day != nil && day != [NSNull null])
+//            [components setDay:[day intValue]];
+//        if (month != nil && month != [NSNull null])
+//            [components setMonth:[month intValue]];
+//        if (year != nil&& year != [NSNull null])
+//            [components setYear:[year intValue]];
+//
+//        NSDate *date = [calendar dateFromComponents:components];
 
         // Add the picker
-        UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 20, 320, 120)];
-        pickerView.date = date;
-        pickerView.datePickerMode = UIDatePickerModeDate;
-        [pickerView addTarget:self action:@selector(dateSelected:) forControlEvents:UIControlEventValueChanged];
+       
         
       //  [action addSubview:pickerView];
         
@@ -462,9 +460,12 @@
 
        // [action setBounds:CGRectMake(0,0,320, 500)];
         
-        [controller.view addSubview:pickerView];
+      //  [controller.view addSubview:pickerView];
         
-        [self.loader presentViewController:controller animated:YES completion:nil];
+        [CustomDatePicker PresentInVC:self.loader fromCall:call completion:^(NSString *selectedString) {
+     //         [call sendCallbackWithResult:@[@{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]}]];
+        }];
+      //  [self.loader presentViewController:controller animated:YES completion:nil];
         
 //        CGRect pickerRect = pickerView.bounds;
 //        pickerRect.origin.y = -100;
@@ -478,8 +479,8 @@
             [rl runUntilDate:d];
       //  }
 //
-        components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:pickerView.date]; // Get necessary date components
-         [call sendCallbackWithResult:@[@{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]}]];
+      // components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:pickerView.date]; // Get necessary date components
+       
        // call.result = @{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]};
 /*
         NSRunLoop *rl = [NSRunLoop currentRunLoop];

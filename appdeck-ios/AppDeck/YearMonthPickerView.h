@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YearMonthPickerView : UIPickerView
+@interface YearMonthPickerView : UIPickerView<UIPickerViewDelegate,UIPickerViewDataSource>{
+    
+    NSMutableArray*months;
+}
 
+-(id)initPickerviewWithFrame:(CGRect)frame andDateComponents:(NSDateComponents*)components;
+-(void)onDateSelectedWithMonth:(int)month andYear:(int)year;
 @end
