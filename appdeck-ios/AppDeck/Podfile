@@ -16,6 +16,8 @@ target 'AppDeck' do
   pod 'SVProgressHUD'
   #  pod 'ARSPopover'
   pod 'SIAlertView'
+  pod 'MaterialComponents/Snackbar'
+  pod 'KAProgressLabel'
   
   #pod 'SSSnackbar'
   

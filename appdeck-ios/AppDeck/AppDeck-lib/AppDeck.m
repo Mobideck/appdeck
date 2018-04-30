@@ -25,7 +25,8 @@
 //#import "TestFlight.h"
 #import "MMPickerView/CustomMMPickerView.h"
 #import "CustomDatePicker.h"
-
+#import <KAProgressLabel/KAProgressLabel.h>
+#import "MySlider.h"
 #import "SelectActionSheet.h"  //unused
 
 #import "SwipeViewController.h"
@@ -45,6 +46,8 @@
 #import "KeyboardStateListener.h"
 
 #import <AudioToolbox/AudioServices.h>
+
+#import <MaterialComponents/MaterialSnackbar.h>
 
 @import MessageUI;
 @import SafariServices;
@@ -462,9 +465,7 @@
         
       //  [controller.view addSubview:pickerView];
         
-        [CustomDatePicker PresentInVC:self.loader fromCall:call completion:^(NSString *selectedString) {
-     //         [call sendCallbackWithResult:@[@{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]}]];
-        }];
+        [CustomDatePicker PresentInVC:self.loader fromCall:call];
       //  [self.loader presentViewController:controller animated:YES completion:nil];
         
 //        CGRect pickerRect = pickerView.bounds;
@@ -502,6 +503,29 @@
         return YES;
     }
     
+    if ([call.command isEqualToString:@"snackbar"]){
+        NSLog(@"param %@", call.param);
+        MDCSnackbarMessage*message = [[MDCSnackbarMessage alloc] init];
+        message.text = [call.param objectForKey:@"message"];
+        message.action=[[MDCSnackbarMessageAction alloc]init];
+        message.action.title=[call.param objectForKey:@"action"];
+        message.action.handler = ^{
+             [call performSelectorOnMainThread:@selector(sendCallbackWithResult:) withObject:@[] waitUntilDone:NO];
+        };
+        
+        [MDCSnackbarManager showMessage:message];
+        return YES;
+    }
+    
+    if ([call.command isEqualToString:@"progress"]){
+        NSLog(@"param %@", call.param);
+        MySlider*slider=[[MySlider alloc]init];
+        [slider showInController:self.loader fromCall:call];
+            
+        return YES;
+        
+    }
+
     if ([call.command isEqualToString:@"clearcache"])
     {
         [self.cache cleanall];
@@ -575,7 +599,6 @@
                                                                  @"userID": result.token.userID
                                                                  };
 
-                                        
                                         [call sendCallbackWithResult:@[result_cb]];
                                     }
                                 }];
@@ -670,8 +693,8 @@
     return [AppDeckPluginManager handleAPICall:call];
 }
 
-
 // call after json config is loaded
+
 -(void)configureApp
 {
     if (shouldConfigureApp == YES)
@@ -688,8 +711,7 @@
     shouldConfigureApp = NO;
 }
 
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
-                 didFinishWithResult:(MessageComposeResult)result
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
     switch (result)
     {

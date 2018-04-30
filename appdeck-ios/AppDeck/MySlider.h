@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDeckApiCall.h"
 
-@interface MySlider : UISlider
+@interface MySlider : UIView{
+    
+    
+}
 
+
+-(void)getValueWithCompletion: (void(^)(NSInteger *))completion;
+-(void)showInController:(UIViewController*)vc fromCall:(AppDeckApiCall*)mcall;
+-(void)initialize;
 @end

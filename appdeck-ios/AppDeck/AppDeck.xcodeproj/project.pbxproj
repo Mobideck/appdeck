@@ -243,6 +243,8 @@
 		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
 		F09DC4652088D36E002F5A31 /* CustomDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4642088D36E002F5A31 /* CustomDatePicker.m */; };
 		F09DC4682089E634002F5A31 /* YearMonthPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4672089E634002F5A31 /* YearMonthPickerView.m */; };
+		F09DC46B208F8A49002F5A31 /* MySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC46A208F8A49002F5A31 /* MySlider.m */; };
+		F09DC46F209319A0002F5A31 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC46E209319A0002F5A31 /* MyCollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -687,6 +689,10 @@
 		F09DC4642088D36E002F5A31 /* CustomDatePicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomDatePicker.m; sourceTree = "<group>"; };
 		F09DC4662089E634002F5A31 /* YearMonthPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YearMonthPickerView.h; sourceTree = "<group>"; };
 		F09DC4672089E634002F5A31 /* YearMonthPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YearMonthPickerView.m; sourceTree = "<group>"; };
+		F09DC469208F8A49002F5A31 /* MySlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MySlider.h; sourceTree = "<group>"; };
+		F09DC46A208F8A49002F5A31 /* MySlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySlider.m; sourceTree = "<group>"; };
+		F09DC46D209319A0002F5A31 /* MyCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewController.h; sourceTree = "<group>"; };
+		F09DC46E209319A0002F5A31 /* MyCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1091,6 +1097,7 @@
 		A916D48C1A1E0AC4005FE1AE /* AppDeck */ = {
 			isa = PBXGroup;
 			children = (
+				F09DC46C20931987002F5A31 /* CollectionView */,
 				A9F3F9B81CF82BA30079225D /* Api */,
 				A916D4751A1E03FE005FE1AE /* Ad */,
 				A916D4961A1E0D05005FE1AE /* Utils */,
@@ -1204,6 +1211,8 @@
 				A916CDAB1A1E03E2005FE1AE /* SelectActionSheet.m */,
 				F09DC4632088D36E002F5A31 /* CustomDatePicker.h */,
 				F09DC4642088D36E002F5A31 /* CustomDatePicker.m */,
+				F09DC469208F8A49002F5A31 /* MySlider.h */,
+				F09DC46A208F8A49002F5A31 /* MySlider.m */,
 				F09DC4662089E634002F5A31 /* YearMonthPickerView.h */,
 				F09DC4672089E634002F5A31 /* YearMonthPickerView.m */,
 				A916CBCF1A1E03DA005FE1AE /* AppDeckProgressHUD.h */,
@@ -1567,6 +1576,15 @@
 			name = Api;
 			sourceTree = "<group>";
 		};
+		F09DC46C20931987002F5A31 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				F09DC46D209319A0002F5A31 /* MyCollectionViewController.h */,
+				F09DC46E209319A0002F5A31 /* MyCollectionViewController.m */,
+			);
+			name = CollectionView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1839,6 +1857,7 @@
 				A97929871C56381B0079D49D /* ManagedWebView.m in Sources */,
 				A9BA71271BC524D0005A212E /* thread.cc in Sources */,
 				A916D2E61A1E03E7005FE1AE /* FPPopoverController.m in Sources */,
+				F09DC46B208F8A49002F5A31 /* MySlider.m in Sources */,
 				A9BA70EB1BC524D0005A212E /* bitstate.cc in Sources */,
 				A952A25D1F72C99D002894F5 /* BarCodeScannerViewController.m in Sources */,
 				A916D2E91A1E03E7005FE1AE /* FPPopoverController+JSon.m in Sources */,
@@ -1877,6 +1896,7 @@
 				A916D2E81A1E03E7005FE1AE /* FPTouchView.m in Sources */,
 				A913C7D51BDE4D550054B590 /* MEZoomAnimationController.m in Sources */,
 				A916D3631A1E03E7005FE1AE /* Alloc.c in Sources */,
+				F09DC46F209319A0002F5A31 /* MyCollectionViewController.m in Sources */,
 				A9BA711B1BC524D0005A212E /* tostring.cc in Sources */,
 				A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */,
 				A9BA711E1BC524D0005A212E /* unicode_groups.cc in Sources */,

@@ -11,6 +11,6 @@
 
 @interface MapViewController : LoaderChildViewController
 
--(void)getCurrentLocation;
+//-(void)getCurrentLocation;
 
 @end

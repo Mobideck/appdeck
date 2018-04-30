@@ -13,5 +13,5 @@
 }
 
 
-+(void)PresentInVC:(UIViewController*)vc fromCall:(AppDeckApiCall*)call completion:(void(^)(NSString *selectedString))completion;
++(void)PresentInVC:(UIViewController*)vc fromCall:(AppDeckApiCall*)call;
 @end

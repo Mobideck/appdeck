@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CacheURLProtocol : NSURLProtocol
+@interface CacheURLProtocol : NSURLProtocol<NSURLSessionDelegate>
 {
     BOOL shouldServeFromCache;
     BOOL shouldForceLongCacheTime;
@@ -34,6 +34,8 @@
 @property (nonatomic, strong) NSMutableURLRequest *currentRequest;
 
 @property (nonatomic, strong) NSURLConnection *currentConnection;
+@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, strong) NSURLSessionDataTask*downloadTask;
 
 @property (nonatomic, strong) NSURLResponse *currentResponse;
 

@@ -48,7 +48,7 @@
 #import "UIColor+blur.h"
 #import "MEZoomAnimationController.h"
 #import "MapViewController.h"
-
+#import "MyCollectionViewController.h"
 @import SafariServices;
 
 @interface LoaderViewController ()
@@ -140,9 +140,13 @@
 
                                       if (error != nil)
                                       {
-                                          UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"App Conf Error" message:[NSString stringWithFormat:@"%@", error] preferredStyle:UIAlertControllerStyleAlert];
-                                          [controller addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-                                          [self presentViewController:controller animated:YES completion:nil];
+                                          
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"App Conf Error" message:[NSString stringWithFormat:@"%@", error] preferredStyle:UIAlertControllerStyleAlert];
+                                              [controller addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+                                              [self presentViewController:controller animated:YES completion:nil];
+                                              // Your code to run on the main queue/thread
+                                          });
                                          
                                           return;
                                       }
@@ -1721,6 +1725,22 @@
         
     }
     
+    if ([call.command isEqualToString:@"collection"])
+    {
+        
+        MyCollectionViewController*collectionVC=[[MyCollectionViewController alloc]init];
+        
+        collectionVC.loader = self;
+        collectionVC.origin = call;
+        collectionVC.screenConfiguration = call.child.screenConfiguration;
+        collectionVC.title = collectionVC.screenConfiguration.title;
+        
+        [self loadChild:collectionVC root:NO popup:LoaderPopUpYes];
+       
+        return YES;
+        
+    }
+    
     if ([call.command isEqualToString:@"barcodehide"])
     {
             UIViewController *top = [self getCurrentChild];
@@ -1805,10 +1825,7 @@
 //                                                  [[UIApplication sharedApplication] altSetStatusBarHidden:NO withAnimation:YES];
                                               
                                           }];
-                         
                      }];
-    
-    
     
 }
 
@@ -2145,15 +2162,29 @@
         
         NSError *error;
         NSURLResponse *response;
-        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+      //  NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         
-        NSString *content = [[NSString alloc]  initWithBytes:[returnData bytes] length:[returnData length] encoding: NSUTF8StringEncoding];
         
-        NSLog(@"Register URL: %@", url);
-        NSLog(@"Register BODY: %@", body);
-        NSLog(@"Return Response: %@", response);
-        NSLog(@"Return Error: %@", error);
-        NSLog(@"Return Data: %@", content);
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:self.url]
+                                                completionHandler:
+                                      ^(NSData *dataa, NSURLResponse *response, NSError *error) {
+                                          
+                                          
+                                          NSString *content = [[NSString alloc]  initWithBytes:[dataa bytes] length:[returnData length] encoding: NSUTF8StringEncoding];
+                                          
+                                          NSLog(@"Register URL: %@", url);
+                                          NSLog(@"Register BODY: %@", body);
+                                          NSLog(@"Return Response: %@", response);
+                                          NSLog(@"Return Error: %@", error);
+                                          NSLog(@"Return Data: %@", content);
+                                          
+                                      }];
+        
+        [task resume];
+        
+ 
+  
     });
 
 #endif

@@ -9,31 +9,20 @@
 #import "CustomDatePicker.h"
 #import "YearMonthPickerView.h"
 
-
 @interface CustomDatePicker ()
 
 @property (copy) void (^onSelectCompletion)(NSString *);
 
-
-
 @end
 
 @implementation CustomDatePicker
-
-
-+ (CustomDatePicker*)sharedView {
-    static dispatch_once_t once;
-    static CustomDatePicker *sharedView;
-    dispatch_once(&once, ^ { sharedView = [[self alloc] init]; });
-    return sharedView;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-+(void)PresentInVC:(UIViewController*)vc fromCall:(AppDeckApiCall*)call completion:(void(^)(NSString *selectedString))completion{
++(void)PresentInVC:(UIViewController*)vc fromCall:(AppDeckApiCall*)call{
     
     id year = [call.param objectForKey:@"year"];
     id month = [call.param objectForKey:@"month"];

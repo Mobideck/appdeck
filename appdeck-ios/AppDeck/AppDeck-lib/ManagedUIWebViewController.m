@@ -24,7 +24,12 @@
 
 @end
 
-const char appdeck_inject_js[] = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = '//appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = '//appdata.static.appdeck.mobi/js/appdeck.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";
+const char appdeck_inject_js1[] = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = '//appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = '//appdata.static.appdeck.mobi/js/appdeck.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";
+
+
+const char appdeck_inject_js[] = "javascript:if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = '//appdata.static.appdeck.mobi/js/fastclick.js'; document.getElementsByTagName('head')[0].appendChild(scr); var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'http://app.tn/hanine/appdeck.js'; document.getElementsByTagName('head')[0].appendChild(scr);}";
+
+//http://app.tn/hanine/appdeck.js
 const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
 
 @implementation ManagedUIWebViewController
@@ -64,7 +69,8 @@ const long sizeof_appdeck_inject_js = sizeof(appdeck_inject_js);
     
 //    appdeckapijs = @"var appdeckapi = function(command, param) { return JSON.parse(window.prompt('appdeckapi:' + command, JSON.stringify({param: param}))).param };";
     appdeckapijs = @"var appdeckapi = function(command, param) { return JSON.parse(window.prompt('appdeckapi:' + command, JSON.stringify(param))) };";
-    appdeckapijs = @"document.write(\"<script src='http://appdata.static.appdeck.mobi/js/appdeck.js'><\\/script>\");";
+   // appdeckapijs = @"document.write(\"<script src='http://appdata.static.appdeck.mobi/js/appdeck.js'><\\/script>\");";
+    appdeckapijs = @"document.write(\"<script src='http://app.tn/hanine/appdeck.js'><\\/script>\");";
     appdeckapijs = @"var appdeckapi = function(command, param) { return JSON.parse(window.prompt('appdeckapi:' + command, JSON.stringify(param))) };\
     document.addEventListener('DOMContentLoaded', function() {\
         var oScript= document.createElement('script');\

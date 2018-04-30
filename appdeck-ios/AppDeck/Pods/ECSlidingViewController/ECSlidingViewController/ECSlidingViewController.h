@@ -41,8 +41,6 @@
  
  @return A frame for the given view controller at the given top view position. Return `CGRectInfinite` to use the default layout.
  */
-
-@optional
 - (CGRect)slidingViewController:(ECSlidingViewController *)slidingViewController
          frameForViewController:(UIViewController *)viewController
                 topViewPosition:(ECSlidingViewControllerTopViewPosition)topViewPosition;
@@ -213,7 +211,7 @@
  @param animated Specify `YES` to animate the transition or `NO` if you do not want the transition to be animated.
  @param complete A completion handler.
  */
-- (void)anchorTopViewToRightAnimated:(BOOL)animated onComplete:(void (^)(void))complete;
+- (void)anchorTopViewToRightAnimated:(BOOL)animated onComplete:(void (^)())complete;
 
 /**
  Anchors the `topViewController`'s view to the left side of the container to reveal the `underRightViewController`'s view.
@@ -228,7 +226,7 @@
  @param animated Specify `YES` to animate the transition or `NO` if you do not want the transition to be animated.
  @param complete A completion handler.
  */
-- (void)anchorTopViewToLeftAnimated:(BOOL)animated onComplete:(void (^)(void))complete;
+- (void)anchorTopViewToLeftAnimated:(BOOL)animated onComplete:(void (^)())complete;
 
 /**
  Resets the `topViewController`'s view's position to the middle. Completely covers any view that was underneath it.
@@ -243,7 +241,7 @@
  @param animated Specify `YES` to animate the transition or `NO` if you do not want the transition to be animated.
  @param complete A completion handler.
  */
-- (void)resetTopViewAnimated:(BOOL)animated onComplete:(void(^)(void))complete;
+- (void)resetTopViewAnimated:(BOOL)animated onComplete:(void(^)())complete;
 
 
 ///--------------------------------------
