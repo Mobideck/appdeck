@@ -18,6 +18,7 @@ PODS:
     - FBSDKCoreKit (~> 4.30.0)
   - Google-Mobile-Ads-SDK (7.28.0)
   - KAProgressLabel (3.3.2)
+  - Masonry (1.1.0)
   - MaterialComponents/AnimationTiming (20.1.1)
   - MaterialComponents/Buttons (20.1.1):
     - MaterialComponents/Ink
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - Google-Mobile-Ads-SDK
   - KAProgressLabel
+  - Masonry
   - MaterialComponents/Snackbar
   - SIAlertView
   - SVProgressHUD
@@ -87,6 +89,7 @@ SPEC CHECKSUMS:
   FBSDKShareKit: a9427574b51bde4f437262c3f118c4ccfddeef6c
   Google-Mobile-Ads-SDK: 7f9bc0011df363ae5616449de3682a14c4701612
   KAProgressLabel: 95dd072d16bb483c0f58012d0e5466a334091af8
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MaterialComponents: 26372b7d42f8057bc467a796dea73cf62abc03ed
   MDFTextAccessibility: aa897b2675bc614c01a331053af680deea692148
   SIAlertView: 20c794b55eaf44d888773ea51647cf8907723919
@@ -94,6 +97,6 @@ SPEC CHECKSUMS:
   TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
   TwitterKit: 43600f2d2848c227739efea5b2939585e69339c3
 
-PODFILE CHECKSUM: 6beec32b5f168f980fa77ac976878c2597d14706
+PODFILE CHECKSUM: f61606b22267ccc78b0684597d5f0f184411a3b9
 
 COCOAPODS: 1.1.1

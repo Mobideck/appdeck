@@ -8,15 +8,21 @@
 
 #import "MyCollectionViewController.h"
 
+#import "UIImageView+WebCache.h"
+#import <Masonry/Masonry.h>
+
 
 @interface customCell: UICollectionViewCell
 
-@property(nonatomic,retain) UILabel*text;
+@property(nonatomic,retain) UILabel*titleLabel;
+@property(nonatomic,retain) UIImageView*imageView;
+@property(nonatomic,retain) NSDictionary*data;
 
 @end
 
 @implementation customCell
 
+static const CGFloat labelPadding = 10;
 -(id)initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     
@@ -24,17 +30,76 @@
     return self;
 }
 
--(void)setup{
+- (CGSize)sizeThatFits:(CGSize)size {
+    CGFloat maxHeight = 9999;
+    if (_titleLabel.numberOfLines > 0){
+        maxHeight = _titleLabel.font.leading*_titleLabel.numberOfLines;
+        CGSize textSize =[_titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_titleLabel.font}];
+
+        // NSLog(@"sizee %f",textSize1.);
+        
+        return CGSizeMake(size.width, textSize.height + labelPadding * 2);
+        
+    }
     
-    _text=[[UILabel alloc]initWithFrame:self.bounds];
-    _text.backgroundColor=[UIColor greenColor];
-    [self addSubview:_text];
+    //    CGSize textSize = [captionLabel.text sizeWithFont:captionLabel.font
+    //                              constrainedToSize:CGSizeMake(size.width - labelPadding*2, maxHeight)
+    //                                  lineBreakMode:captionLabel.lineBreakMode];
+    
+    return CGSizeZero;
 }
 
-//-(void)layoutSubviews{
-//    [super layoutSubviews];
-//
-//}
+-(void)layoutSubviews{
+    
+    CGSize captionLabelSize = [self sizeThatFits:self.bounds.size];
+    _titleLabel.frame = CGRectMake(self.frame.size.width / 2 - captionLabelSize.width / 2,
+                                    self.frame.size.height - captionLabelSize.height,
+                                    captionLabelSize.width, captionLabelSize.height);
+    
+}
+
+-(void)setData:(NSDictionary *)data{
+    _titleLabel.text=data[@"caption"];
+
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:data[@"url"]]
+                  placeholderImage:[UIImage imageNamed:@"Refresh_icon"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                      NSLog(@"error %@", error);
+                  }];
+}
+
+-(void)setup{
+    
+    _titleLabel=[[UILabel alloc]init];
+    _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _titleLabel.opaque = NO;
+  //  _titleLabel.backgroundColor = [UIColor yellowColor];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;// UITextAlignmentCenter;
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;// UILineBreakModeWordWrap;
+    _titleLabel.numberOfLines = 3;
+    _titleLabel.textColor = [UIColor blackColor];
+    //_titleLabel.shadowColor = [UIColor blackColor];
+  //  _titleLabel.shadowOffset = CGSizeMake(1, 1);
+    _titleLabel.font = [UIFont systemFontOfSize:14];
+    [self addSubview:_titleLabel];
+
+    [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left).with.offset(5);
+        make.bottom.equalTo(self.mas_bottom).with.offset(0);
+        make.right.equalTo(self.mas_right).with.offset(-5);
+    }];
+    
+    _imageView=[[UIImageView alloc] init];
+    _imageView.contentMode=UIViewContentModeScaleAspectFit;
+   // _imageView.backgroundColor=[UIColor purpleColor];
+    [self addSubview:_imageView];
+    
+    [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).with.offset(5);
+        make.left.equalTo(self.mas_left).with.offset(5);
+        make.bottom.equalTo(_titleLabel.mas_top).with.offset(-3);
+        make.right.equalTo(self.mas_right).with.offset(-5);
+    }];
+}
 
 @end
 
@@ -58,7 +123,7 @@ static NSString * const reuseIdentifier = @"Cell";
 //        [layout setMinimumLineSpacing:0.0f];
         _collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
         NSLog(@"%@",CGRectCreateDictionaryRepresentation(self.view.bounds));
-        _collection.backgroundColor=[UIColor redColor];
+        _collection.backgroundColor=[UIColor blackColor];
         _collection.delegate=self;
         _collection.dataSource=self;
         
@@ -102,21 +167,28 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[_origin.param objectForKey:@"nb_rows"] intValue];
+    return ((NSArray*)[_origin.param objectForKey:@"images"]).count;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *) collectionView
+                        layout:(UICollectionViewLayout *) collectionViewLayout
+        insetForSectionAtIndex:(NSInteger) section {
+
+    return UIEdgeInsetsMake(10, 0, 0,0); // top, left, bottom, right
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     customCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    cell.text.text=@"teste";
-    cell.backgroundColor=[UIColor greenColor];
+    cell.data=[_origin.param objectForKey:@"images"][indexPath.row];
+    cell.backgroundColor=[UIColor whiteColor];
     return cell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(150, 150);
+    return CGSizeMake(collectionView.frame.size.width-20, 150);
 }
 @end
 

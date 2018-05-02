@@ -240,6 +240,8 @@
 		A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */; };
 		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
+		F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = F0623F3B2099EB7D0054790D /* No_Image_Available.png */; };
+		F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F0623F3D2099F0230054790D /* Refresh_icon.png */; };
 		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
 		F09DC4652088D36E002F5A31 /* CustomDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4642088D36E002F5A31 /* CustomDatePicker.m */; };
 		F09DC4682089E634002F5A31 /* YearMonthPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4672089E634002F5A31 /* YearMonthPickerView.m */; };
@@ -683,6 +685,8 @@
 		A9F3F9C01CF82C1C0079225D /* AppDeckPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckPluginManager.h; path = "AppDeck-lib/AppDeckPluginManager.h"; sourceTree = "<group>"; };
 		A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPluginManager.m; path = "AppDeck-lib/AppDeckPluginManager.m"; sourceTree = "<group>"; };
 		A9F643911708BF1F003D07B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F0623F3B2099EB7D0054790D /* No_Image_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = No_Image_Available.png; sourceTree = "<group>"; };
+		F0623F3D2099F0230054790D /* Refresh_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Refresh_icon.png; sourceTree = "<group>"; };
 		F09DC45D20873C90002F5A31 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		F09DC45E20873C90002F5A31 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		F09DC4632088D36E002F5A31 /* CustomDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDatePicker.h; sourceTree = "<group>"; };
@@ -1460,6 +1464,8 @@
 		A91DFA1A16CE8D1400512CA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F0623F3D2099F0230054790D /* Refresh_icon.png */,
+				F0623F3B2099EB7D0054790D /* No_Image_Available.png */,
 				A9A0B0B017326583003237E0 /* iTunesArtwork */,
 				A908D779170C668C00C858BA /* Localizable.strings */,
 				A91DFA1F16CE8D1400512CA0 /* main.m */,
@@ -1670,6 +1676,8 @@
 				A91DFA1E16CE8D1400512CA0 /* InfoPlist.strings in Resources */,
 				A908D777170C668C00C858BA /* Localizable.strings in Resources */,
 				A952A25E1F72C99D002894F5 /* BarCodeScannerViewController.xib in Resources */,
+				F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */,
+				F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */,
 				A916D4881A1E09C9005FE1AE /* iRate.bundle in Resources */,
 				A97929921C5B7ADC0079D49D /* Images.xcassets in Resources */,
 				A9A0B0B117326583003237E0 /* iTunesArtwork in Resources */,

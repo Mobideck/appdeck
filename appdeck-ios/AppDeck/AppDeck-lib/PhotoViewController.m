@@ -252,8 +252,10 @@ static const CGFloat labelPadding = 10;
     operation = [SDWebImageManager.sharedManager downloadImageWithURL:self.url options:SDWebImageProgressiveDownload progress:^(NSInteger receivedSize, NSInteger expectedSize) {
         
     } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+       // _imageView.backgroundColor=[UIColor redColor];
         __strong UIImageView *sself = _imageView;
-        if (!sself) return;
+        if (!sself)
+            return;
         
         if (image == nil)
             image = placeholderImage;
@@ -261,7 +263,7 @@ static const CGFloat labelPadding = 10;
             imageIsReady = YES;
         
         if (image && finished == NO && workInprogress == NO)
-        {
+        {  
             workInprogress = YES;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 UIImage *tmpimage = [_self getFinalProgressImage:image placeholderImage:placeholderImage];
@@ -293,6 +295,15 @@ static const CGFloat labelPadding = 10;
                 [_self viewWillLayoutSubviews];
             //                                                     });
             //                                                 });
+        }else{
+            NSLog(@"oooooo");
+            
+            
+//            sself.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+//            workFinished = YES;
+//            [sself setNeedsLayout];
+//            if (imageWasSet == NO)
+//                [_self viewWillLayoutSubviews];
         }
 
     }];
@@ -431,7 +442,6 @@ static const CGFloat labelPadding = 10;
             imageWasSet = YES;
             //NSLog(@"zoomScale: %f", scrollview.zoomScale/*, initialZoom*/);
         }
-
 
         [self centerImage];
      

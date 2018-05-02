@@ -57,7 +57,6 @@
     _slider.continuous = YES;
     _slider.value = [[self.call.param objectForKey:@"value"] floatValue];
     [_slider addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-
     
     [_SliderView addSubview:_slider];
     
@@ -68,6 +67,14 @@
     
     [_SliderView addSubview:_sliderValue];
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self
+               action:@selector(aMethod)
+     forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"Ok" forState:UIControlStateNormal];
+    button.frame = CGRectMake(80.0, 210.0, 160.0, 40.0);
+    [view addSubview:button];
+    
     [self addSubview:_SliderView];
     
     
@@ -75,6 +82,9 @@
     
 }
 
+-(void)aMethod{
+    [_SliderView removeFromSuperview];
+}
 -(void)valueChanged:(UISlider*)sender{
      //[self.call performSelectorOnMainThread:@selector(sendCallbackWithResult:) withObject:@[@(sender.value)] waitUntilDone:NO];
     

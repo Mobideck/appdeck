@@ -376,7 +376,7 @@
     if ([call.command isEqualToString:@"select"])
     {
         
-        return YES;
+       // return YES;
         //NSString *title = [call.param objectForKey:@"title"];
         NSArray *values = [call.param objectForKey:@"values"];
         
@@ -503,7 +503,8 @@
         return YES;
     }
     
-    if ([call.command isEqualToString:@"snackbar"]){
+    if ([call.command isEqualToString:@"snackbar"])
+    {
         NSLog(@"param %@", call.param);
         MDCSnackbarMessage*message = [[MDCSnackbarMessage alloc] init];
         message.text = [call.param objectForKey:@"message"];
@@ -517,7 +518,8 @@
         return YES;
     }
     
-    if ([call.command isEqualToString:@"progress"]){
+    if ([call.command isEqualToString:@"progress"])
+    {
         NSLog(@"param %@", call.param);
         MySlider*slider=[[MySlider alloc]init];
         [slider showInController:self.loader fromCall:call];

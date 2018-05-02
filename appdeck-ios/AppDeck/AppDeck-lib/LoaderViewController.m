@@ -1695,12 +1695,12 @@
         return YES;
         
     }
-    if ([call.command isEqualToString:@"select"])
-    {
-        MapViewController*vc= [[MapViewController alloc]init];
-        vc.view.backgroundColor=[UIColor redColor];
-        [self loadChild:vc root:NO popup:LoaderPopUpYes];
-    }
+//    if ([call.command isEqualToString:@"select"])
+//    {
+//        MapViewController*vc= [[MapViewController alloc]init];
+//        vc.view.backgroundColor=[UIColor redColor];
+//        [self loadChild:vc root:NO popup:LoaderPopUpYes];
+//    }
     //barcode ?
     if ([call.command isEqualToString:@"barcode"])
     {
