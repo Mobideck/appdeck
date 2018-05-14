@@ -66,7 +66,7 @@
 @property (strong, nonatomic) UIWebView *header;
 @property (strong, nonatomic) UIWebView *footer;
 
-@property (strong, nonatomic) VCFloatingActionButton*addButton;
+
 
 @property (assign, nonatomic) BOOL          showAdView;
 @property (assign, nonatomic) BOOL          showAdViewOver;

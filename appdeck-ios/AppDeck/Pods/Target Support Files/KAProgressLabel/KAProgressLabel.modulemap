@@ -1,0 +1,6 @@
+framework module KAProgressLabel {
+  umbrella header "KAProgressLabel-umbrella.h"
+
+  export *
+  module * { export * }
+}

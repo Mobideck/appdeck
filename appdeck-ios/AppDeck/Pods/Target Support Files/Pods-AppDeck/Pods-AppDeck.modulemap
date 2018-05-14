@@ -1,0 +1,6 @@
+framework module Pods_AppDeck {
+  umbrella header "Pods-AppDeck-umbrella.h"
+
+  export *
+  module * { export * }
+}

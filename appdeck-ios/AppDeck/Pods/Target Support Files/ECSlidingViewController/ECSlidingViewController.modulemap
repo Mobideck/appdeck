@@ -1,0 +1,6 @@
+framework module ECSlidingViewController {
+  umbrella header "ECSlidingViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -849,7 +849,6 @@
         if (container.count == 0)
             buttons = nil;
             
-        
         /*
         if (self.swipeContainer.navigationItem.rightBarButtonItems == nil)
         {
@@ -878,18 +877,18 @@
             [buttons addObject:dict];
         }
         
-        CGRect floatFrame = CGRectMake([UIScreen mainScreen].bounds.size.width - 44 - 20, [UIScreen mainScreen].bounds.size.height - 44 - 20, 44, 44);
+        CGRect floatFrame = CGRectMake(self.view.bounds.size.width - 44 - 20, self.view.bounds.size.height - 44 - 20, 44, 44);
         
-        _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"plus"] andPressedImage:[UIImage imageNamed:@"cross"] withScrollview:nil];
+        VCFloatingActionButton*addButton  = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"plus"] andPressedImage:[UIImage imageNamed:@"cross"] withScrollview:nil];
         
-        _addButton.buttonsArray = buttons;
-        _addButton.child=self;
-        _addButton.call=call;
+        addButton.buttonsArray = buttons;
+        addButton.child=self;
+        addButton.call=call;
         
-        _addButton.hideWhileScrolling = NO;
+        addButton.hideWhileScrolling = NO;
         // _addButton.delegate = self;
         
-        [self.loader.view addSubview:_addButton];
+        [self.view addSubview:addButton];
         
         return YES;
     }
