@@ -21,10 +21,17 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCOverlayImplementor.h"
-#import "MDCOverlayTransitioning.h"
 #import "private/MDCOverlayAnimationObserver.h"
 #import "private/MDCOverlayObserverOverlay.h"
 #import "private/MDCOverlayObserverTransition.h"
+
+// If this is ever required elsewhere in the code, just disable unused parameter warnings entirely
+// with -Wno-unused-params.
+#ifdef NS_BLOCK_ASSERTIONS
+#define MDC_UNUSED_IN_RELEASE __unused
+#else
+#define MDC_UNUSED_IN_RELEASE
+#endif
 
 @interface MDCOverlayObserver () <MDCOverlayAnimationObserverDelegate>
 
@@ -54,7 +61,7 @@ static MDCOverlayObserver *_sOverlayObserver;
   }
 }
 
-+ (instancetype)observerForScreen:(UIScreen *)screen {
++ (instancetype)observerForScreen:(MDC_UNUSED_IN_RELEASE UIScreen *)screen {
   NSParameterAssert(screen == nil || screen == [UIScreen mainScreen]);
   return _sOverlayObserver;
 }
@@ -82,6 +89,10 @@ static MDCOverlayObserver *_sOverlayObserver;
                                                object:nil];
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Overlays
@@ -151,7 +162,8 @@ static MDCOverlayObserver *_sOverlayObserver;
     return;
   }
 
-  NSValue *frame = userInfo[MDCOverlayFrameKey] ?: [NSValue valueWithCGRect:CGRectNull];
+  NSValue *frame = userInfo[MDCOverlayFrameKey] ?
+                      userInfo[MDCOverlayFrameKey] : [NSValue valueWithCGRect:CGRectNull];
   NSNumber *duration = userInfo[MDCOverlayTransitionDurationKey];
 
   // Update the overlay frame.
@@ -207,10 +219,10 @@ static MDCOverlayObserver *_sOverlayObserver;
     return NSNotFound;
   }
 
-  return [invocations
-      indexOfObjectPassingTest:^BOOL(NSInvocation *invocation, NSUInteger idx, BOOL *stop) {
-        return invocation.selector == action;
-      }];
+  return [invocations indexOfObjectPassingTest:
+          ^BOOL(NSInvocation *invocation, __unused NSUInteger idx, __unused BOOL *stop) {
+            return invocation.selector == action;
+          }];
 }
 
 - (void)addTarget:(id)target action:(SEL)action {
@@ -296,7 +308,7 @@ static MDCOverlayObserver *_sOverlayObserver;
   self.pendingTransition = nil;
 }
 
-- (void)animationObserverDidEndRunloop:(MDCOverlayAnimationObserver *)observer {
+- (void)animationObserverDidEndRunloop:(__unused MDCOverlayAnimationObserver *)observer {
   [self fireTransition];
 }
 

@@ -16,8 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCInkGestureRecognizer.h"
-
+@class MDCInkGestureRecognizer;
 @class MDCInkTouchController;
 @class MDCInkView;
 @protocol MDCInkTouchControllerDelegate;
@@ -149,8 +148,8 @@
  @param location The touch location in the coords of @c inkTouchController.view.
  @return An ink view to use at the touch location.
  */
-- (nonnull MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
-                    inkViewAtTouchLocation:(CGPoint)location;
+- (nullable MDCInkView *)inkTouchController:(nonnull MDCInkTouchController *)inkTouchController
+                     inkViewAtTouchLocation:(CGPoint)location;
 
 /**
  Controls whether the ink touch controller should be processing touches.

@@ -18,12 +18,10 @@
 
 -(id)initWithInfos:(id)infos andChild:(PageViewController *)child
 {
-//    [super buttonWithType:UIButtonTypeCustom];
     self = [super initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     self.type = UIButtonTypeCustom;
     self.contentMode = UIViewContentModeScaleAspectFit;
-//    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     self.child = child;
     
@@ -52,20 +50,14 @@
 -(void)setImageFromData:(NSData *)data forState:(UIControlState)state
 {
     NSLog(@"XXXXXX image size: %lu", data.length);
-   
     
     UIImage *buttonImage = [UIImage imageWithData:data scale:UIScreen.mainScreen.scale];
-//    UIImage *buttonImage = [UIImage imageWithData:data];
 
-    
     CGFloat height = self.child.navigationController.navigationBar.frame.size.height;
 
-//    buttonImage = [buttonImage retinaEnabledImageScaledToFitHeight:height];
     if (buttonImage)
     {
-//        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, buttonImage.size.width, buttonImage.size.height)];
         [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, height, height)];
-        //self.backgroundColor = [UIColor redColor];
         [self setImage:buttonImage forState:state];
         [self setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
     }
@@ -77,6 +69,7 @@
 
 -(void)downloadImage:(NSString *)url forState:(UIControlState)state
 {
+    NSLog(@"url %@",self.child.url);
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url relativeToURL:self.child.url]];
     
     NSCachedURLResponse *cachedResponse = [self.child.loader.appDeck.cache getCacheResponseForRequest:request];
@@ -87,37 +80,29 @@
     }
     else
     {
-        UIImage *buttonImage = [[UIImage alloc] init];//self.child.loader.conf.icon_action;
-        //        [button setContentMode:UIViewContentModeCenter];
+        UIImage *buttonImage = [[UIImage alloc] init];
         [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, buttonImage.size.width, buttonImage.size.height)];
         [self setImage:buttonImage forState:state];
         [self setImageEdgeInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
         
-        
         NSURLSession *session = [NSURLSession sharedSession];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+        {
             if (error == nil)
             {
-                [self setImageFromData:data forState:state];
-                [self.superview setNeedsLayout];
+                dispatch_async(dispatch_get_main_queue(), ^
+                {
+                    [self setImageFromData:data forState:state];
+                    [self.superview setNeedsLayout];
+                });
+         
             }
             else
             NSLog(@"Failed to download icon: %@: %@", url, error);
         }];
         
         [task resume];
-//        
-//        [NSURLConnection sendAsynchronousRequest:request
-//                                           queue:[NSOperationQueue mainQueue]
-//                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-//                                   if (error == nil)
-//                                   {
-//                                       [self setImageFromData:data forState:state];
-//                                       [self.superview setNeedsLayout];
-//                                   }
-//                                   else
-//                                       NSLog(@"Failed to download icon: %@: %@", url, error);
-//                               }];
+
     }
 }
 

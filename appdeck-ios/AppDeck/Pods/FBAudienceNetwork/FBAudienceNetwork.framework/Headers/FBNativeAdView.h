@@ -61,7 +61,7 @@ FB_CLASS_EXPORT
 /**
   A view controller that is used to present modal content. If nil, the view searches for a view controller.
  */
-@property (nonatomic, weak, nullable) UIViewController *viewController;
+@property (nonatomic, weak, nullable) UIViewController *rootViewController;
 
 /**
   This is a method to create a native ad template using the given placement id and type.

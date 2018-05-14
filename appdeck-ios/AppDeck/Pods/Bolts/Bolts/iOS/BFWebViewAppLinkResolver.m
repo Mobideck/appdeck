@@ -103,7 +103,7 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setValue:BFWebViewAppLinkResolverMetaTagPrefix forHTTPHeaderField:BFWebViewAppLinkResolverPreferHeader];
 
-    void (^completion)(NSData *data, NSURLResponse *response, NSError *error) = ^(NSData *data, NSURLResponse *response, NSError *error) {
+    void (^completion)(NSURLResponse *response, NSData *data, NSError *error) = ^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error) {
             [tcs setError:error];
             return;
@@ -128,15 +128,10 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0 || __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_10_9
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        completion(data , response, error);
+        completion(response, data, error);
     }] resume];
 #else
-    //[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:completion];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:completion];
-    
-    [task resume];
-    //
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:completion];
 #endif
 
     return [tcs.task continueWithSuccessBlock:^id(BFTask *task) {
@@ -148,7 +143,7 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
     }];
 }
 
-- (BFTask *)appLinkFromURLInBackground:(NSURL *)url {
+- (BFTask *)appLinkFromURLInBackground:(NSURL *)url NS_EXTENSION_UNAVAILABLE_IOS("") {
     return [[self followRedirects:url] continueWithExecutor:[BFExecutor mainThreadExecutor]
                                            withSuccessBlock:^id(BFTask *task) {
                                                NSData *responseData = task.result[@"data"];
@@ -205,7 +200,7 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
             continue;
         }
         NSMutableDictionary *root = al;
-        for (int i = 1; i < nameComponents.count; i++) {
+        for (NSUInteger i = 1; i < nameComponents.count; i++) {
             NSMutableArray *children = root[nameComponents[i]];
             if (!children) {
                 children = [NSMutableArray array];
@@ -242,26 +237,17 @@ static NSString *const BFWebViewAppLinkResolverShouldFallbackKey = @"should_fall
     NSMutableArray *linkTargets = [NSMutableArray array];
 
     NSArray *platformData = nil;
-    switch (UI_USER_INTERFACE_IDIOM()) {
-        case UIUserInterfaceIdiomPad:
-            platformData = @[ appLinkDict[BFWebViewAppLinkResolverIPadKey] ?: @{},
-                              appLinkDict[BFWebViewAppLinkResolverIOSKey] ?: @{} ];
-            break;
-        case UIUserInterfaceIdiomPhone:
-            platformData = @[ appLinkDict[BFWebViewAppLinkResolverIPhoneKey] ?: @{},
-                              appLinkDict[BFWebViewAppLinkResolverIOSKey] ?: @{} ];
-            break;
-#ifdef __TVOS_9_0
-        case UIUserInterfaceIdiomTV:
-#endif
-#ifdef __IPHONE_9_3
-        case UIUserInterfaceIdiomCarPlay:
-#endif
-        case UIUserInterfaceIdiomUnspecified:
-        default:
-            // Future-proofing. Other User Interface idioms should only hit ios.
-            platformData = @[ appLinkDict[BFWebViewAppLinkResolverIOSKey] ?: @{} ];
-            break;
+
+    const UIUserInterfaceIdiom idiom = UI_USER_INTERFACE_IDIOM();
+    if (idiom == UIUserInterfaceIdiomPad) {
+        platformData = @[ appLinkDict[BFWebViewAppLinkResolverIPadKey] ?: @{},
+                          appLinkDict[BFWebViewAppLinkResolverIOSKey] ?: @{} ];
+    } else if (idiom == UIUserInterfaceIdiomPhone) {
+        platformData = @[ appLinkDict[BFWebViewAppLinkResolverIPhoneKey] ?: @{},
+                          appLinkDict[BFWebViewAppLinkResolverIOSKey] ?: @{} ];
+    } else {
+        // Future-proofing. Other User Interface idioms should only hit ios.
+        platformData = @[ appLinkDict[BFWebViewAppLinkResolverIOSKey] ?: @{} ];
     }
 
     for (NSArray *platformObjects in platformData) {

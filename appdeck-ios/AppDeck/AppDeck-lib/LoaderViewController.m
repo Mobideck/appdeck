@@ -130,9 +130,8 @@
    // NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-                                            completionHandler:
-                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error)
+    {
                                       if (error == nil)
                                       {
                                           result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
@@ -141,42 +140,24 @@
                                       if (error != nil)
                                       {
                                           
-                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                          dispatch_async(dispatch_get_main_queue(), ^
+                                          {
                                               UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"App Conf Error" message:[NSString stringWithFormat:@"%@", error] preferredStyle:UIAlertControllerStyleAlert];
                                               [controller addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
                                               [self presentViewController:controller animated:YES completion:nil];
-                                              // Your code to run on the main queue/thread
                                           });
                                          
                                           return;
                                       }
-                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                      dispatch_async(dispatch_get_main_queue(), ^
+                                      {
                                           [self loadAppConf:result];
-                                          // Your code to run on the main queue/thread
                                       });
                                      
                                   }];
 
     [task resume];
-//
-//    if (error == nil)
-//    {
-//        result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-//    }
-//
-//    if (error != nil)
-//    {
-//        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"App Conf Error"
-//                                                          message:[NSString stringWithFormat:@"%@", error]
-//                                                         delegate:nil
-//                                                cancelButtonTitle:@"OK"
-//                                                otherButtonTitles:nil];
-//        [message show];
-//        return;
-//    }
-//
-//    [self loadAppConf:result];
-    
+
 /*
     appJson = [JSonHTTPApi apiWithRequest:request callback:^(NSDictionary *result, NSError *error)
      {
@@ -2166,25 +2147,21 @@
         
         
         NSURLSession *session = [NSURLSession sharedSession];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:self.url]
-                                                completionHandler:
-                                      ^(NSData *dataa, NSURLResponse *response, NSError *error) {
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:self.url] completionHandler: ^(NSData *dataa, NSURLResponse *response, NSError *error)
+        {
+  
+                    NSString *content = [[NSString alloc]  initWithBytes:[dataa bytes] length:[returnData length] encoding: NSUTF8StringEncoding];
+            
+                    NSLog(@"Register URL: %@", url);
+                    NSLog(@"Register BODY: %@", body);
+                    NSLog(@"Return Response: %@", response);
+                    NSLog(@"Return Error: %@", error);
+                    NSLog(@"Return Data: %@", content);
                                           
-                                          
-                                          NSString *content = [[NSString alloc]  initWithBytes:[dataa bytes] length:[returnData length] encoding: NSUTF8StringEncoding];
-                                          
-                                          NSLog(@"Register URL: %@", url);
-                                          NSLog(@"Register BODY: %@", body);
-                                          NSLog(@"Return Response: %@", response);
-                                          NSLog(@"Return Error: %@", error);
-                                          NSLog(@"Return Data: %@", content);
-                                          
-                                      }];
+        }];
         
         [task resume];
-        
- 
-  
+
     });
 
 #endif
@@ -2216,15 +2193,7 @@
         }]];
         [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:controller animated:YES completion:nil];
-//
-//        [[[UIAlertView alloc] initWithTitle:notification_title
-//                                    message:nil
-//                           cancelButtonItem:[RIButtonItem itemWithLabel:@"Ok" action:^{
-//            [self loadPage:notification_url root:NO popup:LoaderPopUpDefault];
-//        }]
-//                           otherButtonItems:[RIButtonItem itemWithLabel:@"Cancel" action:^{
-//
-//        }], nil] show];
+
     }
     
     if (notification_reload_app != nil)
@@ -2244,7 +2213,6 @@
     {
         NSLog(@"jsonURL: %@", self.jsonUrl);
         NSLog(@"Cache: %@", self.appDeck.cache);
-//        NSData *data = self.app.cache cachedRe
         NSURLRequest *request = [NSURLRequest requestWithURL:self.jsonUrl cachePolicy:NSURLRequestReturnCacheDataDontLoad timeoutInterval:60];
         NSCachedURLResponse *cacheResponse = [self.appDeck.cache getCacheResponseForRequest:request];
         if (cacheResponse == nil)

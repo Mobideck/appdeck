@@ -58,7 +58,7 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 /**
   A view controller that is used to present modal content. If nil, the view searches for a view controller.
  */
-@property (nonatomic, weak, nullable) UIViewController *viewController;
+@property (nonatomic, weak, nullable) UIViewController *rootViewController;
 
 /**
   Passes delegate methods from FBNativeAd. Separate delegate calls will be made for each native ad contained.

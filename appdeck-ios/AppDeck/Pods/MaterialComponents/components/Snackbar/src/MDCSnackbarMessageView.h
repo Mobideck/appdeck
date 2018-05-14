@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 /**
  Class which provides the default implementation of a snackbar.
  */
@@ -25,16 +24,28 @@
 /**
  The color for the background of the snackbar message view.
  */
-@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable)
+    UIColor *snackbarMessageViewBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color for the shadow color for the snackbar message view.
  */
-@property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable)
+    UIColor *snackbarMessageViewShadowColor UI_APPEARANCE_SELECTOR;
 
 /**
  The color for the message text in the snackbar message view.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewTextColor UI_APPEARANCE_SELECTOR;
+
+/**
+ The font for the message text in the snackbar message view.
+ */
+@property(nonatomic, strong, nullable) UIFont *messageFont UI_APPEARANCE_SELECTOR;
+
+/**
+ The font for the button text in the snackbar message view.
+ */
+@property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
 @end

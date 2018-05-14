@@ -18,12 +18,11 @@
 
 #import "MDCSnackbarOverlayView.h"
 
-#import "MDCSnackbarMessageView.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialKeyboardWatcher.h"
-#import "MaterialOverlays.h"
-#import "UIApplication+AppExtensions.h"
 #import "MDCSnackbarMessageViewInternal.h"
+#import "MaterialAnimationTiming.h"
+#import "MaterialApplication.h"
+#import "MaterialKeyboardWatcher.h"
+#import "MaterialOverlay.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
@@ -64,6 +63,11 @@ static const CGFloat kMaximumHeight = 80.0f;
  to a negative value will cause snackbars to appear from a point above the bottom of the screen.
  */
 @property(nonatomic) NSLayoutConstraint *bottomConstraint;
+
+/**
+ The layout constraint which determines the maximum height of the snackbar .
+ */
+@property(nonatomic) NSLayoutConstraint *maximumHeightConstraint;
 
 /**
  The view which actually houses the snackbar. This view is sized to be the same width and height as
@@ -191,7 +195,7 @@ static const CGFloat kMaximumHeight = 80.0f;
  change at any time during runtime.
  */
 - (CGFloat)dynamicBottomMargin {
-  CGFloat keyboardHeight = self.watcher.keyboardOffset;
+  CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
 
   return MAX(keyboardHeight, userHeight);
@@ -284,7 +288,7 @@ static const CGFloat kMaximumHeight = 80.0f;
                                                                  attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0
                                                                   constant:-bottomMargin];
-      _snackbarOnscreenConstraint.active = NO; // snackbar starts off-screen.
+      _snackbarOnscreenConstraint.active = NO;  // snackbar starts off-screen.
       _snackbarOnscreenConstraint.priority = UILayoutPriorityDefaultHigh;
       [container addConstraint:_snackbarOnscreenConstraint];
 
@@ -299,14 +303,16 @@ static const CGFloat kMaximumHeight = 80.0f;
       [container addConstraint:_snackbarOffscreenConstraint];
 
       // Always limit the height of the snackbar.
-      [container
-          addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                     attribute:NSLayoutAttributeHeight
-                                                     relatedBy:NSLayoutRelationLessThanOrEqual
-                                                        toItem:nil
-                                                     attribute:NSLayoutAttributeNotAnAttribute
-                                                    multiplier:1.0
-                                                      constant:kMaximumHeight]];
+      self.maximumHeightConstraint =
+          [NSLayoutConstraint constraintWithItem:snackbarView
+                                       attribute:NSLayoutAttributeHeight
+                                       relatedBy:NSLayoutRelationLessThanOrEqual
+                                          toItem:nil
+                                       attribute:NSLayoutAttributeNotAnAttribute
+                                      multiplier:1.0
+                                        constant:self.maximumHeight];
+
+      [container addConstraint:self.maximumHeightConstraint];
     }
   }
 }
@@ -327,6 +333,7 @@ static const CGFloat kMaximumHeight = 80.0f;
 
 - (void)triggerSnackbarLayoutChange {
   self.manualLayoutChange = YES;
+  self.snackbarView.anchoredToScreenEdge = self.anchoredToScreenEdge;
   [self layoutIfNeeded];
   self.manualLayoutChange = NO;
 }
@@ -341,16 +348,32 @@ static const CGFloat kMaximumHeight = 80.0f;
     return CGRectNull;
   }
 
-  UIScreen *screen = window.screen;
-  if ([screen respondsToSelector:@selector(fixedCoordinateSpace)]) {
-    return [self.snackbarView convertRect:self.snackbarView.bounds
-                        toCoordinateSpace:screen.fixedCoordinateSpace];
-  }
+  return [self.snackbarView convertRect:self.snackbarView.bounds
+                      toCoordinateSpace:window.screen.coordinateSpace];
+}
 
-  CGRect snackbarWindowFrame =
-      [window convertRect:self.snackbarView.bounds fromView:self.snackbarView];
-  CGRect snackbarScreenFrame = [window convertRect:snackbarWindowFrame toWindow:nil];
-  return snackbarScreenFrame;
+- (CGFloat)maximumHeight {
+  // Maximum height must be extended to include the bottom content safe area.
+  CGFloat maximumHeight = kMaximumHeight;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (self.anchoredToScreenEdge) {
+    if (@available(iOS 11.0, *)) {
+      maximumHeight += self.safeAreaInsets.bottom;
+    }
+  }
+#endif
+  return maximumHeight;
+}
+
+- (BOOL)anchoredToScreenEdge {
+  return self.bottomOffset == 0;
+}
+
+#pragma mark - Safe Area Insets
+
+- (void)safeAreaInsetsDidChange {
+  self.maximumHeightConstraint.constant = self.maximumHeight;
+  [self triggerSnackbarLayoutChange];
 }
 
 #pragma mark - Presentation/Dismissal
@@ -399,7 +422,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   void (^animations)(void) = ^{
     self.snackbarView.alpha = 1.0;
   };
-  void (^realCompletion)(BOOL) = ^(BOOL finished) {
+  void (^realCompletion)(BOOL) = ^(__unused BOOL finished) {
     if (completion) {
       completion();
     }
@@ -442,16 +465,17 @@ static const CGFloat kMaximumHeight = 80.0f;
 
   // We use UIView animation inside a CATransaction in order to use the custom animation curve.
   [UIView animateWithDuration:MDCSnackbarTransitionDuration
-                        delay:0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     // Trigger snackbar animation.
-                     [_containingView layoutIfNeeded];
-                   } completion:^(BOOL finished) {
-                     if (completion) {
-                       completion();
-                     }
-                   }];
+      delay:0
+      options:UIViewAnimationOptionCurveEaseInOut
+      animations:^{
+        // Trigger snackbar animation.
+        [_containingView layoutIfNeeded];
+      }
+      completion:^(__unused BOOL finished) {
+        if (completion) {
+          completion();
+        }
+      }];
 
   [snackbarView animateContentOpacityFrom:fromContentOpacity
                                        to:toContentOpacity
@@ -539,8 +563,21 @@ static const CGFloat kMaximumHeight = 80.0f;
   if (_bottomOffset != bottomOffset) {
     _bottomOffset = bottomOffset;
 
-    self.bottomConstraint.constant = -[self dynamicBottomMargin];
+    self.maximumHeightConstraint.constant = self.maximumHeight;
+    self.bottomConstraint.constant = -self.dynamicBottomMargin;
     [self triggerSnackbarLayoutChange];
+
+    // If there is no snackbar the following method returns CGRectNull, but we still need to notify
+    // observers of bottom offset changes.
+    CGRect frame = [self snackbarRectInScreenCoordinates];
+    if (CGRectIsNull(frame)) {
+      frame = CGRectMake(0, CGRectGetHeight(self.frame) - self.bottomOffset,
+                         CGRectGetWidth(self.frame), self.bottomOffset);
+    }
+    [self notifyOverlayChangeWithFrame:frame
+                              duration:[CATransaction animationDuration]
+                                 curve:UIViewAnimationCurveEaseInOut
+                        timingFunction:nil];
   }
 }
 
@@ -559,6 +596,7 @@ static const CGFloat kMaximumHeight = 80.0f;
   [super layoutSubviews];
 
   if (!self.manualLayoutChange && self.rotationDuration > 0) {
+    [self.containingView layoutIfNeeded];
     [self handleRotation];
   }
 }
@@ -579,18 +617,9 @@ static const CGFloat kMaximumHeight = 80.0f;
   }
 
   self.rotationDuration = duration;
-
-  // On iOS 7, the layout of this overlay view will have already occurred by the time the will
-  // rotation notification is posted. In that event, we need to report rotation here. Opting to
-  // check for version using the UIDevice string methods because we need to perform this check even
-  // if the app was compiled on an iOS 7 SDK and is running on an iOS 8 device.
-  NSString *version = [[UIDevice currentDevice] systemVersion];
-  if ([version compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
-    [self handleRotation];
-  }
 }
 
-- (void)didRotate:(NSNotification *)notification {
+- (void)didRotate:(__unused NSNotification *)notification {
   // The UIApplicationDidChangeStatusBarOrientationNotification happens pretty much immediately
   // after the willRotate notification, before any layouts are changed. By delaying this until the
   // next runloop, any rotation-related layout changes will occur, and we can know that they were

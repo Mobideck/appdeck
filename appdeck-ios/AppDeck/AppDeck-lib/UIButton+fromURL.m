@@ -39,8 +39,6 @@
     else
     
         [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler: handler] resume];
-
-       // [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
     
     return button;
 }

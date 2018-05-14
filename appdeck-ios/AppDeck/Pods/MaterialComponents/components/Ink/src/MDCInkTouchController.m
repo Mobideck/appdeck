@@ -16,6 +16,7 @@
 
 #import "MDCInkTouchController.h"
 
+#import "MDCInkGestureRecognizer.h"
 #import "MDCInkView.h"
 
 static const NSTimeInterval kInkTouchDelayInterval = 0.1;
@@ -199,8 +200,8 @@ static const NSTimeInterval kInkTouchDelayInterval = 0.1;
 
 #pragma mark - UIGestureRecognizerDelegate
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other {
+- (BOOL)gestureRecognizer:(__unused UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(__unused UIGestureRecognizer *)other {
   // Subclasses can override this to prioritize another recognizer.
   return YES;
 }

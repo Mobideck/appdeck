@@ -526,49 +526,35 @@
                     [request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
                 }
                 
-                //NSLog(@"request headers: %@", request.allHTTPHeaderFields);
-                
-//                NSHTTPURLResponse* response;
-//                NSError* error = nil;
-//                [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
-                
                 NSURLSession *session = [NSURLSession sharedSession];
                 NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                                         completionHandler:
-                                              ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                              ^(NSData *data, NSURLResponse *response, NSError *error)
+                {
                                                   
                                                   NSArray *new_cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:((NSHTTPURLResponse*)response).allHeaderFields forURL:[NSURL URLWithString:url]];
                                                   NSDictionary *all_cookies = [[NSMutableDictionary alloc] initWithCapacity:new_cookies.count + cookies.count];
-                                                  for (NSHTTPCookie *cookie in cookies) {
+                                                  for (NSHTTPCookie *cookie in cookies)
+                                                  {
                                                       [all_cookies setValue:cookie forKey:cookie.name];
                                                   }
-                                                  for (NSHTTPCookie *cookie in new_cookies) {
+                                                  for (NSHTTPCookie *cookie in new_cookies)
+                                                  {
                                                       [all_cookies setValue:cookie forKey:cookie.name];
                                                   }
                                                   cookies = [all_cookies allValues];
                                                   
-                                                  //NSLog(@"response cookies: %@", response.allHeaderFields);
-                                                  
-                                                  // clean
+                              
                                                   [NSURLProtocol removePropertyForKey:@"CacheMonitoringURLProtocol" inRequest:request];
                                                   
                                                   if (error != nil)
                                                   return;
-                                                  
-                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                      // Your code to run on the main queue/thread
-                                                  });
+                                               
                                                   
                                               }];
                 
                 [task resume];
                 
-                
-                //NSLog(@"response headers: %@", response.allHeaderFields);
-                
-                // get cookie
-               
-                // callback
                 
             }
             
@@ -578,7 +564,8 @@
             
             NSLog(@"result: %d", result);
         }
-        @catch (NSException *exception) {
+        @catch (NSException *exception)
+        {
             NSLog(@"%@", exception.reason);
         }
         

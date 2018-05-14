@@ -14,7 +14,7 @@
 
 static NSString *RNCachingURLHeader = @"X-RNCache";
 
-@interface RNCachingURLProtocol () <NSURLSessionDelegate> //<NSURLConnectionDelegate, NSURLConnectionDataDelegate> //iOS5-only
+@interface RNCachingURLProtocol () <NSURLSessionDelegate>
 @property (nonatomic, readwrite, strong) NSURLRequest *request;
 @property (nonatomic, readwrite, strong) NSURLConnection *connection;
 @property (nonatomic, readwrite, strong) NSURLSession *session;
@@ -130,8 +130,6 @@ static NSString *RNCachingURLHeader = @"X-RNCache";
     }
     if (/* DISABLES CODE */ (YES))
   {
-    //NSURLConnection *connection = [NSURLConnection connectionWithRequest:[self request]
-                                                              //  delegate:self];
       
       NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
       NSURLSession*session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
@@ -164,11 +162,7 @@ static NSString *RNCachingURLHeader = @"X-RNCache";
         [downloadTask resume];
         
         [self setSession:session];
-      //  NSURLConnection *connection = [NSURLConnection connectionWithRequest:[self request]
-                                                                   // delegate:self];
-      //  [self setConnection:connection];
-/*
-      [[self client] URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCannotConnectToHost userInfo:nil]];*/
+
     }
   }
 }
@@ -178,20 +172,16 @@ static NSString *RNCachingURLHeader = @"X-RNCache";
   [[self session] invalidateAndCancel];
 }
 
-// NSURLConnection delegates (generally we pass these on to our client)
-
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-//{
-//  [[self client] URLProtocol:self didLoadData:data];
-//  [self appendData:data];
-//}
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
     [[self client] URLProtocol:self didLoadData:data];
     [self appendData:data];
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error{
-    if (error==nil){
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error
+{
+    if (error==nil)
+    {
         [[self client] URLProtocolDidFinishLoading:self];
         
         NSString *cachePath = [self cachePathForRequest:[self request]];
@@ -200,43 +190,20 @@ static NSString *RNCachingURLHeader = @"X-RNCache";
         [cache setData:[self data]];
         [NSKeyedArchiver archiveRootObject:cache toFile:cachePath];
   
-    }else{
+    }else
+    {
         [[self client] URLProtocol:self didFailWithError:error];
        
     }
     [self setConnection:nil];
     [self setData:nil];
 }
-//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-//{
-//  [[self client] URLProtocol:self didFailWithError:error];
-//  [self setConnection:nil];
-//  [self setData:nil];
-//}
 
-//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-//{
-//  [self setResponse:response];
-//  [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];  // We cache ourselves.
-//}
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
     [self setResponse:response];
     [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
-//- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-//{
-//  [[self client] URLProtocolDidFinishLoading:self];
-//
-//  NSString *cachePath = [self cachePathForRequest:[self request]];
-//  RNCachedData *cache = [RNCachedData new];
-//  [cache setResponse:[self response]];
-//  [cache setData:[self data]];
-//  [NSKeyedArchiver archiveRootObject:cache toFile:cachePath];
-//
-//  [self setConnection:nil];
-//  [self setData:nil];
-//}
 
 - (void)appendData:(NSData *)newData
 {

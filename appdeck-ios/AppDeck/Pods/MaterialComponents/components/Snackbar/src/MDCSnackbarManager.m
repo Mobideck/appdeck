@@ -18,10 +18,21 @@
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
 #import "MaterialOverlayWindow.h"
-#import "UIApplication+AppExtensions.h"
+#import "MaterialApplication.h"
 #import "private/MDCSnackbarMessageInternal.h"
-#import "private/MDCSnackbarOverlayView.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
+#import "private/MDCSnackbarOverlayView.h"
+
+/** Test whether any of the accessibility elements of a view is focused */
+static BOOL UIViewHasFocusedAccessibilityElement(UIView *view) {
+  for (NSInteger i = 0; i < [view accessibilityElementCount]; i++) {
+    id accessibilityElement = [view accessibilityElementAtIndex:i];
+    if ([accessibilityElement accessibilityElementIsFocused]) {
+      return YES;
+    }
+  }
+  return NO;
+};
 
 @class MDCSnackbarManagerSuspensionToken;
 
@@ -103,7 +114,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    _overlayView.accessibilityViewIsModal = YES;
   }
   return self;
 }
@@ -201,13 +211,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
         }
       };
 
-  self.overlayView.hidden = NO;
-  [self activateOverlay:self.overlayView];
-
   Class viewClass = [message viewClass];
   snackbarView = [[viewClass alloc] initWithMessage:message dismissHandler:dismissHandler];
-
   self.currentSnackbar = snackbarView;
+
+  self.overlayView.accessibilityViewIsModal = ![self isSnackbarTransient:snackbarView];
+  self.overlayView.hidden = NO;
+  [self activateOverlay:self.overlayView];
 
   // Once the Snackbar has finished animating on screen, start the automatic dismiss timeout, but
   // only if the user isn't running VoiceOver.
@@ -231,7 +241,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(message.duration * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
                   MDCSnackbarMessageView *strongSnackbarView = weakSnackbarView;
-                  if (strongSnackbarView) {
+                  BOOL hasVoiceOverFocus = UIAccessibilityIsVoiceOverRunning() &&
+                                           UIViewHasFocusedAccessibilityElement(strongSnackbarView);
+                  if (strongSnackbarView && !hasVoiceOverFocus) {
                     // Mimic the user tapping on the snackbar.
                     [strongSnackbarView dismissWithAction:nil userInitiated:NO];
                   }
@@ -397,7 +409,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // queue.
   NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
   [self.pendingMessages
-      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage, NSUInteger idx, BOOL *stop) {
+      enumerateObjectsUsingBlock:^(MDCSnackbarMessage *pendingMessage,
+                                   NSUInteger idx,
+                                   __unused BOOL *stop) {
         if (!categoryToDismiss || [pendingMessage.category isEqualToString:categoryToDismiss]) {
           // Mark the message for removal from the pending messages list.
           [indexesToRemove addIndex:idx];
@@ -558,6 +572,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _identifier = [NSUUID UUID];
   }
   return self;
+}
+
+- (void)dealloc {
+  [MDCSnackbarManager resumeMessagesWithToken:self];
 }
 
 @end

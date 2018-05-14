@@ -16,6 +16,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+#import <CoreMedia/CoreMedia.h>
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
@@ -36,6 +37,11 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
   Typed access to the id of the ad placement.
  */
 @property (nonatomic, copy, readonly) NSString *placementID;
+
+/**
+  The duration of the video, as a CMTime value.  Returns kCMTimeIndefinite if no video is loaded.
+ */
+@property (nonatomic, assign, readonly) CMTime duration;
 
 /**
   the delegate
@@ -69,7 +75,7 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
                          withUserID:(nullable NSString *)userID
                        withCurrency:(nullable NSString *)currency;
 
-/*!
+/**
  This is a method to initialize an FBRewardedVideoAd matching the given placement id and allows the publisher to set
  the reward to give to a user.
 

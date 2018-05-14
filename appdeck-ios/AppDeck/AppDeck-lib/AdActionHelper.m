@@ -31,10 +31,6 @@
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:self.url]];
     [request addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];
 
-
-    
-    //conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
-    
     NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
     session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
     
@@ -45,32 +41,10 @@
     {
         currentRequest = request;
         receivedData = [NSMutableData data];
-    } else {
+    } else
+    {
         [self failed];
     }
-
-    
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    configuration.HTTPAdditionalHeaders=@{@"User-Agent":[[AppDeck sharedInstance] userAgent]};
-//    session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-//    
-//    NSURLSessionTask *task = [session dataTaskWithURL:[NSURL URLWithString:self.url]];
-//    [task resume];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.url]];
-//    [request addValue:[[AppDeck sharedInstance] userAgent] forHTTPHeaderField:@"User-Agent"];
-//
-//    session = [NSURLSession sharedSession];
-//    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-//                                            completionHandler:
-//                                  ^(NSData *data, NSURLResponse *response, NSError *error) {
-//                                      if(error)
-//                                        [self failed];
-//                                      else{
-//
-//                                      }
-//                                  }];
-//
-//    [task resume];
     
 }
 
@@ -167,10 +141,8 @@
 
 #pragma mark - NSURLSessionDelegate
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-willPerformHTTPRedirection:(NSHTTPURLResponse *)response
-        newRequest:(NSURLRequest *)request
- completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler{
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
+{
     
     [task cancel];
     NSLog(@"Redirect: %@", request.URL.absoluteString);
@@ -180,7 +152,6 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
     if ([request.URL.scheme isEqualToString:@"itms-appss"] || [request.URL.host isEqualToString:@"itunes.apple.com"])
     {
         [self handleAppStore:request];
-       // [session cancel];
     }
     
     // update current Request if needed
@@ -188,9 +159,8 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
     
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
-didReceiveResponse:(NSURLResponse *)response
- completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -205,13 +175,13 @@ didReceiveResponse:(NSURLResponse *)response
     [receivedData setLength:0];
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
-    didReceiveData:(NSData *)data{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
     [receivedData appendData:data];
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-didCompleteWithError:(nullable NSError *)error{
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error
+{
     if (error){
          [self failed];
     }else{
@@ -219,58 +189,5 @@ didCompleteWithError:(nullable NSError *)error{
     }
     
 }
-#pragma mark - NSURLConnectionDelegate
-
-//- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
-//{
-//    //[connection cancel];
-//    NSLog(@"Redirect: %@", request.URL.absoluteString);
-//
-//    //https://itunes.apple.com/app/game-of-war-fire-age/id667728512?ls=1&mt=8
-//    //itms-appss://itunes.apple.com/fr/app/empire-four-kingdoms/id585661281?mt=8&ls=1&uo=4
-//    if ([request.URL.scheme isEqualToString:@"itms-appss"] || [request.URL.host isEqualToString:@"itunes.apple.com"])
-//    {
-//        [self handleAppStore:request];
-//        [connection cancel];
-//        return nil;
-//    }
-//
-//    // update current Request if needed
-//    currentRequest = request;
-//    return request;
-//}
-
-//- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-//{
-//    if ([response isKindOfClass:[NSHTTPURLResponse class]])
-//    {
-//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-//        if ([httpResponse statusCode] != 200)
-//            [self failed];
-//
-//        [connection cancel];
-//        [self handleURL:currentRequest];
-//        return;
-//
-//    }
-//    [receivedData setLength:0];
-//}
-
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-//{
-//    [receivedData appendData:data];
-//}
-
-//- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-//{
-////    NSLog(@"Succeeded! Received %d bytes of data: %@",[receivedData length], [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
-//    [self handleHTML:currentRequest data:receivedData];
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-//{
-//    [self failed];
-//}
-
 
 @end

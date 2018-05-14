@@ -72,13 +72,10 @@ static const CGFloat labelPadding = 10;
     _titleLabel=[[UILabel alloc]init];
     _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _titleLabel.opaque = NO;
-  //  _titleLabel.backgroundColor = [UIColor yellowColor];
     _titleLabel.textAlignment = NSTextAlignmentCenter;// UITextAlignmentCenter;
     _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;// UILineBreakModeWordWrap;
     _titleLabel.numberOfLines = 3;
     _titleLabel.textColor = [UIColor blackColor];
-    //_titleLabel.shadowColor = [UIColor blackColor];
-  //  _titleLabel.shadowOffset = CGSizeMake(1, 1);
     _titleLabel.font = [UIFont systemFontOfSize:14];
     [self addSubview:_titleLabel];
 
@@ -90,7 +87,6 @@ static const CGFloat labelPadding = 10;
     
     _imageView=[[UIImageView alloc] init];
     _imageView.contentMode=UIViewContentModeScaleAspectFit;
-   // _imageView.backgroundColor=[UIColor purpleColor];
     [self addSubview:_imageView];
     
     [_imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -114,13 +110,10 @@ static NSString * const reuseIdentifier = @"Cell";
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     if(!_collection){
-     //   _collection.frame=self.view.bounds;
         
         UICollectionViewFlowLayout *layout= [UICollectionViewFlowLayout new]; // standard flow layout
         
         [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
-//        [layout setMinimumInteritemSpacing:0.0f];
-//        [layout setMinimumLineSpacing:0.0f];
         _collection = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
         NSLog(@"%@",CGRectCreateDictionaryRepresentation(self.view.bounds));
         _collection.backgroundColor=[UIColor blackColor];

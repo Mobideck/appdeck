@@ -11,7 +11,6 @@
 @interface EmbedResources : NSObject <NSURLConnectionDelegate,NSURLSessionDelegate>
 {
     BOOL cancel;
-//    dispatch_queue_t backgroundQueue;
     
     NSURLConnection *conn;
     NSURLSession*session;

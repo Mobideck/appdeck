@@ -230,7 +230,7 @@ FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 FB_EXPORT struct FBAdStarRating {
     /// The value of the star rating, X in X/5
     CGFloat value;
-    // The total possible star rating, Y in 4/Y
+    /// The total possible star rating, Y in 4/Y
     NSInteger scale;
 } FBAdStarRating;
 

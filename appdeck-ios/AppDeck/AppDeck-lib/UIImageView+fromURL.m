@@ -42,8 +42,8 @@
         NSCachedURLResponse *cachedResponse = [app.cache getCacheResponseForRequest:request];
         if (cachedResponse)
             handler(cachedResponse.data,cachedResponse.response,nil);
-        else{
-           // [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
+        else
+        {
         
             NSURLSession *session = [NSURLSession sharedSession];
             NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:handler];
@@ -51,10 +51,8 @@
             [task resume];
         }
         
-        
     });
     
-
     return imageView;
 }
 
@@ -86,14 +84,14 @@
     NSCachedURLResponse *cachedResponse = [app.cache getCacheResponseForRequest:request];
     if (cachedResponse)
         handler(cachedResponse.data, cachedResponse.response, nil);
-    else{
+    else
+    {
         NSURLSession *session = [NSURLSession sharedSession];
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:handler];
         
         [task resume];
     }
-       // [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handler];
-    
+
     return imageView;
 }
 

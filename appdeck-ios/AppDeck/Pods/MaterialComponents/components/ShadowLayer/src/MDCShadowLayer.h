@@ -15,6 +15,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "MaterialShadowElevations.h"
 
 /**
  Metrics of the Material shadow effect.
@@ -43,7 +44,7 @@
  The Material shadow effect.
 
  @see
- https://www.google.com/design/spec/what-is-material/elevation-shadows.html#elevation-shadows-shadows
+ https://material.io/guidelines/what-is-material/elevation-shadows.html#elevation-shadows-shadows
 
  Consider rasterizing your MDCShadowLayer if your view will not generally be animating or
  changing size. If you need to animate a rasterized MDCShadowLayer, disable rasterization first.
@@ -64,7 +65,7 @@
 
  Negative values act as if zero were specified.
  */
-@property(nonatomic, assign) CGFloat elevation;
+@property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
  Whether to apply the "cutout" shadow layer mask.
@@ -75,4 +76,11 @@
  */
 @property(nonatomic, getter=isShadowMaskEnabled, assign) BOOL shadowMaskEnabled;
 
+@end
+
+/**
+ Subclasses can depend on MDCShadowLayer implementing CALayerDelegate actionForLayer:forKey: in
+ order to implicitly animate 'path' or 'shadowPath' on sublayers.
+ */
+@interface MDCShadowLayer (Subclassing) <CALayerDelegate>
 @end

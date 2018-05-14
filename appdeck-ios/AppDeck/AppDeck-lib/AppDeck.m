@@ -48,6 +48,8 @@
 #import <AudioToolbox/AudioServices.h>
 
 #import <MaterialComponents/MaterialSnackbar.h>
+#import "VCFloatingActionButton.h"
+
 
 @import MessageUI;
 @import SafariServices;
@@ -260,12 +262,6 @@
     if ([call.command isEqualToString:@"menu"] || [call.command isEqualToString:@"previousnext"])
         return YES;
     
-/*    if ([call.command isEqualToString:@"menu"])
-    {
- 
-        return @"";
-    }*/
-    
     if ([call.command isEqualToString:@"loadextern"])
     {
         NSString *urlstring = [NSString stringWithFormat:@"%@", call.param];
@@ -375,9 +371,7 @@
     
     if ([call.command isEqualToString:@"select"])
     {
-        
-       // return YES;
-        //NSString *title = [call.param objectForKey:@"title"];
+
         NSArray *values = [call.param objectForKey:@"values"];
         
         __block AppDeck *me = self;
@@ -433,73 +427,9 @@
     
     if ([call.command isEqualToString:@"selectdate"])
     {
-//        id year = [call.param objectForKey:@"year"];
-//        id month = [call.param objectForKey:@"month"];
-//        id day = [call.param objectForKey:@"day"];
-////        UIAlertController*controller = [UIAlertController alertControllerWithTitle:@"AppDeck \n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-////        [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil]];
-//
-////        UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:@"AppDeck \n\n\n\n\n\n" delegate:nil cancelButtonTitle:@"Ok" destructiveButtonTitle:nil otherButtonTitles: nil];
-////        action.actionSheetStyle = (self.loader.conf.icon_theme == IconThemeLight ? UIBarStyleDefault : UIBarStyleBlackOpaque);
-//        // init the date
-//        NSCalendar *calendar = [NSCalendar currentCalendar];
-//        NSDateComponents *components = [[NSDateComponents alloc] init];
-//
-//        if (day != nil && day != [NSNull null])
-//            [components setDay:[day intValue]];
-//        if (month != nil && month != [NSNull null])
-//            [components setMonth:[month intValue]];
-//        if (year != nil&& year != [NSNull null])
-//            [components setYear:[year intValue]];
-//
-//        NSDate *date = [calendar dateFromComponents:components];
 
-        // Add the picker
-       
-        
-      //  [action addSubview:pickerView];
-        
-       // [action showInView:self.loader.view];
-
-       // [action setBounds:CGRectMake(0,0,320, 500)];
-        
-      //  [controller.view addSubview:pickerView];
-        
         [CustomDatePicker PresentInVC:self.loader fromCall:call];
-      //  [self.loader presentViewController:controller animated:YES completion:nil];
-        
-//        CGRect pickerRect = pickerView.bounds;
-//        pickerRect.origin.y = -100;
-//        pickerView.bounds = pickerRect;
-        
-        NSRunLoop *rl = [NSRunLoop currentRunLoop];
-        NSDate *d;
-        
-      //  while ([action isVisible]) {
-            d = [[NSDate alloc] init];
-            [rl runUntilDate:d];
-      //  }
-//
-      // components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:pickerView.date]; // Get necessary date components
-       
-       // call.result = @{@"year": [NSNumber numberWithInteger:[components year]], @"month" : [NSNumber numberWithInteger:[components month]], @"day" : [NSNumber numberWithInteger:[components day]]};
-/*
-        NSRunLoop *rl = [NSRunLoop currentRunLoop];
-        NSDate *d;
-        while ([alert isVisible]) {
-            d = [[NSDate alloc] init];
-            [rl runUntilDate:d];
-        }
- 
-         call.result = @"OK";
- */
-        
-//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                
-//            });
-//        });
-        
+
         return YES;
     }
     

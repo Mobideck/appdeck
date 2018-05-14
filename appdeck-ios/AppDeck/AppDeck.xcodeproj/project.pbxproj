@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		47DE00EE2DF55B66BA29C4DB /* libPods-AppDeck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B3CEE7BBE11D866ADB5429 /* libPods-AppDeck.a */; };
 		A900BBA21BBEE92B005D1ECF /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A900BBA11BBEE92B005D1ECF /* JSBadgeView.m */; };
 		A908D777170C668C00C858BA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A908D779170C668C00C858BA /* Localizable.strings */; };
 		A90B3B9218293E1B0039A48A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A90B3B9118293E1B0039A48A /* CoreLocation.framework */; };
@@ -240,6 +239,12 @@
 		A9F3F9BC1CF82BE20079225D /* AppDeckPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9BB1CF82BE20079225D /* AppDeckPlugin.m */; };
 		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
+		C718193C3C4167440F51A3D1 /* Pods_AppDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9D2AD65EF989E94368B3F96 /* Pods_AppDeck.framework */; };
+		F056571520A43AFA00F46071 /* floatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F056571020A43AF900F46071 /* floatTableViewCell.xib */; };
+		F056571620A43AFA00F46071 /* VCFloatingActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F056571120A43AF900F46071 /* VCFloatingActionButton.m */; };
+		F056571720A43AFA00F46071 /* floatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F056571220A43AF900F46071 /* floatTableViewCell.m */; };
+		F056571A20A43C8800F46071 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F056571820A43C8800F46071 /* cross.png */; };
+		F056571B20A43C8800F46071 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = F056571920A43C8800F46071 /* plus.png */; };
 		F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = F0623F3B2099EB7D0054790D /* No_Image_Available.png */; };
 		F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F0623F3D2099F0230054790D /* Refresh_icon.png */; };
 		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
@@ -252,7 +257,6 @@
 /* Begin PBXFileReference section */
 		4A424AEF5637E9CDB70B31AD /* Pods-AppDeck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppDeck.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppDeck/Pods-AppDeck.release.xcconfig"; sourceTree = "<group>"; };
 		82DDA09917CC40BACB19864A /* Pods-AppDeck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppDeck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppDeck/Pods-AppDeck.debug.xcconfig"; sourceTree = "<group>"; };
-		98B3CEE7BBE11D866ADB5429 /* libPods-AppDeck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AppDeck.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A900BBA01BBEE92B005D1ECF /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = "AppDeck-lib/JSBadgeView/JSBadgeView.h"; sourceTree = SOURCE_ROOT; };
 		A900BBA11BBEE92B005D1ECF /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSBadgeView.m; path = "AppDeck-lib/JSBadgeView/JSBadgeView.m"; sourceTree = SOURCE_ROOT; };
 		A908D778170C668C00C858BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -685,6 +689,15 @@
 		A9F3F9C01CF82C1C0079225D /* AppDeckPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDeckPluginManager.h; path = "AppDeck-lib/AppDeckPluginManager.h"; sourceTree = "<group>"; };
 		A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPluginManager.m; path = "AppDeck-lib/AppDeckPluginManager.m"; sourceTree = "<group>"; };
 		A9F643911708BF1F003D07B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E9D2AD65EF989E94368B3F96 /* Pods_AppDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F056570C20A3533600F46071 /* AppDeck-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDeck-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		F056571020A43AF900F46071 /* floatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = floatTableViewCell.xib; path = FloatingButton/floatTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		F056571120A43AF900F46071 /* VCFloatingActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCFloatingActionButton.m; path = FloatingButton/VCFloatingActionButton.m; sourceTree = SOURCE_ROOT; };
+		F056571220A43AF900F46071 /* floatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = floatTableViewCell.m; path = FloatingButton/floatTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		F056571320A43AF900F46071 /* floatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = floatTableViewCell.h; path = FloatingButton/floatTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		F056571420A43AF900F46071 /* VCFloatingActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCFloatingActionButton.h; path = FloatingButton/VCFloatingActionButton.h; sourceTree = SOURCE_ROOT; };
+		F056571820A43C8800F46071 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		F056571920A43C8800F46071 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		F0623F3B2099EB7D0054790D /* No_Image_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = No_Image_Available.png; sourceTree = "<group>"; };
 		F0623F3D2099F0230054790D /* Refresh_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Refresh_icon.png; sourceTree = "<group>"; };
 		F09DC45D20873C90002F5A31 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -744,7 +757,7 @@
 				A91DFA7616CE970A00512CA0 /* CoreImage.framework in Frameworks */,
 				A91DFA1416CE8D1400512CA0 /* UIKit.framework in Frameworks */,
 				A91DFA1616CE8D1400512CA0 /* Foundation.framework in Frameworks */,
-				47DE00EE2DF55B66BA29C4DB /* libPods-AppDeck.a in Frameworks */,
+				C718193C3C4167440F51A3D1 /* Pods_AppDeck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,6 +1084,7 @@
 		A916D48A1A1E0AA4005FE1AE /* import */ = {
 			isa = PBXGroup;
 			children = (
+				F05656FF20A34F5800F46071 /* FloatingButton */,
 				A9BA708A1BC524D0005A212E /* re2lib */,
 				A900BB941BBECFDC005D1ECF /* JSBadgeView */,
 				A916D4941A1E0C51005FE1AE /* Other */,
@@ -1441,7 +1455,7 @@
 				A91DFA1316CE8D1400512CA0 /* UIKit.framework */,
 				A91DFA1516CE8D1400512CA0 /* Foundation.framework */,
 				A91DFA1716CE8D1400512CA0 /* CoreGraphics.framework */,
-				98B3CEE7BBE11D866ADB5429 /* libPods-AppDeck.a */,
+				E9D2AD65EF989E94368B3F96 /* Pods_AppDeck.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1452,6 +1466,7 @@
 				A911DD881DDF7064002FE0DB /* AppDeck.entitlements */,
 				A91DFA1A16CE8D1400512CA0 /* Supporting Files */,
 				A91DFA1B16CE8D1400512CA0 /* AppDeck-Info.plist */,
+				F056570C20A3533600F46071 /* AppDeck-Bridging-Header.h */,
 				A91DFA1C16CE8D1400512CA0 /* InfoPlist.strings */,
 				A91DFA2216CE8D1400512CA0 /* AppDelegate.h */,
 				A91DFA2316CE8D1400512CA0 /* AppDelegate.m */,
@@ -1464,6 +1479,8 @@
 		A91DFA1A16CE8D1400512CA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F056571820A43C8800F46071 /* cross.png */,
+				F056571920A43C8800F46071 /* plus.png */,
 				F0623F3D2099F0230054790D /* Refresh_icon.png */,
 				F0623F3B2099EB7D0054790D /* No_Image_Available.png */,
 				A9A0B0B017326583003237E0 /* iTunesArtwork */,
@@ -1582,6 +1599,19 @@
 			name = Api;
 			sourceTree = "<group>";
 		};
+		F05656FF20A34F5800F46071 /* FloatingButton */ = {
+			isa = PBXGroup;
+			children = (
+				F056571320A43AF900F46071 /* floatTableViewCell.h */,
+				F056571220A43AF900F46071 /* floatTableViewCell.m */,
+				F056571020A43AF900F46071 /* floatTableViewCell.xib */,
+				F056571420A43AF900F46071 /* VCFloatingActionButton.h */,
+				F056571120A43AF900F46071 /* VCFloatingActionButton.m */,
+			);
+			name = FloatingButton;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		F09DC46C20931987002F5A31 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1627,6 +1657,7 @@
 				TargetAttributes = {
 					A91DFA0F16CE8D1400512CA0 = {
 						DevelopmentTeam = 9K2HP594UT;
+						LastSwiftMigration = 0920;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1675,7 +1706,10 @@
 				A96BD5501BB2D01600F6F658 /* Launch Screen.storyboard in Resources */,
 				A91DFA1E16CE8D1400512CA0 /* InfoPlist.strings in Resources */,
 				A908D777170C668C00C858BA /* Localizable.strings in Resources */,
+				F056571520A43AFA00F46071 /* floatTableViewCell.xib in Resources */,
 				A952A25E1F72C99D002894F5 /* BarCodeScannerViewController.xib in Resources */,
+				F056571B20A43C8800F46071 /* plus.png in Resources */,
+				F056571A20A43C8800F46071 /* cross.png in Resources */,
 				F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */,
 				F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */,
 				A916D4881A1E09C9005FE1AE /* iRate.bundle in Resources */,
@@ -1908,6 +1942,7 @@
 				A9BA711B1BC524D0005A212E /* tostring.cc in Sources */,
 				A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */,
 				A9BA711E1BC524D0005A212E /* unicode_groups.cc in Sources */,
+				F056571720A43AFA00F46071 /* floatTableViewCell.m in Sources */,
 				A916D36A1A1E03E7005FE1AE /* Ppmd7Dec.c in Sources */,
 				A979298D1C58BD140079D49D /* CacheURLProtocol.m in Sources */,
 				A916D3A81A1E03E7005FE1AE /* MRBlurView.m in Sources */,
@@ -1947,6 +1982,7 @@
 				A916D3D51A1E03E7005FE1AE /* RNCachingURLProtocol.m in Sources */,
 				A916D3FC1A1E03E7005FE1AE /* UIView+forceSetScrollTop.m in Sources */,
 				A916D3611A1E03E7005FE1AE /* 7zIn.c in Sources */,
+				F056571620A43AFA00F46071 /* VCFloatingActionButton.m in Sources */,
 				A916D3F91A1E03E7005FE1AE /* UIScrollView+zoomToPoint.m in Sources */,
 				A916D3DE1A1E03E7005FE1AE /* SDWebImageDownloaderOperation.m in Sources */,
 				A916D3D21A1E03E7005FE1AE /* Reachability.m in Sources */,
@@ -2098,6 +2134,7 @@
 				);
 				INFOPLIST_FILE = "AppDeck/AppDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AppDeck-lib/GoogleAnalytics",
@@ -2114,6 +2151,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppDeck-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2147,6 +2188,7 @@
 				);
 				INFOPLIST_FILE = "AppDeck/AppDeck-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AppDeck-lib/GoogleAnalytics",
@@ -2171,6 +2213,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.mobideck.appdeck.test;
 				PRODUCT_NAME = AppDeck;
+				SWIFT_INCLUDE_PATHS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppDeck-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

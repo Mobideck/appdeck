@@ -18,16 +18,19 @@
 
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-#import "MaterialButtons.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialButtons.h"
 #import "MaterialTypography.h"
+#import "private/MaterialSnackbarStrings.h"
+#import "private/MaterialSnackbarStrings_table.h"
 #import "private/MDCSnackbarMessageViewInternal.h"
 #import "private/MDCSnackbarOverlayView.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
-NSString *const MDCSnackbarMessageViewTitleA11yHint = @"Double-tap to dismiss.";
+
+// The Bundle for string resources.
+static NSString *const kMaterialSnackbarBundle = @"MaterialSnackbar.bundle";
 
 static inline UIColor *MDCRGBAColor(uint8_t r, uint8_t g, uint8_t b, float a) {
   return [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:(a)];
@@ -159,7 +162,13 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 @end
 
-@implementation MDCSnackbarMessageView
+@implementation MDCSnackbarMessageView {
+  UIFont *_messageFont;
+  UIFont *_buttonFont;
+
+  // Holds the instances of MDCButton
+  NSMutableArray<MDCButton *> *_actionButtons;
+}
 
 + (void)initialize {
   [[self appearance] setSnackbarMessageViewShadowColor:MDCRGBAColor(0x00, 0x00, 0x00, 1.0f)];
@@ -208,7 +217,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
 - (void)setSnackbarMessageViewBackgroundColor:(UIColor *)snackbarMessageViewBackgroundColor {
   _snackbarMessageViewBackgroundColor = snackbarMessageViewBackgroundColor;
-  _containerView.backgroundColor = snackbarMessageViewBackgroundColor;
+  self.backgroundColor = snackbarMessageViewBackgroundColor;
 }
 
 - (void)setSnackbarShadowColor:(UIColor *)snackbarMessageViewShadowColor {
@@ -224,25 +233,96 @@ static const CGFloat kButtonInkRadius = 64.0f;
 - (void)addColorToMessageLabel:(UIColor *)color {
   NSMutableAttributedString *messageString = [_label.attributedText mutableCopy];
   [messageString addAttributes:@{
-                                 NSForegroundColorAttributeName :color,
-                                 } range:NSMakeRange(0, messageString.length)];
+    NSForegroundColorAttributeName : color,
+  }
+                         range:NSMakeRange(0, messageString.length)];
   _label.attributedText = messageString;
+}
+
+- (UIFont *)messageFont {
+  return _messageFont;
+}
+
+- (void)setMessageFont:(UIFont *)font {
+  _messageFont = font;
+
+  [self updateMessageFont];
+}
+
+- (void)updateMessageFont {
+  // If we have a custom font apply it to the label.
+  // If not, fall back to the Material specified font.
+  if (_messageFont) {
+    _label.font = _messageFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody2];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _label.font = [MDCTypography body2Font];
+    }
+  }
+
+  [self setNeedsLayout];
+}
+
+- (UIFont *)buttonFont {
+  return _buttonFont;
+}
+
+- (void)setButtonFont:(UIFont *)font {
+  _buttonFont = font;
+
+  [self updateButtonFont];
+}
+
+- (void)updateButtonFont {
+  UIFont *finalButtonFont;
+
+  // If we have a custom font apply it to the button.
+  // If not, fall back to the Material specified font.
+  if (_buttonFont) {
+    finalButtonFont = _buttonFont;
+  } else {
+    // TODO(#2709): Migrate to a single source of truth for fonts
+    // There is no custom font, so use the default font.
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleButton];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      finalButtonFont = [MDCTypography buttonFont];
+    }
+  }
+
+  for (MDCButton *button in _actionButtons) {
+    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+  }
+
+  [self setNeedsLayout];
 }
 
 - (instancetype)initWithMessage:(MDCSnackbarMessage *)message
                  dismissHandler:(MDCSnackbarMessageDismissHandler)handler {
   self = [super init];
   if (self) {
-    
     _message = message;
     _dismissalHandler = [handler copy];
-    
-    self.backgroundColor = [UIColor clearColor];
+
+    self.backgroundColor = _snackbarMessageViewBackgroundColor;
     self.layer.cornerRadius = kCornerRadius;
     self.layer.shadowColor = _snackbarMessageViewShadowColor.CGColor;
     self.layer.shadowOpacity = kShadowAlpha;
     self.layer.shadowOffset = kShadowOffset;
     self.layer.shadowRadius = kShadowSpread;
+
+    _anchoredToScreenEdge = YES;
 
     // Borders are drawn inside of the bounds of a layer. Because our border is translucent, we need
     // to have a view with transparent background and border only (@c self). Inside will be a
@@ -251,7 +331,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [self addSubview:_containerView];
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    _containerView.backgroundColor = _snackbarMessageViewBackgroundColor;
+    _containerView.backgroundColor = [UIColor clearColor];
     _containerView.layer.cornerRadius = kCornerRadius;
     _containerView.layer.masksToBounds = YES;
 
@@ -281,6 +361,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [_buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView addSubview:_buttonView];
 
+    _actionButtons = [[NSMutableArray alloc] init];
+
     // Set up the title label.
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
     [_contentView addSubview:_label];
@@ -294,7 +376,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
         enumerateAttribute:MDCSnackbarMessageBoldAttributeName
                    inRange:NSMakeRange(0, messageString.length)
                    options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                usingBlock:^(id value, NSRange range, BOOL *stop) {
+                usingBlock:^(id value, NSRange range, __unused BOOL *stop) {
                   UIFont *font = [MDCTypography body1Font];
                   if ([value boolValue]) {
                     font = [MDCTypography body2Font];
@@ -313,11 +395,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
     [_label setContentHuggingPriority:UILayoutPriorityDefaultLow
                               forAxis:UILayoutConstraintAxisHorizontal];
 
+    NSString *accessibilityHintKey =
+        kMaterialSnackbarStringTable[kStr_MaterialSnackbarMessageViewTitleA11yHint];
+    NSString *accessibilityHint =
+        NSLocalizedStringFromTableInBundle(accessibilityHintKey,
+                                           kMaterialSnackbarStringsTableName,
+                                           [[self class] bundle],
+                                           @"Dismissal accessibility hint for Snackbar");
+
     // For VoiceOver purposes, the label is the primary 'button' for dismissing the snackbar, so
     // we'll make sure the label looks like a button.
     _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
-    _label.accessibilityHint = MDCSnackbarMessageViewTitleA11yHint;
+    _label.accessibilityHint = accessibilityHint;
 
     // If an accessibility label was set on the message model object, use that instead of the text
     // in the label.
@@ -332,7 +422,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                              : kMaximumViewWidth_iPhone;
 
     // Take into account the content padding.
-    availableTextWidth -= (kContentMargin.left + kContentMargin.right);
+    availableTextWidth -= (self.safeContentMargin.left + self.safeContentMargin.right);
 
     // If there are buttons, account for the padding between the title and the buttons.
     if (message.action) {
@@ -352,16 +442,6 @@ static const CGFloat kButtonInkRadius = 64.0f;
       textColorHighlighted = message.highlightedButtonTextColor;
     }
 
-    NSDictionary *buttonAttributes = @{
-      NSFontAttributeName : [MDCTypography buttonFont],
-      NSForegroundColorAttributeName : textColor,
-    };
-
-    NSDictionary *buttonHighlightedAttributes = @{
-      NSFontAttributeName : [MDCTypography buttonFont],
-      NSForegroundColorAttributeName : textColorHighlighted,
-    };
-
     // Add buttons to the view. We'll use this opportunity to determine how much space a button will
     // need, to inform the layout direction.
     NSMutableArray *actions = [NSMutableArray array];
@@ -370,18 +450,19 @@ static const CGFloat kButtonInkRadius = 64.0f;
       [buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
       [_buttonView addSubview:buttonView];
 
-      UIButton *button = [[MDCSnackbarMessageViewButton alloc] init];
+      MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
+      if (_buttonFont) {
+        [button setTitleFont:_buttonFont forState:UIControlStateNormal];
+        [button setTitleFont:_buttonFont forState:UIControlStateHighlighted];
+      }
+      [button setTitleColor:textColor forState:UIControlStateNormal];
+      [button setTitleColor:textColorHighlighted forState:UIControlStateHighlighted];
       [button setTranslatesAutoresizingMaskIntoConstraints:NO];
       button.tag = kButtonTagStart;
       [buttonView addSubview:button];
+      [_actionButtons addObject:button];
 
       // Style the text in the button.
-      NSAttributedString *buttonText =
-          [[NSAttributedString alloc] initWithString:message.action.title
-                                          attributes:buttonAttributes];
-      NSAttributedString *buttonHighlightedText =
-          [[NSAttributedString alloc] initWithString:message.action.title
-                                          attributes:buttonHighlightedAttributes];
       button.titleLabel.numberOfLines = 1;
       button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
       button.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -389,8 +470,10 @@ static const CGFloat kButtonInkRadius = 64.0f;
 
       // Set up the button's accessibility values.
       button.accessibilityIdentifier = message.action.accessibilityIdentifier;
-      [button setAttributedTitle:buttonText forState:UIControlStateNormal];
-      [button setAttributedTitle:buttonHighlightedText forState:UIControlStateHighlighted];
+      button.accessibilityHint = message.action.accessibilityHint;
+
+      [button setTitle:message.action.title forState:UIControlStateNormal];
+      [button setTitle:message.action.title forState:UIControlStateHighlighted];
 
       if (message.buttonTextColor) {
         [button setTitleColor:textColor forState:UIControlStateNormal];
@@ -405,7 +488,8 @@ static const CGFloat kButtonInkRadius = 64.0f;
                     action:@selector(handleButtonTapped:)
           forControlEvents:UIControlEventTouchUpInside];
 
-      availableTextWidth -= [buttonText size].width;
+      CGSize buttonSize = [button sizeThatFits:CGSizeMake(CGFLOAT_MAX,CGFLOAT_MAX)];
+      availableTextWidth -= buttonSize.width;
       availableTextWidth -= 2 * kButtonPadding;
 
       [actions addObject:buttonView];
@@ -422,6 +506,17 @@ static const CGFloat kButtonInkRadius = 64.0f;
 }
 
 #pragma mark - Constraints and layout
+
+- (void)setAnchoredToScreenEdge:(BOOL)anchoredToScreenEdge {
+  _anchoredToScreenEdge = anchoredToScreenEdge;
+  [self invalidateIntrinsicContentSize];
+
+  if (self.viewConstraints) {
+    [self removeConstraints:self.viewConstraints];
+    self.viewConstraints = nil;
+    [self updateConstraints];
+  }
+}
 
 - (void)updateConstraints {
   [super updateConstraints];
@@ -447,12 +542,13 @@ static const CGFloat kButtonInkRadius = 64.0f;
 - (NSArray *)containerViewConstraints {
   NSDictionary *metrics = @{
     @"kBorderMargin" : @(kBorderWidth),
-    @"kBottomMargin" : @(kContentMargin.bottom),
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
+    @"kBottomMargin" : @(self.safeContentMargin.bottom),
+    @"kLeftMargin" : @(self.safeContentMargin.left),
+    @"kRightMargin" : @(self.safeContentMargin.right),
     @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kTopMargin" : @(kContentMargin.top),
+    @"kTopMargin" : @(self.safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
+    @"kContentSafeBottomInset" : @(kBorderWidth +  self.contentSafeBottomInset),
   };
   NSDictionary *views = @{
     @"container" : self.containerView,
@@ -473,7 +569,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
                                                                              views:views]];
 
   // Pin the top and bottom edges of the container view to the snackbar.
-  formatString = @"V:|-(==kBorderMargin)-[container]-(==kBorderMargin)-|";
+  formatString = @"V:|-(==kBorderMargin)-[container]-(==kContentSafeBottomInset)-|";
   [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                            options:0
                                                                            metrics:metrics
@@ -546,11 +642,11 @@ static const CGFloat kButtonInkRadius = 64.0f;
  */
 - (NSArray *)contentViewConstraints {
   NSDictionary *metrics = @{
-    @"kBottomMargin" : @(kContentMargin.bottom),
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
+    @"kBottomMargin" : @(self.safeContentMargin.bottom),
+    @"kLeftMargin" : @(self.safeContentMargin.left),
+    @"kRightMargin" : @(self.safeContentMargin.right),
     @"kTitleImagePadding" : @(kTitleImagePadding),
-    @"kTopMargin" : @(kContentMargin.top),
+    @"kTopMargin" : @(self.safeContentMargin.top),
   };
 
   NSMutableDictionary *views = [NSMutableDictionary dictionary];
@@ -618,10 +714,10 @@ static const CGFloat kButtonInkRadius = 64.0f;
   NSMutableArray *constraints = [NSMutableArray array];
 
   NSDictionary *metrics = @{
-    @"kLeftMargin" : @(kContentMargin.left),
-    @"kRightMargin" : @(kContentMargin.right),
-    @"kTopMargin" : @(kContentMargin.top),
-    @"kBottomMargin" : @(kContentMargin.bottom),
+    @"kLeftMargin" : @(self.safeContentMargin.left),
+    @"kRightMargin" : @(self.safeContentMargin.right),
+    @"kTopMargin" : @(self.safeContentMargin.top),
+    @"kBottomMargin" : @(self.safeContentMargin.bottom),
     @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kBorderMargin" : @(kBorderWidth),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
@@ -629,7 +725,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   };
 
   __block UIView *previousButton = nil;
-  [self.buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, BOOL *stop) {
+  [self.buttons enumerateObjectsUsingBlock:^(UIView *button, NSUInteger idx, __unused BOOL *stop) {
     // Convenience dictionary of views.
     NSMutableDictionary *views = [NSMutableDictionary dictionary];
     views[@"buttonContainer"] = button;
@@ -707,17 +803,51 @@ static const CGFloat kButtonInkRadius = 64.0f;
   height = MAX(height, self.label.intrinsicContentSize.height);
 
   // Make sure that content margins are included in our calculation.
-  height += kContentMargin.top + kContentMargin.bottom;
+  height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
   // Make sure that the height of the image and text is larger than the minimum height;
   height = MAX(kMinimumHeight, height);
 
+  height = MAX(kMinimumHeight, height) + self.contentSafeBottomInset;
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
+}
+
+- (CGFloat)contentSafeBottomInset {
+  // If a bottom offset has been set to raise the HUD, e.g. above a tab bar, we should ignore
+  // any safeAreaInsets, since it is no longer 'anchored' to the bottom of the screen. This is set
+  // by the MDCSnackbarOverlayView whenever the bottomOffset is non-zero.
+  if (!self.anchoredToScreenEdge) {
+    return 0;
+  }
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    return self.window.safeAreaInsets.bottom;
+  }
+#endif
+  return 0;
+}
+
+- (UIEdgeInsets)safeContentMargin {
+  UIEdgeInsets contentMargin = kContentMargin;
+
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
+  if (@available(iOS 11.0, *)) {
+    safeAreaInsets = self.window.safeAreaInsets;
+  }
+#endif
+
+  // We only take the left and right safeAreaInsets in to account because the bottom is
+  // handled by contentSafeBottomInset and we will never overlap the top inset.
+  contentMargin.left = MAX(contentMargin.left, safeAreaInsets.left);
+  contentMargin.right = MAX(contentMargin.right, safeAreaInsets.right);
+
+  return contentMargin;
 }
 
 #pragma mark - Event Handlers
 
-- (void)handleBackgroundSwipedRight:(UIButton *)sender {
+- (void)handleBackgroundSwipedRight:(__unused UIButton *)sender {
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
@@ -730,7 +860,7 @@ static const CGFloat kButtonInkRadius = 64.0f;
   [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
 }
 
-- (void)handleBackgroundSwipedLeft:(UIButton *)sender {
+- (void)handleBackgroundSwipedLeft:(__unused UIButton *)sender {
   CABasicAnimation *translationAnimation =
       [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
   translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
@@ -743,15 +873,15 @@ static const CGFloat kButtonInkRadius = 64.0f;
   [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
 }
 
-- (void)handleBackgroundTapped:(UIButton *)sender {
+- (void)handleBackgroundTapped:(__unused UIButton *)sender {
   [self dismissWithAction:nil userInitiated:YES];
 }
 
-- (void)handleButtonTapped:(UIButton *)sender {
+- (void)handleButtonTapped:(__unused UIButton *)sender {
   [self dismissWithAction:self.message.action userInitiated:YES];
 }
 
-- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
+- (void)animationDidStop:(__unused CAAnimation *)theAnimation finished:(BOOL)flag {
   if (flag) {
     [self dismissWithAction:nil userInitiated:YES];
   }
@@ -805,6 +935,27 @@ static const CGFloat kButtonInkRadius = 64.0f;
   [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
 
   [CATransaction commit];
+}
+
+#pragma mark - Resource bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kMaterialSnackbarBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  // In iOS 8+, we could be included by way of a dynamic framework, and our resource bundles may
+  // not be in the main .app bundle, but rather in a nested framework, so figure out where we live
+  // and use that as the search location.
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCSnackbarMessageView class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
 }
 
 @end

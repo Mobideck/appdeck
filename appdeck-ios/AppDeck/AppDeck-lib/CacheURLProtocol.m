@@ -221,7 +221,6 @@
         [self clean];
         return;
     }
-//    self.currentConnection = [NSURLConnection connectionWithRequest:self.request delegate:self];
     
     NSURLSessionConfiguration*config = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue: [NSOperationQueue mainQueue]];
@@ -242,19 +241,17 @@
 
 #pragma mark - NSURLSessionDelegate
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler{
-    
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
+{
     if (response)
         [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler{
-    
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
     
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    
-    
-    
+
     self.currentResponse = response;
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
     [self storeResponseStart:response];
@@ -264,16 +261,17 @@
 
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
     [[self client] URLProtocol:self didLoadData:data];
     [self storeResponseAppendData:data];
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error{
-    
-    
-    
-    if (error){
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error
+{
+
+    if (error)
+    {
          [self storeResponseCancel];
         if ([NSFileManager.defaultManager fileExistsAtPath:cachedFilePathBody])
         {
@@ -285,81 +283,19 @@
         }
         [[self client] URLProtocol:self didFailWithError:error];
         
-    }else{
+    }else
+    {
         [self storeResponseClose];
         [[self client] URLProtocolDidFinishLoading:self];
     }
     [self clean];
 }
 
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
- willCacheResponse:(NSCachedURLResponse *)proposedResponse
- completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler
 {
     completionHandler(proposedResponse);
 }
-#pragma mark - NSURLConnectionDelegate
 
-- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
-{
-    
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-/*    if (shouldForceLongCacheTime)
-    {
-        NSHTTPURLResponse *httpResponse =
-        int cacheTTL = 3600 * 24 * 31;
-        [headers setObject:[NSString stringWithFormat:@"public, max-age=%d", cacheTTL] forKey:@"Cache-Control"];
-    }*/
-    self.currentResponse = response;
-    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
-    [self storeResponseStart:response];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [[self client] URLProtocol:self didLoadData:data];
-    [self storeResponseAppendData:data];
-}
-/*
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-    //    [self.client URLProtocol:self cachedResponseIsValid:cachedResponse];
-    return cachedResponse;
-}*/
-
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
-{
-    if (redirectResponse)
-        [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:redirectResponse];
-    return request;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    [self storeResponseClose];
-    [[self client] URLProtocolDidFinishLoading:self];
-    [self clean];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [self storeResponseCancel];
-    // request failed, we try to get it from cache just in case
-    if ([NSFileManager.defaultManager fileExistsAtPath:cachedFilePathBody])
-    {
-        if ([self serveFromCache])
-        {
-            [self clean];
-            return;
-        }
-    }
-    [[self client] URLProtocol:self didFailWithError:error];
-    [self clean];
-}
 
 #pragma mark - internal
 
@@ -491,7 +427,6 @@
 {
     if (self.currentRequest)
         [NSURLProtocol removePropertyForKey:@"CacheURLProtocol" inRequest:self.currentRequest];
-    //self.currentConnection = nil;
     self.session=nil;
     self.currentRequest = nil;
     self.currentResponse = nil;

@@ -28,6 +28,8 @@
 
 #import "AppDeckAdNative.h"
 #import "KeyboardStateListener.h"
+#import "VCFloatingActionButton.h"
+
 
 @interface PageViewController ()
 
@@ -73,7 +75,6 @@
     [player prepareToPlay];
     [player.view setFrame: self.view.bounds];  // player's frame must match parent's
     [self.view addSubview:player.view];*/
-
     
 /*    [UIView animateWithDuration:0.5
                      animations:^{
@@ -103,8 +104,6 @@
     
     shouldPatchContentInset = (self.loader.appDeck.iosVersion >= 7.0 && self.navigationController.navigationBar.translucent);
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -561,9 +560,7 @@
                             //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(progressEstimateChanged:) name:@"WebProgressEstimateChangedNotification" object:contentCtl.coreWebView];
                             [self viewWillLayoutSubviews];
                         }];
-    
-
-        }]; 
+        }];
 }
 
 -(void)applicationWillEnterForeground
@@ -769,8 +766,6 @@
         [self.loader executeJS:js];
         return YES;
     }
-
-    
     
     if ([call.command isEqualToString:@"disable_pulltorefresh"])
     {
@@ -872,10 +867,33 @@
         if (self.isMain)
             self.swipeContainer.navigationItem.rightBarButtonItems = buttons;
         
-        
-        
     }
     
+    if ([call.command isEqualToString:@"floating"])
+    {
+        
+        NSMutableArray*buttons= [[NSMutableArray alloc]init];
+        
+        for (NSDictionary*dict in call.param) {
+            [buttons addObject:dict];
+        }
+        
+        CGRect floatFrame = CGRectMake([UIScreen mainScreen].bounds.size.width - 44 - 20, [UIScreen mainScreen].bounds.size.height - 44 - 20, 44, 44);
+        
+        _addButton = [[VCFloatingActionButton alloc]initWithFrame:floatFrame normalImage:[UIImage imageNamed:@"plus"] andPressedImage:[UIImage imageNamed:@"cross"] withScrollview:nil];
+        
+        _addButton.buttonsArray = buttons;
+        _addButton.child=self;
+        _addButton.call=call;
+        
+        _addButton.hideWhileScrolling = NO;
+        // _addButton.delegate = self;
+        
+        [self.loader.view addSubview:_addButton];
+        
+        return YES;
+    }
+
     if ([call.command isEqualToString:@"loadingshow"])
     {
         AppDeckProgressHUD *appdeckProgressHUD = [AppDeckProgressHUD progressHUDForViewController:self];
@@ -897,38 +915,24 @@
         [appdeckProgressHUD hide];
         return YES;
     }
-    /*
-    if ([call.command isEqualToString:@"cordovainit"])
-    {
-        [AppDeckCordovaViewController createWithPageViewController:self];
-        return YES;
-    }
-    if ([call.command isEqualToString:@"cordovainject"])
-    {
-        return YES;
-    }*/
-
     
     return [super apiCall:call];
 }
 
+-(void) didSelectMenuOptionAtIndex:(NSInteger)row{
+    
+}
+
 -(void)load:(NSString *)url
 {
-    // javascript ?
+
     if ([url hasPrefix:@"javascript:"])
     {
         url = [url substringFromIndex:11];
         [contentCtl executeJS:url];
         return;
     }
-/*    if ([url hasPrefix:@"javascriptlog:"])
-    {
-        url = [url substringFromIndex:14];
-        [self.loader.log info:[contentCtl executeJS:url]];
-        return;
-    }*/
-
-    // load page
+    
     [contentCtl loadRequest:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url relativeToURL:self.url]] progess:nil completed:nil];
 }
 
