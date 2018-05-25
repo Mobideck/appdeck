@@ -1,4 +1,4 @@
-//
+  //
 //  LoaderConfiguration.m
 //  AppDeck
 //
@@ -107,9 +107,7 @@
     
 //    self.control_color = [[result query:@"control_color"] toUIColor];
 //    self.button_color = [[result query:@"button_color"] toUIColor];
-    
 
-    
     AppDeck *app = [AppDeck sharedInstance];
     
     self.cache = [[NSMutableArray alloc] init];
@@ -232,7 +230,7 @@
 
     // MUST do image doawload at end to take advantage of cache
     
-    if ([result query:@"logo"] != nil)
+    if ([result query:@"logo"] != nil )
         self.logo = [[ImagePreload alloc] initWithURL:[NSURL URLWithString:[result query:@"logo"] relativeToURL:self.baseUrl] height:44];
     
     // icon theme
@@ -314,6 +312,14 @@
     [self.image_pull_arrow preload];
     
     return YES;
+}
+
+- (CALayer *)gradientBGLayerForBounds:(CGRect)bounds colors:(NSArray *)colors
+{
+    CAGradientLayer * gradientBG = [CAGradientLayer layer];
+    gradientBG.frame = bounds;
+    gradientBG.colors = colors;
+    return gradientBG;
 }
 
 - (UIImage *)scaledImage:(UIImage *)image

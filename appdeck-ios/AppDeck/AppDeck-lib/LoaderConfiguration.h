@@ -148,5 +148,5 @@ typedef enum {
 @property (weak, nonatomic) LoaderViewController *loader;
 
 -(BOOL)loadWithURL:(NSURL *)url result:(NSDictionary *)result loader:(LoaderViewController *)loader;
-
+-(void)updateStyleWithParams:(NSDictionary*)params;
 @end

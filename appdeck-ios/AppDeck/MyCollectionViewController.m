@@ -11,7 +11,6 @@
 #import "UIImageView+WebCache.h"
 #import <Masonry/Masonry.h>
 
-
 @interface customCell: UICollectionViewCell
 
 @property(nonatomic,retain) UILabel*titleLabel;
@@ -35,17 +34,9 @@ static const CGFloat labelPadding = 10;
     if (_titleLabel.numberOfLines > 0){
         maxHeight = _titleLabel.font.leading*_titleLabel.numberOfLines;
         CGSize textSize =[_titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_titleLabel.font}];
-
-        // NSLog(@"sizee %f",textSize1.);
-        
         return CGSizeMake(size.width, textSize.height + labelPadding * 2);
-        
     }
-    
-    //    CGSize textSize = [captionLabel.text sizeWithFont:captionLabel.font
-    //                              constrainedToSize:CGSizeMake(size.width - labelPadding*2, maxHeight)
-    //                                  lineBreakMode:captionLabel.lineBreakMode];
-    
+
     return CGSizeZero;
 }
 

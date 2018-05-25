@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class LoaderViewController;
 @interface Singleton : NSObject
+
++(Singleton*)sharedInstance;
+-(UIImage*)getIconFromName:(NSString*)icon withLoader:(LoaderViewController*)loader;
 
 @end

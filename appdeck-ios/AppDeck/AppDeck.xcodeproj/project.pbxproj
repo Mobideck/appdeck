@@ -247,6 +247,16 @@
 		F056571B20A43C8800F46071 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = F056571920A43C8800F46071 /* plus.png */; };
 		F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */ = {isa = PBXBuildFile; fileRef = F0623F3B2099EB7D0054790D /* No_Image_Available.png */; };
 		F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F0623F3D2099F0230054790D /* Refresh_icon.png */; };
+		F077F78E20AF13D500C80789 /* téléchargement.png in Resources */ = {isa = PBXBuildFile; fileRef = F077F78D20AF13D400C80789 /* téléchargement.png */; };
+		F077F79120B3013900C80789 /* MyCustomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F077F79020B3013900C80789 /* MyCustomTableViewController.m */; };
+		F078DB9420A9D4DB0018CA5D /* ImageBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = F078DB9320A9D4DB0018CA5D /* ImageBanner.m */; };
+		F081FE8420AC62D3004B175A /* MyTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F081FE8320AC62D3004B175A /* MyTabBarViewController.m */; };
+		F081FE8720AD8830004B175A /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = F081FE8620AD8830004B175A /* Singleton.m */; };
+		F091F17920B6D6660041D104 /* myCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F091F17820B6D6660041D104 /* myCell.xib */; };
+		F091F17C20B6DA380041D104 /* myCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F091F17B20B6DA380041D104 /* myCell.m */; };
+		F091F17E20B6FCC10041D104 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = F091F17D20B6FCC10041D104 /* next.png */; };
+		F091F18020B6FCC60041D104 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = F091F17F20B6FCC60041D104 /* previous.png */; };
+		F091F18320B80D1C0041D104 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F091F18220B80D1C0041D104 /* GradientView.m */; };
 		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
 		F09DC4652088D36E002F5A31 /* CustomDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4642088D36E002F5A31 /* CustomDatePicker.m */; };
 		F09DC4682089E634002F5A31 /* YearMonthPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4672089E634002F5A31 /* YearMonthPickerView.m */; };
@@ -700,6 +710,22 @@
 		F056571920A43C8800F46071 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		F0623F3B2099EB7D0054790D /* No_Image_Available.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = No_Image_Available.png; sourceTree = "<group>"; };
 		F0623F3D2099F0230054790D /* Refresh_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Refresh_icon.png; sourceTree = "<group>"; };
+		F077F78D20AF13D400C80789 /* téléchargement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "téléchargement.png"; path = "../../../../../Downloads/téléchargement.png"; sourceTree = "<group>"; };
+		F077F78F20B3013900C80789 /* MyCustomTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCustomTableViewController.h; sourceTree = "<group>"; };
+		F077F79020B3013900C80789 /* MyCustomTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCustomTableViewController.m; sourceTree = "<group>"; };
+		F078DB9220A9D4DB0018CA5D /* ImageBanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageBanner.h; sourceTree = "<group>"; };
+		F078DB9320A9D4DB0018CA5D /* ImageBanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageBanner.m; sourceTree = "<group>"; };
+		F081FE8220AC62D3004B175A /* MyTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTabBarViewController.h; sourceTree = "<group>"; };
+		F081FE8320AC62D3004B175A /* MyTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTabBarViewController.m; sourceTree = "<group>"; };
+		F081FE8520AD8830004B175A /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		F081FE8620AD8830004B175A /* Singleton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Singleton.m; sourceTree = "<group>"; };
+		F091F17820B6D6660041D104 /* myCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = myCell.xib; sourceTree = "<group>"; };
+		F091F17A20B6DA380041D104 /* myCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myCell.h; sourceTree = "<group>"; };
+		F091F17B20B6DA380041D104 /* myCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = myCell.m; sourceTree = "<group>"; };
+		F091F17D20B6FCC10041D104 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
+		F091F17F20B6FCC60041D104 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
+		F091F18120B80D1B0041D104 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		F091F18220B80D1C0041D104 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		F09DC45D20873C90002F5A31 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		F09DC45E20873C90002F5A31 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		F09DC4632088D36E002F5A31 /* CustomDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDatePicker.h; sourceTree = "<group>"; };
@@ -1127,6 +1153,17 @@
 				A916D48F1A1E0AEC005FE1AE /* Page */,
 				A916D48E1A1E0AE5005FE1AE /* Loader */,
 				A916D48D1A1E0AD6005FE1AE /* Cache */,
+				F078DB9220A9D4DB0018CA5D /* ImageBanner.h */,
+				F078DB9320A9D4DB0018CA5D /* ImageBanner.m */,
+				F081FE8220AC62D3004B175A /* MyTabBarViewController.h */,
+				F081FE8320AC62D3004B175A /* MyTabBarViewController.m */,
+				F077F78F20B3013900C80789 /* MyCustomTableViewController.h */,
+				F077F79020B3013900C80789 /* MyCustomTableViewController.m */,
+				F091F17820B6D6660041D104 /* myCell.xib */,
+				F091F17A20B6DA380041D104 /* myCell.h */,
+				F091F17B20B6DA380041D104 /* myCell.m */,
+				F091F18120B80D1B0041D104 /* GradientView.h */,
+				F091F18220B80D1C0041D104 /* GradientView.m */,
 			);
 			name = AppDeck;
 			sourceTree = "<group>";
@@ -1470,6 +1507,8 @@
 				A91DFA1C16CE8D1400512CA0 /* InfoPlist.strings */,
 				A91DFA2216CE8D1400512CA0 /* AppDelegate.h */,
 				A91DFA2316CE8D1400512CA0 /* AppDelegate.m */,
+				F081FE8520AD8830004B175A /* Singleton.h */,
+				F081FE8620AD8830004B175A /* Singleton.m */,
 				A96BD54F1BB2D01600F6F658 /* Launch Screen.storyboard */,
 				A97929911C5B7ADC0079D49D /* Images.xcassets */,
 			);
@@ -1479,6 +1518,9 @@
 		A91DFA1A16CE8D1400512CA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F091F17F20B6FCC60041D104 /* previous.png */,
+				F091F17D20B6FCC10041D104 /* next.png */,
+				F077F78D20AF13D400C80789 /* téléchargement.png */,
 				F056571820A43C8800F46071 /* cross.png */,
 				F056571920A43C8800F46071 /* plus.png */,
 				F0623F3D2099F0230054790D /* Refresh_icon.png */,
@@ -1703,6 +1745,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A952A2591F72C995002894F5 /* mire.png in Resources */,
+				F091F17920B6D6660041D104 /* myCell.xib in Resources */,
 				A96BD5501BB2D01600F6F658 /* Launch Screen.storyboard in Resources */,
 				A91DFA1E16CE8D1400512CA0 /* InfoPlist.strings in Resources */,
 				A908D777170C668C00C858BA /* Localizable.strings in Resources */,
@@ -1711,8 +1754,11 @@
 				F056571B20A43C8800F46071 /* plus.png in Resources */,
 				F056571A20A43C8800F46071 /* cross.png in Resources */,
 				F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */,
+				F091F17E20B6FCC10041D104 /* next.png in Resources */,
+				F091F18020B6FCC60041D104 /* previous.png in Resources */,
 				F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */,
 				A916D4881A1E09C9005FE1AE /* iRate.bundle in Resources */,
+				F077F78E20AF13D500C80789 /* téléchargement.png in Resources */,
 				A97929921C5B7ADC0079D49D /* Images.xcassets in Resources */,
 				A9A0B0B117326583003237E0 /* iTunesArtwork in Resources */,
 			);
@@ -1819,6 +1865,7 @@
 				A916D3601A1E03E7005FE1AE /* 7zFile.c in Sources */,
 				A916D3BA1A1E03E7005FE1AE /* PageViewController.m in Sources */,
 				A916D3FB1A1E03E7005FE1AE /* UIView+EasingFunctions.m in Sources */,
+				F091F18320B80D1C0041D104 /* GradientView.m in Sources */,
 				A916D2DC1A1E03E7005FE1AE /* AppDeckUserProfile.m in Sources */,
 				A9BA71251BC524D0005A212E /* strutil.cc in Sources */,
 				A916D2D51A1E03E7005FE1AE /* AppDeckAdConfig.m in Sources */,
@@ -1834,6 +1881,7 @@
 				A916D36F1A1E03E7005FE1AE /* ManagedUIWebViewController.m in Sources */,
 				A916D3D31A1E03E7005FE1AE /* RemoteAppCache.m in Sources */,
 				A916D35B1A1E03E7005FE1AE /* LoaderViewController.m in Sources */,
+				F078DB9420A9D4DB0018CA5D /* ImageBanner.m in Sources */,
 				A916CEB51A1E03E6005FE1AE /* HTMLChunkAdViewController.m in Sources */,
 				A93FED0E1A94D46100F94B66 /* AdBlock.m in Sources */,
 				A99EF6DA1C09E11200DAC126 /* CustomECSlidingViewController.m in Sources */,
@@ -1846,6 +1894,7 @@
 				A9BA71211BC524D0005A212E /* pcre.cc in Sources */,
 				A916D3D61A1E03E7005FE1AE /* RSTimingFunction.m in Sources */,
 				A916D2D41A1E03E7005FE1AE /* AppDeck.m in Sources */,
+				F081FE8420AC62D3004B175A /* MyTabBarViewController.m in Sources */,
 				A916D2D21A1E03E7005FE1AE /* easing.c in Sources */,
 				A916D3AF1A1E03E7005FE1AE /* MRStopButton.m in Sources */,
 				A9BA70ED1BC524D0005A212E /* dfa.cc in Sources */,
@@ -1892,8 +1941,10 @@
 				A916D2E01A1E03E7005FE1AE /* CRNavigationBar.m in Sources */,
 				A916D3691A1E03E7005FE1AE /* Ppmd7.c in Sources */,
 				A9BA71201BC524D0005A212E /* hash.cc in Sources */,
+				F091F17C20B6DA380041D104 /* myCell.m in Sources */,
 				A9BA70EE1BC524D0005A212E /* filtered_re2.cc in Sources */,
 				A916D3F51A1E03E7005FE1AE /* UIImageView+Animation.m in Sources */,
+				F081FE8720AD8830004B175A /* Singleton.m in Sources */,
 				A916D35C1A1E03E7005FE1AE /* LogViewController.m in Sources */,
 				A916D3DA1A1E03E7005FE1AE /* SDImageCache.m in Sources */,
 				A97929871C56381B0079D49D /* ManagedWebView.m in Sources */,
@@ -1948,6 +1999,7 @@
 				A916D3A81A1E03E7005FE1AE /* MRBlurView.m in Sources */,
 				A916D3B81A1E03E7005FE1AE /* PageBarButton.m in Sources */,
 				A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */,
+				F077F79120B3013900C80789 /* MyCustomTableViewController.m in Sources */,
 				A916D3E41A1E03E7005FE1AE /* UIImage+WebP.m in Sources */,
 				A916D3B51A1E03E7005FE1AE /* NSString+UIColor.m in Sources */,
 				A916D2D91A1E03E7005FE1AE /* AppDeckAdViewController.m in Sources */,

@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoaderViewController.h"
+#import "LoaderChildViewController.h"
+#import "LoaderChildViewController.h"
 
-@interface MyTabBarViewController : UITabBarController
 
+@interface MyTabBarViewController : UIViewController
+
+@property (nonatomic, retain) NSArray*controllersArray;
+@property (nonatomic, retain) UITabBarController *tabVC;
+
+@property (nonatomic, weak) LoaderChildViewController* child;
+@property (nonatomic, retain) LoaderViewController *loader;
+-(void)loadWithItem:(NSDictionary*)item url:(NSURL*)url;
+
+-(instancetype)initWithLoaderChild:(LoaderChildViewController*)child;
 @end

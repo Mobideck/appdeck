@@ -11,6 +11,7 @@
 #import "LoaderConfiguration.h"
 #import "AppURLCache.h"
 #import "AppDeckApiCall.h"
+#import "Singleton.h"
 
 #define SCREEN_WIDTH     [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT     [UIScreen mainScreen].bounds.size.height
@@ -36,8 +37,7 @@ CGFloat buttonToScreenHeight;
     self = [super initWithFrame:frame];
     if (self)
     {
-//        windowView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-//        _mainWindow = [UIApplication sharedApplication].keyWindow;
+
         _buttonView = [[UIView alloc]initWithFrame:frame];
         _buttonView.backgroundColor = [UIColor clearColor];
         _buttonView.userInteractionEnabled = YES;
@@ -90,18 +90,15 @@ CGFloat buttonToScreenHeight;
     
     [_buttonView addGestureRecognizer:buttonTap3];
     
-    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
     UIVisualEffectView *vsview = [[UIVisualEffectView alloc]initWithEffect:nil];
     
     _bgView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _bgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
-   // _bgView.alpha = 0;
     _bgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *buttonTap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
 
     buttonTap2.cancelsTouchesInView = NO;
     vsview.frame = _bgView.bounds;
-  //  _bgView = vsview;
     [_bgView addGestureRecognizer:buttonTap2];
     
     _normalImageView = [[UIImageView alloc]initWithFrame:self.bounds];
@@ -118,8 +115,6 @@ CGFloat buttonToScreenHeight;
     _normalImageView.image = _normalImage;
     _pressedImageView.image = _pressedImage;
    
-    //crash fixed iOS11 - [_bgView addSubview:_menuTable];
-   // [[(UIVisualEffectView *)_bgView contentView] addSubview:_menuTable];
     [_bgView addSubview:_menuTable];
 
     [_buttonView addSubview:_pressedImageView];
@@ -189,9 +184,7 @@ CGFloat buttonToScreenHeight;
      {
          noOfRows = 0;
          [_bgView removeFromSuperview];
-         
-//         [windowView removeFromSuperview];
-//         [_mainWindow removeFromSuperview];
+
          
      }];
 }
@@ -284,7 +277,7 @@ CGFloat buttonToScreenHeight;
 -(void)tableView:(UITableView *)tableView willDisplayCell:(floatTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    double delay = (indexPath.row*indexPath.row) * 0.004;  //Quadratic time function for progressive delay
+    double delay = (indexPath.row*indexPath.row) * 0.004;
 
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(0.95, 0.95);
     CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(0,-(indexPath.row+1)*CGRectGetHeight(cell.imgView.frame));
@@ -318,37 +311,8 @@ CGFloat buttonToScreenHeight;
     
     if ([icon hasPrefix:@"!"])
     {
-        UIImage *iconImage = self.child.loader.conf.icon_action.image;
-        if ([icon isEqualToString:@"!action"])
-            iconImage = self.child.loader.conf.icon_action.image;
-        if ([icon isEqualToString:@"!ok"])
-            iconImage = self.child.loader.conf.icon_ok.image;
-        if ([icon isEqualToString:@"!cancel"])
-            iconImage = self.child.loader.conf.icon_cancel.image;
-        if ([icon isEqualToString:@"!close"])
-            iconImage = self.child.loader.conf.icon_close.image;
-        if ([icon isEqualToString:@"!config"])
-            iconImage = self.child.loader.conf.icon_config.image;
-        if ([icon isEqualToString:@"!info"])
-            iconImage = self.child.loader.conf.icon_info.image;
-        if ([icon isEqualToString:@"!menu"])
-            iconImage = self.child.loader.conf.icon_menu.image;
-        if ([icon isEqualToString:@"!next"])
-            iconImage = self.child.loader.conf.icon_next.image;
-        if ([icon isEqualToString:@"!previous"])
-            iconImage = self.child.loader.conf.icon_previous.image;
-        if ([icon isEqualToString:@"!refresh"])
-            iconImage = self.child.loader.conf.icon_refresh.image;
-        if ([icon isEqualToString:@"!search"])
-            iconImage = self.child.loader.conf.icon_search.image;
-        if ([icon isEqualToString:@"!up"])
-            iconImage = self.child.loader.conf.icon_up.image;
-        if ([icon isEqualToString:@"!down"])
-            iconImage = self.child.loader.conf.icon_down.image;
-        if ([icon isEqualToString:@"!user"])
-            iconImage = self.child.loader.conf.icon_user.image;
-        
-        cell.imgView.image = iconImage;
+    
+         [cell.imgView setImage:[[Singleton sharedInstance]getIconFromName:icon withLoader:self.child.loader]];
 
     }else if (icon)
         [self downloadImage:icon forCell:cell];
@@ -392,12 +356,8 @@ CGFloat buttonToScreenHeight;
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"selected CEll: %tu",indexPath.row);
     [delegate didSelectMenuOptionAtIndex:indexPath.row];
-//    [self removeFromSuperview];
 
-    
-    
     [UIView animateWithDuration:animationTime/2 animations:^
      {
          self.bgView.alpha = 0;
@@ -412,19 +372,8 @@ CGFloat buttonToScreenHeight;
          
          [self.child load:[[_buttonsArray objectAtIndex:indexPath.row] objectForKey:@"content"]];
          
-         //         [windowView removeFromSuperview];
-         //         [_mainWindow removeFromSuperview];
-         
      }];
-    
-    
-    
-//    [self.child load:[[_buttonsArray objectAtIndex:indexPath.row] objectForKey:@"content"]];
-    //[self dismissMenu:nil];
 
-//     [_call sendCallbackWithResult:@[[[_buttonsArray objectAtIndex:indexPath.row] objectForKey:@"content"]]];
-//     [_call performSelectorOnMainThread:@selector(sendCallbackWithResult:) withObject:[[_buttonsArray objectAtIndex:indexPath.row] objectForKey:@"content"] waitUntilDone:NO];
-    
 }
 
 @end

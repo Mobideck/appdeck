@@ -78,7 +78,6 @@
     
     [buttons addObject:[[UIBarButtonItem alloc] initWithCustomView:container]];
     
-    
     self.rightBarButtonItems = buttons;
     
     doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];

@@ -18,6 +18,8 @@
 #import "AdManager.h"
 
 @class VCFloatingActionButton;
+@class ImageBanner;
+@class MyTabBarViewController;
 @interface PageViewController : LoaderChildViewController <MBProgressHUDDelegate, UIScrollViewDelegate, ManagedWebViewDelegate/*, AppDeckApiCallDelegate*/>
 {    
     BOOL    loadingInprogress;
@@ -37,6 +39,9 @@
     
     ManagedWebView *contentCtl;
     ManagedWebView *refreshCtl;
+    
+    ImageBanner*imageBanner;
+    MyTabBarViewController*tabBarController;
        
     BOOL    shouldReloadHistory;
     
@@ -65,8 +70,6 @@
 
 @property (strong, nonatomic) UIWebView *header;
 @property (strong, nonatomic) UIWebView *footer;
-
-
 
 @property (assign, nonatomic) BOOL          showAdView;
 @property (assign, nonatomic) BOOL          showAdViewOver;

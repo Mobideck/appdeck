@@ -29,6 +29,8 @@
 #import "AppDeckAdNative.h"
 #import "KeyboardStateListener.h"
 #import "VCFloatingActionButton.h"
+#import "ImageBanner.h"
+#import "MyTabBarViewController.h"
 
 
 @interface PageViewController ()
@@ -219,7 +221,9 @@
    
     managedWebView.scrollView.contentInset = [self getPageContentInset];
     managedWebView.scrollView.scrollIndicatorInsets = [self getPageContentInset];//[self getDefaultContentInset];
-    managedWebView.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    managedWebView.view.frame=CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+
+  //  managedWebView.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     managedWebView.webView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [managedWebView setBackgroundColor1:self.loader.conf.app_background_color1 color2:self.loader.conf.app_background_color2];
 }
@@ -848,19 +852,6 @@
         
         if (container.count == 0)
             buttons = nil;
-            
-        /*
-        if (self.swipeContainer.navigationItem.rightBarButtonItems == nil)
-        {
-            container.alpha = 0;
-            [UIView animateWithDuration:0.125
-                             animations:^{
-                                 container.alpha = 1;
-                             }
-                             completion:^(BOOL finished){
-                                 
-                             }];
-        }*/
         
         self.rightBarButtonItems = buttons;
         if (self.isMain)
@@ -873,7 +864,8 @@
         
         NSMutableArray*buttons= [[NSMutableArray alloc]init];
         
-        for (NSDictionary*dict in call.param) {
+        for (NSDictionary*dict in call.param)
+        {
             [buttons addObject:dict];
         }
         
@@ -886,13 +878,44 @@
         addButton.call=call;
         
         addButton.hideWhileScrolling = NO;
-        // _addButton.delegate = self;
         
         [self.view addSubview:addButton];
         
         return YES;
     }
+    
+    if ([call.command isEqualToString:@"banner"])
+    {
+        if(!imageBanner){
+            imageBanner = [[ImageBanner alloc] init];
+            imageBanner.height= [call.param[@"height"] floatValue];
+            imageBanner.frame=CGRectMake(0, 0, self.view.frame.size.width,imageBanner.height);
+            [self.view addSubview:imageBanner];
+        }
+      
+        [imageBanner addImage:call.param];
+        return YES;
+    }
 
+    if ([call.command isEqualToString:@"info"])
+    {
+
+    }
+    
+    if ([call.command isEqualToString:@"tab"])
+    {
+        
+        if ((!tabBarController)) {
+            tabBarController=[[MyTabBarViewController alloc]initWithLoaderChild:self];
+            [[self.loader getNavController] pushViewController:tabBarController animated:YES];
+
+        }
+        
+         [tabBarController loadWithItem:call.param url:[NSURL URLWithString:call.param[@"content"]] ];
+        
+        return YES;
+    }
+    
     if ([call.command isEqualToString:@"loadingshow"])
     {
         AppDeckProgressHUD *appdeckProgressHUD = [AppDeckProgressHUD progressHUDForViewController:self];
@@ -1648,7 +1671,7 @@
     
     errorView.frame = self.view.bounds;
 
-    CGRect frame = self.view.bounds;
+    CGRect frame = self.view.frame;
 
     if (self.loader.appDeck.keyboardStateListener.isVisible)
     {
@@ -1708,7 +1731,10 @@
         
         [self updateWebViewOrientation];
     }
-    
+    float offset=0;
+    if(imageBanner)
+        offset=imageBanner.height;
+    frame=CGRectMake(0, offset, frame.size.width, frame.size.height-offset);
     contentCtl.view.frame = frame;
     refreshCtl.view.frame = frame;
     
@@ -1738,6 +1764,7 @@
             _interstitialAd.view.hidden = YES;
     }*/
 
+    
 }
 
 -(UIView *)webView

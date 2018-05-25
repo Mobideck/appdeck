@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImageBanner : UIView
+@interface ImageBanner : UIView <UICollectionViewDelegate, UICollectionViewDataSource>
+
+@property(nonatomic,retain) UICollectionView*collectionView;
+@property(nonatomic,retain) UIPageControl*pageControl;
+@property(nonatomic,assign) float height;
+-(void)addImage:(NSDictionary*)imageDict;
 
 @end

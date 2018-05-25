@@ -94,7 +94,7 @@ typedef enum AdManagerEvent: int {
 @property (strong, nonatomic) NSString *appLogoUrl;
 
 @property (strong, nonatomic) NSURL *jsonUrl;
-//@property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) NSURL *url;
 
 @property (assign, nonatomic) BOOL appIsBusy;
 
@@ -157,6 +157,8 @@ typedef enum AdManagerEvent: int {
 -(void)setFullScreen:(BOOL)fullScreen animation:(UIStatusBarAnimation)animation;
 
 -(void)loadConf;
+
+-(UINavigationController*)getNavController;
 
 -(void)executeJS:(NSString *)js;
 

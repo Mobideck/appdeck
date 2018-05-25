@@ -259,6 +259,7 @@
 {
     call.app = self;
 
+    
     if ([call.command isEqualToString:@"menu"] || [call.command isEqualToString:@"previousnext"])
         return YES;
     
@@ -292,6 +293,8 @@
     }
     if ([call.command isEqualToString:@"info"])
     {
+        
+        
         [self.loader.log info:@"%@", call.param];
         return YES;
     }

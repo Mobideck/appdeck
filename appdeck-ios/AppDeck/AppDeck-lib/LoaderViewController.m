@@ -49,6 +49,7 @@
 #import "MEZoomAnimationController.h"
 #import "MapViewController.h"
 #import "MyCollectionViewController.h"
+#import "MyCustomTableViewController.h"
 @import SafariServices;
 
 @interface LoaderViewController ()
@@ -83,11 +84,6 @@
     overlay.hidden = YES;
     [self.view addSubview:overlay];
     
-    /*loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    loadingView.frame = CGRectMake(self.view.bounds.size.width / 2 - loadingView.bounds.size.width / 2, self.view.frame.size.height * 0.75, loadingView.frame.size.width, loadingView.frame.size.height);
-    
-    [loadingView startAnimating];
-    [self.view addSubview:loadingView];*/
 
     {
         statusBarInfo = [[UIView alloc] initWithFrame:CGRectMake(0, -[[UIApplication sharedApplication] statusBarFrame].size.height, self.view.bounds.size.width, [[UIApplication sharedApplication] statusBarFrame].size.height)];
@@ -125,16 +121,22 @@
         request = [[NSURLRequest alloc] initWithURL:self.jsonUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
     
    __block NSMutableDictionary *result;
-//    NSURLResponse * response = nil;
-//    NSError *error = nil;
-   // NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error)
     {
                                       if (error == nil)
                                       {
+                                          
                                           result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                          dispatch_async(dispatch_get_main_queue(), ^
+                                                         
+                                          {
+                                                       
+                                                [self loadAppConf:result];
+                                              
+                                          });
+                                         
                                       }
 
                                       if (error != nil)
@@ -149,42 +151,12 @@
                                          
                                           return;
                                       }
-                                      dispatch_async(dispatch_get_main_queue(), ^
-                                      {
-                                          [self loadAppConf:result];
-                                      });
-                                     
+        
                                   }];
 
     [task resume];
 
-/*
-    appJson = [JSonHTTPApi apiWithRequest:request callback:^(NSDictionary *result, NSError *error)
-     {
-         //NSLog(@"AppConf: %@ - %@", result, error);
-         
-         if (error != nil)
-         {
-             
-             UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"App Conf Error"
-                                                               message:[NSString stringWithFormat:@"%@", error]
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil];
-             [message show];
-         }
-         [self loadAppConf:result];
-     }];    */
 }
-
-/*-(void)loadAppWithURL:(NSString *)base_url andConf:(NSString *)conf_url
-{
-    app_base_url = base_url;
-    app_conf_url = conf_url;
-    
-    self.baseUrl = [NSURL URLWithString:app_base_url];
-    self.url = [NSURL URLWithString:app_conf_url relativeToURL:self.baseUrl];
-}*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -313,11 +285,16 @@
     if (navController && navController.viewControllers && navController.viewControllers.count > 0)
     {
         SwipeViewController *swipe = (SwipeViewController *)[navController.viewControllers lastObject];
-        LoaderChildViewController *child = swipe.current;
-        if (child && child.isFullScreen == YES)
-        {
+        if([swipe isKindOfClass:[SwipeViewController class]]){
+            LoaderChildViewController *child = swipe.current;
+            if (child && child.isFullScreen == YES)
+            {
+                return YES;
+            }
+        }else{
             return YES;
         }
+     
     }
     return NO;
 }
@@ -443,7 +420,7 @@
             [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
         } else {
 //            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 64) colors:@[ (id)[self.conf.app_topbar_color1.blur CGColor], (id)[self.conf.app_topbar_color2.blur CGColor] ]];
-            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, navigationBarHeight) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, self.view.frame.size.width, navigationBarHeight) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -500,7 +477,7 @@
     
     NSLog(@"Loader Ready !");
     
-    [self loadUI];
+    [self loadUIWithUrl:self.conf.bootstrapUrl.absoluteString];
     
     // call postLoadUI after a small delay
     // this allow UI to be fully ready and loaded
@@ -576,9 +553,7 @@
             navCtl.navigationBar.backgroundColor = [UIColor clearColor];
             [navCtl.navigationBar sendSubviewToBack:vibrantStatusBar];
             [navCtl.navigationBar sendSubviewToBack:viewWithBlurredBackground];
-
-            
-            
+    
         }
         
     }
@@ -625,7 +600,7 @@
     return navCtl;
 }
 
--(void)loadUI
+-(void)loadUIWithUrl:(NSString*)url
 {
     if (self.appDeck.iosVersion >= 7.0)
         [self setNeedsStatusBarAppearanceUpdate];
@@ -633,39 +608,7 @@
     self.width = self.view.bounds.size.width - self.view.bounds.origin.x;
     self.height = self.view.bounds.size.height;// - self.view.frame.origin.y;
     
-    /*
-    // create navigation controller
-    navController = [[UINavigationController alloc] init];//initWithRootViewController:centerController];
-    navController.automaticallyAdjustsScrollViewInsets = NO;
-    navController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
-    //    navController.view.frame = CGRectMake(0, 0, self.width, self.height);
-    //    navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    //    navController.navigationBar.backgroundColor = [UIColor redColor];
-    //    navController.navigationBar.translucent = YES;
-    //    UINavigationBar
-    navController.delegate = self;
-    [self addChildViewController:navController];
-    [self.view addSubview:navController.view];
 
-//    [self loadRootPage:self.conf.bootstrapUrl.absoluteString];
-//    return;
-    
-    LoaderChildViewController* page = [[LoaderChildViewController alloc] initWithNibName:nil bundle:nil URL:nil content:nil header:nil footer:nil loader:self];
-    page.view.backgroundColor = [UIColor redColor];
-    
-    SwipeViewController *container = [[SwipeViewController alloc] initWithNibName:nil bundle:nil];
-    container.current = page;
-    
-    
-    NSArray *ctls = [NSArray arrayWithObject:container];
-    //        NSArray *ctls = [NSArray arrayWithObject:page];
-    [navController setViewControllers:ctls];
-    
-    return;
-    
-    */
-    
-    // add left menu
     if (self.conf.leftMenuUrl != nil)
     {
         leftController = [[MenuViewController alloc] initWithNibName:nil bundle:nil URL:self.conf.leftMenuUrl content:nil header:nil footer:nil loader:self width:self.conf.leftMenuWidth align:MenuAlignLeft];
@@ -683,68 +626,8 @@
     centerController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
     centerController.view.backgroundColor = self.view.backgroundColor;
 
-    /*
-    self.closeMenuGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMenuGesture:)];
-    self.closeMenuGestureRecognizer.numberOfTapsRequired = 1;
-    self.closeMenuGestureRecognizer.delegate = self;
-    self.closeMenuGestureRecognizer.enabled = YES;
-    [centerController.view addGestureRecognizer:self.closeMenuGestureRecognizer];
-    */
-    
-    // create navigation controller
     navController = [self createNavigationController];
-    
-
-    
-    
-    /*
-    navController = [[CRNavigationController alloc] init];//initWithRootViewController:centerController];
-    navController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
-//    navController.view.frame = CGRectMake(0, 0, self.width, self.height);
-//    navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-//    navController.navigationBar.backgroundColor = [UIColor redColor];
-//    navController.navigationBar.translucent = YES;
-//    UINavigationBar
-    navController.delegate = self;
-    
-//    CRNavigationController *navigationController = (CRNavigationController *)self.navigationController;
-    CRNavigationBar *navigationBar = (CRNavigationBar *)navController.navigationBar;
-    
-    if (self.conf.icon_theme == IconThemeLight)
-        navigationBar.tintColor = [UIColor whiteColor];
-    else
-        navigationBar.tintColor = [UIColor blackColor];
-    
-    if (self.conf.topbar_color1 && self.conf.topbar_color2)
-    {
-        [navigationBar setBarTintColor1:self.conf.topbar_color1 color2:self.conf.topbar_color2];
-    }
-    else if (self.conf.app_color1)
-    {
-        [navigationBar setBarTintColor:self.conf.topbar_color1];
-    }
-    else
-    {
-        [navigationBar setBarTintColor:self.conf.topbar_color1];
-    }
-    
-    [navigationBar displayColorLayer:true];*/
-    
-    
-/*    navController.edgesForExtendedLayout = UIRectEdgeNone;
-    navController.extendedLayoutIncludesOpaqueBars = NO;
-    navController.automaticallyAdjustsScrollViewInsets = NO;*/
-    
-//    [navigationBar setBarTintColor:self.conf.topbar_color1];
-    
-  
-//    navController.extendedLayoutIncludesOpaqueBars = YES;
-//    navController.automaticallyAdjustsScrollViewInsets = NO;
-
-//    if([self respondsToSelector:@selector(edgesForExtendedLayout)])
-//        [self setEdgesForExtendedLayout:UIRectEdgeBottom];
-    
-//    [centerController.view addSubview:navController.view];
+ 
     [centerController addChildViewController:navController];
     [navController didMoveToParentViewController:self];
     [centerController.view addSubview:navController.view];
@@ -759,19 +642,6 @@
     self.slidingViewController.topViewAnchoredGesture = /*ECSlidingViewControllerAnchoredGesturePanning |*/
                                                         ECSlidingViewControllerAnchoredGestureTapping;
     
-/*    MEZoomAnimationController *zoom = [[MEZoomAnimationController alloc] init];
-    self.menuTransition = zoom;
-    self.slidingViewController.delegate = zoom;*/
-
-    /*
-    //TODO: restore
-    __weak __typeof__(self) weakSelf = self;
-    self.slidingViewController.topViewCenterMoved = ^(float x) {
-        if (weakSelf == nil)
-            return;
-        __typeof__(self) strongSelf = weakSelf;
-        [strongSelf topViewCenterMoved:x];
-    };*/
     [self registerECSlidingViewControllerNotification];
     self.slidingViewController.view.frame = self.view.bounds;//CGRectMake(0, 0, self.width, self.height);
     self.slidingViewController.anchorRightRevealAmount = (self.conf.leftMenuWidth > 280 ? 280 : self.conf.leftMenuWidth);
@@ -780,22 +650,6 @@
     self.slidingViewController.underLeftViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
     
     self.slidingViewController.underRightViewController.edgesForExtendedLayout = UIRectEdgeTop | UIRectEdgeBottom | UIRectEdgeLeft; // don't go under the top view
-    
-/*    self.slidingViewController.shouldAddPanGestureRecognizerToTopViewSnapshot = YES;
-    self.slidingViewController.shouldAllowPanningPastAnchor = NO;
-    if (self.appDeck.iosVersion >= 6.0)
-        self.slidingViewController.shouldAllowUserInteractionsWhenAnchored = NO;
-    else
-        self.slidingViewController.shouldAllowUserInteractionsWhenAnchored = YES;
-    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
-    self.slidingViewController.underRightWidthLayout = ECFixedRevealWidth;*/
-
-
-    //    [self.slidingViewController setAnchorRightRevealAmount:280.0f];
-    
-//    [self.navigationController.view addGestureRecognizer:self.slidingViewController.panGesture];
-//    self.slidingViewController.panGesture.delegate = self;
-    
 
     UIGestureRecognizer *panGesture = [self.slidingViewController panGesture];
     panGesture.delegate = self;
@@ -805,45 +659,10 @@
     centerController.view.layer.shadowOpacity = 0.75f;
     centerController.view.layer.shadowRadius = 10.0f;
     centerController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    //centerController.view.layer.shouldRasterize = YES;
-    //centerController.view.layer.rasterizationScale = [UIScreen mainScreen].scale;
-
     [self addChildViewController:self.slidingViewController];
     [self.slidingViewController didMoveToParentViewController:self];
     [self.view addSubview:self.slidingViewController.view];
-    /*
-    self.slidingViewController.view.alpha = 0;
-    [UIView animateWithDuration:0.5
-                     animations:^{
-                         self.slidingViewController.view.alpha = 1;
-                     }
-                     completion:^(BOOL finished){
-                         
-                     }];
-    */
-    // create popup navigation controller
-    //popUp = [self createNavigationController];
-/*    popUp = [[CRNavigationController alloc] init];//initWithRootViewController:centerController];
-    navigationBar = (CRNavigationBar *)popUp.navigationBar;
-//    popUp = [[UINavigationController alloc] init];
-    popUp.view.frame = self.view.bounds;
-    popUp.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    popUp.delegate = self;
-    popUp.view.backgroundColor = [UIColor whiteColor];
-    
-    popUp.tintColor = (self.conf.icon_theme == IconThemeLight ? [UIColor whiteColor] : [UIColor blackColor]);
-    
-    if (self.conf.topbar_color1 && self.conf.topbar_color2)
-        [popUp setBarTintColor1:self.conf.topbar_color1 color2:self.conf.topbar_color2];
-    else if (self.conf.app_color1)
-        [popUp setBarTintColor:self.conf.topbar_color1];
-    else
-        [popUp setBarTintColor:self.conf.topbar_color1];
-    
-    [navigationBar displayColorLayer:true];*/
 
-    
-    // create fake status bar
     if (self.appDeck.iosVersion >= 7.0)
     {
         fakeStatusBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, statusBarHeight)];
@@ -856,34 +675,21 @@
         fakeStatusBar.alpha = 0.0;
         [self.view addSubview:fakeStatusBar];
     }
-    
-    /*
-    [loadingView removeFromSuperview];
-    loadingView = nil;*/
+
 
     [self setLoadingHidden:YES];
     
-    // load bootstrap
-//    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_select.php"];
-//    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_notice.php"];
-//    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_scroll.php"];
-//    [self loadRootPage:@"http://testapp.appdeck.mobi/kitchensink_slide2.php"];
-    
-    LoaderChildViewController    *page = [self getChildViewControllerFromURL:self.conf.bootstrapUrl.absoluteString type:@"default"];
+
+    LoaderChildViewController *page = [self getChildViewControllerFromURL:url type:@"default"];
     
     [self loadChild:page root:YES popup:LoaderPopUpNo];
     
-    // init ad engine
-    //self.adManager = [[AdManager alloc] initWithLoader:self];
-    
     [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventLaunch];
     
-    /*
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setDefaults];
-    [blurFilter setValue:[NSNumber numberWithFloat: 5.0f] forKey:@"inputRadius"];
-    [self.view.layer setFilters:@[blurFilter]];
-    */
+}
+
+-(UINavigationController*)getNavController{
+    return navController;
 }
 
 -(void)setLoadingHidden:(BOOL)hidden
@@ -973,19 +779,22 @@
 /*    if (currentTouchPoint.x > self.view.frame.size.width * 0.25 && currentTouchPoint.x < self.view.frame.size.width * 0.75)
         return NO;*/
     SwipeViewController *ctl =  (SwipeViewController *)[navController.viewControllers lastObject];
-    CGPoint currentTouchPoint     = [gestureRecognizer locationInView:self.view];
-    //NSLog(@"currentTouchPoint.x: %f", currentTouchPoint.x);
-
-    if (ctl.swipeEnabled == NO)
-        return NO;
-    
-    if (ctl.previous != nil)
-        if (currentTouchPoint.x > self.view.frame.size.width * 0.25 && currentTouchPoint.x < self.view.frame.size.width * 0.75)
+    if([navController.viewControllers isKindOfClass:[SwipeViewController class]]){
+        CGPoint currentTouchPoint     = [gestureRecognizer locationInView:self.view];
+        //NSLog(@"currentTouchPoint.x: %f", currentTouchPoint.x);
+        
+        if (ctl.swipeEnabled == NO)
             return NO;
+        
+        if (ctl.previous != nil)
+            if (currentTouchPoint.x > self.view.frame.size.width * 0.25 && currentTouchPoint.x < self.view.frame.size.width * 0.75)
+                return NO;
+        
+        if (ctl.next != nil)
+            if (currentTouchPoint.x > self.view.frame.size.width * 0.25 && currentTouchPoint.x < self.view.frame.size.width * 0.75)
+                return NO;
+    }
 
-    if (ctl.next != nil)
-        if (currentTouchPoint.x > self.view.frame.size.width * 0.25 && currentTouchPoint.x < self.view.frame.size.width * 0.75)
-            return NO;
     
     [self setGlobalUserInteractionEnabled:NO];
     
@@ -1099,7 +908,10 @@
 {
     if (popUp)
         return ((SwipeViewController *)popUp.topViewController).current;
-    return ((SwipeViewController *)navController.topViewController).current;
+    if([navController.topViewController isKindOfClass:[SwipeViewController class]])
+       return ((SwipeViewController *)navController.topViewController).current;
+    
+    return navController.topViewController;
 }
 
 -(void)toggleMenu:(id)origin
@@ -1122,40 +934,6 @@
     popUp = nil;
     [navController dismissViewControllerAnimated:YES completion:^{ p.viewControllers = @[]; }];
 }
-/*
--(void)closePopUp:(id)origin andShow:(LoaderChildViewController *)newPage
-{
-    newPage.isPopUp = YES;
-    
-    void (^popupcompletion)(void) = ^{
-        
-        popUp = [self createNavigationController];
-        popUp.viewControllers = [NSArray arrayWithObject:container];
-        
-        UIBarButtonItem* closeButton = [self barButtonItemWithImage:self.conf.icon_close.image andAction:@selector(closePopUp:)];
-        
-        //UIBarButtonItem* closeButton = [[UIBarButtonItem alloc] initWithTitle:@"close" style:UIBarButtonItemStylePlain target:self action:@selector(closePopUp:)];
-        popUp.topViewController.navigationItem.leftBarButtonItem = closeButton;
-        [navController presentViewController:popUp animated:YES completion:^{
-            if (self.appDeck.iosVersion >= 7.0)
-                [self setNeedsStatusBarAppearanceUpdate];
-        }];
-        
-        if (self.appDeck.iosVersion >= 7.0)
-            [self setNeedsStatusBarAppearanceUpdate];
-    };
-    
-    [self.slidingViewController resetTopView];
-    
-    if (popUp != nil)
-    {
-        [navController dismissViewControllerAnimated:YES completion:popupcompletion];
-    }
-    else
-    {
-        popupcompletion();
-    }
-}*/
 
 -(BOOL)isSameDomain:(NSString *)domain
 {
@@ -1167,7 +945,6 @@
     }
     return NO;
 }
-
 
 -(LoaderChildViewController *)getChildViewControllerFromURL:(NSString *)pageUrlString type:(NSString *)type
 {
@@ -1245,9 +1022,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     button.contentMode = UIViewContentModeScaleAspectFit;
-    //button.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    //            [button setBackgroundImage:self.conf.icon_menu.image forState:UIControlStateNormal];
+
     [button setImage:image forState:UIControlStateNormal];
     
     [button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
@@ -1259,6 +1034,8 @@
 
 -(LoaderChildViewController *)loadChild:(LoaderChildViewController *)page root:(BOOL)root popup:(LoaderPopUp)popup
 {
+    
+    self.url=page.url;
     // we can't have two controller animating at same time
     if (navController.isAnimating)
     {
@@ -1319,7 +1096,8 @@
     {
         page.isPopUp = YES;
         
-        void (^popupcompletion)(void) = ^{
+        void (^popupcompletion)(void) = ^
+        {
 
             popUp = [self createNavigationController];
             popUp.viewControllers = [NSArray arrayWithObject:container];
@@ -1328,24 +1106,18 @@
             UIBarButtonItem* closeButton = [self barButtonItemWithImage:self.conf.icon_close.image andAction:@selector(closePopUp:)];
             popUp.topViewController.navigationItem.leftBarButtonItem = closeButton;
             
-            [navController presentViewController:popUp animated:YES completion:^{
-//                self.forceStatusBarHidden = YES;
+            [navController presentViewController:popUp animated:YES completion:^
+            {
                 navController.isAnimating = NO;
             }];
   
             if (self.appDeck.iosVersion >= 7.0)
-                [UIView animateWithDuration:0.33 animations:^{
+                [UIView animateWithDuration:0.33 animations:^
+                 {
                     [self setNeedsStatusBarAppearanceUpdate];
-                }];
+                 }];
         };
-        
-/*        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
-            [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
-                self.leftMenuOpen = NO;
-                [leftController isMain:NO];
-                self.rightMenuOpen = NO;
-                [leftController isMain:NO];
-            }];*/
+
         
         if (popUp != nil)
         {
@@ -1359,11 +1131,9 @@
         
         if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
         {
-            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
-                /*self.leftMenuOpen = NO;
-                [leftController isMain:NO];
-                self.rightMenuOpen = NO;
-                [leftController isMain:NO];*/
+            [self.slidingViewController resetTopViewAnimated:NO onComplete:^
+            {
+
             }];
         }
         return page;
@@ -1372,7 +1142,6 @@
     if (root)
     {
 
-        
         ECSlidingViewControllerTopViewPosition position = self.slidingViewController.currentTopViewPosition;
         
         if (position != ECSlidingViewControllerTopViewPositionCentered)
@@ -1392,7 +1161,8 @@
                     [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
                 //animated = NO;
             }];
-        } else {
+        } else
+        {
             NSArray *ctls = [NSArray arrayWithObject:container];
             [navController setViewControllers:ctls];
             
@@ -1405,9 +1175,9 @@
             
             if ([page isKindOfClass:[PageViewController class]])
                 [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventRoot];
-            //animated = NO;
         }
-    } else {
+    } else
+    {
         BOOL same = NO;
 
         if (same == YES)
@@ -1422,15 +1192,7 @@
                 [self.adManager pageViewController:(PageViewController *)page appearWithEvent:AdManagerEventPush];
         }
         
-/*        if (self.leftMenuOpen == YES || self.rightMenuOpen == YES)
-        {
-            [self.slidingViewController resetTopViewAnimated:NO onComplete:^{
-                self.leftMenuOpen = NO;
-                [leftController isMain:NO];
-                self.rightMenuOpen = NO;
-                [leftController isMain:NO];
-            }];
-        }*/
+
     }
    
 
@@ -1483,10 +1245,17 @@
     }
 }
 
-
 -(BOOL)apiCall:(AppDeckApiCall *)call
 {
     call.loader = self;
+    
+    if ([call.command isEqualToString:@"uiconfig"])
+    {
+
+        [self updateStyleWithParams:call.param];
+        
+        return YES;
+    }
     
     if ([call.command isEqualToString:@"popup"])
     {
@@ -1526,7 +1295,8 @@
     {
         if (popUp)
         {
-            [navController dismissViewControllerAnimated:YES completion:^{
+            [navController dismissViewControllerAnimated:YES completion:^
+            {
                 navController.isAnimating = NO;
                 popUp = nil;
             }];
@@ -1540,7 +1310,7 @@
 
     if ([call.command isEqualToString:@"pagepoproot"])
     {
-//        [navController popToRootViewControllerAnimated:YES];
+
         NSArray *viewControllers = [NSArray arrayWithObject:navController.viewControllers.firstObject];
         [navController setViewControllers:viewControllers animated:YES];
         if (self.leftMenuOpen || self.rightMenuOpen)
@@ -1572,9 +1342,12 @@
             {
                 if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredLeft)
                 {
-                    [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
-                        [NSTimer scheduledTimerWithTimeInterval:0.1 target:[NSBlockOperation blockOperationWithBlock:^{
-                            [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
+                    [self.slidingViewController resetTopViewAnimated:YES onComplete:^
+                    {
+                        [NSTimer scheduledTimerWithTimeInterval:0.1 target:[NSBlockOperation blockOperationWithBlock:^
+                        {
+                            [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^
+                            {
                                 self.leftMenuOpen = YES;
                                 [leftController isMain:YES];
                                 self.rightMenuOpen = NO;
@@ -1583,7 +1356,8 @@
                         }] selector:@selector(main) userInfo:nil repeats:NO];
                     }];
                 } else {
-                    [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^{
+                    [self.slidingViewController anchorTopViewToRightAnimated:YES onComplete:^
+                    {
                         self.leftMenuOpen = YES;
                         [leftController isMain:YES];
                         self.rightMenuOpen = NO;
@@ -1596,8 +1370,11 @@
                 if (self.slidingViewController.currentTopViewPosition == ECSlidingViewControllerTopViewPositionAnchoredRight)
                 {
                     [self.slidingViewController resetTopViewAnimated:YES onComplete:^{
-                        [NSTimer scheduledTimerWithTimeInterval:0.1 target:[NSBlockOperation blockOperationWithBlock:^{
-                            [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{
+                        [NSTimer scheduledTimerWithTimeInterval:0.1 target:[NSBlockOperation blockOperationWithBlock:^
+                        {
+                            
+                            [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^
+                            {
                                 self.leftMenuOpen = NO;
                                 [leftController isMain:NO];
                                 self.rightMenuOpen = YES;
@@ -1605,8 +1382,10 @@
                             }];
                         }] selector:@selector(main) userInfo:nil repeats:NO];
                     }];
-                } else {
-                    [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^{
+                } else
+                {
+                    [self.slidingViewController anchorTopViewToLeftAnimated:YES onComplete:^
+                    {
                         self.leftMenuOpen = NO;
                         [leftController isMain:NO];
                         self.rightMenuOpen = YES;
@@ -1632,7 +1411,6 @@
             }];
         }
         
-        //[self loadPage:[NSString stringWithFormat:@"%@",call.param] root:NO forcePopup:YES];
         return YES;
     }
     
@@ -1661,34 +1439,21 @@
         }
         
         browser.loader = self;
-        browser.screenConfiguration = call.child.screenConfiguration;// [ScreenConfiguration defaultConfigurationWitehLoader:self];//[ScreenConfiguration defaultConfigurationWitehLoader:self];
+        browser.screenConfiguration = call.child.screenConfiguration;
         browser.title = browser.screenConfiguration.title;
 
         [self loadChild:browser root:NO popup:LoaderPopUpDefault];
-        
-        //        [self presentModalViewController:browser animated:YES];
-//        [self.navigationController pushViewController:browser animated:YES];
-        /*
-         [self.view addSubview:browser.view];
-         [self addChildViewController:browser];
-         */
+    
         
         return YES;
         
     }
-//    if ([call.command isEqualToString:@"select"])
-//    {
-//        MapViewController*vc= [[MapViewController alloc]init];
-//        vc.view.backgroundColor=[UIColor redColor];
-//        [self loadChild:vc root:NO popup:LoaderPopUpYes];
-//    }
-    //barcode ?
+
     if ([call.command isEqualToString:@"barcode"])
     {
         NSError *error;
         
         BarCodeScannerViewController *barcode = [[BarCodeScannerViewController alloc] initWithNibName:@"BarCodeScannerViewController" bundle:nil URL:[NSURL URLWithString:[call.child.url.absoluteString stringByAppendingString:@"#BarCode"]] content:nil header:nil footer:nil loader:self];
-        //barcode.url = [NSURL URLWithString:[call.child.url.absoluteString stringByAppendingString:@"#BarCode"]];
         if (barcode == nil)
         {
             NSLog(@"barcode Error: %@", error);
@@ -1697,7 +1462,8 @@
         
         barcode.loader = self;
         barcode.origin = call;
-        barcode.screenConfiguration = call.child.screenConfiguration;// [ScreenConfiguration defaultConfigurationWitehLoader:self];//[ScreenConfiguration defaultConfigurationWitehLoader:self];
+        barcode.screenConfiguration = call.child.screenConfiguration;
+        
         barcode.title = barcode.screenConfiguration.title;
         
         [self loadChild:barcode root:NO popup:LoaderPopUpYes];
@@ -1722,6 +1488,23 @@
         
     }
     
+    if ([call.command isEqualToString:@"list"])
+    {
+        
+        MyCustomTableViewController*tableview=[[MyCustomTableViewController alloc]init];
+        
+        tableview.url=self.url;
+        tableview.loader = self;
+        tableview.origin = call;
+        tableview.screenConfiguration = call.child.screenConfiguration;
+        tableview.title = tableview.screenConfiguration.title;
+        
+        [self loadChild:tableview root:NO popup:LoaderPopUpYes];
+        
+        return YES;
+        
+    }
+    
     if ([call.command isEqualToString:@"barcodehide"])
     {
             UIViewController *top = [self getCurrentChild];
@@ -1729,7 +1512,8 @@
             if ([top isKindOfClass:[BarCodeScannerViewController class]])
             {
                 BarCodeScannerViewController *barcode = (BarCodeScannerViewController *)top;
-                [navController dismissViewControllerAnimated:YES completion:^{
+                [navController dismissViewControllerAnimated:YES completion:^
+                {
                     navController.isAnimating = NO;
                     popUp = nil;
                     [barcode stopReading];
@@ -1741,6 +1525,59 @@
     return [self.appDeck apiCall:call];
 }
 
+
+-(void)updateStyleWithParams:(NSDictionary*)params
+{
+    
+    navigationBarHeight = 64;
+    
+    if (@available(iOS 11, *)) {
+        UIEdgeInsets insets = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
+        if (insets.top > 0) {
+            navigationBarHeight = 88;
+        }
+    }
+    
+    
+    if (![[params query:@"actionbar_color"] isKindOfClass:[NSNull class]]) {
+            UIColor* app_topbar_color1 = [[params query:@"actionbar_color"] toUIColor];
+        [[UITabBar appearance] setTintColor:app_topbar_color1];
+        
+    }
+    
+    if (![[params query:@"topbar_color"] isKindOfClass:[NSNull class]] && ![[params query:@"topbar_color_dark"] isKindOfClass:[NSNull class]])
+    {
+        
+         UIColor*app_topbar_color1 = [[params query:@"topbar_color"] toUIColor];
+         UIColor*app_topbar_color2 = [[params query:@"topbar_color_dark"] toUIColor];
+        if (self.appDeck.iosVersion < 7.0)
+        {
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 44) colors:@[ (id)[app_topbar_color1 CGColor], (id)[app_topbar_color2 CGColor] ]];
+            UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
+            [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
+        } else {
+            
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, navigationBarHeight) colors:@[ (id)[app_topbar_color1 CGColor], (id)[app_topbar_color2 CGColor] ]];
+            UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
+            [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+//            if([[UINavigationBar class] respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) //iOS >=5.0
+//            {
+                 //[[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
+            self.navigationController.navigationBar.barTintColor = [UIColor colorWithPatternImage:bgAsImage];
+            [self.navigationController.navigationBar setTranslucent:false];
+          //  }
+        }
+        
+        //   [[UINavigationBar appearance] setBarTintColor:self.app_topbar_color1];
+    }
+    
+}
 #pragma mark - UIWebView Delegate (for menu)
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
