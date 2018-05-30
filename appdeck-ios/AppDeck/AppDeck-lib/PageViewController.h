@@ -19,6 +19,7 @@
 
 @class VCFloatingActionButton;
 @class ImageBanner;
+@class ImageBannerTest;
 @class MyTabBarViewController;
 @interface PageViewController : LoaderChildViewController <MBProgressHUDDelegate, UIScrollViewDelegate, ManagedWebViewDelegate/*, AppDeckApiCallDelegate*/>
 {    
@@ -41,6 +42,7 @@
     ManagedWebView *refreshCtl;
     
     ImageBanner*imageBanner;
+    ImageBannerTest*imageBannertt;
     MyTabBarViewController*tabBarController;
        
     BOOL    shouldReloadHistory;

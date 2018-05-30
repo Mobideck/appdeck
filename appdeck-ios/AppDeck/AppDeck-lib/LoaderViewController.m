@@ -1538,21 +1538,20 @@
         }
     }
     
-    
     if (![[params query:@"actionbar_color"] isKindOfClass:[NSNull class]]) {
-            UIColor* app_topbar_color1 = [[params query:@"actionbar_color"] toUIColor];
-        [[UITabBar appearance] setTintColor:app_topbar_color1];
+            self.conf.app_topbar_color1 = [[params query:@"actionbar_color"] toUIColor];
+        [[UITabBar appearance] setTintColor:self.conf.app_topbar_color1];
         
     }
     
     if (![[params query:@"topbar_color"] isKindOfClass:[NSNull class]] && ![[params query:@"topbar_color_dark"] isKindOfClass:[NSNull class]])
     {
         
-         UIColor*app_topbar_color1 = [[params query:@"topbar_color"] toUIColor];
-         UIColor*app_topbar_color2 = [[params query:@"topbar_color_dark"] toUIColor];
+         self.conf.app_topbar_color1 = [[params query:@"topbar_color"] toUIColor];
+         self.conf.app_topbar_color2 = [[params query:@"topbar_color_dark"] toUIColor];
         if (self.appDeck.iosVersion < 7.0)
         {
-            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 44) colors:@[ (id)[app_topbar_color1 CGColor], (id)[app_topbar_color2 CGColor] ]];
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, 44) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -1560,21 +1559,24 @@
             [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
         } else {
             
-            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, navigationBarHeight) colors:@[ (id)[app_topbar_color1 CGColor], (id)[app_topbar_color2 CGColor] ]];
+            CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, navigationBarHeight) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
             [bgGradientLayer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
-            
-//            if([[UINavigationBar class] respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) //iOS >=5.0
-//            {
-                 //[[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
-            self.navigationController.navigationBar.barTintColor = [UIColor colorWithPatternImage:bgAsImage];
-            [self.navigationController.navigationBar setTranslucent:false];
-          //  }
+
+            [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
+ 
+         
         }
         
-        //   [[UINavigationBar appearance] setBarTintColor:self.app_topbar_color1];
+        UIViewController *vc=[[UIViewController alloc]init];
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:vc animated:NO completion:^{
+            [vc dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }];
+        
     }
     
 }

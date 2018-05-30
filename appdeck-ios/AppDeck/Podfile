@@ -22,6 +22,7 @@ target 'AppDeck' do
     pod 'MaterialComponents/Snackbar', '~> 44.6.0'
     pod 'KAProgressLabel'
     pod 'Masonry'
+    pod 'iCarousel', '~> 1.8'
   # pod 'KCFloatingActionButton', '~> 2.2'
     
   

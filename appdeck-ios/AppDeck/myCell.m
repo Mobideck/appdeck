@@ -66,7 +66,6 @@
                                           {
                                               dispatch_async(dispatch_get_main_queue(), ^
                                                              {
-                                                                 
                                                                  imageView.image = [UIImage imageWithData:dataaa];
                                                              });
                                           }
@@ -100,7 +99,6 @@
     gradientBG.colors = colors;
     return gradientBG;
 }
-
 
 -(NSString*)returnDateFormat:(NSString*)dateStr{
     

@@ -9,15 +9,15 @@
 #import "ImageBanner.h"
 #import "UIImageView+WebCache.h"
 #import <Masonry/Masonry.h>
+#import "NSString+UIColor.h"
 
-@interface BannerCell : UICollectionViewCell
+@interface BannerCell : UIView
 
 @property (nonatomic,retain) UIImageView*imageView;
 @property (nonatomic,retain) UILabel*titleLabel,*subtitleLabel;
 @property (nonatomic,retain) NSDictionary*data;
 @property (nonatomic,retain) UIView*container;
-@property (nonatomic,retain) UIButton*previousBtn;
-@property (nonatomic,retain) UIButton*nextBtn;
+
 
 @end
 
@@ -53,7 +53,7 @@ static const CGFloat labelPadding = 10;
                                       captionLabelSize2.width, captionLabelSize2.height);
     
     float height= captionLabelSize1.height+captionLabelSize2.height;
-    _container.frame=CGRectMake(0, self.frame.size.height-height, self.frame.size.width, height);
+    _container.frame=CGRectMake(0, self.frame.size.height-height-20, self.frame.size.width, height);
     
 }
 
@@ -69,11 +69,6 @@ static const CGFloat labelPadding = 10;
     return CGSizeZero;
 }
 
--(void)layoutSubviews
-{
-    
-}
-
 -(void)setup
 {
     
@@ -82,7 +77,7 @@ static const CGFloat labelPadding = 10;
     [self addSubview:_imageView];
     
     _container=[[UIView alloc]init];
-    _container.backgroundColor=[UIColor colorWithWhite:1 alpha:0.2];
+    _container.backgroundColor=[UIColor colorWithWhite:0 alpha:0.8];
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -122,62 +117,16 @@ static const CGFloat labelPadding = 10;
     }];
     [self addSubview:_container];
     
-    _previousBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _previousBtn.backgroundColor=[UIColor colorWithWhite:1 alpha:0.6];
-    [_previousBtn setImage:[UIImage imageNamed:@"previous"] forState:UIControlStateNormal];
-    
-//    UIBezierPath *maskPath = [UIBezierPath
-//                              bezierPathWithRoundedRect:_previousBtn.bounds
-//                              byRoundingCorners:(UIRectCornerTopRight | UIRectCornerBottomRight)
-//                              cornerRadii:CGSizeMake(5, 5)
-//                              ];
-//
-//    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-//
-//    maskLayer.frame = self.bounds;
-//    maskLayer.path = maskPath.CGPath;
-//
-//    _previousBtn.layer.mask = maskLayer;
-    
-    [self addSubview:_previousBtn];
-    [_previousBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.mas_left);
-        make.centerY.equalTo(self.mas_centerY );
-        make.width.equalTo(@40);
-        make.height.equalTo(@50);
-    }];
-
-    _nextBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.backgroundColor=[UIColor colorWithWhite:1 alpha:0.6];
-    [_nextBtn setImage:[UIImage imageNamed:@"next"] forState:UIControlStateNormal];
-    [self addSubview:_nextBtn];
-    [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right);
-        make.centerY.equalTo(self.mas_centerY );
-        make.width.equalTo(@40);
-        make.height.equalTo(@50);
-    }];
-    
-//    UIBezierPath *maskPath1 = [UIBezierPath
-//                              bezierPathWithRoundedRect:_nextBtn.bounds
-//                              byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerBottomLeft)
-//                              cornerRadii:CGSizeMake(5, 5)
-//                              ];
-//    
-//    CAShapeLayer *maskLayer1 = [CAShapeLayer layer];
-//    
-//    maskLayer1.frame = self.bounds;
-//    maskLayer1.path = maskPath1.CGPath;
-//    
-//    _nextBtn.layer.mask = maskLayer1;
-//   
 }
+
     
 @end
 
 @interface ImageBanner ()
 {
     NSMutableArray * ImagesDict;
+    NSTimer*timer;
+    BOOL isAutoScrollEnabled;
 }
 
 @end
@@ -200,6 +149,8 @@ static const CGFloat labelPadding = 10;
     {
         
         ImagesDict=[NSMutableArray array];
+        isAutoScrollEnabled=true;
+       
 
     }
     
@@ -212,32 +163,62 @@ static const CGFloat labelPadding = 10;
     if(!_collectionView)
     {
         
-        UICollectionViewFlowLayout *layout= [UICollectionViewFlowLayout new]; // standard flow layout
-        
-        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-        layout.minimumLineSpacing=0;
-        layout.minimumInteritemSpacing=0;
-        
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-        NSLog(@"%@",CGRectCreateDictionaryRepresentation(self.bounds));
-        _collectionView.backgroundColor=[UIColor blackColor];
-        [_collectionView setPagingEnabled:true];
-        _collectionView.delegate=self;
-        _collectionView.dataSource=self;
-        
-        [_collectionView registerClass:[BannerCell class] forCellWithReuseIdentifier:@"cell"];
-        [self addSubview:_collectionView];
-        
-        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0, _collectionView.frame.size.height-30, self.frame.size.width, 30)];
+        [self setupScrollerWithImages];
+ 
+        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0, _scrollView.frame.size.height-20, self.frame.size.width, 20)];
         _pageControl.numberOfPages=[ImagesDict count];
-        _pageControl.tintColor=[UIColor grayColor];
-        _pageControl.currentPageIndicatorTintColor=[UIColor whiteColor];
+        _pageControl.pageIndicatorTintColor=[UIColor whiteColor];
+        _pageControl.currentPageIndicatorTintColor=[UIColor darkGrayColor];
         _pageControl.currentPage=0;
         [self addSubview:_pageControl];
         
+        if (ImagesDict.count==1) {
+            _pageControl.alpha=0;
+        }
+
     }
     
 }
+
+-(void)setupScrollerWithImages{
+    _scrollView=[[UIScrollView alloc] initWithFrame:self.frame];
+
+    _scrollView.backgroundColor=[UIColor lightGrayColor];
+    _scrollView.delegate = self;
+    float x = 0.0;
+    float y = 0.0;
+    float index = 0;
+    self.scrollView.showsHorizontalScrollIndicator=YES;
+    [self.scrollView setPagingEnabled:YES];
+    self.scrollView.contentSize = CGSizeMake(ImagesDict.count*self.frame.size.width, self.frame.size.height);
+    for (NSDictionary*dict in ImagesDict){
+        
+        BannerCell* cell = [[BannerCell alloc]initWithFrame:CGRectMake(x, y, self.frame.size.width, self.frame.size.height)];
+        
+        cell.data=dict;
+        [self.scrollView addSubview:cell];
+        index = index + 1;
+        x = self.scrollView.frame.size.width * index;
+    }
+    [self addSubview:_scrollView];
+    
+    if (isAutoScrollEnabled)
+        [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(autoscroll) userInfo:nil repeats:true];
+
+}
+
+-(void)autoscroll{
+    if (isAutoScrollEnabled){
+        float contentWidth = self.scrollView.contentSize.width;
+        float x = self.scrollView.contentOffset.x + self.scrollView.frame.size.width;
+        if (x < contentWidth){
+            [self.scrollView setContentOffset:CGPointMake(x, 0) animated:true];
+        }else{
+            [self.scrollView setContentOffset:CGPointMake(0, 0) animated:true];
+        }
+    }
+}
+
 -(void)addImage:(NSDictionary*)imageDict
 {
     [ImagesDict addObject:imageDict];
@@ -247,32 +228,12 @@ static const CGFloat labelPadding = 10;
     [_collectionView reloadData];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
- 
-    return [ImagesDict count];
-}
-
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    BannerCell*cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.data=ImagesDict[indexPath.row];
-    
-    return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake(collectionView.frame.size.width, 200);
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
-    CGFloat pageWidth = _collectionView.frame.size.width;
-    float fractionalPage = _collectionView.contentOffset.x/pageWidth;
-    NSInteger page = lround(fractionalPage);
-    _pageControl.currentPage = page;
-    [_collectionView reloadData];
+    int pageNum = (int)(self.scrollView.contentOffset.x / self.scrollView
+                   .frame.size.width);
+    _pageControl.currentPage = pageNum;
     
 }
 @end

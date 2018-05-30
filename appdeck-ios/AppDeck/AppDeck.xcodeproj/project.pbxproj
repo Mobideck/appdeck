@@ -257,6 +257,8 @@
 		F091F17E20B6FCC10041D104 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = F091F17D20B6FCC10041D104 /* next.png */; };
 		F091F18020B6FCC60041D104 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = F091F17F20B6FCC60041D104 /* previous.png */; };
 		F091F18320B80D1C0041D104 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F091F18220B80D1C0041D104 /* GradientView.m */; };
+		F091F18620B81E6E0041D104 /* ImageBannerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F091F18520B81E6E0041D104 /* ImageBannerTest.m */; };
+		F091F18B20B84A1A0041D104 /* ImageBannerTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = F091F18A20B84A1A0041D104 /* ImageBannerTest.xib */; };
 		F09DC45F20873C90002F5A31 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC45E20873C90002F5A31 /* MapViewController.m */; };
 		F09DC4652088D36E002F5A31 /* CustomDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4642088D36E002F5A31 /* CustomDatePicker.m */; };
 		F09DC4682089E634002F5A31 /* YearMonthPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F09DC4672089E634002F5A31 /* YearMonthPickerView.m */; };
@@ -726,6 +728,9 @@
 		F091F17F20B6FCC60041D104 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = previous.png; sourceTree = "<group>"; };
 		F091F18120B80D1B0041D104 /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		F091F18220B80D1C0041D104 /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		F091F18420B81E6E0041D104 /* ImageBannerTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageBannerTest.h; sourceTree = "<group>"; };
+		F091F18520B81E6E0041D104 /* ImageBannerTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageBannerTest.m; sourceTree = "<group>"; };
+		F091F18A20B84A1A0041D104 /* ImageBannerTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageBannerTest.xib; sourceTree = "<group>"; };
 		F09DC45D20873C90002F5A31 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		F09DC45E20873C90002F5A31 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		F09DC4632088D36E002F5A31 /* CustomDatePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomDatePicker.h; sourceTree = "<group>"; };
@@ -1155,6 +1160,9 @@
 				A916D48D1A1E0AD6005FE1AE /* Cache */,
 				F078DB9220A9D4DB0018CA5D /* ImageBanner.h */,
 				F078DB9320A9D4DB0018CA5D /* ImageBanner.m */,
+				F091F18420B81E6E0041D104 /* ImageBannerTest.h */,
+				F091F18520B81E6E0041D104 /* ImageBannerTest.m */,
+				F091F18A20B84A1A0041D104 /* ImageBannerTest.xib */,
 				F081FE8220AC62D3004B175A /* MyTabBarViewController.h */,
 				F081FE8320AC62D3004B175A /* MyTabBarViewController.m */,
 				F077F78F20B3013900C80789 /* MyCustomTableViewController.h */,
@@ -1751,6 +1759,7 @@
 				A908D777170C668C00C858BA /* Localizable.strings in Resources */,
 				F056571520A43AFA00F46071 /* floatTableViewCell.xib in Resources */,
 				A952A25E1F72C99D002894F5 /* BarCodeScannerViewController.xib in Resources */,
+				F091F18B20B84A1A0041D104 /* ImageBannerTest.xib in Resources */,
 				F056571B20A43C8800F46071 /* plus.png in Resources */,
 				F056571A20A43C8800F46071 /* cross.png in Resources */,
 				F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */,
@@ -2038,6 +2047,7 @@
 				A916D3F91A1E03E7005FE1AE /* UIScrollView+zoomToPoint.m in Sources */,
 				A916D3DE1A1E03E7005FE1AE /* SDWebImageDownloaderOperation.m in Sources */,
 				A916D3D21A1E03E7005FE1AE /* Reachability.m in Sources */,
+				F091F18620B81E6E0041D104 /* ImageBannerTest.m in Sources */,
 				A916D3661A1E03E7005FE1AE /* Lzma2Dec.c in Sources */,
 				A916D4081A1E03E7005FE1AE /* WebBrowserViewController.m in Sources */,
 				A916D3B11A1E03E7005FE1AE /* MRWeakProxy.m in Sources */,

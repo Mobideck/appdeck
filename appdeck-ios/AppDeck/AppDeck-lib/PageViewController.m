@@ -30,6 +30,7 @@
 #import "KeyboardStateListener.h"
 #import "VCFloatingActionButton.h"
 #import "ImageBanner.h"
+#import "ImageBannerTest.h"
 #import "MyTabBarViewController.h"
 
 
@@ -892,8 +893,18 @@
             imageBanner.frame=CGRectMake(0, 0, self.view.frame.size.width,imageBanner.height);
             [self.view addSubview:imageBanner];
         }
-      
         [imageBanner addImage:call.param];
+        
+//                if(!imageBannertt){
+//                    NSBundle*bundle=[NSBundle mainBundle];
+//                    imageBannertt = [[bundle loadNibNamed:@"ImageBannerTest" owner:self options:nil] objectAtIndex:0];
+//
+//                    //imageBannertt = [[ImageBannerTest alloc] initwithn];
+//                   // imageBannertt.height= [call.param[@"height"] floatValue];
+//                   // imageBannertt.frame=CGRectMake(0, 0, self.view.frame.size.width,200);
+//                    [self.view addSubview:imageBannertt];
+//                }
+        
         return YES;
     }
 
@@ -1734,6 +1745,7 @@
     float offset=0;
     if(imageBanner)
         offset=imageBanner.height;
+        //offset=200;
     frame=CGRectMake(0, offset, frame.size.width, frame.size.height-offset);
     contentCtl.view.frame = frame;
     refreshCtl.view.frame = frame;

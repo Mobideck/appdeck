@@ -10,20 +10,6 @@
 
 @implementation GradientView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-//
-//- (void)awakeFromNib {
-//    [super awakeFromNib];
-//
-//
-//    // Initialization code
-//}
 
 -(void)setGradientViewWithcolors:(NSArray*)colors{
     gradient=[[CAGradientLayer alloc] init];
@@ -32,13 +18,10 @@
     [self.layer insertSublayer:gradient atIndex:0];
 }
 
-
 -(void)layoutSubviews{
     
     [super layoutSubviews];
     gradient.frame=self.bounds;
 }
-    
-
 
 @end
