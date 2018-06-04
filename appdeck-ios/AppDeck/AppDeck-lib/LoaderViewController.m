@@ -1488,6 +1488,23 @@
         
     }
     
+    if ([call.command isEqualToString:@"openMap"])
+    {
+        
+        MapViewController*collectionVC=[[MapViewController alloc]init];
+        
+//        collectionVC.loader = self;
+//        collectionVC.origin = call;
+//        collectionVC.screenConfiguration = call.child.screenConfiguration;
+//        collectionVC.title = collectionVC.screenConfiguration.title;
+        
+        [self loadChild:collectionVC root:NO popup:LoaderPopUpYes];
+        
+        return YES;
+        
+    }
+    
+    
     if ([call.command isEqualToString:@"list"])
     {
         
@@ -1499,7 +1516,7 @@
         tableview.screenConfiguration = call.child.screenConfiguration;
         tableview.title = tableview.screenConfiguration.title;
         
-        [self loadChild:tableview root:NO popup:LoaderPopUpYes];
+        [self loadChild:tableview root:YES popup:LoaderPopUpNo];
         
         return YES;
         
@@ -1531,14 +1548,16 @@
     
     navigationBarHeight = 64;
     
-    if (@available(iOS 11, *)) {
+    if (@available(iOS 11, *))
+    {
         UIEdgeInsets insets = [UIApplication sharedApplication].delegate.window.safeAreaInsets;
         if (insets.top > 0) {
             navigationBarHeight = 88;
         }
     }
     
-    if (![[params query:@"actionbar_color"] isKindOfClass:[NSNull class]]) {
+    if (![[params query:@"actionbar_color"] isKindOfClass:[NSNull class]])
+    {
             self.conf.app_topbar_color1 = [[params query:@"actionbar_color"] toUIColor];
         [[UITabBar appearance] setTintColor:self.conf.app_topbar_color1];
         
@@ -1557,7 +1576,9 @@
             UIImage * bgAsImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             [[UINavigationBar appearance] setBackgroundImage:bgAsImage forBarMetrics:UIBarMetricsDefault];
-        } else {
+        }
+        else
+        {
             
             CALayer * bgGradientLayer = [self gradientBGLayerForBounds:CGRectMake(0, 0, 320, navigationBarHeight) colors:@[ (id)[self.conf.app_topbar_color1 CGColor], (id)[self.conf.app_topbar_color2 CGColor] ]];
             UIGraphicsBeginImageContext(bgGradientLayer.bounds.size);
@@ -1571,8 +1592,10 @@
         }
         
         UIViewController *vc=[[UIViewController alloc]init];
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:vc animated:NO completion:^{
-            [vc dismissViewControllerAnimated:YES completion:^{
+        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:vc animated:NO completion:^
+        {
+            [vc dismissViewControllerAnimated:YES completion:^
+            {
                 
             }];
         }];

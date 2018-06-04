@@ -8,8 +8,11 @@
 
 #import "MapViewController.h"
 #import <MapKit/MapKit.h>
+#import <MapViewPlus/MapViewPlus-Swift.h>
 
-@interface MapViewController ()
+@interface MapViewController (){
+    MapViewPlus*mapView;
+}
 
 @end
 
@@ -18,9 +21,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    MKMapView *mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
+    
+    
+    mapView = [[MapViewPlus alloc] initWithFrame:self.view.frame];
     [self.view addSubview:mapView];
+    
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        [locationManager requestWhenInUseAuthorization];
+    
+    [locationManager startUpdatingLocation];
+    
     // Do any additional setup after loading the view.
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    
+    [locationManager stopUpdatingLocation];
+    NSLog(@"OldLocation %f %f", oldLocation.coordinate.latitude, oldLocation.coordinate.longitude);
+    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    
+//    NSMutableArray*annotation=[NSMutableArray array];
+//    [annotation addObject:[AnnotationPlus anno]];
+ //   [mapView setupWithAnnotations:@[[AnnotationPlus ]];
+    
 }
 
 - (void)didReceiveMemoryWarning {

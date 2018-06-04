@@ -23,6 +23,7 @@ target 'AppDeck' do
     pod 'KAProgressLabel'
     pod 'Masonry'
     pod 'iCarousel', '~> 1.8'
+    pod 'MapViewPlus'
   # pod 'KCFloatingActionButton', '~> 2.2'
     
   

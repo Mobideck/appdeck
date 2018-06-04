@@ -21,6 +21,7 @@
 @synthesize paddingView;
 @synthesize delegate;
 @synthesize titleLabel;
+@synthesize contentLabel;
 @synthesize dateLabel;
 @synthesize containerView;
 @synthesize globalData;
@@ -78,6 +79,7 @@
     }
     
     titleLabel.text=dataa[@"caption"];
+    contentLabel.text=dataa[@"content"];
     
     dateLabel.text=[self returnDateFormat:dataa[@"date"]];
     

@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "LoaderChildViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface MapViewController : LoaderChildViewController
+@interface MapViewController : LoaderChildViewController<CLLocationManagerDelegate>{
+    CLLocationManager *locationManager;
+}
 
 //-(void)getCurrentLocation;
 

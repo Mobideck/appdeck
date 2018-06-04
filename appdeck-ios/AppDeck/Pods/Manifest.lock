@@ -19,6 +19,9 @@ PODS:
   - Google-Mobile-Ads-SDK (7.28.0)
   - iCarousel (1.8.3)
   - KAProgressLabel (3.3.2)
+  - Kingfisher (4.6.4)
+  - MapViewPlus (0.1.2):
+    - Kingfisher (~> 4.6.3)
   - Masonry (1.1.0)
   - MaterialComponents/AnimationTiming (44.6.0)
   - MaterialComponents/Buttons (44.6.0):
@@ -71,6 +74,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK
   - iCarousel (~> 1.8)
   - KAProgressLabel
+  - MapViewPlus
   - Masonry
   - MaterialComponents/Snackbar (~> 44.6.0)
   - SIAlertView
@@ -99,6 +103,8 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 7f9bc0011df363ae5616449de3682a14c4701612
   iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
   KAProgressLabel: 95dd072d16bb483c0f58012d0e5466a334091af8
+  Kingfisher: 68498a706e46c2a050b0c9572f100e5db407f6e0
+  MapViewPlus: 4e448279f98297f007cb16904a244a525b3c9d5e
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MaterialComponents: 974b52899fb90f28da0284790be46b2ca82358f5
   MDFInternationalization: e355b0cebecf53d60233bd267084e49366c82513
@@ -108,6 +114,6 @@ SPEC CHECKSUMS:
   TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
   TwitterKit: 43600f2d2848c227739efea5b2939585e69339c3
 
-PODFILE CHECKSUM: d613fb7f5234b2e9aea31121612ddd90df2653ad
+PODFILE CHECKSUM: 65098eca4d0003a1f26a7b2bb2208438b7e20e49
 
 COCOAPODS: 1.1.1

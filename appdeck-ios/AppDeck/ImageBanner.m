@@ -53,7 +53,7 @@ static const CGFloat labelPadding = 10;
                                       captionLabelSize2.width, captionLabelSize2.height);
     
     float height= captionLabelSize1.height+captionLabelSize2.height;
-    _container.frame=CGRectMake(0, self.frame.size.height-height-20, self.frame.size.width, height);
+    _container.frame=CGRectMake(8, self.frame.size.height-height-40, self.frame.size.width-16, height);
     
 }
 
@@ -77,7 +77,10 @@ static const CGFloat labelPadding = 10;
     [self addSubview:_imageView];
     
     _container=[[UIView alloc]init];
-    _container.backgroundColor=[UIColor colorWithWhite:0 alpha:0.8];
+    _container.backgroundColor=[UIColor colorWithWhite:1 alpha:0.4];
+    
+    _container.layer.cornerRadius=3;
+    _container.layer.masksToBounds=true;
     
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -126,7 +129,6 @@ static const CGFloat labelPadding = 10;
 {
     NSMutableArray * ImagesDict;
     NSTimer*timer;
-    BOOL isAutoScrollEnabled;
 }
 
 @end
@@ -149,9 +151,7 @@ static const CGFloat labelPadding = 10;
     {
         
         ImagesDict=[NSMutableArray array];
-        isAutoScrollEnabled=true;
        
-
     }
     
     return self;
@@ -165,14 +165,16 @@ static const CGFloat labelPadding = 10;
         
         [self setupScrollerWithImages];
  
-        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0, _scrollView.frame.size.height-20, self.frame.size.width, 20)];
+        _pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake(0, _scrollView.frame.size.height-30, self.frame.size.width, 30)];
+        _pageControl.backgroundColor=[UIColor colorWithRed:30/255 green:30/255 blue:30/255 alpha:1];
         _pageControl.numberOfPages=[ImagesDict count];
-        _pageControl.pageIndicatorTintColor=[UIColor whiteColor];
-        _pageControl.currentPageIndicatorTintColor=[UIColor darkGrayColor];
+        _pageControl.pageIndicatorTintColor=[UIColor lightGrayColor];
+        _pageControl.currentPageIndicatorTintColor=[UIColor whiteColor];
         _pageControl.currentPage=0;
         [self addSubview:_pageControl];
         
-        if (ImagesDict.count==1) {
+        if (ImagesDict.count==1)
+        {
             _pageControl.alpha=0;
         }
 
@@ -183,7 +185,7 @@ static const CGFloat labelPadding = 10;
 -(void)setupScrollerWithImages{
     _scrollView=[[UIScrollView alloc] initWithFrame:self.frame];
 
-    _scrollView.backgroundColor=[UIColor lightGrayColor];
+    _scrollView.backgroundColor=[UIColor colorWithRed:30/255 green:30/255 blue:30/255 alpha:1];
     _scrollView.delegate = self;
     float x = 0.0;
     float y = 0.0;
@@ -191,7 +193,8 @@ static const CGFloat labelPadding = 10;
     self.scrollView.showsHorizontalScrollIndicator=YES;
     [self.scrollView setPagingEnabled:YES];
     self.scrollView.contentSize = CGSizeMake(ImagesDict.count*self.frame.size.width, self.frame.size.height);
-    for (NSDictionary*dict in ImagesDict){
+    for (NSDictionary*dict in ImagesDict)
+    {
         
         BannerCell* cell = [[BannerCell alloc]initWithFrame:CGRectMake(x, y, self.frame.size.width, self.frame.size.height)];
         
@@ -202,18 +205,23 @@ static const CGFloat labelPadding = 10;
     }
     [self addSubview:_scrollView];
     
-    if (isAutoScrollEnabled)
+    if ([[ImagesDict[0] objectForKey:@"auto_scroll"] boolValue])
         [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(autoscroll) userInfo:nil repeats:true];
 
 }
 
--(void)autoscroll{
-    if (isAutoScrollEnabled){
+-(void)autoscroll
+{
+    if ([[ImagesDict[0] objectForKey:@"auto_scroll"] boolValue])
+    {
         float contentWidth = self.scrollView.contentSize.width;
         float x = self.scrollView.contentOffset.x + self.scrollView.frame.size.width;
-        if (x < contentWidth){
+        if (x < contentWidth)
+        {
             [self.scrollView setContentOffset:CGPointMake(x, 0) animated:true];
-        }else{
+        }
+        else
+        {
             [self.scrollView setContentOffset:CGPointMake(0, 0) animated:true];
         }
     }
@@ -227,7 +235,6 @@ static const CGFloat labelPadding = 10;
 
     [_collectionView reloadData];
 }
-
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

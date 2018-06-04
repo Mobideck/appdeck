@@ -895,16 +895,6 @@
         }
         [imageBanner addImage:call.param];
         
-//                if(!imageBannertt){
-//                    NSBundle*bundle=[NSBundle mainBundle];
-//                    imageBannertt = [[bundle loadNibNamed:@"ImageBannerTest" owner:self options:nil] objectAtIndex:0];
-//
-//                    //imageBannertt = [[ImageBannerTest alloc] initwithn];
-//                   // imageBannertt.height= [call.param[@"height"] floatValue];
-//                   // imageBannertt.frame=CGRectMake(0, 0, self.view.frame.size.width,200);
-//                    [self.view addSubview:imageBannertt];
-//                }
-        
         return YES;
     }
 
@@ -922,7 +912,7 @@
 
         }
         
-         [tabBarController loadWithItem:call.param url:[NSURL URLWithString:call.param[@"content"]] ];
+        [tabBarController loadWithItem:call.param url:[NSURL URLWithString:call.param[@"content"]]];
         
         return YES;
     }
@@ -938,7 +928,6 @@
 
     if ([call.command isEqualToString:@"loadingset"])
     {
-//        [self.swipeContainer child:self updateProgressWithProgress:[call.param intValue] duration:0.25];
         return YES;
     }
     

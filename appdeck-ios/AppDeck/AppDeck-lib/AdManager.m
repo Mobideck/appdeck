@@ -60,9 +60,7 @@
 
 -(void)fetchAdFor:(PageViewController *)page appearWithEvent:(AdManagerEvent)event
 {
-
-    
-    
+  
 }
 
 #pragma mark - PageViewController Ad Injection
