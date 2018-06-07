@@ -26,8 +26,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-            app:expandedTitleTextAppearance="@android:color/transparent">
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/bannerContainer"

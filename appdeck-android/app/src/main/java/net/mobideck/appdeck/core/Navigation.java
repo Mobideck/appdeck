@@ -191,12 +191,13 @@ public class Navigation {
         else
             pageAnimation.pop(toAppDeckView);
 
-        if (fromAppDeckView.viewState.isPopUp || toAppDeckView.viewState.isPopUp)
+       /* if (fromAppDeckView.viewState.isPopUp || toAppDeckView.viewState.isPopUp)
             ;
-        else if (mStack.size() == 1)
+        else */
+//       if (mStack.size() == 1)
             AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_HAMBURGER);
-        else
-            AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
+//        else
+//            AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
 
         AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_POP);
 

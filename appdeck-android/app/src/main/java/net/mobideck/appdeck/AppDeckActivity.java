@@ -246,7 +246,7 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
         /******** ??????????????????? *********/
         // Always hide title
-        //mCollapsingToolbarLayout.setTitle(" ");
+        mCollapsingToolbarLayout.setTitle(" ");
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,10 +424,13 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
         /* actionbar title */
         if (appDeck.appConfig.title != null) {
-            mActionBar.setTitle(appDeck.appConfig.title);
+           // mActionBar.setTitle(appDeck.appConfig.title);
             Log.i("title** ", "1 "+appDeck.appConfig.title);
 
             mCollapsingToolbarLayout.setTitle(appDeck.appConfig.title);
+            mCollapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#000000"));
+
+            Log.i("title** ", "1* "+mCollapsingToolbarLayout.getTitle());
         }
 
     /* * */
@@ -476,7 +479,37 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
         mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
+        // logo
+        getLogo();
+
         appDeck.push.shouldHandleIntent(intent);
+    }
+
+    public void getLogo(){
+
+        AppConfig appConfig = appDeck.appConfig;
+        String logo = appConfig.logo;
+
+        if (logo != null && !logo.isEmpty()) {
+            AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(logo, new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap response) {
+                    BitmapDrawable draw = new BitmapDrawable(getResources(), response);
+                    mActionBar.setTitle(null);
+                    mActionBar.setIcon(draw);
+                    mActionBar.setDisplayShowHomeEnabled(true); // show logo
+                    mActionBar.setDisplayShowTitleEnabled(false); // hide String title
+                }
+            }, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, AppDeckApplication.getAppDeck().deviceInfo.actionBarIconSize * 2, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, "Error while fetching Logo : "+error.getLocalizedMessage());
+                }
+            }));
+        } else {
+            mActionBar.setIcon(null);
+            mActionBar.setDisplayShowHomeEnabled(false); // hide logo
+            //mActionBar.setDisplayShowTitleEnabled(true); // show String title
+        }
     }
 
     protected void unloadAppDeckConfig() {
@@ -731,6 +764,7 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
             getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
             mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            getLogo();
 
         }
 
@@ -850,6 +884,15 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                           color1=  Color.parseColor(colors.getString(0));
                           color2=  Color.parseColor(colors.getString(1));
                           mActionBar.setBackgroundDrawable(getDrawable());
+
+                        /* titre */
+                        String title = response.getString("title");
+
+                        mActionBar.setIcon(null);
+                        mActionBar.setDisplayShowHomeEnabled(false); // hide logo
+
+                        mCollapsingToolbarLayout.setTitleEnabled(false);
+                        mToolbar.setTitle(title);
 
 
                     } catch (JSONException e) {
@@ -1110,6 +1153,8 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
         // title
       //  mToolbar.setTitle(viewConfig.title);
         //mCollapsingToolbarLayout.setTitle(viewConfig.title);
+
+
 
         // logo
 //        String logo = appConfig.logo;
