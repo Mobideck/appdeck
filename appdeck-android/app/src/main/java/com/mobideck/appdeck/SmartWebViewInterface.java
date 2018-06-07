@@ -10,78 +10,62 @@ import android.webkit.ValueCallback;
  */
 public interface SmartWebViewInterface {
 
-    public static int LOAD_DEFAULT = 0;
-    public static int LOAD_CACHE_ELSE_NETWORK = 1;
-    public static int LOAD_NO_CACHE = 2;
+    int LOAD_DEFAULT = 0;
+    int LOAD_CACHE_ELSE_NETWORK = 1;
+    int LOAD_NO_CACHE = 2;
 
-    public String getUrl();
+    String getUrl();
 
-    public void setTouchDisabled(boolean touchDisabled);
-    public boolean getTouchDisabled();
+    void setTouchDisabled(boolean touchDisabled);
 
-    public void pause();
-    public void resume();
-    public void clean();
-    public void unloadPage();
+    void pause();
+    void resume();
+    void unloadPage();
 
-    public boolean smartWebViewRestoreState(Bundle savedInstanceState);
+    boolean smartWebViewRestoreState(Bundle savedInstanceState);
+    boolean smartWebViewSaveState(Bundle outState);
 
-    public boolean smartWebViewSaveState(Bundle outState);
+    String resolve(String relativeURL);
 
-    public String resolve(String relativeURL);
+    void loadUrl(String absoluteURL);
+    void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl);
 
-    public void loadUrl(String absoluteURL);
-    public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl);
+    void reload();
+    void stopLoading();
+    void setCacheMode(int mode);
 
-    public void reload();
-    public void stopLoading();
-    public void setCacheMode(int mode);
+    void destroy();
 
-    public void destroy();
+    void evaluateJavascript(java.lang.String script, android.webkit.ValueCallback<java.lang.String> callback);
 
-
-    void	evaluateJavascript(java.lang.String script, android.webkit.ValueCallback<java.lang.String> callback);
-
-    public void sendJsEvent(String eventName, String eventDetailJSon);
+    void sendJsEvent(String eventName, String eventDetailJSon);
 
     //public void copyScrollTo(SmartWebView target);
 
-    public int fetchHorizontalScrollOffset();
-    public int fetchVerticalScrollOffset();
+    int fetchHorizontalScrollOffset();
+    int fetchVerticalScrollOffset();
 
-    public void scrollTo(int x, int y);
-    /*{
-        SmartWebViewCrossWalk target = (SmartWebViewCrossWalk)_target;
-        computeScroll();
-        int x = computeHorizontalScrollOffset();
-        int y = computeVerticalScrollOffset();
-        target.scrollTo(x, y);
-    }*/
+    void scrollTo(int x, int y);
+    void setRootAppDeckFragment(AppDeckFragment root);
 
-
-    public void setRootAppDeckFragment(AppDeckFragment root);
-
-    public void clearAllCache();
-
-    public void clearCookies();
-
+    void clearAllCache();
+    void clearCookies();
 
     // Webview API
-    public void smartWebViewGoBack();
-    public void smartWebViewGoForward();
-    public String smartWebViewGetTitle();
-    public String smartWebViewGetUrl();
-    public boolean smartWebViewCanGoBack();
-    public boolean smartWebViewCanGoForward();
+    void smartWebViewGoBack();
+    void smartWebViewGoForward();
+    String smartWebViewGetTitle();
+    String smartWebViewGetUrl();
+    boolean smartWebViewCanGoBack();
+    boolean smartWebViewCanGoForward();
 
     // Activity API
-    public void onActivityPause(Loader loader);
-    public void onActivityResume(Loader loader);
-    public void onActivityDestroy(Loader loader);
-    public void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data);
-    public void onActivityNewIntent(Loader loader, Intent intent);
+    void onActivityPause(Loader loader);
+    void onActivityResume(Loader loader);
+    void onActivityDestroy(Loader loader);
+    void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data);
+    void onActivityNewIntent(Loader loader, Intent intent);
 
-    public boolean getIsWarmUp();
-    public void setIsWarmUp(boolean value);
-
+    boolean getIsWarmUp();
+    void setIsWarmUp(boolean value);
 }

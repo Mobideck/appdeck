@@ -19,6 +19,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -343,13 +344,8 @@ public class CameraSource {
 
             // SurfaceTexture was introduced in Honeycomb (11), so if we are running and
             // old version of Android. fall back to use SurfaceView.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                mDummySurfaceTexture = new SurfaceTexture(DUMMY_TEXTURE_NAME);
-                mCamera.setPreviewTexture(mDummySurfaceTexture);
-            } else {
-                mDummySurfaceView = new SurfaceView(mContext);
-                mCamera.setPreviewDisplay(mDummySurfaceView.getHolder());
-            }
+            mDummySurfaceTexture = new SurfaceTexture(DUMMY_TEXTURE_NAME);
+            mCamera.setPreviewTexture(mDummySurfaceTexture);
             mCamera.startPreview();
 
             mProcessingThread = new Thread(mFrameProcessor);
@@ -374,6 +370,10 @@ public class CameraSource {
             }
 
             mCamera = createCamera();
+
+            if (mCamera == null) return null;
+            updateOrientation();
+
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
 
@@ -415,17 +415,7 @@ public class CameraSource {
                 mCamera.stopPreview();
                 mCamera.setPreviewCallbackWithBuffer(null);
                 try {
-                    // We want to be compatible back to Gingerbread, but SurfaceTexture
-                    // wasn't introduced until Honeycomb.  Since the interface cannot use a SurfaceTexture, if the
-                    // developer wants to display a preview we must use a SurfaceHolder.  If the developer doesn't
-                    // want to display a preview we use a SurfaceTexture if we are running at least Honeycomb.
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        mCamera.setPreviewTexture(null);
-
-                    } else {
-                        mCamera.setPreviewDisplay(null);
-                    }
+                    mCamera.setPreviewTexture(null);
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to clear camera preview: " + e);
                 }
@@ -642,10 +632,6 @@ public class CameraSource {
      */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public boolean setAutoFocusMoveCallback(@Nullable AutoFocusMoveCallback cb) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            return false;
-        }
-
         synchronized (mCameraLock) {
             if (mCamera != null) {
                 CameraAutoFocusMoveCallback autoFocusMoveCallback = null;
@@ -746,6 +732,8 @@ public class CameraSource {
         }
         Camera camera = Camera.open(requestedCameraId);
 
+        if (camera == null) return null;
+
         SizePair sizePair = selectSizePair(camera, mRequestedPreviewWidth, mRequestedPreviewHeight);
         if (sizePair == null) {
             throw new RuntimeException("Could not find suitable preview size.");
@@ -769,9 +757,9 @@ public class CameraSource {
                 previewFpsRange[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
                 previewFpsRange[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
         parameters.setPreviewFormat(ImageFormat.NV21);
-
-        setRotation(camera, parameters, requestedCameraId);
-
+//--------------------------------------------------------------------------------------------------
+        //setRotation(camera, parameters, requestedCameraId);
+//--------------------------------------------------------------------------------------------------
         if (mFocusMode != null) {
             if (parameters.getSupportedFocusModes().contains(
                     mFocusMode)) {
@@ -814,6 +802,34 @@ public class CameraSource {
         return camera;
     }
 
+    public void updateOrientation(int width, int height) {
+        if (mCamera == null) return;
+
+        mCamera.getParameters().setPictureSize(width, height);
+
+        updateOrientation();
+    }
+
+    private void updateOrientation() {
+        if (mCamera == null) return;
+
+        android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(getIdForRequestedCamera(mFacing), info);
+
+        final int rotation = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+
+        int degrees = 0;
+
+        switch (rotation) {
+            case Surface.ROTATION_0: degrees = 0; break;
+            case Surface.ROTATION_90: degrees = 90; break;
+            case Surface.ROTATION_180: degrees = 180; break;
+            case Surface.ROTATION_270: degrees = 270; break;
+        }
+
+        mCamera.setDisplayOrientation((info.orientation - degrees + 360) % 360);
+    }
+
     /**
      * Gets the id for the camera specified by the direction it is facing.  Returns -1 if no such
      * camera was found.
@@ -845,6 +861,8 @@ public class CameraSource {
      * @return the selected preview and picture size pair
      */
     private static SizePair selectSizePair(Camera camera, int desiredWidth, int desiredHeight) {
+        if (camera == null) return null;
+
         List<SizePair> validPreviewSizes = generateValidPreviewSizeList(camera);
 
         // The method for selecting the best size is to minimize the sum of the differences between
@@ -904,6 +922,8 @@ public class CameraSource {
      * preview images may be distorted on some devices.
      */
     private static List<SizePair> generateValidPreviewSizeList(Camera camera) {
+        if (camera == null) return null;
+
         Camera.Parameters parameters = camera.getParameters();
         List<android.hardware.Camera.Size> supportedPreviewSizes =
                 parameters.getSupportedPreviewSizes();

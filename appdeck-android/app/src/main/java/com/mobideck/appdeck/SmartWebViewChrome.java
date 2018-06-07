@@ -209,7 +209,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     @Override
     public void loadDataWithBaseURL(String baseUrl, String data,
                                     String mimeType, String encoding, String historyUrl) {
-        if (baseUrl != null && baseUrl.startsWith("javascript:") == false)
+        if (baseUrl != null && !baseUrl.startsWith("javascript:"))
         {
             CookieManager cookieManager = CookieManager.getInstance();
             if (url != null && cookieManager != null)
@@ -618,7 +618,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
     public class SmartWebChromeChromeClient extends VideoEnabledWebChromeClient /*implements OnCompletionListener, OnErrorListener*/ {
 
-        public SmartWebChromeChromeClient(View activityNonVideoView, ViewGroup activityVideoView, View loadingView, VideoEnabledWebView webView) {
+        SmartWebChromeChromeClient(View activityNonVideoView, ViewGroup activityVideoView, View loadingView, VideoEnabledWebView webView) {
             super(activityNonVideoView, activityVideoView, loadingView, webView);
         }
 
@@ -709,7 +709,7 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
                 result.cancel();
                 return true;
             }
-			if (message.startsWith("appdeckapi:") == true)
+			if (message.startsWith("appdeckapi:"))
 			{
 				AppDeckApiCall call = new AppDeckApiCall(message.substring(11), defaultValue, new SmartWebViewChromeResult(result));
 				call.webview = SmartWebViewChrome.this;
@@ -928,7 +928,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     int page_height = -1;
     long lastScrollToBottomEventTime = -1;
     int lastScrollToBottomEventContentHeight = -1;
-    private int scrollToBottomEventTimeInterval = 500;
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt)
@@ -936,19 +935,17 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         super.onScrollChanged(l, t, oldl, oldt);
         int content_height = (int)(getContentHeight() * getScale());
         int content_height_limit = content_height - page_height - page_height / 2;
-        if (true)
+        if (t > content_height_limit && content_height_limit > 0)
         {
-            if (t > content_height_limit && content_height_limit > 0)
-            {
-                long scrollToBottomEventTime = System.currentTimeMillis();
-                long scrollEventTimeDiff = scrollToBottomEventTime - lastScrollToBottomEventTime;
+            long scrollToBottomEventTime = System.currentTimeMillis();
+            long scrollEventTimeDiff = scrollToBottomEventTime - lastScrollToBottomEventTime;
 
-                if (scrollEventTimeDiff > scrollToBottomEventTimeInterval && lastScrollToBottomEventContentHeight != content_height)
-                {
-                    lastScrollToBottomEventTime = scrollToBottomEventTime;
-                    lastScrollToBottomEventContentHeight = content_height;
-                    sendJsEvent("scrollToBottom", "null");
-                }
+            int scrollToBottomEventTimeInterval = 500;
+            if (scrollEventTimeDiff > scrollToBottomEventTimeInterval && lastScrollToBottomEventContentHeight != content_height)
+            {
+                lastScrollToBottomEventTime = scrollToBottomEventTime;
+                lastScrollToBottomEventContentHeight = content_height;
+                sendJsEvent("scrollToBottom", "null");
             }
         }
     }
@@ -986,22 +983,16 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
         return true;
     }
 
-    public boolean apiCall(final AppDeckApiCall call)
-    {
-        if (call.command.equalsIgnoreCase("disable_catch_link"))
-        {
-            Log.i("API", uri.getPath()+" **DISABLE CATCH LINK**");
+    public boolean apiCall(final AppDeckApiCall call) {
+        if (call.command.equalsIgnoreCase("disable_catch_link")) {
+            Log.i("API", uri.getPath() + " **DISABLE CATCH LINK**");
 
-            boolean value = call.input.getBoolean("param");
-            ((SmartWebViewChrome)call.smartWebView).disableCatchLink = value;
+            ((SmartWebViewChrome) call.smartWebView).disableCatchLink = call.input.getBoolean("param");
 
             return true;
         }
 
-        if (root != null)
-            return root.apiCall(call);
-        else
-            return false;
+        return root != null && root.apiCall(call);
     }
 
     public int fetchHorizontalScrollOffset() {return computeHorizontalScrollOffset(); }
@@ -1064,8 +1055,6 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
 
         mFilePathCallback.onReceiveValue(results);
         mFilePathCallback = null;
-        return;
-
     }
 
     public void onActivityNewIntent(Loader loader, Intent intent)
@@ -1100,5 +1089,4 @@ public class SmartWebViewChrome extends VideoEnabledWebView implements SmartWebV
     private boolean isWarmUp = false;
     public boolean getIsWarmUp() { return isWarmUp; }
     public void setIsWarmUp(boolean value) {isWarmUp = value;}
-
 }

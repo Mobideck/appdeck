@@ -1,21 +1,20 @@
 package com.mobideck.appdeck;
 
-import android.content.Intent;
 import android.os.Build;
-import android.view.View;
 import android.view.ViewGroup;
+import android.content.Intent;
 
 import java.util.ArrayList;
 
 public class SmartWebViewFactory {
 
-    public static boolean forceCrossWalk = false;
+    private static boolean forceCrossWalk = false;
 
     public static final int POSITION_LEFT = 1;
     public static final int POSITION_RIGHT = 2;
-    public static final int POSITION_HIDDEN = 3;
+    private static final int POSITION_HIDDEN = 3;
 
-    public static ArrayList<SmartWebView> smartWebViews = null;
+    private static ArrayList<SmartWebView> smartWebViews = null;
 
     public static SmartWebView createMenuSmartWebView(Loader loader, String url, int position)
     {
@@ -24,20 +23,13 @@ public class SmartWebViewFactory {
 
         SmartWebView smartWebView = SmartWebViewFactory.createSmartWebView(tmp);
 
-        smartWebView.view.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-
-        //this.url = url;
-        //this.position = position;
+        smartWebView.view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         smartWebView.ctl.setCacheMode(SmartWebViewInterface.LOAD_CACHE_ELSE_NETWORK);
 
-        if (url != null)
-            smartWebView.ctl.loadUrl(url);
+        if (url != null) smartWebView.ctl.loadUrl(url);
 
         return smartWebView;
-
     }
 
     public static SmartWebView createSmartWebView(AppDeckFragment root)
@@ -69,8 +61,6 @@ public class SmartWebViewFactory {
         smartWebView.ctl.unloadPage();
         smartWebView.ctl.pause();
         smartWebView.ctl.destroy();
-        //smartWebView.ctl.setIsWarmUp(true);
-        //smartWebViews.add(smartWebView);
     }
 
     public static void setPreferences(Loader loader)
@@ -82,7 +72,7 @@ public class SmartWebViewFactory {
 
     }
 
-    public static boolean activityPaused = false;
+    private static boolean activityPaused = false;
 
     public static void onActivityPause(Loader loader)
     {
@@ -103,7 +93,6 @@ public class SmartWebViewFactory {
 
     public static void onActivityDestroy(Loader loader)
     {
-
     }
 
     public  static void onActivityResult(Loader loader, int requestCode, int resultCode, Intent data)

@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -330,15 +331,15 @@ public class PageSwipe extends AppDeckFragment {
     	if (appDeck.isLowSystem)
     		return false;
     	
-    	boolean shouldUpdate = false;    	
-    	if (previousPage == null && currentPage.previousPageUrl != null && currentPage.previousPageUrl.isEmpty() == false)
+    	boolean shouldUpdate = false;
+    	if (previousPage == null && currentPage.previousPageUrl != null && !currentPage.previousPageUrl.isEmpty())
     	{
     		previousPage = PageFragmentSwap.newInstance(currentPage.previousPageUrl);
 			previousPage.loader = this.loader;
     		previousPage.pageSwipe = this;
     		shouldUpdate = true;
     	}
-    	if (nextPage == null && currentPage.nextPageUrl != null && currentPage.nextPageUrl.isEmpty() == false)
+    	if (nextPage == null && currentPage.nextPageUrl != null && !currentPage.nextPageUrl.isEmpty())
     	{
     		nextPage = PageFragmentSwap.newInstance(currentPage.nextPageUrl);
 			nextPage.loader = this.loader;
@@ -350,18 +351,9 @@ public class PageSwipe extends AppDeckFragment {
     
     public void updatePreviousNext(AppDeckFragment origin)
     {
-    	if (origin != currentPage)
-    		return;
-    	boolean shouldUpdate = false;
-    	shouldUpdate = shouldUpdate || initPreviousNext();
-    	if (shouldUpdate)
-    	{
-    		if (adapter != null)
-    			adapter.notifyDataSetChanged();
-    	}
+        if (origin == currentPage && initPreviousNext() && adapter != null) adapter.notifyDataSetChanged();
     }
-    
-    
+
     private class PageSwipeAdapter extends PagerAdapter {
 
     	PageSwipe pageSwipe;
@@ -415,8 +407,9 @@ public class PageSwipe extends AppDeckFragment {
         	return pageSwipe.currentPage;        	
         }
         
+        @NonNull
         @Override
-        public Object instantiateItem (ViewGroup container, int position)
+        public Object instantiateItem (@NonNull ViewGroup container, int position)
         {
         	AppDeckFragment fragment = getView(position);
         	
@@ -436,10 +429,10 @@ public class PageSwipe extends AppDeckFragment {
         }
         
         @Override
-        public void destroyItem (ViewGroup container, int position, Object object)
+        public void destroyItem (@NonNull ViewGroup container, int position, @NonNull Object object)
         {
         	// we should keep fragment if it has only been moved 
-        	if (object != null && object != previousPage && object != currentPage && object != nextPage)
+        	if (object != previousPage && object != currentPage && object != nextPage)
         	{
 	    		FragmentTransaction ft = fm.beginTransaction();
 	    		ft.remove((Fragment)object);
@@ -449,81 +442,35 @@ public class PageSwipe extends AppDeckFragment {
         
 		@Override
 		public int getCount() {
-            int count = (pageSwipe.currentPage != null ? 1 : 0)  + (pageSwipe.previousPage != null ? 1 : 0) + (pageSwipe.nextPage != null ? 1 : 0);
-            return count;
+            return ((pageSwipe.currentPage != null) ? 1 : 0) + ((pageSwipe.previousPage != null) ? 1 : 0) + ((pageSwipe.nextPage != null) ? 1 : 0);
 		}
 
 		@Override
-		public boolean isViewFromObject(View view, Object object)
-		{
-			boolean isView = ((Fragment)object).getView() == view;
-			return isView;
+		public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+            return ((Fragment)object).getView() == view;
 		}
-    	
-/*		@Override
-		public void setPrimaryItem (View container, int position, Object object)
-		{
-			
-		}*/
-		
-	    public int getFragmentPosition (AppDeckFragment fragment) {
-	    	int position = 0;
-        	
-        	if (fragment == previousPage)
-        		return position;
-        	if (previousPage != null)
-        		position++;
-        	if (fragment == currentPage)
-        		return position;
-        	if (fragment == nextPage)
-        		return position + 1;        	
+
+	    int getFragmentPosition(AppDeckFragment fragment) {
+	    	if (fragment == previousPage) return 0;
+        	if (fragment == currentPage) return 1;
+        	if (fragment == nextPage) return 2;
 
         	return -1;
 	    }
 
-		
 		@Override
-	    public int getItemPosition (Object object) {
-			AppDeckFragment fragment = (AppDeckFragment)object;
-	    	int position = getFragmentPosition(fragment);
-	    	if (position == -1)
-	    		return POSITION_NONE;
+	    public int getItemPosition (@NonNull Object object) {
+	    	int position = getFragmentPosition((AppDeckFragment)object);
+	    	if (position == -1) return POSITION_NONE;
 	    	return position;
 	    }
-				
-		/*
-	    @Override
-	    public Parcelable saveState()
-	    {
-	    	Bundle state = new Bundle();
-	    	if (previousPage != null)
-	    		fm.putFragment(state, "previousPage", previousPage);
-	    	if (currentPage != null)
-	    		fm.putFragment(state, "currentPage", currentPage);
-	    	if (nextPage != null)
-	    		fm.putFragment(state, "nextPage", nextPage);
-	        return state;
-	    }
-
-	    @Override
-	    public void restoreState(Parcelable state, ClassLoader loader)
-	    {
-            Bundle bundle = (Bundle)state;
-            bundle.setClassLoader(loader);
-            previousPage = (PageFragmentSwap)fm.getFragment(bundle, "previousPage");
-            currentPage = (PageFragmentSwap)fm.getFragment(bundle, "currentPage");
-            nextPage = (PageFragmentSwap)fm.getFragment(bundle, "nextPage");
-	    }	*/	
     }
 
-	public String evaluateJavascript(String js)
-	{
-		if (previousPage != null)
-			previousPage.evaluateJavascript(js);
-		if (currentPage != null)
-			currentPage.evaluateJavascript(js);
-		if (nextPage != null)
-			nextPage.evaluateJavascript(js);
+	public String evaluateJavascript(String js) {
+		if (previousPage != null) previousPage.evaluateJavascript(js);
+		if (currentPage != null) currentPage.evaluateJavascript(js);
+		if (nextPage != null) nextPage.evaluateJavascript(js);
+
 		return "";
 	}
 }

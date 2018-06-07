@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-        <WebView
+    <WebView
         android:id="@+id/left_menu_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />   
+        android:layout_height="match_parent" />
     
-</FrameLayout>    
+</FrameLayout>

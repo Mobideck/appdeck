@@ -6,10 +6,12 @@ import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
-public class LightLoader extends MaterialDialog {
-    public LightLoader(Context context){
+import java.util.Objects;
+
+class LightLoader extends MaterialDialog {
+    LightLoader(Context context){
         super(new MaterialDialog.Builder(context).progress(true, 0));
-        ViewGroup.LayoutParams params = getWindow().getAttributes();
+        ViewGroup.LayoutParams params = Objects.requireNonNull(getWindow()).getAttributes();
         params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 128,
                 context.getResources().getDisplayMetrics());

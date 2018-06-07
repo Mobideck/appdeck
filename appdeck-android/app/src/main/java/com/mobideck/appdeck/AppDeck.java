@@ -20,15 +20,8 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-// TODO:
-// - https://github.com/Huppie/Appirater-for-Android
-// - https://github.com/Prototik/HoloEverywhere
-// - http://code.google.com/p/android-wheel/
-// - https://github.com/chrisbanes/PhotoView
-
 public class AppDeck {
 
-    //public boolean isAppdeckTestApp = false;
     public boolean isDebugBuild = false;
 
 	public static String TAG = "AppDeck";
@@ -36,11 +29,8 @@ public class AppDeck {
 	public static String version = "1.6.0";
 
     public static String appdeck_inject_js = "if (typeof(appDeckAPICall)  === 'undefined') { appDeckAPICall = ''; var scr = document.createElement('script'); scr.type='text/javascript';  scr.src = 'https://appdata.static.appdeck.mobi/js/appdeck.js'; scr.async = true; document.getElementsByTagName('head')[0].appendChild(scr); var result = true;} else { var result = false; }";
-    //public static String appdeck_inject_js_inline = "javascript:" + appdeck_inject_js;
 
     public static String error_html;
-
-//	public static String error_html_new = "<html><head><meta name=viewport content=\"width=device-width,user-scalable=no\"><style>svg{bottom: 0; height: 150px; left: 0; margin: auto; position: absolute; top: 0; right: 0; width: 150px;}</style></head><body> <svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" id=\"Layer_1\" x=\"0px\" y=\"0px\" width=\"512px\" height=\"441.078px\" viewBox=\"0 0 512 441.078\" enable-background=\"new 0 0 512 441.078\" xml:space=\"preserve\"><path d=\"M512,122.174c-9.88-7.479-108.315-87.975-255.994-87.975c-33.099,0-63.561,4.177-91.272,10.557l227.182,226.966L512,122.174 z M64.107,0l-28.04,28.4l45.196,45.195C34.199,94.902,5.166,118.324,0,122.281l255.785,318.69l0.221,0.106l0.22-0.214 l85.773-106.898l72.919,72.919l28.029-28.051L64.107,0z\" fill=\"#CD5C5C\"/></svg></body></style>";
 
 	public boolean noCache = false;
 	
@@ -112,7 +102,7 @@ public class AppDeck {
     	assetManager = context.getAssets();
     	
     	uid = Utils.getUid(context.getApplicationContext());
-    	packageName = context.getPackageName();    	
+    	packageName = context.getPackageName();
     	
     	if (app_conf_url == null)
     	{
@@ -202,5 +192,4 @@ public class AppDeck {
     	
     	return builder;
     }
-    
 }

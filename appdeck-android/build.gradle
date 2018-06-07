@@ -10,7 +10,10 @@ buildscript {
     dependencies {
         // http://tools.android.com/release
         // https://bintray.com/android/android-tools/com.android.tools.build.gradle
-        classpath ('com.android.tools.build:gradle:3.0.0') {
+//        classpath ('com.android.tools.build:gradle:3.0.0') {
+//            exclude module: 'proguard-gradle'
+//        }
+        classpath ('com.android.tools.build:gradle:2.3.2') { /********/
             exclude module: 'proguard-gradle'
         }
         // force last version of proguard

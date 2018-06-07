@@ -304,16 +304,7 @@ public class AppDeckFragment extends Fragment {
 	
 	public boolean isCurrentAppDeckPage()
 	{
-		if (isMain == false)
-			return false;
-		//TODO: implement this
-		//if (pageSwipe == null)
-		//	return true;
-    	/*if (appDeck.loader.getSupportFragmentManager().getBackStackEntryCount() - 1 != backStackIndex)
-    		return false;*/
-    	//if (pageSwipe.currentPage != this)
-    	//	return false;
-    	return true;
+		return isMain;
 	}
 	
     public void setIsMain(boolean isMain)
@@ -359,7 +350,7 @@ public class AppDeckFragment extends Fragment {
     {
         progressStart = true;
         progress = -1;
-    	if (isCurrentAppDeckPage() == false)
+    	if (!isCurrentAppDeckPage())
     		return;
     	loader.progressStart();
     }
@@ -368,7 +359,7 @@ public class AppDeckFragment extends Fragment {
     {
         progressStart = true;
         progress = percent;
-    	if (isCurrentAppDeckPage() == false)
+    	if (!isCurrentAppDeckPage())
     		return;    	
     	loader.progressSet(percent);
     }
@@ -377,7 +368,7 @@ public class AppDeckFragment extends Fragment {
     {
         progressStart = false;
         progress = -1;
-    	if (isCurrentAppDeckPage() == false)
+    	if (!isCurrentAppDeckPage())
     		return;    	
     	loader.progressStop();
     }
@@ -386,7 +377,7 @@ public class AppDeckFragment extends Fragment {
     {
         progressStart = false;
         progress = -1;
-    	if (isCurrentAppDeckPage() == false)
+    	if (!isCurrentAppDeckPage())
     		return;
     	loader.progressStop();
     }
@@ -397,28 +388,15 @@ public class AppDeckFragment extends Fragment {
 	}
 
 	public boolean apiCall(AppDeckApiCall call)
-	{	
+	{
 		return loader.apiCall(call);
-		
-	}    
-	
-	public void reload(boolean forceReload)
-	{
-		
 	}
 	
-	public void clean()
-	{
-	}
+	public void reload(boolean forceReload) {}
 	
-	public boolean canGoBack()
-	{
-		return false;
-	}
+	public void clean() {}
 	
-	public void goBack()
-	{
-		
-	}
-
+	public boolean canGoBack() { return false; }
+	
+	public void goBack() {}
 }
