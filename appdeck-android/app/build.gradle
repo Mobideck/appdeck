@@ -83,8 +83,6 @@ dependencies {
 
     // https://developers.facebook.com/docs/android
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
-    compile 'com.facebook.android:facebook-core:4.28.0'
-    compile 'com.facebook.android:facebook-login:4.28.0'
 
     // https://fabric.io/kits/android/twitterkit/install
     // https://docs.fabric.io/android/changelog.html#twitter-core

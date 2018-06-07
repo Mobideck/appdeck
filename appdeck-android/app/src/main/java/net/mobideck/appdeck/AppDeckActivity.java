@@ -870,15 +870,35 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                         navigation.loadRootURL(url);
 
                         /* menu */
-                        JSONObject leftmenu = response.getJSONObject("leftmenu");
-                        String urlLeft = leftmenu.getString("url");
-                        Log.i("url** ", urlLeft);
+                        JSONObject leftmenu, rightmenu;
+                        String urlLeft = "", urlRight = "";
+                        if(response.has("leftmenu")) {
+                            leftmenu = response.getJSONObject("leftmenu");
+                            if (leftmenu.has("url")) {
+                                urlLeft = leftmenu.getString("url");
+                            }
+                        }
 
-                        JSONObject rightmenu = response.getJSONObject("rightmenu");
-                        String urlRight = rightmenu.getString("url");
-                        Log.i("url** ", urlRight);
+                        if(response.has("rightmenu")) {
+                            rightmenu = response.getJSONObject("rightmenu");
+                            if (rightmenu.has("url")) {
+                                urlRight = rightmenu.getString("url");
+                            }
+                        }
 
-                        getMenu(urlLeft, urlRight);
+                        Log.i("menu** ",  urlLeft+" "+ urlRight);
+
+                        if(!urlLeft.isEmpty() && !urlRight.isEmpty()){
+                            getMenu(urlLeft, urlRight);
+                        }else if(!urlLeft.isEmpty() && urlRight.isEmpty()){
+                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+                            getMenu(urlLeft, "");
+                        }else if(urlLeft.isEmpty() && !urlRight.isEmpty()){
+                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+                            getMenu("", urlRight);
+                        }
+//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
 
                         /* color tolbar user */
                         JSONArray colors = response.getJSONArray("app_topbar_color");
