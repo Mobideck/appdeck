@@ -434,7 +434,8 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
         }
 
     /* * */
-    getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
+    getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), "");
+    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
 
 /*?????????????????*/
         if (menuManager.noMenu) {
@@ -480,15 +481,12 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
         mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         // logo
-        getLogo();
+        getLogo(appConfig.logo);
 
         appDeck.push.shouldHandleIntent(intent);
     }
 
-    public void getLogo(){
-
-        AppConfig appConfig = appDeck.appConfig;
-        String logo = appConfig.logo;
+    public void getLogo(String logo){
 
         if (logo != null && !logo.isEmpty()) {
             AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(logo, new Response.Listener<Bitmap>() {
@@ -762,10 +760,13 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
         if(bootstrapURL.equals("http://testappv4.appdeck.mobi/")){
 
-            getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
-            mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            getLogo();
+            //appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url)
+            getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), "");
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
 
+            mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+            getLogo(appDeck.appConfig.logo);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -886,13 +887,18 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                           mActionBar.setBackgroundDrawable(getDrawable());
 
                         /* titre */
-                        String title = response.getString("title");
+                        if(response.has("logo")){
+                            String logo = response.getString("logo");
+                            getLogo(logo);
+                        }else {
+                            String title = response.getString("title");
 
-                        mActionBar.setIcon(null);
-                        mActionBar.setDisplayShowHomeEnabled(false); // hide logo
+                            mActionBar.setIcon(null);
+                            mActionBar.setDisplayShowHomeEnabled(false); // hide logo
 
-                        mCollapsingToolbarLayout.setTitleEnabled(false);
-                        mToolbar.setTitle(title);
+                            mCollapsingToolbarLayout.setTitleEnabled(false);
+                            mToolbar.setTitle(title);
+                        }
 
 
                     } catch (JSONException e) {
