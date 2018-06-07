@@ -150,6 +150,7 @@ import io.netty.handler.codec.http.HttpObject;
 import io.netty.handler.codec.http.HttpRequest;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
+// Loader
 public class Loader extends AppCompatActivity {
 
 	public final static String TAG = "LOADER";
