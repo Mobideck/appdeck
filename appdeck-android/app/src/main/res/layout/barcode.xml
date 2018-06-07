@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <net.mobideck.appdeck.autre_.ui.camera.CameraSourcePreview
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </net.mobideck.appdeck.autre_.ui.camera.CameraSourcePreview>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.33"
+            android:background="#33EEEEEE"
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.33">
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="0.33"
+                android:background="#33EEEEEE"
+                />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:scaleType="fitXY"
+                android:src="@drawable/mire" />
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="0.33"
+                android:background="#33EEEEEE"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.33"
+            android:background="#33EEEEEE"
+            />
+    </LinearLayout>
+
+</FrameLayout>

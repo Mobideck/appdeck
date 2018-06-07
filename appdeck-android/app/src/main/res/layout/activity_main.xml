@@ -50,11 +50,6 @@
     </android.support.v4.widget.DrawerLayout>
 
     <!-- View where the video will be shown when video goes fullscreen -->
-    <FrameLayout
-        android:id="@+id/videoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </FrameLayout>
 
     <!-- loading Layout -->
     <FrameLayout
@@ -81,16 +76,16 @@
 
     <!-- DebugLog -->
     <FrameLayout
-    android:id="@+id/debugLog"
-    android:layout_width="match_parent"
-    android:layout_height="280dp"
-    android:layout_gravity="bottom"
-    android:background="@android:color/white"
-    android:visibility="gone"
-    android:elevation="2dp"
-    android:gravity="bottom"
-    android:translationY="280dp"
-    android:alpha="0">
+        android:id="@+id/debugLog"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:visibility="gone"
+        android:elevation="2dp"
+        android:gravity="bottom"
+        android:translationY="280dp"
+        android:alpha="0">
     <TextView
         android:id="@+id/debugTextView"
         android:layout_width="match_parent"
@@ -100,11 +95,17 @@
         android:scrollbars = "vertical"/>
     </FrameLayout>
     <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="right|bottom"
-    android:padding="2dp"
-    android:text="log"
-    android:id="@+id/closeDebug"
-    android:visibility="gone"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:padding="2dp"
+        android:text="log"
+        android:id="@+id/closeDebug"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
 </FrameLayout>

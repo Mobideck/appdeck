@@ -11,7 +11,7 @@
 
     <!-- general dimensions for all custom menu items -->
     <dimen name="menu_item_icon_size">24dp</dimen>
-    <dimen name="menu_item_size">48dp</dimen>
-    <dimen name="menu_item_ripple_size">48dp</dimen>
+    <dimen name="menu_item_size">35dp</dimen>
+    <dimen name="menu_item_ripple_size">35dp</dimen>
 
 </resources>

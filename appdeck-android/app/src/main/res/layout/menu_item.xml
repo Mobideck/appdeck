@@ -22,8 +22,7 @@
             android:id="@+id/imageView"
             android:layout_width="@dimen/menu_item_icon_size"
             android:layout_height="@dimen/menu_item_icon_size"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center"/>
 
         <FrameLayout
             android:id="@+id/badgeCircle"

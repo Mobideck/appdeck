@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckApplication;
 import net.mobideck.appdeck.R;
 import net.mobideck.appdeck.config.ViewConfig;
 import net.mobideck.appdeck.core.ads.AdManager;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,7 @@ public class Navigation {
 
     public Navigation() {
         mStack = new ArrayList<>();
-    }
+    } //mStack --> root
 
     public void clean() {
         FrameLayout viewContainer = AppDeckApplication.getActivity().getViewContainer();
@@ -87,7 +90,7 @@ public class Navigation {
         AppDeckApplication.getActivity().menuManager.closeMenu();
 
         // remove and clean previous stack
-        clean();
+        //clean(); /* problem onBackpress */
 
         mStack.add(appDeckView);
 
@@ -120,7 +123,7 @@ public class Navigation {
 
         AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
 
-        AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_PUSH);
+        //AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_PUSH);
 
         AppDeckApplication.getActivity().resetAppBar();
     }

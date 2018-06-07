@@ -2,6 +2,8 @@
 package net.mobideck.appdeck.config;
 
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,7 +18,10 @@ import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckActivity;
 import net.mobideck.appdeck.AppDeckApplication;
 import net.mobideck.appdeck.R;
+import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.util.Utils;
+
+import static net.mobideck.appdeck.util.Utils.parseColor;
 
 public class AppConfig {
 
@@ -81,17 +86,17 @@ public class AppConfig {
     @SerializedName("app_color")
     @Expose
     public String appColor;
-    //public transient Drawable appColorDrawable;
+    public transient Drawable appColorDrawable;
 
     @SerializedName("app_topbar_color")
     @Expose
     public String appTopbarColor;
-    //public transient Drawable appTopbarColorDrawable;
+    public transient Drawable appTopbarColorDrawable;
 
     @SerializedName("app_topbar_text_color")
     @Expose
     public String appTopbarTextColor;
-    //public transient Drawable appTopbarTextColorDrawable;
+    public transient Drawable appTopbarTextColorDrawable;
 
     @SerializedName("app_actionbar_color")
     @Expose
@@ -110,27 +115,27 @@ public class AppConfig {
     @SerializedName("app_background_color")
     @Expose
     public List<String> appBackgroundColor;
-    //public transient Drawable appBackgroundColorDrawable;
+    public transient Drawable appBackgroundColorDrawable;
 
     @SerializedName("leftmenu_background_color")
     @Expose
     public List<String> leftMenuBackgroundColor;
-    //public transient Drawable leftMenuBackgroundColorDrawable;
+    public transient Drawable leftMenuBackgroundColorDrawable;
 
     @SerializedName("rightmenu_background_color")
     @Expose
     public List<String> rightMenuBackgroundColor;
-    //public transient Drawable rightMenuBackgroundColorDrawable;
+    public transient Drawable rightMenuBackgroundColorDrawable;
 
-    /*@SerializedName("control_color")
+    @SerializedName("control_color")
     @Expose
     public String controlColor;
-    //public transient Drawable controlColorDrawable;*/
+    public transient Drawable controlColorDrawable;
 
     @SerializedName("image_network_error_background_color")
     @Expose
     public String imageNetworkErrorBackgroundColor;
-    //public transient Drawable imageNetworkErrorBackgroundColorDrawable;
+    public transient Drawable imageNetworkErrorBackgroundColorDrawable;
 
     // Icons
 
@@ -412,19 +417,22 @@ public class AppConfig {
                 rightMenu.width = 280;
             if (rightMenu.url == null)
                 rightMenu = null;
+            /* jusqua la correction de cote ws */
+            if (rightMenu.width == 100)
+                rightMenu.width = 280;
         }
 
         // Colors
-        /*
         appColorDrawable = readColor(appColor, "#000000");
-        appTopbarColorDrawable = readColor(appTopbarColor, "#0A728F", "#03405F");
+
+        //appTopbarColorDrawable = readColor(appTopbarColor, "#0A728F", "#03405F");
+
         appTopbarTextColorDrawable = readColor(appTopbarTextColor, "#FFFFFF");
         appBackgroundColorDrawable = readColor(appBackgroundColor, "#FFFFFF", "#EEEEEE");
         leftMenuBackgroundColorDrawable = readColor(leftMenuBackgroundColor, "#FFFFFF", "#EEEEEE");
         rightMenuBackgroundColorDrawable = readColor(rightMenuBackgroundColor, "#FFFFFF", "#EEEEEE");
         controlColorDrawable = readColor(controlColor, "#000000");
         imageNetworkErrorBackgroundColorDrawable = readColor(imageNetworkErrorBackgroundColor, "#FFFFFF");
-        */
 
         /*
         color;
@@ -446,6 +454,7 @@ public class AppConfig {
             //noinspection ResourceType
             appColor = activity.getString(R.color.AppDeckColorTopBar);
         }
+
         if (appTopbarTextColor == null) {
             //noinspection ResourceType
             appTopbarTextColor = activity.getString(R.color.AppDeckColorTopBarText);
@@ -622,6 +631,7 @@ public class AppConfig {
         return Utils.getColorDrawable(colors);
     }
 
+
     public URI getUrl() { return mBaseURI; }
 
     public ViewConfig getDefaultConfiguration()
@@ -639,6 +649,24 @@ public class AppConfig {
         config.bottombarTextColor = appBottombarTextColor;
         config.backgroundColor = appBackgroundColor;
         config.configure(null);
+
         return config;
     }
+
+
+//    class AppTolbarColor {
+//
+//        public int color1;
+//        public int color2;
+//
+//        public Drawable getDrawable()
+//        {
+//            GradientDrawable gd = new GradientDrawable(
+//                    GradientDrawable.Orientation.TOP_BOTTOM,
+//                    new int[] {color1, color2});
+//            gd.setCornerRadius(0f);
+//            return gd;
+//        }
+//    }
+
 }

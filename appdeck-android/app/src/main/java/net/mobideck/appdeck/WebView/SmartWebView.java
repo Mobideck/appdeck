@@ -2,15 +2,19 @@ package net.mobideck.appdeck.WebView;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -31,6 +35,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.DatePicker;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -40,12 +45,17 @@ import net.mobideck.appdeck.AppDeck;
 import net.mobideck.appdeck.AppDeckActivity;
 import net.mobideck.appdeck.AppDeckApplication;
 import net.mobideck.appdeck.R;
+import net.mobideck.appdeck.UI.DatePickerDialogCustom;
 import net.mobideck.appdeck.WebView.Video.VideoEnabledWebChromeClient;
 import net.mobideck.appdeck.WebView.Video.VideoEnabledWebView;
 import net.mobideck.appdeck.core.ApiCall;
 import net.mobideck.appdeck.core.DebugLog;
 import net.mobideck.appdeck.core.Cache;
+import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.Page;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -54,7 +64,9 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -152,6 +164,8 @@ public class SmartWebView extends VideoEnabledWebView {
         });
         setWebViewClient(new SmartWebViewChromeClient());
         setWebChromeClient(mWebViewChromeChromeClient);
+
+        //super.loadDataWithBaseURL("", "<!DOCTYPE html><html><head><title></title></head><body></body></html>", "text/html", "utf-8", "");
     }
 
     private void configureWebView() {
@@ -185,6 +199,7 @@ public class SmartWebView extends VideoEnabledWebView {
         webSettings.setDomStorageEnabled(true);
 
         webSettings.setPluginState(WebSettings.PluginState.ON);
+        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
 
         if (Build.VERSION.SDK_INT >= 17) {
             webSettings.setMediaPlaybackRequiresUserGesture(false);
@@ -207,6 +222,7 @@ public class SmartWebView extends VideoEnabledWebView {
     public void unloadPage()
     {
         evaluateJavascript("document.head.innerHTML = document.body.innerHTML = '';", null);
+        //goBack();
         clearHistory();
     }
 
@@ -281,7 +297,7 @@ public class SmartWebView extends VideoEnabledWebView {
                 mFirstLoad = false;
                 return;
             }
-            Log.d("SmartWebView", "OnPageStarted (not firstLoad) :" + url);
+            Log.d("SmartWebView", "OnPageStarted (not firstLoad) :" + url);;
         }
 
         @Override
@@ -302,6 +318,9 @@ public class SmartWebView extends VideoEnabledWebView {
 
             if (page.shouldOverrideUrlLoading(url)) {
 
+                /* */
+                final Navigation navigation = AppDeckApplication.getAppDeck().navigation;
+
                 final Gson gson = new Gson();
 
                 String javascript = "app.client.rewriteURL('" + gson.toJson(url) + "')";
@@ -311,11 +330,18 @@ public class SmartWebView extends VideoEnabledWebView {
                     public void onReceiveValue(String value) {
                         String newURL = gson.fromJson(value, String.class);
                         Log.d(TAG, "app.client.rewriteURL:"+value+":"+newURL);
-                        if (newURL != null && (newURL.indexOf("http://") == 0 || newURL.indexOf("https://") == 0))
-                            page.loadUrl(newURL);
+                        if (newURL != null && (newURL.indexOf("http://") == 0 || newURL.indexOf("https://") == 0)){
+                            //page.loadUrl(newURL);
+
+                            /* */
+                            navigation.loadRootURL(newURL);
+                        }
                         else {
                             DebugLog.error("app.client.rewriteURL", "rewrite failed: "+url+" => "+value);
-                            page.loadUrl(url);
+                            //page.loadUrl(url);
+
+                            /* */
+                            navigation.loadRootURL(url);
                         }
                     }
                 });
@@ -825,6 +851,23 @@ public class SmartWebView extends VideoEnabledWebView {
 
             return true;
         }
+
+//        if (call.command.equalsIgnoreCase("popover"))
+//        {
+//            //  Log.i("API", uri.getPath()+" **POPOVER**");
+//
+//            String url = call.paramObject.optString("url");
+//
+//            if (url != null && !url.isEmpty())
+//            {
+//                Navigation navigation = AppDeckApplication.getAppDeck().navigation;
+//                navigation.loadRootURL(url);
+//
+//            }
+//
+//            return true;
+//        }
+
 
         if (page!= null)
             return page.apiCall(call);

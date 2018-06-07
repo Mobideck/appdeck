@@ -17,6 +17,14 @@
     <permission android:name="net.mobideck.appdeck.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="net.mobideck.appdeck.permission.C2D_MESSAGE" />
 
+    <!-- vibrate -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <!-- barcode -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
     <application
         android:name=".AppDeckApplication"
         android:allowBackup="true"
@@ -31,7 +39,7 @@
 
         <!-- Test Cache -->
         <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
-
+0
         <!-- AppDeck Dev App -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
 
@@ -45,7 +53,7 @@
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
 
         <!--  Play3-Live Android -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
+        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/761ha792d5a82b6332ba378114920d2fafe8"></meta-data>-->
 
         <!--  Monsieur-Mademoiselle -->
         <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.dev.appdeck.mobi/get/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
@@ -142,6 +150,10 @@
 
         <!-- Configuration -->
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
         <meta-data android:name="com.crashlytics.ApiKey" android:value="e62d5eb16cef87dc2d56665e3205360edcbd44bb"/>
 
         <!-- Push Notification -->

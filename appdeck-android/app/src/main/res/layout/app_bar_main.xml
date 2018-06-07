@@ -16,8 +16,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:elevation="4dp"
         android:fitsSystemWindows="false"
-        android:id="@+id/appbar"
-        >
+        android:id="@+id/appbar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -27,7 +26,8 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:expandedTitleTextAppearance="@android:color/transparent">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/bannerContainer"
@@ -36,7 +36,8 @@
                 android:src="@drawable/appdeck"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="false"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"
+                android:visibility="gone"/>
 
             <!--<ImageView
                 android:id="@+id/backgroundImageView"
@@ -52,20 +53,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                />
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
+        <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tabs"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabMode="fixed"-->
+            <!--app:tabGravity="fill"/>-->
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            android:layout_height="match_parent"
+            app:tabMode="scrollable"
+            android:visibility="gone"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
     <!--<android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
@@ -97,7 +105,6 @@
         android:id="@+id/actionmenu"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-
         app:layout_anchor="@+id/bottom_hook"
         android:layout_gravity="top"
         app:layout_behavior="net.mobideck.appdeck.UI.BottomNavigationBehavior"
@@ -111,9 +118,7 @@
         android:layout_centerHorizontal="true"
         app:layout_anchor="@+id/bottom_hook"
         android:layout_gravity="top|center_horizontal"
-        >
-
-    </FrameLayout>
+        android:visibility="gone"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -122,12 +127,10 @@
         android:layout_alignParentBottom="true"
         android:elevation="4dp"
         app:layout_behavior="net.mobideck.appdeck.UI.BottomNavigationBehavior"
-
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         android:layout_gravity="bottom"
-
-        />
+        android:visibility="gone"/>
 
     <View
         android:id="@+id/bottom_hook"
@@ -135,5 +138,7 @@
         android:layout_height="0dp"
         android:layout_gravity="bottom"
         />
+
+    <include layout="@layout/content_main" />
 
 </android.support.design.widget.CoordinatorLayout>

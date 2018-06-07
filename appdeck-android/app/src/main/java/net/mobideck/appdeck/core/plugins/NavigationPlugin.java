@@ -5,8 +5,7 @@ import android.util.Log;
 import com.mobideck.appdeck.plugin.ApiCall;
 
 import net.mobideck.appdeck.AppDeckApplication;
-import net.mobideck.appdeck.core.Page;
-import net.mobideck.appdeck.core.PageManager;
+import net.mobideck.appdeck.core.Navigation;
 
 import java.util.ArrayList;
 
@@ -107,10 +106,20 @@ public class NavigationPlugin extends PluginAdaptater {
     }
 
     public boolean popover(final ApiCall call) {
-        Log.d(TAG, "popover");
+        Log.i("popover* ", "popover");
         //net.mobideck.appdeck.core.ApiCall apiCall = (net.mobideck.appdeck.core.ApiCall)call;
         //String absoluteURL = apiCall.smartWebView.resolve(call.inputObject.optString("param"));
         //AppDeckApplication.getAppDeck().navigation.popPage();
+
+        String url = call.paramObject.optString("url");
+
+        if (url != null && !url.isEmpty())
+        {
+            Navigation navigation = AppDeckApplication.getAppDeck().navigation;
+            navigation.loadRootURL(url);
+
+        }
+
         return true;
     }
 

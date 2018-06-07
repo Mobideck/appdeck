@@ -5,18 +5,25 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -43,21 +50,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobideck.appdeck.plugin.PluginManager;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import net.mobideck.appdeck.WebView.SmartWebView;
+
 import net.mobideck.appdeck.config.AppConfig;
 import net.mobideck.appdeck.config.MenuEntry;
 import net.mobideck.appdeck.config.ViewConfig;
@@ -65,106 +86,91 @@ import net.mobideck.appdeck.core.ApiCall;
 import net.mobideck.appdeck.core.AppDeckBottomMenuItem;
 import net.mobideck.appdeck.core.AppDeckView;
 import net.mobideck.appdeck.core.Banner;
-import net.mobideck.appdeck.core.DebugLog;
 import net.mobideck.appdeck.core.MenuManager;
 import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.Page;
 import net.mobideck.appdeck.core.AppDeckMenuItem;
 import net.mobideck.appdeck.core.PageAnimation;
-import net.mobideck.appdeck.core.ViewState;
 import net.mobideck.appdeck.util.Utils;
-import net.mobideck.appdeck.util.ViewTools;
 
 /*import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;*/
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 import hotchemi.android.rate.AppRate;
 import hotchemi.android.rate.OnClickButtonListener;
 
 import static net.mobideck.appdeck.AppDeckApplication.setAppDeck;
 
-public class AppDeckActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class AppDeckActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static String TAG = "AppDeckActivity";
 
-    Toolbar mToolbar;
-
+    Toolbar mToolbar, mActionMenu;
     FloatingActionButton mFloatingActionButton;
-
     DrawerLayout mDrawerLayout;
-
     CollapsingToolbarLayout mCollapsingToolbarLayout;
-
     CoordinatorLayout mCoordinatorLayout;
-
     AppBarLayout mAppBarLayout;
 
-    Toolbar mActionMenu;
-
-    FrameLayout mViewContainer;
-
+    FrameLayout mViewContainer, mDrawerLeftMenu, mDrawerRightMenu, mLoading;
     TabLayout mTabLayout;
-
     BottomNavigationView mBottomNavigationView;
-
     public View nonVideoLayout;
-
     public ViewGroup videoLayout;
 
-    FrameLayout mDrawerLeftMenu;
-
-    FrameLayout mDrawerRightMenu;
-
-    View mAdsBannerContainer;
-
-    View mBottomHook;
+    View mAdsBannerContainer, mBottomHook;
 
     ViewPager mBannerContainer;
     private Banner mBannerManager;
 
-    FrameLayout mLoading;
-
     private ActionBar mActionBar;
-
-    private SmartWebView mLeftMenuWebView;
-    private SmartWebView mRightMenuWebView;
+    private SmartWebView mLeftMenuWebView, mRightMenuWebView;
 
     private ActionBarDrawerToggle mActionBarDrawerToggle;
-
     private ImageView mTopBarLogoImageView;
-
-    private Drawable mUpArrow;
-    private Drawable mCloseArrow;
+    private Drawable mUpArrow, mCloseArrow;
 
     public boolean willShowActivity = false;
     public SmartWebView smartWebViewRegiteredForActivityResult = null;
-
     public MenuManager menuManager;
-
     private Page mCurrentPage;
-
-    private AppDeckMenuItem[] mTopMenuItems;
-    private AppDeckMenuItem[] mActionMenuItems;
+    private AppDeckMenuItem[] mTopMenuItems, mActionMenuItems;
     private AppDeckBottomMenuItem[] mBottomMenuItems;
-
     private ViewConfig mCurrentViewConfig;
-
 
     // services
     Crashlytics crashlytics;
     CallbackManager callbackManager;
     TwitterAuthClient twitterAuthClient;
 
+    public AppDeck appDeck;
+
+    /* user toolbar color */
+    public int color1;
+    public int color2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+
+        /* facebook */
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
+        /* * */
 
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mFloatingActionButton = (FloatingActionButton)findViewById(R.id.fab);
@@ -184,6 +190,7 @@ public class AppDeckActivity extends AppCompatActivity
         mBottomHook = (View)findViewById(R.id.bottom_hook);
         mBannerContainer = (ViewPager)findViewById(R.id.bannerContainer);
         mLoading = (FrameLayout)findViewById(R.id.loading);
+
         AppDeckApplication.setActivity(this);
         setAppDeck(new AppDeck(this));
 
@@ -233,11 +240,13 @@ public class AppDeckActivity extends AppCompatActivity
             }
         });
 
+        /****** ????????????????? ********/
         // make sure toolbar is above other view
         mCoordinatorLayout.bringChildToFront(mAppBarLayout);
 
+        /******** ??????????????????? *********/
         // Always hide title
-        mCollapsingToolbarLayout.setTitle(" ");
+        //mCollapsingToolbarLayout.setTitle(" ");
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,8 +299,8 @@ public class AppDeckActivity extends AppCompatActivity
             }
         });
 
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
 
         mUpArrow = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp);
         //mUpArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
@@ -356,7 +365,7 @@ public class AppDeckActivity extends AppCompatActivity
             }
         });
 
-        // Bottom Menu
+        // Bottom Menu /**************/
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -386,19 +395,24 @@ public class AppDeckActivity extends AppCompatActivity
             }
         });
 
+        /***/
+        appDeck = AppDeckApplication.getAppDeck();
         loadAppDeckConfig(getIntent());
 
-        FrameLayout debugLog = (FrameLayout)findViewById(R.id.debugLog);
-        Button debugLogButton = (Button) findViewById(R.id.closeDebug);
-        if (AppDeckApplication.getAppDeck().deviceInfo.isDebugBuild) {
-            new DebugLog(debugLog, debugLogButton);
-        } else {
+        /***** log button *****/
+//        FrameLayout debugLog = (FrameLayout)findViewById(R.id.debugLog);
+//        Button debugLogButton = (Button) findViewById(R.id.closeDebug);
+//        if (AppDeckApplication.getAppDeck().deviceInfo.isDebugBuild) {
+//            new DebugLog(debugLog, debugLogButton);
+//        } else {
+//
+//        }
 
-        }
     }
 
+
     protected void loadAppDeckConfig(Intent intent) {
-        AppDeck appDeck = AppDeckApplication.getAppDeck();
+
         AppConfig appConfig = appDeck.appConfig;
 
         unloadAppDeckConfig();
@@ -408,59 +422,30 @@ public class AppDeckActivity extends AppCompatActivity
         //if (appDeck.appConfig.topbar_color != null)
         //    mActionBar.setBackgroundDrawable(appDeck.appConfig.topbar_color.getDrawable());
 
-        //if (appDeck.appConfig.title != null)
-        //    mActionBar.setTitle(appDeck.appConfig.title);
+        /* actionbar title */
+        if (appDeck.appConfig.title != null) {
+            mActionBar.setTitle(appDeck.appConfig.title);
+            Log.i("title** ", "1 "+appDeck.appConfig.title);
 
-        menuManager.noMenu = true;
-        if (appDeck.appConfig.leftMenu != null && appDeck.appConfig.leftMenu.url != null) {
-            menuManager.noMenu = false;
-            mLeftMenuWebView = SmartWebView.createMenuSmartWebView(this, appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url));
-            if (appDeck.appConfig.leftMenuBackgroundColor != null)
-                mDrawerLeftMenu.setBackground(Utils.getColorDrawable(appDeck.appConfig.leftMenuBackgroundColor));
-            mDrawerLeftMenu.post(new Runnable() {
-                @Override
-                public void run() {
-                    Resources resources = getResources();
-                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppDeckApplication.getAppDeck().appConfig.leftMenu.width, resources.getDisplayMetrics());
-                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
-                    params.width = (int)(width);
-                    mDrawerLeftMenu.setLayoutParams(params);
-                    mDrawerLeftMenu.addView(mLeftMenuWebView);
-                }
-            });
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.left_drawer));
-        } else {
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
-        }
-        if (appDeck.appConfig.rightMenu != null && appDeck.appConfig.rightMenu.url != null) {
-            menuManager.noMenu = false;
-            mRightMenuWebView = SmartWebView.createMenuSmartWebView(this, appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
-            if (appDeck.appConfig.rightMenuBackgroundColor != null)
-                mDrawerRightMenu.setBackground(Utils.getColorDrawable(appDeck.appConfig.rightMenuBackgroundColor));
-            mDrawerRightMenu.post(new Runnable() {
-                @Override
-                public void run() {
-                    Resources resources = getResources();
-                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppDeckApplication.getAppDeck().appConfig.rightMenu.width, resources.getDisplayMetrics());
-                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
-                    params.width = (int)(width);
-                    mDrawerRightMenu.setLayoutParams(params);
-                    mDrawerRightMenu.addView(mRightMenuWebView);
-                }
-            });
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.right_drawer));
-        } else {
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+            mCollapsingToolbarLayout.setTitle(appDeck.appConfig.title);
         }
 
-        if (menuManager.noMenu)
+    /* * */
+    getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
+
+/*?????????????????*/
+        if (menuManager.noMenu) {
             mToolbar.setNavigationIcon(null);
-
-        menuManager.setLeftMenuWebView(mLeftMenuWebView);
-        menuManager.setRightMenuWebView(mRightMenuWebView);
-
-        if (menuManager.noMenu)
             menuManager.setMenuIcon(MenuManager.ICON_NONE);
+        }
+
+/*???????????????*/
+//        menuManager.setLeftMenuWebView(mLeftMenuWebView);
+//        menuManager.setRightMenuWebView(mRightMenuWebView);
+
+/*????????????*/
+//        if (menuManager.noMenu)
+//            menuManager.setMenuIcon(MenuManager.ICON_NONE);
 
         // tabs
         mTabLayout.setTabTextColors(
@@ -468,24 +453,28 @@ public class AppDeckActivity extends AppCompatActivity
                 Utils.parseColor(appDeck.appConfig.appTopbarTextColor) // selected
         );
 
+        /* --- */
         // Bottom menu
-        Menu bottomMenu = mBottomNavigationView.getMenu();
-        while (bottomMenu.size() > 0)
-            bottomMenu.removeItem(0);
-        if (appConfig.bottomMenu != null && appConfig.bottomMenu.size() > 0) {
-            mBottomNavigationView.setVisibility(View.VISIBLE);
-            mBottomMenuItems = new AppDeckBottomMenuItem[appConfig.bottomMenu.size()];
-            for (int i = 0; i < appConfig.bottomMenu.size(); i++) {
-                MenuEntry menuEntry = appConfig.bottomMenu.get(i);
-                MenuItem menuItem = bottomMenu.add(menuEntry.title != null ? menuEntry.title : "#"+(i + 1));
-                mBottomMenuItems[i] = new AppDeckBottomMenuItem(menuItem, this);
-                mBottomMenuItems[i].configure(menuEntry.title, menuEntry.icon, menuEntry.content);
-            }
-        } else {
-            mBottomNavigationView.setVisibility(View.INVISIBLE);
-        }
+//        Menu bottomMenu = mBottomNavigationView.getMenu();
+//        while (bottomMenu.size() > 0)
+//            bottomMenu.removeItem(0);
+//        if (appConfig.bottomMenu != null && appConfig.bottomMenu.size() > 0) {
+//            mBottomNavigationView.setVisibility(View.VISIBLE);
+//            mBottomMenuItems = new AppDeckBottomMenuItem[appConfig.bottomMenu.size()];
+//            for (int i = 0; i < appConfig.bottomMenu.size(); i++) {
+//                MenuEntry menuEntry = appConfig.bottomMenu.get(i);
+//                MenuItem menuItem = bottomMenu.add(menuEntry.title != null ? menuEntry.title : "#"+(i + 1));
+//                mBottomMenuItems[i] = new AppDeckBottomMenuItem(menuItem, this);
+//                mBottomMenuItems[i].configure(menuEntry.title, menuEntry.icon, menuEntry.content);
+//            }
+//        } else {
+//            mBottomNavigationView.setVisibility(View.GONE);
+//        }
 
+        /****/
         appDeck.start(this);
+
+        mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         appDeck.push.shouldHandleIntent(intent);
     }
@@ -658,39 +647,424 @@ public class AppDeckActivity extends AppCompatActivity
             mTwitterAuthClient.onActivityResult(requestCode, resultCode, data);
         if (pluginManager != null)
             pluginManager.onActivityResult(this, requestCode, resultCode, data);*/
+
+
+        /**barcode**/
+        IntentResult Result = IntentIntegrator.parseActivityResult(requestCode , resultCode ,data);
+        if(Result != null){
+            if(Result.getContents() == null){
+                Log.d("AppDeck" , "cancelled scan");
+                Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Log.d("AppDeck" , "Scanned");
+                Toast.makeText(this,"Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            super.onActivityResult(requestCode , resultCode , data);
+        }
+        /**barcode**/
+
+        /* facebook */
+        if (callbackManager != null)
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
+
+    private void getMenu(String urlLeft, String urlRight){
+
+        menuManager.noMenu = true;
+        if (appDeck.appConfig.leftMenu != null && appDeck.appConfig.leftMenu.url != null) {
+            menuManager.noMenu = false;
+            mLeftMenuWebView = SmartWebView.createMenuSmartWebView(this, urlLeft);
+            if (appDeck.appConfig.leftMenuBackgroundColor != null)
+                mDrawerLeftMenu.setBackground(Utils.getColorDrawable(appDeck.appConfig.leftMenuBackgroundColor));
+            mDrawerLeftMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppDeckApplication.getAppDeck().appConfig.leftMenu.width, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
+                    params.width = (int)(width);
+                    mDrawerLeftMenu.setLayoutParams(params);
+                    mDrawerLeftMenu.addView(mLeftMenuWebView);
+                }
+            });
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.left_drawer));
+
+        }else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
+        }
+        /****************/
+        if (appDeck.appConfig.rightMenu != null && appDeck.appConfig.rightMenu.url != null) {
+            menuManager.noMenu = false;
+            mRightMenuWebView = SmartWebView.createMenuSmartWebView(this, urlRight);
+            if (appDeck.appConfig.rightMenuBackgroundColor != null)
+                mDrawerRightMenu.setBackground(Utils.getColorDrawable(appDeck.appConfig.rightMenuBackgroundColor));
+            mDrawerRightMenu.post(new Runnable() {
+                @Override
+                public void run() {
+                    Resources resources = getResources();
+                    float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppDeckApplication.getAppDeck().appConfig.rightMenu.width, resources.getDisplayMetrics());
+                    DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
+                    params.width = (int)(width);
+                    mDrawerRightMenu.setLayoutParams(params);
+                    mDrawerRightMenu.addView(mRightMenuWebView);
+                }
+            });
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.right_drawer)); //LOCK_MODE_UNLOCKED
+        } else {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
+        }
+
+    }
+
 
     @Override
     public void onBackPressed() {
 
+        String bootstrapURL = AppDeckApplication.getAppDeck().appConfig.bootstrap.getAbsoluteURL();
+        Log.i("rtr** ", bootstrapURL);
+
+        if(bootstrapURL.equals("http://testappv4.appdeck.mobi/")){
+
+            getMenu(appDeck.appConfig.resolveURL(appDeck.appConfig.leftMenu.url), appDeck.appConfig.resolveURL(appDeck.appConfig.rightMenu.url));
+            mToolbar.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
             return;
         }
 
         Navigation navigation = AppDeckApplication.getAppDeck().navigation;
-
         // current page can go back ?
         if (navigation.shouldOverrideBackButton()) {
+
             return;
         }
+
 
         // current page is home ?
-        AppDeckView currentAppDeckView = navigation.getCurrentAppDeckView();
-        String bootstrapURL = AppDeckApplication.getAppDeck().appConfig.bootstrap.getAbsoluteURL();
-        if (!currentAppDeckView.getURL().equalsIgnoreCase(bootstrapURL))
-        {
-            navigation.loadRootURL(bootstrapURL);
-            return;
-        }
+//        AppDeckView currentAppDeckView = navigation.getCurrentAppDeckView();
+//        String bootstrapURL = AppDeckApplication.getAppDeck().appConfig.bootstrap.getAbsoluteURL();
+//        if (!currentAppDeckView.getURL().equalsIgnoreCase(bootstrapURL))
+//        {
+//            navigation.loadRootURL(bootstrapURL);
+//
+//            Log.i("rtr** ", bootstrapURL);
+//            return;
+//        }
 
-        super.onBackPressed();
+       super.onBackPressed();
     }
+
+
 
     public boolean apiCall(final ApiCall call) {
+
+        /***/
+        if (call.command.equalsIgnoreCase("vibrate")) {
+
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(900);
+
+            Log.i("ok** ", "vib");
+
+
+            return true;
+        }
+
+
+        if (call.command.equalsIgnoreCase("barcode")) {
+            Log.i("API", "**BARCODE**");
+
+            Activity activity = this;
+            IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+            intentIntegrator.setDesiredBarcodeFormats(intentIntegrator.ALL_CODE_TYPES);
+            intentIntegrator.setBeepEnabled(false);
+            intentIntegrator.setCameraId(0);
+            intentIntegrator.setPrompt("SCAN");
+            intentIntegrator.setBarcodeImageEnabled(false);
+            intentIntegrator.setOrientationLocked(true);
+            intentIntegrator.initiateScan();
+
+//            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+//            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+//            startActivityForResult(intent, 0);	//Barcode Scanner to scan for us
+
+
+            return true;
+
+        }
+
+
+        if (call.command.equalsIgnoreCase("loadapp")) {
+            Log.i("API", "**LOAD APP**");
+
+            String jsonUrl = call.paramObject.optString("url");
+
+            Log.i("url** ", jsonUrl);
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(jsonUrl, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onStart() { // called before request is started
+                    //Some debugging code here
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // called when response HTTP status is "200 OK"
+                    //here is the interesting part
+
+                    Log.i("url** ", ""+response);
+
+                    try {
+                        JSONObject bootstrap = response.getJSONObject("bootstrap");
+
+                        String url = bootstrap.getString("url");
+
+                        /* home */
+                        Navigation navigation = AppDeckApplication.getAppDeck().navigation;
+                        navigation.loadRootURL(url);
+
+                        /* menu */
+                        JSONObject leftmenu = response.getJSONObject("leftmenu");
+                        String urlLeft = leftmenu.getString("url");
+                        Log.i("url** ", urlLeft);
+
+                        JSONObject rightmenu = response.getJSONObject("rightmenu");
+                        String urlRight = rightmenu.getString("url");
+                        Log.i("url** ", urlRight);
+
+                        getMenu(urlLeft, urlRight);
+
+                        /* color tolbar user */
+                        JSONArray colors = response.getJSONArray("app_topbar_color");
+                          color1=  Color.parseColor(colors.getString(0));
+                          color2=  Color.parseColor(colors.getString(1));
+                          mActionBar.setBackgroundDrawable(getDrawable());
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String response, Throwable e) {
+
+                    Toast.makeText(AppDeckActivity.this, "error", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onRetry(int retryNo) {  //error connexion
+
+                    if (retryNo == 1) {
+                        final android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(AppDeckActivity.this);
+                        alert.setMessage("error cnx internet");
+                        alert.setNegativeButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        alert.show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            });
+
+
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("reload")) {
+            AppDeckApplication.getActivity().menuManager.reload();
+
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("pageroot")) {
+            Log.i("API", "**PAGE ROOT**");
+            String absoluteURL = call.smartWebView.resolve(call.inputObject.optString("param"));
+
+            Navigation navigation = AppDeckApplication.getAppDeck().navigation;
+            navigation.loadRootURL(absoluteURL);
+
+            return true;
+        }
+
+        /*** page navigation ***/
+        if (call.command.equalsIgnoreCase("pagepush")) {
+            Log.i("API", "**PAGE PUSH**");
+            String absoluteURL = call.smartWebView.resolve(call.inputObject.optString("param"));
+
+            Navigation navigation = AppDeckApplication.getAppDeck().navigation;
+            navigation.loadRootURL(absoluteURL);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("facebooklogin")) {
+            Log.i("API** ", "** FACEBOOK LOGIN **");
+
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            // App code
+                            Log.i("API** ", "facebook login ok");
+
+                            JSONObject result = new JSONObject();
+                            try {
+                                result.put("appID", loginResult.getAccessToken().getApplicationId());
+                                result.put("token", loginResult.getAccessToken().getToken());
+                                result.put("userID", loginResult.getAccessToken().getUserId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            call.sendCallbackWithResult("success", result);
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            // App code
+                            Log.i("API** ", "facebook login cancel");
+                            call.sendCallBackWithError("cancel");
+                        }
+
+                        @Override
+                        public void onError(FacebookException exception) {
+                            // App code
+                            Log.i("API** ", "facebook login error");
+                            call.sendCallBackWithError(exception.getMessage());
+                        }
+                    });
+
+            call.setResult(Boolean.valueOf(true));
+
+            willShowActivity = true;
+
+            List<String> perm = new ArrayList<String>();
+            //perm.add("user_friends");
+            LoginManager.getInstance().logInWithReadPermissions(AppDeckActivity.this, perm);
+
+            return true;
+
+        }
+
+        if (call.command.equalsIgnoreCase("preferencesget")) {
+            Log.i("API", "**PREFERENCES GET**");
+
+            String name = call.paramObject.optString("name");
+            String defaultValue = call.paramObject.optString("value", "");
+
+            SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
+
+            String key = "appdeck_preferences_json1_" + name;
+            String finalValueJson = prefs.getString(key, null);
+
+            if (finalValueJson == null)
+                call.setResult(defaultValue);
+            else
+                call.setResult(finalValueJson);
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("preferencesset")) {
+            Log.i("API", "**PREFERENCES SET**");
+
+            String name = call.paramObject.optString("name");
+            String finalValue = call.paramObject.optString("value", "");
+
+            SharedPreferences prefs = getSharedPreferences(AppDeckApplication.class.getSimpleName(), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            String key = "appdeck_preferences_json1_" + name;
+            editor.putString(key, finalValue);
+            editor.apply();
+
+            call.setResult(finalValue);
+
+            return true;
+        }
+
+        if (call.command.equalsIgnoreCase("twitterlogin")) {
+            Log.i("API", "** TWITTER LOGIN **");
+            TwitterAuthClient mTwitterAuthClient = new TwitterAuthClient();
+
+
+            if (mTwitterAuthClient == null) {
+                Toast.makeText(getApplicationContext(), "Twitter is not configured for this app", Toast.LENGTH_LONG).show();
+                return true;
+            }
+
+            //call.postponeResult();
+            call.setResultJSON("true");
+
+            willShowActivity = true;
+
+            // final AppDeckApiCall mycall = call;
+            mTwitterAuthClient.authorize(this, new com.twitter.sdk.android.core.Callback<TwitterSession>() {
+
+                @Override
+                public void success(final Result<TwitterSession> twitterSessionResult) {
+                    // Success
+                    Log.d(TAG, "Twitter login ok");
+
+                    JSONObject result = new JSONObject();
+                    try {
+                        result.put("userName", twitterSessionResult.data.getUserName());
+                        result.put("authToken", twitterSessionResult.data.getAuthToken().token);
+                        result.put("authTokenSecret", twitterSessionResult.data.getAuthToken().secret);
+                        result.put("userID", twitterSessionResult.data.getUserId() + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    call.sendCallbackWithResult("success", result);
+                }
+
+                @Override
+                public void failure(TwitterException e) {
+                    Log.d(TAG, "twitter login failed");
+                    call.sendCallBackWithError(e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+
+            return true;
+
+        }
+
+        /***/
+
         return AppDeckApplication.getAppDeck().apiCall(call);
     }
+
+
+   /* color tolbar user */
+    public Drawable getDrawable()
+    {
+        GradientDrawable gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[] {color1, color2});
+        gd.setCornerRadius(0f);
+        return gd;
+    }
+
 
     private AppDeckView mCurrentAppDeckView;
 
@@ -734,43 +1108,44 @@ public class AppDeckActivity extends AppCompatActivity
          */
 
         // title
-        mToolbar.setTitle(viewConfig.title);
+      //  mToolbar.setTitle(viewConfig.title);
         //mCollapsingToolbarLayout.setTitle(viewConfig.title);
 
         // logo
-        String logo = appConfig.logo;
-        if (viewConfig.logo != null && !viewConfig.logo.isEmpty())
-            logo = viewConfig.logo;
+//        String logo = appConfig.logo;
+//        if (viewConfig.logo != null && !viewConfig.logo.isEmpty())
+//            logo = viewConfig.logo;
+//
+//        // disable logo and title if there are some banners
+//        if (viewConfig.banners != null && viewConfig.banners.size() > 0)
+//        {
+//            logo = null;
+//
+//            /*mToolbar.setTitle("");
+//            mActionBar.setTitle("");*/
+//        }
+//
+//        if (logo != null && !logo.isEmpty()) {
+//            AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(logo, new Response.Listener<Bitmap>() {
+//                @Override
+//                public void onResponse(Bitmap response) {
+//                BitmapDrawable draw = new BitmapDrawable(getResources(), response);
+//                mActionBar.setTitle(null);
+//                mActionBar.setIcon(draw);
+//                mActionBar.setDisplayShowHomeEnabled(true); // show logo
+//                mActionBar.setDisplayShowTitleEnabled(false); // hide String title
+//                }
+//            }, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, AppDeckApplication.getAppDeck().deviceInfo.actionBarIconSize * 2, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
+//                public void onErrorResponse(VolleyError error) {
+//                Log.e(TAG, "Error while fetching Logo : "+error.getLocalizedMessage());
+//                }
+//            }));
+//        } else {
+//            mActionBar.setIcon(null);
+//            mActionBar.setDisplayShowHomeEnabled(false); // hide logo
+//            //mActionBar.setDisplayShowTitleEnabled(true); // show String title
+//        }
 
-        // disable logo and title if there are some banners
-        if (viewConfig.banners != null && viewConfig.banners.size() > 0)
-        {
-            logo = null;
-
-            /*mToolbar.setTitle("");
-            mActionBar.setTitle("");*/
-        }
-
-        if (logo != null && !logo.isEmpty()) {
-            AppDeckApplication.getAppDeck().addToRequestQueue(new ImageRequest(logo, new Response.Listener<Bitmap>() {
-                @Override
-                public void onResponse(Bitmap response) {
-                BitmapDrawable draw = new BitmapDrawable(getResources(), response);
-                mActionBar.setTitle(null);
-                mActionBar.setIcon(draw);
-                mActionBar.setDisplayShowHomeEnabled(true); // show logo
-                mActionBar.setDisplayShowTitleEnabled(false); // hide String title
-                }
-            }, AppDeckApplication.getAppDeck().deviceInfo.screenWidth, AppDeckApplication.getAppDeck().deviceInfo.actionBarIconSize * 2, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
-                public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Error while fetching Logo : "+error.getLocalizedMessage());
-                }
-            }));
-        } else {
-            mActionBar.setIcon(null);
-            mActionBar.setDisplayShowHomeEnabled(false); // hide logo
-            //mActionBar.setDisplayShowTitleEnabled(true); // show String title
-        }
 
         // topbar color
         if (!Utils.equals(mCurrentViewConfig.topbarColor, viewConfig.topbarColor)) {
@@ -1098,10 +1473,8 @@ public class AppDeckActivity extends AppCompatActivity
     }
 
     public void showErrorMessage(String errorMessage) {
-        Snackbar
-                .make(AppDeckApplication.getActivity().findViewById(android.R.id.content)
-                        , errorMessage, Snackbar.LENGTH_LONG)
-                .show(); // Don’t forget to show!
+        Snackbar.make(AppDeckApplication.getActivity().findViewById(android.R.id.content)
+                , errorMessage, Snackbar.LENGTH_LONG).show(); // Don’t forget to show!
     }
 
 

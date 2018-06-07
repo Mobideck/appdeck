@@ -14,18 +14,19 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "net.mobideck.appdeck"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "2.0.0"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        /*****/
+        multiDexEnabled true
     }
 
     buildTypes {
         debug {
             ext.enableCrashlytics = false
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources false
         }
@@ -38,12 +39,18 @@ android {
     useLibrary 'org.apache.http.legacy'
 }
 
+//buildscript {
+//    repositories {
+//        jcenter();
+//    }
+//}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'*/
+    testCompile 'junit:junit:4.12'
 
     // https://developer.android.com/topic/libraries/support-library/revisions.html
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -67,7 +74,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
 
     // https://fabric.io/kits/android/crashlytics/install
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
         transitive = true;
     }
 
@@ -75,7 +82,9 @@ dependencies {
     compile 'com.github.hotchemi:android-rate:1.0.1'
 
     // https://developers.facebook.com/docs/android
-    compile 'com.facebook.android:facebook-android-sdk:4.22.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile 'com.facebook.android:facebook-core:4.28.0'
+    compile 'com.facebook.android:facebook-login:4.28.0'
 
     // https://fabric.io/kits/android/twitterkit/install
     // https://docs.fabric.io/android/changelog.html#twitter-core
@@ -88,14 +97,24 @@ dependencies {
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
 
     compile 'com.github.mobideck:appdeck-android-plugin:1.0.6'
+
+    /**barcode**/
+    compile 'com.google.zxing:core:3.2.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
+    compile 'com.android.support:multidex:1.0.0'
+
+    /****/
 }
 
-preBuild.doFirst {
+preBuild.doFirst { /*** embedresources_android_studio.php ***/
     // Download embed assets
     println "php extra/embedresources_android_studio.php build".execute(null, new File(".")).text
 }
 
-clean.doFirst {
+clean.doFirst { /*** embedresources_android_studio.php ***/
     println "php extra/embedresources_android_studio.php clean".execute(null, new File(".")).text
 }
 

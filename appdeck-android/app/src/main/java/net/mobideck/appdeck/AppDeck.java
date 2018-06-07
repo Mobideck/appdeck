@@ -6,6 +6,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.Build;
+import android.os.Vibrator;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.Display;
@@ -69,15 +71,13 @@ public class AppDeck {
 
     public static int PERMISSION_SHARE = 1200;
 
-    public String error_html;
+    public String error_html, packageName;
 
     public Gson gson;
 
     public AppConfig appConfig;
 
     public Navigation navigation;
-
-    public String packageName;
 
     public AssetManager assetManager;
 
@@ -107,6 +107,11 @@ public class AppDeck {
     private ViewConfig mDefaultViewConfig;
 
     public boolean justLaunch = true;
+
+    public static AppDeck getInstance()
+    {
+        return AppDeckApplication.getAppDeck();
+    }
 
     // device info
 
@@ -192,7 +197,6 @@ public class AppDeck {
                 "<meta http-equiv=\"expires\" content=\"0\" />\n" +
                 "<meta http-equiv=\"expires\" content=\"Tue, 01 Jan 1980 1:00:00 GMT\" />\n" +
                 "<meta http-equiv=\"pragma\" content=\"no-cache\" /><style>html{-webkit-font-smoothing:antialiased}body{font-family:HelveticaNeue-Light,\"Helvetica Neue Light\",\"Helvetica Neue\",Helvetica,Arial,\"Lucida Grande\",sans-serif;font-weight:300;color:#BAC1C8}body{margin:0;padding:0;overflow:hidden}.mark{font-size:120px;text-align:center}.title{font-size:40px;text-align:center}</style><body><div class=mark>!</div><div class=title>&lt;"+context.getString(R.string.network_error)+"/&gt;</div></body></html>";
-
 
 
         //Volley volley = Volley.s
@@ -316,6 +320,8 @@ public class AppDeck {
             //historyUrls.add(call.smartWebView.getUrl());
         }
 
+
+
         if (mPluginManager.handleCall(call))
             return true;
 
@@ -327,6 +333,7 @@ public class AppDeck {
         AppDeckApplication.getActivity().evaluateJavascript(js);
         navigation.evaluateJavascript(js);
     }
+
 
     public RemoteAppCache fetchRemoteAppCache() {
         return new RemoteAppCache(this);

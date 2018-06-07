@@ -1,11 +1,18 @@
 package net.mobideck.appdeck.core;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,10 +29,26 @@ import net.mobideck.appdeck.util.Utils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.Request;
@@ -77,9 +100,12 @@ public class PhotoBrowser extends AppDeckView {
 			JSONObject image = images.optJSONObject(i);
             String imageUrl = image.optString("url");
             String thumbnailUrl = image.optString("thumbnail");
-            if (imageUrl != null && imageUrl != "")
+
+            Log.i("photo** ", ""+imageUrl);
+            /* */
+            if (imageUrl != null && !imageUrl.equals(""))
                 imageUrl = apiCall.resolveURL(imageUrl);
-            if (thumbnailUrl != null && thumbnailUrl != "")
+            if (thumbnailUrl != null && !thumbnailUrl.equals(""))
                 thumbnailUrl = apiCall.resolveURL(thumbnailUrl);
 			mUrl[i] = imageUrl;
 			mThumbnail[i] = thumbnailUrl;
@@ -286,13 +312,16 @@ public class PhotoBrowser extends AppDeckView {
                 return;
             }
 
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    downloadImage();
+//                }
+//            }, "proxy").start();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    downloadImage();
-                }
-            }, "proxy").start();
+
+              new DownloadImage().execute(mImageUrl);
+
         }
 
         public View getView() {
@@ -324,9 +353,49 @@ public class PhotoBrowser extends AppDeckView {
             mainHandler.post(myRunnable);
         }
 
+
+
+        // DownloadImage AsyncTask
+        private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected Bitmap doInBackground(String... URL) {
+
+                String imageURL = URL[0];
+
+                Bitmap bitmap = null;
+                try {
+                    // Download Image from URL
+                    InputStream input = new java.net.URL(imageURL).openStream();
+                    // Decode Bitmap
+                    bitmap = BitmapFactory.decodeStream(input);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return bitmap;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap result) {
+                // Set the bitmap into ImageView
+                if(result!=null) mImageView.setImage(ImageSource.bitmap(result));
+            }
+        }
+
+
         private void loadImage() {
-            Uri uri = Uri.fromFile(mImageFile);
-            mImageView.setImage(ImageSource.uri(uri));
+//            Uri uri = Uri.fromFile(mImageFile);
+//            mImageView.setImage(ImageSource.uri(uri));
+
+            // Execute DownloadImage AsyncTask
+             new DownloadImage().execute(mImageUrl);
+
         }
 
         public void share() {
@@ -373,24 +442,28 @@ public class PhotoBrowser extends AppDeckView {
            PhotoBrowserImage image = mImages.get(position);
 
            View imageView = image.getView();
+
            collection.addView(imageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+
            return imageView;
-/*
-           ViewGroup root = (ViewGroup)AppDeckApplication.getActivity().getLayoutInflater().inflate(R.layout.photo_browser_image, null);
 
-           collection.addView(root, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-           final SubsamplingScaleImageView imageView = (SubsamplingScaleImageView)root.findViewById(R.id.imageView);
+//           ViewGroup root = (ViewGroup)AppDeckApplication.getActivity().getLayoutInflater().inflate(R.layout.photo_browser_image, null);
+//
+//           collection.addView(root, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//
+//           final SubsamplingScaleImageView imageView = (SubsamplingScaleImageView)root.findViewById(R.id.imageView);
+//
+//           imageView.setPanLimit(SubsamplingScaleImageView.PAN_LIMIT_CENTER);
+//           imageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
+//           final String imageUrl = mUrl[position];
+//           String imageThumbnail = mThumbnail[position];
+//           String imageCaption = mCaption[position];
+//           imageView.setImage(ImageSource.resource(R.drawable.appdeck));
+//
+//           return root;
 
-           imageView.setPanLimit(SubsamplingScaleImageView.PAN_LIMIT_CENTER);
-           imageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
-           final String imageUrl = mUrl[position];
-           String imageThumbnail = mThumbnail[position];
-           String imageCaption = mCaption[position];
-           imageView.setImage(ImageSource.resource(R.drawable.appdeck));
-
-           return root;*/
        }
 
        @Override
@@ -414,4 +487,8 @@ public class PhotoBrowser extends AppDeckView {
        }
 
    }
+
+
+
 }
+

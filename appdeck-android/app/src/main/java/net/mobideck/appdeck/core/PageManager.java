@@ -462,8 +462,10 @@ public class PageManager extends AppDeckView {
 
     // AppDeckView
 
-    public boolean apiCall(final ApiCall call) {
-        return AppDeckApplication.getActivity().apiCall(call);
+    public boolean apiCall(final ApiCall call) { /*** correction ***/
+
+       return AppDeckApplication.getActivity().apiCall(call);
+
     }
 
     @Override

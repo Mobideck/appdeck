@@ -1,14 +1,17 @@
 package net.mobideck.appdeck.core.plugins;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Vibrator;
 import android.provider.Telephony;
 import android.util.Log;
 
 import com.mobideck.appdeck.plugin.ApiCall;
 
 import net.mobideck.appdeck.AppDeckApplication;
+import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.PhotoBrowser;
 
 import org.json.JSONArray;
@@ -85,6 +88,7 @@ public class ActionPlugin extends PluginAdaptater {
             AppDeckApplication.getAppDeck().navigation.push(photoBrowser);
         }
 
+        Log.i("photo** ", ""+images);
 
         return true;
     }

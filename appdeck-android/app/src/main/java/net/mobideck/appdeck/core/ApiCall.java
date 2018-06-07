@@ -1,6 +1,5 @@
 package net.mobideck.appdeck.core;
 
-import android.view.View;
 import android.webkit.JsPromptResult;
 import android.webkit.ValueCallback;
 
@@ -33,6 +32,7 @@ public class ApiCall extends com.mobideck.appdeck.plugin.ApiCall {
     protected boolean postponeResult = false;
 
     protected boolean resultSent = false;
+
 
     public ApiCall(String command, String inputJSON, JsPromptResult result)
     {

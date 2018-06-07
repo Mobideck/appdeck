@@ -1,6 +1,8 @@
 
 package net.mobideck.appdeck.config;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
 
@@ -39,7 +41,7 @@ public class ViewConfig {
 
     @SerializedName("topbar_color")
     @Expose
-    public String topbarColor;
+    public static String topbarColor;
 
     /*@SerializedName("topbar_color_dark")
     @Expose
@@ -149,6 +151,7 @@ public class ViewConfig {
     }
     */
 
+
     public void configure(AppDeckView source) {
         if (urls == null) {
             mUrlRegexp = new Pattern[0];
@@ -194,9 +197,13 @@ public class ViewConfig {
         if (source != null) {
             if (logo != null && !logo.isEmpty())
                 logo = source.resolveURL(logo);
+
+            Log.i("logo** ", "1 "+logo);
         } else {
             if (logo != null && !logo.isEmpty())
                 logo = AppDeckApplication.getAppDeck().appConfig.resolveURL(logo);
+
+            Log.i("logo** ", "2 "+logo);
         }
 
         // also resolve URLs in all menu entries

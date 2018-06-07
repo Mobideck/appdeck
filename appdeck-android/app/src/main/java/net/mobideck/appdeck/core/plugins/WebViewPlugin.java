@@ -138,6 +138,70 @@ public class WebViewPlugin extends PluginAdaptater {
     public boolean selectdate(final ApiCall call) {
         Log.d(TAG, "selectdate");
 
+//        String title = call.paramObject.optString("title");
+//        String year = call.paramObject.optString("year");
+//        String month = call.paramObject.optString("month");
+//        String day = call.paramObject.optString("day");
+//
+//        //call.postponeResult();
+//
+//        DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, final int year, final int monthOfYear,
+//                                  final int dayOfMonth) {
+//
+//                Log.d("Date", "selected");
+//                JSONObject result = new JSONObject();
+//                try {
+//                    result.put("year", String.valueOf(year));
+//                    result.put("month", String.valueOf(monthOfYear + 1));
+//                    result.put("day", String.valueOf(dayOfMonth));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                call.sendCallbackWithResult("success", result);
+//            }
+//        };
+//
+//        int yearValue = call.paramObject.optInt("year");
+//        int monthValue = call.paramObject.optInt("month");
+//        int dayValue = call.paramObject.optInt("day");
+//        Calendar cal = GregorianCalendar.getInstance();
+//        cal.set(yearValue, monthValue - 1, dayValue);
+//        //if (yearValue == 0)
+//        yearValue = cal.get(Calendar.YEAR);
+//        //if (monthValue == 0)
+//        monthValue = cal.get(Calendar.MONTH);
+//        //if (dayValue == 0)
+//        dayValue = cal.get(Calendar.DAY_OF_MONTH);
+//        final DatePickerDialogCustom datepicker = new DatePickerDialogCustom(AppDeckApplication.getActivity(), d, yearValue, monthValue, dayValue);
+//        datepicker.setOnCancelListener(
+//                new DialogInterface.OnCancelListener() {
+//                    public void onCancel(DialogInterface dialog) {
+//                        //call.sendPostponeResult(false);
+//                        call.sendCallbackWithResult("error", "cancel");
+//                    }
+//                });
+//        datepicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                //call.sendPostponeResult(false);
+//                call.sendCallbackWithResult("error", "cancel");
+//            }
+//        });
+//
+//        if (year.length() > 0)
+//            datepicker.setYearEnabled(false);
+//        if (month.length() > 0)
+//            datepicker.setMonthEnabled(false);
+//        if (day.length() > 0)
+//            datepicker.setDayEnabled(false);
+//        datepicker.setTitle(title);
+//        datepicker.show();
+//
+
         String title = call.paramObject.optString("title");
         String year = call.paramObject.optString("year");
         String month = call.paramObject.optString("month");
@@ -175,7 +239,7 @@ public class WebViewPlugin extends PluginAdaptater {
         monthValue = cal.get(Calendar.MONTH);
         //if (dayValue == 0)
         dayValue = cal.get(Calendar.DAY_OF_MONTH);
-        final DatePickerDialogCustom datepicker = new DatePickerDialogCustom(AppDeckApplication.getActivity(), d, yearValue, monthValue, dayValue);
+        final DatePickerDialog datepicker = new DatePickerDialog(AppDeckApplication.getActivity(), d, yearValue, monthValue, dayValue);
         datepicker.setOnCancelListener(
                 new DialogInterface.OnCancelListener() {
                     public void onCancel(DialogInterface dialog) {
@@ -192,16 +256,10 @@ public class WebViewPlugin extends PluginAdaptater {
             }
         });
 
-        if (year.length() > 0)
-            datepicker.setYearEnabled(false);
-        if (month.length() > 0)
-            datepicker.setMonthEnabled(false);
-        if (day.length() > 0)
-            datepicker.setDayEnabled(false);
-        datepicker.setTitle(title);
         datepicker.show();
 
-        return true;
-
+       return true;
     }
+
+
 }
