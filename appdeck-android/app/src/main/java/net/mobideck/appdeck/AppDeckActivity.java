@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +31,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
@@ -62,13 +62,10 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mobideck.appdeck.plugin.PluginManager;
@@ -79,6 +76,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import net.mobideck.appdeck.WebView.SmartWebView;
 
+import net.mobideck.appdeck.autre_.SimpleScannerActivity;
 import net.mobideck.appdeck.config.AppConfig;
 import net.mobideck.appdeck.config.MenuEntry;
 import net.mobideck.appdeck.config.ViewConfig;
@@ -102,8 +100,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -159,6 +155,9 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
     /* user toolbar color */
     public int color1;
     public int color2;
+
+    private static final int ZXING_CAMERA_PERMISSION = 1;
+    private Class<?> mClss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -680,23 +679,6 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
             pluginManager.onActivityResult(this, requestCode, resultCode, data);*/
 
 
-        /**barcode**/
-        IntentResult Result = IntentIntegrator.parseActivityResult(requestCode , resultCode ,data);
-        if(Result != null){
-            if(Result.getContents() == null){
-                Log.d("AppDeck" , "cancelled scan");
-                Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Log.d("AppDeck" , "Scanned");
-                Toast.makeText(this,"Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
-            }
-        }
-        else {
-            super.onActivityResult(requestCode , resultCode , data);
-        }
-        /**barcode**/
-
         /* facebook */
         if (callbackManager != null)
             callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -818,23 +800,14 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
         if (call.command.equalsIgnoreCase("barcode")) {
             Log.i("API", "**BARCODE**");
 
-            Activity activity = this;
-            IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-            intentIntegrator.setDesiredBarcodeFormats(intentIntegrator.ALL_CODE_TYPES);
-            intentIntegrator.setBeepEnabled(false);
-            intentIntegrator.setCameraId(0);
-            intentIntegrator.setPrompt("SCAN");
-            intentIntegrator.setBarcodeImageEnabled(false);
-            intentIntegrator.setOrientationLocked(true);
-            intentIntegrator.initiateScan();
-
-//            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-//            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-//            startActivityForResult(intent, 0);	//Barcode Scanner to scan for us
-
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, ZXING_CAMERA_PERMISSION);
+            } else {
+                Intent intent = new Intent(this, SimpleScannerActivity.class);
+                startActivity(intent);
+            }
 
             return true;
-
         }
 
 
@@ -886,19 +859,15 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                             }
                         }
 
-                        Log.i("menu** ",  urlLeft+" "+ urlRight);
-
                         if(!urlLeft.isEmpty() && !urlRight.isEmpty()){
                             getMenu(urlLeft, urlRight);
                         }else if(!urlLeft.isEmpty() && urlRight.isEmpty()){
-                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
                             getMenu(urlLeft, "");
+                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
                         }else if(urlLeft.isEmpty() && !urlRight.isEmpty()){
-                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
                             getMenu("", urlRight);
+                            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
                         }
-//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.left_drawer));
-//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, findViewById(R.id.right_drawer));
 
                         /* color tolbar user */
                         JSONArray colors = response.getJSONArray("app_topbar_color");
