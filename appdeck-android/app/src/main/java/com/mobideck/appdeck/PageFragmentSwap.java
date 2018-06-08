@@ -22,12 +22,17 @@ import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -35,8 +40,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -678,10 +686,9 @@ public class PageFragmentSwap extends AppDeckFragment {
 
     public String evaluateJavascript(String js)
     {
-        if (pageWebView != null)
-            pageWebView.ctl.evaluateJavascript(js, null);
-        if (pageWebViewAlt != null)
-            pageWebViewAlt.ctl.evaluateJavascript(js, null);
+        if (pageWebView != null) pageWebView.ctl.evaluateJavascript(js, null);
+        if (pageWebViewAlt != null) pageWebViewAlt.ctl.evaluateJavascript(js, null);
+
         return "";
     }
 
@@ -716,7 +723,7 @@ public class PageFragmentSwap extends AppDeckFragment {
             anim.start();
             return true;
         }*/
-
+	//	Log.i call.command
 		if (call.command.equalsIgnoreCase("load"))
 		{
 			Log.i("API", uri.getPath()+" **LOAD**");
@@ -838,10 +845,10 @@ public class PageFragmentSwap extends AppDeckFragment {
 				menuItems = screenConfiguration.getDefaultPageMenuItems(uri, this);
 				loader.setMenuItems(menuItems);
 			}
-			
+
 			return true;
 		}
-		
+
 		if (call.command.equalsIgnoreCase("previousnext"))
 		{
 			Log.i("API", uri.getPath()+" **PREVIOUSNEXT**");
@@ -857,21 +864,23 @@ public class PageFragmentSwap extends AppDeckFragment {
 			
 			return true;
 		}
-		
+
+		/***********************/
 		if (call.command.equalsIgnoreCase("popover"))
 		{
 			Log.i("API", uri.getPath()+" **POPOVER**");
 
 			String url = call.param.getString("url");
-			
+
 			if (url != null && !url.isEmpty())
 			{
-				loader.showPopOver(this, call);
+				loader.showPopOver(this, call, url);
+
 			}
 			
 			return true;
-		}		
-		
+		}
+
 		if (call.command.equalsIgnoreCase("popup"))
 		{
 			Log.i("API", uri.getPath()+" **POPUP**");
@@ -882,7 +891,7 @@ public class PageFragmentSwap extends AppDeckFragment {
 			
 			return true;
 		}
-		
+
 		if (call.command.equalsIgnoreCase("select"))
 		{
 			Log.i("API", uri.getPath()+" **SELECT**");
@@ -921,23 +930,24 @@ public class PageFragmentSwap extends AppDeckFragment {
             return true;
 		}
 
+
 		if (call.command.equalsIgnoreCase("selectdate"))
 		{
 			Log.i("API", uri.getPath()+" **SELECT DATE**");
-			
+
 			String title = call.param.getString("title");
 			String year = call.param.getString("year");
 			String month = call.param.getString("month");
 			String day = call.param.getString("day");
-			
+
 			//call.postponeResult();
-			
+
 		    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-		    	
+
 		        @Override
 		        public void onDateSet(DatePicker view, final int year, final int monthOfYear,
 		                final int dayOfMonth) {
-		        	
+
 		        	Log.d("Date", "selected");
 					JSONObject result = new JSONObject();
 					try {
@@ -949,8 +959,8 @@ public class PageFragmentSwap extends AppDeckFragment {
 					}
                     call.sendCallbackWithResult("success", result);
 		        }
-		    };			
-			
+		    };
+
 		    int yearValue = call.param.getInt("year");
 		    int monthValue = call.param.getInt("month");
 		    int dayValue = call.param.getInt("day");
@@ -971,20 +981,20 @@ public class PageFragmentSwap extends AppDeckFragment {
                         }
                     });
 			  datepicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
-				
+
 				@Override
 				public void onDismiss(DialogInterface dialog) {
 					//call.sendPostponeResult(false);
                     call.sendCallbackWithResult("error", "cancel");
 				}
 			});
-			  
+
 			  if (year.length() > 0)
 				  datepicker.setYearEnabled(false);
 			  if (month.length() > 0)
 				  datepicker.setMonthEnabled(false);
 			  if (day.length() > 0)
-				  datepicker.setDayEnabled(false);			  
+				  datepicker.setDayEnabled(false);
 			  datepicker.setTitle(title);
 			  datepicker.show();
 
@@ -1005,6 +1015,8 @@ public class PageFragmentSwap extends AppDeckFragment {
             preLoadingIndicator.bringToFront();*/
             return true;
         }
+
+
         if (call.command.equalsIgnoreCase("loadinghide"))
         {
             //preLoadingIndicator.setVisibility(View.GONE);

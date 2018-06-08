@@ -70,7 +70,8 @@ public class AppDeckApiCall extends ApiCall {
 			e.printStackTrace();
 		}
 	}
-	
+
+    @Override
 	public void sendCallBackWithError(String error)
 	{
 		JSONArray result = new JSONArray();
@@ -88,19 +89,21 @@ public class AppDeckApiCall extends ApiCall {
         sendCallbackWithResult(type, params);
     }*/
 
+    @Override
 	public void sendCallbackWithResult(String type, String result) {
 		JSONArray results = new JSONArray();
 		results.put(result);
 		sendCallbackWithResult(type, results);
 	}
 
+    @Override
 	public void sendCallbackWithResult(String type, JSONObject result) {
 		JSONArray results = new JSONArray();
 		results.put(result);
 		sendCallbackWithResult(type, results);
 	}
 
-
+    @Override
 	public void sendCallbackWithResult(String type, JSONArray results)
 	{
 /*        JSONArray results_json = new JSONArray();
@@ -115,12 +118,14 @@ public class AppDeckApiCall extends ApiCall {
                     }
                 });
 	}
-	
+
+    @Override
 	public void setResultJSON(String json)
 	{
 		resultJSON = json;
 	}
-	
+
+    @Override
 	public void setResult(Object res)
 	{
 		JSONArray result = new JSONArray();
@@ -128,18 +133,21 @@ public class AppDeckApiCall extends ApiCall {
 		//JSONObject jsonObj = (JSONObject) JSONObject.wrap(res);
 		resultJSON = result.toString();
 	}
-	
+
+    @Override
 	public void postponeResult()
 	{
 		postponeResult = true;
 	}
-	
+
+    @Override
 	public void sendPostponeResult(Boolean r)
 	{
 		postponeResult = false;
 		sendResult(r);
 	}
-	
+
+    @Override
 	public void sendResult(Boolean r)
 	{
 		if (postponeResult)
@@ -161,8 +169,5 @@ public class AppDeckApiCall extends ApiCall {
 
 		if (resultSent == false)
 			result.SmartWebViewResultCancel();
-		
 	}
-	
-	
 }

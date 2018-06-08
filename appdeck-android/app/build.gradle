@@ -8,11 +8,6 @@
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }*/
-
-configurations.all {
-    resolutionStrategy.force 'com.android.support:support-v4:27.0.1'
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
@@ -36,13 +31,15 @@ repositories {
 android {
     compileSdkVersion 27
 
+    buildToolsVersion "27.0.3"
+
     // http://tools.android.com/release
     //buildToolsVersion '24.0.2'
 
     defaultConfig {
         applicationId "com.mobideck.appdeck"
 
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 80
         versionName "1.8.0"
@@ -72,7 +69,7 @@ android {
         crosswalk {
             dimension "webview"
             // 15 by default, set 21 for faster build time
-            minSdkVersion 16
+            minSdkVersion 19
             versionCode = 1
         }
         chromium {
@@ -128,6 +125,7 @@ android {
             zipAlignEnabled true
             //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'proguard-xwalk.pro'
+
         }
     }
 
@@ -139,11 +137,14 @@ android {
     }*/
 }
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // http://developer.android.com/tools/building/multidex.html
-    compile 'com.android.support:multidex:1.0.2'
+    compile 'com.android.support:multidex:1.0.2' /********/
+    androidTestCompile 'com.android.support:multidex:1.0.2'
+    androidTestCompile 'com.android.support:multidex-instrumentation:1.0.2'
 
     // https://developer.android.com/topic/libraries/support-library/revisions.html
     //compile 'com.android.support:appcompat-v7:23.3.0'

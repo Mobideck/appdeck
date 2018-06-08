@@ -12,11 +12,7 @@ import android.webkit.ValueCallback;
  */
 public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface {
 
-
-    public static void setPreferences(Loader loader)
-    {
-
-    }
+    public static void setPreferences(Loader loader) {}
 
     public SmartWebViewCrossWalk(AppDeckFragment root) {
         super(root.loader);
@@ -44,23 +40,11 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     }
 
     @Override
-    public void setTouchDisabled(boolean touchDisabled) {
-
-    }
-
-    @Override
-    public boolean getTouchDisabled() {
-        return false;
-    }
-
-    @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -68,13 +52,7 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     }
 
     @Override
-    public void clean() {
-
-    }
-
-    @Override
     public void unloadPage() {
-
     }
 
     @Override
@@ -138,6 +116,10 @@ public class SmartWebViewCrossWalk extends View implements SmartWebViewInterface
     public boolean smartWebViewCanGoForward() { return false; }
 
     public String getUrl() { return null; }
+
+    @Override
+    public void setTouchDisabled(boolean touchDisabled) {
+    }
 
     public void onActivityPause(Loader loader) { }
 

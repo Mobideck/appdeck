@@ -58,7 +58,7 @@ import ui.camera.CameraSourcePreview;
 
 public class BarCodeReader extends AppDeckFragment {
 
-    BarCodeReader self;
+    BarCodeReader self = null;
 
     private static final String TAG = "Barcode-reader";
 
@@ -177,27 +177,8 @@ public class BarCodeReader extends AppDeckFragment {
 
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
 
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this.loader,
-                Manifest.permission.CAMERA)) {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this.loader, Manifest.permission.CAMERA))
             ActivityCompat.requestPermissions(this.loader, permissions, RC_HANDLE_CAMERA_PERM);
-            return;
-        }
-/*
-        final Activity thisActivity = this.loader;
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityCompat.requestPermissions(thisActivity, permissions,
-                        RC_HANDLE_CAMERA_PERM);
-            }
-        };
-
-        rootView.findViewById(R.id.topLayout).setOnClickListener(listener);
-        Snackbar.make(mGraphicOverlay, R.string.permission_camera_rationale,
-                Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.ok, listener)
-                .show();*/
     }
 
     /**
@@ -217,7 +198,6 @@ public class BarCodeReader extends AppDeckFragment {
                 @Override
                 public void run() {
                     apiCall.sendCallbackWithResult("callback", results);
-
                 }
             };
             mainHandler.post(myRunnable);
@@ -291,10 +271,7 @@ public class BarCodeReader extends AppDeckFragment {
                 .setRequestedFps(15.0f);
 
         // make sure that auto focus is an available option
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            builder = builder.setFocusMode(
-                    autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
-        }
+        builder = builder.setFocusMode(autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
 
         mCameraSource = builder
                 .setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null)
@@ -360,13 +337,9 @@ public class BarCodeReader extends AppDeckFragment {
      */
     private void startCameraSource() throws SecurityException {
         // check that the device has play services available.
-        int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-                this.loader);
-        if (code != ConnectionResult.SUCCESS) {
-            Dialog dlg =
-                    GoogleApiAvailability.getInstance().getErrorDialog(this.loader, code, RC_HANDLE_GMS);
-            dlg.show();
-        }
+        int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this.loader);
+        if (code != ConnectionResult.SUCCESS)
+            GoogleApiAvailability.getInstance().getErrorDialog(this.loader, code, RC_HANDLE_GMS).show();
 
         if (mCameraSource != null) {
             try {
@@ -378,5 +351,4 @@ public class BarCodeReader extends AppDeckFragment {
             }
         }
     }
-
 }

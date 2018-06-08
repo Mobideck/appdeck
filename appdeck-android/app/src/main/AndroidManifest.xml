@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobideck.appdeck">
 
     <!--  permission for appdeck -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" /><!-- Internet Access -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /><!-- Check Internet Access -->
@@ -30,111 +32,35 @@
     <!-- WideSapce minSdk 17 override -->
     <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="com.gc.materialdesign" />
 
+
+    <!-- vibrate -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <!-- location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+   <!-- phone -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         tools:replace="android:icon,android:theme"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:hardwareAccelerated="true"
         android:name="com.mobideck.appdeck.AppDeckApplication"
-        android:theme="@style/Theme.MyAppDeckTheme" >
+        android:theme="@style/Theme.MyAppDeckTheme"
+        android:allowBackup="true">
 
         <!-- AppDeck Test App -->
-        <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906"></meta-data>
-
-        <!-- Test Cache -->
-        <!-- <meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/932h33fe5c9e9d1648ee30a2a713a3492be9"></meta-data>-->
-
-        <!-- AppDeck Dev App -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
-
-        <!-- PC INpact -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/224h315e5a19e0865b35ac7e5b3713ef5a3b" />-->
-
-        <!-- PC INpact Dev -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1060hc931f3cbf173612382d474a58d3a78b0" />-->
-
-        <!--  Play3-Live iOS -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/757h76c94e17ec542ce74d210eb3f949bf6f"></meta-data> -->
-
-        <!--  Play3-Live Android -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/761ha792d5a82b6332ba378114920d2fafe8"></meta-data> -->
-
-        <!--  Monsieur-Mademoiselle -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/996h682fe65e828164f4686e7b531f5e0f9f"></meta-data>-->
-
-        <!--  94 citoyens -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/837hf414478b7e520570c0a057bd3fe124c9"></meta-data>-->
-
-        <!-- Univers Freebox -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/999h056edc07b49f95bb570e1af07b8eece8"></meta-data>-->
-
-        <!-- Actu Animaux -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/979hf2a89dc17ae78bd6e3ff60a65f301724"></meta-data>-->
-
-        <!-- Jeux Video Live -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1069hdaf84412b985ad99efa1037a6948c978"></meta-data>-->
-
-        <!-- Tool Fitness -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/989hb11900d8d83ee53fbe22c0e922f3ba09"></meta-data>-->
-
-        <!-- JP News -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1086h2bcaa38f9a89f2e90b3e19b46b583f41"></meta-data>-->
-
-        <!-- xboxygen -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1089habcccfd19841b01be8f081b17e1d9dc1"></meta-data>-->
-
-        <!-- SNIIM -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/959hc85fdc336418aade8d2d86f6af4a5fa9"></meta-data>-->
-
-        <!-- RDD -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1109h4bed9177a3e9d426e75a0055ca5fefa2"></meta-data>-->
-
-        <!-- Jeux Online -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1282h3a3bf9a93a263a6e3118e9ef55dcf69d"></meta-data>-->
-
-        <!-- Serie Addict -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1180h595374b1057d1e57537d6c1d3639cea4"></meta-data>-->
-
-        <!-- Team AAA -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1279hf8895674d261055a2a3818b41cbd4d03"></meta-data>-->
-
-        <!-- Dev Test -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/982h553006d57a69ecc3e5c73b36a48d9051"></meta-data>-->
-
-        <!-- Ginjfo -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1622h34412ab3c04f08e74e473a53b0dbd795"></meta-data>-->
-
-        <!-- Tatoo -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1571h24994efd99e8f6dacac48a298ac319f7"></meta-data>-->
-
-        <!-- Krewe -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1818hf63940ad7859260deba357b98fe1b3ef"></meta-data>-->
-
-        <!-- Fis-Ski -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1833h98708fb114b52085fe57a6e301611916"></meta-data>-->
-
-        <!-- Somfy -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1913h07f960c6a85e4e288e3c8fcf056e8fc2"></meta-data>-->
-
-        <!-- Gamer Network -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1924h9126a001382240adb058f23f60fb93d2"></meta-data>-->
-
-        <!-- Freenews -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2110hf12a8cb06f755b12f947c710e43cd47c"></meta-data>-->
-
-        <!-- Memo Heures -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2247hadc45a049e11769f39f2719601b9f0a6"></meta-data>-->
-
-        <!-- Game Love -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/2394h80b265540a1cb6e70ad4b6aadb4652b1"></meta-data>-->
-
-        <!-- Zebulon -->
-        <!--<meta-data android:name="AppDeckJSONURL" android:value="http://config.appdeck.mobi/json/1882h9fcb3c7b1f3831cf00853cf085e1e1d3"></meta-data>-->
+        <meta-data
+            android:name="AppDeckJSONURL"
+            android:value="http://config.appdeck.mobi/json/218hf32d1901627d35131fa83b63f56ae906" />
 
         <meta-data android:name="noCache" android:value="false" />
 
         <!-- BarCode API -->
         <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
+
 
         <!-- [START gcm_receiver] -->
         <receiver
