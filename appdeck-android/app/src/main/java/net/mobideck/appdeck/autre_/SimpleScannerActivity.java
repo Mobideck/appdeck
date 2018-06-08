@@ -2,17 +2,23 @@ package net.mobideck.appdeck.autre_;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
 
 import net.mobideck.appdeck.R;
+import net.mobideck.appdeck.core.ApiCall;
+
+import org.json.JSONArray;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class SimpleScannerActivity extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
+
+    public static ApiCall apiCall ;
 
     @Override
     public void onCreate(Bundle state) {
@@ -39,9 +45,25 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
     }
 
     @Override
-    public void handleResult(Result rawResult) {
+    public void handleResult(final Result rawResult) {
         Toast.makeText(this, "Contents = " + rawResult.getText() +
                 ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+
+
+        Handler mainHandler = new Handler(getMainLooper());
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+
+                final JSONArray results = new JSONArray();
+                results.put(rawResult.getText().toString());
+                apiCall.sendCallbackWithResult("callback", results);
+            }
+        };
+        mainHandler.post(myRunnable);
+
+        //Log.i("result ", results.toString());
+
 
         // Note:
         // * Wait 2 seconds to resume the preview.
@@ -53,6 +75,9 @@ public class SimpleScannerActivity extends BaseScannerActivity implements ZXingS
             public void run() {
                 mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
             }
-        }, 2000);
+        }, 1000);
+
+
+        finish();
     }
 }

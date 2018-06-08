@@ -803,6 +803,8 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, ZXING_CAMERA_PERMISSION);
             } else {
+                SimpleScannerActivity.apiCall = call;
+
                 Intent intent = new Intent(this, SimpleScannerActivity.class);
                 startActivity(intent);
             }

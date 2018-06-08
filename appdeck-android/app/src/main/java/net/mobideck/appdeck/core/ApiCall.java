@@ -1,5 +1,6 @@
 package net.mobideck.appdeck.core;
 
+import android.util.Log;
 import android.webkit.JsPromptResult;
 import android.webkit.ValueCallback;
 
