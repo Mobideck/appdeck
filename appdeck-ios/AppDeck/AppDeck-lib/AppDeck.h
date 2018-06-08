@@ -12,6 +12,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <SafariServices/SFSafariViewController.h>
+#import "WWCalendarTimeSelector-Swift.h"
 
 
 #define APPDECK_VERSION @"1.10"
@@ -23,15 +24,17 @@
 @class LogViewController;
 @class KeyboardStateListener;
 
+
 @protocol MFMailComposeViewControllerDelegate;
 @protocol MFMessageComposeViewControllerDelegate;
 @protocol SFSafariViewControllerDelegate;
 
-@interface AppDeck : NSObject <AppDeckApiCallDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, SFSafariViewControllerDelegate>
+@interface AppDeck : NSObject <AppDeckApiCallDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, SFSafariViewControllerDelegate,WWCalendarTimeSelectorProtocol>
 {
     UIWebView *firstWebView;
     BOOL shouldConfigureApp;
 }
+
 +(AppDeck *)sharedInstance;
 
 @property (assign, nonatomic)   float iosVersion;
@@ -56,9 +59,6 @@
 +(LoaderViewController *)open:(NSString *)url  withLaunchingWithOptions:(NSDictionary *)launchOptions;
 +(void)reloadFrom:(NSString *)url;
 +(void)restart;
-
-//-(id)api:(NSString *)command param:(id)param;
-//-(NSString *)JSapi:(NSString *)command param:(NSString *)paramJSON;
 
 -(BOOL)apiCall:(AppDeckApiCall *)call;
 

@@ -24,6 +24,8 @@ target 'AppDeck' do
     pod 'Masonry'
     pod 'iCarousel', '~> 1.8'
     pod 'MapViewPlus'
+    pod 'DXCustomCallout-ObjC'
+    pod 'WWCalendarTimeSelector'
   # pod 'KCFloatingActionButton', '~> 2.2'
     
   

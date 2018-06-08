@@ -240,6 +240,10 @@
 		A9F3F9C21CF82C1C0079225D /* AppDeckPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */; };
 		A9F643921708BF1F003D07B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F643911708BF1F003D07B3 /* CoreData.framework */; };
 		C718193C3C4167440F51A3D1 /* Pods_AppDeck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9D2AD65EF989E94368B3F96 /* Pods_AppDeck.framework */; };
+		F03869FC20C6AC7E00A2727E /* myView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F03869FB20C6AC7E00A2727E /* myView.xib */; };
+		F0386A0620C6C52E00A2727E /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = F0386A0520C6C52E00A2727E /* point.png */; };
+		F0386A0A20C925A300A2727E /* me.png in Resources */ = {isa = PBXBuildFile; fileRef = F0386A0920C925A300A2727E /* me.png */; };
+		F0386A0D20C953A400A2727E /* myView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0386A0C20C953A400A2727E /* myView.m */; };
 		F056571520A43AFA00F46071 /* floatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F056571020A43AF900F46071 /* floatTableViewCell.xib */; };
 		F056571620A43AFA00F46071 /* VCFloatingActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F056571120A43AF900F46071 /* VCFloatingActionButton.m */; };
 		F056571720A43AFA00F46071 /* floatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F056571220A43AF900F46071 /* floatTableViewCell.m */; };
@@ -702,6 +706,11 @@
 		A9F3F9C11CF82C1C0079225D /* AppDeckPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDeckPluginManager.m; path = "AppDeck-lib/AppDeckPluginManager.m"; sourceTree = "<group>"; };
 		A9F643911708BF1F003D07B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E9D2AD65EF989E94368B3F96 /* Pods_AppDeck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppDeck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F03869FB20C6AC7E00A2727E /* myView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = myView.xib; sourceTree = "<group>"; };
+		F0386A0520C6C52E00A2727E /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
+		F0386A0920C925A300A2727E /* me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me.png; sourceTree = "<group>"; };
+		F0386A0B20C953A400A2727E /* myView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myView.h; sourceTree = "<group>"; };
+		F0386A0C20C953A400A2727E /* myView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = myView.m; sourceTree = "<group>"; };
 		F056570C20A3533600F46071 /* AppDeck-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDeck-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		F056571020A43AF900F46071 /* floatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = floatTableViewCell.xib; path = FloatingButton/floatTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		F056571120A43AF900F46071 /* VCFloatingActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCFloatingActionButton.m; path = FloatingButton/VCFloatingActionButton.m; sourceTree = SOURCE_ROOT; };
@@ -1226,6 +1235,9 @@
 				A99EF6D91C09E11200DAC126 /* CustomECSlidingViewController.m */,
 				F09DC45D20873C90002F5A31 /* MapViewController.h */,
 				F09DC45E20873C90002F5A31 /* MapViewController.m */,
+				F03869FB20C6AC7E00A2727E /* myView.xib */,
+				F0386A0B20C953A400A2727E /* myView.h */,
+				F0386A0C20C953A400A2727E /* myView.m */,
 			);
 			name = Loader;
 			sourceTree = "<group>";
@@ -1526,6 +1538,8 @@
 		A91DFA1A16CE8D1400512CA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F0386A0920C925A300A2727E /* me.png */,
+				F0386A0520C6C52E00A2727E /* point.png */,
 				F091F17F20B6FCC60041D104 /* previous.png */,
 				F091F17D20B6FCC10041D104 /* next.png */,
 				F077F78D20AF13D400C80789 /* téléchargement.png */,
@@ -1752,6 +1766,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0386A0A20C925A300A2727E /* me.png in Resources */,
 				A952A2591F72C995002894F5 /* mire.png in Resources */,
 				F091F17920B6D6660041D104 /* myCell.xib in Resources */,
 				A96BD5501BB2D01600F6F658 /* Launch Screen.storyboard in Resources */,
@@ -1762,7 +1777,9 @@
 				F091F18B20B84A1A0041D104 /* ImageBannerTest.xib in Resources */,
 				F056571B20A43C8800F46071 /* plus.png in Resources */,
 				F056571A20A43C8800F46071 /* cross.png in Resources */,
+				F03869FC20C6AC7E00A2727E /* myView.xib in Resources */,
 				F0623F3C2099EB7E0054790D /* No_Image_Available.png in Resources */,
+				F0386A0620C6C52E00A2727E /* point.png in Resources */,
 				F091F17E20B6FCC10041D104 /* next.png in Resources */,
 				F091F18020B6FCC60041D104 /* previous.png in Resources */,
 				F0623F3E2099F0230054790D /* Refresh_icon.png in Resources */,
@@ -1999,6 +2016,7 @@
 				A913C7D51BDE4D550054B590 /* MEZoomAnimationController.m in Sources */,
 				A916D3631A1E03E7005FE1AE /* Alloc.c in Sources */,
 				F09DC46F209319A0002F5A31 /* MyCollectionViewController.m in Sources */,
+				F0386A0D20C953A400A2727E /* myView.m in Sources */,
 				A9BA711B1BC524D0005A212E /* tostring.cc in Sources */,
 				A95D313D1C3BFFE1007D0C63 /* UIColor+blur.m in Sources */,
 				A9BA711E1BC524D0005A212E /* unicode_groups.cc in Sources */,

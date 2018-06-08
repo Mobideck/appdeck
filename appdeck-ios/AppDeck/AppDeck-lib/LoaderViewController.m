@@ -1488,23 +1488,22 @@
         
     }
     
-    if ([call.command isEqualToString:@"openMap"])
-    {
-        
-        MapViewController*collectionVC=[[MapViewController alloc]init];
-        
-//        collectionVC.loader = self;
-//        collectionVC.origin = call;
-//        collectionVC.screenConfiguration = call.child.screenConfiguration;
-//        collectionVC.title = collectionVC.screenConfiguration.title;
-        
-        [self loadChild:collectionVC root:NO popup:LoaderPopUpYes];
-        
-        return YES;
-        
-    }
-    
-    
+//    if ([call.command isEqualToString:@"map"])
+//    {
+//        
+//        MapViewController*mapVC=[[MapViewController alloc]init];
+//        
+//        NSLog(@"call %@",call.param);
+//        mapVC.call = call;
+//        mapVC.screenConfiguration = call.child.screenConfiguration;
+//        mapVC.title = mapVC.screenConfiguration.title;
+//        
+//        [self loadChild:mapVC root:NO popup:LoaderPopUpYes];
+//        
+//        return YES;
+//        
+//    }
+//    
     if ([call.command isEqualToString:@"list"])
     {
         
@@ -1541,7 +1540,6 @@
     
     return [self.appDeck apiCall:call];
 }
-
 
 -(void)updateStyleWithParams:(NSDictionary*)params
 {

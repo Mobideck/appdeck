@@ -14,6 +14,8 @@
     CLLocationManager *locationManager;
 }
 
+@property (nonatomic, strong) AppDeckApiCall *call;
+@property (nonatomic, weak) LoaderChildViewController* child;
 //-(void)getCurrentLocation;
 
 @end

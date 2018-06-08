@@ -114,7 +114,6 @@ typedef enum AdManagerEvent: int {
 @property (assign, nonatomic) BOOL leftMenuOpen;
 @property (assign, nonatomic) BOOL rightMenuOpen;
 
-
 @property (assign, nonatomic) BOOL appRunInBackground;
 
 @property (assign, nonatomic) BOOL appDidLaunch;

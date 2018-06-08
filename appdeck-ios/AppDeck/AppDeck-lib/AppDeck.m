@@ -430,8 +430,13 @@
     
     if ([call.command isEqualToString:@"selectdate"])
     {
-
-        [CustomDatePicker PresentInVC:self.loader fromCall:call];
+        
+        WWCalendarTimeSelector*selector=[WWCalendarTimeSelector instantiate];
+        selector.delegate=self;
+        
+        [self.loader presentViewController:selector animated:YES completion:nil];
+        
+        //   [CustomDatePicker PresentInVC:self.loader fromCall:call];
 
         return YES;
     }

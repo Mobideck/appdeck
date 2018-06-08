@@ -33,6 +33,8 @@
 #import "ImageBannerTest.h"
 #import "MyTabBarViewController.h"
 
+#import "MapViewController.h"
+
 
 @interface PageViewController ()
 
@@ -915,6 +917,23 @@
         [tabBarController loadWithItem:call.param url:[NSURL URLWithString:call.param[@"content"]]];
         
         return YES;
+    }
+    
+    if ([call.command isEqualToString:@"map"])
+    {
+        
+        MapViewController*mapVC=[[MapViewController alloc]init];
+        
+        NSLog(@"call %@",call.param);
+        mapVC.call = call;
+        mapVC.child=self;
+        mapVC.screenConfiguration = call.child.screenConfiguration;
+        mapVC.title = mapVC.screenConfiguration.title;
+        
+        [self.loader loadChild:mapVC root:NO popup:LoaderPopUpYes];
+        
+        return YES;
+        
     }
     
     if ([call.command isEqualToString:@"loadingshow"])
