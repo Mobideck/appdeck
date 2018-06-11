@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment android:name="net.mobideck.appdeck.autre_.SimpleScannerFragment"
+    <fragment android:name="net.mobideck.appdeck.barcode.SimpleScannerFragment"
           android:id="@+id/scanner_fragment"
           android:layout_weight="1"
           android:layout_width="match_parent"

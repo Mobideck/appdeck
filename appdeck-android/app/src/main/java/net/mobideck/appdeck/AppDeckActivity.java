@@ -76,7 +76,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import net.mobideck.appdeck.WebView.SmartWebView;
 
-import net.mobideck.appdeck.autre_.SimpleScannerActivity;
+import net.mobideck.appdeck.barcode.SimpleScannerActivity;
 import net.mobideck.appdeck.config.AppConfig;
 import net.mobideck.appdeck.config.MenuEntry;
 import net.mobideck.appdeck.config.ViewConfig;
@@ -811,7 +811,6 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
             return true;
         }
-
 
         if (call.command.equalsIgnoreCase("loadapp")) {
             Log.i("API", "**LOAD APP**");

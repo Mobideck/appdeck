@@ -217,8 +217,8 @@
 
 
         <!-- Barcode -->
-        <activity android:name="net.mobideck.appdeck.autre_.BaseScannerActivity"/>
-        <activity android:name="net.mobideck.appdeck.autre_.SimpleScannerActivity"/>
+        <activity android:name="net.mobideck.appdeck.barcode.BaseScannerActivity"/>
+        <activity android:name="net.mobideck.appdeck.barcode.SimpleScannerActivity"/>
 
 
     </application>

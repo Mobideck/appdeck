@@ -1,4 +1,4 @@
-package net.mobideck.appdeck.autre_;
+package net.mobideck.appdeck.barcode;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

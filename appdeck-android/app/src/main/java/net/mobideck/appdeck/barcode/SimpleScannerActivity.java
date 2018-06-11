@@ -1,8 +1,7 @@
-package net.mobideck.appdeck.autre_;
+package net.mobideck.appdeck.barcode;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 

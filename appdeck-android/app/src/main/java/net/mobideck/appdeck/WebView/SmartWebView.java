@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +16,8 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -852,21 +855,76 @@ public class SmartWebView extends VideoEnabledWebView {
             return true;
         }
 
-//        if (call.command.equalsIgnoreCase("popover"))
-//        {
-//            //  Log.i("API", uri.getPath()+" **POPOVER**");
+
+        /***************************************************/
+
+//        if (call.command.equalsIgnoreCase("mylocation")) { /* nouveau composant */ /* local position */
 //
-//            String url = call.paramObject.optString("url");
+//            GpsTracker gpsTracker;
 //
-//            if (url != null && !url.isEmpty())
-//            {
-//                Navigation navigation = AppDeckApplication.getAppDeck().navigation;
-//                navigation.loadRootURL(url);
+//            try {
+//                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+//                }else{
+//                    double latitude = 0, longitude = 0 ;
+//                    gpsTracker = new GpsTracker(Loader.this);
+//                    if(gpsTracker.canGetLocation()){
+//                        latitude = gpsTracker.getLatitude();
+//                        longitude = gpsTracker.getLongitude();
+//                    }else {
+//                        gpsTracker.showSettingsAlert();
+//                    }
 //
+//                    // Create a Uri from an intent string. Use the result to create an Intent.
+//                    Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+latitude+","+longitude);
+//
+//                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+//                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//                    // Make the Intent explicit by setting the Google Maps package
+//                    mapIntent.setPackage("com.google.android.apps.maps");
+//
+//                    // Attempt to start an activity that can handle the Intent
+//                    startActivity(mapIntent);
+//                }
+//            } catch (Exception e){
+//                e.printStackTrace();
 //            }
 //
 //            return true;
 //        }
+//        /***********************************************************/
+//
+//        if (call.command.equalsIgnoreCase("geolocation")) {
+//
+//            String latitude = call.param.getString("latitude");
+//            String longitude = call.param.getString("longitude");
+//
+//            // Create a Uri from an intent string. Use the result to create an Intent.
+//            Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+latitude+","+longitude);
+//
+//            // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+//            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//            // Make the Intent explicit by setting the Google Maps package
+//            mapIntent.setPackage("com.google.android.apps.maps");
+//
+//            // Attempt to start an activity that can handle the Intent
+//            startActivity(mapIntent);
+//
+//            return true;
+//
+//        }
+//
+//        /***********************************************************/
+//
+//        if (call.command.equalsIgnoreCase("phone")) {
+//
+//            String phone = call.param.getString("phone");
+//
+//            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phone));
+//            startActivity(intent);
+//        }
+        /***********************************************************/
+
 
 
         if (page!= null)
