@@ -7,8 +7,7 @@
     android:fitsSystemWindows="false"
     tools:context=".AppDeckActivity"
     android:background="@android:color/black"
-    android:id="@+id/coordinator"
-    >
+    android:id="@+id/coordinator">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

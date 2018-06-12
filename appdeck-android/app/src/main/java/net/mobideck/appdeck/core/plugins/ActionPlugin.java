@@ -31,17 +31,39 @@ public class ActionPlugin extends PluginAdaptater {
 
     public boolean sendsms(final ApiCall call) {
         Log.d(TAG, "sendsms");
+//        String to = call.paramObject.optString("address");
+//        String message = call.paramObject.optString("body");
+//        Log.i("API", "**SENDSMS** "+to+": "+message);
+//
+//        String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AppDeckApplication.getContext());
+//        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + to));
+//        intent.putExtra("sms_body", message);
+//        if (defaultSmsPackageName != null) {
+//            intent.setPackage(defaultSmsPackageName);
+//        }
+//        AppDeckApplication.getActivity().startActivity(intent);
+
+        /* */
         String to = call.paramObject.optString("address");
         String message = call.paramObject.optString("body");
-        Log.i("API", "**SENDSMS** "+to+": "+message);
+        Log.i("API", "**SENDSMS** " + to + ": " + message);
 
-        String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AppDeckApplication.getContext());
-        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + to));
-        intent.putExtra("sms_body", message);
-        if (defaultSmsPackageName != null) {
-            intent.setPackage(defaultSmsPackageName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AppDeckApplication.getContext());
+            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + to));
+            intent.putExtra("sms_body", message);
+            if (defaultSmsPackageName != null) {
+                intent.setPackage(defaultSmsPackageName);
+            }
+            AppDeckApplication.getActivity().startActivity(intent);
+        } else {
+            Uri smsUri = Uri.parse("tel:" + to);
+            Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
+            intent.putExtra("address", to);
+            intent.putExtra("sms_body", message);
+            intent.setType("vnd.android-dir/mms-sms");
+            AppDeckApplication.getActivity().startActivity(intent);
         }
-        AppDeckApplication.getActivity().startActivity(intent);
 
         return true;
     }
@@ -59,6 +81,9 @@ public class ActionPlugin extends PluginAdaptater {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
         AppDeckApplication.getActivity().startActivity(intent);
+
+        /* */
+
         return true;
     }
 

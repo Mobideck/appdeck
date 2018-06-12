@@ -25,6 +25,8 @@ public class MenuPlugin extends PluginAdaptater {
     public boolean slidemenu(final ApiCall call) {
         Log.d(TAG, "slidemenu");
 
+        Log.i("navigation", "appdeck "+call.command.toString());
+
         String command = call.paramObject.optString("command", "none");
         String position = call.paramObject.optString("position", "none");
 
@@ -46,14 +48,20 @@ public class MenuPlugin extends PluginAdaptater {
                 menuManager.openRightMenu();
             if (position.equalsIgnoreCase("main"))
                 menuManager.closeMenu();
+            Log.i("navigation", "1close");
         } else {
+            Log.i("navigation", "2close");
+
             menuManager.closeMenu();
         }
         return true;
     }
 
-    public boolean menu(final ApiCall call) {
+    public boolean menu(ApiCall call) {
         Log.d(TAG, "menu");
+
+        String command = call.paramObject.optString("command", "none");
+        Log.i("navigation", command);
 
         /*
         net.mobideck.appdeck.core.ApiCall apiCall = (net.mobideck.appdeck.core.ApiCall)call;

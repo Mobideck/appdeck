@@ -387,7 +387,9 @@ public class Page extends AppDeckView {
 
         int x = mWebView.fetchHorizontalScrollOffset();
         int y = mWebView.fetchVerticalScrollOffset();
-        mWebViewAlt.scrollTo(x, y);
+      /* */
+//      mWebViewAlt.scrollTo(x, y);
+
         //pageWebView.copyScrollTo(pageWebViewAlt);
         mSwipeViewAlt.setAlpha(0f);
         mSwipeViewAlt.setVisibility(View.VISIBLE);

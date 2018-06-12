@@ -56,6 +56,7 @@ import net.mobideck.appdeck.core.DebugLog;
 import net.mobideck.appdeck.core.Cache;
 import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.Page;
+import net.mobideck.appdeck.location.GpsTracker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +73,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class SmartWebView extends VideoEnabledWebView {
@@ -854,76 +857,6 @@ public class SmartWebView extends VideoEnabledWebView {
 
             return true;
         }
-
-
-        /***************************************************/
-
-//        if (call.command.equalsIgnoreCase("mylocation")) { /* nouveau composant */ /* local position */
-//
-//            GpsTracker gpsTracker;
-//
-//            try {
-//                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
-//                }else{
-//                    double latitude = 0, longitude = 0 ;
-//                    gpsTracker = new GpsTracker(Loader.this);
-//                    if(gpsTracker.canGetLocation()){
-//                        latitude = gpsTracker.getLatitude();
-//                        longitude = gpsTracker.getLongitude();
-//                    }else {
-//                        gpsTracker.showSettingsAlert();
-//                    }
-//
-//                    // Create a Uri from an intent string. Use the result to create an Intent.
-//                    Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+latitude+","+longitude);
-//
-//                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-//                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//                    // Make the Intent explicit by setting the Google Maps package
-//                    mapIntent.setPackage("com.google.android.apps.maps");
-//
-//                    // Attempt to start an activity that can handle the Intent
-//                    startActivity(mapIntent);
-//                }
-//            } catch (Exception e){
-//                e.printStackTrace();
-//            }
-//
-//            return true;
-//        }
-//        /***********************************************************/
-//
-//        if (call.command.equalsIgnoreCase("geolocation")) {
-//
-//            String latitude = call.param.getString("latitude");
-//            String longitude = call.param.getString("longitude");
-//
-//            // Create a Uri from an intent string. Use the result to create an Intent.
-//            Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+latitude+","+longitude);
-//
-//            // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-//            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-//            // Make the Intent explicit by setting the Google Maps package
-//            mapIntent.setPackage("com.google.android.apps.maps");
-//
-//            // Attempt to start an activity that can handle the Intent
-//            startActivity(mapIntent);
-//
-//            return true;
-//
-//        }
-//
-//        /***********************************************************/
-//
-//        if (call.command.equalsIgnoreCase("phone")) {
-//
-//            String phone = call.param.getString("phone");
-//
-//            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phone));
-//            startActivity(intent);
-//        }
-        /***********************************************************/
 
 
 

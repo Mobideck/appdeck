@@ -25,6 +25,12 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 
+    <!-- location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- phone -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".AppDeckApplication"
         android:allowBackup="true"

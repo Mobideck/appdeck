@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/menu_item_size"
-    android:layout_height="@dimen/menu_item_size"
-    >
+    android:layout_height="@dimen/menu_item_size">
 
     <!-- separate view to display ripple/color change when menu item is clicked -->
     <FrameLayout

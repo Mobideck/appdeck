@@ -20,6 +20,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -89,6 +90,7 @@ import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.Page;
 import net.mobideck.appdeck.core.AppDeckMenuItem;
 import net.mobideck.appdeck.core.PageAnimation;
+import net.mobideck.appdeck.location.GpsTracker;
 import net.mobideck.appdeck.util.Utils;
 
 /*import org.androidannotations.annotations.AfterViews;
@@ -99,6 +101,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +109,7 @@ import cz.msebera.android.httpclient.Header;
 import hotchemi.android.rate.AppRate;
 import hotchemi.android.rate.OnClickButtonListener;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static net.mobideck.appdeck.AppDeckApplication.setAppDeck;
 
 public class AppDeckActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -685,6 +689,7 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
     }
 
+    /* */
     private void getMenu(String urlLeft, String urlRight){
 
         menuManager.noMenu = true;
@@ -765,7 +770,6 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
             return;
         }
 
-
         // current page is home ?
 //        AppDeckView currentAppDeckView = navigation.getCurrentAppDeckView();
 //        String bootstrapURL = AppDeckApplication.getAppDeck().appConfig.bootstrap.getAbsoluteURL();
@@ -781,17 +785,15 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
     }
 
 
-
     public boolean apiCall(final ApiCall call) {
 
-        /***/
+        /* */
         if (call.command.equalsIgnoreCase("vibrate")) {
 
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             v.vibrate(900);
 
             Log.i("ok** ", "vib");
-
 
             return true;
         }
@@ -900,7 +902,6 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String response, Throwable e) {
-
                     Toast.makeText(AppDeckActivity.this, "error", Toast.LENGTH_LONG).show();
                 }
 
@@ -924,17 +925,9 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                 }
 
                 @Override
-                public void onFinish() {
-
-                }
+                public void onFinish() {}
             });
 
-
-            return true;
-        }
-
-        if (call.command.equalsIgnoreCase("reload")) {
-            AppDeckApplication.getActivity().menuManager.reload();
 
             return true;
         }
@@ -1089,6 +1082,76 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
         }
 
         /***/
+
+
+        /***************************************************/
+
+//        if (call.command.equalsIgnoreCase("mylocation")) { /* nouveau composant */ /* local position */
+//
+//            GpsTracker gpsTracker;
+//
+//            try {
+//                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+//                }else{
+//                    double latitude = 0, longitude = 0 ;
+//                    gpsTracker = new GpsTracker(AppDeckActivity.this);
+//                    if(gpsTracker.canGetLocation()){
+//                        latitude = gpsTracker.getLatitude();
+//                        longitude = gpsTracker.getLongitude();
+//                    }else {
+//                        gpsTracker.showSettingsAlert();
+//                    }
+//
+//                    // Create a Uri from an intent string. Use the result to create an Intent.
+//                    Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+latitude+","+longitude);
+//
+//                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+//                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//                    // Make the Intent explicit by setting the Google Maps package
+//                    mapIntent.setPackage("com.google.android.apps.maps");
+//
+//                    // Attempt to start an activity that can handle the Intent
+//                    startActivity(mapIntent);
+//                }
+//            } catch (Exception e){
+//                e.printStackTrace();
+//            }
+//
+//            return true;
+//        }
+//        /***********************************************************/
+//
+//        if (call.command.equalsIgnoreCase("geolocation")) {
+//
+//            String latitude = call.paramObject.optString("latitude");
+//            String longitude = call.paramObject.optString("longitude");
+//
+//            // Create a Uri from an intent string. Use the result to create an Intent.
+//            Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+latitude+","+longitude);
+//
+//            // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+//            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//            // Make the Intent explicit by setting the Google Maps package
+//            mapIntent.setPackage("com.google.android.apps.maps");
+//
+//            // Attempt to start an activity that can handle the Intent
+//            startActivity(mapIntent);
+//
+//            return true;
+//
+//        }
+//
+//        /***********************************************************/
+//
+//        if (call.command.equalsIgnoreCase("phone")) {
+//
+//            String phone = call.paramObject.optString("phone");
+//
+//            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phone));
+//            startActivity(intent);
+//        }
+        /***********************************************************/
 
         return AppDeckApplication.getAppDeck().apiCall(call);
     }
