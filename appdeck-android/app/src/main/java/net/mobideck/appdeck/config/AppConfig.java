@@ -405,18 +405,27 @@ public class AppConfig {
 
         if (leftMenu != null) {
             leftMenu.url = resolveURL(leftMenu.url, null);
-            if (leftMenu.width <= 0)
-                leftMenu.width = 280;
+
+            if (leftMenu.width > 0 || leftMenu.width <0)
+                leftMenu.width = 300;
             if (leftMenu.url == null)
-                leftMenu = null;
+                leftMenu.width = 0;
+
+            Log.i("width-", "config "+leftMenu.width);
+
+//            if (leftMenu.width <= 0)
+//                leftMenu.width = 320;
+//            /* */
+            if (leftMenu.url == null)
+                 leftMenu.width = 0; /* */
         }
 
         if (rightMenu != null) {
             rightMenu.url = resolveURL(rightMenu.url, null);
             if (rightMenu.width <= 0)
-                rightMenu.width = 280;
+                rightMenu.width = 300;
             if (rightMenu.url == null)
-                rightMenu = null;
+                rightMenu.width = 0; /* */
             /* jusqua la correction de cote ws */
             if (rightMenu.width == 100)
                 rightMenu.width = 280;

@@ -464,6 +464,8 @@ public class PageManager extends AppDeckView {
 
     public boolean apiCall(final ApiCall call) { /*** correction ***/
 
+        Log.i("call-", "3 "+call.command);
+
        return AppDeckApplication.getActivity().apiCall(call);
 
     }

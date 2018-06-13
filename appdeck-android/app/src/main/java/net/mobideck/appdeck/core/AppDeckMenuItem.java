@@ -67,6 +67,8 @@ public class AppDeckMenuItem {
         });
     }
 
+
+
     public void configure(String title, String icon, String url, int badge, boolean disabled, AppDeckView appDeckView)
     {
         mAppDeckView = appDeckView;

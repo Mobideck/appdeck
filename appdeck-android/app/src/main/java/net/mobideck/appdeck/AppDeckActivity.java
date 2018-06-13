@@ -704,8 +704,15 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                     Resources resources = getResources();
                     float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppDeckApplication.getAppDeck().appConfig.leftMenu.width, resources.getDisplayMetrics());
                     DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
-                    params.width = (int)(width);
+
+                    /* */
+                    if(params.width!=0)
+                        params.width = (int)(width);
+
+                    Log.i("width-", "LEFT "+width);
+
                     mDrawerLeftMenu.setLayoutParams(params);
+
                     mDrawerLeftMenu.addView(mLeftMenuWebView);
                 }
             });
@@ -726,9 +733,15 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                     Resources resources = getResources();
                     float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, AppDeckApplication.getAppDeck().appConfig.rightMenu.width, resources.getDisplayMetrics());
                     DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerRightMenu.getLayoutParams();
-                    params.width = (int)(width);
+
+                    /* */
+                    if(params.width!=0)
+                        params.width = (int)(width);
+
                     mDrawerRightMenu.setLayoutParams(params);
                     mDrawerRightMenu.addView(mRightMenuWebView);
+
+                   // Log.i("width-", "RIGTH "+width);
                 }
             });
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, findViewById(R.id.right_drawer)); //LOCK_MODE_UNLOCKED
@@ -786,6 +799,8 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 
 
     public boolean apiCall(final ApiCall call) {
+
+        Log.i("call-", "1 "+call.command);
 
         /* */
         if (call.command.equalsIgnoreCase("vibrate")) {
@@ -892,6 +907,21 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                             mToolbar.setTitle(title);
                         }
 
+                        //menu open size
+//                        if(response.has("leftmenu")){
+//                            JSONObject rgh = response.getJSONObject("leftmenu");
+//                            float widthLEFT = rgh.getInt("width");
+//
+//                            DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mDrawerLeftMenu.getLayoutParams();
+//
+//                            /* */
+//                            if(params.width!=0)
+//                                params.width = (int)(widthLEFT);
+//
+//                            Log.i("width-", "hm "+widthLEFT);
+//
+//                            mDrawerLeftMenu.setLayoutParams(params);
+//                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -1152,6 +1182,34 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
 //            startActivity(intent);
 //        }
         /***********************************************************/
+
+
+        if (call.command.equalsIgnoreCase("slidemenu")) {
+
+            Log.i("navigation", "appdeck "+call.command.toString());
+
+            String command = call.paramObject.optString("command");
+            String position = call.paramObject.optString("position");
+
+            if (command.equalsIgnoreCase("toggle")) {
+                if (position.equalsIgnoreCase("left"))
+                    menuManager.openLeftMenu();
+                if (position.equalsIgnoreCase("right"))
+                    menuManager.openRightMenu();
+                if (position.equalsIgnoreCase("main"))
+                    menuManager.toggleMenu();
+            } else if (command.equalsIgnoreCase("open")) {
+                if (position.equalsIgnoreCase("left"))
+                    menuManager.openLeftMenu();
+                if (position.equalsIgnoreCase("right"))
+                    menuManager.openRightMenu();
+                if (position.equalsIgnoreCase("main"))
+                    menuManager.closeMenu();
+            } else {
+                menuManager.closeMenu();
+            }
+            return true;
+        }
 
         return AppDeckApplication.getAppDeck().apiCall(call);
     }

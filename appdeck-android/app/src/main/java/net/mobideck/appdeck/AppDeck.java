@@ -294,6 +294,8 @@ public class AppDeck {
 
     public boolean apiCall(final ApiCall call) {
 
+        Log.i("call-", "2 "+call.command);
+
         if (call.command.equalsIgnoreCase("ready")) {
             Log.i("API", "**READY**");
 

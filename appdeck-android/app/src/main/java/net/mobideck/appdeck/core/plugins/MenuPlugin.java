@@ -17,45 +17,45 @@ public class MenuPlugin extends PluginAdaptater {
 
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add("slidemenu");
+        //commands.add("slidemenu");
         commands.add("menu");
         return commands;
     }
 
-    public boolean slidemenu(final ApiCall call) {
-        Log.d(TAG, "slidemenu");
-
-        Log.i("navigation", "appdeck "+call.command.toString());
-
-        String command = call.paramObject.optString("command", "none");
-        String position = call.paramObject.optString("position", "none");
-
-        MenuManager menuManager = AppDeckApplication.getActivity().menuManager;
-
-        if (command.equalsIgnoreCase("toggle"))
-        {
-            if (position.equalsIgnoreCase("left"))
-                menuManager.openLeftMenu();
-            if (position.equalsIgnoreCase("right"))
-                menuManager.openRightMenu();
-            if (position.equalsIgnoreCase("main"))
-                menuManager.toggleMenu();
-        } else if (command.equalsIgnoreCase("open"))
-        {
-            if (position.equalsIgnoreCase("left"))
-                menuManager.openLeftMenu();
-            if (position.equalsIgnoreCase("right"))
-                menuManager.openRightMenu();
-            if (position.equalsIgnoreCase("main"))
-                menuManager.closeMenu();
-            Log.i("navigation", "1close");
-        } else {
-            Log.i("navigation", "2close");
-
-            menuManager.closeMenu();
-        }
-        return true;
-    }
+//    public boolean slidemenu(final ApiCall call) {
+//        Log.d(TAG, "slidemenu");
+//
+//        Log.i("navigation", "appdeck "+call.command.toString());
+//
+//        String command = call.paramObject.optString("command", "none");
+//        String position = call.paramObject.optString("position", "none");
+//
+//        MenuManager menuManager = AppDeckApplication.getActivity().menuManager;
+//
+//        if (command.equalsIgnoreCase("toggle"))
+//        {
+//            if (position.equalsIgnoreCase("left"))
+//                menuManager.openLeftMenu();
+//            if (position.equalsIgnoreCase("right"))
+//                menuManager.openRightMenu();
+//            if (position.equalsIgnoreCase("main"))
+//                menuManager.toggleMenu();
+//        } else if (command.equalsIgnoreCase("open"))
+//        {
+//            if (position.equalsIgnoreCase("left"))
+//                menuManager.openLeftMenu();
+//            if (position.equalsIgnoreCase("right"))
+//                menuManager.openRightMenu();
+//            if (position.equalsIgnoreCase("main"))
+//                menuManager.closeMenu();
+//            Log.i("navigation", "1close");
+//        } else {
+//            Log.i("navigation", "2close");
+//
+//            menuManager.closeMenu();
+//        }
+//        return true;
+//    }
 
     public boolean menu(ApiCall call) {
         Log.d(TAG, "menu");
@@ -63,8 +63,8 @@ public class MenuPlugin extends PluginAdaptater {
         String command = call.paramObject.optString("command", "none");
         Log.i("navigation", command);
 
-        /*
-        net.mobideck.appdeck.core.ApiCall apiCall = (net.mobideck.appdeck.core.ApiCall)call;
+
+    /*    net.mobideck.appdeck.core.ApiCall apiCall = (net.mobideck.appdeck.core.ApiCall)call;
 
         // menu entries
         JSONArray entries = call.inputObject.optJSONArray("param");
@@ -89,6 +89,9 @@ public class MenuPlugin extends PluginAdaptater {
 
             apiCall.page.getConfig().setTopMenu(menuItems);
         }*/
+
+
+
         return true;
     }
 

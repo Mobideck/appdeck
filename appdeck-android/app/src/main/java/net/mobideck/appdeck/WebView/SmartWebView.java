@@ -54,6 +54,7 @@ import net.mobideck.appdeck.WebView.Video.VideoEnabledWebView;
 import net.mobideck.appdeck.core.ApiCall;
 import net.mobideck.appdeck.core.DebugLog;
 import net.mobideck.appdeck.core.Cache;
+import net.mobideck.appdeck.core.MenuManager;
 import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.Page;
 import net.mobideck.appdeck.location.GpsTracker;
@@ -845,8 +846,10 @@ public class SmartWebView extends VideoEnabledWebView {
         return true;
     }
 
-    public boolean apiCall(final ApiCall call)
-    {
+    public boolean apiCall(final ApiCall call) {
+
+        Log.i("call-", " "+call.command);
+
         if (call.command.equalsIgnoreCase("disable_catch_link"))
         {
             Log.i("API", uri.getPath()+" **DISABLE CATCH LINK**");
@@ -857,7 +860,6 @@ public class SmartWebView extends VideoEnabledWebView {
 
             return true;
         }
-
 
 
         if (page!= null)
