@@ -842,6 +842,7 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
                 @Override
                 public void onStart() { // called before request is started
                     //Some debugging code here
+                    getMenu("", "");
                 }
 
                 @Override
@@ -1210,6 +1211,7 @@ public class AppDeckActivity extends AppCompatActivity implements NavigationView
             }
             return true;
         }
+
 
         return AppDeckApplication.getAppDeck().apiCall(call);
     }

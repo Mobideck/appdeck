@@ -30,6 +30,7 @@ import net.mobideck.appdeck.config.AppConfig;
 import net.mobideck.appdeck.config.ViewConfig;
 import net.mobideck.appdeck.core.ApiCall;
 import net.mobideck.appdeck.core.Cache;
+import net.mobideck.appdeck.core.MenuManager;
 import net.mobideck.appdeck.core.Navigation;
 import net.mobideck.appdeck.core.RemoteAppCache;
 import net.mobideck.appdeck.core.Share;
@@ -321,7 +322,6 @@ public class AppDeck {
 
             //historyUrls.add(call.smartWebView.getUrl());
         }
-
 
 
         if (mPluginManager.handleCall(call))

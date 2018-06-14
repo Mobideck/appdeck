@@ -257,7 +257,7 @@ public class MenuManager {
             public void onAnimationStart(Animator animation) {
                 if (!menuArrowIsShown)
                     mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-                mActionBarDrawerToggle.syncState();
+                    mActionBarDrawerToggle.syncState();
             }
 
             @Override
@@ -266,7 +266,7 @@ public class MenuManager {
                     mActionBarDrawerToggle.setDrawerIndicatorEnabled(false);
                 else
                     mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-                mActionBarDrawerToggle.syncState();
+                    mActionBarDrawerToggle.syncState();
             }
 
             @Override

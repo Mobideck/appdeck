@@ -413,9 +413,9 @@ public class AppConfig {
 
             Log.i("width-", "config "+leftMenu.width);
 
-//            if (leftMenu.width <= 0)
-//                leftMenu.width = 320;
-//            /* */
+            if (leftMenu.width <= 0)
+                leftMenu.width = 320;
+            /* */
             if (leftMenu.url == null)
                  leftMenu.width = 0; /* */
         }

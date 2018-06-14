@@ -118,12 +118,12 @@ public class Navigation {
 
         AppDeckApplication.getActivity().setCurrentAppDeckView(appDeckView);
 
-        pageAnimation = new PageAnimation(AppDeckApplication.getActivity());
-        pageAnimation.push(appDeckView);
+//        pageAnimation = new PageAnimation(AppDeckApplication.getActivity());
+//        pageAnimation.push(appDeckView);
 
         AppDeckApplication.getActivity().menuManager.setMenuIcon(MenuManager.ICON_BACK);
 
-        //AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_PUSH);
+        AppDeckApplication.getAppDeck().adManager.showAds(AdManager.EVENT_PUSH);
 
         AppDeckApplication.getActivity().resetAppBar();
     }
