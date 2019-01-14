@@ -1,3 +1,10 @@
+# THIS PROJECT IS DEPRECATED
+Appdeck is not maintained anymore.
+
+You can still use the AppDeck, but you should not rely on any AppDeck Cloud Services component.
+
+---
+
 AppDeck iOS/Android application library
 =======================================
 
